@@ -1,0 +1,251 @@
+//
+// Copyright 2020 Wireline, Inc.
+//
+
+/* eslint import/no-dynamic-require: 0 */
+/* eslint global-require: 0 */
+
+import isArray from 'lodash.isarray';
+import { exec } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import findRoot from 'find-root';
+import ora from 'ora';
+
+import { addInstalled } from './extensions';
+
+/**
+ * Checks if yarn is used as a package manager.
+ */
+const isGlobalYarn = () => {
+  try {
+    findRoot(__dirname, dir => fs.existsSync(path.join(dir, 'yarn.lock')));
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+/**
+ * Init nvm if required.
+ * @param {String} command
+ */
+const prepareExec = (command) => {
+  if (command === 'npm') {
+    command = '[ -s "$NVM_DIR/nvm.sh" ] && unset PREFIX && \. "$NVM_DIR/nvm.sh" ; npm'; // eslint-disable-line no-useless-escape
+  }
+  return command;
+};
+
+/**
+ * @param {String} command
+ * @param {Array} args
+ * @param {Object} options
+ */
+const runCommand = async (command, args, options) => {
+  return new Promise((resolve, reject) => {
+    const { spinner: spinnerText } = options;
+
+    const spinner = ora(spinnerText);
+    spinner.start();
+
+    exec(`${prepareExec(command)} ${args.join(' ')}`, (err) => {
+      if (err) {
+        spinner.fail();
+        reject(err);
+      } else {
+        spinner.succeed();
+        spinner.clear();
+        resolve();
+      }
+    });
+  });
+};
+
+/**
+ * Finds root dir of a workspace.
+ * @param {String} from
+ */
+const getWorkspaceRoot = from => {
+  try {
+    return findRoot(from, dir => {
+      const pkgPath = path.join(dir, 'package.json');
+      if (fs.existsSync(pkgPath)) {
+        const { workspaces } = require(pkgPath);
+        return workspaces && (isArray(workspaces) || workspaces.packages);
+      }
+    });
+  } catch (err) {
+    return '';
+  }
+};
+
+/**
+ * Pluggable CLI module.
+ */
+export default class Pluggable {
+  _modulePath;
+
+  /**
+   * Pluggable factory.
+   * @param {Object} options
+   */
+  static create (options) {
+    return new Pluggable(options);
+  }
+
+  /**
+   * @constructor
+   * @param {String} moduleName
+   * @param {String} version
+   */
+  constructor ({ moduleName, version }) {
+    this._moduleName = moduleName;
+    this._version = version;
+    this._workspaceRoot = getWorkspaceRoot(__dirname);
+    this._isInWorkspace = this._workspaceRoot && fs.existsSync(path.resolve(this._workspaceRoot, 'node_modules', this._moduleName));
+    this._installed = this.isInstalled();
+  }
+
+  get moduleName () {
+    return this._moduleName;
+  }
+
+  get version () {
+    return this._version;
+  }
+
+  get workspaceRoot () {
+    return this._workspaceRoot;
+  }
+
+  get installed () {
+    return this._installed;
+  }
+
+  get isInWorkspace () {
+    return this._isInWorkspace;
+  }
+
+  get modulePath () {
+    if (!this._modulePath) {
+      const { moduleName } = this;
+      const pkgPath = require.resolve(`${moduleName}/package.json`);
+      const pkg = require(pkgPath);
+      this._modulePath = path.resolve(path.dirname(pkgPath), pkg.main);
+    }
+    return this._modulePath;
+  }
+
+  /**
+   * Checks if workspace is defined.
+   */
+  isWorkspace () {
+    return !!this.workspaceRoot;
+  }
+
+  /**
+   * Checks if extension is installed.
+   */
+  isInstalled () {
+    const { moduleName } = this;
+    if (this._isInWorkspace) return true;
+    try {
+      const pkgPath = require.resolve(`${moduleName}/package.json`);
+      const pkg = require(pkgPath);
+      // Check if module is installed and version matches cli version.
+      return !!pkg;
+      // TODO(egorgripasov): Extension compatibility. Semver?
+      // && pkg.version === this.version;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  /**
+   * Install CLI extension.
+   */
+  async installModule (npmClient, options = {}) {
+    const moduleName = this._moduleName;
+    const version = this._version;
+
+    if (this.isWorkspace()) {
+      console.error(`The module ${moduleName}@${version} has to be added to devDependencies.`);
+      return;
+    }
+
+    const isYarn = npmClient ? npmClient === 'yarn' : isGlobalYarn();
+
+    const command = isYarn ? 'yarn' : 'npm';
+    const args = isYarn ? ['global', 'add'] : ['install', '-g'];
+    args.push(`${moduleName}${version ? `@${version}` : ''}`);
+
+    return runCommand(command, args, options);
+  }
+
+  /**
+   * Uninstall CLI extension.
+   */
+  async uninstallModule (npmClient, options = {}) {
+    const moduleName = this._moduleName;
+
+    if (this.isWorkspace()) {
+      console.error(`The module ${moduleName} has to be removed from devDependencies.`);
+      return;
+    }
+
+    const isYarn = npmClient ? npmClient === 'yarn' : isGlobalYarn();
+
+    const command = isYarn ? 'yarn' : 'npm';
+    const args = isYarn ? ['global', 'remove'] : ['uninstall', '-g'];
+    args.push(`${moduleName}`);
+
+    return runCommand(command, args, options);
+  }
+
+  /**
+   * Init extension in a scope of main CLI.
+   * @param {Object} state
+   */
+  async init (state) {
+    return require(this.modulePath).init(state);
+  }
+
+  /**
+   * Destroy extension in a scope of main CLI.
+   * @param {Object} state
+   */
+  async destroy (state) {
+    return require(this.modulePath).destroy(state);
+  }
+
+  /**
+   * Runs command of an CLI extension.
+   * @param {Object} state
+   * @param {Object} argv
+   */
+  async run (state, argv) {
+    const { installed, moduleName, version } = this;
+    if (!installed) {
+      const spinner = `Installing ${moduleName}${version ? `@${version}` : ''}`;
+      try {
+        await this.installModule(null, { spinner });
+        await addInstalled(moduleName, this.getInfo());
+      } catch (err) {
+        console.error(err);
+        return;
+      }
+    }
+
+    return require(this.modulePath).runAsExtension(state, argv);
+  }
+
+  getInfo () {
+    this._cleanCache();
+    return require(this.modulePath).info;
+  }
+
+  _cleanCache () {
+    delete require.cache[require.resolve(this.modulePath)];
+  }
+}

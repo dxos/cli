@@ -1,0 +1,90 @@
+{
+  "name": "@dxos/cli",
+  "version": "1.0.1-beta.0",
+  "description": "DxOS CLI",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli#readme",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dxos/cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dxos/cli.git"
+  },
+  "bin": {
+    "wire": "bin/wire.js"
+  },
+  "files": [
+    "bin/",
+    "dist/es"
+  ],
+  "scripts": {
+    "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
+    "build:watch": "yarn run build --watch",
+    "clean": "rm -rf ./dist",
+    "dev": "babel-node ./src/main.js",
+    "lint": "semistandard",
+    "lint:fix": "semistandard --fix",
+    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+  },
+  "jest": {
+    "cacheDirectory": "/tmp/jest",
+    "testEnvironment": "node",
+    "verbose": false
+  },
+  "dependencies": {
+    "@babel/runtime": "7.7.2",
+    "@dxos/cli-core": "^1.0.1-beta.0",
+    "@dxos/debug": "^1.0.0-beta.67",
+    "assert": "^2.0.0",
+    "find-root": "^1.1.0",
+    "fs-extra": "^8.1.0",
+    "js-yaml": "^3.13.1",
+    "lodash.defaults": "^4.2.0",
+    "lodash.defaultsdeep": "^4.6.1",
+    "lodash.get": "^4.4.2",
+    "lodash.isarray": "^4.0.0",
+    "lodash.omit": "^4.5.0",
+    "lodash.set": "^4.3.2",
+    "lodash.uniqby": "^4.7.0",
+    "ndjson-parse": "^1.0.4",
+    "node-yaml": "^4.0.1",
+    "ora": "^3.4.0",
+    "read-pkg-up": "^6.0.0",
+    "semistandard": "^14.2.0",
+    "semver": "^7.1.1",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "^8.0.0",
+    "babel-plugin-add-module-exports": "^1.0.0",
+    "babel-plugin-inline-import": "^3.0.0",
+    "jest": "^25.1.0"
+  },
+  "semistandard": {
+    "parser": "babel-eslint",
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ],
+    "ignore": [
+      "/node_modules/",
+      "**/node_modules/",
+      "**/dist/"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "c147f853bc07376a163cee05c3c44198387c5655"
+}

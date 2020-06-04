@@ -1,0 +1,64 @@
+- command:
+  - wns
+  - faucet
+  - keys
+  describe: WNS management.
+  moduleName: "@wirelineio/wns-cli"
+- command:
+  - party
+  describe: Party management.
+  moduleName: "@dxos/data-cli"
+  initRequired: true
+  destroyRequired: true
+- command:
+  - echo
+  describe: ECHO operations.
+  moduleName: "@dxos/echo-cli"
+- command:
+  - app
+  describe: Application management.
+  moduleName: "@dxos/app-cli"
+- command:
+  - pad
+  describe: Pad management.
+  moduleName: "@dxos/pad-cli"
+- command:
+  - bot
+  describe: Bot operations.
+  moduleName: "@dxos/bot-cli"
+- command:
+  - dashboard
+  describe: Dashboard management.
+  moduleName: "@dxos/dashboard-cli"
+- command:
+  - game
+  describe: Game operations.
+  moduleName: "@dxos/game-cli"
+- command:
+  - chess
+  describe: Chess operations.
+  moduleName: "@dxos/chess-cli"
+- command:
+  - peer
+  describe: Peer operations.
+  moduleName: "@dxos/peer-cli"
+- command:
+  - resource
+  describe: Resource operations.
+  moduleName: "@dxos/resource-cli"
+- command:
+  - xbox
+  describe: XBox operations.
+  moduleName: "@dxos/xbox-cli"
+- command:
+  - signal
+  describe: Signal operations.
+  moduleName: "@dxos/signal-cli"
+- command:
+  - ipfs
+  describe: IPFS operations.
+  moduleName: "@dxos/ipfs-cli"
+- command:
+  - machine
+  describe: Machine operations.
+  moduleName: "@dxos/machine-cli"
