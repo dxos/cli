@@ -82,8 +82,7 @@ export class App {
    * @constructor
    * @param {Object} config
    */
-  constructor(config = {}) {
-
+  constructor (config = {}) {
     const { config: cliConfig, state, options, version } = config;
     const { prompt, baseCommand, enableInteractive = false } = options;
 
@@ -112,7 +111,7 @@ export class App {
     this._getModules = getModules;
   }
 
-  get state() {
+  get state () {
     return this._state;
   }
 
@@ -126,7 +125,7 @@ export class App {
    * @param input - input string.
    * @param interactive - true if in interactive mode.
    */
-  async parseAsync(input, interactive) {
+  async parseAsync (input, interactive) {
     assert(this._parser, 'Invalid command parser.');
 
     return new Promise((resolve, reject) => {
@@ -137,6 +136,7 @@ export class App {
         // Bug: yargs resets help settings after first usage of external CLI,
         // so need to set it again.
         .help()
+        // eslint-disable-next-line
         .parse(input, context, async (err, argv, output) => {
           // Strip command name if in CLI mode.
           // TODO(burdon): https://github.com/yargs/yargs/issues/1010
@@ -163,9 +163,8 @@ export class App {
   /**
    * Process the command.
    */
-  async start(argv) {
+  async start (argv) {
     try {
-
       // Init modules.
       if (this._getModules) {
         this._modules = await this._getModules();
@@ -233,7 +232,7 @@ export class App {
   /**
    * Start interactive mode.
    */
-  async startInteractive() {
+  async startInteractive () {
     this._state.cliState.interactive = true;
 
     this.getReadlineInterface();
@@ -263,7 +262,7 @@ export class App {
     });
   }
 
-  getReadlineInterface() {
+  getReadlineInterface () {
     if (!this._rl) {
       this._rl = readline.createInterface({
         input: process.stdin,

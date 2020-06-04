@@ -25,6 +25,7 @@ export const importCert = async (link) => {
   // Ignore self-signed cert for case of import.
   set(process.env, 'npm_config_strict_ssl', 'false');
 
+  // eslint-disable-next-line
   const parsedUrl = url.parse(link);
   const filename = `${Date.now()}-${parsedUrl.host.replace(/\./g, '-')}-${path.basename(parsedUrl.pathname)}`;
   await download(link, certPath, { filename });

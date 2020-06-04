@@ -150,7 +150,7 @@ export class Runnable {
    * @param {Array} args
    * @param {Object} options
    */
-  constructor(executable, args = []) {
+  constructor (executable, args = []) {
     assert(executable);
     assert(args);
 
@@ -163,7 +163,7 @@ export class Runnable {
    * @param {Array} args
    * @param {Object} options
    */
-  async run(args = [], options = {}) {
+  async run (args = [], options = {}) {
     const { detached } = options;
     if (detached) {
       await this._runDaemon(args, options);
@@ -172,7 +172,7 @@ export class Runnable {
     }
   }
 
-  async _runDaemon(args = [], options = {}) {
+  async _runDaemon (args = [], options = {}) {
     const {
       env,
       name,
@@ -224,7 +224,7 @@ export class Runnable {
     }
   }
 
-  async _run(args = [], options = {}) {
+  async _run (args = [], options = {}) {
     return new Promise(resolve => {
       const { background } = options;
       const child = spawn(this._executable, [...this._args, ...args], { ...options, stdio: 'inherit' });
