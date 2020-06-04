@@ -1249,6 +1249,19 @@
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
+"@dxos/protocol-plugin-presence@^1.1.0-alpha.4":
+  version "1.1.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@dxos/protocol-plugin-presence/-/protocol-plugin-presence-1.1.0-beta.2.tgz#c9374641b5cb4139d99303d111850aadc350d166"
+  integrity sha512-8Odiq3J+OdtfdL73ricegspWTDLABcQ3JfDbNpKvbSZx1TyqxfbqT1ZKqqSzheZtOvuhqmbBSVjVZVHlzdHamg==
+  dependencies:
+    "@dxos/broadcast" "^1.0.0-beta.4"
+    "@dxos/codec-protobuf" "^1.1.0-beta.9"
+    "@dxos/protocol" "^1.1.0-beta.2"
+    debug "^4.1.1"
+    ngraph.graph "^19.0.1"
+    queue-microtask "^1.1.2"
+    source-map-support "^0.5.12"
+
 "@dxos/protocol-plugin-replicator@^1.1.0-alpha.4":
   version "1.1.0-beta.2"
   resolved "https://registry.yarnpkg.com/@dxos/protocol-plugin-replicator/-/protocol-plugin-replicator-1.1.0-beta.2.tgz#8d8d318877624bf2b3e32c4cc44c251eb9828045"
@@ -10119,12 +10132,24 @@ ngraph.events@1.0.0:
   resolved "https://registry.yarnpkg.com/ngraph.events/-/ngraph.events-1.0.0.tgz#260b638f1d8b1394a10ce1dda9e5d9d9c85001b1"
   integrity sha512-Z7wyywdw8IKjOW0bDiOG4FUqX5fwqW7SDMO1huemDXho7Qy1b02RoBkPS43KLIZU2wrW2orju99k8wIr+xXvVA==
 
+ngraph.events@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ngraph.events/-/ngraph.events-1.2.1.tgz#6e40425ef9dec1e074bbef6da56c8d79b9188fd8"
+  integrity sha512-D4C+nXH/RFxioGXQdHu8ELDtC6EaCiNsZtih0IvyGN81OZSUby4jXoJ5+RNWasfsd0FnKxxpAROyUMzw64QNsw==
+
 ngraph.graph@^18.0.1:
   version "18.0.3"
   resolved "https://registry.yarnpkg.com/ngraph.graph/-/ngraph.graph-18.0.3.tgz#5cab1502be4b3d5ac5470083596a070bd85ec8ba"
   integrity sha512-IjGOWvYSUi1Oj3V1JrhhLGPY/rqvbvhUOa5tgOzIQo/LxO4wcBOSjZGZWeTTBUNLPt6R5hpkWKrUBaqPxgY4Ew==
   dependencies:
     ngraph.events "1.0.0"
+
+ngraph.graph@^19.0.1:
+  version "19.1.0"
+  resolved "https://registry.yarnpkg.com/ngraph.graph/-/ngraph.graph-19.1.0.tgz#88910ed53f6b4bc374f1b67296f4f81aab814e24"
+  integrity sha512-9cws84qfPkrYa7BaBtT+KgZfLXrd6pNL9Gl5Do+MBO/0Hm6rOM7qK78MZaO1uEoIK6p2pgUs6lu29zn/6tP59w==
+  dependencies:
+    ngraph.events "^1.2.1"
 
 nice-try@^1.0.4:
   version "1.0.5"
