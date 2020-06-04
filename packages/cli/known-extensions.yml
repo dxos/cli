@@ -11,10 +11,6 @@
   initRequired: true
   destroyRequired: true
 - command:
-  - echo
-  describe: ECHO operations.
-  moduleName: "@dxos/echo-cli"
-- command:
   - app
   describe: Application management.
   moduleName: "@dxos/app-cli"
@@ -30,10 +26,6 @@
   - dashboard
   describe: Dashboard management.
   moduleName: "@dxos/dashboard-cli"
-- command:
-  - game
-  describe: Game operations.
-  moduleName: "@dxos/game-cli"
 - command:
   - chess
   describe: Chess operations.
