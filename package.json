@@ -1,0 +1,59 @@
+{
+  "name": "@dxos/cli",
+  "version": "1.0.1",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "lerna run build",
+    "clean": "lerna run clean",
+    "lint": "lerna run lint",
+    "lint:fix": "lerna run lint -- --fix",
+    "lint:staged": "lint-staged",
+    "sort-package-json": "lerna exec npx sort-package-json",
+    "test": "lerna run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dxos/cli.git"
+  },
+  "keywords": [],
+  "author": "DxOS.org",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dxos/cli/issues"
+  },
+  "homepage": "https://github.com/dxos/cli#readme",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "lint-staged": {
+    "*.js": "semistandard"
+  },
+  "pre-commit": [
+    "lint:staged"
+  ],
+  "dependencies": {
+    "lerna": "^3.19.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "lint-staged": "^9.5.0",
+    "pre-commit": "^1.2.2",
+    "semistandard": "^14.2.0"
+  },
+  "semistandard": {
+    "parser": "babel-eslint",
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ],
+    "ignore": [
+      "/node_modules/",
+      "**/node_modules/",
+      "**/dist/"
+    ]
+  }
+}

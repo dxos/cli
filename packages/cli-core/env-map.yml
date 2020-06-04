@@ -1,0 +1,12 @@
+#
+# ENV mapping
+#
+
+WIRE_WNS_ENDPOINT:
+  path: services.wns.server
+WIRE_WNS_USER_KEY:
+  path: services.wns.userKey
+WIRE_WNS_BOND_ID:
+  path: services.wns.bondId
+WIRE_WNS_CHAIN_ID:
+  path: services.wns.chainId
