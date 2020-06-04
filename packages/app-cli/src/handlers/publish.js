@@ -27,6 +27,7 @@ export const publish = config => async ({ path: distPath = DEFAULT_DIST_PATH }) 
 
   const uploadedFiles = [];
 
+  // eslint-disable-next-line
   for await (const file of ipfs.add(globSource(publishFolder, { recursive: true }))) {
     uploadedFiles.push(file.cid.toString());
   }
