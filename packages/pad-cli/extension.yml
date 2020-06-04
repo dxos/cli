@@ -1,0 +1,6 @@
+name: dxos/pad-cli
+version: 0.0.1
+displayName: pad-cli
+description: Pad management.
+command:
+  - pad
