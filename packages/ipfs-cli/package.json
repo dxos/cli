@@ -1,8 +1,8 @@
 {
-  "name": "@dxos/dashboard-cli",
+  "name": "@dxos/ipfs-cli",
   "version": "1.0.1-beta.0",
-  "description": "DxOS Dashboard CLI",
-  "homepage": "https://github.com/dxos/cli/tree/master/packages/dashboard-cli#readme",
+  "description": "DxOS IPFS CLI",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/ipfs-cli#readme",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
@@ -13,7 +13,7 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-dashboard": "bin/wire-dashboard.js"
+    "wire-ipfs": "bin/wire-ipfs.js"
   },
   "files": [
     "bin/",
@@ -26,7 +26,7 @@
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --no-cache --silent --runInBand"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "jest": {
     "cacheDirectory": "/tmp/jest",
@@ -34,22 +34,15 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "@dxos/async": "^1.0.0-beta.1",
     "@dxos/cli-core": "^1.0.1-beta.0",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^0.4.8",
     "assert": "^2.0.0",
-    "chance": "^1.1.3",
-    "download": "^7.1.0",
-    "fs-extra": "^8.1.0",
-    "hypercore-crypto": "^1.0.0",
-    "ipfs-http-client": "^42.0.0",
-    "js-yaml": "^3.13.1",
+    "boolean": "^3.0.1",
     "lodash-clean": "^2.2.1",
+    "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
-    "node-fetch": "^2.6.0",
-    "node-yaml": "^4.0.1",
-    "semver": "^7.1.1",
-    "tar": "^6.0.1",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
@@ -59,6 +52,7 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@dxos/data-cli": "^1.0.0-beta.67",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.0",

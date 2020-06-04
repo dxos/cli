@@ -1,0 +1,6 @@
+name: dxos/ipfs-cli
+version: 0.0.1
+displayName: ipfs-cli
+description: IPFS operations.
+command:
+  - ipfs
