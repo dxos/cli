@@ -1,0 +1,8 @@
+name: dxos/data-cli
+version: 0.0.1
+displayName: data-cli
+description: Party management.
+initRequired: true
+destroyRequired: true
+command:
+  - party
