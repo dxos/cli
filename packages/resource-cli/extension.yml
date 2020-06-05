@@ -1,0 +1,6 @@
+name: dxos/resource-cli
+version: 0.0.1
+displayName: resource-cli
+description: Resource operations.
+command:
+  - resource
