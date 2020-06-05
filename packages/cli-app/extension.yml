@@ -1,0 +1,6 @@
+name: dxos/cli-app
+version: 0.0.1
+displayName: cli-app
+description: Application management.
+command:
+  - app

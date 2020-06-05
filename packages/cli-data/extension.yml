@@ -1,0 +1,8 @@
+name: dxos/cli-data
+version: 0.0.1
+displayName: cli-data
+description: Party management.
+initRequired: true
+destroyRequired: true
+command:
+  - party

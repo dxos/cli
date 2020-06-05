@@ -1,0 +1,6 @@
+name: dxos/cli-bot
+version: 0.0.1
+displayName: cli-bot
+description: Bot operations.
+command:
+  - bot

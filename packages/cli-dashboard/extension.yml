@@ -1,0 +1,6 @@
+name: dxos/cli-dashboard
+version: 0.0.1
+displayName: cli-dashboard
+description: Dashboard management.
+command:
+  - dashboard

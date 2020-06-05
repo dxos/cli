@@ -1,6 +1,0 @@
-name: dxos/machine-cli
-version: 0.0.1
-displayName: machine-cli
-description: Machine operations.
-command:
-  - machine

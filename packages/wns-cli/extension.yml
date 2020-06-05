@@ -1,8 +1,0 @@
-name: dxos/wns-cli
-version: 0.0.1
-displayName: wns-cli
-description: WNS management.
-command:
-  - wns
-  - faucet
-  - keys

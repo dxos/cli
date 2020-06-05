@@ -1,0 +1,6 @@
+name: dxos/cli-signal
+version: 0.0.1
+displayName: cli-signal
+description: Signal operations.
+command:
+  - signal
