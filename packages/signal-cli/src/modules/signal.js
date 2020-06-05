@@ -1,0 +1,161 @@
+//
+// Copyright 2020 DxOS.
+//
+
+import assert from 'assert';
+
+import clean from 'lodash-clean';
+
+import { spawn } from 'child_process';
+import { Runnable, sanitizeEnv, stopService, asyncHandler } from '@dxos/cli-core';
+import { Registry } from '@wirelineio/registry-client';
+import { log } from '@dxos/debug';
+
+const SIGNAL_PROCESS_NAME = 'signal';
+const DEFAULT_LOG_FILE = '/var/log/signal.log';
+
+const DEFAULT_MAX_MEMORY = '1G';
+
+const XBOX_TYPE = 'wrn:xbox';
+
+/**
+ * Signal CLI module.
+ */
+export const SignalModule = ({ config }) => {
+  const bin = config.get('cli.signal.bin');
+
+  const signalRunnable = new Runnable(bin, []);
+
+  return {
+    command: ['signal'],
+    describe: 'Signal CLI.',
+    builder: yargs => yargs
+      // Install / Upgrade.
+      .command({
+        command: ['install', 'upgrade'],
+        describe: 'Download & Install @dxos/signal binary.',
+        builder: yargs => yargs.version(false)
+          .option('npmClient', { default: config.get('cli.npmClient') })
+          .option('dry-run', { type: 'boolean', default: false })
+          .option('channel', { default: config.get('cli.signal.channel') })
+          .option('version'),
+        handler: asyncHandler(async ({ npmClient, channel, version, 'dry-run': noop }) => {
+          const npmPkg = config.get('cli.signal.package');
+          const packageVersion = `${npmPkg}@${version || channel}`;
+          const args = npmClient === 'npm' ? ['install', '-g'] : ['global', 'add'];
+          args.push(packageVersion);
+          const options = {
+            stdio: 'inherit',
+            env: { ...process.env }
+          };
+          log(`Installing ${packageVersion}...`);
+          log(`${[npmClient, ...args].join(' ')}`);
+
+          if (!noop) {
+            spawn(npmClient, args, options);
+          }
+        })
+      })
+
+      .command({
+        command: ['start'],
+        describe: 'Start signal.',
+        builder: yargs => yargs
+          .strict(false)
+          .help(false)
+          .option('help')
+          .option('wns-bootstrap', {
+            describe: 'start with wns bootstrap',
+            type: 'boolean',
+            default: true
+          })
+          .option('log-file', { type: 'string' })
+          .option('proc-name', { type: 'string', default: SIGNAL_PROCESS_NAME })
+          .option('daemon')
+          .option('max-memory', { type: 'string', default: DEFAULT_MAX_MEMORY }),
+
+        handler: asyncHandler(async ({
+          daemon,
+          maxMemory,
+          logFile = DEFAULT_LOG_FILE,
+          procName,
+          verbose,
+          wnsBootstrap,
+          ...argv
+        }) => {
+          if (wnsBootstrap && !argv.help) {
+            const { server, bondId, chainId } = config.get('services.wns');
+
+            assert(server, 'Invalid WNS endpoint.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const attributes = clean({ type: XBOX_TYPE });
+            const xboxes = await registry.queryRecords(attributes);
+
+            const bootstrap = xboxes
+              .filter(b => b.attributes && b.attributes.signal && (!bondId || b.bondId !== bondId))
+              .map(({ attributes: { signal } }) => {
+                try {
+                  if (signal.unpublish || signal.server.includes('localhost') || signal.server.includes('0.0.0.0')) return null;
+                  return signal.server;
+                } catch (err) {
+                  return null;
+                }
+              })
+              .filter(Boolean)
+              .join(',');
+
+            argv.bootstrap = argv.bootstrap ? `${argv.bootstrap},${bootstrap}` : bootstrap;
+          }
+
+          if (verbose) {
+            argv.logLevel = 'debug';
+          }
+
+          if (daemon) {
+            argv.logFormat = 'json';
+          }
+
+          // Convert argv params into args array excepting those from yargs
+          let args = Object.entries(argv).filter(([k, v]) => !k.includes('-') && Boolean(v)).reduce((prev, [key, value]) => {
+            if (value !== false && !['$0', '_', 'proc-name'].includes(key)) {
+              return [...prev, ...[`--${key}`, value !== true ? value : undefined].filter(Boolean)];
+            }
+            return prev;
+          }, []);
+
+          if (argv.help) {
+            args = ['--help'];
+            // usage and pass --help to underlying binary.
+            yargs.showHelp();
+          }
+
+          const options = {
+            name: procName,
+            logFile,
+            detached: daemon,
+            maxMemory,
+            env: {
+              CONFIG_FILE: config,
+              ...sanitizeEnv(process.env)
+            }
+          };
+
+          // forward params to the binary
+          signalRunnable.run(args, options);
+        })
+      })
+
+      // stop.
+      .command({
+        command: ['stop'],
+        describe: 'Stop Signal',
+        builder: yargs => yargs
+          .option('proc-name', { type: 'string', default: SIGNAL_PROCESS_NAME }),
+        handler: asyncHandler(async ({ procName }) => {
+          await stopService(procName);
+        })
+      })
+  };
+};
