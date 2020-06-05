@@ -1,8 +1,8 @@
 {
-  "name": "@dxos/signal-cli",
+  "name": "@wirelineio/wns-cli",
   "version": "1.0.1-beta.0",
-  "description": "DxOS Signal CLI",
-  "homepage": "https://github.com/dxos/cli/tree/master/packages/signal-cli#readme",
+  "description": "Wireline WNS CLI",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/wns-cli#readme",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
@@ -13,7 +13,7 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-signal": "bin/wire-signal.js"
+    "wire-wns": "bin/wire-wns.js"
   },
   "files": [
     "bin/",
@@ -26,7 +26,7 @@
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests --runInBand --no-cache"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "jest": {
     "cacheDirectory": "/tmp/jest",
@@ -35,9 +35,19 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^1.0.1-beta.0",
+    "@dxos/crypto": "^1.0.0-beta.1",
+    "@dxos/data-client": "^1.0.0-beta.67",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^0.4.8",
+    "assert": "^2.0.0",
+    "fs-extra": "9.0.0",
+    "graphql-request": "^1.8.2",
+    "inquirer": "^7.0.0",
+    "js-yaml": "^3.13.1",
     "lodash-clean": "^2.2.1",
+    "lodash.get": "^4.4.2",
+    "node-yaml": "^4.0.1",
+    "tree-kill": "^1.2.1",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
@@ -48,12 +58,20 @@
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@dxos/data-cli": "^1.0.0-beta.67",
+    "babel-eslint": "^9.0.0",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-inline-import": "^3.0.0",
+    "eslint": "^5.5.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^2.6.2",
     "jest": "^25.1.0",
-    "semistandard": "^14.2.0"
+    "prettier": "^1.14.2",
+    "semistandard": "^14.2.0",
+    "uuid": "^3.3.3"
   },
   "semistandard": {
     "parser": "babel-eslint",
@@ -73,5 +91,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "c147f853bc07376a163cee05c3c44198387c5655"
 }
