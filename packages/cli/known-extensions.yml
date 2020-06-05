@@ -3,54 +3,54 @@
   - faucet
   - keys
   describe: WNS management.
-  moduleName: "@wirelineio/wns-cli"
+  moduleName: "@wirelineio/cli-wns"
 - command:
   - party
   describe: Party management.
-  moduleName: "@dxos/data-cli"
+  moduleName: "@dxos/cli-data"
   initRequired: true
   destroyRequired: true
 - command:
   - app
   describe: Application management.
-  moduleName: "@dxos/app-cli"
+  moduleName: "@dxos/cli-app"
 - command:
   - pad
   describe: Pad management.
-  moduleName: "@dxos/pad-cli"
+  moduleName: "@dxos/cli-pad"
 - command:
   - bot
   describe: Bot operations.
-  moduleName: "@dxos/bot-cli"
+  moduleName: "@dxos/cli-bot"
 - command:
   - dashboard
   describe: Dashboard management.
-  moduleName: "@dxos/dashboard-cli"
+  moduleName: "@dxos/cli-dashboard"
 - command:
   - chess
   describe: Chess operations.
-  moduleName: "@dxos/chess-cli"
+  moduleName: "@dxos/cli-chess"
 - command:
   - peer
   describe: Peer operations.
-  moduleName: "@dxos/peer-cli"
+  moduleName: "@dxos/cli-peer"
 - command:
   - resource
   describe: Resource operations.
-  moduleName: "@dxos/resource-cli"
+  moduleName: "@dxos/cli-resource"
 - command:
   - xbox
   describe: XBox operations.
-  moduleName: "@dxos/xbox-cli"
+  moduleName: "@dxos/cli-xbox"
 - command:
   - signal
   describe: Signal operations.
-  moduleName: "@dxos/signal-cli"
+  moduleName: "@dxos/cli-signal"
 - command:
   - ipfs
   describe: IPFS operations.
-  moduleName: "@dxos/ipfs-cli"
+  moduleName: "@dxos/cli-ipfs"
 - command:
   - machine
   describe: Machine operations.
-  moduleName: "@dxos/machine-cli"
+  moduleName: "@dxos/cli-machine"
