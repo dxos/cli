@@ -895,31 +895,31 @@
   integrity sha512-0orf1DtPKmS/eIkz9LWJ4FDtnHN4HhV1y8+Di33z7FW622rScK8eBT/W/wiKG1uORhQ2OgEZE8PUidpEpZr0jg==
 
 "@dxos/botkit-client@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-1.0.0-beta.67.tgz#4ce904043a1203f07beef3cb8849e4223b7773da"
-  integrity sha512-Ojc0t3GzAinpf39Lj8klJ/0LzJpLjc9pwCzD6/+GEg1h6dB6HRbBR6c59s5Jq2Glk6Og5Vp9DH/TVnBRl+rYzQ==
+  version "1.0.0-beta.68"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-1.0.0-beta.68.tgz#f914712db0151a816bb812c3ff4d2ea67430bda3"
+  integrity sha512-sp4GcCD30obe8SqK753luBkyq0wn65GBBBF46jYi6sPjEdc6hpQb4dJB7yWSon3LWHdmSPgjKOQXV1QIUBKSdw==
   dependencies:
     "@dxos/async" "^1.0.0-beta.1"
     "@dxos/crypto" "^1.0.0-beta.1"
-    "@dxos/data-client" "^1.0.0-beta.67"
-    "@dxos/debug" "^1.0.0-beta.67"
-    "@dxos/network-manager" "^1.0.0-beta.67"
+    "@dxos/data-client" "^1.0.0-beta.68"
+    "@dxos/debug" "^1.0.0-beta.68"
+    "@dxos/network-manager" "^1.0.0-beta.68"
     "@dxos/protocol-plugin-bot" "^1.1.0-alpha.4"
     assert "^2.0.0"
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
 
 "@dxos/botkit@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit/-/botkit-1.0.0-beta.67.tgz#f8c0806ef935c2cd0def610f566590afe529beed"
-  integrity sha512-HBgSE5rrDvTWpLg+wS4zjhS1swwx18ZUPvC0U2Z+Ymd0mF3pC5Ro2QRbaavRmCuuMwTsw9/3c2Oub2Y20a4OwQ==
+  version "1.0.0-beta.68"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit/-/botkit-1.0.0-beta.68.tgz#48f991f581e215a6ff15851a28c1c1e54d18319a"
+  integrity sha512-CMzO1fByh7l6hctmDzeILcJqiH9m6MHUMO6aEwDV0M+DVqjUPCP/RnuQ3Qhqz7qhqKxb2O2yowwwexfKVnWktg==
   dependencies:
     "@dxos/codec-protobuf" "^1.1.0-beta.7"
-    "@dxos/config" "^1.0.0-beta.67"
+    "@dxos/config" "^1.0.0-beta.68"
     "@dxos/credentials" "^1.0.1-beta.4"
     "@dxos/crypto" "^1.0.0-beta.1"
-    "@dxos/data-client" "^1.0.0-beta.67"
-    "@dxos/network-manager" "^1.0.0-beta.67"
+    "@dxos/data-client" "^1.0.0-beta.68"
+    "@dxos/network-manager" "^1.0.0-beta.68"
     "@dxos/party-manager" "^1.0.1-beta.4"
     "@dxos/protocol-plugin-bot" "^1.1.0-alpha.4"
     "@dxos/protocol-plugin-messenger" "^1.1.0-alpha.4"
@@ -950,15 +950,15 @@
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
-"@dxos/cli-core@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@dxos/cli-core/-/cli-core-1.0.0-beta.67.tgz#619066d46264f11cca441a5d31432bcde4460072"
-  integrity sha512-muEKnt+qzpTxdwxId4IDClEVdb9jQqqqshDvbP4OHL9nIV5E1DbpSuIlMTTPfDwMg47YMC9aiWzDXQqIAlb01Q==
+"@dxos/cli-core@^1.0.0-beta.68":
+  version "1.0.0-beta.68"
+  resolved "https://registry.yarnpkg.com/@dxos/cli-core/-/cli-core-1.0.0-beta.68.tgz#d7bbd63fdaff8f7e5328558d9ad735cae778ffcf"
+  integrity sha512-g8/FZ6g430ltTYQbR2jfezl9wKKyhMsG6fiMh3GdITnOfHfJTTJ0de3wJ973AkdkOptBQ2QRAiDa7W9/5dhBHg==
   dependencies:
     "@babel/runtime" "7.7.2"
-    "@dxos/config" "^1.0.0-beta.67"
+    "@dxos/config" "^1.0.0-beta.68"
     "@dxos/crypto" "^1.0.0-beta.1"
-    "@dxos/debug" "^1.0.0-beta.67"
+    "@dxos/debug" "^1.0.0-beta.68"
     assert "^2.0.0"
     command-exists "^1.2.9"
     console.table "^0.10.0"
@@ -996,10 +996,10 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/config@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@dxos/config/-/config-1.0.0-beta.67.tgz#1af68224e9d7649f55fd2f3e568ab75f97be0ccd"
-  integrity sha512-h4sEgddhBqqf+/pK887Sh9a0vlyLPHZKYzCEOQvvEfAcHEmXI7EM2bAp2qKzo201nc+enGhU7AyzWkvY1/XeOw==
+"@dxos/config@^1.0.0-beta.67", "@dxos/config@^1.0.0-beta.68":
+  version "1.0.0-beta.68"
+  resolved "https://registry.yarnpkg.com/@dxos/config/-/config-1.0.0-beta.68.tgz#be7bb765985ee3174f250bd57d650764017d970c"
+  integrity sha512-3vPZMBmi3EQtCH40bA6FH8voVVFkdbxjRPqSiizHq8+u/JUg/7O0JwneePJYmBOT+T6AFufgAWyWBNy9++8w3A==
   dependencies:
     boolean "^3.0.1"
     debug "^4.1.1"
@@ -1056,16 +1056,16 @@
     hypercore-crypto "^1.0.0"
 
 "@dxos/data-cli@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@dxos/data-cli/-/data-cli-1.0.0-beta.67.tgz#784f86fdbf095dc9848d21a37b063da10ff2821d"
-  integrity sha512-k9k1p3cx3XXbr9OCMeKRukj4XXgEHmWi8s+ghK+6GxgJOp6nx0lLdMLN4qrS5mESNMa2gUXCcTgOyHf27pNbbQ==
+  version "1.0.0-beta.68"
+  resolved "https://registry.yarnpkg.com/@dxos/data-cli/-/data-cli-1.0.0-beta.68.tgz#ec2ed6d516bbb46fd8c56f8093d21262fbd68dfd"
+  integrity sha512-VaMdPuYnVgDHSpztUrLRYKB4PwGujsLeNBVu4tWbl0NM5S3DBIUC0jPrciGL4/tfMlGL+20qlMQMMXMuWWpgcA==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@dxos/cli-core" "^1.0.0-beta.67"
+    "@dxos/cli-core" "^1.0.0-beta.68"
     "@dxos/credentials" "^1.0.1-beta.4"
     "@dxos/crypto" "^1.0.0-beta.1"
-    "@dxos/data-client" "^1.0.0-beta.67"
-    "@dxos/debug" "^1.0.0-beta.67"
+    "@dxos/data-client" "^1.0.0-beta.68"
+    "@dxos/debug" "^1.0.0-beta.68"
     "@dxos/party-manager" "^1.0.1-beta.4"
     assert "^2.0.0"
     js-yaml "^3.13.1"
@@ -1074,20 +1074,20 @@
     random-access-memory "^3.1.1"
     yargs "^11.0.0"
 
-"@dxos/data-client@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@dxos/data-client/-/data-client-1.0.0-beta.67.tgz#8fe99681c1cf3e18c0ad0a6d515f7e14dde6bbd5"
-  integrity sha512-GN4bbiMgtGrqQ8PrsP2+lUILjpOMDepvrtQOS781YwhHBmPZP2u9DRkwCuilMhaxuZDXlE0pkp3kFGt1CEyM5g==
+"@dxos/data-client@^1.0.0-beta.67", "@dxos/data-client@^1.0.0-beta.68":
+  version "1.0.0-beta.68"
+  resolved "https://registry.yarnpkg.com/@dxos/data-client/-/data-client-1.0.0-beta.68.tgz#98ab9ec1defcd31ee911835b1ce384d073020fc4"
+  integrity sha512-n95H2S3DuaQC/X9aDzeRrMwwoKw9lUrBb+TT01CI9I/xYOsMDxbgvWh49kFjqbFvd6JL+YFa17Xpnfn7rxlNfg==
   dependencies:
     "@babel/runtime" "^7.8.7"
     "@dxos/async" "^1.0.0-beta.1"
     "@dxos/credentials" "^1.0.1-beta.4"
     "@dxos/crypto" "^1.0.0-beta.1"
-    "@dxos/debug" "^1.0.0-beta.67"
+    "@dxos/debug" "^1.0.0-beta.68"
     "@dxos/feed-level-indexer" "^1.0.0-beta.11"
     "@dxos/feed-store" "1.2.0-beta.14"
     "@dxos/metrics" "^1.0.0-beta.6"
-    "@dxos/network-manager" "^1.0.0-beta.67"
+    "@dxos/network-manager" "^1.0.0-beta.68"
     "@dxos/party-manager" "^1.0.1-beta.4"
     "@dxos/protocol" "^1.1.0-alpha.4"
     "@dxos/protocol-plugin-replicator" "^1.1.0-alpha.4"
@@ -1115,10 +1115,10 @@
     through2 "^3.0.1"
     wrtc "^0.4.3"
 
-"@dxos/debug@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.67.tgz#967eca2a43c68db56aff4093b6ee1be36837d715"
-  integrity sha512-n6Uqbvd/fsH/BVaRfBKsH5nuea+Sa27kxrMVcf9odw+gChKiivxMIVsY15BOyzmIsCU7dhexUhC32PSZeVkGVg==
+"@dxos/debug@^1.0.0-beta.67", "@dxos/debug@^1.0.0-beta.68":
+  version "1.0.0-beta.68"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.68.tgz#fbfb4e325dadf3fa5225449e70a3a942171876ba"
+  integrity sha512-zP+6JULmqU8OK8BhhRS/zXxMDfnChjqNlDkmhpiwr5/w+cNfOIs5CJrCSugkcc6isI6mo/W/PUYdBxGgMAlo6Q==
   dependencies:
     debug "^4.1.1"
 
@@ -1195,10 +1195,10 @@
     lodash.set "^4.3.2"
     lodash.unset "^4.5.2"
 
-"@dxos/network-manager@^1.0.0-beta.35", "@dxos/network-manager@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@dxos/network-manager/-/network-manager-1.0.0-beta.67.tgz#42e19bb4029847165b8d7774bd63c392ca14ed8d"
-  integrity sha512-Nd6b6SUQyaRl09gPSM/BQAAINjPu9NCcAN9CEKwLgc5Gd5quedqXYsVtec3xzDHaWyVb+pH3Z0MwU6A8DMiL0g==
+"@dxos/network-manager@^1.0.0-beta.35", "@dxos/network-manager@^1.0.0-beta.67", "@dxos/network-manager@^1.0.0-beta.68":
+  version "1.0.0-beta.68"
+  resolved "https://registry.yarnpkg.com/@dxos/network-manager/-/network-manager-1.0.0-beta.68.tgz#c154eed135e485d722810c67f252e151600f9bc4"
+  integrity sha512-SCIhxJwxGG+m+j3+g1Q/ivX+7qaVaGPQUxPKibWLJH6mvGu2MZgXmvJ8Hgla7XwA1guOkAStXkPSoqn3IuZfgQ==
   dependencies:
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/metrics" "^1.0.0-beta.6"
@@ -2389,9 +2389,9 @@
     "@types/node" ">= 8"
 
 "@octokit/types@^4.0.1":
-  version "4.1.6"
-  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-4.1.6.tgz#03d3f277dee73086940578c2518c2ed700ac07a0"
-  integrity sha512-/gN/VeZirpFb0GIpbDF6SgtfDp9EQ+ymqPf595wjRkEoRgkrCnJGctGAd8MrynStBvYRmMWF1P64qzZFzhW7Vg==
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-4.1.7.tgz#efb1c26b6e6201b7d6e56b9a17e73d0541401567"
+  integrity sha512-2ydXNFLsoJbm5D3zvAkbK0y9JaS4eBZ4sk0DJcOLH1sY+p3H861ysARJLLQQtztN5y5vvxKS12JRUwoLkEO4Ag==
   dependencies:
     "@types/node" ">= 8"
 
@@ -2620,17 +2620,11 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/events@*":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
-  integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
-
 "@types/glob@^7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
-  integrity sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.2.tgz#06ca26521353a545d94a0adc74f38a59d232c987"
+  integrity sha512-VgNIkxK+j7Nz5P7jvUZlRvhuPSmsEfS03b0alKcq5V/STUKAa3Plemsn5mrQUO7am6OErJ4rhGEGJbACclrtRA==
   dependencies:
-    "@types/events" "*"
     "@types/minimatch" "*"
     "@types/node" "*"
 
@@ -2694,9 +2688,9 @@
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
 "@types/node@*", "@types/node@>= 8":
-  version "14.0.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.10.tgz#dbfaa170bd9eafccccb6d7060743a761b0844afd"
-  integrity sha512-Bz23oN/5bi0rniKT24ExLf4cK0JdvN3dH/3k0whYkdN4eI4vS2ZW/2ENNn2uxHCzWcbdHIa/GRuWQytfzCjRYw==
+  version "14.0.11"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.11.tgz#61d4886e2424da73b7b25547f59fdcb534c165a3"
+  integrity sha512-lCvvI24L21ZVeIiyIUHZ5Oflv1hhHQ5E1S25IRlKIXaRkVgmXpJMI3wUJkmym2bTbCe+WoIibQnMVAU3FguaOg==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -2709,9 +2703,9 @@
   integrity sha512-Exw4yUWMBXM3X+8oqzJNRqZSwUAaS4+7NdvHqQuFi/d+synz++xmX3QIf+BFqneW8N31R8Ky+sikfZUXq07ggQ==
 
 "@types/node@^13.7.0":
-  version "13.13.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.9.tgz#79df4ae965fb76d31943b54a6419599307a21394"
-  integrity sha512-EPZBIGed5gNnfWCiwEIwTE2Jdg4813odnG8iNPMQGrqVxrI+wL68SPtPeCX+ZxGBaA6pKAVc6jaKgP/Q0QzfdQ==
+  version "13.13.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.10.tgz#34a9be3cbc409fd235984bd18a130006f5234396"
+  integrity sha512-J+FbkhLTcFstD7E5mVZDjYxa1VppwT2HALE6H3n2AnBSP8uiCQk0Pyr6BkJcP38dFV9WecoVJRJmFnl9ikIW7Q==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4201,9 +4195,9 @@ camelcase@^6.0.0:
   integrity sha512-8KMDF1Vz2gzOq54ONPJS65IvTUaB1cHJ2DMM7MbPmLZljDH1qpzzLsWdiN9pHh6qvkRVDTi/07+eNGch/oLU4w==
 
 caniuse-lite@^1.0.30001043:
-  version "1.0.30001077"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001077.tgz#5d7da6a120b08d9f4fd94823786ecb454aaa5626"
-  integrity sha512-AEzsGvjBJL0lby/87W96PyEvwN0GsYvk5LHsglLg9tW37K4BqvAvoSCdWIE13OZQ8afupqZ73+oL/1LkedN8hA==
+  version "1.0.30001078"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001078.tgz#e1b6e2ae327b6a1ec11f65ec7a0dde1e7093074c"
+  integrity sha512-sF12qXe9VMm32IEf/+NDvmTpwJaaU7N1igpiH2FdI4DyABJSsOqG3ZAcFvszLkoLoo1y6VJLMYivukUAxaMASw==
 
 canonical-json@^0.0.4:
   version "0.0.4"
@@ -5503,9 +5497,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.413:
-  version "1.3.459"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.459.tgz#49a43d78f60b5bf42312b636f3af43c695e0c652"
-  integrity sha512-aN3Z89qEYIwVjzGi9SrcTjjopRZ3STUA6xTufS0fxZy8xOO2iqVw8rYKdT32CHgOKHOYj5KGmz3n6xUKE4QJiQ==
+  version "1.3.462"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.462.tgz#82087404c20ed664963ececab23337ac7a150e21"
+  integrity sha512-HST/xWLOeA0LGUhxBqvcPDDUGHjB6rn99VBgPWmaHv+zqwXgOaZO5RnRcd5owjRE7nh+z1c0SwcK8qP8o7sofg==
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
@@ -12005,9 +11999,9 @@ regenerate-unicode-properties@^8.2.0:
     regenerate "^1.4.0"
 
 regenerate@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
-  integrity sha512-1G6jJVDWrt0rK99kBjvEtziZNCICAuvIPkSiUFIQxVP06RCVpq3dmDo2oi6ABpYaDYaTRr67BEhL8r1wgEZZKg==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.1.tgz#cad92ad8e6b591773485fbe05a485caf4f457e6f"
+  integrity sha512-j2+C8+NtXQgEKWk49MMP5P/u2GhnahTtVkRIHr5R5lVRlbKvmQ+oS+A5aLKWp2ma5VkT8sh6v+v4hbH0YHR66A==
 
 regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4:
   version "0.13.5"
