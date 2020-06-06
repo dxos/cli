@@ -98,7 +98,7 @@ export const SignalModule = ({ config }) => {
               .filter(b => b.attributes && b.attributes.signal && (!bondId || b.bondId !== bondId))
               .map(({ attributes: { signal } }) => {
                 try {
-                  return signal.active && signal.bootstrap ? signal.bootstrap : null;
+                  return signal.active !== false && signal.bootstrap ? signal.bootstrap : null;
                 } catch (err) {
                   return null;
                 }
