@@ -6,7 +6,7 @@ import { getTable } from 'console.table';
 
 import { log, logError, logs } from '@dxos/debug';
 
-const CLI_DEBUG_NAMESPACE = 'cli';
+const CLI_DEBUG_NAMESPACE = 'dxos:cli';
 
 /**
  * @param {any} data
