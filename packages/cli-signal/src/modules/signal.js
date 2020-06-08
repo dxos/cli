@@ -16,7 +16,8 @@ const DEFAULT_LOG_FILE = '/var/log/signal.log';
 
 const DEFAULT_MAX_MEMORY = '1G';
 
-const XBOX_TYPE = 'wrn:xbox';
+const WRN_TYPE = 'wrn:service';
+const SERVICE_TYPE = 'signal';
 
 /**
  * Signal CLI module.
@@ -90,15 +91,14 @@ export const SignalModule = ({ config }) => {
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const attributes = clean({ type: XBOX_TYPE });
-            const xboxes = await registry.queryRecords(attributes);
+            const attributes = clean({ type: WRN_TYPE, service: SERVICE_TYPE });
+            const registeredServers = await registry.queryRecords(attributes);
 
-            const bootstrap = xboxes
+            const bootstrap = registeredServers
               .filter(b => b.attributes && b.attributes.signal && (!bondId || b.bondId !== bondId))
               .map(({ attributes: { signal } }) => {
                 try {
-                  if (signal.unpublish || signal.server.includes('localhost') || signal.server.includes('0.0.0.0')) return null;
-                  return signal.server;
+                  return signal.active !== false && signal.bootstrap ? signal.bootstrap : null;
                 } catch (err) {
                   return null;
                 }
