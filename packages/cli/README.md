@@ -14,7 +14,9 @@ or
 $ npm install --global @dxos/cli@beta
 ```
 
-In order to install CLI extensions, one could leverage automatic installation mechanism:
+### Extensions
+
+In order to install CLI extensions, one could leverage automatic installation mechanism (for DxOS extensions only):
 
 ```bash
 $ wire wns
@@ -22,6 +24,35 @@ $ wire wns
 
 ```bash
 $ wire app
+```
+
+In order to install arbitrary extension, `wire extension install` command could be used:
+
+```
+$ wire extension install @dxos/cli-ipfs --version beta
+
+✔ Installing @dxos/cli-ipfs@beta
+```
+
+View installed extensions: 
+
+```
+$ wire extension list
+
+extension       command  version       description
+--------------  -------  ------------  -----------------------
+@dxos/cli-app   app      1.0.1-beta.1  Application management.
+@dxos/cli-bot   bot      1.0.1-beta.1  Bot operations.
+@dxos/cli-ipfs  ipfs     1.0.1-beta.2  IPFS operations.
+```
+
+Uninstall extension:
+
+```
+$ wire extension uninstall @dxos/cli-ipfs
+
+Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it? (Yes/No): y
+✔ Uninstalling @dxos/cli-ipfs
 ```
 
 ## Upgrade
@@ -210,13 +241,15 @@ $ wire app register help
 
 | Extension |
 | :------------ |
-| [App CLI](https://github.com/wirelineio/incubator/blob/master/dxos/app-cli/README.md) |
-| [Bot CLI](https://github.com/wirelineio/incubator/blob/master/dxos/bot-cli/README.md) |
-| [Dashboard CLI](https://github.com/wirelineio/incubator/blob/master/dxos/dashboard-cli/README.md) |
-| [Data CLI](https://github.com/wirelineio/incubator/blob/master/dxos/data-cli/README.md) |
-| [Echo CLI](https://github.com/wirelineio/incubator/blob/master/dxos/echo-cli/README.md) |
-| [Peer CLI](https://github.com/wirelineio/incubator/blob/master/dxos/peer-cli/README.md) |
-| [Resource CLI](https://github.com/wirelineio/incubator/blob/master/dxos/resource-cli/README.md) |
-| [WNS CLI](https://github.com/wirelineio/incubator/blob/master/dxos/wns-cli/README.md) |
-| [XBox CLI](https://github.com/wirelineio/incubator/blob/master/dxos/xbox-cli/README.md) |
-| [Game CLI](https://github.com/wirelineio/incubator/tree/master/examples/game-cli/README.md) |
+| [App CLI](https://github.com/dxos/cli/blob/master/packages/cli-app/README.md) |
+| [Bot CLI](https://github.com/dxos/cli/blob/master/packages/cli-bot/README.md) |
+| [Dashboard CLI](https://github.com/dxos/cli/blob/master/packages/cli-dashboard/README.md) |
+| [Data CLI](https://github.com/dxos/cli/blob/master/packages/cli-data/README.md) |
+| [IPFS CLI](https://github.com/dxos/cli/blob/master/packages/cli-ipfs/README.md) |
+| [Machine CLI](https://github.com/dxos/cli/blob/master/packages/cli-machine/README.md) |
+| [Pad CLI](https://github.com/dxos/cli/blob/master/packages/cli-pad/README.md) |
+| [Peer CLI](https://github.com/dxos/cli/blob/master/packages/cli-peer/README.md) |
+| [Resource CLI](https://github.com/dxos/cli/blob/master/packages/cli-resource/README.md) |
+| [Signal CLI](https://github.com/dxos/cli/blob/master/packages/cli-signal/README.md) |
+| [WNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-wns/README.md) |
+| [XBox CLI](https://github.com/dxos/cli/blob/master/packages/cli-xbox/README.md) |
