@@ -14,6 +14,10 @@ cli:
     package: '@dxos/signal'
     channel: 'beta'
     bin: 'dxos-signal'
+  mdns:
+    package: '@dxos/mdns'
+    channel: 'beta'
+    bin: 'dxos-mdns'
   npmClient: 'npm' # npm|yarn
   channel: 'beta'
 
