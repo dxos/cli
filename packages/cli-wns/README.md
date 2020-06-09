@@ -1,5 +1,38 @@
 # WNS CLI
 
+## Account Setup
+
+Registering records in WNS requires an account. To create an account, activate the required profile and run the following command:
+
+```bash
+$ wire wns account create
+? Post a Tweet with text 'Fund cosmos1jeh4d8ym99t235p22n6j4lyyf9wk56jgzjq9dk' and paste the URL: "<PASTE TWEET URL HERE>"
+Requesting funds from faucet...
+Got funds from faucet:
+[
+  {
+    "type": "uwire",
+    "quantity": 1000000000
+  }
+]
+Creating a bond...
+Bond created successfully.
+Account created successfully. Copy the mnemonic to another safe location.
+There is no way to recover the account and associated funds if this mnemonic is lost.
+{
+  "mnemonic": "rely lounge lock never tuition relax ostrich depth clever pill clap express",
+  "privateKey": "87bb801596815239cc79c0e62f76d0f94a0c6be25e9cfcc13f7297ed01db3794",
+  "publicKey": "02c65789582ad62e527e1fcd1d267aad79864dd2e8bfbb19bce90997fe630aa3ac",
+  "address": "cosmos1jeh4d8ym99t235p22n6j4lyyf9wk56jgzjq9dk",
+  "bondId": "0b73fdcbbf7033c51c405cbcb4498ddcf1a9c6b6d17873e22db34f39e3f3ca3c"
+}
+Mnemonic saved to ~/.wire/profile/devnet.secrets.yml
+```
+
+The profile configuration file is automatically updated with the WNS account private key and bond.
+
+## Operations
+
 These commands require `wire` CLI to be configured, and a profile to be active.
 
 Get node status:
