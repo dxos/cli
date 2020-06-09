@@ -247,6 +247,7 @@ $ wire app register help
 | [Data CLI](https://github.com/dxos/cli/blob/master/packages/cli-data/README.md) |
 | [IPFS CLI](https://github.com/dxos/cli/blob/master/packages/cli-ipfs/README.md) |
 | [Machine CLI](https://github.com/dxos/cli/blob/master/packages/cli-machine/README.md) |
+| [MDNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-mdns/README.md) |
 | [Pad CLI](https://github.com/dxos/cli/blob/master/packages/cli-pad/README.md) |
 | [Peer CLI](https://github.com/dxos/cli/blob/master/packages/cli-peer/README.md) |
 | [Resource CLI](https://github.com/dxos/cli/blob/master/packages/cli-resource/README.md) |

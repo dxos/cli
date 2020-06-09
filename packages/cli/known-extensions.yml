@@ -54,3 +54,7 @@
   - machine
   describe: Machine operations.
   moduleName: "@dxos/cli-machine"
+- command:
+  - mdns
+  describe: MDNS operations.
+  moduleName: "@dxos/cli-mdns"
