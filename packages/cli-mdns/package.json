@@ -13,7 +13,7 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-dashboard": "bin/wire-dashboard.js"
+    "wire-mdns": "bin/wire-mdns.js"
   },
   "files": [
     "bin/",
