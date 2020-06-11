@@ -9,9 +9,6 @@ import { spawn } from 'child_process';
 import { unlinkSync, existsSync } from 'fs';
 import pm2 from 'pm2';
 import pify from 'pify';
-import commandExists from 'command-exists';
-
-const { sync: commandExistsSync } = commandExists;
 
 const PROCESS_PREFIX = 'dxos.';
 const STATUS_RUNNING = 'online';
@@ -104,21 +101,12 @@ const _getLogs = async (name, options = {}) => {
 
   assert(logFile, 'Unable to locate log file.');
 
-  let command = 'tail';
-  let args = [`-${lines}`];
-
-  if (commandExistsSync('pm2')) {
-    command = 'pm2';
-    args = ['logs', procName, '--lines', lines];
-    if (!follow) {
-      args.push('--nostream');
-    }
-  } else {
-    if (follow) {
-      args.push('-f');
-    }
-    args.push(logFile);
+  const command = 'tail';
+  const args = [`-${lines}`];
+  if (follow) {
+    args.push('-f');
   }
+  args.push(logFile);
 
   spawn(command, args, { stdio: 'inherit' });
 };
@@ -215,7 +203,8 @@ export class Runnable {
         interpreter,
         autorestart,
         max_memory_restart: maxMemory,
-        env
+        env,
+        logDateFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
       });
 
       await pm.dump();
