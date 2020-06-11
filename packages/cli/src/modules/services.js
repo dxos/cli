@@ -14,9 +14,10 @@ export const ServicesModule = () => ({
   command: ['service', 'services'],
   describe: 'Services.',
 
-  handler: asyncHandler(async () => {
+  handler: asyncHandler(async argv => {
+    const { json } = argv;
     const { services } = await listServices();
-    print(services);
+    print(services, { json });
   }),
 
   builder: yargs => yargs

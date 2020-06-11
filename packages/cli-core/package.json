@@ -35,7 +35,6 @@
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
     "assert": "^2.0.0",
-    "command-exists": "^1.2.9",
     "console.table": "^0.10.0",
     "download": "^7.1.0",
     "find-root": "^1.1.0",
