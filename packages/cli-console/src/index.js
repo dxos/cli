@@ -4,7 +4,7 @@
 
 import { createCLI } from '@dxos/cli-core';
 
-import { AppModule } from './modules/dashboard';
+import { AppModule } from './modules/console';
 
 import info from '../extension.yml';
 

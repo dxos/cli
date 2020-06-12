@@ -6,10 +6,10 @@ cli:
   app:
     serve:
       config: '~/.wire/remote.yml'
-  dashboard:
-    package: '@dxos/xbox-dashboard'
+  console:
+    package: '@dxos/console-server'
     channel: 'beta'
-    bin: 'dxos-dashboard'
+    bin: 'dxos-console'
   signal:
     package: '@dxos/signal'
     channel: 'beta'

@@ -1,8 +1,8 @@
 {
-  "name": "@dxos/cli-dashboard",
+  "name": "@dxos/cli-console",
   "version": "1.0.1-beta.5",
-  "description": "DxOS Dashboard CLI",
-  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-dashboard#readme",
+  "description": "DxOS Console CLI",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-console#readme",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
@@ -13,7 +13,7 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-dashboard": "bin/wire-dashboard.js"
+    "wire-console": "bin/wire-console.js"
   },
   "files": [
     "bin/",
