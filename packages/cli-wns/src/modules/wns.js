@@ -215,7 +215,7 @@ export const WNSModule = ({ config }) => ({
         .option('filename', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
-        const { variables = {}, filename } = argv;
+        const { variables = '{}', filename } = argv;
 
         const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
         assert(server, 'Invalid WNS endpoint.');
