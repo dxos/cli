@@ -13,6 +13,7 @@ const DEFAULT_LOG_FILE = '/var/log/console.log';
  */
 export const AppModule = ({ config }) => {
   const bin = config.get('cli.console.bin');
+  const defaultConfigFile = config.get('cli.console.config');
 
   const consoleRunnable = new Runnable(bin, []);
 
@@ -79,7 +80,7 @@ export const AppModule = ({ config }) => {
             logFile,
             detached: daemon,
             env: {
-              CONFIG_FILE: config,
+              CONFIG_FILE: config || process.env.CONFIG_FILE || defaultConfigFile,
               ...process.env
             }
           };
