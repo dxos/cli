@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-app",
-  "version": "1.0.1-beta.5",
+  "version": "1.0.1-beta.6",
   "description": "DxOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
   "license": "GPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^1.0.1-beta.5",
+    "@dxos/cli-core": "^1.0.1-beta.6",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^0.4.8",
     "assert": "^2.0.0",
