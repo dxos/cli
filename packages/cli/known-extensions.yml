@@ -31,6 +31,10 @@
   describe: Chess operations.
   moduleName: "@dxos/cli-chess"
 - command:
+    - console
+  describe: Console management.
+  moduleName: "@dxos/cli-console"
+- command:
   - peer
   describe: Peer operations.
   moduleName: "@dxos/cli-peer"
