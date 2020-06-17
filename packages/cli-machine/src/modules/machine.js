@@ -158,17 +158,11 @@ export const MachineModule = ({ config }) => {
          `#cloud-config
          
          runcmd:
-           - add-apt-repository -y ppa:longsleep/golang-backports
-           - apt-get install -y psmisc git wget curl gnupg python build-essential golang-1.13
-           - ln -s /usr/lib/go-1.13/bin/go /usr/local/bin
-           - ln -s /usr/lib/go-1.13/bin/gofmt /usr/local/bin
+           - apt-get install -y psmisc git wget curl gnupg python build-essential
            - add-apt-repository -y ppa:certbot/certbot
            - apt install -y python-certbot-apache
            - git clone https://${githubAccessToken}@github.com/dxos/xbox.git
            - cd xbox
-           - sed -i 's?git@github.com:wirelineio/wns.git?https://${githubAccessToken}@github.com/wirelineio/wns.git?g' .gitmodules
-           - git submodule sync
-           - git submodule update --init --recursive
            - cd ..
            - cp -r xbox /opt
            - cd /opt/xbox/scripts
