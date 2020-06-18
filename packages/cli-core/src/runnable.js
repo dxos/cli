@@ -13,7 +13,7 @@ import pify from 'pify';
 const PROCESS_PREFIX = 'dxos.';
 const STATUS_RUNNING = 'online';
 
-const MAX_MEMORY = '200M';
+const MAX_MEMORY = '500M';
 
 const pm = {
   connect: pify(pm2.connect.bind(pm2)),

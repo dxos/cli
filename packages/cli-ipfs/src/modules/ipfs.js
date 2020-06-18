@@ -50,10 +50,11 @@ export const IPFSModule = ({ config }) => ({
           default: true
         })
         .option('connect-interval', { type: 'number', default: 300 })
-        .option('connect-ipv6', { type: 'boolean', default: false }),
+        .option('connect-ipv6', { type: 'boolean', default: false })
+        .option('max-memory', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
-        const { logFile, daemon, procName, forward, connectInterval, connectIpv6, wnsBootstrap } = argv;
+        const { logFile, daemon, procName, forward, connectInterval, connectIpv6, wnsBootstrap, maxMemory } = argv;
         const forwardArgs = forward ? JSON.parse(forward).args : [];
 
         if (wnsBootstrap && connectInterval >= 0) {
@@ -75,7 +76,8 @@ export const IPFSModule = ({ config }) => ({
           name: procName,
           detached: daemon,
           singleInstance: true,
-          logFile
+          logFile,
+          maxMemory
         };
         await ipfsRunnable.run(['daemon', '--writable', ...forwardArgs], ipfsOptions);
       })

@@ -14,8 +14,6 @@ import { log } from '@dxos/debug';
 const SIGNAL_PROCESS_NAME = 'signal';
 const DEFAULT_LOG_FILE = '/var/log/signal.log';
 
-const DEFAULT_MAX_MEMORY = '1G';
-
 const WRN_TYPE = 'wrn:service';
 const SERVICE_TYPE = 'signal';
 
@@ -73,7 +71,7 @@ export const SignalModule = ({ config }) => {
           .option('log-file', { type: 'string' })
           .option('proc-name', { type: 'string', default: SIGNAL_PROCESS_NAME })
           .option('daemon')
-          .option('max-memory', { type: 'string', default: DEFAULT_MAX_MEMORY }),
+          .option('max-memory', { type: 'string' }),
 
         handler: asyncHandler(async ({
           daemon,
