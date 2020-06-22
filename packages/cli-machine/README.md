@@ -1,6 +1,6 @@
 # Machine CLI
 
-`wire machine` allows automated creation and management of xboxes in cloud hosting.
+`wire machine` allows automated creation and management of kubes in cloud hosting.
 
 ## Commands
 
