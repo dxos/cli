@@ -11,41 +11,41 @@ $ wire machine list
 {
   "machines": [
     {
-      "name": "boxc18e28d7",
+      "name": "kubec18e28d7",
       "created_at": "2020-05-26T21:25:20Z"
     },
     {
-      "name": "boxf1145cc7",
+      "name": "kubef1145cc7",
       "created_at": "2020-05-26T21:25:23Z"
     },
     {
-      "name": "box087f310c",
+      "name": "kube087f310c",
       "created_at": "2020-05-28T14:51:55Z"
     }
   ]
 }
 ```
 
-`wire machine create --name <optionalboxname>`
+`wire machine create --name <optionalkubename>`
 
 ```
 $ wire machine create
 {
   "machine": {
-    "name": "box087f310c"
+    "name": "kube087f310c"
   }
 }
 ```
 
-`wire machine publish --name <boxname>`
+`wire machine publish --name <kubename>`
 
 ``` 
-$ /home/david/projects/wireline/incubator/node_modules/.bin/wire machine publish --name box087f310c
+$ /home/david/projects/wireline/incubator/node_modules/.bin/wire machine publish --name kube087f310c
 {
   "machine_data": {
-    "name": "box087f310c",
-    "dns_name": "box087f310c.boxes.dxos.network",
-    "wrn": "boxes.dxos.network/box087f310c"
+    "name": "kube087f310c",
+    "dns_name": "kube087f310c.boxes.dxos.network",
+    "wrn": "kube.dxos.network/box087f310c"
   }
 }
 ```
@@ -61,5 +61,5 @@ services:
   machine:
     doAccessToken: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     githubAccessToken: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    dnsDomain: 'box.dxos.network'
+    dnsDomain: 'kube.dxos.network'
 ```
