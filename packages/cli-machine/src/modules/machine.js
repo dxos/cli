@@ -14,7 +14,7 @@ import DigitalOcean from 'do-wrapper';
 import { asyncHandler, print } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
-const XBOX_TYPE = 'wrn:xbox';
+const KUBE_TYPE = 'wrn:kube';
 
 /**
  *
@@ -60,7 +60,7 @@ export const MachineModule = ({ config }) => {
             print({ result }, { json: true });
           }
 
-          const boxesRaw = result.droplets.filter((droplet) => { return droplet.name.startsWith('box'); });
+          const boxesRaw = result.droplets.filter((droplet) => { return droplet.name.startsWith('kube'); });
           const machines = boxesRaw.map((droplet) => {
             return { name: droplet.name, created_at: droplet.created_at };
           });
@@ -102,7 +102,7 @@ export const MachineModule = ({ config }) => {
           const version = '1.0.0';
 
           const boxRecord = {
-            type: XBOX_TYPE,
+            type: KUBE_TYPE,
             name: wnsBoxName,
             version
           };
@@ -131,12 +131,12 @@ export const MachineModule = ({ config }) => {
 
           const { droplet: dropletInfo } = await session.droplets.getById(dropletId);
 
-          const box = {
+          const kube = {
             name: dropletInfo.name,
             ip_address: dropletInfo.networks.v4[0].ip_address
           };
 
-          print({ box }, { json: true });
+          print({ kube }, { json: true });
         })
       })
       .command({
@@ -150,7 +150,7 @@ export const MachineModule = ({ config }) => {
 
           const session = new DigitalOcean(doAccessToken);
 
-          const boxName = yargs.argv.name ? yargs.argv.name : `box${crypto.randomBytes(4).toString('hex')}`;
+          const boxName = yargs.argv.name ? yargs.argv.name : `kube${crypto.randomBytes(4).toString('hex')}`;
           const boxFullyQualifiedName = `${boxName}.${dnsDomain}`;
 
           // TODO(dboreham): There are custom cloud-init sections for things like configuring repos and installing packages that we should use.
@@ -161,21 +161,21 @@ export const MachineModule = ({ config }) => {
            - apt-get install -y psmisc git wget curl gnupg python build-essential
            - add-apt-repository -y ppa:certbot/certbot
            - apt install -y python-certbot-apache
-           - git clone https://${githubAccessToken}@github.com/dxos/xbox.git
-           - cd xbox
+           - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
+           - cd kube
            - cd ..
-           - cp -r xbox /opt
-           - cd /opt/xbox/scripts
+           - cp -r kube /opt
+           - cd /opt/kube/scripts
            - sed -i 's/run_installer "ssh" install_ssh_key/#run_installer "ssh" install_ssh_key/g' install.sh
            - sed -i 's/apt clean//g' install.sh
            - sed -i 's/apt autoclean//g' install.sh
            - sed -i 's/apt autoremove//g' install.sh
            - export HOME=/root
            - ./install.sh /opt
-           - sed -i s/xbox.local/${boxFullyQualifiedName}/g /root/.wire/remote.yml
-           - cp ./conf/systemd/xbox.service /etc/systemd/system
-           - systemctl enable xbox
-           - systemctl start xbox
+           - sed -i s/kube.local/${boxFullyQualifiedName}/g /root/.wire/remote.yml
+           - cp ./conf/systemd/kube.service /etc/systemd/system
+           - systemctl enable kube
+           - systemctl start kube
         `;
 
           const createParameters = {
