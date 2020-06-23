@@ -60,7 +60,7 @@ export const MachineModule = ({ config }) => {
             print({ result }, { json: true });
           }
 
-          const boxesRaw = result.droplets.filter((droplet) => { return droplet.name.startsWith('box'); });
+          const boxesRaw = result.droplets.filter((droplet) => { return droplet.name.startsWith('kube'); });
           const machines = boxesRaw.map((droplet) => {
             return { name: droplet.name, created_at: droplet.created_at };
           });
@@ -131,12 +131,12 @@ export const MachineModule = ({ config }) => {
 
           const { droplet: dropletInfo } = await session.droplets.getById(dropletId);
 
-          const box = {
+          const kube = {
             name: dropletInfo.name,
             ip_address: dropletInfo.networks.v4[0].ip_address
           };
 
-          print({ box }, { json: true });
+          print({ kube }, { json: true });
         })
       })
       .command({
@@ -150,7 +150,7 @@ export const MachineModule = ({ config }) => {
 
           const session = new DigitalOcean(doAccessToken);
 
-          const boxName = yargs.argv.name ? yargs.argv.name : `box${crypto.randomBytes(4).toString('hex')}`;
+          const boxName = yargs.argv.name ? yargs.argv.name : `kube${crypto.randomBytes(4).toString('hex')}`;
           const boxFullyQualifiedName = `${boxName}.${dnsDomain}`;
 
           // TODO(dboreham): There are custom cloud-init sections for things like configuring repos and installing packages that we should use.
