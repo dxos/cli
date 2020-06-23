@@ -161,7 +161,7 @@ export const MachineModule = ({ config }) => {
            - apt-get install -y psmisc git wget curl gnupg python build-essential
            - add-apt-repository -y ppa:certbot/certbot
            - apt install -y python-certbot-apache
-           - git clone https://${githubAccessToken}@github.com/dxos/xbox.git kube
+           - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
            - cd ..
            - cp -r kube /opt
