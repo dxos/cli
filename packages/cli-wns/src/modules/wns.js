@@ -19,7 +19,8 @@ import {
   Runnable,
   stopService,
   asyncHandler,
-  getActiveProfilePath
+  getActiveProfilePath,
+  parseFee
 } from '@dxos/cli-core';
 
 import { log } from '@dxos/debug';
@@ -96,6 +97,9 @@ export const WNSModule = ({ config }) => ({
     .option('address')
     .option('name')
     .option('tag')
+
+    .option('gas', { type: 'string' })
+    .option('fees', { type: 'string' })
 
     .option('background', { type: 'boolean', alias: 'daemon', default: false })
     .option('user', { default: 'root' })
@@ -253,7 +257,7 @@ export const WNSModule = ({ config }) => ({
 
           handler: asyncHandler(async argv => {
             const { txKey, filename } = argv;
-            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const { server, userKey, bondId, chainId, fees, gas } = getConnectionInfo(argv, config.get('services.wns'));
 
             assert(server, 'Invalid WNS endpoint.');
             assert(userKey, 'Invalid User Key.');
@@ -269,7 +273,8 @@ export const WNSModule = ({ config }) => ({
 
             const { record } = await yaml.read(file);
             const registry = new Registry(server, chainId);
-            const result = await registry.setRecord(userKey, record, txKey, bondId);
+            const fee = parseFee(fees, gas);
+            const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
 
             log(JSON.stringify(result, undefined, 2));
           })
@@ -537,7 +542,7 @@ export const WNSModule = ({ config }) => ({
             .option('quantity', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const { type: denom, quantity: amount } = argv;
+            const { type: denom, quantity: amount, fees, gas } = argv;
 
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
@@ -548,7 +553,8 @@ export const WNSModule = ({ config }) => ({
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const result = await registry.createBond([{ denom, amount }], privateKey);
+            const fee = parseFee(fees, gas);
+            const result = await registry.createBond([{ denom, amount }], privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
         })
