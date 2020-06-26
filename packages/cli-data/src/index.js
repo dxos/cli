@@ -6,7 +6,7 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import ram from 'random-access-memory';
 import os from 'os';
 
-import { createClient } from '@dxos/data-client';
+import { createClient } from '@dxos/client';
 import { createCLI } from '@dxos/cli-core';
 import { keyToBuffer } from '@dxos/crypto';
 import { Keyring, KeyType } from '@dxos/credentials';

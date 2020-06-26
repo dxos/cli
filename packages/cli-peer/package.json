@@ -35,8 +35,8 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^1.0.1-beta.10",
+    "@dxos/client": "^1.0.0-beta.97",
     "@dxos/crypto": "^1.0.0-beta.1",
-    "@dxos/data-client": "^1.0.0-beta.67",
     "@dxos/debug": "^1.0.0-beta.67",
     "@dxos/network-manager": "^1.0.0-beta.67",
     "@dxos/protocol-plugin-messenger": "^1.1.0-alpha.4",
@@ -52,7 +52,6 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "@dxos/data-cli": "^1.0.0-beta.67",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.0",
