@@ -44,12 +44,14 @@ const FAUCET_TOKEN = 'uwire';
 const FAUCET_AMOUNT = '1000000000';
 
 const getConnectionInfo = (argv, config) => {
-  const { server, userKey, bondId, txKey, chainId } = argv;
+  const { server, userKey, bondId, txKey, chainId, fees, gas } = argv;
 
   const result = {
     ...config,
     ...clean({ server, userKey, bondId, txKey, chainId }),
-    privateKey: txKey || userKey || config.userKey
+    privateKey: txKey || userKey || config.userKey,
+    fees,
+    gas
   };
 
   return result;
@@ -542,12 +544,12 @@ export const WNSModule = ({ config }) => ({
             .option('quantity', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const { type: denom, quantity: amount, fees, gas } = argv;
+            const { type: denom, quantity: amount, verbose } = argv;
 
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const { server, privateKey, chainId, fees, gas } = getConnectionInfo(argv, config.get('services.wns'));
             assert(server, 'Invalid WNS endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
             assert(chainId, 'Invalid WNS Chain ID.');
@@ -555,7 +557,7 @@ export const WNSModule = ({ config }) => ({
             const registry = new Registry(server, chainId);
             const fee = parseFee(fees, gas);
             const result = await registry.createBond([{ denom, amount }], privateKey, fee);
-            log(JSON.stringify(result, undefined, 2));
+            log(verbose ? JSON.stringify(result, undefined, 2) : result.data);
           })
         })
 
