@@ -258,7 +258,7 @@ export const WNSModule = ({ config }) => ({
             .option('bond-id', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const { txKey, filename } = argv;
+            const { txKey, filename, verbose } = argv;
             const { server, userKey, bondId, chainId, fees, gas } = getConnectionInfo(argv, config.get('services.wns'));
 
             assert(server, 'Invalid WNS endpoint.');
@@ -278,7 +278,7 @@ export const WNSModule = ({ config }) => ({
             const fee = parseFee(fees, gas);
             const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
 
-            log(JSON.stringify(result, undefined, 2));
+            log(verbose ? JSON.stringify(result, undefined, 2) : result.data);
           })
         })
 
