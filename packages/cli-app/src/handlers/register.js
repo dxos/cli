@@ -6,14 +6,14 @@ import assert from 'assert';
 import clean from 'lodash-clean';
 import isEqual from 'lodash.isequal';
 
-import { readFile, writeFile } from '@dxos/cli-core';
+import { readFile, writeFile, parseGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
 
 import { APP_CONFIG_FILENAME } from '../config';
 
 export const register = (config, { getAppRecord }) => async ({ verbose, name, id, namespace, 'dry-run': noop, txKey }) => {
-  const { server, userKey, bondId, chainId } = config.get('services.wns');
+  const { server, userKey, bondId, chainId, gas, fees } = config.get('services.wns');
 
   assert(server, 'Invalid WNS endpoint.');
   assert(userKey, 'Invalid WNS userKey.');
@@ -48,7 +48,8 @@ export const register = (config, { getAppRecord }) => async ({ verbose, name, id
     await writeFile(conf, APP_CONFIG_FILENAME);
   }
 
-  await registry.setRecord(userKey, record, txKey, bondId);
+  const fee = parseGasAndFees(gas, fees);
+  await registry.setRecord(userKey, record, txKey, bondId, fee);
 
   log(`Registered ${conf.name}@${conf.version}.`);
 };
