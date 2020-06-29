@@ -443,11 +443,15 @@ export const WNSModule = ({ config }) => ({
           command: ['get'],
           describe: 'Get account.',
           handler: asyncHandler(async argv => {
-            const { address } = argv;
+            let { address } = argv;
 
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
             assert(server, 'Invalid WNS endpoint.');
             assert(chainId, 'Invalid WNS Chain ID.');
+
+            if (!address && privateKey) {
+              address = new Account(Buffer.from(privateKey, 'hex')).getCosmosAddress();
+            }
 
             const registry = new Registry(server, chainId);
             const result = await registry.getAccounts([address]);
