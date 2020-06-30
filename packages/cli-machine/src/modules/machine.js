@@ -72,7 +72,9 @@ export const MachineModule = ({ config }) => {
         command: ['publish'],
         describe: 'Publish a machine.',
         builder: yargs => yargs
-          .option('name', { type: 'string' }),
+          .option('name', { type: 'string' })
+          .option('gas', { type: 'string' })
+          .option('fees', { type: 'string' }),
 
         handler: asyncHandler(async () => {
           const { verbose } = yargs.argv;

@@ -45,7 +45,9 @@ export const XBoxModule = ({ config }) => ({
         .version(false)
         .option('version', { type: 'string' })
         .option('id', { type: 'string' })
-        .option('data', { type: 'json' }),
+        .option('data', { type: 'json' })
+        .option('gas', { type: 'string' })
+        .option('fees', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
         const { verbose, id, 'dry-run': noop, data, txKey } = argv;

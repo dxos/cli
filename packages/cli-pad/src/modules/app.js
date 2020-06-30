@@ -61,8 +61,9 @@ export const AppModule = ({ config }) => {
           .option('name', { type: 'string' })
           .option('version', { type: 'string' })
           .option('id', { type: 'string' })
-          .option('namespace', { type: 'string' }),
-
+          .option('namespace', { type: 'string' })
+          .option('gas', { type: 'string' })
+          .option('fees', { type: 'string' }),
         handler: asyncHandler(register(config, { getPadRecord }))
       })
 
@@ -72,7 +73,9 @@ export const AppModule = ({ config }) => {
         describe: 'Deploy Pad to WNS.',
         builder: yargs => yargs
           .strict(false)
-          .version(false),
+          .version(false)
+          .option('gas', { type: 'string' })
+          .option('fees', { type: 'string' }),
         handler: asyncHandler(async argv => {
           log('Preparing to deploy...');
           await build(config, { getPadRecord })(argv);

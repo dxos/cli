@@ -45,7 +45,9 @@ export const ResourceModule = ({ config }) => ({
         .version(false)
         .option('id', { type: 'string', required: true })
         .option('version', { type: 'string' })
-        .option('data', { type: 'json' }),
+        .option('data', { type: 'json' })
+        .option('gas', { type: 'string' })
+        .option('fees', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
         const { verbose, id, data, 'dry-run': noop, txKey } = argv;

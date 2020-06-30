@@ -114,7 +114,9 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
         .option('name', { type: 'string' })
         .option('version', { type: 'string' })
         .option('id', { type: 'string' })
-        .option('namespace', { type: 'string' }),
+        .option('namespace', { type: 'string' })
+        .option('gas', { type: 'string' })
+        .option('fees', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
         const { verbose, name, id, version, namespace, 'dry-run': noop, txKey } = argv;
@@ -247,7 +249,9 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
         .command({
           command: ['register'],
           describe: 'Register a bot factory.',
-          builder: yargs => yargs,
+          builder: yargs => yargs
+            .option('gas', { type: 'string' })
+            .option('fees', { type: 'string' }),
 
           handler: asyncHandler(async () => {
             const { server, userKey, bondId, chainId, gas, fees } = config.get('services.wns');
