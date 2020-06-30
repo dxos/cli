@@ -7,7 +7,7 @@ import clean from 'lodash-clean';
 import get from 'lodash.get';
 import semverInc from 'semver/functions/inc';
 
-import { asyncHandler, parseGasAndFees } from '@dxos/cli-core';
+import { asyncHandler, getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
 
@@ -51,7 +51,8 @@ export const ResourceModule = ({ config }) => ({
 
       handler: asyncHandler(async argv => {
         const { verbose, id, data, 'dry-run': noop, txKey } = argv;
-        const { server, userKey, bondId, chainId, gas, fees } = config.get('services.wns');
+        const wnsConfig = config.get('services.wns');
+        const { server, userKey, bondId, chainId } = wnsConfig;
 
         assert(server, 'Invalid WNS endpoint.');
         assert(userKey, 'Invalid WNS userKey.');
@@ -82,7 +83,7 @@ export const ResourceModule = ({ config }) => ({
           return;
         }
 
-        const fee = parseGasAndFees(gas, fees);
+        const fee = getGasAndFees(argv, wnsConfig);
         await registry.setRecord(userKey, record, txKey, bondId, fee);
       })
     })

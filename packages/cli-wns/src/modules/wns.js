@@ -50,8 +50,8 @@ const getConnectionInfo = (argv, config) => {
     ...config,
     ...clean({ server, userKey, bondId, txKey, chainId }),
     privateKey: txKey || userKey || config.userKey,
-    fees,
-    gas
+    gas: gas || config.gas,
+    fees: fees || config.fees
   };
 
   return result;

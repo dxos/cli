@@ -14,3 +14,10 @@ export const parseGasAndFees = (gas, fees = '') => {
 
   return { amount, gas };
 };
+
+export const getGasAndFees = (argv, config = {}) => {
+  return parseGasAndFees(
+    argv.gas || config.gas,
+    argv.fees || config.fees
+  );
+};

@@ -11,7 +11,7 @@ import crypto from 'crypto';
 
 import DigitalOcean from 'do-wrapper';
 
-import { asyncHandler, print, parseGasAndFees } from '@dxos/cli-core';
+import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
 const KUBE_TYPE = 'wrn:kube';
@@ -76,7 +76,7 @@ export const MachineModule = ({ config }) => {
           .option('gas', { type: 'string' })
           .option('fees', { type: 'string' }),
 
-        handler: asyncHandler(async () => {
+        handler: asyncHandler(async (argv) => {
           const { verbose } = yargs.argv;
 
           const boxName = yargs.argv.name;
@@ -98,7 +98,8 @@ export const MachineModule = ({ config }) => {
             print({ dnsResult }, { json: true });
           }
 
-          const { server, userKey, bondId, chainId, gas, fees } = config.get('services.wns');
+          const wnsConfig = config.get('services.wns');
+          const { server, userKey, bondId, chainId } = wnsConfig;
           const registry = new Registry(server, chainId);
 
           const version = '1.0.0';
@@ -109,7 +110,7 @@ export const MachineModule = ({ config }) => {
             version
           };
 
-          const fee = parseGasAndFees(gas, fees);
+          const fee = getGasAndFees(argv, wnsConfig);
           await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
 
           const machineData = {
