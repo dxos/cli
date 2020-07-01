@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-data",
-  "version": "1.0.1-beta.11",
+  "version": "1.0.1-beta.12",
   "description": "DxOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
   "license": "GPL-3.0",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^1.0.1-beta.11",
+    "@dxos/cli-core": "^1.0.1-beta.12",
     "@dxos/client": "^1.0.0-beta.97",
     "@dxos/credentials": "^1.0.1-beta.4",
     "@dxos/crypto": "^1.0.0-beta.1",
