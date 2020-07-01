@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-core",
-  "version": "1.0.1-beta.11",
+  "version": "1.0.1-beta.12",
   "description": "CLI Core",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
   "license": "GPL-3.0",
