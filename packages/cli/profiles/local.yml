@@ -25,9 +25,11 @@ cli:
 services:
   wns:
     server: 'http://127.0.0.1:9473/api'
-    userKey: b1e4e95dd3e3294f15869b56697b5e3bdcaa24d9d0af1be9ee57d5a59457843a
-    bondId: 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3
-    chainId: wireline
+    userKey: 'b1e4e95dd3e3294f15869b56697b5e3bdcaa24d9d0af1be9ee57d5a59457843a'
+    bondId: '8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3'
+    chainId: 'localnet'
+    gas: '200000'
+    fees: '200000uwire'
   ipfs:
     server: '/ip4/127.0.0.1/tcp/5001'
     gateway: 'http://127.0.0.1:8888/ipfs/'
