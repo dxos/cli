@@ -19,6 +19,7 @@ export const EXTENSION_CONFIG_FILENAME = 'extension.yml';
 const COMMANDS_PERMIT_NO_PROFILE = [
   'help',
   'version',
+  'keys',
   'profile',
   'services'
 ];
