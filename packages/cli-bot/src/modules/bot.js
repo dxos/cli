@@ -267,7 +267,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               .option('proc-name', { type: 'string', default: BOT_FACTORY_PROCESS_NAME }),
 
             handler: asyncHandler(async argv => {
-              const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset } = argv;
+              const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset, verbose } = argv;
 
               let { topic, secretKey } = argv;
               if (!topic || !secretKey) {
@@ -296,6 +296,10 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
                 singleInstance,
                 logFile
               };
+
+              if (verbose && detached) {
+                log(topic);
+              }
 
               await botFactoryRunnable.run([], options);
             })
