@@ -377,6 +377,30 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
             }
           })
         })
+
+        .command({
+          command: ['reset'],
+          describe: 'Reset bot factory.',
+          builder: yargs => yargs
+            .option('topic', { alias: 't', type: 'string' }),
+
+          handler: asyncHandler(async argv => {
+            const { topic } = argv;
+
+            const { interactive } = cliState;
+
+            const client = await getClient();
+            const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
+            await botFactoryClient.sendResetRequest();
+
+            if (interactive) {
+              await botFactoryClient.close();
+            } else {
+              // Workaround for segfaults from node-wrtc.
+              process.exit(0);
+            }
+          })
+        })
     })
 
     .command({
