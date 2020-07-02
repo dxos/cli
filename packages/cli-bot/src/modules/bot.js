@@ -13,7 +13,7 @@ import isEqual from 'lodash.isequal';
 import { load } from 'js-yaml';
 
 import { BotFactoryClient } from '@dxos/botkit-client';
-import { Runnable, sanitizeEnv, stopService, asyncHandler, readFile, writeFile } from '@dxos/cli-core';
+import { Runnable, sanitizeEnv, stopService, asyncHandler, readFile, writeFile, print } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
@@ -73,17 +73,69 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
   builder: yargs => yargs
     .command({
       command: ['spawn'],
-      describe: 'Spawn bot instance.',
+      describe: 'Spawn new bot instance.',
       builder: yargs => yargs
         .option('topic', { alias: 't', type: 'string' })
-        .option('bot-id', { type: 'string' })
+        .option('bot-id', { type: 'string' }),
+
+      handler: asyncHandler(async argv => {
+        const { botId, topic, json } = argv;
+        const { interactive } = cliState;
+
+        const client = await getClient();
+        const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
+        const botUID = await botFactoryClient.sendSpawnRequest(botId);
+
+        print({ botUID }, { json });
+
+        if (interactive) {
+          await botFactoryClient.close();
+        } else {
+          // Workaround for segfaults from node-wrtc.
+          process.exit(0);
+        }
+      })
+    })
+
+    .command({
+      command: ['stop', 'start', 'restart', 'kill'],
+      describe: 'Stop bot.',
+      builder: yargs => yargs
+        .option('topic', { alias: 't', type: 'string' })
+        .option('bot-uid', { type: 'string' }),
+
+      handler: asyncHandler(async argv => {
+        const { 'bot-uid': botUID, topic } = argv;
+        const [, command] = argv._;
+
+        const { interactive } = cliState;
+
+        const client = await getClient();
+        const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
+        await botFactoryClient.sendBotManagementRequest(botUID, command);
+
+        if (interactive) {
+          await botFactoryClient.close();
+        } else {
+          // Workaround for segfaults from node-wrtc.
+          process.exit(0);
+        }
+      })
+    })
+
+    .command({
+      command: ['invite'],
+      describe: 'Invite bot to a party.',
+      builder: yargs => yargs
+        .option('topic', { alias: 't', type: 'string' })
+        .option('bot-uid', { type: 'string' })
         .option('spec', { alias: 's', type: 'json' }),
 
       handler: asyncHandler(async argv => {
-        const { topic, botId, spec } = argv;
+        const { topic, 'bot-uid': botUID, spec } = argv;
 
         assert(topic, 'Invalid topic.');
-        assert(botId, 'Invalid Bot ID.');
+        assert(botUID, 'Invalid Bot UID.');
 
         const botSpec = spec ? JSON.parse(spec) : {};
 
@@ -99,8 +151,9 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
         }
 
         const invitationObject = invitation.toQueryParameters();
-        log(`Spawning bot ${botId} to join '${party}' party with invitation: ${JSON.stringify(invitationObject)}.`);
-        await botFactoryClient.sendSpawnRequest(botId, party, botSpec, invitationObject);
+        log(`Inviting bot ${botUID} to join '${party}' party with invitation: ${JSON.stringify(invitationObject)}.`);
+        await botFactoryClient.sendInvitationRequest(botUID, party, botSpec, invitationObject);
+
         await botFactoryClient.close();
       })
     })
@@ -202,6 +255,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
           describe: 'Run a bot factory.',
           builder: yargs => yargs
             .option('local-dev', { alias: 'd', type: 'boolean', default: false, description: 'Local development mode' })
+            .option('reset', { type: 'boolean', default: false, description: 'Remove previously spawned bots' })
             .option('topic', { alias: 't', type: 'string' })
             .option('secret-key', { alias: 's', type: 'string' })
             .option('single-instance', { type: 'boolean', default: false })
@@ -210,7 +264,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
             .option('proc-name', { type: 'string', default: BOT_FACTORY_PROCESS_NAME }),
 
           handler: asyncHandler(async argv => {
-            const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName } = argv;
+            const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset } = argv;
 
             let { topic, secretKey } = argv;
             if (!topic || !secretKey) {
@@ -226,6 +280,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
               ).join(','),
               NODE_OPTIONS: '',
               ...mapToKeyValues(load(envmap), config.values),
+              WIRE_BOT_RESET: reset,
               WIRE_BOT_TOPIC: topic,
               WIRE_BOT_SECRET_KEY: secretKey,
               WIRE_BOT_LOCAL_DEV: localDev
@@ -313,6 +368,30 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => ({
             const status = await botFactoryClient.getStatus();
 
             log(JSON.stringify(status));
+
+            if (interactive) {
+              await botFactoryClient.close();
+            } else {
+              // Workaround for segfaults from node-wrtc.
+              process.exit(0);
+            }
+          })
+        })
+
+        .command({
+          command: ['reset'],
+          describe: 'Reset bot factory.',
+          builder: yargs => yargs
+            .option('topic', { alias: 't', type: 'string' }),
+
+          handler: asyncHandler(async argv => {
+            const { topic } = argv;
+
+            const { interactive } = cliState;
+
+            const client = await getClient();
+            const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
+            await botFactoryClient.sendResetRequest();
 
             if (interactive) {
               await botFactoryClient.close();

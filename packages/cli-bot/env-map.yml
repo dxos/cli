@@ -22,6 +22,9 @@ WIRE_IPFS_GATEWAY:
 WIRE_IPC_PORT: 
   path: bot.ipc.port
   type: number
+WIRE_BOT_RESET:
+  path: bot.reset
+  type: boolean
 WIRE_BOT_SPEC:
   path: bot.botSpec
   type: json
