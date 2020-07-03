@@ -57,6 +57,16 @@ const getConnectionInfo = (argv, config) => {
   return result;
 };
 
+const readJSONFile = (filePath) => {
+  assert(filePath, 'Invalid file path.');
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`File not found: ${filePath}`);
+  }
+
+  return JSON.parse(fs.readFileSync(filePath));
+};
+
 /**
  * Prompt the user to enter a valid URL.
  * @param {string} name - input variable name
@@ -752,28 +762,17 @@ export const WNSModule = ({ config }) => ({
       command: ['migrate'],
       describe: 'WNS chain migration tools.',
       builder: yargs => yargs
+        .option('from-file', { type: 'string' })
+        .option('to-file', { type: 'string' })
+
         .command({
           command: ['accounts'],
           describe: 'Migrate accounts from exported file to new genesis.json.',
-          builder: yargs => yargs
-            .option('from-file', { type: 'string' })
-            .option('to-file', { type: 'string' }),
-
           handler: asyncHandler(async argv => {
             const { fromFile, toFile } = argv;
 
-            assert(fromFile, 'Invalid from-file.');
-            assert(toFile, 'Invalid to-file.');
-
-            if (!fs.existsSync(fromFile)) {
-              log(`File not found: ${fromFile}`);
-              return;
-            }
-
-            if (!fs.existsSync(toFile)) {
-              log(`File not found: ${toFile}`);
-              return;
-            }
+            const from = readJSONFile(fromFile);
+            const to = readJSONFile(toFile);
 
             const stats = {
               countFromFileAccounts: 0,
@@ -783,10 +782,8 @@ export const WNSModule = ({ config }) => ({
               countMigratedAccounts: 0
             };
 
-            const from = JSON.parse(fs.readFileSync(fromFile));
             stats.countFromFileAccounts = from.app_state.accounts.length;
 
-            const to = JSON.parse(fs.readFileSync(toFile));
             const existingAccounts = {};
             to.app_state.accounts.forEach(account => {
               existingAccounts[account.address] = true;
@@ -807,6 +804,28 @@ export const WNSModule = ({ config }) => ({
               to.app_state.accounts.push(account);
               stats.countMigratedAccounts++;
             });
+
+            fs.writeFileSync(toFile, JSON.stringify(to, undefined, 2));
+
+            log(JSON.stringify(stats, null, 2));
+          })
+        })
+
+        .command({
+          command: ['bonds'],
+          describe: 'Migrate bonds from exported file to new genesis.json.',
+          handler: asyncHandler(async argv => {
+            const { fromFile, toFile } = argv;
+
+            const from = readJSONFile(fromFile);
+            const to = readJSONFile(toFile);
+
+            const stats = {
+              countMigratedBonds: from.app_state.bond.bonds.length
+            };
+
+            // Copy over all bonds.
+            to.app_state.bond.bonds = from.app_state.bond.bonds;
 
             fs.writeFileSync(toFile, JSON.stringify(to, undefined, 2));
 
