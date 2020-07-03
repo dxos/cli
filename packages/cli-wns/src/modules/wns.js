@@ -832,5 +832,73 @@ export const WNSModule = ({ config }) => ({
             log(JSON.stringify(stats, null, 2));
           })
         })
+
+        .command({
+          command: ['gentx-accounts'],
+          describe: 'Update genesis.json with accounts from gentx folder, with initial stake.',
+          builder: yargs => yargs
+            .option('gentx-folder', { type: 'string' })
+            .option('amount', { type: 'string' }),
+
+          handler: asyncHandler(async argv => {
+            const { gentxFolder, toFile, amount } = argv;
+
+            assert(gentxFolder, 'Invalid gentx folder path.');
+            assert(amount, 'Invalid amount.');
+
+            const to = readJSONFile(toFile);
+
+            const stats = {
+              countSkippedExistingAccounts: 0,
+              countNewAccounts: 0
+            };
+
+            const gentxAccounts = [];
+
+            const gentxFiles = fs.readdirSync(gentxFolder);
+            gentxFiles.forEach(gentxFile => {
+              const gentxFilePath = path.join(gentxFolder, gentxFile);
+              const gentx = JSON.parse(fs.readFileSync(gentxFilePath));
+              gentxAccounts.push(gentx.value.msg[0].value.delegator_address);
+            });
+
+            const existingAccounts = {};
+            to.app_state.accounts.forEach(account => {
+              existingAccounts[account.address] = true;
+            });
+
+            gentxAccounts.forEach(account => {
+              if (existingAccounts[account]) {
+                return stats.countSkippedExistingAccounts++;
+              }
+
+              const newAccount = {
+                address: account,
+                coins: [
+                  {
+                    denom: 'uwire',
+                    amount
+                  }
+                ],
+                sequence_number: '0',
+                account_number: '0',
+                original_vesting: [],
+                delegated_free: [],
+                delegated_vesting: [],
+                start_time: '0',
+                end_time: '0',
+                module_name: '',
+                module_permissions: ['']
+              };
+
+              to.app_state.accounts.push(newAccount);
+              stats.countNewAccounts++;
+            });
+
+            fs.writeFileSync(toFile, JSON.stringify(to, undefined, 2));
+
+            log(JSON.stringify(stats, null, 2));
+          })
+        })
     })
 });
