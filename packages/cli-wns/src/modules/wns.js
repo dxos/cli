@@ -747,4 +747,71 @@ export const WNSModule = ({ config }) => ({
             })
         })
     })
+
+    .command({
+      command: ['migrate'],
+      describe: 'WNS chain migration tools.',
+      builder: yargs => yargs
+        .command({
+          command: ['accounts'],
+          describe: 'Migrate accounts from exported file to new genesis.json.',
+          builder: yargs => yargs
+            .option('from-file', { type: 'string' })
+            .option('to-file', { type: 'string' }),
+
+          handler: asyncHandler(async argv => {
+            const { fromFile, toFile } = argv;
+
+            assert(fromFile, 'Invalid from-file.');
+            assert(toFile, 'Invalid to-file.');
+
+            if (!fs.existsSync(fromFile)) {
+              log(`File not found: ${fromFile}`);
+              return;
+            }
+
+            if (!fs.existsSync(toFile)) {
+              log(`File not found: ${toFile}`);
+              return;
+            }
+
+            const stats = {
+              countFromFileAccounts: 0,
+              countSkippedModuleAccounts: 0,
+              skippedModuleAccounts: [],
+              countSkippedExistingAccounts: 0,
+              countMigratedAccounts: 0
+            };
+
+            const from = JSON.parse(fs.readFileSync(fromFile));
+            stats.countFromFileAccounts = from.app_state.accounts.length;
+
+            const to = JSON.parse(fs.readFileSync(toFile));
+            const existingAccounts = {};
+            to.app_state.accounts.forEach(account => {
+              existingAccounts[account.address] = true;
+            });
+
+            from.app_state.accounts.forEach(account => {
+              if (account.module_name) {
+                stats.skippedModuleAccounts.push(account.module_name);
+                return stats.countSkippedModuleAccounts++;
+              }
+
+              if (existingAccounts[account.address]) {
+                return stats.countSkippedExistingAccounts++;
+              }
+
+              account.account_number = '0';
+              account.sequence_number = '0';
+              to.app_state.accounts.push(account);
+              stats.countMigratedAccounts++;
+            });
+
+            fs.writeFileSync(toFile, JSON.stringify(to, undefined, 2));
+
+            log(JSON.stringify(stats, null, 2));
+          })
+        })
+    })
 });
