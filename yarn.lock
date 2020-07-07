@@ -942,39 +942,40 @@
   resolved "https://registry.yarnpkg.com/@dxos/async/-/async-1.0.0-beta.2.tgz#063ce87151682953864c193feb4b2281383ac18c"
   integrity sha512-hBP3Nla/QD8W82CDJv/SZDyn2LMXiZkljMpUGgqL9Pbv04DEY78bsCg5SBqDbaL4zudwIs/u41Y45SOjjdQWcQ==
 
-"@dxos/botkit-client@^1.0.0-beta.118":
-  version "1.0.0-beta.118"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-1.0.0-beta.118.tgz#855c31b1991ffee1711cdb339b18b403226561eb"
-  integrity sha512-5DZuodctOOvg1KU3c48np1i8IER4i3yrGH+WVVzdsxISSiChBAZEZ/GMmKMM3QvDJvminT/X2vdk0vcnuH6HzQ==
+"@dxos/botkit-client@^1.0.0-beta.120":
+  version "1.0.0-beta.120"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-1.0.0-beta.120.tgz#785ff637e34f22d6fde34b0207bfec9bcc82f627"
+  integrity sha512-D9T8m8Wn0lWvSmDihxzwLUJq3rkrH1mW7zmqGtgaYAKLihXvWI4PSCQe2e6CmFQi8dXwlCvEVA6YFkjW9YEoVg==
   dependencies:
     "@dxos/async" "^1.0.0-beta.1"
-    "@dxos/client" "^1.0.0-beta.118"
+    "@dxos/client" "^1.0.0-beta.120"
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/debug" "^1.0.0-beta.73"
     "@dxos/network-manager" "^1.0.0-beta.94"
-    "@dxos/protocol-plugin-bot" "^1.1.0-beta.11"
+    "@dxos/protocol-plugin-bot" "^1.1.0-beta.12"
     assert "^2.0.0"
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
 
-"@dxos/botkit@^1.0.0-beta.118":
-  version "1.0.0-beta.118"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit/-/botkit-1.0.0-beta.118.tgz#332989fde612f063fc574d6682fb76773dce08bb"
-  integrity sha512-PlK7RTE6x/LG2aUFnoVhjuTXTERqZhoTxHT/8NcmKE7jNM1nDZi423TUF8XKloGupdGGVToDNeGZBuU/wNB3qg==
+"@dxos/botkit@^1.0.0-beta.120":
+  version "1.0.0-beta.120"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit/-/botkit-1.0.0-beta.120.tgz#a1db2a20a1ebfcf50534c0fdb1e60bab0652778f"
+  integrity sha512-LG3XCpRnt12AcwMvyPSJnU6MRht7KjQ6ust5wIBVtkuZtWioejPIgb8DhSDrbAnohnhi+XMRXAahpYra79EZ6g==
   dependencies:
     "@dxos/async" "^1.0.0-beta.2"
-    "@dxos/client" "^1.0.0-beta.118"
+    "@dxos/client" "^1.0.0-beta.120"
     "@dxos/codec-protobuf" "^1.1.0-beta.7"
     "@dxos/config" "^1.0.0-beta.73"
     "@dxos/credentials" "^1.0.1-beta.4"
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/network-manager" "^1.0.0-beta.94"
     "@dxos/party-manager" "^1.0.1-beta.21"
-    "@dxos/protocol-plugin-bot" "^1.1.0-beta.11"
+    "@dxos/protocol-plugin-bot" "^1.1.0-beta.12"
     "@dxos/protocol-plugin-messenger" "^1.1.0-alpha.4"
     "@dxos/random-access-multi-storage" "^1.1.0-beta.2"
     "@wirelineio/registry-client" "^0.4.8"
     assert "^2.0.0"
+    chance "^1.1.6"
     cpy-cli "2.0.0"
     debug "^4.1.1"
     download "^7.1.0"
@@ -1003,10 +1004,10 @@
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
-"@dxos/client@^1.0.0-beta.118":
-  version "1.0.0-beta.118"
-  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-1.0.0-beta.118.tgz#c2a13f80130d167924939c936718930654471d1e"
-  integrity sha512-Dtr1jnGXUE6J+8OeSv+newa7DUmWG661MT2Jxw9C6dikGysMJydYacaur11KgHzW/N6XxGYRJeHXLjgTzdYuYQ==
+"@dxos/client@^1.0.0-beta.120":
+  version "1.0.0-beta.120"
+  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-1.0.0-beta.120.tgz#a6a1832774d8f87b2569699807aa347745d0782c"
+  integrity sha512-rhohZwbYX7SGf0ssSc4ekbYndG9KUGLb5y89lGIlTsGhq9xLa2mjvRM5vlXHeXcxOzEnpiHrRz+bkA5otowdeA==
   dependencies:
     "@babel/runtime" "^7.9.6"
     "@dxos/async" "^1.0.0-beta.1"
@@ -1453,15 +1454,15 @@
     json-stable-stringify "^1.0.1"
     mississippi "^4.0.0"
 
-"@dxos/protocol-plugin-bot@^1.1.0-beta.11":
-  version "1.1.0-beta.11"
-  resolved "https://registry.yarnpkg.com/@dxos/protocol-plugin-bot/-/protocol-plugin-bot-1.1.0-beta.11.tgz#b7e0bd1478f6a77ecc553736397114b881cf6e5c"
-  integrity sha512-9VJITVhvGOoKOJMEr4exEIyObEao2jo0hes390Q8drS5lDWJrPfzLoMJyZmyl2hHdxPh3QR5vclTvWB7aQekJA==
+"@dxos/protocol-plugin-bot@^1.1.0-beta.12":
+  version "1.1.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@dxos/protocol-plugin-bot/-/protocol-plugin-bot-1.1.0-beta.12.tgz#40e6dde90be28b133937269eed9a370863b30fbd"
+  integrity sha512-E5qomlrCZ7xnNL51G6s76L1nNYk83Kj6GxhBjgWB0qhVuU8gBQpkEWEdKJR3KdAU27DUp9qa4VfsRNg5cVlbyw==
   dependencies:
     "@dxos/broadcast" "^1.0.0-beta.6"
     "@dxos/codec-protobuf" "^1.1.0-beta.7"
     "@dxos/crypto" "^1.0.0-beta.1"
-    "@dxos/protocol" "^1.1.0-beta.11"
+    "@dxos/protocol" "^1.1.0-beta.12"
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
@@ -1532,6 +1533,24 @@
   version "1.1.0-beta.11"
   resolved "https://registry.yarnpkg.com/@dxos/protocol/-/protocol-1.1.0-beta.11.tgz#0c4c79da03b2937a12634d0781f1b6417bb6bc1e"
   integrity sha512-PIf+h5V9fsS10MJiEZfWiYC/mbbngXtD/W4xgZ60oWu3mReMjiLx70GlNWEMB3L+Mk8js1BpEFXy7yk0O7OiQA==
+  dependencies:
+    "@dxos/codec-protobuf" "^1.1.0-beta.9"
+    assert "^2.0.0"
+    buffer-json-encoding "^1.0.2"
+    debug "^4.1.1"
+    end-of-stream "^1.4.1"
+    humanhash "^1.0.4"
+    hypercore-protocol "^6.11.1"
+    nanoerror "^1.1.0"
+    nanomessage "^5.2.5"
+    nanoresource-promise "^1.2.0"
+    signal-promise "^1.0.3"
+    source-map-support "^0.5.12"
+
+"@dxos/protocol@^1.1.0-beta.12":
+  version "1.1.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@dxos/protocol/-/protocol-1.1.0-beta.12.tgz#a03aa297fb31597e48aa55ad2e1369ea362a5eec"
+  integrity sha512-IqAie47zwgNSQZmDzQ4A1IsxiCjtFq+Qc2hLSa1I2NqVzCOnNR6BrVBj3spX5CnE+h8zRoevKa9kqoINYWTuqA==
   dependencies:
     "@dxos/codec-protobuf" "^1.1.0-beta.9"
     assert "^2.0.0"
@@ -4604,7 +4623,7 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.1, chalk@^2.4.1, chalk@^2.4
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chance@^1.1.3:
+chance@^1.1.3, chance@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/chance/-/chance-1.1.6.tgz#967a0a129e0f342f7c65cd5d20f5ae870a26b8af"
   integrity sha512-DXLzaGjasDWbvlFAJyQBIwlzdQZuPdz4of9TTTxmHTjja88ZU/vBwUwxxjalSt43zWTPrhiJT0z0N4bZqfZS9w==
