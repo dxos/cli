@@ -10,8 +10,6 @@ import { createKeyPair, keyToString } from '@dxos/crypto';
 
 export const SERVICE_CONFIG_FILENAME = 'service.yml';
 
-export const BOT_CONFIG_FILENAME = 'bot.yml';
-
 /**
  * @returns {Object}
  */

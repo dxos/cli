@@ -12,6 +12,7 @@ import clean from 'lodash-clean';
 import isEqual from 'lodash.isequal';
 import { load } from 'js-yaml';
 
+import { BOT_CONFIG_FILENAME } from '@dxos/botkit';
 import { BotFactoryClient } from '@dxos/botkit-client';
 import { Runnable, sanitizeEnv, stopService, asyncHandler, readFile, writeFile, print } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
@@ -21,7 +22,6 @@ import { Registry } from '@wirelineio/registry-client';
 import envmap from '../../env-map.yml';
 
 import {
-  BOT_CONFIG_FILENAME,
   SERVICE_CONFIG_FILENAME,
   getBotFactoryServiceConfig
 } from '../config';
