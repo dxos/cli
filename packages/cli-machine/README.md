@@ -40,7 +40,7 @@ $ wire machine create
 `wire machine publish --name <kubename>`
 
 ``` 
-$ /home/david/projects/wireline/incubator/node_modules/.bin/wire machine publish --name kube087f310c
+$ /home/david/projects/dxos/incubator/node_modules/.bin/wire machine publish --name kube087f310c
 {
   "machine_data": {
     "name": "kube087f310c",

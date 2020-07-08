@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS.
+// Copyright 2020 DXOS.org
 //
 
 import { asyncHandler } from '@dxos/cli-core';
