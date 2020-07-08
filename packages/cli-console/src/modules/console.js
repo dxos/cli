@@ -1,6 +1,7 @@
 //
-// Copyright 2020 DxOS.
+// Copyright 2020 DXOS.org
 //
+
 import { spawn } from 'child_process';
 import { Runnable, stopService, asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';

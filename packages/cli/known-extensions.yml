@@ -3,7 +3,7 @@
   - faucet
   - keys
   describe: WNS management.
-  moduleName: "@wirelineio/cli-wns"
+  moduleName: "@dxos/cli-wns"
 - command:
   - party
   describe: Party management.

@@ -1,7 +1,7 @@
 {
-  "name": "@wirelineio/cli-wns",
+  "name": "@dxos/cli-wns",
   "version": "1.0.1-beta.16",
-  "description": "Wireline WNS CLI",
+  "description": "WNS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-wns#readme",
   "license": "GPL-3.0",
   "bugs": {

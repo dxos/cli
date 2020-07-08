@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS.
+// Copyright 2020 DXOS.org
 //
 
 // TODO(burdon): Move code out of index.js
