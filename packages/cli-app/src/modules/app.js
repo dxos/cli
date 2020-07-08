@@ -6,7 +6,7 @@ import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 import { APP_TYPE, DEFAULT_PORT, BASE_URL } from '../config';
-import { build, publish, register, query, serve } from '../handlers';
+import { build, configuration, publish, register, query, serve } from '../handlers';
 
 /**
  * @param {object} config
@@ -122,6 +122,22 @@ export const AppModule = ({ config }) => {
             builder: yargs => yargs
               .option('proc-name', { type: 'string' }),
             handler: asyncHandler(serve.stop(config))
+          })
+      })
+
+      // Configuration.
+      .command({
+        command: ['config'],
+        describe: 'Applications configuration',
+        builder: yargs => yargs
+        // update.
+          .command({
+            command: ['update'],
+            describe: 'Update applications configuration.',
+            builder: yargs => yargs.version(false)
+              .option('conf', { type: 'json' }),
+
+            handler: asyncHandler(configuration.update(config))
           })
       })
   });
