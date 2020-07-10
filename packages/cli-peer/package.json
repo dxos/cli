@@ -35,7 +35,6 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^1.0.1-beta.19",
-    "@dxos/client": "^1.0.0-beta.97",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
     "@dxos/network-manager": "^1.0.0-beta.67",
