@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-xbox",
-  "version": "1.0.1-beta.18",
+  "version": "1.0.1-beta.19",
   "description": "DxOS XBOX CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-xbox#readme",
   "license": "GPL-3.0",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^1.0.1-beta.18",
+    "@dxos/cli-core": "^1.0.1-beta.19",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^0.4.8",
     "assert": "^2.0.0",
