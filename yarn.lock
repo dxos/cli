@@ -942,13 +942,13 @@
   resolved "https://registry.yarnpkg.com/@dxos/async/-/async-1.0.0-beta.2.tgz#063ce87151682953864c193feb4b2281383ac18c"
   integrity sha512-hBP3Nla/QD8W82CDJv/SZDyn2LMXiZkljMpUGgqL9Pbv04DEY78bsCg5SBqDbaL4zudwIs/u41Y45SOjjdQWcQ==
 
-"@dxos/botkit-client@^1.0.0-beta.121":
-  version "1.0.0-beta.121"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-1.0.0-beta.121.tgz#fc810ab02b34672ee89738ae0a6119382ced479f"
-  integrity sha512-NgNy/xlFqGQxeHyBI3H1Hxft5Qwp+KZse3Ic9cZvR7zGDeb/Ycwc5B53Ot6L5JAt9Nr8tAKwTfFp97S6Por8zw==
+"@dxos/botkit-client@^1.0.0-beta.131":
+  version "1.0.0-beta.131"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-1.0.0-beta.131.tgz#781648610b74b15faa0878de45bdbb5bef576ed7"
+  integrity sha512-tBtggs7LW9/veVvMmO+VWpMbcDH87f4bRl/pZfRQ6+T8XmSgoIJ1Is1agSN/f1vv9TCcYY/++KY99pKiD2tRbg==
   dependencies:
     "@dxos/async" "^1.0.0-beta.1"
-    "@dxos/client" "^1.0.0-beta.121"
+    "@dxos/client" "^1.0.0-beta.131"
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/debug" "^1.0.0-beta.73"
     "@dxos/network-manager" "^1.0.0-beta.94"
@@ -957,13 +957,13 @@
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
 
-"@dxos/botkit@^1.0.0-beta.121":
-  version "1.0.0-beta.121"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit/-/botkit-1.0.0-beta.121.tgz#9fdfdb859cecf7f9bb9c2f20b15870818a844182"
-  integrity sha512-9HjS59aHXwnsSOhXI5xzOZPYkiL2fBFncA7yTnRrjhehEb2qE/UirgJxTx8sKd/IyCoQbaIUB6UmcG4vmRbb1w==
+"@dxos/botkit@^1.0.0-beta.131":
+  version "1.0.0-beta.131"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit/-/botkit-1.0.0-beta.131.tgz#48539c489298302a52c98087ca02ce4e6ef89747"
+  integrity sha512-OEKEuPDuv4/cV9mTUVXXi8lNxdY2LsU5iioZquRp6yDGnEzj5Yu82Hr+nq0aHqi/8xsEwvB7uE0Xue2kD9K/lw==
   dependencies:
     "@dxos/async" "^1.0.0-beta.2"
-    "@dxos/client" "^1.0.0-beta.121"
+    "@dxos/client" "^1.0.0-beta.131"
     "@dxos/codec-protobuf" "^1.1.0-beta.7"
     "@dxos/config" "^1.0.0-beta.73"
     "@dxos/credentials" "^1.0.1-beta.4"
@@ -1004,10 +1004,10 @@
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
-"@dxos/client@^1.0.0-beta.121":
-  version "1.0.0-beta.121"
-  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-1.0.0-beta.121.tgz#0d7edc2266044df9e7fd581ae96ab7875b450ce8"
-  integrity sha512-/CsNEvvX0+xoCpRK9IoMfrzqrN21i0Ya+0820rTl7MkqXJN1igEtec4QdMeh7Ax0MEUCj8fiFw+eT2wjnhRRcA==
+"@dxos/client@^1.0.0-beta.131":
+  version "1.0.0-beta.131"
+  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-1.0.0-beta.131.tgz#5dba0dfb3540e8b8ec4bc07a7fffd577ff48d236"
+  integrity sha512-SvYoTzDMLQu5AdseZvWc67rkmQFkLwaePyNN6DvXLvO+Ca22nn7K/4WtXx/l8TG+V3qpersPzhmPO1b7diP75g==
   dependencies:
     "@babel/runtime" "^7.9.6"
     "@dxos/async" "^1.0.0-beta.1"
