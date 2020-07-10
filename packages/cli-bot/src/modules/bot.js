@@ -5,6 +5,7 @@
 import assert from 'assert';
 import fs from 'fs-extra';
 import path from 'path';
+import get from 'lodash.get';
 import yaml from 'node-yaml';
 import fetch from 'node-fetch';
 import semverInc from 'semver/functions/inc';
@@ -30,8 +31,6 @@ const BOT_TYPE = 'wrn:bot';
 const BOT_FACTORY_TYPE = 'wrn:bot-factory';
 
 const BOT_FACTORY_DEBUG_NAMESPACES = ['bot-factory', 'bot-factory:*'];
-
-const BOT_FACTORY_CONFIG_FILENAME = 'bot-factory.yml';
 
 const BOT_FACTORY_EXEC = 'node';
 const BOT_FACTORY_PROCESS_NAME = 'bot-factory';
@@ -60,6 +59,23 @@ const getBotRecord = (config, namespace) => {
   if (namespace) {
     record.tag = namespace;
   }
+
+  return record;
+};
+
+/**
+ * @param {object} config
+ */
+const getBotFactoryRecord = (config) => {
+  const { id, version, ...rest } = config;
+
+  const record = {
+    type: BOT_FACTORY_TYPE,
+    name: id.substring(String(`${BOT_FACTORY_TYPE}:`).length),
+    version,
+
+    ...rest
+  };
 
   return record;
 };
@@ -308,9 +324,14 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           .command({
             command: ['register'],
             describe: 'Register a bot factory.',
-            builder: yargs => yargs,
+            builder: yargs => yargs
+              .version(false)
+              .option('version', { type: 'string' })
+              .option('id', { type: 'string' })
+              .option('data', { type: 'json' }),
 
-            handler: asyncHandler(async () => {
+            handler: asyncHandler(async argv => {
+              const { verbose, id, 'dry-run': noop, data, txKey } = argv;
               const { server, userKey, bondId, chainId } = config.get('services.wns');
 
               assert(server, 'Invalid WNS endpoint.');
@@ -318,33 +339,73 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               assert(bondId, 'Invalid WNS Bond ID.');
               assert(chainId, 'Invalid WNS Chain ID.');
 
+              assert(id, 'Invalid BotFactory ID.');
+
               // Create service.yml.
               await getBotFactoryServiceConfig();
 
-              const botFactoryConfigFile = path.join(process.cwd(), BOT_FACTORY_CONFIG_FILENAME);
-              if (!fs.existsSync(botFactoryConfigFile)) {
-                throw new Error(`File not found: ${BOT_FACTORY_CONFIG_FILENAME}`);
-              }
-
-              const botFactoryYml = await yaml.read(botFactoryConfigFile);
               const serviceYml = await yaml.read(path.join(process.cwd(), SERVICE_CONFIG_FILENAME));
               const { topic } = serviceYml;
 
-              const record = {
-                ...botFactoryYml,
-                ...serviceYml,
-                type: BOT_FACTORY_TYPE,
-                accessKey: topic
-              };
+              const registry = new Registry(server, chainId);
 
-              // Scrub certain info from WNS record.
-              delete record.secretKey;
-              delete record.topic;
+              let { version } = argv;
+              if (!version) {
+                const [factory] = await registry.resolveRecords([id]);
+                version = get(factory, 'version');
+                assert(version, 'Invalid BotFactory Version.');
+
+                version = semverInc(version, 'patch');
+              }
+
+              const record = getBotFactoryRecord({ ...data, id, version, topic });
+
+              log(`Registering ${record.name} v${record.version}...`);
+              if (verbose || noop) {
+                log(JSON.stringify({ registry: server, record }, undefined, 2));
+              }
+
+              if (noop) {
+                return;
+              }
+
+              await registry.setRecord(userKey, record, txKey, bondId);
+            })
+          })
+
+          // Query bot factories.
+          .command({
+            command: ['query'],
+            describe: 'Query bot factories.',
+            builder: yargs => yargs
+              .option('id')
+              .option('name')
+              .option('namespace'),
+
+            handler: asyncHandler(async argv => {
+              const { id, name, namespace } = argv;
+
+              const { server, chainId } = config.get('services.wns');
+
+              assert(server, 'Invalid WNS endpoint.');
+              assert(chainId, 'Invalid WNS Chain ID.');
 
               const registry = new Registry(server, chainId);
-              console.log(`Registering ${record.name} v${record.version}...`);
 
-              await registry.setRecord(userKey, record, null, bondId);
+              let factories = [];
+              if (id) {
+                factories = await registry.getRecordsByIds([id]);
+                factories = factories
+                  .filter(b => !name || (name && b.attributes.name === name))
+                  .filter(b => !namespace || (namespace && b.attributes.tag === namespace));
+              } else {
+                const attributes = clean({ type: BOT_FACTORY_TYPE, name, tag: namespace });
+                factories = await registry.queryRecords(attributes);
+              }
+
+              if (factories && factories.length) {
+                log(JSON.stringify(factories, null, 2));
+              }
             })
           })
 
