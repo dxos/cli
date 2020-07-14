@@ -100,9 +100,9 @@ export class StateManager {
    * @param {Object} invitation
    */
   async joinParty (partyKey, invitation) {
-    if (partyKey && /^[0-9a-f]{64}$/i.test(partyKey)) {
-      if (this._currentParty !== partyKey) {
-        if (!this._parties.has(partyKey)) {
+    if ((partyKey && /^[0-9a-f]{64}$/i.test(partyKey)) || invitation) {
+      if (invitation || this._currentParty !== partyKey) {
+        if (invitation || !this._parties.has(partyKey)) {
           await this._assureClient();
           await this.setModel();
 
@@ -116,8 +116,9 @@ export class StateManager {
               });
             };
 
-            await this._client.partyManager.joinParty(InvitationDescriptor.fromQueryParameters(invitation),
+            const party = await this._client.partyManager.joinParty(InvitationDescriptor.fromQueryParameters(invitation),
               secretProvider);
+            partyKey = keyToString(party.publicKey);
           }
 
           await this._client.partyManager.openParty(keyToBuffer(partyKey));
