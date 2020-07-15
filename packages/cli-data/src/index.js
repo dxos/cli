@@ -49,8 +49,8 @@ const _createClient = async (config) => {
     const hasHalo = await dataClient.partyManager.identityManager.isInitialized();
     if (!hasHalo) {
       await dataClient.partyManager.identityManager.initializeForNewIdentity({
-        identityDisplayName: `${os.userInfo().username} CLI`,
-        deviceDisplayName: `${os.userInfo().username} - CLI - default device`
+        identityDisplayName: `cli:${os.userInfo().username}`,
+        deviceDisplayName: `cli:${os.userInfo().username} - default device`
       });
     }
   }

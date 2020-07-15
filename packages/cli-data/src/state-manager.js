@@ -10,7 +10,7 @@ import { generatePasscode } from '@dxos/credentials';
 import { keyToBuffer, keyToString, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
 import { InvitationDescriptor } from '@dxos/party-manager';
 
-const DEFAULT_UPDATE_HANDLER = model => log(JSON.stringify(model.messages));
+const DEFAULT_UPDATE_HANDLER = model => { log(JSON.stringify(model.messages)); return true; };
 
 /**
  * Represents state of the CLI within a party, as well as list of active parties;
@@ -49,10 +49,6 @@ export class StateManager {
     return this._model;
   }
 
-  get modelType () {
-    return this._modelType;
-  }
-
   isOpenParty (partyKey) {
     assert(partyKey);
     assert(this._parties.has(partyKey));
@@ -63,10 +59,9 @@ export class StateManager {
   /**
    * Set currently active model.
    * @param {Object} model
-   * @param {String} type
    * @param {Function} updateHandler
    */
-  async setModel (model, type, updateHandler = DEFAULT_UPDATE_HANDLER) {
+  async setModel (model, updateHandler = DEFAULT_UPDATE_HANDLER) {
     await this._assureClient();
 
     if (this._removeModelListener) {
@@ -77,19 +72,19 @@ export class StateManager {
     if (this._model) {
       this._client.modelFactory.destroyModel(this._model);
       this._model = null;
-      this._modelType = null;
     }
 
     if (model) {
-      const onUpdate = () => {
+      const onUpdate = async () => {
         const rl = this._getReadlineInterface();
-        updateHandler(model);
-        rl.prompt();
+        const needPrompt = await updateHandler(model);
+        if (needPrompt) {
+          rl.prompt();
+        }
       };
 
       this._model = model;
       this._model.on('update', onUpdate);
-      this._modelType = type;
       this._removeModelListener = () => model.removeListener('update', onUpdate);
     }
   }
