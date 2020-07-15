@@ -34,8 +34,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/botkit": "^1.0.0-beta.131",
-    "@dxos/botkit-client": "^1.0.0-beta.131",
+    "@dxos/botkit": "^1.0.0-beta.147",
+    "@dxos/botkit-client": "^1.0.0-beta.147",
     "@dxos/cli-core": "^1.0.1-beta.21",
     "@dxos/config": "^1.0.0-beta.67",
     "@dxos/crypto": "^1.0.0-beta.1",
@@ -72,7 +72,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "jest": "^25.1.0",
     "prettier": "^1.14.2",
-    "semistandard": "^14.2.0",
+    "semistandard": "14.2.0",
     "uuid": "^3.3.3"
   },
   "semistandard": {

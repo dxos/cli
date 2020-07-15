@@ -35,11 +35,11 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^1.0.1-beta.21",
-    "@dxos/client": "^1.0.0-beta.97",
-    "@dxos/credentials": "^1.0.1-beta.4",
+    "@dxos/client": "^1.0.0-beta.147",
+    "@dxos/credentials": "^1.0.1-beta.28",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@dxos/party-manager": "^1.0.1-beta.4",
+    "@dxos/party-manager": "^1.0.1-beta.28",
     "assert": "^2.0.0",
     "js-yaml": "^3.13.1",
     "lodash.defaultsdeep": "^4.6.1",
@@ -66,7 +66,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "jest": "^25.1.0",
     "prettier": "^1.14.2",
-    "semistandard": "^14.2.0",
+    "semistandard": "14.2.0",
     "uuid": "^3.3.3"
   },
   "semistandard": {

@@ -41,7 +41,7 @@
     "babel-eslint": "^10.1.0",
     "lint-staged": "^9.5.0",
     "pre-commit": "^1.2.2",
-    "semistandard": "^14.2.0"
+    "semistandard": "14.2.0"
   },
   "semistandard": {
     "parser": "babel-eslint",
