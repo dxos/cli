@@ -280,10 +280,11 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               .option('single-instance', { type: 'boolean', default: false })
               .option('detached', { type: 'boolean', alias: 'daemon', default: false })
               .option('log-file', { type: 'string' })
-              .option('proc-name', { type: 'string', default: BOT_FACTORY_PROCESS_NAME }),
+              .option('proc-name', { type: 'string', default: BOT_FACTORY_PROCESS_NAME })
+              .option('ipc-port', { type: 'string' }),
 
             handler: asyncHandler(async argv => {
-              const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset, verbose } = argv;
+              const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset, verbose, ipcPort } = argv;
 
               let { topic, secretKey } = argv;
               if (!topic || !secretKey) {
@@ -302,7 +303,8 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
                 WIRE_BOT_RESET: reset,
                 WIRE_BOT_TOPIC: topic,
                 WIRE_BOT_SECRET_KEY: secretKey,
-                WIRE_BOT_LOCAL_DEV: localDev
+                WIRE_BOT_LOCAL_DEV: localDev,
+                ...(ipcPort ? { WIRE_IPC_PORT: ipcPort } : {})
               };
 
               const options = {
