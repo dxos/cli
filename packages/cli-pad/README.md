@@ -31,7 +31,7 @@ You can specify the following params in your `pad.yml`:
 Example:
 
 ```yml
-name: 'wireline.io/example-pad'
+name: 'dxos.org/example-pad'
 displayName: 'Example Pad'
 version: 0.0.0
 build: yarn dist
@@ -57,7 +57,7 @@ In package root folder:
 - make sure `pad.yml` is presented, with `name` and `version` fields. E.g.:
 
 ```yaml
-name: 'wireline.io/example-pad'
+name: 'dxos.org/example-pad'
 displayName: 'Example Pad'
 version: 0.0.1
 build: yarn dist
@@ -73,13 +73,13 @@ $ yarn run wire pad register
 ### Query
 
 ```bash
-$ yarn run wire pad query --name 'wireline.io/example-pad'
+$ yarn run wire pad query --name 'dxos.org/example-pad'
 
 [
   {
     "id": "QmUSmSPUBhPSXSGaHhUDxBn3cjG2gjJ9BiUznvUBiJo37F",
     "type": "wrn:pad",
-    "name": "wireline.io/example-pad",
+    "name": "dxos.org/example-pad",
     "version": "0.0.1",
     "owners": [
       "6ee3328f65c8566cd5451e49e97a767d10a8adf7"
@@ -89,7 +89,7 @@ $ yarn run wire pad query --name 'wireline.io/example-pad'
     "expiryTime": "2021-03-10T15:35:04.132179296",
     "attributes": {
       "displayName": "Example Pad",
-      "name": "wireline.io/example-pad",
+      "name": "dxos.org/example-pad",
       "type": "wrn:pad",
       "version": "0.0.1"
     }

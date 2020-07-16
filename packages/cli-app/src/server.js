@@ -1,6 +1,7 @@
 //
-// Copyright 2020 DxOS
+// Copyright 2020 DXOS.org
 //
+
 import fs from 'fs';
 import { join } from 'path';
 import os from 'os';

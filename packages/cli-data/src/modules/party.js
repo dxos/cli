@@ -1,5 +1,5 @@
 //
-// Copyright 2020 Wireline, Inc.
+// Copyright 2020 DXOS.org
 //
 
 import assert from 'assert';
@@ -23,18 +23,18 @@ export const PartyModule = ({ stateManager }) => ({
       builder: yargs => yargs
         .option('interactive', { hidden: true, default: true })
         .option('invitation')
-        .option('url'),
+        .option('invitation-url'),
 
       handler: asyncHandler(async argv => {
-        const { partyKey, url, invitation } = argv;
+        const { partyKey, invitationUrl, invitation } = argv;
 
-        assert(partyKey, 'Invalid party key.');
+        assert(partyKey || invitation || invitationUrl, 'Invalid party.');
 
         let invite = null;
         if (invitation) {
           invite = JSON.parse(Buffer.from(invitation, 'base64').toString('utf8'));
-        } else if (url) {
-          invite = queryString.parse(url.split('?')[1].replace(/\\/g, ''), { decode: true });
+        } else if (invitationUrl) {
+          invite = queryString.parse(invitationUrl.split('?')[1].replace(/\\/g, ''), { decode: true });
         }
 
         await stateManager.joinParty(partyKey, invite);

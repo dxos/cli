@@ -1,5 +1,5 @@
 //
-// Copyright 2020 Wireline, Inc.
+// Copyright 2020 DXOS.org
 //
 
 import defaultsDeep from 'lodash.defaultsdeep';
@@ -49,8 +49,8 @@ const _createClient = async (config) => {
     const hasHalo = await dataClient.partyManager.identityManager.isInitialized();
     if (!hasHalo) {
       await dataClient.partyManager.identityManager.initializeForNewIdentity({
-        identityDisplayName: `DxOS CLI - ${os.userInfo().username}`,
-        deviceDisplayName: `DxOS CLI - ${os.userInfo().username} - default device`
+        identityDisplayName: `cli:${os.userInfo().username}`,
+        deviceDisplayName: `cli:${os.userInfo().username} - default device`
       });
     }
   }

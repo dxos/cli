@@ -43,5 +43,5 @@ $ wire ipfs find app example.com/editor
 Bot lookup: (resuires additional `--platform` parameter)
 
 ```
-$ wire ipfs find bot wireline.io/store --platform macos-x64
+$ wire ipfs find bot dxos.org/echo --platform macos-x64
 ```

@@ -1,6 +1,6 @@
 # Bot CLI
 
-Read [concepts](../botkit/README.md) first, if unfamiliar with how bots work.
+Read [concepts](https://github.com/dxos/sdk/tree/master/packages/botkit) first, if unfamiliar with how bots work.
 
 Commands:
 
@@ -8,6 +8,16 @@ Commands:
 * `wire bot register` - Register a bot in WNS.
 * `wire bot query` - Query bot in WNS.
 * `wire bot factory start` - Start a bot factory.
+* `wire bot spawn` - Spawn new bot instance.
+* `wire bot factory status` - Obtain bot factory status.
+
+Bot management commands: 
+
+* `wire bot stop` - Stop bot.
+* `wire bot start` - Start bot.
+* `wire bot restart` - Restart bot.
+* `wire bot kill` - Stop bot and remove all its data.
+* `wire bot factory reset` - Stop all runinng bots and remove all the data.
 
 ## Local Development
 
@@ -17,7 +27,7 @@ For example:
 
 ```bash
 $ cd examples/echo-bot
-$ yarn wire bot factory start --local-dev
+$ wire bot factory start --local-dev
   bot-factory {"started":true,"topic":"83e8b9ac8d7a22d096673f2f55b13346f225fd060fe869fab9c26042716753b5","peerId":"83e8b9ac8d7a22d096673f2f55b13346f225fd060fe869fab9c26042716753b5","localDev":true}
 ```
 
@@ -42,7 +52,7 @@ $ yarn package:macos-x64
 Upload the packages to IPFS.
 
 ```bash
-$ yarn wire bot publish
+$ wire bot publish
 Uploaded macos-x64.tgz to IPFS, CID: QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn
 Package contents have changed.
 Run 'wire bot register' to register the new bot version: 1.0.53
@@ -52,7 +62,7 @@ Inspect bot.yml before registering.
 
 ```bash
 $ cat bot.yml
-id: 'wrn:bot:wireline.io/echo'
+id: 'wrn:bot:dxos.org/echo'
 name: ECHO
 version: 1.0.53
 package:
@@ -66,18 +76,18 @@ package:
 Register the bot with WNS.
 
 ```bash
-$ yarn wire bot register
+$ wire bot register
 ```
 
 Query registered bot.
 
 ```bash
-$ yarn wire bot query --name 'wireline.io/echo'
+$ wire bot query --name 'dxos.org/echo'
 [
   {
     "id": "QmbwMajMxYsFrgZpLt7feSr88VvpAEJrrXwRBF1FwL6EoR",
     "type": "wrn:bot",
-    "name": "wireline.io/echo",
+    "name": "dxos.org/echo",
     "version": "1.0.53",
     "owners": [
       "6ee3328f65c8566cd5451e49e97a767d10a8adf7"
@@ -87,7 +97,7 @@ $ yarn wire bot query --name 'wireline.io/echo'
     "expiryTime": "2021-04-30T10:37:00.974990000",
     "attributes": {
       "displayName": "ECHO",
-      "name": "wireline.io/echo",
+      "name": "dxos.org/echo",
       "package": {
         "linux": {
           "arm": "QmX3DDmeFunX5aVmaTNnViwQUe15Wa4UbZYcC3AwFwoWcg",
@@ -111,60 +121,72 @@ Start the bot factory. The `topic` logged by bot-factory is the swarm topic that
 ```bash
 $ cd dxos/botkit
 
-$ yarn run wire bot factory start
+$ wire bot factory start
   bot-factory {"started":true,"topic":"0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e","peerId":"0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e","localDev":false}
+```
+> Bot factory will attempt to restart previously running bots unless you provide `--reset` flag.
+
+From another terminal spawn new bot instance using bot factory topic .
+
+```bash
+$ wire bot spawn --bot-id="wrn:bot:dxos.org/echo" --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e
+
+key     value
+------  ----------------------------------------------------------------
+botUID  55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
 ```
 
 Create a new party.
 
 ```bash
-$ cd dxos/data-cli
-
-$ yarn run wire party create
+$ wire party create
 {
   "partyKey": "bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483"
 }
 [wire]>
 ```
 
-Spawn the echo bot. Use topic from the bot factory console output, enabling the CLI to connect to it. Use echo-bot version from `echo-bot/bot.yml`.
+Using bot factory topic and bot UID invite previously spawned bot to the party.
 
 ```bash
-[wire]> bot spawn --bot-id="wrn:bot:wireline.io/echo#1.0.53" --spec='{"type":"testing.item.Task","listId":"list-tasks"}' --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e
-Spawning bot wrn:bot:wireline.io/echo#1.0.53 to join 'bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483' party with invitation: {"swarmKey":"305b70cf46d0e22628d424fce23ea6f76bd9da44df8a3ed3fe70e56858b0bffa","invitation":"878c110aaab9a7173e3562e882e10c4480c32789ff012733825034c1fa340be7","hash":"b8f9fc83963153f63ae9e36871abed598f248d61"}.
-[wire]>
+[wire]> bot invite --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e --bot-uid 55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
+
+Inviting bot 55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef to join 'bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483' party with invitation: {"swarmKey":"c05c32751bb1a70fe70d801e4101c706c729f1bdf622f14cd3e9721effe1a2e8","invitation":"784cf2ab3ce3bb1be56dec738b9ab1d8a020cc95a54b619acdd084471f3ae154","hash":"3d36a6188a28a22f4b8f794ee9433cce6ca1b9b3"}
 ```
 
 Bot factory should download and spawn the bot:
 
 ```bash
-  bot-factory Spawn bot request for wrn:bot:wireline.io/echo#1.0.53: {"botConfig":{"botId":"wrn:bot:wireline.io/echo#1.0.53","topic":"bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483","modelOptions":"{\"type\":\"testing.item.Task\",\"listId\":\"list-tasks\"}","invitation":"{\"swarmKey\":\"305b70cf46d0e22628d424fce23ea6f76bd9da44df8a3ed3fe70e56858b0bffa\",\"invitation\":\"878c110aaab9a7173e3562e882e10c4480c32789ff012733825034c1fa340be7\",\"hash\":\"b8f9fc83963153f63ae9e36871abed598f248d61\"}","__type_url":"dxos.protocol.bot.Spawn"}} +0ms
-  bot-factory Downloading bot package: http://127.0.0.1:8888/ipfs//QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn +7ms
-  bot-factory Bot package downloaded: /Users/ashwinp/projects/wireline/incubator/dxos/botkit/out/bots/QmbwMajMxYsFrgZpLt7feSr88VvpAEJrrXwRBF1FwL6EoR +955ms
-  bot-factory Spawned bot: {"pid":61969,"command":"/Users/ashwinp/projects/wireline/incubator/dxos/botkit/out/bots/QmbwMajMxYsFrgZpLt7feSr88VvpAEJrrXwRBF1FwL6EoR/main.bin","args":[],"wireEnv":{"WIRE_BOT_IPC_SERVER":"bot-61894","WIRE_BOT_TOPIC":"bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483","WIRE_BOT_SPEC":"{\"type\":\"testing.item.Task\",\"listId\":\"list-tasks\"}","WIRE_BOT_INVITATION":"{\"swarmKey\":\"305b70cf46d0e22628d424fce23ea6f76bd9da44df8a3ed3fe70e56858b0bffa\",\"invitation\":\"878c110aaab9a7173e3562e882e10c4480c32789ff012733825034c1fa340be7\",\"hash\":\"b8f9fc83963153f63ae9e36871abed598f248d61\"}"},"topic":"bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483","spec":"{\"type\":\"testing.item.Task\",\"listId\":\"list-tasks\"}","cwd":"/Users/ashwinp/projects/wireline/incubator/dxos/botkit/out/bots/QmbwMajMxYsFrgZpLt7feSr88VvpAEJrrXwRBF1FwL6EoR/.bots/d50e8a9f-f02c-4863-83b6-968749924ef3"} +19ms
+  bot-factory Received command: {"botId":"wrn:bot:dxos.org/echo","__type_url":"dxos.protocol.bot.Spawn"} +3m
+  bot-factory Spawn bot request forwrn:bot:dxos.org/echo +1ms
+  bot-factory Downloading bot package: http://127.0.0.1:8888/ipfs/QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn +678ms
+  bot-factory Bot package downloaded: /Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj +1s
+  bot-factory Spawned bot: {"pid":39899,"command":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/main.bin","args":[],"wireEnv":{"WIRE_BOT_IPC_SERVER":"bot-39752","WIRE_BOT_UID":"55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","WIRE_BOT_NAME":"bot:Store Pygmy Marmoset","WIRE_BOT_CWD":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/.bots/55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","WIRE_BOT_RESTARTED":false},"cwd":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/.bots/55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef"} +20ms
+  bot-factory Received command: {"botUID":"55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","topic":"bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483","modelOptions":"{}","invitation":"{\"swarmKey\":\"35769cec26533f9f4b4bb889320e473343902a9a8a210089b986e2cbd4ce47b9\",\"invitation\":\"bd996bd739be0187266830186d61fcbed21eece6c26c92be20c146b35ba28cf1\",\"hash\":\"a19549792f280a43d5fc9ad628393167a83fa744\"}","__type_url":"dxos.protocol.bot.Invite"} +3s
+  bot-factory Invite bot request for '55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef': {"botUID":"55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","topic":"bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483","modelOptions":"{}","invitation":"{\"swarmKey\":\"35769cec26533f9f4b4bb889320e473343902a9a8a210089b986e2cbd4ce47b9\",\"invitation\":\"bd996bd739be0187266830186d61fcbed21eece6c26c92be20c146b35ba28cf1\",\"hash\":\"a19549792f280a43d5fc9ad628393167a83fa744\"}","__type_url":"dxos.protocol.bot.Invite"} +0ms
 ```
 
 Note: The bot package is downloaded to the `botkit/out/bots/<CID>` folder. Delete the `botkit/out/bots` directory to re-test the bot install flow later.
 
-Add a new task from the CLI session. The spawned echo-bot will log the mutations.
+Check out bot factory status.
 
 ```bash
-[wire]> echo open --type="testing.item.Task" --args.listId="list-tasks"
-[wire]> echo append --data.title="Hello World"
-{"title":"Hello"}
-[wire]> [{"id":"testing.item.Task/cd3aa78a-c64c-4480-82b8-e54115a2f5c8","properties":{"title":"Hello"}}]
-[wire]>
-[wire]> echo append --data.title="Hello World"
-{"title":"Hello"}
-[wire]> [{"id":"testing.item.Task/cd3aa78a-c64c-4480-82b8-e54115a2f5c8","properties":{"title":"Hello"}},{"id":"testing.item.Task/3a7703af-900b-424a-831a-712f8a0243ad","properties":{"title":"Hello"}}]
-[wire]>
-```
-
-Spawned echo-bot:
-
-```bash
-  bot-factory:61969 [{"id":"testing.item.Task/cd3aa78a-c64c-4480-82b8-e54115a2f5c8","properties":{"title":"Hello"}}]
-  bot-factory:61969  +0ms
-  bot-factory:61969 [{"id":"testing.item.Task/cd3aa78a-c64c-4480-82b8-e54115a2f5c8","properties":{"title":"Hello"}},{"id":"testing.item.Task/3a7703af-900b-424a-831a-712f8a0243ad","properties":{"title":"Hello"}}]
-  bot-factory:61969  +3s
+$ wire bot factory status --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e | jq
+{
+  "started": true,
+  "version": "1.0.0-beta.87",
+  "uptime": "136",
+  "bots": [
+    {
+      "type": "wrn:bot:dxos.org/echo",
+      "botUID": "55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef",
+      "started": "2020-06-24T20:05:15Z",
+      "lastActive": "2020-06-24T20:06:54Z",
+      "stopped": false,
+      "parties": [
+        "bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483"
+      ]
+    }
+  ]
+}
 ```

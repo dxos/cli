@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-peer",
-  "version": "1.0.1-beta.13",
+  "version": "1.0.1-beta.22",
   "description": "DxOS Peer CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-peer#readme",
   "license": "GPL-3.0",
@@ -34,8 +34,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^1.0.1-beta.13",
-    "@dxos/client": "^1.0.0-beta.97",
+    "@dxos/cli-core": "^1.0.1-beta.22",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
     "@dxos/network-manager": "^1.0.0-beta.67",
@@ -64,7 +63,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "jest": "^25.1.0",
     "prettier": "^1.14.2",
-    "semistandard": "^14.2.0",
+    "semistandard": "14.2.0",
     "uuid": "^3.3.3"
   },
   "semistandard": {

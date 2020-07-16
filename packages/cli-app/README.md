@@ -31,7 +31,7 @@ You can specify the following params in your `app.yml`:
 Example:
 
 ```yml
-name: 'wireline.io/example-app'
+name: 'dxos.org/example-app'
 displayName: 'Example App'
 version: 0.0.0
 build: yarn dist
@@ -57,7 +57,7 @@ In package root folder:
 - make sure `app.yml` is presented, with `name` and `version` fields. E.g.:
 
 ```yaml
-name: 'wireline.io/example-app'
+name: 'dxos.org/example-app'
 displayName: 'Example App'
 version: 0.0.1
 build: yarn dist
@@ -73,13 +73,13 @@ $ yarn run wire app register
 ### Query
 
 ```bash
-$ yarn run wire app query --name 'wireline.io/example-app'
+$ yarn run wire app query --name 'dxos.org/example-app'
 
 [
   {
     "id": "QmUSmSPUBhPSXSGaHhUDxBn3cjG2gjJ9BiUznvUBiJo37F",
     "type": "wrn:app",
-    "name": "wireline.io/example-app",
+    "name": "dxos.org/example-app",
     "version": "0.0.1",
     "owners": [
       "6ee3328f65c8566cd5451e49e97a767d10a8adf7"
@@ -89,7 +89,7 @@ $ yarn run wire app query --name 'wireline.io/example-app'
     "expiryTime": "2021-03-10T15:35:04.132179296",
     "attributes": {
       "displayName": "Example App",
-      "name": "wireline.io/example-app",
+      "name": "dxos.org/example-app",
       "type": "wrn:app",
       "version": "0.0.1"
     }
@@ -109,8 +109,8 @@ yarn run wire app serve
 
 The following URLs will be available:
 
-- GET `/app/wireline.io/example-app/`: Latest version on WNS by default.
-- GET  `/app/wireline.io/example-app@0.0.1/`
+- GET `/app/dxos.org/example-app/`: Latest version on WNS by default.
+- GET  `/app/dxos.org/example-app@0.0.1/`
 
 #### Apps config endpoints:
 
@@ -127,5 +127,5 @@ cli:
 
 The following URLs will be available:
 
-- GET `/app/wireline.io/example-app/config/config.json`: To match app latest version on WNS by default.
-- GET  `/app/wireline.io/example-app@0.0.1/config/config.json`
+- GET `/app/dxos.org/example-app/config/config.json`: To match app latest version on WNS by default.
+- GET  `/app/dxos.org/example-app@0.0.1/config/config.json`

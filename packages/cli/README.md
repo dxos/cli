@@ -60,30 +60,24 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 An older version of DxOS CLI could be upgraded via `wire upgrade` command.
 
 ```
-$wire version
-v1.0.0-beta.32
+$ wire version
+v1.0.1-beta.15
 
-$ wire upgrade --npm-client yarn --force
-Found extensions: @dxos/app-cli, @dxos/bot-cli, @dxos/dashboard-cli, @dxos/data-cli, @dxos/ipfs-cli, @dxos/signal-cli, @wirelineio/wns-cli
-✔ Removing @dxos/app-cli
-✔ Removing @dxos/bot-cli
-✔ Removing @dxos/dashboard-cli
-✔ Removing @dxos/data-cli
-✔ Removing @dxos/ipfs-cli
-✔ Removing @dxos/signal-cli
-✔ Removing @wirelineio/wns-cli
-✔ Removing @dxos/cli
-✔ Installing @dxos/cli@beta
-✔ Installing @dxos/app-cli@beta
-✔ Installing @dxos/bot-cli@beta
-✔ Installing @dxos/dashboard-cli@beta
-✔ Installing @dxos/data-cli@beta
-✔ Installing @dxos/ipfs-cli@beta
-✔ Installing @dxos/signal-cli@beta
-✔ Installing @wirelineio/wns-cli@beta
+$ wire upgrade --force
+Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
+✔ Uninstalling @dxos/cli-data
+✔ Uninstalling @dxos/cli-signal
+✔ Uninstalling @dxos/cli-bot
+✔ Uninstalling @dxos/cli-app
+✔ Uninstalling @dxos/cli
+✔ Installing @dxos/cli
+✔ Installing @dxos/cli-app
+✔ Installing @dxos/cli-bot
+✔ Installing @dxos/cli-signal
+✔ Installing @dxos/cli-data
 
 $ wire version
-v1.0.0-beta.33
+v1.0.1-beta.16
 ```
 
 ## Troubleshooting

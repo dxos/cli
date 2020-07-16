@@ -386,11 +386,11 @@ $ wire wns query '{ getStatus { version }}'
 For more complex query:
 
 ```bash
-$ echo 'query ($refs: [String!]) { resolveRecords(refs: $refs) { id type name version }}' | wire wns query --variables='{ "refs": ["wrn:bot:wireline.io/store"] }'
+$ echo 'query ($refs: [String!]) { resolveRecords(refs: $refs) { id type name version }}' | wire wns query --variables='{ "refs": ["wrn:bot:dxos.org/echo"] }'
 ```
 
 Read query from file:
 
 ```bash
-$ wire wns query --filename='<file_with_query>' --variables='{ "refs": ["wrn:bot:wireline.io/store"] }'
+$ wire wns query --filename='<file_with_query>' --variables='{ "refs": ["wrn:bot:dxos.org/echo"] }'
 ```

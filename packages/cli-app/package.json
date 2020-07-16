@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-app",
-  "version": "1.0.1-beta.13",
+  "version": "1.0.1-beta.22",
   "description": "DxOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
   "license": "GPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^1.0.1-beta.13",
+    "@dxos/cli-core": "^1.0.1-beta.22",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^0.4.8",
     "assert": "^2.0.0",
@@ -46,6 +46,7 @@
     "ipfs-http-client": "^42.0.0",
     "js-yaml": "^3.13.1",
     "lodash-clean": "^2.2.1",
+    "lodash.defaultsdeep": "^4.6.1",
     "lodash.isequal": "^4.5.0",
     "node-fetch": "^2.6.0",
     "node-yaml": "^4.0.1",
@@ -71,7 +72,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "jest": "^25.1.0",
     "prettier": "^1.14.2",
-    "semistandard": "^14.2.0",
+    "semistandard": "14.2.0",
     "uuid": "^3.3.3"
   },
   "semistandard": {

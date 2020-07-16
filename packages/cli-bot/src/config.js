@@ -1,5 +1,5 @@
 //
-// Copyright 2020 Wireline, Inc.
+// Copyright 2020 DXOS.org
 //
 
 import fs from 'fs-extra';
@@ -9,8 +9,6 @@ import yaml from 'node-yaml';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
 export const SERVICE_CONFIG_FILENAME = 'service.yml';
-
-export const BOT_CONFIG_FILENAME = 'bot.yml';
 
 /**
  * @returns {Object}
