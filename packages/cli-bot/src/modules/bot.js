@@ -330,7 +330,8 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               .version(false)
               .option('version', { type: 'string' })
               .option('id', { type: 'string' })
-              .option('data', { type: 'json' }),
+              .option('data', { type: 'json' })
+              .option('topic', { type: 'string' }),
 
             handler: asyncHandler(async argv => {
               const { verbose, id, 'dry-run': noop, data, txKey } = argv;
@@ -343,11 +344,15 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
 
               assert(id, 'Invalid BotFactory ID.');
 
-              // Create service.yml.
-              await getBotFactoryServiceConfig();
+              let { topic } = argv;
 
-              const serviceYml = await yaml.read(path.join(process.cwd(), SERVICE_CONFIG_FILENAME));
-              const { topic } = serviceYml;
+              if (!topic) {
+                // Create service.yml.
+                await getBotFactoryServiceConfig();
+
+                const serviceYml = await yaml.read(path.join(process.cwd(), SERVICE_CONFIG_FILENAME));
+                topic = serviceYml.topic;
+              }
 
               const registry = new Registry(server, chainId);
 
