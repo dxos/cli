@@ -304,7 +304,8 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
                 WIRE_BOT_TOPIC: topic,
                 WIRE_BOT_SECRET_KEY: secretKey,
                 WIRE_BOT_LOCAL_DEV: localDev,
-                ...(ipcPort ? { WIRE_IPC_PORT: ipcPort } : {})
+                ...(ipcPort ? { WIRE_IPC_PORT: ipcPort } : {}),
+                ...(detached ? { DEBUG_HIDE_DATE: true } : {})
               };
 
               const options = {
