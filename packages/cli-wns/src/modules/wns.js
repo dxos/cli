@@ -759,6 +759,139 @@ export const WNSModule = ({ config }) => ({
     })
 
     .command({
+      command: ['authority'],
+      describe: 'Name authority operations.',
+      builder: yargs => yargs
+        .command({
+          command: ['reserve [name]'],
+          describe: 'Reserve authority/name.',
+          handler: asyncHandler(async argv => {
+            const { name } = argv;
+            assert(name, 'Invalid authority name.');
+
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+
+            assert(server, 'Invalid WNS endpoint.');
+            assert(privateKey, 'Invalid Transaction Key.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.reserveAuthority(name, privateKey, fee);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['whois [name]'],
+          describe: 'Lookup authority information.',
+          handler: asyncHandler(async argv => {
+            const { name } = argv;
+            assert(name, 'Invalid authority name.');
+
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            assert(server, 'Invalid WNS endpoint.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const result = await registry.lookupAuthorities([name]);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+    })
+
+    .command({
+      command: ['name'],
+      describe: 'Name operations.',
+      builder: yargs => yargs
+        .command({
+          command: ['set [name] [id]'],
+          describe: 'Set name (create name to record ID mapping).',
+          handler: asyncHandler(async argv => {
+            const { name, id } = argv;
+            assert(name, 'Invalid Name.');
+            assert(id, 'Invalid Record ID.');
+
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+
+            assert(server, 'Invalid WNS endpoint.');
+            assert(privateKey, 'Invalid Transaction Key.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.setName(name, id, privateKey, fee);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['delete [name]'],
+          describe: 'Delete name (remove name to record ID mapping).',
+          handler: asyncHandler(async argv => {
+            const { name } = argv;
+            assert(name, 'Invalid Name.');
+
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+
+            assert(server, 'Invalid WNS endpoint.');
+            assert(privateKey, 'Invalid Transaction Key.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.deleteName(name, privateKey, fee);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['lookup [name]'],
+          describe: 'Lookup name information.',
+          builder: yargs => yargs
+            .option('history', { type: 'boolean' }),
+
+          handler: asyncHandler(async argv => {
+            const { name, history } = argv;
+            assert(name, 'Invalid Name.');
+
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            assert(server, 'Invalid WNS endpoint.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const result = await registry.lookupNames([name], history);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['resolve [name]'],
+          describe: 'Resolve name to record.',
+          handler: asyncHandler(async argv => {
+            const { name } = argv;
+
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            assert(server, 'Invalid WNS endpoint.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+
+            const result = await registry.resolveNames([name]);
+            log(JSON.stringify(result, undefined, 4));
+          })
+        })
+    })
+
+    .command({
       command: ['migrate'],
       describe: 'WNS chain migration tools.',
       builder: yargs => yargs
