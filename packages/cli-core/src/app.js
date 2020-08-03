@@ -74,6 +74,7 @@ export class App {
     // http://yargs.js.org/docs/#api-failfn
     .fail(msg => {
       logError(msg);
+      process.exit(1);
     });
 
   _modules = [];
@@ -226,6 +227,9 @@ export class App {
       return result;
     } catch (err) {
       logError(err);
+      if (!this._state.cliState.interactive) {
+        process.exit(1);
+      }
     }
   }
 
