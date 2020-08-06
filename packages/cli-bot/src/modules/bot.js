@@ -284,10 +284,11 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               .option('single-instance', { type: 'boolean', default: false })
               .option('detached', { type: 'boolean', alias: 'daemon', default: false })
               .option('log-file', { type: 'string' })
-              .option('proc-name', { type: 'string', default: BOT_FACTORY_PROCESS_NAME }),
+              .option('proc-name', { type: 'string', default: BOT_FACTORY_PROCESS_NAME })
+              .option('ipc-port', { type: 'string' }),
 
             handler: asyncHandler(async argv => {
-              const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset, verbose } = argv;
+              const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset, verbose, ipcPort } = argv;
 
               let { topic, secretKey } = argv;
               if (!topic || !secretKey) {
@@ -306,7 +307,9 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
                 WIRE_BOT_RESET: reset,
                 WIRE_BOT_TOPIC: topic,
                 WIRE_BOT_SECRET_KEY: secretKey,
-                WIRE_BOT_LOCAL_DEV: localDev
+                WIRE_BOT_LOCAL_DEV: localDev,
+                ...(ipcPort ? { WIRE_IPC_PORT: ipcPort } : {}),
+                ...(detached ? { DEBUG_HIDE_DATE: true } : {})
               };
 
               const options = {
@@ -334,7 +337,8 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               .option('id', { type: 'string' })
               .option('data', { type: 'json' })
               .option('gas', { type: 'string' })
-              .option('fees', { type: 'string' }),
+              .option('fees', { type: 'string' })
+              .option('topic', { type: 'string' }),
 
             handler: asyncHandler(async (argv) => {
               const wnsConfig = config.get('services.wns');
@@ -348,11 +352,15 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
 
               assert(id, 'Invalid BotFactory ID.');
 
-              // Create service.yml.
-              await getBotFactoryServiceConfig();
+              let { topic } = argv;
 
-              const serviceYml = await yaml.read(path.join(process.cwd(), SERVICE_CONFIG_FILENAME));
-              const { topic } = serviceYml;
+              if (!topic) {
+                // Create service.yml.
+                await getBotFactoryServiceConfig();
+
+                const serviceYml = await yaml.read(path.join(process.cwd(), SERVICE_CONFIG_FILENAME));
+                topic = serviceYml.topic;
+              }
 
               const registry = new Registry(server, chainId);
 

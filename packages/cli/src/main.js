@@ -82,10 +82,10 @@ module.exports = createCLI(
   }
 );
 
-process.on('uncaughtException', err => {
+const handleError = err => {
   logError(err);
-});
+  process.exit(1);
+};
 
-process.on('unhandledRejection', err => {
-  logError(err);
-});
+process.on('uncaughtException', handleError);
+process.on('unhandledRejection', handleError);
