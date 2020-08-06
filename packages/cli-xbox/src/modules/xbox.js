@@ -7,7 +7,7 @@ import clean from 'lodash-clean';
 import get from 'lodash.get';
 import semverInc from 'semver/functions/inc';
 
-import { asyncHandler, print } from '@dxos/cli-core';
+import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
 
@@ -45,11 +45,14 @@ export const XBoxModule = ({ config }) => ({
         .version(false)
         .option('version', { type: 'string' })
         .option('id', { type: 'string' })
-        .option('data', { type: 'json' }),
+        .option('data', { type: 'json' })
+        .option('gas', { type: 'string' })
+        .option('fees', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
         const { verbose, id, 'dry-run': noop, data, txKey } = argv;
-        const { server, userKey, bondId, chainId } = config.get('services.wns');
+        const wnsConfig = config.get('services.wns');
+        const { server, userKey, bondId, chainId } = wnsConfig;
 
         assert(server, 'Invalid WNS endpoint.');
         assert(userKey, 'Invalid WNS userKey.');
@@ -80,7 +83,8 @@ export const XBoxModule = ({ config }) => ({
           return;
         }
 
-        await registry.setRecord(userKey, record, txKey, bondId);
+        const fee = getGasAndFees(argv, wnsConfig);
+        await registry.setRecord(userKey, record, txKey, bondId, fee);
       })
     })
 

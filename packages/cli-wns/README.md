@@ -31,6 +31,21 @@ Mnemonic saved to ~/.wire/profile/devnet.secrets.yml
 
 The profile configuration file is automatically updated with the WNS account private key and bond.
 
+## Gas and Fees
+
+https://docs.cosmos.network/master/basics/gas-fees.html
+
+* Transactions require `gas`, set to the maximum value the transaction is allowed to consume.
+* Typically, validators also require transaction `fees` to be provided to allow the transaction into the mempool.
+
+The `gas` and `fees` can be set to some default values in the profile, and can be overriden for each command using the `--gas` and `--fees` arguments.
+
+Example:
+
+```bash
+$ wns bond create --type uwire --quantity 1000000000 --gas 200000 --fees 200000uwire
+```
+
 ## Operations
 
 These commands require `wire` CLI to be configured, and a profile to be active.
@@ -110,7 +125,7 @@ $ wire faucet request --post-url "<TWEET URL>"
       }
     ]
   }
-} 
+}
 ```
 
 Send tokens:

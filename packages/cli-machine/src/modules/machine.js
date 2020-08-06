@@ -11,7 +11,7 @@ import crypto from 'crypto';
 
 import DigitalOcean from 'do-wrapper';
 
-import { asyncHandler, print } from '@dxos/cli-core';
+import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
 const KUBE_TYPE = 'wrn:kube';
@@ -72,9 +72,11 @@ export const MachineModule = ({ config }) => {
         command: ['publish'],
         describe: 'Publish a machine.',
         builder: yargs => yargs
-          .option('name', { type: 'string' }),
+          .option('name', { type: 'string' })
+          .option('gas', { type: 'string' })
+          .option('fees', { type: 'string' }),
 
-        handler: asyncHandler(async () => {
+        handler: asyncHandler(async (argv) => {
           const { verbose } = yargs.argv;
 
           const boxName = yargs.argv.name;
@@ -96,7 +98,8 @@ export const MachineModule = ({ config }) => {
             print({ dnsResult }, { json: true });
           }
 
-          const { server, userKey, bondId, chainId } = config.get('services.wns');
+          const wnsConfig = config.get('services.wns');
+          const { server, userKey, bondId, chainId } = wnsConfig;
           const registry = new Registry(server, chainId);
 
           const version = '1.0.0';
@@ -107,7 +110,8 @@ export const MachineModule = ({ config }) => {
             version
           };
 
-          await registry.setRecord(userKey, boxRecord, undefined, bondId);
+          const fee = getGasAndFees(argv, wnsConfig);
+          await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
 
           const machineData = {
             name: boxName,
@@ -156,7 +160,7 @@ export const MachineModule = ({ config }) => {
           // TODO(dboreham): There are custom cloud-init sections for things like configuring repos and installing packages that we should use.
           const cloudConfigScript =
          `#cloud-config
-         
+
          runcmd:
            - apt-get install -y psmisc git wget curl gnupg python build-essential
            - add-apt-repository -y ppa:certbot/certbot
