@@ -332,27 +332,6 @@ export const WNSModule = ({ config }) => ({
             log(JSON.stringify(result, undefined, 2));
           })
         })
-
-        // Resolve record.
-        .command({
-          command: ['resolve [ref]'],
-          describe: 'Resolve record.',
-          builder: yargs => yargs
-            .option('ref'),
-
-          handler: asyncHandler(async argv => {
-            const { ref } = argv;
-
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
-
-            const registry = new Registry(server, chainId);
-
-            const result = await registry.resolveRecords([ref]);
-            log(JSON.stringify(result, undefined, 4));
-          })
-        })
     })
 
     .command({
