@@ -458,16 +458,47 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
             command: ['reset'],
             describe: 'Reset bot factory.',
             builder: yargs => yargs
-              .option('topic', { alias: 't', type: 'string' }),
+              .option('topic', { alias: 't', type: 'string' })
+              .option('source', { type: 'boolean' })
+              .option('hard', { type: 'boolean' }),
 
             handler: asyncHandler(async argv => {
-              const { topic } = argv;
+              const { topic, source = false, hard = false } = argv;
 
               const { interactive } = cliState;
 
               const client = await getClient();
               const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
-              await botFactoryClient.sendResetRequest();
+              await botFactoryClient.sendResetRequest(source);
+
+              if (hard) {
+                await botFactoryClient.sendStopRequest();
+              }
+
+              if (interactive) {
+                await botFactoryClient.close();
+              } else {
+                // Workaround for segfaults from node-wrtc.
+                process.exit(0);
+              }
+            })
+          })
+
+          .command({
+            command: ['stop'],
+            describe: 'Stop bot factory.',
+            builder: yargs => yargs
+              .option('topic', { alias: 't', type: 'string' })
+              .option('code', { type: 'number' }),
+
+            handler: asyncHandler(async argv => {
+              const { topic, code = 0 } = argv;
+
+              const { interactive } = cliState;
+
+              const client = await getClient();
+              const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
+              await botFactoryClient.sendStopRequest(code);
 
               if (interactive) {
                 await botFactoryClient.close();
