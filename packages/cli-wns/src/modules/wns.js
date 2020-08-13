@@ -744,8 +744,11 @@ export const WNSModule = ({ config }) => ({
         .command({
           command: ['reserve [name]'],
           describe: 'Reserve authority/name.',
+          builder: yargs => yargs
+            .option('owner', { type: 'string', default: '' }),
+
           handler: asyncHandler(async argv => {
-            const { name } = argv;
+            const { name, owner } = argv;
             assert(name, 'Invalid authority name.');
 
             const wnsConfig = config.get('services.wns');
@@ -757,7 +760,7 @@ export const WNSModule = ({ config }) => ({
 
             const registry = new Registry(server, chainId);
             const fee = getGasAndFees(argv, wnsConfig);
-            const result = await registry.reserveAuthority(name, privateKey, fee);
+            const result = await registry.reserveAuthority(name, privateKey, fee, owner);
 
             log(JSON.stringify(result, undefined, 2));
           })

@@ -265,6 +265,18 @@ $ wire wns authority reserve dxos
 }
 ```
 
+Create sub-authority (same owner as parent authority):
+
+```bash
+$ wire wns authority reserve echo.dxos
+```
+
+Create sub-authority (custom owner for sub-authority):
+
+```bash
+$ wire wns authority reserve kube.dxos --owner cosmos1rm3ctz5etfrqaal3sp555wh57gcv5lwgx09wxc
+```
+
 Check authority information:
 
 ```bash
