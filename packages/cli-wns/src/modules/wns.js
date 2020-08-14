@@ -50,8 +50,8 @@ const getConnectionInfo = (argv, config) => {
     ...config,
     ...clean({ server, userKey, bondId, txKey, chainId }),
     privateKey: txKey || userKey || config.userKey,
-    gas: gas || config.gas,
-    fees: fees || config.fees
+    gas: String(gas || config.gas),
+    fees: String(fees || config.fees)
   };
 
   return result;
@@ -317,18 +317,21 @@ export const WNSModule = ({ config }) => ({
           command: ['list'],
           describe: 'List records.',
           builder: yargs => yargs
-            .option('bond-id', { type: 'string' }),
+            .option('bond-id', { type: 'string' })
+            .option('type', { type: 'string' })
+            .option('name', { type: 'string' })
+            .option('all', { type: 'boolean', default: false }),
 
           handler: asyncHandler(async argv => {
             const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            const { bondId } = argv;
+            const { type, name, bondId, all } = argv;
 
             assert(server, 'Invalid WNS endpoint.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
 
-            const result = await registry.queryRecords({ bondId });
+            const result = await registry.queryRecords({ bondId, type, name }, all);
             log(JSON.stringify(result, undefined, 2));
           })
         })

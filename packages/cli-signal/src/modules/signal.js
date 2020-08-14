@@ -14,8 +14,8 @@ import { log } from '@dxos/debug';
 const SIGNAL_PROCESS_NAME = 'signal';
 const DEFAULT_LOG_FILE = '/var/log/signal.log';
 
-const WRN_TYPE = 'wrn:service';
-const SERVICE_TYPE = 'signal';
+const LIMIT = 5;
+const RECORD_TYPE = 'network/service/signal';
 
 /**
  * Signal CLI module.
@@ -83,25 +83,20 @@ export const SignalModule = ({ config }) => {
           ...argv
         }) => {
           if (wnsBootstrap && !argv.help) {
-            const { server, bondId, chainId } = config.get('services.wns');
+            const { server, chainId } = config.get('services.wns');
 
             assert(server, 'Invalid WNS endpoint.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const attributes = clean({ type: WRN_TYPE, service: SERVICE_TYPE });
+            const attributes = clean({ type: RECORD_TYPE });
             const registeredServers = await registry.queryRecords(attributes);
 
             const bootstrap = registeredServers
-              .filter(b => b.attributes && b.attributes.signal && (!bondId || b.bondId !== bondId))
-              .map(({ attributes: { signal } }) => {
-                try {
-                  return signal.active !== false && signal.bootstrap ? signal.bootstrap : null;
-                } catch (err) {
-                  return null;
-                }
-              })
-              .filter(Boolean)
+              .filter(({ attributes: { active, bootstrap } }) => active !== false && bootstrap)
+              .map(({ attributes: { bootstrap } }) => bootstrap)
+              .sort(() => Math.random() - 0.5)
+              .slice(0, LIMIT)
               .join(',');
 
             argv.bootstrap = argv.bootstrap ? `${argv.bootstrap},${bootstrap}` : bootstrap;

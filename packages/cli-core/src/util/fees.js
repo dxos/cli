@@ -17,7 +17,7 @@ export const parseGasAndFees = (gas, fees = '') => {
 
 export const getGasAndFees = (argv, config = {}) => {
   return parseGasAndFees(
-    argv.gas || config.gas,
-    argv.fees || config.fees
+    String(argv.gas || config.gas),
+    String(argv.fees || config.fees)
   );
 };
