@@ -3,23 +3,20 @@
 //
 
 import assert from 'assert';
-import fs from 'fs-extra';
 import path from 'path';
 import get from 'lodash.get';
 import yaml from 'node-yaml';
-import fetch from 'node-fetch';
 import semverInc from 'semver/functions/inc';
 import clean from 'lodash-clean';
-import isEqual from 'lodash.isequal';
 import { load } from 'js-yaml';
 
-import { BOT_CONFIG_FILENAME } from '@dxos/botkit';
 import { BotFactoryClient } from '@dxos/botkit-client';
-import { Runnable, sanitizeEnv, stopService, asyncHandler, readFile, writeFile, print, getGasAndFees } from '@dxos/cli-core';
+import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
 
+import { build, publish, register } from '../handlers/bot';
 import envmap from '../../env-map.yml';
 
 import {
@@ -27,7 +24,7 @@ import {
   getBotFactoryServiceConfig
 } from '../config';
 
-const BOT_TYPE = 'wrn:bot';
+const BOT_TYPE = 'wrn://dxos/type/application/bot';
 const BOT_FACTORY_TYPE = 'wrn://dxos/type/service/bot-factory';
 
 const BOT_FACTORY_DEBUG_NAMESPACES = ['bot-factory', 'bot-factory:*'];
@@ -41,18 +38,12 @@ const DEFAULT_LOG_FILE = '/var/log/bot-factory.log';
 const botFactoryRunnable = new Runnable(BOT_FACTORY_EXEC, [BOT_FACTORY_PATH]);
 
 /**
- * @param {object} config
+ * @param {object} fields
  * @param {string} namespace
  */
-const getBotRecord = (config, namespace) => {
-  const { id, name, version, ...rest } = config;
-
+const getBotRecord = ({ build, names, ...rest }, namespace) => {
   const record = {
     type: BOT_TYPE,
-    name: id.substring(String(`${BOT_TYPE}:`).length),
-    version,
-
-    displayName: name,
     ...rest
   };
 
@@ -64,17 +55,12 @@ const getBotRecord = (config, namespace) => {
 };
 
 /**
- * @param {object} config
+ * @param {object} fields
  */
-const getBotFactoryRecord = (config) => {
-  const { id, version, ...rest } = config;
-
+const getBotFactoryRecord = (fields) => {
   const record = {
     type: BOT_FACTORY_TYPE,
-    name: id.substring(String(`${BOT_FACTORY_TYPE}:`).length),
-    version,
-
-    ...rest
+    ...fields
   };
 
   return record;
@@ -177,62 +163,6 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
         })
       })
 
-      // Register bot.
-      .command({
-        command: ['register'],
-        describe: 'Register bot.',
-        builder: yargs => yargs
-          .version(false)
-          .option('name', { type: 'string' })
-          .option('version', { type: 'string' })
-          .option('id', { type: 'string' })
-          .option('namespace', { type: 'string' })
-          .option('gas', { type: 'string' })
-          .option('fees', { type: 'string' }),
-
-        handler: asyncHandler(async (argv) => {
-          const { verbose, name, id, version, namespace, 'dry-run': noop, txKey } = argv;
-          const wnsConfig = config.get('services.wns');
-          const { server, userKey, bondId, chainId } = wnsConfig;
-
-          assert(server, 'Invalid WNS endpoint.');
-          assert(userKey, 'Invalid WNS userKey.');
-          assert(bondId, 'Invalid WNS Bond ID.');
-          assert(chainId, 'Invalid WNS Chain ID.');
-
-          const botConfig = await readFile(BOT_CONFIG_FILENAME);
-
-          const conf = {
-            ...botConfig,
-            ...clean({ id, name, version })
-          };
-
-          assert(conf.id, 'Invalid Bot ID.');
-          assert(conf.name, 'Invalid Bot Name.');
-          assert(conf.version, 'Invalid Bot Version.');
-
-          const record = getBotRecord(conf, namespace);
-
-          const registry = new Registry(server, chainId);
-          log(`Registering ${record.name} v${record.version}...`);
-
-          if (verbose || noop) {
-            log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
-          }
-
-          if (noop) {
-            return;
-          }
-
-          if (!isEqual(conf, botConfig)) {
-            await writeFile(conf, BOT_CONFIG_FILENAME);
-          }
-
-          const fee = getGasAndFees(argv, wnsConfig);
-          await registry.setRecord(userKey, record, txKey, bondId, fee);
-        })
-      })
-
       // Query bots.
       .command({
         command: ['query'],
@@ -266,6 +196,60 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           if (bots && bots.length) {
             log(JSON.stringify(bots, null, 2));
           }
+        })
+      })
+
+      .command({
+        command: ['build'],
+        describe: 'Upload bot package to IPFS.',
+        builder: yargs => yargs
+          .option('target', { type: 'string' }),
+
+        handler: asyncHandler(build(config))
+      })
+
+      .command({
+        command: ['publish'],
+        describe: 'Upload bot package to IPFS.',
+        builder: yargs => yargs,
+
+        handler: asyncHandler(async argv => {
+          const { version } = await publish(config)(argv);
+          log(`Run 'wire bot register' to register the new bot version: ${version}`);
+        })
+      })
+
+      // Register bot.
+      .command({
+        command: ['register'],
+        describe: 'Register bot.',
+        builder: yargs => yargs
+          .version(false)
+          .option('name', { type: 'array' })
+          .option('version', { type: 'string' })
+          .option('namespace', { type: 'string' })
+          .option('gas', { type: 'string' })
+          .option('fees', { type: 'string' }),
+
+        handler: asyncHandler(register(config, { getBotRecord }))
+      })
+
+      .command({
+        command: ['deploy'],
+        describe: 'Build, publish and register bot.',
+        builder: yargs => yargs
+          .version(false)
+          .option('name', { type: 'array' })
+          .option('version', { type: 'string' })
+          .option('namespace', { type: 'string' })
+          .option('gas', { type: 'string' })
+          .option('fees', { type: 'string' })
+          .option('target', { type: 'string' }),
+
+        handler: asyncHandler(async argv => {
+          await build(config)(argv);
+          await publish(config)(argv);
+          await register(config, { getBotRecord })(argv);
         })
       })
 
@@ -485,57 +469,6 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               }
             })
           })
-      })
-
-      .command({
-        command: ['publish'],
-        describe: 'Upload bot package to IPFS.',
-        builder: yargs => yargs,
-
-        handler: asyncHandler(async () => {
-          // Upload fails without trailing slash.
-          let ipfsEndpoint = config.get('services.ipfs.gateway');
-          assert(ipfsEndpoint, 'Invalid IPFS Gateway.');
-
-          if (!ipfsEndpoint.endsWith('/')) {
-            ipfsEndpoint = `${ipfsEndpoint}/`;
-          }
-
-          const files = fs.readdirSync(path.join(process.cwd(), 'out', 'dist'));
-          const uploads = await Promise.all(files.map(async (file) => {
-            // Upload to IPFS.
-            const filePath = path.join(process.cwd(), 'out', 'dist', file);
-            const response = await fetch(ipfsEndpoint, {
-              method: 'POST',
-              body: fs.createReadStream(filePath)
-            });
-
-            if (!response.ok) {
-              throw new Error(`Upload to IPFS failed: ${response.statusText}`);
-            }
-
-            const cid = response.headers.get('Ipfs-Hash');
-            log(`Uploaded ${file} to IPFS, CID: ${cid}`);
-
-            return { file, cid };
-          }));
-
-          // Update CIDs in bot.yml.
-          const botConfig = await readFile(BOT_CONFIG_FILENAME);
-          botConfig.package = botConfig.package || {};
-
-          uploads.forEach(upload => {
-            const [platform, arch] = path.parse(upload.file).name.split('-');
-            botConfig.package[platform] = botConfig.package[platform] || {};
-            botConfig.package[platform][arch] = upload.cid;
-          });
-
-          botConfig.version = semverInc(botConfig.version, 'patch');
-          await writeFile(botConfig, BOT_CONFIG_FILENAME);
-
-          log('Package contents have changed.');
-          log(`Run 'wire bot register' to register the new bot version: ${botConfig.version}`);
-        })
       })
   };
 };
