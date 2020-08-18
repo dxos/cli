@@ -68,7 +68,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   // Router handler.
   const appVersionHandler = async (req, res) => {
     let { wrn } = req.params;
-    let resourcePath = req.path;
+    let resourcePath = req.path || '/';
 
     // Mimic the /:org/:app pattern.  This is mainly for aesthetics.
     if (!wrn.startsWith('wrn://')) {
@@ -78,13 +78,18 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
       resourcePath = `/${components.slice(1).join('/')}`;
     }
 
+    if (resourcePath === '/' && !req.originalUrl.endsWith('/')) {
+      console.log(`Redirecting ${req.originalUrl} to ${req.originalUrl}/ ...`);
+      return res.redirect(`${req.originalUrl}/`);
+    }
+
     console.log(`WRN: ${wrn}, resource: ${resourcePath}`);
 
     const cid = await getCid(wrn);
 
     if (!cid) {
-      console.log(`Cannot find deploy for ${wrn}`);
-      return res.status(404);
+      console.log(`Cannot find CID for ${wrn}`);
+      return res.status(404).send('Not found');
     }
     return ipfsRoute(cid)(req, res, resourcePath);
   };

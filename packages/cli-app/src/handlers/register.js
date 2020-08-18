@@ -57,6 +57,7 @@ export const register = (config, { getAppRecord }) => async (argv) => {
     log(`Record ID: ${appId}`);
   }
 
+  // eslint-disable-next-line
   for await (const wrn of name) {
     log(`Assigning name ${wrn}...`);
     if (!noop) {
