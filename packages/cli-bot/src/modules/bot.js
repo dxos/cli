@@ -325,14 +325,14 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
             handler: asyncHandler(async (argv) => {
               const wnsConfig = config.get('services.wns');
               const { server, userKey, bondId, chainId } = wnsConfig;
-              const { verbose, 'dry-run': noop, data, txKey, name, version } = argv;
+              const { verbose, 'dry-run': noop, data, txKey, name = [], version } = argv;
 
               assert(server, 'Invalid WNS endpoint.');
               assert(userKey, 'Invalid WNS userKey.');
               assert(bondId, 'Invalid WNS Bond ID.');
               assert(chainId, 'Invalid WNS Chain ID.');
 
-              assert(Array.isArray(name) && name.length, 'Invalid BotFactory Record Name.');
+              assert(Array.isArray(name), 'Invalid BotFactory Record Name.');
               assert(version, 'Invalid BotFactory Version.');
 
               let { topic } = argv;
@@ -357,6 +357,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               if (!noop) {
                 const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
                 factoryId = result.data;
+                log(`Record ID: ${factoryId}`);
               }
 
               for await (const wrn of name) {

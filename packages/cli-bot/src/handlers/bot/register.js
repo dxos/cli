@@ -21,10 +21,10 @@ export const register = (config, { getBotRecord }) => async (argv) => {
   assert(bondId, 'Invalid WNS Bond ID.');
   assert(chainId, 'Invalid WNS Chain ID.');
 
-  const { names, build, ...botConfig } = await readFile(BOT_CONFIG_FILENAME);
+  const { names = [], build, ...botConfig } = await readFile(BOT_CONFIG_FILENAME);
   const { name = names } = argv;
 
-  assert(Array.isArray(name) && name.length, 'Invalid Bot Record Name.');
+  assert(Array.isArray(name), 'Invalid Bot Record Name.');
 
   const conf = {
     ...botConfig,
@@ -52,6 +52,7 @@ export const register = (config, { getBotRecord }) => async (argv) => {
     }
     const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
     botId = result.data;
+    log(`Record ID: ${botId}`);
   }
 
   for await (const wrn of name) {
