@@ -4,9 +4,7 @@
 
 import assert from 'assert';
 import path from 'path';
-import get from 'lodash.get';
 import yaml from 'node-yaml';
-import semverInc from 'semver/functions/inc';
 import clean from 'lodash-clean';
 import { load } from 'js-yaml';
 
@@ -318,7 +316,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
             builder: yargs => yargs
               .version(false)
               .option('version', { type: 'string' })
-              .option('id', { type: 'string' })
+              .option('name', { type: 'array' })
               .option('data', { type: 'json' })
               .option('gas', { type: 'string' })
               .option('fees', { type: 'string' })
@@ -327,17 +325,17 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
             handler: asyncHandler(async (argv) => {
               const wnsConfig = config.get('services.wns');
               const { server, userKey, bondId, chainId } = wnsConfig;
-              const { verbose, id, 'dry-run': noop, data, txKey } = argv;
+              const { verbose, 'dry-run': noop, data, txKey, name, version } = argv;
 
               assert(server, 'Invalid WNS endpoint.');
               assert(userKey, 'Invalid WNS userKey.');
               assert(bondId, 'Invalid WNS Bond ID.');
               assert(chainId, 'Invalid WNS Chain ID.');
 
-              assert(id, 'Invalid BotFactory ID.');
+              assert(Array.isArray(name) && name.length, 'Invalid BotFactory Record Name.');
+              assert(version, 'Invalid BotFactory Version.');
 
               let { topic } = argv;
-
               if (!topic) {
                 // Create service.yml.
                 await getBotFactoryServiceConfig();
@@ -347,29 +345,26 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               }
 
               const registry = new Registry(server, chainId);
+              const fee = getGasAndFees(argv, wnsConfig);
 
-              let { version } = argv;
-              if (!version) {
-                const [factory] = await registry.resolveRecords([id]);
-                version = get(factory, 'version');
-                assert(version, 'Invalid BotFactory Version.');
-
-                version = semverInc(version, 'patch');
-              }
-
-              const record = getBotFactoryRecord({ ...data, id, version, topic });
-
-              log(`Registering ${record.name} v${record.version}...`);
+              const record = getBotFactoryRecord({ ...data, version, topic });
+              log(`Registering ${record.name || ''} v${record.version}...`);
               if (verbose || noop) {
                 log(JSON.stringify({ registry: server, record }, undefined, 2));
               }
 
-              if (noop) {
-                return;
+              let factoryId;
+              if (!noop) {
+                const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
+                factoryId = result.data;
               }
 
-              const fee = getGasAndFees(argv, wnsConfig);
-              await registry.setRecord(userKey, record, txKey, bondId, fee);
+              for await (const wrn of name) {
+                log(`Assigning name ${wrn}...`);
+                if (!noop) {
+                  await registry.setName(wrn, factoryId, userKey, fee);
+                }
+              }
             })
           })
 
