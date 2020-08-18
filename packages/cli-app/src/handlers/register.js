@@ -51,7 +51,8 @@ export const register = (config, { getAppRecord }) => async (argv) => {
   }
 
   const fee = getGasAndFees(argv, wnsConfig);
-  await registry.setRecord(userKey, record, txKey, bondId, fee);
+  const response = await registry.setRecord(userKey, record, txKey, bondId, fee);
+  console.log(response.data);
 
   log(`Registered ${conf.name}@${conf.version}.`);
 };

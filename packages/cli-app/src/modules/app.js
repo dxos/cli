@@ -14,9 +14,8 @@ import { build, configuration, publish, register, query, serve } from '../handle
  */
 const getAppRecord = (config, namespace) => {
   const record = {
-    id: `${APP_TYPE}:${config.name}`,
-    type: APP_TYPE,
-    ...config
+    ...config,
+    type: APP_TYPE
   };
 
   if (namespace) {

@@ -12,7 +12,7 @@ import { APP_CONFIG_FILENAME } from '../config';
 
 const DEFAULT_BUILD = 'yarn webpack -p';
 
-export const build = (config, { getAppRecord, getPublicUrl }) => async ({ verbose }) => {
+export const build = (config, { getAppRecord }) => async ({ verbose }) => {
   const appConfig = await readFile(APP_CONFIG_FILENAME);
 
   const {
@@ -22,8 +22,6 @@ export const build = (config, { getAppRecord, getPublicUrl }) => async ({ verbos
   const record = getAppRecord(appConfig);
   record.version = semverInc(appConfig.version, 'patch');
 
-  const publicUrl = getPublicUrl(record);
-
   log(`Building ${record.name}...`);
   const [command, ...args] = build.split(' ');
 
@@ -31,7 +29,6 @@ export const build = (config, { getAppRecord, getPublicUrl }) => async ({ verbos
   const { status } = spawnSync(command, args, {
     env: {
       ...process.env,
-      PUBLIC_URL: publicUrl,
       CONFIG_DYNAMIC: true
     },
     stdio: verbose && 'inherit'
