@@ -39,14 +39,6 @@
   describe: Peer operations.
   moduleName: "@dxos/cli-peer"
 - command:
-  - resource
-  describe: Resource operations.
-  moduleName: "@dxos/cli-resource"
-- command:
-  - xbox
-  describe: XBox operations.
-  moduleName: "@dxos/cli-xbox"
-- command:
   - signal
   describe: Signal operations.
   moduleName: "@dxos/cli-signal"

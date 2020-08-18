@@ -1,6 +1,0 @@
-name: dxos/cli-xbox
-version: 0.0.1
-displayName: cli-xbox
-description: XBox operations.
-command:
-  - xbox

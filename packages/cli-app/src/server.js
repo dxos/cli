@@ -9,6 +9,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 import clean from 'lodash-clean';
 import yaml from 'js-yaml';
+import get from 'lodash.get';
 
 import { Registry } from '@wirelineio/registry-client';
 
@@ -49,9 +50,9 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     const attributes = clean({ wrn });
     const { records: apps } = await registry.resolveNames([wrn]);
     console.log(apps);
-    //  Should resolve to only one record.
+    // Should resolve to only one record.
     if (apps && apps.length === 1) {
-      const [{ attributes: { package: cid } }] = apps;
+      const cid = get(apps, '[0].attributes.package["/"]');
       console.log(`Resolved ${wrn} to cid: ${cid}`);
       cache.set(wrn, { cid, expiration: Date.now() + MAX_CACHE_AGE });
       return cid;
