@@ -15,7 +15,7 @@ const SIGNAL_PROCESS_NAME = 'signal';
 const DEFAULT_LOG_FILE = '/var/log/signal.log';
 
 const LIMIT = 5;
-const RECORD_TYPE = 'network/service/signal';
+const RECORD_TYPE = 'wrn://dxos/type/service/signal';
 
 /**
  * Signal CLI module.

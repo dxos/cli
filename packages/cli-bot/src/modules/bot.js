@@ -28,7 +28,7 @@ import {
 } from '../config';
 
 const BOT_TYPE = 'wrn:bot';
-const BOT_FACTORY_TYPE = 'wrn:bot-factory';
+const BOT_FACTORY_TYPE = 'wrn://dxos/type/service/bot-factory';
 
 const BOT_FACTORY_DEBUG_NAMESPACES = ['bot-factory', 'bot-factory:*'];
 

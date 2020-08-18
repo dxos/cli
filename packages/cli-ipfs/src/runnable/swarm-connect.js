@@ -12,7 +12,7 @@ import { Registry } from '@wirelineio/registry-client';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;
-const RECORD_TYPE = 'network/service/ipfs';
+const RECORD_TYPE = 'wrn://dxos/type/service/ipfs';
 const SERVICE_EXEC = 'ipfs';
 const SVC_NAME = 'ipfs-swarm-connect';
 
