@@ -23,9 +23,6 @@ const IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE = '/var/log/ipfs-swarm-connect.log';
 const RECORD_TYPE = 'wrn:service';
 const SERVICE_TYPE = 'ipfs';
 
-const APP_TYPE = 'wrn:app';
-const BOT_TYPE = 'wrn:bot';
-
 const ipfsRunnable = new Runnable(IPFS_EXEC);
 const swarmConnectRunable = new Runnable(IPFS_SWARM_CONNECTOR_EXEC, [IPFS_SWARM_CONNECTOR_PATH]);
 
@@ -118,6 +115,12 @@ export const IPFSModule = ({ config }) => ({
         .option('platform', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
+        const { server, chainId } = config.get('services.wns');
+        assert(server, 'Invalid WNS endpoint.');
+        assert(chainId, 'Invalid WNS Chain ID.');
+
+        const registry = new Registry(server, chainId);
+
         const { json, name, platform } = argv;
         let { thing } = argv;
 
@@ -132,21 +135,19 @@ export const IPFSModule = ({ config }) => ({
 
         if (!hash) {
           assert(name, 'Invalid Name.');
-          const { server, chainId } = config.get('services.wns');
-          const registry = new Registry(server, chainId);
 
           switch (thing) {
             case 'app': {
-              const apps = await registry.queryRecords({ type: APP_TYPE, name });
+              const { records: apps } = await registry.resolveNames([name]);
               assert(apps[0], 'App not found in WNS.');
-              hash = get(apps, '[0].attributes.package');
+              hash = get(apps, '[0].attributes.package["/"]');
               break;
             }
             case 'bot': {
               assert(platform, 'Invalid platform.');
-              const bots = await registry.queryRecords({ type: BOT_TYPE, name });
+              const { records: bots } = await registry.resolveNames([name]);
               assert(bots[0], 'Bot not found in WNS.');
-              hash = get(bots, `[0].attributes.package.${platform.replace('-', '.')}`);
+              hash = get(bots, `[0].attributes.package.${platform.replace('-', '.')}["/"]`);
               break;
             }
             default: {
@@ -156,12 +157,6 @@ export const IPFSModule = ({ config }) => ({
         }
 
         assert(hash, 'Invalid Hash.');
-
-        const { server, chainId } = config.get('services.wns');
-        const registry = new Registry(server, chainId);
-
-        assert(server, 'Invalid WNS endpoint.');
-        assert(chainId, 'Invalid WNS Chain ID.');
 
         const attributes = { type: RECORD_TYPE, service: SERVICE_TYPE };
         const services = await registry.queryRecords(attributes);
