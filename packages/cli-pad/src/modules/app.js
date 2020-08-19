@@ -14,7 +14,6 @@ import { build, publish, register, query } from '../handlers';
  */
 const getPadRecord = (config, namespace) => {
   const record = {
-    id: `${PAD_TYPE}:${config.name}`,
     type: PAD_TYPE,
     ...config
   };
