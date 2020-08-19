@@ -24,6 +24,16 @@ const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
   response.body.pipe(res);
 };
 
+const fixWrn = (wrn) => {
+  if (wrn.startsWith('wrn://')) {
+    return wrn;
+  }
+  if (wrn.startsWith('wrn:')) {
+    return `wrn://${wrn.slice(4).replace(/:/g, '/')}`;
+  }
+  return wrn;
+};
+
 const getConfigFilePath = (file = '') => {
   return file.startsWith('~') ? join(os.homedir(), file.substring(1)) : file;
 };
@@ -70,15 +80,14 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     let { wrn } = req.params;
     let resourcePath = req.path || '/';
 
-    // Mimic the /:org/:app pattern.  This is mainly for aesthetics.
-    if (!wrn.startsWith('wrn:')) {
+    if (wrn.startsWith('wrn:')) {
+      wrn = fixWrn(wrn);
+    } else {
+      // Mimic the /:org/:app pattern.  This is mainly for aesthetics.
       const components = req.path.split('/').filter(component => component);
       const [app] = components;
       wrn = `wrn://${wrn}/${app}`;
       resourcePath = `/${components.slice(1).join('/')}`;
-    } else {
-      // Accept wrn:, wrn:/, wrn://
-      wrn = wrn.replace(/^wrn:\/{0,2}/, 'wrn://');
     }
 
     if (resourcePath === '/' && !req.originalUrl.endsWith('/')) {
