@@ -94,8 +94,8 @@ export const SignalModule = ({ config }) => {
             const registeredServers = await registry.queryRecords(attributes);
 
             const bootstrap = registeredServers
-              .filter(({ attributes: { active, bootstrap } }) => active !== false && bootstrap)
-              .map(({ attributes: { bootstrap } }) => bootstrap)
+              .filter(({ signal: { attributes: { active, bootstrap } } }) => active !== false && bootstrap)
+              .map(({ signal: { attributes: { bootstrap } } }) => bootstrap)
               .sort(() => Math.random() - 0.5)
               .slice(0, LIMIT)
               .join(',');
