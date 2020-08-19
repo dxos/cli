@@ -12,7 +12,8 @@ import { Registry } from '@wirelineio/registry-client';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;
-const RECORD_TYPE = 'wrn://dxos/type/service/ipfs';
+const RECORD_TYPE = 'wrn:service';
+const SERVICE_TYPE = 'ipfs';
 const SERVICE_EXEC = 'ipfs';
 const SVC_NAME = 'ipfs-swarm-connect';
 
@@ -53,7 +54,7 @@ export class SwarmConnector {
   }
 
   async connect () {
-    const attributes = { type: RECORD_TYPE };
+    const attributes = { type: RECORD_TYPE, service: SERVICE_TYPE };
     const records = await this._registry.queryRecords(attributes);
 
     const active = records
