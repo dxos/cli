@@ -53,7 +53,7 @@ export const MachineModule = ({ config }) => {
         handler: asyncHandler(async () => {
           const { verbose } = yargs.argv;
 
-          const session = new DigitalOcean(doAccessToken);
+          const session = new DigitalOcean(doAccessToken, 100);
           const result = await session.droplets.getAll();
 
           if (verbose) {
@@ -83,7 +83,7 @@ export const MachineModule = ({ config }) => {
           const fullyQualifiedBoxName = `${boxName}.${dnsDomain}`;
           const wnsBoxName = `${dnsDomain}/${boxName}`;
 
-          const session = new DigitalOcean(doAccessToken);
+          const session = new DigitalOcean(doAccessToken, 100);
 
           const dropletId = await getIdFromName(session, yargs.argv.name);
 
@@ -113,12 +113,11 @@ export const MachineModule = ({ config }) => {
 
           const fee = getGasAndFees(argv, wnsConfig);
           const result = await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
-          console.log('Record ID:', result.data);
 
           const machineData = {
             name: boxName,
             dns_name: fullyQualifiedBoxName,
-            wrn: wnsBoxName
+            wns_record_id: result.data
           };
 
           print({ machine_data: machineData }, { json: true });
@@ -131,7 +130,7 @@ export const MachineModule = ({ config }) => {
           .option('name', { type: 'string' }),
 
         handler: asyncHandler(async () => {
-          const session = new DigitalOcean(doAccessToken);
+          const session = new DigitalOcean(doAccessToken, 100);
 
           const dropletId = await getIdFromName(session, yargs.argv.name);
 
@@ -154,7 +153,7 @@ export const MachineModule = ({ config }) => {
         handler: asyncHandler(async () => {
           const { verbose } = yargs.argv;
 
-          const session = new DigitalOcean(doAccessToken);
+          const session = new DigitalOcean(doAccessToken, 100);
 
           const boxName = yargs.argv.name ? yargs.argv.name : `kube${crypto.randomBytes(4).toString('hex')}`;
           const boxFullyQualifiedName = `${boxName}.${dnsDomain}`;
