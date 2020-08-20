@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1-moon.3",
+  "version": "1.0.1-moon.4",
   "useWorkspaces": true,
   "npmClient": "yarn"
 }
