@@ -107,11 +107,13 @@ export const MachineModule = ({ config }) => {
           const boxRecord = {
             type: KUBE_TYPE,
             name: wnsBoxName,
+            url: `https://${fullyQualifiedBoxName}`,
             version
           };
 
           const fee = getGasAndFees(argv, wnsConfig);
-          await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
+          const result = await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
+          console.log('Record ID:', result.data);
 
           const machineData = {
             name: boxName,
@@ -167,6 +169,7 @@ export const MachineModule = ({ config }) => {
            - apt install -y python-certbot-apache
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
+           - git checkout release-moon
            - cd ..
            - cp -r kube /opt
            - cd /opt/kube/scripts
