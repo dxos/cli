@@ -24,14 +24,11 @@ const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
   response.body.pipe(res);
 };
 
-const fixWrn = (wrn) => {
-  if (wrn.startsWith('wrn://')) {
-    return wrn;
-  }
+const normalizeWrn = (wrn) => {
   if (wrn.startsWith('wrn:')) {
-    return `wrn://${wrn.slice(4).replace(/:/g, '/')}`;
+    wrn = wrn.slice(4).replace(/^\/*/, '');
   }
-  return wrn;
+  return `wrn://${wrn.replace(/:/g, '/')}`;
 };
 
 const getConfigFilePath = (file = '') => {
@@ -80,8 +77,10 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     let { wrn } = req.params;
     let resourcePath = req.path || '/';
 
+    wrn = decodeURIComponent(wrn);
+
     if (wrn.startsWith('wrn:')) {
-      wrn = fixWrn(wrn);
+      wrn = normalizeWrn(wrn);
     } else {
       // Mimic the /:org/:app pattern.  This is mainly for aesthetics.
       const components = req.path.split('/').filter(component => component);
