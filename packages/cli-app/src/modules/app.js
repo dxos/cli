@@ -59,7 +59,7 @@ export const AppModule = ({ config }) => {
         describe: 'Register app.',
         builder: yargs => yargs
           .version(false)
-          .option('name', { type: 'string' })
+          .option('name', { type: 'array' })
           .option('version', { type: 'string' })
           .option('id', { type: 'string' })
           .option('namespace', { type: 'string' })
@@ -76,7 +76,8 @@ export const AppModule = ({ config }) => {
           .strict(false)
           .version(false)
           .option('gas', { type: 'string' })
-          .option('fees', { type: 'string' }),
+          .option('fees', { type: 'string' })
+          .option('name', { type: 'array' }),
         handler: asyncHandler(async argv => {
           log('Preparing to deploy...');
           await build(config, { getAppRecord, getPublicUrl })(argv);
