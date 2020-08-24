@@ -148,10 +148,11 @@ export const MachineModule = ({ config }) => {
         command: ['create'],
         describe: 'Create a Machine.',
         builder: yargs => yargs
-          .option('name', { type: 'string' }),
+          .option('name', { type: 'string' })
+          .option('pin', { type: 'boolean', default: false }),
 
         handler: asyncHandler(async () => {
-          const { verbose } = yargs.argv;
+          const { verbose, pin } = yargs.argv;
 
           const session = new DigitalOcean(doAccessToken, 100);
 
@@ -171,6 +172,8 @@ export const MachineModule = ({ config }) => {
            - git checkout release-moon
            - cd ..
            - cp -r kube /opt
+           - echo "export KUBE_FQDN=${boxFullyQualifiedName}" >> /opt/kube/etc/kube.env
+           - echo "export KUBE_PIN_WNS_OBJECTS=${pin ? 1 : 0}" >> /opt/kube/etc/kube.env
            - cd /opt/kube/scripts
            - sed -i 's/run_installer "ssh" install_ssh_key/#run_installer "ssh" install_ssh_key/g' install.sh
            - sed -i 's/apt clean//g' install.sh
@@ -179,6 +182,8 @@ export const MachineModule = ({ config }) => {
            - export HOME=/root
            - ./install.sh /opt
            - sed -i s/kube.local/${boxFullyQualifiedName}/g /root/.wire/remote.yml
+           - sed -i s/kube.local/${boxFullyQualifiedName}/g /etc/apache2/sites-available/000-default.conf
+           - sed -i s/kube.local/${boxFullyQualifiedName}/g /etc/apache2/sites-available/default-ssl.conf
            - cp ./conf/systemd/kube.service /etc/systemd/system
            - systemctl enable kube
            - systemctl start kube
