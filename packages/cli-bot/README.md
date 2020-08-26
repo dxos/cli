@@ -62,53 +62,62 @@ Inspect bot.yml before registering.
 
 ```bash
 $ cat bot.yml
-id: 'wrn:bot:dxos.org/echo'
-name: ECHO
-version: 1.0.53
+name: ExampleBot
+version: 0.0.1
 package:
   linux:
-    x64: QmVRmLrQeLZS8Xee7YVzYYAQANWmXqsNgNkaPMxM8MtPLA
-    arm: QmX3DDmeFunX5aVmaTNnViwQUe15Wa4UbZYcC3AwFwoWcg
+    x64:
+      /: QmVRmLrQeLZS8Xee7YVzYYAQANWmXqsNgNkaPMxM8MtPLA
+    arm:
+      /: QmX3DDmeFunX5aVmaTNnViwQUe15Wa4UbZYcC3AwFwoWcg
   macos:
-    x64: QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn
+    x64:
+      /: QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn
 ```
 
 Register the bot with WNS.
 
+> You could use optional `--name` argument in order to assign specific name to the record.
+
 ```bash
-$ wire bot register
+$ wire bot register --name "wrn://dxos/bot/example"
 ```
 
 Query registered bot.
 
 ```bash
-$ wire bot query --name 'dxos.org/echo'
+$ wire bot query
 [
   {
-    "id": "QmbwMajMxYsFrgZpLt7feSr88VvpAEJrrXwRBF1FwL6EoR",
-    "type": "wrn:bot",
-    "name": "dxos.org/echo",
-    "version": "1.0.53",
+    "id": "bafyreialjdlezoavldq6wun6i4p3oq6iln4pniqmodweo4ut3q4n3kgxni",
+    "names": [
+      "wrn://dxos/bot/example"
+    ],
     "owners": [
       "6ee3328f65c8566cd5451e49e97a767d10a8adf7"
     ],
-    "bondId": "8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3",
-    "createTime": "2020-04-30T10:37:00.974990000",
-    "expiryTime": "2021-04-30T10:37:00.974990000",
+    "bondId": "d466a4a9a640040f3d9582a5dc8797b43409c3bfde338b4b74ead9ffa225b494",
+    "createTime": "2020-08-25T18:47:58.737921941",
+    "expiryTime": "2021-08-25T18:47:58.737921941",
     "attributes": {
-      "displayName": "ECHO",
-      "name": "dxos.org/echo",
+      "name": "ExampleBot",
       "package": {
         "linux": {
-          "arm": "QmX3DDmeFunX5aVmaTNnViwQUe15Wa4UbZYcC3AwFwoWcg",
-          "x64": "QmVRmLrQeLZS8Xee7YVzYYAQANWmXqsNgNkaPMxM8MtPLA"
+          "x64": {
+            "/": "QmVRmLrQeLZS8Xee7YVzYYAQANWmXqsNgNkaPMxM8MtPLA"
+          },
+          "arm": {
+            "/": "QmX3DDmeFunX5aVmaTNnViwQUe15Wa4UbZYcC3AwFwoWcg"
+          }
         },
         "macos": {
-          "x64": "QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn"
+          "x64": {
+            "/": "QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn"
+          }
         }
       },
       "type": "wrn:bot",
-      "version": "1.0.53"
+      "version": "0.0.1"
     }
   }
 ]
