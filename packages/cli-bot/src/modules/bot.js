@@ -7,6 +7,7 @@ import path from 'path';
 import yaml from 'node-yaml';
 import clean from 'lodash-clean';
 import { load } from 'js-yaml';
+import set from 'lodash.set';
 
 import { BotFactoryClient } from '@dxos/botkit-client';
 import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
@@ -79,15 +80,19 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
         describe: 'Spawn new bot instance.',
         builder: yargs => yargs
           .option('topic', { alias: 't', type: 'string' })
+          .option('env', { type: 'string' })
+          .option('ipfsCID', { type: 'string' })
+          .option('ipfsEndpoint', { type: 'string' })
+          .option('id', { type: 'string' })
           .option('bot-id', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { botId, topic, json } = argv;
+          const { botId, topic, json, env, ipfsCID, ipfsEndpoint, id } = argv;
           const { interactive } = cliState;
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
-          const botUID = await botFactoryClient.sendSpawnRequest(botId);
+          const botUID = await botFactoryClient.sendSpawnRequest(botId, { env, ipfsCID, ipfsEndpoint, id });
 
           print({ botUID }, { json });
 
