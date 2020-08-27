@@ -19,7 +19,8 @@ import {
   Runnable,
   stopService,
   asyncHandler,
-  getActiveProfilePath
+  getActiveProfilePath,
+  getGasAndFees
 } from '@dxos/cli-core';
 
 import { log } from '@dxos/debug';
@@ -43,15 +44,27 @@ const FAUCET_TOKEN = 'uwire';
 const FAUCET_AMOUNT = '1000000000';
 
 const getConnectionInfo = (argv, config) => {
-  const { server, userKey, bondId, txKey, chainId } = argv;
+  const { server, userKey, bondId, txKey, chainId, fees, gas } = argv;
 
   const result = {
     ...config,
     ...clean({ server, userKey, bondId, txKey, chainId }),
-    privateKey: txKey || userKey || config.userKey
+    privateKey: txKey || userKey || config.userKey,
+    gas: String(gas || config.gas),
+    fees: String(fees || config.fees)
   };
 
   return result;
+};
+
+const readJSONFile = (filePath) => {
+  assert(filePath, 'Invalid file path.');
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`File not found: ${filePath}`);
+  }
+
+  return JSON.parse(fs.readFileSync(filePath));
 };
 
 /**
@@ -96,6 +109,9 @@ export const WNSModule = ({ config }) => ({
     .option('address')
     .option('name')
     .option('tag')
+
+    .option('gas', { type: 'string' })
+    .option('fees', { type: 'string' })
 
     .option('background', { type: 'boolean', alias: 'daemon', default: false })
     .option('user', { default: 'root' })
@@ -252,8 +268,9 @@ export const WNSModule = ({ config }) => ({
             .option('bond-id', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const { txKey, filename } = argv;
-            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const { txKey, filename, verbose } = argv;
+            const wnsConfig = config.get('services.wns');
+            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, wnsConfig);
 
             assert(server, 'Invalid WNS endpoint.');
             assert(userKey, 'Invalid User Key.');
@@ -269,9 +286,10 @@ export const WNSModule = ({ config }) => ({
 
             const { record } = await yaml.read(file);
             const registry = new Registry(server, chainId);
-            const result = await registry.setRecord(userKey, record, txKey, bondId);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
 
-            log(JSON.stringify(result, undefined, 2));
+            log(verbose ? JSON.stringify(result, undefined, 2) : result.data);
           })
         })
 
@@ -299,40 +317,22 @@ export const WNSModule = ({ config }) => ({
           command: ['list'],
           describe: 'List records.',
           builder: yargs => yargs
-            .option('bond-id', { type: 'string' }),
+            .option('bond-id', { type: 'string' })
+            .option('type', { type: 'string' })
+            .option('name', { type: 'string' })
+            .option('all', { type: 'boolean', default: false }),
 
           handler: asyncHandler(async argv => {
             const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            const { bondId } = argv;
+            const { type, name, bondId, all } = argv;
 
             assert(server, 'Invalid WNS endpoint.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
 
-            const result = await registry.queryRecords({ bondId });
+            const result = await registry.queryRecords({ bondId, type, name }, all);
             log(JSON.stringify(result, undefined, 2));
-          })
-        })
-
-        // Resolve record.
-        .command({
-          command: ['resolve [ref]'],
-          describe: 'Resolve record.',
-          builder: yargs => yargs
-            .option('ref'),
-
-          handler: asyncHandler(async argv => {
-            const { ref } = argv;
-
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
-
-            const registry = new Registry(server, chainId);
-
-            const result = await registry.resolveRecords([ref]);
-            log(JSON.stringify(result, undefined, 4));
           })
         })
     })
@@ -350,11 +350,13 @@ export const WNSModule = ({ config }) => ({
             .option('mnemonic', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const { server, userKey, bondId } = getConnectionInfo(argv, config.get('services.wns'));
+            const wnsConfig = config.get('services.wns');
+            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, wnsConfig);
 
             assert(server, 'Invalid WNS endpoint.');
             assert(!userKey, 'User key already exists.');
             assert(!bondId, 'Bond already exists.');
+            assert(chainId, 'Invalid WNS Chain ID.');
 
             const faucetServer = config.get('services.faucet.server');
 
@@ -370,7 +372,7 @@ export const WNSModule = ({ config }) => ({
             const account = Account.generateFromMnemonic(mnemonic);
             const address = account.getCosmosAddress();
 
-            const registry = new Registry(server);
+            const registry = new Registry(server, chainId);
             const accountResult = await registry.getAccounts([address]);
             if (accountResult.length) {
               log('Account already exists.');
@@ -392,7 +394,8 @@ export const WNSModule = ({ config }) => ({
             const privateKey = account.getPrivateKey();
 
             log('Creating a bond...');
-            await registry.createBond([{ denom: FAUCET_TOKEN, amount: FAUCET_AMOUNT }], privateKey);
+            const fee = getGasAndFees(argv, wnsConfig);
+            await registry.createBond([{ denom: FAUCET_TOKEN, amount: FAUCET_AMOUNT }], privateKey, fee);
             const bondsResult = await registry.queryBonds({ owner: address });
 
             const newBondId = bondsResult && bondsResult.length && bondsResult[0].id;
@@ -436,11 +439,15 @@ export const WNSModule = ({ config }) => ({
           command: ['get'],
           describe: 'Get account.',
           handler: asyncHandler(async argv => {
-            const { address } = argv;
+            let { address } = argv;
 
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
             assert(server, 'Invalid WNS endpoint.');
             assert(chainId, 'Invalid WNS Chain ID.');
+
+            if (!address && privateKey) {
+              address = new Account(Buffer.from(privateKey, 'hex')).getCosmosAddress();
+            }
 
             const registry = new Registry(server, chainId);
             const result = await registry.getAccounts([address]);
@@ -469,7 +476,8 @@ export const WNSModule = ({ config }) => ({
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
             assert(server, 'Invalid WNS endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
             assert(chainId, 'Invalid WNS Chain ID.');
@@ -478,7 +486,8 @@ export const WNSModule = ({ config }) => ({
             const fromAddress = account.formattedCosmosAddress;
 
             const registry = new Registry(server, chainId);
-            await registry.sendCoins([{ denom, amount }], toAddress, privateKey);
+            const fee = getGasAndFees(argv, wnsConfig);
+            await registry.sendCoins([{ denom, amount }], toAddress, privateKey, fee);
             const result = await registry.getAccounts([fromAddress, toAddress]);
             log(JSON.stringify(result, undefined, 2));
           })
@@ -537,19 +546,21 @@ export const WNSModule = ({ config }) => ({
             .option('quantity', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const { type: denom, quantity: amount } = argv;
+            const { type: denom, quantity: amount, verbose } = argv;
 
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
             assert(server, 'Invalid WNS endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const result = await registry.createBond([{ denom, amount }], privateKey);
-            log(JSON.stringify(result, undefined, 2));
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.createBond([{ denom, amount }], privateKey, fee);
+            log(verbose ? JSON.stringify(result, undefined, 2) : result.data);
           })
         })
 
@@ -567,13 +578,15 @@ export const WNSModule = ({ config }) => ({
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
             assert(server, 'Invalid WNS endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const result = await registry.refillBond(id, [{ denom, amount }], privateKey);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.refillBond(id, [{ denom, amount }], privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
         })
@@ -592,13 +605,15 @@ export const WNSModule = ({ config }) => ({
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
             assert(server, 'Invalid WNS endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const result = await registry.withdrawBond(id, [{ denom, amount }], privateKey);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.withdrawBond(id, [{ denom, amount }], privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
         })
@@ -611,13 +626,15 @@ export const WNSModule = ({ config }) => ({
             const { id } = argv;
             assert(id, 'Invalid Bond ID.');
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
             assert(server, 'Invalid WNS endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const result = await registry.cancelBond(id, privateKey);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.cancelBond(id, privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
         })
@@ -634,13 +651,15 @@ export const WNSModule = ({ config }) => ({
             assert(id, 'Invalid Record ID.');
             assert(bondId, 'Invalid Bond ID.');
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
             assert(server, 'Invalid WNS endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const result = await registry.associateBond(id, bondId, privateKey);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.associateBond(id, bondId, privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
         })
@@ -653,13 +672,15 @@ export const WNSModule = ({ config }) => ({
             const { id } = argv;
             assert(id, 'Invalid Record ID.');
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
             assert(server, 'Invalid WNS endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const result = await registry.dissociateBond(id, privateKey);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.dissociateBond(id, privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
         })
@@ -679,13 +700,15 @@ export const WNSModule = ({ config }) => ({
                 const { bondId } = argv;
                 assert(bondId, 'Invalid Bond ID.');
 
-                const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+                const wnsConfig = config.get('services.wns');
+                const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
                 assert(server, 'Invalid WNS endpoint.');
                 assert(privateKey, 'Invalid Transaction Key.');
                 assert(chainId, 'Invalid WNS Chain ID.');
 
                 const registry = new Registry(server, chainId);
-                const result = await registry.dissociateRecords(bondId, privateKey);
+                const fee = getGasAndFees(argv, wnsConfig);
+                const result = await registry.dissociateRecords(bondId, privateKey, fee);
                 log(JSON.stringify(result, undefined, 2));
               })
             })
@@ -703,16 +726,298 @@ export const WNSModule = ({ config }) => ({
                 assert(oldBondId, 'Invalid Old Bond ID.');
                 assert(newBondId, 'Invalid New Bond ID.');
 
-                const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+                const wnsConfig = config.get('services.wns');
+                const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
                 assert(server, 'Invalid WNS endpoint.');
                 assert(privateKey, 'Invalid Transaction Key.');
                 assert(chainId, 'Invalid WNS Chain ID.');
 
                 const registry = new Registry(server, chainId);
-                const result = await registry.reassociateRecords(oldBondId, newBondId, privateKey);
+                const fee = getGasAndFees(argv, wnsConfig);
+                const result = await registry.reassociateRecords(oldBondId, newBondId, privateKey, fee);
                 log(JSON.stringify(result, undefined, 2));
               })
             })
+        })
+    })
+
+    .command({
+      command: ['authority'],
+      describe: 'Name authority operations.',
+      builder: yargs => yargs
+        .command({
+          command: ['reserve [name]'],
+          describe: 'Reserve authority/name.',
+          builder: yargs => yargs
+            .option('owner', { type: 'string', default: '' }),
+
+          handler: asyncHandler(async argv => {
+            const { name, owner } = argv;
+            assert(name, 'Invalid authority name.');
+
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+
+            assert(server, 'Invalid WNS endpoint.');
+            assert(privateKey, 'Invalid Transaction Key.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.reserveAuthority(name, privateKey, fee, owner);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['whois [name]'],
+          describe: 'Lookup authority information.',
+          handler: asyncHandler(async argv => {
+            const { name } = argv;
+            assert(name, 'Invalid authority name.');
+
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            assert(server, 'Invalid WNS endpoint.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const result = await registry.lookupAuthorities([name]);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+    })
+
+    .command({
+      command: ['name'],
+      describe: 'Name operations.',
+      builder: yargs => yargs
+        .command({
+          command: ['set [name] [id]'],
+          describe: 'Set name (create name to record ID mapping).',
+          handler: asyncHandler(async argv => {
+            const { name, id } = argv;
+            assert(name, 'Invalid Name.');
+            assert(id, 'Invalid Record ID.');
+
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+
+            assert(server, 'Invalid WNS endpoint.');
+            assert(privateKey, 'Invalid Transaction Key.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.setName(name, id, privateKey, fee);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['delete [name]'],
+          describe: 'Delete name (remove name to record ID mapping).',
+          handler: asyncHandler(async argv => {
+            const { name } = argv;
+            assert(name, 'Invalid Name.');
+
+            const wnsConfig = config.get('services.wns');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+
+            assert(server, 'Invalid WNS endpoint.');
+            assert(privateKey, 'Invalid Transaction Key.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const fee = getGasAndFees(argv, wnsConfig);
+            const result = await registry.deleteName(name, privateKey, fee);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['lookup [name]'],
+          describe: 'Lookup name information.',
+          builder: yargs => yargs
+            .option('history', { type: 'boolean' }),
+
+          handler: asyncHandler(async argv => {
+            const { name, history } = argv;
+            assert(name, 'Invalid Name.');
+
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            assert(server, 'Invalid WNS endpoint.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const result = await registry.lookupNames([name], history);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['resolve [name]'],
+          describe: 'Resolve name to record.',
+          handler: asyncHandler(async argv => {
+            const { name } = argv;
+
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            assert(server, 'Invalid WNS endpoint.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+
+            const result = await registry.resolveNames([name]);
+            log(JSON.stringify(result, undefined, 4));
+          })
+        })
+    })
+
+    .command({
+      command: ['migrate'],
+      describe: 'WNS chain migration tools.',
+      builder: yargs => yargs
+        .option('from-file', { type: 'string' })
+        .option('to-file', { type: 'string' })
+
+        .command({
+          command: ['accounts'],
+          describe: 'Migrate accounts from exported file to new genesis.json.',
+          handler: asyncHandler(async argv => {
+            const { fromFile, toFile } = argv;
+
+            const from = readJSONFile(fromFile);
+            const to = readJSONFile(toFile);
+
+            const stats = {
+              countFromFileAccounts: 0,
+              countSkippedModuleAccounts: 0,
+              skippedModuleAccounts: [],
+              countSkippedExistingAccounts: 0,
+              countMigratedAccounts: 0
+            };
+
+            stats.countFromFileAccounts = from.app_state.accounts.length;
+
+            const existingAccounts = {};
+            to.app_state.accounts.forEach(account => {
+              existingAccounts[account.address] = true;
+            });
+
+            from.app_state.accounts.forEach(account => {
+              if (account.module_name) {
+                stats.skippedModuleAccounts.push(account.module_name);
+                return stats.countSkippedModuleAccounts++;
+              }
+
+              if (existingAccounts[account.address]) {
+                return stats.countSkippedExistingAccounts++;
+              }
+
+              account.account_number = '0';
+              account.sequence_number = '0';
+              to.app_state.accounts.push(account);
+              stats.countMigratedAccounts++;
+            });
+
+            fs.writeFileSync(toFile, JSON.stringify(to, undefined, 2));
+
+            log(JSON.stringify(stats, null, 2));
+          })
+        })
+
+        .command({
+          command: ['bonds'],
+          describe: 'Migrate bonds from exported file to new genesis.json.',
+          handler: asyncHandler(async argv => {
+            const { fromFile, toFile } = argv;
+
+            const from = readJSONFile(fromFile);
+            const to = readJSONFile(toFile);
+
+            const stats = {
+              countMigratedBonds: from.app_state.bond.bonds.length
+            };
+
+            // Copy over all bonds.
+            to.app_state.bond.bonds = from.app_state.bond.bonds;
+
+            fs.writeFileSync(toFile, JSON.stringify(to, undefined, 2));
+
+            log(JSON.stringify(stats, null, 2));
+          })
+        })
+
+        .command({
+          command: ['gentx-accounts'],
+          describe: 'Update genesis.json with accounts from gentx folder, with initial stake.',
+          builder: yargs => yargs
+            .option('gentx-folder', { type: 'string' })
+            .option('amount', { type: 'string' }),
+
+          handler: asyncHandler(async argv => {
+            const { gentxFolder, toFile, amount } = argv;
+
+            assert(gentxFolder, 'Invalid gentx folder path.');
+            assert(amount, 'Invalid amount.');
+
+            const to = readJSONFile(toFile);
+
+            const stats = {
+              countSkippedExistingAccounts: 0,
+              countNewAccounts: 0
+            };
+
+            const gentxAccounts = [];
+
+            const gentxFiles = fs.readdirSync(gentxFolder);
+            gentxFiles.forEach(gentxFile => {
+              const gentxFilePath = path.join(gentxFolder, gentxFile);
+              const gentx = JSON.parse(fs.readFileSync(gentxFilePath));
+              gentxAccounts.push(gentx.value.msg[0].value.delegator_address);
+            });
+
+            const existingAccounts = {};
+            to.app_state.accounts.forEach(account => {
+              existingAccounts[account.address] = true;
+            });
+
+            gentxAccounts.forEach(account => {
+              if (existingAccounts[account]) {
+                return stats.countSkippedExistingAccounts++;
+              }
+
+              const newAccount = {
+                address: account,
+                coins: [
+                  {
+                    denom: 'uwire',
+                    amount
+                  }
+                ],
+                sequence_number: '0',
+                account_number: '0',
+                original_vesting: [],
+                delegated_free: [],
+                delegated_vesting: [],
+                start_time: '0',
+                end_time: '0',
+                module_name: '',
+                module_permissions: ['']
+              };
+
+              to.app_state.accounts.push(newAccount);
+              stats.countNewAccounts++;
+            });
+
+            fs.writeFileSync(toFile, JSON.stringify(to, undefined, 2));
+
+            log(JSON.stringify(stats, null, 2));
+          })
         })
     })
 });

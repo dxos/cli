@@ -24,23 +24,27 @@ cli:
 # DxOS services.
 services:
   wns:
-    server: 'http://127.0.0.1:9473/api'
-    userKey: 'b1e4e95dd3e3294f15869b56697b5e3bdcaa24d9d0af1be9ee57d5a59457843a'
-    bondId: '8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3'
-    chainId: 'localnet'
+    server: 'https://wns1.kube.moon.dxos.network/api'
+    userKey:
+    bondId:
+    chainId: 'devnet-2'
     gas: '200000'
     fees: '200000uwire'
   ipfs:
     server: '/ip4/127.0.0.1/tcp/5001'
     gateway: 'http://127.0.0.1:8888/ipfs/'
   signal:
-    server: 'ws://127.0.0.1:4000'
+    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
   ice:
-    - urls: 'stun:night.2e1a47.xyz:3478'
-    - urls: 'turn:night.2e1a47.xyz:3478'
+    - urls: 'stun:apollo1.kube.moon.dxos.network:3478'
+    - urls: 'turn:apollo1.kube.moon.dxos.network:3478'
+      username: 'dxos'
+      credential: 'dxos'
+    - urls: 'stun:apollo2.kube.moon.dxos.network:3478'
+    - urls: 'turn:apollo2.kube.moon.dxos.network:3478'
       username: 'dxos'
       credential: 'dxos'
   faucet:
-    server: ''
+    server: 'https://faucet.kube.moon.dxos.network/api'
 system:
   certEndpoint: ''

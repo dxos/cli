@@ -9,16 +9,26 @@ import express from 'express';
 import fetch from 'node-fetch';
 import clean from 'lodash-clean';
 import yaml from 'js-yaml';
+import get from 'lodash.get';
 
 import { Registry } from '@wirelineio/registry-client';
 
-import { APP_TYPE, BASE_URL, DEFAULT_PORT } from './config';
+import { BASE_URL, DEFAULT_PORT } from './config';
+
+const MAX_CACHE_AGE = 120 * 1000;
 
 const ensureEndsWithSlash = url => (url.endsWith('/') ? url : `${url}/`);
 
-const ipfsRouter = (ipfsGateway) => (cid) => async (req, res) => {
-  const response = await fetch(`${ensureEndsWithSlash(ipfsGateway)}${cid}${req.path}`);
+const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
+  const response = await fetch(`${ensureEndsWithSlash(ipfsGateway)}${cid}${resourcePath}`);
   response.body.pipe(res);
+};
+
+const normalizeWrn = (wrn) => {
+  if (wrn.startsWith('wrn:')) {
+    wrn = wrn.slice(4).replace(/^\/*/, '');
+  }
+  return `wrn://${wrn.replace(/:/g, '/')}`;
 };
 
 const getConfigFilePath = (file = '') => {
@@ -33,23 +43,25 @@ const getConfigFilePath = (file = '') => {
  */
 export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, namespace }) => {
   const registry = new Registry(registryEndpoint, chainId);
-  const cidMap = new Map();
+  const cache = new Map();
 
-  const getCid = async (name, version) => {
-    let cacheKey = `${name}@${version}`;
-
-    if (version && cidMap.has(cacheKey)) {
-      return cidMap.get(cacheKey);
+  const getCid = async (wrn) => {
+    const cached = cache.get(wrn);
+    if (cached && Date.now() < cached.expiration) {
+      console.log(`Cached answer ${wrn} -> ${cached.cid}`);
+      return cached.cid;
     }
 
-    const attributes = clean({ type: APP_TYPE, tag: namespace, name, version });
-    const apps = await registry.queryRecords(attributes);
-    //  Should resolve to only one record.
+    console.log(`Resolving ${wrn}`);
+
+    const attributes = clean({ wrn });
+    const { records: apps } = await registry.resolveNames([wrn]);
+    console.log(apps);
+    // Should resolve to only one record.
     if (apps && apps.length === 1) {
-      const [{ attributes: { name: recordName, version: recordVersion, package: cid } }] = apps;
-      cacheKey = `${recordName}@${recordVersion}`;
-      console.log(`Resolved ${cacheKey} cid: ${cid}`);
-      cidMap.set(cacheKey, cid);
+      const cid = get(apps, '[0].attributes.package["/"]');
+      console.log(`Resolved ${wrn} to cid: ${cid}`);
+      cache.set(wrn, { cid, expiration: Date.now() + MAX_CACHE_AGE });
       return cid;
     }
     console.log(`Found ${apps.length} apps.`, apps.map(({ name, version }) => `${name}@${version}`).join(' '));
@@ -62,15 +74,35 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
 
   // Router handler.
   const appVersionHandler = async (req, res) => {
-    const { org, app, version } = req.params;
-    const name = `${org}/${app}`;
-    const cid = await getCid(name, version);
+    let { wrn } = req.params;
+    let resourcePath = req.path || '/';
+
+    wrn = decodeURIComponent(wrn);
+
+    if (wrn.startsWith('wrn:')) {
+      wrn = normalizeWrn(wrn);
+    } else {
+      // Mimic the /:org/:app pattern.  This is mainly for aesthetics.
+      const components = req.path.split('/').filter(component => component);
+      const [app] = components;
+      wrn = `wrn://${wrn}/${app}`;
+      resourcePath = `/${components.slice(1).join('/')}`;
+    }
+
+    if (resourcePath === '/' && !req.originalUrl.endsWith('/')) {
+      console.log(`Redirecting ${req.originalUrl} to ${req.originalUrl}/ ...`);
+      return res.redirect(`${req.originalUrl}/`);
+    }
+
+    console.log(`WRN: ${wrn}, resource: ${resourcePath}`);
+
+    const cid = await getCid(wrn);
 
     if (!cid) {
-      console.log(`Cannot find deploy for ${name}`);
-      return res.status(404);
+      console.log(`Cannot find CID for ${wrn}`);
+      return res.status(404).send('Not found');
     }
-    return ipfsRoute(cid)(req, res);
+    return ipfsRoute(cid)(req, res, resourcePath);
   };
 
   // Config handler
@@ -91,11 +123,8 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   // Start configuring express app.
   const app = express();
 
-  app.use(`${BASE_URL}/:org/:app@:version/config/config.json`, configHandler);
-  app.use(`${BASE_URL}/:org/:app/config/config.json`, configHandler);
-
-  app.use(`${BASE_URL}/:org/:app@:version?`, appVersionHandler);
-  app.use(`${BASE_URL}/:org/:app`, appVersionHandler);
+  app.use('/config/config.json', configHandler);
+  app.use(`${BASE_URL}/:wrn/`, appVersionHandler);
 
   return app.listen(port, () => {
     console.log(`Server started on ${port}.`);

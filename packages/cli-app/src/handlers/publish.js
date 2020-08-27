@@ -6,6 +6,7 @@ import assert from 'assert';
 import IpfsHttpClient, { globSource } from 'ipfs-http-client';
 import path from 'path';
 import semverInc from 'semver/functions/inc';
+import set from 'lodash.set';
 
 import { log } from '@dxos/debug';
 import { readFile, writeFile } from '@dxos/cli-core';
@@ -37,7 +38,7 @@ export const publish = config => async ({ path: distPath = DEFAULT_DIST_PATH }) 
   const cid = uploadedFiles.pop();
 
   // Update CID in app.yml.
-  appConfig.package = cid;
+  set(appConfig, 'package["/"]', cid);
   appConfig.version = semverInc(appConfig.version, 'patch');
   await writeFile(appConfig, APP_CONFIG_FILENAME);
 

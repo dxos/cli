@@ -14,9 +14,8 @@ import { build, configuration, publish, register, query, serve } from '../handle
  */
 const getAppRecord = (config, namespace) => {
   const record = {
-    id: `${APP_TYPE}:${config.name}`,
-    type: APP_TYPE,
-    ...config
+    ...config,
+    type: APP_TYPE
   };
 
   if (namespace) {
@@ -60,11 +59,12 @@ export const AppModule = ({ config }) => {
         describe: 'Register app.',
         builder: yargs => yargs
           .version(false)
-          .option('name', { type: 'string' })
+          .option('name', { type: 'array' })
           .option('version', { type: 'string' })
           .option('id', { type: 'string' })
-          .option('namespace', { type: 'string' }),
-
+          .option('namespace', { type: 'string' })
+          .option('gas', { type: 'string' })
+          .option('fees', { type: 'string' }),
         handler: asyncHandler(register(config, { getAppRecord }))
       })
 
@@ -74,7 +74,10 @@ export const AppModule = ({ config }) => {
         describe: 'Deploy Application to WNS.',
         builder: yargs => yargs
           .strict(false)
-          .version(false),
+          .version(false)
+          .option('gas', { type: 'string' })
+          .option('fees', { type: 'string' })
+          .option('name', { type: 'array' }),
         handler: asyncHandler(async argv => {
           log('Preparing to deploy...');
           await build(config, { getAppRecord, getPublicUrl })(argv);
