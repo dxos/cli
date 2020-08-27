@@ -45,6 +45,6 @@ services:
       username: 'dxos'
       credential: 'dxos'
   faucet:
-    server: 'https://faucet.kube.moon.dxos.network'
+    server: 'https://faucet.kube.moon.dxos.network/api'
 system:
   certEndpoint: ''
