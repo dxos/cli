@@ -102,7 +102,7 @@ $ wire app query
 
 ### Serve Apps
 
-Once apps are published to ipfs and registered to WNS we can use `wire app serve` to serve the distributed files.
+Once apps are published to IPFS, a WNS record and name have been registered, we can use `wire app serve` to serve the distributed files.
 
 ```bash
 wire app serve
@@ -110,15 +110,24 @@ wire app serve
 
 - `port`: Which port to start the server. Defaults to `5999`
 
-The following URLs will be available:
+The application will hosted at:
 
-- GET `/app/dxos.org/example-app/`: Latest version on WNS by default.
-- GET  `/app/dxos.org/example-app@0.0.1/`
+- GET: `/app/${WRN}/`
+
+Since WRN's can contain characters which are reserved in URL's, it is often necessary to URI-escape the WRN portion of the URL.
+
+For example, with the WRN `wrn://dxos/application/example` the URL is: 
+
+- GET: `/app/wrn%3A%2F%2Fdxos%2Fapplication%2Fexample/`
+
+Because URI-encoded URL are difficult to enter manually, there is an optimization for simple WRN's of the form `wrn://<org>/<appname>`.  For a simple, two-part name like `wrn://dxos/example`, an unencoded URL can be used:
+
+- GET: `/app/dxos/example/`
 
 #### Apps config endpoints:
 
-If using `dxos/config` dynamic configuration each app can request its own config from a config endpoint (`/config/config.json`).
-This endpoint will serve the a json format of a YAML file located at `~/.wire/remote.yml`. This can be modified in the global configuration file:
+If using `dxos/config` dynamic configuration each app can request config from a config endpoint (`/config/config.json`).
+This endpoint will serve a JSON-formatted representation of the YAML file located at `~/.wire/remote.yml`. The location of the YAML can be modified in the global configuration file:
 
 ```yaml
 cli:
@@ -130,5 +139,4 @@ cli:
 
 The following URLs will be available:
 
-- GET `/app/dxos.org/example-app/config/config.json`: To match app latest version on WNS by default.
-- GET  `/app/dxos.org/example-app@0.0.1/config/config.json`
+- GET `/config/config.json`
