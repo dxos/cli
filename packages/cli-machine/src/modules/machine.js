@@ -169,7 +169,6 @@ export const MachineModule = ({ config }) => {
            - apt install -y python-certbot-apache
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
-           - git checkout release-moon
            - cd ..
            - cp -r kube /opt
            - echo "export KUBE_FQDN=${boxFullyQualifiedName}" >> /opt/kube/etc/kube.env
