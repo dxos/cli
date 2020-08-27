@@ -351,11 +351,12 @@ export const WNSModule = ({ config }) => ({
 
           handler: asyncHandler(async argv => {
             const wnsConfig = config.get('services.wns');
-            const { server, userKey, bondId } = getConnectionInfo(argv, wnsConfig);
+            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, wnsConfig);
 
             assert(server, 'Invalid WNS endpoint.');
             assert(!userKey, 'User key already exists.');
             assert(!bondId, 'Bond already exists.');
+            assert(chainId, 'Invalid WNS Chain ID.');
 
             const faucetServer = config.get('services.faucet.server');
 
@@ -371,7 +372,7 @@ export const WNSModule = ({ config }) => ({
             const account = Account.generateFromMnemonic(mnemonic);
             const address = account.getCosmosAddress();
 
-            const registry = new Registry(server);
+            const registry = new Registry(server, chainId);
             const accountResult = await registry.getAccounts([address]);
             if (accountResult.length) {
               log('Account already exists.');
