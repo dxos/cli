@@ -120,7 +120,7 @@ For example, with the WRN `wrn://dxos/application/example` the URL is:
 
 - GET: `/app/wrn%3A%2F%2Fdxos%2Fapplication%2Fexample/`
 
-Because URI-encoded URL are difficult to enter manually, there is an optimization for simple WRN's of the form `wrn://<org>/<appname>`.  For a simple, two-part name like `wrn://dxos/example`, an unencoded URL can be used:
+Because URI-encoded URL's are difficult to enter manually, there is an optimization for short WRN's of the form `wrn://<org>/<appname>` that does not require any URI-encoding of the name.  For example, with the short WRN `wrn://dxos/example`, this plain URL can be used:
 
 - GET: `/app/dxos/example/`
 
