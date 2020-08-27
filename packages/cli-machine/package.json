@@ -37,7 +37,7 @@
     "@dxos/async": "^1.0.0-beta.1",
     "@dxos/cli-core": "^1.0.1-moon.8",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@wirelineio/registry-client": "^1.0.0-moon.0",
+    "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "do-wrapper": "^4.0.0",
