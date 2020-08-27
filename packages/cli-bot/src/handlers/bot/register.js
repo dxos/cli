@@ -54,7 +54,7 @@ export const register = (config, { getBotRecord }) => async (argv) => {
     botId = result.data;
     log(`Record ID: ${botId}`);
   }
-
+  // eslint-disable-next-line
   for await (const wrn of name) {
     log(`Assigning name ${wrn}...`);
     if (!noop) {

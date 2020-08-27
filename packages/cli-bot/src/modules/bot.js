@@ -360,6 +360,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
                 log(`Record ID: ${factoryId}`);
               }
 
+              // eslint-disable-next-line
               for await (const wrn of name) {
                 log(`Assigning name ${wrn}...`);
                 if (!noop) {
