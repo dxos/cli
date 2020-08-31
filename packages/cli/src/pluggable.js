@@ -11,20 +11,11 @@ import fs from 'fs';
 import path from 'path';
 import findRoot from 'find-root';
 import ora from 'ora';
+import readPkgUp from 'read-pkg-up';
 
 import { addInstalled } from './extensions';
 
-/**
- * Checks if yarn is used as a package manager.
- */
-const isGlobalYarn = () => {
-  try {
-    findRoot(__dirname, dir => fs.existsSync(path.join(dir, 'yarn.lock')));
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
+const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
 /**
  * Init nvm if required.
@@ -81,9 +72,34 @@ const getWorkspaceRoot = from => {
 };
 
 /**
+ * Checks if yarn is used as a package manager.
+ */
+export const isGlobalYarn = async () => {
+  return new Promise((resolve, reject) => {
+    const args = 'list -g --depth 0 --json --silent | jq \'.dependencies\' | jq -r \'keys[]\'';
+
+    exec(`${prepareExec('npm')} ${args}`, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        try {
+          if (String(data).split('\n').includes(pkg.package.name)) {
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        } catch (err) {
+          reject(err);
+        }
+      }
+    });
+  });
+};
+
+/**
  * Pluggable CLI module.
  */
-export default class Pluggable {
+export class Pluggable {
   _modulePath;
 
   /**
@@ -174,7 +190,7 @@ export default class Pluggable {
       return;
     }
 
-    const isYarn = npmClient ? npmClient === 'yarn' : isGlobalYarn();
+    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn();
 
     const command = isYarn ? 'yarn' : 'npm';
     const args = isYarn ? ['global', 'add'] : ['install', '-g'];
@@ -194,7 +210,7 @@ export default class Pluggable {
       return;
     }
 
-    const isYarn = npmClient ? npmClient === 'yarn' : isGlobalYarn();
+    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn();
 
     const command = isYarn ? 'yarn' : 'npm';
     const args = isYarn ? ['global', 'remove'] : ['uninstall', '-g'];

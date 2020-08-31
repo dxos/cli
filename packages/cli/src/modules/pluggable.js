@@ -4,7 +4,7 @@
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import Pluggable from '../pluggable';
+import { Pluggable } from '../pluggable';
 
 /**
  * Wrapper class for CLI extension.
