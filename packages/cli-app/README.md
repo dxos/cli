@@ -14,8 +14,10 @@ To deploy apps we need a number of steps:
 
 All this operations can be resumed with one command:
 
+> You could use optional `--name` argument in order to assign specific name to the record.
+
 ```
-$ wire app deploy
+$ wire app deploy --name "wrn://dxos/application/example"
 ```
 
 ### Build app.
