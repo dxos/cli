@@ -9,7 +9,7 @@ import { compare, valid } from 'semver';
 import { asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import Pluggable from '../pluggable';
+import { Pluggable } from '../pluggable';
 import { addInstalled, removeInstalled, listInstalled } from '../extensions';
 
 /**

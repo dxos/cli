@@ -10,7 +10,7 @@ import { log } from '@dxos/debug';
 import { asyncHandler } from '@dxos/cli-core';
 
 import { addInstalled, removeInstalled, listInstalled } from '../extensions';
-import Pluggable from '../pluggable';
+import { Pluggable } from '../pluggable';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
