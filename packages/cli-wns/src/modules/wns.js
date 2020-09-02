@@ -14,6 +14,7 @@ import { ensureFileSync, removeSync } from 'fs-extra';
 import fs from 'fs';
 import os from 'os';
 import get from 'lodash.get';
+import set from 'lodash.set';
 
 import {
   Runnable,
@@ -1017,6 +1018,23 @@ export const WNSModule = ({ config }) => ({
             fs.writeFileSync(toFile, JSON.stringify(to, undefined, 2));
 
             log(JSON.stringify(stats, null, 2));
+          })
+        })
+
+        .command({
+          command: ['patch'],
+          describe: 'Patch parameters in genesis.json.',
+          builder: yargs => yargs
+            .option('key', { type: 'string' })
+            .option('value', { type: 'string' }),
+
+          handler: asyncHandler(async argv => {
+            const { fromFile, toFile, key, value } = argv;
+
+            const data = readJSONFile(fromFile || toFile);
+            set(data, key, value);
+
+            fs.writeFileSync(toFile || fromFile, JSON.stringify(data, undefined, 2));
           })
         })
     })
