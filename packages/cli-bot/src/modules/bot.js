@@ -23,7 +23,7 @@ import {
   getBotFactoryServiceConfig
 } from '../config';
 
-const { pkg } = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
+const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
 const BOT_TYPE = 'wrn:bot';
 const BOT_FACTORY_TYPE = 'wrn:bot-factory';
@@ -298,7 +298,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
                 WIRE_BOT_TOPIC: topic,
                 WIRE_BOT_SECRET_KEY: secretKey,
                 WIRE_BOT_LOCAL_DEV: localDev,
-                WIRE_CLI_NODE_PATH: await getGlobalModulesPath(await isGlobalYarn(pkg.name)),
+                WIRE_CLI_NODE_PATH: await getGlobalModulesPath(await isGlobalYarn(pkg.package.name)),
                 ...(ipcPort ? { WIRE_IPC_PORT: ipcPort } : {}),
                 ...(detached ? { DEBUG_HIDE_DATE: true } : {})
               };
