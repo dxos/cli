@@ -1,0 +1,60 @@
+//
+// Copyright 2020 DXOS.org
+//
+
+import { exec } from 'child_process';
+
+/**
+ * Init nvm if required.
+ * @param {String} command
+ */
+export const prepareExec = (command) => {
+  if (command === 'npm') {
+    command = '[ -s "$NVM_DIR/nvm.sh" ] && unset PREFIX && \. "$NVM_DIR/nvm.sh" ; npm'; // eslint-disable-line no-useless-escape
+  }
+  return command;
+};
+
+/**
+ * Checks if yarn is used as a package manager.
+ * @param {String} packageName - package to check.
+ */
+export const isGlobalYarn = async (packageName) => {
+  return new Promise((resolve, reject) => {
+    const args = 'list -g --depth 0 --json --silent | jq \'.dependencies\' | jq -r \'keys[]\'';
+
+    exec(`${prepareExec('npm')} ${args}`, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        try {
+          if (String(data).split('\n').includes(packageName)) {
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        } catch (err) {
+          reject(err);
+        }
+      }
+    });
+  });
+};
+
+/**
+ * Determines path to globally installed node_modules.
+ * @param {boolean} isYarn
+ */
+export const getGlobalModulesPath = async (isYarn = false) => {
+  const command = isYarn ? 'echo $(yarn global dir)/node_modules' : `${prepareExec('npm')} root --quiet -g`;
+
+  return new Promise((resolve, reject) => {
+    exec(command, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(String(data).trim());
+      }
+    });
+  });
+};

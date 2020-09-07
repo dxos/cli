@@ -7,10 +7,10 @@ import path from 'path';
 import yaml from 'node-yaml';
 import clean from 'lodash-clean';
 import { load } from 'js-yaml';
-import set from 'lodash.set';
+import readPkgUp from 'read-pkg-up';
 
 import { BotFactoryClient } from '@dxos/botkit-client';
-import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
+import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees, isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
@@ -22,6 +22,8 @@ import {
   SERVICE_CONFIG_FILENAME,
   getBotFactoryServiceConfig
 } from '../config';
+
+const { pkg } = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
 const BOT_TYPE = 'wrn:bot';
 const BOT_FACTORY_TYPE = 'wrn:bot-factory';
@@ -295,6 +297,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
                 WIRE_BOT_TOPIC: topic,
                 WIRE_BOT_SECRET_KEY: secretKey,
                 WIRE_BOT_LOCAL_DEV: localDev,
+                WIRE_CLI_NODE_PATH: await getGlobalModulesPath(await isGlobalYarn(pkg.name)),
                 ...(ipcPort ? { WIRE_IPC_PORT: ipcPort } : {}),
                 ...(detached ? { DEBUG_HIDE_DATE: true } : {})
               };

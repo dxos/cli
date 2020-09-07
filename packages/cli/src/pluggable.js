@@ -13,20 +13,11 @@ import findRoot from 'find-root';
 import ora from 'ora';
 import readPkgUp from 'read-pkg-up';
 
+import { prepareExec, isGlobalYarn } from '@dxos/cli-core';
+
 import { addInstalled } from './extensions';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
-
-/**
- * Init nvm if required.
- * @param {String} command
- */
-const prepareExec = (command) => {
-  if (command === 'npm') {
-    command = '[ -s "$NVM_DIR/nvm.sh" ] && unset PREFIX && \. "$NVM_DIR/nvm.sh" ; npm'; // eslint-disable-line no-useless-escape
-  }
-  return command;
-};
 
 /**
  * @param {String} command
@@ -69,31 +60,6 @@ const getWorkspaceRoot = from => {
   } catch (err) {
     return '';
   }
-};
-
-/**
- * Checks if yarn is used as a package manager.
- */
-export const isGlobalYarn = async () => {
-  return new Promise((resolve, reject) => {
-    const args = 'list -g --depth 0 --json --silent | jq \'.dependencies\' | jq -r \'keys[]\'';
-
-    exec(`${prepareExec('npm')} ${args}`, (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        try {
-          if (String(data).split('\n').includes(pkg.package.name)) {
-            resolve(false);
-          } else {
-            resolve(true);
-          }
-        } catch (err) {
-          reject(err);
-        }
-      }
-    });
-  });
 };
 
 /**
@@ -190,7 +156,7 @@ export class Pluggable {
       return;
     }
 
-    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn();
+    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg.package.name);
 
     const command = isYarn ? 'yarn' : 'npm';
     const args = isYarn ? ['global', 'add'] : ['install', '-g'];
@@ -210,7 +176,7 @@ export class Pluggable {
       return;
     }
 
-    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn();
+    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg.package.name);
 
     const command = isYarn ? 'yarn' : 'npm';
     const args = isYarn ? ['global', 'remove'] : ['uninstall', '-g'];
