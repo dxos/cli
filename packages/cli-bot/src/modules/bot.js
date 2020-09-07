@@ -86,15 +86,16 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           .option('ipfsCID', { type: 'string' })
           .option('ipfsEndpoint', { type: 'string' })
           .option('id', { type: 'string' })
+          .option('name', { type: 'string' })
           .option('bot-id', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { botId, topic, json, env, ipfsCID, ipfsEndpoint, id } = argv;
+          const { botId, topic, json, env, ipfsCID, ipfsEndpoint, id, name } = argv;
           const { interactive } = cliState;
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
-          const botUID = await botFactoryClient.sendSpawnRequest(botId, { env, ipfsCID, ipfsEndpoint, id });
+          const botUID = await botFactoryClient.sendSpawnRequest(botId, { env, ipfsCID, ipfsEndpoint, id, name });
 
           print({ botUID }, { json });
 
