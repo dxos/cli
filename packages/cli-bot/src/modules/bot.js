@@ -7,9 +7,10 @@ import path from 'path';
 import yaml from 'node-yaml';
 import clean from 'lodash-clean';
 import { load } from 'js-yaml';
+import readPkgUp from 'read-pkg-up';
 
 import { BotFactoryClient } from '@dxos/botkit-client';
-import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
+import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees, isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
@@ -21,6 +22,8 @@ import {
   SERVICE_CONFIG_FILENAME,
   getBotFactoryServiceConfig
 } from '../config';
+
+const { pkg } = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
 const BOT_TYPE = 'wrn:bot';
 const BOT_FACTORY_TYPE = 'wrn:bot-factory';
@@ -79,15 +82,20 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
         describe: 'Spawn new bot instance.',
         builder: yargs => yargs
           .option('topic', { alias: 't', type: 'string' })
+          .option('env', { type: 'string' })
+          .option('ipfsCID', { type: 'string' })
+          .option('ipfsEndpoint', { type: 'string' })
+          .option('id', { type: 'string' })
+          .option('name', { type: 'string' })
           .option('bot-id', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { botId, topic, json } = argv;
+          const { botId, topic, json, env, ipfsCID, ipfsEndpoint, id, name } = argv;
           const { interactive } = cliState;
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
-          const botUID = await botFactoryClient.sendSpawnRequest(botId);
+          const botUID = await botFactoryClient.sendSpawnRequest(botId, { env, ipfsCID, ipfsEndpoint, id, name });
 
           print({ botUID }, { json });
 
@@ -290,6 +298,7 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
                 WIRE_BOT_TOPIC: topic,
                 WIRE_BOT_SECRET_KEY: secretKey,
                 WIRE_BOT_LOCAL_DEV: localDev,
+                WIRE_CLI_NODE_PATH: await getGlobalModulesPath(await isGlobalYarn(pkg.name)),
                 ...(ipcPort ? { WIRE_IPC_PORT: ipcPort } : {}),
                 ...(detached ? { DEBUG_HIDE_DATE: true } : {})
               };

@@ -46,7 +46,8 @@ export const publish = config => async () => {
 
   uploads.forEach(upload => {
     const [platform, arch] = path.parse(upload.file).name.split('-');
-    set(botConfig, `package.${platform}.${arch}["/"]`, upload.cid);
+    const packagePath = arch ? `${platform}.${arch}` : platform;
+    set(botConfig, `package.${packagePath}["/"]`, upload.cid);
   });
 
   botConfig.version = semverInc(botConfig.version, 'patch');
