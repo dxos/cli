@@ -743,6 +743,29 @@ export const WNSModule = ({ config }) => ({
     })
 
     .command({
+      command: ['auction'],
+      describe: 'Auction operations.',
+      builder: yargs => yargs
+        .command({
+          command: ['get [id]'],
+          describe: 'Get auction information.',
+          handler: asyncHandler(async argv => {
+            const { id } = argv;
+            assert(id, 'Invalid auction ID.');
+
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            assert(server, 'Invalid WNS endpoint.');
+            assert(chainId, 'Invalid WNS Chain ID.');
+
+            const registry = new Registry(server, chainId);
+            const result = await registry.getAuctionsByIds([id]);
+
+            log(JSON.stringify(result, undefined, 2));
+          })
+        })
+    })
+
+    .command({
       command: ['authority'],
       describe: 'Name authority operations.',
       builder: yargs => yargs
@@ -783,7 +806,7 @@ export const WNSModule = ({ config }) => ({
             assert(chainId, 'Invalid WNS Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const result = await registry.lookupAuthorities([name]);
+            const result = await registry.lookupAuthorities([name], true);
 
             log(JSON.stringify(result, undefined, 2));
           })
@@ -1023,7 +1046,7 @@ export const WNSModule = ({ config }) => ({
 
         .command({
           command: ['patch'],
-          describe: 'Patch parameters in genesis.json.',
+          describe: 'Patch entries in genesis.json.',
           builder: yargs => yargs
             .option('key', { type: 'string' })
             .option('value', { type: 'string' }),
