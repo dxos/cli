@@ -199,3 +199,45 @@ $ wire bot factory status --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba1
   ]
 }
 ```
+
+## Troubleshooting
+
+Get status of running BotFactory:
+
+```bash
+$ wire bot factory status --topic=$(wire wns name resolve wrn://dxos/service/bot-factory/apollo1 | jq -r '.records[0].attributes.topic') | jq
+{
+  "started": true,
+  "version": "1.0.0-moon.4",
+  "uptime": "1119239",
+  "platform": "linux.x64",
+  "bots": [
+    {
+      "type": "wrn://dxos/bot/chess",
+      "botUID": "ea76f653aa32c20c5e87efd6cc83db70f735aac9ae8435b9009c988346aeea6e",
+      "started": "2020-08-27T19:46:15Z",
+      "lastActive": "2020-08-27T19:46:39Z",
+      "stopped": true,
+      "parties": [
+        "886d19901b0230e3c648a96c7fb5cddd8e46f1803f00c9c2d24d7903688e0d36"
+      ]
+    },
+    {
+      "type": "wrn://dxos/bot/store",
+      "botUID": "9c31db6af9f486f5167b862490b80be0b4da097056c0dc3810ca9b50ec60983d",
+      "started": "2020-09-03T14:17:54Z",
+      "lastActive": "2020-09-03T16:00:05Z",
+      "stopped": false,
+      "parties": [
+        "3b51679030b42f7eaad380933d5ae0d5bd4f2a9924b9c5bde71e9af00a738c99"
+      ]
+    }
+  ]
+}
+```
+
+Hard reset BotFactory (kills all bots, removes all the data/keys, restarts BotFactory):
+
+```bash
+$ wire bot factory reset --hard --topic=$(wire wns name resolve wrn://dxos/service/bot-factory/apollo2 | jq -r '.records[0].attributes.topic')
+```
