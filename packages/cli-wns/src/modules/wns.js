@@ -811,6 +811,32 @@ export const WNSModule = ({ config }) => ({
             log(JSON.stringify(result, undefined, 2));
           })
         })
+
+        .command({
+          command: ['bond'],
+          describe: 'Authority bond operations.',
+          builder: yargs => yargs
+
+            .command({
+              command: ['set [name] [bond-id]'],
+              describe: 'Set bond for authority.',
+              handler: asyncHandler(async argv => {
+                const { name, bondId } = argv;
+                assert(name, 'Invalid authority name.');
+                assert(bondId, 'Invalid Bond ID.');
+
+                const wnsConfig = config.get('services.wns');
+                const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+                assert(server, 'Invalid WNS endpoint.');
+                assert(chainId, 'Invalid WNS Chain ID.');
+
+                const registry = new Registry(server, chainId);
+                const fee = getGasAndFees(argv, wnsConfig);
+                const result = await registry.setAuthorityBond(name, bondId, privateKey, fee);
+                log(JSON.stringify(result, undefined, 2));
+              })
+            })
+        })
     })
 
     .command({
