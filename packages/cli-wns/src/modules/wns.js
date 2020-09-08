@@ -10,7 +10,7 @@ import clean from 'lodash-clean';
 import yaml from 'node-yaml';
 import inquirer from 'inquirer';
 import url from 'url';
-import { ensureFileSync, removeSync } from 'fs-extra';
+import { ensureFileSync, removeSync, ensureDir } from 'fs-extra';
 import fs from 'fs';
 import os from 'os';
 import get from 'lodash.get';
@@ -25,7 +25,7 @@ import {
 } from '@dxos/cli-core';
 
 import { log } from '@dxos/debug';
-import { Registry, Account } from '@wirelineio/registry-client';
+import { Registry, Account, Util } from '@wirelineio/registry-client';
 
 import { requestFaucetTokens } from './faucet';
 
@@ -43,6 +43,8 @@ const WNS_CLI_EXEC = 'wnscli';
 
 const FAUCET_TOKEN = 'uwire';
 const FAUCET_AMOUNT = '1000000000';
+
+const OUT_DIR = 'out';
 
 const getConnectionInfo = (argv, config) => {
   const { server, userKey, bondId, txKey, chainId, fees, gas } = argv;
@@ -762,6 +764,85 @@ export const WNSModule = ({ config }) => ({
 
             log(JSON.stringify(result, undefined, 2));
           })
+        })
+
+        .command({
+          command: ['bid'],
+          describe: 'Auction bid operations.',
+          builder: yargs => yargs
+            .option('auction-id', { type: 'string' })
+            .option('type', { type: 'string' })
+            .option('quantity', { type: 'string' })
+            .option('file-path', { type: 'string' })
+
+            .command({
+              command: ['commit [auction-id] [quantity] [type]'],
+              describe: 'Commit auction bid.',
+              handler: asyncHandler(async argv => {
+                const { auctionId, quantity, type: denom } = argv;
+                assert(auctionId, 'Invalid auction ID.');
+                assert(quantity, 'Invalid token quantity.');
+                assert(denom, 'Invalid token type.');
+
+                const wnsConfig = config.get('services.wns');
+                const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+                assert(server, 'Invalid WNS endpoint.');
+                assert(privateKey, 'Invalid Transaction Key.');
+                assert(chainId, 'Invalid WNS Chain ID.');
+
+                const account = new Account(Buffer.from(privateKey, 'hex'));
+                const bidderAddress = account.formattedCosmosAddress;
+                const bidAmount = `${quantity}${denom}`;
+                const noise = Account.generateMnemonic();
+
+                const reveal = {
+                  chainId,
+                  auctionId,
+                  bidderAddress,
+                  bidAmount,
+                  noise
+                };
+
+                const commitHash = await Util.getContentId(reveal);
+
+                // Save reveal file.
+                const outDirPath = path.join(process.cwd(), OUT_DIR);
+                const revealFilePath = path.join(outDirPath, `${commitHash}.json`);
+                await ensureDir(outDirPath);
+                fs.writeFileSync(revealFilePath, JSON.stringify(reveal, undefined, 2));
+
+                const registry = new Registry(server, chainId);
+                const fee = getGasAndFees(argv, wnsConfig);
+
+                const result = await registry.commitBid(auctionId, commitHash, privateKey, fee);
+                log(JSON.stringify(result, undefined, 2));
+
+                log(`\nReveal file: ${revealFilePath}`);
+              })
+            })
+
+            .command({
+              command: ['reveal [auction-id] [file-path]'],
+              describe: 'Reveal auction bid.',
+              handler: asyncHandler(async argv => {
+                const { auctionId, filePath } = argv;
+                assert(auctionId, 'Invalid auction ID.');
+                assert(filePath, 'Invalid reveal file path.');
+
+                const wnsConfig = config.get('services.wns');
+                const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+                assert(server, 'Invalid WNS endpoint.');
+                assert(privateKey, 'Invalid Transaction Key.');
+                assert(chainId, 'Invalid WNS Chain ID.');
+
+                const registry = new Registry(server, chainId);
+                const fee = getGasAndFees(argv, wnsConfig);
+
+                const reveal = fs.readFileSync(path.resolve(filePath));
+                const result = await registry.revealBid(auctionId, reveal.toString('hex'), privateKey, fee);
+                log(JSON.stringify(result, undefined, 2));
+              })
+            })
         })
     })
 
