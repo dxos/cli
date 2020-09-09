@@ -1156,10 +1156,17 @@ export const WNSModule = ({ config }) => ({
           describe: 'Patch entries in genesis.json.',
           builder: yargs => yargs
             .option('key', { type: 'string' })
-            .option('value', { type: 'string' }),
+            .option('value', { type: 'string' })
+            .option('type', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const { fromFile, toFile, key, value } = argv;
+            const { fromFile, toFile, key, type: dataType } = argv;
+            let { value } = argv;
+
+            switch (dataType) {
+              case 'bool': value = (value === 'true'); break;
+              case 'int': value = parseInt(value, 10); break;
+            }
 
             const data = readJSONFile(fromFile || toFile);
             set(data, key, value);
