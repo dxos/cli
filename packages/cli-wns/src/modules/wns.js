@@ -25,7 +25,7 @@ import {
 } from '@dxos/cli-core';
 
 import { log } from '@dxos/debug';
-import { Registry, Account, Util } from '@wirelineio/registry-client';
+import { Registry, Account, createBid } from '@wirelineio/registry-client';
 
 import { requestFaucetTokens } from './faucet';
 
@@ -793,17 +793,7 @@ export const WNSModule = ({ config }) => ({
                 const account = new Account(Buffer.from(privateKey, 'hex'));
                 const bidderAddress = account.formattedCosmosAddress;
                 const bidAmount = `${quantity}${denom}`;
-                const noise = Account.generateMnemonic();
-
-                const reveal = {
-                  chainId,
-                  auctionId,
-                  bidderAddress,
-                  bidAmount,
-                  noise
-                };
-
-                const commitHash = await Util.getContentId(reveal);
+                const { reveal, commitHash } = await createBid(chainId, auctionId, bidderAddress, bidAmount);
 
                 // Save reveal file.
                 const outDirPath = path.join(process.cwd(), OUT_DIR);
