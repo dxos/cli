@@ -239,8 +239,8 @@ Reserve authority:
 ```bash
 $ wire wns authority reserve dxos
 {
-  "hash": "DADF18AF6F11457572CE2AC419CA65F0824012FC409E3E9B964DD0FDE59DD506",
-  "height": 169,
+  "hash": "3B9BC99DC0D04604719E7B4E18C6D758E581596360B9F9BB6B4DB8A39D3E1553",
+  "height": 10,
   "data": "dxos",
   "log": [
     {
@@ -250,7 +250,7 @@ $ wire wns authority reserve dxos
     }
   ],
   "gasWanted": "200000",
-  "gasUsed": "35532",
+  "gasUsed": "68091",
   "events": [
     {
       "type": "message",
@@ -265,6 +265,209 @@ $ wire wns authority reserve dxos
 }
 ```
 
+Check authority information:
+
+```bash
+$ wire wns authority whois dxos
+{
+  "meta": {
+    "height": "6"
+  },
+  "records": [
+    {
+      "ownerAddress": "",
+      "ownerPublicKey": "",
+      "height": "6",
+      "status": "auction",
+      "bondId": "",
+      "expiryTime": "2020-09-14T10:31:08.827695000",
+      "auction": {
+        "id": "8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3",
+        "status": "commit",
+        "ownerAddress": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
+        "createTime": "2020-09-14T10:22:08.827695000",
+        "commitsEndTime": "2020-09-14T10:25:08.827695000",
+        "revealsEndTime": "2020-09-14T10:28:08.827695000",
+        "commitFee": {
+          "type": "uwire",
+          "quantity": "1000000"
+        },
+        "revealFee": {
+          "type": "uwire",
+          "quantity": "1000000"
+        },
+        "minimumBid": {
+          "type": "uwire",
+          "quantity": "5000000"
+        },
+        "winnerAddress": "",
+        "winnerBid": {
+          "type": "",
+          "quantity": "0"
+        },
+        "winnerPrice": {
+          "type": "",
+          "quantity": "0"
+        },
+        "bids": []
+      }
+    }
+  ]
+}
+```
+
+Get authority auction info:
+
+```bash
+$ wire wns auction get 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3
+[
+  {
+    "id": "8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3",
+    "status": "commit",
+    "ownerAddress": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
+    "createTime": "2020-09-14T10:22:08.827695000",
+    "commitsEndTime": "2020-09-14T10:25:08.827695000",
+    "revealsEndTime": "2020-09-14T10:28:08.827695000",
+    "commitFee": {
+      "type": "uwire",
+      "quantity": "1000000"
+    },
+    "revealFee": {
+      "type": "uwire",
+      "quantity": "1000000"
+    },
+    "minimumBid": {
+      "type": "uwire",
+      "quantity": "5000000"
+    },
+    "winnerAddress": "",
+    "winnerBid": {
+      "type": "",
+      "quantity": "0"
+    },
+    "winnerPrice": {
+      "type": "",
+      "quantity": "0"
+    },
+    "bids": []
+  }
+]
+```
+
+Commit an auction bid:
+
+```bash
+$ wire wns auction bid commit 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3 25000000 uwire
+{
+  "hash": "18E83BE3FB33D1FD01475AC511AFC306EB54BFD3DF86AEC547CE4E369A1E3B37",
+  "height": 24,
+  "data": "8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3",
+  "log": [
+    {
+      "msg_index": 0,
+      "success": true,
+      "log": ""
+    }
+  ],
+  "gasWanted": "200000",
+  "gasUsed": "61183",
+  "events": [
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "action",
+          "value": "commit"
+        }
+      ]
+    },
+    {
+      "type": "transfer",
+      "attributes": [
+        {
+          "key": "recipient",
+          "value": "cosmos1j4yzhgjm00ch3h0p9kel7g8sp6g045qfmrkxd2"
+        },
+        {
+          "key": "amount",
+          "value": "2000000uwire"
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "sender",
+          "value": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094"
+        }
+      ]
+    }
+  ]
+}
+
+Reveal file: /Users/ashwinp/projects/dxos/arena/apps/arena-app/out/bafyreigy7aivxwaamyjepr7dpk5ybrpkztqzgn6kbxieg6pmby5i75zouy.json
+```
+
+Reveal an auction bid:
+
+```bash
+$ wire wns auction bid reveal 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3 ./out/bafyreigy7aivxwaamyjepr7dpk5ybrpkztqzgn6kbxieg6pmby5i75zouy.json
+{
+  "hash": "EE9FE58F19D8BD02BC2C4FDD808AA45FB1ADA19D61D90C3D5A5AAE796A033AFA",
+  "height": 44,
+  "data": "8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3",
+  "log": [
+    {
+      "msg_index": 0,
+      "success": true,
+      "log": ""
+    }
+  ],
+  "gasWanted": "200000",
+  "gasUsed": "69085",
+  "events": [
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "action",
+          "value": "reveal"
+        }
+      ]
+    },
+    {
+      "type": "transfer",
+      "attributes": [
+        {
+          "key": "recipient",
+          "value": "cosmos1j4yzhgjm00ch3h0p9kel7g8sp6g045qfmrkxd2"
+        },
+        {
+          "key": "amount",
+          "value": "25000000uwire"
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "sender",
+          "value": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Set authority bond (after winning auction):
+
+```bash
+$ wire wns authority bond set dxos 4c41d1e7989959f9687677e1c754b123c2f9e53aff257fc5571703f76b47e7ec
+```
+
 Create sub-authority (same owner as parent authority):
 
 ```bash
@@ -275,24 +478,6 @@ Create sub-authority (custom owner for sub-authority):
 
 ```bash
 $ wire wns authority reserve kube.dxos --owner cosmos1rm3ctz5etfrqaal3sp555wh57gcv5lwgx09wxc
-```
-
-Check authority information:
-
-```bash
-$ wire wns authority whois dxos
-{
-  "meta": {
-    "height": "179"
-  },
-  "records": [
-    {
-      "ownerAddress": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
-      "ownerPublicKey": "61rphyEC6tEq0pxTI2Sy97VlWCSZhA/PRaUfFlQjhQcpYfTfYtg=",
-      "height": "169"
-    }
-  ]
-}
 ```
 
 Set name:
