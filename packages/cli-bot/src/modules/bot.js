@@ -87,17 +87,52 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           .option('ipfsEndpoint', { type: 'string' })
           .option('id', { type: 'string' })
           .option('name', { type: 'string' })
-          .option('bot-id', { type: 'string' }),
+          .option('bot-name', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { botId, topic, json, env, ipfsCID, ipfsEndpoint, id, name } = argv;
+          const { botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name } = argv;
           const { interactive } = cliState;
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
-          const botUID = await botFactoryClient.sendSpawnRequest(botId, { env, ipfsCID, ipfsEndpoint, id, name });
+          const botId = await botFactoryClient.sendSpawnRequest(botName, { env, ipfsCID, ipfsEndpoint, id, name });
 
-          print({ botUID }, { json });
+          print({ botId }, { json });
+
+          if (interactive) {
+            await botFactoryClient.close();
+          } else {
+            // Workaround for segfaults from node-wrtc.
+            process.exit(0);
+          }
+        })
+      })
+
+      .command({
+        command: ['send'],
+        describe: 'Send arbitrary message to a bot.',
+        builder: yargs => yargs
+          .option('topic', { alias: 't', type: 'string' })
+          .option('bot-id', { type: 'string' })
+          .option('message', { type: 'json' }),
+
+        handler: asyncHandler(async argv => {
+          const { topic, botId, message: data = {}, json } = argv;
+          const { interactive } = cliState;
+
+          const client = await getClient();
+          const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
+
+          const message = Buffer.from(JSON.stringify(data));
+          const { message: { data: result, error } } = await botFactoryClient.sendBotCommand(botId, message);
+
+          if (error) {
+            throw new Error(error);
+          }
+
+          const output = JSON.parse(result.toString());
+
+          print(output, { json });
 
           if (interactive) {
             await botFactoryClient.close();
@@ -113,17 +148,17 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
         describe: 'Stop bot.',
         builder: yargs => yargs
           .option('topic', { alias: 't', type: 'string' })
-          .option('bot-uid', { type: 'string' }),
+          .option('bot-id', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { 'bot-uid': botUID, topic } = argv;
+          const { botId, topic } = argv;
           const [, command] = argv._;
 
           const { interactive } = cliState;
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
-          await botFactoryClient.sendBotManagementRequest(botUID, command);
+          await botFactoryClient.sendBotManagementRequest(botId, command);
 
           if (interactive) {
             await botFactoryClient.close();
@@ -139,14 +174,14 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
         describe: 'Invite bot to a party.',
         builder: yargs => yargs
           .option('topic', { alias: 't', type: 'string' })
-          .option('bot-uid', { type: 'string' })
+          .option('bot-id', { type: 'string' })
           .option('spec', { alias: 's', type: 'json' }),
 
         handler: asyncHandler(async argv => {
-          const { topic, 'bot-uid': botUID, spec } = argv;
+          const { topic, botId, spec } = argv;
 
           assert(topic, 'Invalid topic.');
-          assert(botUID, 'Invalid Bot UID.');
+          assert(botId, 'Invalid Bot Id.');
 
           const botSpec = spec ? JSON.parse(spec) : {};
 
@@ -162,8 +197,8 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           }
 
           const invitationObject = invitation.toQueryParameters();
-          log(`Inviting bot ${botUID} to join '${party}' party with invitation: ${JSON.stringify(invitationObject)}.`);
-          await botFactoryClient.sendInvitationRequest(botUID, party, botSpec, invitationObject);
+          log(`Inviting bot ${botId} to join '${party}' party with invitation: ${JSON.stringify(invitationObject)}.`);
+          await botFactoryClient.sendInvitationRequest(botId, party, botSpec, invitationObject);
 
           await botFactoryClient.close();
         })
