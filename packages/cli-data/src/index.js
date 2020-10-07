@@ -8,8 +8,7 @@ import os from 'os';
 
 import { Client } from '@dxos/client';
 import { createCLI } from '@dxos/cli-core';
-import { keyToBuffer } from '@dxos/crypto';
-import { Keyring, KeyType } from '@dxos/credentials';
+import { keyToBuffer, createKeyPair } from '@dxos/crypto';
 
 import { PartyModule } from './modules/party';
 import { StateManager } from './state-manager';
@@ -38,30 +37,20 @@ const _createClient = async (config) => {
   config = defaultsDeep({}, clientConf, client);
   // TODO(dboreham): Allow keyring to be persisted.
   // TODO(dboreham): Allow feedstore to be persisted.
-  const keyring = new Keyring();
-  // TODO(dboreham): Allow seed phrase to be supplied by the user.
-  // const identityKeyPair = keyPairFromSeedPhrase(seedPhrase);
-  // await keyring.addKeyRecord({ ...identityKeyPair, type: KeyType.IDENTITY });
-  await keyring.createKeyRecord({ type: KeyType.IDENTITY });
 
   const dataClient = new Client({
     storage: ram,
-    swarm: config.swarm,
-    keyring
+    swarm: config.swarm
   });
 
   await dataClient.initialize();
 
-  // TODO(dboreham): Allow the user to specify identityDisplayName and deviceDisplayName.
-  if (dataClient.partyManager.identityManager.hasIdentity()) {
-    const hasHalo = await dataClient.partyManager.identityManager.isInitialized();
-    if (!hasHalo) {
-      await dataClient.partyManager.identityManager.initializeForNewIdentity({
-        identityDisplayName: `cli:${os.userInfo().username}`,
-        deviceDisplayName: `cli:${os.userInfo().username} - default device`
-      });
-    }
-  }
+  // TODO(dboreham): Allow seed phrase to be supplied by the user.
+  const { publicKey, secretKey } = createKeyPair();
+  const username = `cli:${os.userInfo().username}`;
+
+  await dataClient.createProfile({ publicKey, secretKey, username });
+
   return dataClient;
 };
 

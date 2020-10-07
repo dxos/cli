@@ -66,7 +66,7 @@ export const PartyModule = ({ stateManager }) => ({
 
       handler: asyncHandler(async () => {
         const party = await stateManager.createParty();
-        log(JSON.stringify({ partyKey: keyToString(party.publicKey) }, null, 2));
+        log(JSON.stringify({ partyKey: keyToString(party.key) }, null, 2));
       })
     })
 
