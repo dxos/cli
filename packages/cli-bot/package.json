@@ -34,8 +34,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/botkit": "^1.1.0-beta.9",
-    "@dxos/botkit-client": "^1.1.0-beta.9",
+    "@dxos/botkit": "^1.1.0-beta.15",
+    "@dxos/botkit-client": "^1.1.0-beta.15",
     "@dxos/cli-core": "^1.1.0-beta.10",
     "@dxos/config": "^1.0.0-beta.67",
     "@dxos/crypto": "^1.0.0-beta.1",
