@@ -8,7 +8,7 @@ import { log } from '@dxos/debug';
 
 import { generatePasscode } from '@dxos/credentials';
 import { keyToBuffer, keyToString, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
-import { InvitationDescriptor, InviteDetails, InviteType } from '@dxos/party-manager';
+import { InvitationDescriptor } from '@dxos/party-manager';
 
 const DEFAULT_UPDATE_HANDLER = model => { log(JSON.stringify(model.messages)); return true; };
 
@@ -169,9 +169,6 @@ export class StateManager {
     assert(this._parties.has(partyKey));
     assert(this._parties.get(partyKey).useCredentials);
 
-    const secretProvider = () => {
-    };
-
     // Provided by inviter node.
     const secretValidator = async (invitation, secret) => {
       const signature = secret.slice(0, SIGNATURE_LENGTH);
@@ -181,10 +178,10 @@ export class StateManager {
 
     await this._assureClient();
 
-    return this._client.partyManager.inviteToParty(
-      keyToBuffer(partyKey),
-      new InviteDetails(InviteType.INTERACTIVE, { secretValidator, secretProvider })
-    );
+    const party = await this._client.echo.getParty(keyToBuffer(partyKey));
+    const invitation = await party.createInvitation({ secretValidator });
+
+    return invitation;
   }
 
   async _assureClient () {
