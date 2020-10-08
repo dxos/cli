@@ -131,7 +131,7 @@ export class StateManager {
   async createParty () {
     await this._assureClient();
     await this.setModel();
-    const party = await this._client.createParty();
+    const party = await this._client.echo.createParty();
 
     const topic = keyToString(party.key);
     // TODO(egor): useCredentials is always true now, so we can factor it out.
@@ -150,9 +150,12 @@ export class StateManager {
 
     const passcode = generatePasscode();
     const secretProvider = () => Buffer.from(passcode);
+    const secretValidator = (invitation, secret) => secret && secret.equals(invitation.secret);
 
     await this._assureClient();
-    const invitation = await this._client.createInvitation(keyToBuffer(partyKey), secretProvider);
+
+    const party = await this._client.echo.getParty(keyToBuffer(partyKey));
+    const invitation = await party.createInvitation({ secretValidator, secretProvider });
 
     return { invitation: invitation.toQueryParameters(), passcode };
   }
