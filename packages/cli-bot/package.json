@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-bot",
-  "version": "1.1.0-beta.11",
+  "version": "2.0.0-alpha.0",
   "description": "DxOS Bot CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-bot#readme",
   "license": "GPL-3.0",
@@ -34,9 +34,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/botkit": "^1.1.0-beta.15",
-    "@dxos/botkit-client": "^1.1.0-beta.15",
-    "@dxos/cli-core": "^1.1.0-beta.11",
+    "@dxos/botkit": "^2.1.2",
+    "@dxos/botkit-client": "^2.1.2",
+    "@dxos/cli-core": "^2.0.0-alpha.0",
     "@dxos/config": "^1.0.0-beta.67",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",

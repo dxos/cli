@@ -8,7 +8,7 @@ import { log } from '@dxos/debug';
 
 import { generatePasscode } from '@dxos/credentials';
 import { keyToBuffer, keyToString, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
-import { InvitationDescriptor, InviteDetails, InviteType } from '@dxos/party-manager';
+import { InvitationDescriptor } from '@dxos/party-manager';
 
 const DEFAULT_UPDATE_HANDLER = model => { log(JSON.stringify(model.messages)); return true; };
 
@@ -111,12 +111,12 @@ export class StateManager {
               });
             };
 
-            const party = await this._client.partyManager.joinParty(InvitationDescriptor.fromQueryParameters(invitation),
-              secretProvider);
-            partyKey = keyToString(party.publicKey);
+            const party = await this._client.echo.joinParty(InvitationDescriptor.fromQueryParameters(invitation), secretProvider);
+            await party.open();
+
+            partyKey = keyToString(party.key);
           }
 
-          await this._client.partyManager.openParty(keyToBuffer(partyKey));
           this._parties.set(partyKey, { partyKey, useCredentials: !!invitation });
         }
 
@@ -131,8 +131,9 @@ export class StateManager {
   async createParty () {
     await this._assureClient();
     await this.setModel();
-    const party = await this._client.partyManager.createParty();
-    const topic = keyToString(party.publicKey);
+    const party = await this._client.echo.createParty();
+
+    const topic = keyToString(party.key);
     // TODO(egor): useCredentials is always true now, so we can factor it out.
     this._parties.set(topic, { partyKey: topic, useCredentials: true });
     this._currentParty = topic;
@@ -149,13 +150,12 @@ export class StateManager {
 
     const passcode = generatePasscode();
     const secretProvider = () => Buffer.from(passcode);
-    const secretValidator = async (invitation, secret) => secret && secret.equals(invitation.secret);
+    const secretValidator = (invitation, secret) => secret && secret.equals(invitation.secret);
 
     await this._assureClient();
-    const invitation = await this._client.partyManager.inviteToParty(
-      keyToBuffer(partyKey),
-      new InviteDetails(InviteType.INTERACTIVE, { secretValidator, secretProvider })
-    );
+
+    const party = await this._client.echo.getParty(keyToBuffer(partyKey));
+    const invitation = await party.createInvitation({ secretValidator, secretProvider });
 
     return { invitation: invitation.toQueryParameters(), passcode };
   }
@@ -169,9 +169,6 @@ export class StateManager {
     assert(this._parties.has(partyKey));
     assert(this._parties.get(partyKey).useCredentials);
 
-    const secretProvider = () => {
-    };
-
     // Provided by inviter node.
     const secretValidator = async (invitation, secret) => {
       const signature = secret.slice(0, SIGNATURE_LENGTH);
@@ -181,10 +178,10 @@ export class StateManager {
 
     await this._assureClient();
 
-    return this._client.partyManager.inviteToParty(
-      keyToBuffer(partyKey),
-      new InviteDetails(InviteType.INTERACTIVE, { secretValidator, secretProvider })
-    );
+    const party = await this._client.echo.getParty(keyToBuffer(partyKey));
+    const invitation = await party.createInvitation({ secretValidator });
+
+    return invitation;
   }
 
   async _assureClient () {
