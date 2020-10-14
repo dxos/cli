@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.1](https://www.github.com/dxos/cli/compare/v2.0.0...v2.0.1) (2020-10-14)
+
+
+### Bug Fixes
+
+* Enable publishing to NPM. ([acac2b4](https://www.github.com/dxos/cli/commit/acac2b4fad4a6d62eb8a6ee284b6e53b9c4b68f4))
+
 ## [2.0.0](https://www.github.com/dxos/cli/compare/v1.0.0...v2.0.0) (2020-10-14)
 
 
