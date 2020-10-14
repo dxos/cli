@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://www.github.com/dxos/cli/compare/v1.0.0...v2.0.0) (2020-10-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* Bump major
+
+### Features
+
+* Bump major ([b5ae4e6](https://www.github.com/dxos/cli/commit/b5ae4e6ea159f85e2a8089c1a18f7511aec9c008))
+
 ## 1.0.0 (2020-10-14)
 
 
