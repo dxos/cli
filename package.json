@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-kit",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "DxOS CLI Kit",
   "private": true,
   "scripts": {
