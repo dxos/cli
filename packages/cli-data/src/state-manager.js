@@ -4,13 +4,11 @@
 
 import assert from 'assert';
 
-import { log } from '@dxos/debug';
-
 import { generatePasscode } from '@dxos/credentials';
 import { keyToBuffer, keyToString, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
 import { InvitationDescriptor } from '@dxos/party-manager';
 
-const DEFAULT_UPDATE_HANDLER = model => { log(JSON.stringify(model.messages)); return true; };
+const DEFAULT_ITEM_UPDATE_HANDLER = () => {};
 
 /**
  * Represents state of the CLI within a party, as well as list of active parties;
@@ -22,7 +20,10 @@ export class StateManager {
    */
   _parties = new Map();
 
+  // TODO(egorgripasov): Deplrecated.
   _currentParty = null;
+
+  _party = null;
 
   /**
    * @constructor
@@ -45,8 +46,12 @@ export class StateManager {
     return this._currentParty;
   }
 
-  get model () {
-    return this._model;
+  get party () {
+    return this._party;
+  }
+
+  get item () {
+    return this._item;
   }
 
   isOpenParty (partyKey) {
@@ -56,36 +61,30 @@ export class StateManager {
     return !this._parties.get(partyKey).useCredentials;
   }
 
-  /**
-   * Set currently active model.
-   * @param {Object} model
-   * @param {Function} updateHandler
-   */
-  async setModel (model, updateHandler = DEFAULT_UPDATE_HANDLER) {
+  async setItem (item, updateHandler = DEFAULT_ITEM_UPDATE_HANDLER) {
     await this._assureClient();
 
-    if (this._removeModelListener) {
-      this._removeModelListener();
-      this._removeModelListener = null;
+    if (this._itemUnsubscribe) {
+      this._itemUnsubscribe();
+      this._itemUnsubscribe = null;
     }
 
-    if (this._model) {
-      this._client.modelFactory.destroyModel(this._model);
-      this._model = null;
+    if (this._item) {
+      // Destroy item?
+      this._item = null;
     }
 
-    if (model) {
+    if (item) {
       const onUpdate = async () => {
         const rl = this._getReadlineInterface();
-        const needPrompt = await updateHandler(model);
+        const needPrompt = await updateHandler(item);
         if (needPrompt) {
           rl.prompt();
         }
       };
 
-      this._model = model;
-      this._model.on('update', onUpdate);
-      this._removeModelListener = () => model.removeListener('update', onUpdate);
+      this._item = item;
+      this._itemUnsubscribe = this._item.subscribe(onUpdate);
     }
   }
 
@@ -99,7 +98,7 @@ export class StateManager {
       if (invitation || this._currentParty !== partyKey) {
         if (invitation || !this._parties.has(partyKey)) {
           await this._assureClient();
-          await this.setModel();
+          await this.setItem();
 
           if (invitation) {
             const secretProvider = () => {
@@ -113,6 +112,8 @@ export class StateManager {
 
             const party = await this._client.echo.joinParty(InvitationDescriptor.fromQueryParameters(invitation), secretProvider);
             await party.open();
+
+            this._party = party;
 
             partyKey = keyToString(party.key);
           }
@@ -130,13 +131,15 @@ export class StateManager {
    */
   async createParty () {
     await this._assureClient();
-    await this.setModel();
+    await this.setItem();
     const party = await this._client.echo.createParty();
 
     const topic = keyToString(party.key);
     // TODO(egor): useCredentials is always true now, so we can factor it out.
     this._parties.set(topic, { partyKey: topic, useCredentials: true });
+
     this._currentParty = topic;
+    this._party = party;
     return party;
   }
 

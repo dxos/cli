@@ -30,6 +30,7 @@
   - chess
   describe: Chess operations.
   moduleName: "@dxos/cli-chess"
+  initRequired: true
 - command:
     - console
   describe: Console management.

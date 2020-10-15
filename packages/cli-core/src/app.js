@@ -102,7 +102,8 @@ export class App {
         getReadlineInterface: this.getReadlineInterface.bind(this),
         cliState: {
           interactive: false
-        }
+        },
+        models: []
       };
     }
 

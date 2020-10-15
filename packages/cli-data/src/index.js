@@ -23,7 +23,7 @@ const WIRE_CONFIG = {
   enableInteractive: true
 };
 
-const _createClient = async (config) => {
+const _createClient = async (config, models) => {
   const { client = {}, services: { signal: { server }, ice }, cli } = config.values;
   const clientConf = {
     swarm: {
@@ -51,13 +51,21 @@ const _createClient = async (config) => {
 
   await dataClient.createProfile({ publicKey, secretKey, username });
 
+  // Register models from other extensions.
+  // eslint-disable-next-line
+  for await (const model of models) {
+    if (!dataClient.modelFactory.hasModel(model.meta.type)) {
+      dataClient.modelFactory.registerModel(model);
+    }
+  }
+
   return dataClient;
 };
 
 let client;
-const createClientGetter = (config) => async () => {
+const createClientGetter = (config, models) => async () => {
   if (!client) {
-    client = await _createClient(config);
+    client = await _createClient(config, models);
   }
   return client;
 };
@@ -65,8 +73,8 @@ const createClientGetter = (config) => async () => {
 let stateManager;
 
 const initDataCliState = async (state) => {
-  const { config, getReadlineInterface } = state;
-  const getClient = await createClientGetter(config);
+  const { config, getReadlineInterface, models } = state;
+  const getClient = await createClientGetter(config, models);
   stateManager = new StateManager(getClient, getReadlineInterface);
 
   state.getClient = getClient;
