@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.4](https://www.github.com/dxos/cli/compare/v2.0.3...v2.0.4) (2020-10-15)
+
+
+### Bug Fixes
+
+* lockfile-lint ([f9db5f2](https://www.github.com/dxos/cli/commit/f9db5f2f5717e9efa7a6a5cedcb67260c035fac5))
+* Only select a public IP address. ([a71d73c](https://www.github.com/dxos/cli/commit/a71d73c2f087bbfbf94527e8bfdf002b76feb13a))
+
 ### [2.0.3](https://www.github.com/dxos/cli/compare/v2.0.2...v2.0.3) (2020-10-15)
 
 
