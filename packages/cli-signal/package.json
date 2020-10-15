@@ -68,7 +68,7 @@
     ]
   },
   "peerDependencies": {
-    "@dxos/cli": "^1.0.1"
+    "@dxos/cli": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
