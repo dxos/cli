@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.3](https://www.github.com/dxos/cli/compare/v2.0.2...v2.0.3) (2020-10-15)
+
+
+### Bug Fixes
+
+* peerDep ([#47](https://www.github.com/dxos/cli/issues/47)) ([508388e](https://www.github.com/dxos/cli/commit/508388ec03a2851e556608d400f8e486e01e9779))
+
 ### [2.0.2](https://www.github.com/dxos/cli/compare/v2.0.1...v2.0.2) (2020-10-15)
 
 
