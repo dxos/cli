@@ -89,7 +89,7 @@ export const MachineModule = ({ config }) => {
 
           const dropletInfo = await session.droplets.getById(dropletId);
 
-          const ipAddress = dropletInfo.droplet.networks.v4[0].ip_address;
+          const ipAddress = dropletInfo.droplet.networks.v4.find(net => net.type === 'public').ip_address;
 
           const dnsResult = await session.domains.createRecord(dnsDomain,
             { type: 'A', name: boxName, data: ipAddress });
