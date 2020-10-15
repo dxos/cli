@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.2](https://www.github.com/dxos/cli/compare/v2.0.1...v2.0.2) (2020-10-15)
+
+
+### Bug Fixes
+
+* proper models and items. ([#45](https://www.github.com/dxos/cli/issues/45)) ([6426df8](https://www.github.com/dxos/cli/commit/6426df8bf925e2fcedf7aa3f48a43c872780402d))
+
 ### [2.0.1](https://www.github.com/dxos/cli/compare/v2.0.0...v2.0.1) (2020-10-14)
 
 
