@@ -159,7 +159,7 @@ export const MachineModule = ({ config }) => {
           const boxName = yargs.argv.name ? yargs.argv.name : `kube${crypto.randomBytes(4).toString('hex')}`;
           const boxFullyQualifiedName = `${boxName}.${dnsDomain}`;
 
-          // TODO(dboreham): There are custom cloud-init sections for things like configuring repos and installing packages that we should use.
+          // docker apt source sauce from: https://stackoverflow.com/a/62706447
           const cloudConfigScript =
          `#cloud-config
 
@@ -171,11 +171,17 @@ export const MachineModule = ({ config }) => {
            - python
            - build-essential
            - python-certbot-apache
+           - docker-ce
+           - docker-ce-cli
+           - docker-compose
 
          apt:
            sources:
              certbot:
                source: "ppa:certbot/certbot"
+             docker.list:
+               source: deb [arch=amd64] https://download.docker.com/linux/ubuntu $RELEASE stable
+               keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
 
          runcmd:
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
