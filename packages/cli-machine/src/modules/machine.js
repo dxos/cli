@@ -163,10 +163,21 @@ export const MachineModule = ({ config }) => {
           const cloudConfigScript =
          `#cloud-config
 
+         package_update: true
+
+         package_upgrade: true
+
+         packages:
+           - python
+           - build-essential
+           - python-certbot-apache
+
+         apt:
+           sources:
+             certbot:
+               source: "ppa:certbot/certbot"
+
          runcmd:
-           - apt-get install -y psmisc git wget curl gnupg python build-essential
-           - add-apt-repository -y ppa:certbot/certbot
-           - apt install -y python-certbot-apache
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
            - cd ..
