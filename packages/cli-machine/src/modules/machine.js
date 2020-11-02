@@ -160,6 +160,7 @@ export const MachineModule = ({ config }) => {
           const boxFullyQualifiedName = `${boxName}.${dnsDomain}`;
 
           // docker apt source sauce from: https://stackoverflow.com/a/62706447
+          // Note that we can't install docker-compose as an apt package because we'll get an old version from the base OS repository
           const cloudConfigScript =
          `#cloud-config
 
@@ -173,7 +174,6 @@ export const MachineModule = ({ config }) => {
            - python-certbot-apache
            - docker-ce
            - docker-ce-cli
-           - docker-compose
 
          apt:
            sources:
@@ -184,6 +184,8 @@ export const MachineModule = ({ config }) => {
                keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
 
          runcmd:
+           - curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+           - chmod +x /usr/local/bin/docker-compose
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
            - cd ..
