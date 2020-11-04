@@ -57,7 +57,7 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 
 ## Upgrade
 
-An older version of DxOS CLI could be upgraded via `wire upgrade` command.
+An older version of the CLI could be upgraded via `wire upgrade` command.
 
 ```
 $ wire version
