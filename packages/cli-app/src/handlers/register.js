@@ -4,13 +4,12 @@
 
 import assert from 'assert';
 import clean from 'lodash-clean';
-import isEqual from 'lodash.isequal';
 
-import { readFile, writeFile, getGasAndFees } from '@dxos/cli-core';
+import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
 
-import { APP_CONFIG_FILENAME } from '../config';
+import { loadAppConfig, updateAppConfig } from './config';
 
 export const register = (config, { getAppRecord }) => async (argv) => {
   const { verbose, version, namespace, 'dry-run': noop, txKey } = argv;
@@ -22,13 +21,8 @@ export const register = (config, { getAppRecord }) => async (argv) => {
   assert(bondId, 'Invalid WNS Bond ID.');
   assert(chainId, 'Invalid WNS Chain ID.');
 
-  const { names = [], ...appConfig } = await readFile(APP_CONFIG_FILENAME);
-  const { name = names } = argv;
-
-  assert(Array.isArray(name), 'Invalid App Record Name.');
-
   const conf = {
-    ...appConfig,
+    ...await loadAppConfig(),
     ...clean({ version })
   };
 
@@ -49,9 +43,7 @@ export const register = (config, { getAppRecord }) => async (argv) => {
 
   let appId;
   if (!noop) {
-    if (!isEqual(conf, appConfig)) {
-      await writeFile(conf, APP_CONFIG_FILENAME);
-    }
+    await updateAppConfig(conf);
     const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
     appId = result.data;
     log(`Record ID: ${appId}`);
