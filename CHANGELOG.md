@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.6](https://www.github.com/dxos/cli/compare/v2.0.5...v2.0.6) (2020-11-13)
+
+
+### Bug Fixes
+
+* Draw defaults for app from package.json ([#64](https://www.github.com/dxos/cli/issues/64)) ([33aecd2](https://www.github.com/dxos/cli/commit/33aecd2f3ba9e8b8e8f4dd3916b9d6fa1968f7bd))
+
 ### [2.0.5](https://www.github.com/dxos/cli/compare/v2.0.4...v2.0.5) (2020-11-11)
 
 
