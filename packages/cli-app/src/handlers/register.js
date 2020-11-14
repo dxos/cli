@@ -10,26 +10,28 @@ import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
 
 import { loadAppConfig, updateAppConfig } from './config';
+import { spawnSync } from 'child_process';
 
 export const register = (config, { getAppRecord }) => async (argv) => {
-  const { verbose, version, namespace, 'dry-run': noop, txKey } = argv;
+  const { verbose, version, namespace, 'dry-run': noop, txKey, name } = argv;
   const wnsConfig = config.get('services.wns');
   const { server, userKey, bondId, chainId } = wnsConfig;
 
   assert(server, 'Invalid WNS endpoint.');
   assert(userKey, 'Invalid WNS userKey.');
-  assert(bondId, 'Invalid WNS Bond ID.');
-  assert(chainId, 'Invalid WNS Chain ID.');
+  assert(bondId, 'Invalid WNS bond ID.');
+  assert(chainId, 'Invalid WNS chain ID.');
 
   const conf = {
     ...await loadAppConfig(),
     ...clean({ version })
   };
 
-  log(`Registering ${conf.name}@${conf.version}...`);
+  assert(name, 'Invalid WRN.');
+  assert(conf.name, 'Invalid app name.');
+  assert(conf.version, 'Invalid app version.');
 
-  assert(conf.name, 'Invalid App Name');
-  assert(conf.version, 'Invalid App Version');
+  log(`Registering ${conf.name}@${conf.version}...`);
 
   const record = getAppRecord(conf, namespace);
 
@@ -40,6 +42,17 @@ export const register = (config, { getAppRecord }) => async (argv) => {
   }
 
   const fee = getGasAndFees(argv, wnsConfig);
+
+  const { status, stdout } = spawnSync('git', [
+    'describe',
+    '--tags',
+    '--first-parent',
+    '--abbrev=99',
+    '--long',
+    '--dirty',
+    '--always'
+  ], { shell: true });
+  conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
 
   let appId;
   if (!noop) {
