@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.7](https://www.github.com/dxos/cli/compare/v2.0.6...v2.0.7) (2020-11-14)
+
+
+### Bug Fixes
+
+* Fix missing name, plus try to include repo version when available. ([b876360](https://www.github.com/dxos/cli/commit/b8763606fe67c08154949e75b49b46da9228ec74))
+
 ### [2.0.6](https://www.github.com/dxos/cli/compare/v2.0.5...v2.0.6) (2020-11-13)
 
 
