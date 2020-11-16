@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.8](https://www.github.com/dxos/cli/compare/v2.0.7...v2.0.8) (2020-11-16)
+
+
+### Bug Fixes
+
+* set the repositoryVersion before building the record. ([a452e2b](https://www.github.com/dxos/cli/commit/a452e2bf6c99400093852ebe191eeb8a08c674f4))
+
 ### [2.0.7](https://www.github.com/dxos/cli/compare/v2.0.6...v2.0.7) (2020-11-14)
 
 

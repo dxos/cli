@@ -31,18 +31,6 @@ export const register = (config, { getAppRecord }) => async (argv) => {
   assert(conf.name, 'Invalid app name.');
   assert(conf.version, 'Invalid app version.');
 
-  log(`Registering ${conf.name}@${conf.version}...`);
-
-  const record = getAppRecord(conf, namespace);
-
-  const registry = new Registry(server, chainId);
-
-  if (verbose || noop) {
-    log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
-  }
-
-  const fee = getGasAndFees(argv, wnsConfig);
-
   const { status, stdout } = spawnSync('git', [
     'describe',
     '--tags',
@@ -53,6 +41,17 @@ export const register = (config, { getAppRecord }) => async (argv) => {
     '--always'
   ], { shell: true });
   conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
+
+  log(`Registering ${conf.name}@${conf.version}...`);
+
+  const record = getAppRecord(conf, namespace);
+  const registry = new Registry(server, chainId);
+
+  if (verbose || noop) {
+    log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
+  }
+
+  const fee = getGasAndFees(argv, wnsConfig);
 
   let appId;
   if (!noop) {
