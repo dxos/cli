@@ -47,7 +47,8 @@ export const AppModule = ({ config }) => {
         command: ['publish'],
         describe: 'Publish Pad to IPFS.',
         builder: yargs => yargs
-          .option('path', { type: 'string' }),
+          .option('path', { type: 'string' })
+          .option('timeout', { type: 'string', default: '10m' }),
         handler: asyncHandler(publish(config))
       })
 
@@ -73,8 +74,13 @@ export const AppModule = ({ config }) => {
         builder: yargs => yargs
           .strict(false)
           .version(false)
+          .option('name', { type: 'string' })
+          .option('version', { type: 'string' })
+          .option('id', { type: 'string' })
+          .option('namespace', { type: 'string' })
           .option('gas', { type: 'string' })
-          .option('fees', { type: 'string' }),
+          .option('fees', { type: 'string' })
+          .option('timeout', { type: 'string', default: '10m' }),
         handler: asyncHandler(async argv => {
           log('Preparing to deploy...');
           await build(config, { getPadRecord })(argv);

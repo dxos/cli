@@ -6,7 +6,7 @@ import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 import { APP_TYPE, DEFAULT_PORT, BASE_URL } from '../config';
-import { build, configuration, publish, register, query, serve } from '../handlers';
+import { build, publish, register, query, serve } from '../handlers';
 
 /**
  * @param {object} config
@@ -49,7 +49,8 @@ export const AppModule = ({ config }) => {
         command: ['publish'],
         describe: 'Publish Application to IPFS.',
         builder: yargs => yargs
-          .option('path', { type: 'string' }),
+          .option('path', { type: 'string' })
+          .option('timeout', { type: 'string', default: '10m' }),
         handler: asyncHandler(publish(config))
       })
 
@@ -77,7 +78,11 @@ export const AppModule = ({ config }) => {
           .version(false)
           .option('gas', { type: 'string' })
           .option('fees', { type: 'string' })
-          .option('name', { type: 'array' }),
+          .option('name', { type: 'array' })
+          .option('version', { type: 'string' })
+          .option('id', { type: 'string' })
+          .option('namespace', { type: 'string' })
+          .option('timeout', { type: 'string', default: '10m' }),
         handler: asyncHandler(async argv => {
           log('Preparing to deploy...');
           await build(config, { getAppRecord, getPublicUrl })(argv);
@@ -125,22 +130,6 @@ export const AppModule = ({ config }) => {
             builder: yargs => yargs
               .option('proc-name', { type: 'string' }),
             handler: asyncHandler(serve.stop(config))
-          })
-      })
-
-      // Configuration.
-      .command({
-        command: ['config'],
-        describe: 'Applications configuration',
-        builder: yargs => yargs
-        // update.
-          .command({
-            command: ['update'],
-            describe: 'Update applications configuration.',
-            builder: yargs => yargs.version(false)
-              .option('conf', { type: 'json' }),
-
-            handler: asyncHandler(configuration.update(config))
           })
       })
   });

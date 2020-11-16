@@ -5,42 +5,51 @@
 import assert from 'assert';
 import IpfsHttpClient, { globSource } from 'ipfs-http-client';
 import path from 'path';
-import semverInc from 'semver/functions/inc';
 import set from 'lodash.set';
+import pify from 'pify';
+import folderSize from 'get-folder-size';
+import cliProgress from 'cli-progress';
 
 import { log } from '@dxos/debug';
-import { readFile, writeFile } from '@dxos/cli-core';
 
-import { APP_CONFIG_FILENAME } from '../config';
+import { loadAppConfig, updateAppConfig } from './config';
+
+const getFolderSize = pify(folderSize);
 
 const DEFAULT_DIST_PATH = 'dist';
 
-export const publish = config => async ({ path: distPath = DEFAULT_DIST_PATH }) => {
-  const appConfig = await readFile(APP_CONFIG_FILENAME);
-  log(`Publishing ${appConfig.name}...`);
+export const publish = config => async ({ timeout, path: distPath = DEFAULT_DIST_PATH }) => {
+  const conf = await loadAppConfig();
+
+  log(`Publishing ${conf.name}...`);
 
   const ipfsServer = config.get('services.ipfs.server');
   assert(ipfsServer, 'Invalid IPFS Server.');
 
-  const ipfs = IpfsHttpClient(ipfsServer);
+  const ipfs = IpfsHttpClient({
+    url: ipfsServer,
+    timeout: timeout || '10m'
+  });
 
-  const publishFolder = path.join(process.cwd(), appConfig.publish || distPath);
+  const publishFolder = path.join(process.cwd(), conf.publish || distPath);
 
-  const uploadedFiles = [];
+  const source = globSource(publishFolder, { recursive: true });
+  const total = await getFolderSize(publishFolder);
+
+  const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+  bar.start(total, 0);
 
   // eslint-disable-next-line
-  for await (const file of ipfs.add(globSource(publishFolder, { recursive: true }))) {
-    uploadedFiles.push(file.cid.toString());
-  }
+  const addResult = await ipfs.add(source, { progress: bytes => bar.update(bytes) });
 
-  assert(uploadedFiles.length, 'No files to upload.');
+  bar.update(total);
+  bar.stop();
 
-  const cid = uploadedFiles.pop();
+  const cid = addResult.cid.toString();
 
   // Update CID in app.yml.
-  set(appConfig, 'package["/"]', cid);
-  appConfig.version = semverInc(appConfig.version, 'patch');
-  await writeFile(appConfig, APP_CONFIG_FILENAME);
+  set(conf, 'package["/"]', cid);
+  await updateAppConfig(conf);
 
-  log(`Published ${appConfig.name}@${appConfig.version} with cid ${cid}`);
+  log(`Published ${conf.name}@${conf.version} with cid ${cid}`);
 };

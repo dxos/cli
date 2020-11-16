@@ -15,14 +15,17 @@ import { PAD_CONFIG_FILENAME } from '../config';
 
 const DEFAULT_DIST_PATH = 'dist';
 
-export const publish = config => async ({ path: distPath = DEFAULT_DIST_PATH }) => {
+export const publish = config => async ({ timeout, path: distPath = DEFAULT_DIST_PATH }) => {
   const appConfig = await readFile(PAD_CONFIG_FILENAME);
   log(`Publishing ${appConfig.name}...`);
 
   const ipfsServer = config.get('services.ipfs.server');
   assert(ipfsServer, 'Invalid IPFS Server.');
 
-  const ipfs = IpfsHttpClient(ipfsServer);
+  const ipfs = IpfsHttpClient({
+    url: ipfsServer,
+    timeout: timeout || '10m'
+  });
 
   const publishFolder = path.join(process.cwd(), appConfig.publish || distPath);
 

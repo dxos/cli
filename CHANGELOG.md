@@ -1,5 +1,35 @@
 # Changelog
 
+### [2.0.7](https://www.github.com/dxos/cli/compare/v2.0.6...v2.0.7) (2020-11-14)
+
+
+### Bug Fixes
+
+* Fix missing name, plus try to include repo version when available. ([b876360](https://www.github.com/dxos/cli/commit/b8763606fe67c08154949e75b49b46da9228ec74))
+
+### [2.0.6](https://www.github.com/dxos/cli/compare/v2.0.5...v2.0.6) (2020-11-13)
+
+
+### Bug Fixes
+
+* Draw defaults for app from package.json ([#64](https://www.github.com/dxos/cli/issues/64)) ([33aecd2](https://www.github.com/dxos/cli/commit/33aecd2f3ba9e8b8e8f4dd3916b9d6fa1968f7bd))
+
+### [2.0.5](https://www.github.com/dxos/cli/compare/v2.0.4...v2.0.5) (2020-11-11)
+
+
+### Bug Fixes
+
+* add timeout option and progress bar ([#63](https://www.github.com/dxos/cli/issues/63)) ([d43d339](https://www.github.com/dxos/cli/commit/d43d3396eb3b5f1e2aae73f9f61d77ea63a11585))
+* updates of echo api. ([#50](https://www.github.com/dxos/cli/issues/50)) ([fb6c2c4](https://www.github.com/dxos/cli/commit/fb6c2c4bd42889f8dfc541b78edd88a68e0c2df3))
+
+### [2.0.4](https://www.github.com/dxos/cli/compare/v2.0.3...v2.0.4) (2020-10-15)
+
+
+### Bug Fixes
+
+* lockfile-lint ([f9db5f2](https://www.github.com/dxos/cli/commit/f9db5f2f5717e9efa7a6a5cedcb67260c035fac5))
+* Only select a public IP address. ([a71d73c](https://www.github.com/dxos/cli/commit/a71d73c2f087bbfbf94527e8bfdf002b76feb13a))
+
 ### [2.0.3](https://www.github.com/dxos/cli/compare/v2.0.2...v2.0.3) (2020-10-15)
 
 
