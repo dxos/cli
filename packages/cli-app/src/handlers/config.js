@@ -2,24 +2,31 @@
 // Copyright 2020 DxOS.
 //
 
-import assert from 'assert';
 import fs from 'fs';
-import os from 'os';
-import { read, write } from 'node-yaml';
 import defaultsDeep from 'lodash.defaultsdeep';
+import pick from 'lodash.pick';
 
-const update = config => async argv => {
-  const { conf } = argv;
+import { readFile, writeFile } from '@dxos/cli-core';
 
-  const configFile = config.get('cli.app.serve.config', '').replace('~', os.homedir());
-  assert(configFile && fs.existsSync(configFile), 'Configuration file does not exist.');
+import { APP_CONFIG_FILENAME, DEFAULT_PACKAGE_JSON_ATTRIBUTES, PACKAGE_JSON_FILENAME } from '../config';
 
-  let appConfig = await read(configFile);
-  appConfig = defaultsDeep({}, conf, appConfig);
+const DEFAULT_BUILD = 'yarn webpack -p';
 
-  await write(configFile, appConfig);
+export const updateAppConfig = async config => {
+  let appConfig = fs.existsSync(APP_CONFIG_FILENAME) ? await readFile(APP_CONFIG_FILENAME) : {};
+  appConfig = defaultsDeep({}, appConfig, config);
+
+  await writeFile(appConfig, APP_CONFIG_FILENAME);
 };
 
-export default {
-  update
+export const loadAppConfig = async () => {
+  const packageProperties = pick(fs.existsSync(PACKAGE_JSON_FILENAME)
+    ? await readFile(PACKAGE_JSON_FILENAME) : {}, DEFAULT_PACKAGE_JSON_ATTRIBUTES);
+  const appConfig = fs.existsSync(APP_CONFIG_FILENAME) ? await readFile(APP_CONFIG_FILENAME) : {};
+
+  return {
+    build: DEFAULT_BUILD,
+    ...packageProperties,
+    ...appConfig
+  };
 };

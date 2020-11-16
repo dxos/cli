@@ -54,9 +54,7 @@ const _createClient = async (config, models) => {
   // Register models from other extensions.
   // eslint-disable-next-line
   for await (const model of models) {
-    if (!dataClient.modelFactory.hasModel(model.meta.type)) {
-      dataClient.modelFactory.registerModel(model);
-    }
+    dataClient.registerModel(model);
   }
 
   return dataClient;
