@@ -149,6 +149,7 @@ export const MachineModule = ({ config }) => {
         describe: 'Create a Machine.',
         builder: yargs => yargs
           .option('name', { type: 'string' })
+          .option('memory', { type: 'number', default: '4' })
           .option('pin', { type: 'boolean', default: false }),
 
         handler: asyncHandler(async () => {
@@ -207,10 +208,35 @@ export const MachineModule = ({ config }) => {
            - systemctl start kube
         `;
 
+          // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
+          let sizeSlug = 's-2vcpu-4gb';
+          switch (yargs.argv.memory) {
+            case 1:
+              sizeSlug = 's-1vcpu-1gb';
+              break;
+            case 2:
+              sizeSlug = 's-2vcpu-2gb';
+              break;
+            case 4:
+              sizeSlug = 's-2vcpu-4gb';
+              break;
+            case 8:
+              sizeSlug = 's-4vcpu-8gb';
+              break;
+            case 16:
+              sizeSlug = 's-8vcpu-16gb';
+              break;
+            case 32:
+              sizeSlug = 's-8vcpu-32gb';
+              break;
+            default:
+              print(`Unsupported memory size specified: ${yargs.argv.memory}, using default 4G size instead.`);
+          }
+
           const createParameters = {
             name: boxName,
             region: 'nyc3',
-            size: 's-2vcpu-4gb',
+            size: sizeSlug,
             image: 'ubuntu-18-04-x64',
             ssh_keys: sshKeys,
             user_data: cloudConfigScript
