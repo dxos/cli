@@ -1,0 +1,8 @@
+name: dxos/cli-payment
+version: 0.0.1
+displayName: cli-payment
+description: Payment management.
+initRequired: true
+destroyRequired: true
+command:
+  - payment

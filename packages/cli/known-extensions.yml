@@ -55,3 +55,9 @@
   - mdns
   describe: MDNS operations.
   moduleName: "@dxos/cli-mdns"
+- command:
+  - payment
+  describe: Payment management.
+  moduleName: "@dxos/cli-payment"
+  initRequired: true
+  destroyRequired: true
