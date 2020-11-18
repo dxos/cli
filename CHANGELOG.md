@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.10](https://www.github.com/dxos/cli/compare/v2.0.9...v2.0.10) (2020-11-18)
+
+
+### Bug Fixes
+
+* Add wire machine delete and kube tags. ([bfb9201](https://www.github.com/dxos/cli/commit/bfb920148918f7b32031fb2a60a5a1624457970a))
+
 ### [2.0.9](https://www.github.com/dxos/cli/compare/v2.0.8...v2.0.9) (2020-11-18)
 
 
