@@ -11,23 +11,38 @@ import crypto from 'crypto';
 
 import DigitalOcean from 'do-wrapper';
 
+import { waitForCondition } from '@dxos/async';
 import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
 const KUBE_TYPE = 'wrn:kube';
 
 /**
- *
  * @param {DigitalOceanSession} session
  * @param {string} name
  * @return {string} - id for box named name
  */
-const getIdFromName = async (session, name) => {
+const getDropletIdFromName = async (session, name) => {
   assert(session);
   assert(name);
   const result = await session.droplets.getAll();
-  const targetDroplet = result.droplets.filter((droplet) => { return droplet.name === name; });
-  return targetDroplet[0].id;
+  const [targetDroplet] = result.droplets.filter(droplet => droplet.name === name) || [];
+  return targetDroplet ? targetDroplet.id : undefined;
+};
+
+/**
+ * @param {DigitalOceanSession} session
+ * @param {string} domain
+ * @param {string} name
+ * @return {string} - id for box named name
+ */
+const getRecordIdFromName = async (session, domain, name) => {
+  assert(session);
+  assert(domain);
+  assert(name);
+  const result = await session.domains.getAllRecords(domain, KUBE_TYPE);
+  const [target] = result.domain_records.filter(record => record.name === name) || [];
+  return target ? target.id : undefined;
 };
 
 /**
@@ -70,7 +85,8 @@ export const MachineModule = ({ config }) => {
               created_at: droplet.created_at,
               memory: droplet.memory,
               vcpus: droplet.vcpus,
-              ip_address: droplet.networks.v4.find(net => net.type === 'public').ip_address
+              ip_address: droplet.networks.v4.find(net => net.type === 'public').ip_address,
+              fqdn: `${droplet.name}.${dnsDomain}`
             };
           });
 
@@ -92,21 +108,6 @@ export const MachineModule = ({ config }) => {
           const fullyQualifiedBoxName = `${boxName}.${dnsDomain}`;
           const wnsBoxName = `${dnsDomain}/${boxName}`;
 
-          const session = new DigitalOcean(doAccessToken, 100);
-
-          const dropletId = await getIdFromName(session, yargs.argv.name);
-
-          const dropletInfo = await session.droplets.getById(dropletId);
-
-          const ipAddress = dropletInfo.droplet.networks.v4.find(net => net.type === 'public').ip_address;
-
-          const dnsResult = await session.domains.createRecord(dnsDomain,
-            { type: 'A', name: boxName, data: ipAddress });
-
-          if (verbose) {
-            print({ dnsResult }, { json: true });
-          }
-
           const wnsConfig = config.get('services.wns');
           const { server, userKey, bondId, chainId } = wnsConfig;
           const registry = new Registry(server, chainId);
@@ -122,6 +123,10 @@ export const MachineModule = ({ config }) => {
 
           const fee = getGasAndFees(argv, wnsConfig);
           const result = await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
+
+          if (verbose) {
+            print({ result }, { json: true });
+          }
 
           const machineData = {
             name: boxName,
@@ -139,10 +144,18 @@ export const MachineModule = ({ config }) => {
           .option('name', { type: 'string' }),
 
         handler: asyncHandler(async () => {
+          const { name } = yargs.argv;
           const session = new DigitalOcean(doAccessToken, 100);
 
-          const dropletId = await getIdFromName(session, yargs.argv.name);
-          await session.droplets.deleteById(dropletId);
+          const dropletId = await getDropletIdFromName(session, name);
+          if (dropletId) {
+            await session.droplets.deleteById(dropletId);
+          }
+
+          const recordId = await getRecordIdFromName(session, dnsDomain, name);
+          if (recordId) {
+            await session.domains.deleteRecord(dnsDomain, recordId);
+          }
         })
       })
       .command({
@@ -152,18 +165,23 @@ export const MachineModule = ({ config }) => {
           .option('name', { type: 'string' }),
 
         handler: asyncHandler(async () => {
+          const { name } = yargs.argv;
           const session = new DigitalOcean(doAccessToken, 100);
 
-          const dropletId = await getIdFromName(session, yargs.argv.name);
-          const { droplet: dropletInfo } = await session.droplets.getById(dropletId);
+          let kube = {};
+          const dropletId = await getDropletIdFromName(session, name);
 
-          const kube = {
-            name: dropletInfo.name,
-            created_at: dropletInfo.created_at,
-            memory: dropletInfo.memory,
-            vcpus: dropletInfo.vcpus,
-            ip_address: dropletInfo.networks.v4.find(net => net.type === 'public').ip_address
-          };
+          if (dropletId) {
+            const { droplet } = await session.droplets.getById(dropletId);
+            kube = {
+              name: droplet.name,
+              created_at: droplet.created_at,
+              memory: droplet.memory,
+              vcpus: droplet.vcpus,
+              ip_address: droplet.networks.v4.find(net => net.type === 'public').ip_address,
+              fqdn: `${name}.${dnsDomain}`
+            };
+          }
 
           print({ kube }, { json: true });
         })
@@ -184,6 +202,11 @@ export const MachineModule = ({ config }) => {
 
           const boxName = yargs.argv.name ? yargs.argv.name : `kube${crypto.randomBytes(4).toString('hex')}`;
           const boxFullyQualifiedName = `${boxName}.${dnsDomain}`;
+
+          const dropletId = await getDropletIdFromName(session, boxName);
+          if (dropletId) {
+            throw new Error(`${boxName} already exists`);
+          }
 
           // docker apt source sauce from: https://stackoverflow.com/a/62706447
           // Note that we can't install docker-compose as an apt package because we'll get an old version from the base OS repository
@@ -274,13 +297,31 @@ export const MachineModule = ({ config }) => {
           }
 
           const result = await session.droplets.create(createParameters);
+          const droplet = await waitForCondition(async () => {
+            const { droplet } = await session.droplets.getById(result.droplet.id);
+            if (droplet?.networks.v4.find(net => net.type === 'public').ip_address) {
+              return droplet;
+            }
+            return undefined;
+          }, 0, 1000);
 
           if (verbose) {
-            print({ result }, { json: true });
+            print({ droplet }, { json: true });
+          }
+
+          const ipAddress = droplet.networks.v4.find(net => net.type === 'public').ip_address;
+          const dnsResult = await session.domains.createRecord(dnsDomain, { type: 'A', name: boxName, data: ipAddress, tags: [KUBE_TYPE] });
+          if (verbose) {
+            print({ dnsResult }, { json: true });
           }
 
           const machine = {
-            name: boxName
+            name: droplet.name,
+            created_at: droplet.created_at,
+            memory: droplet.memory,
+            vcpus: droplet.vcpus,
+            ip_address: ipAddress,
+            fqdn: boxFullyQualifiedName
           };
 
           print({ machine }, { json: true });
