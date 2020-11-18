@@ -58,15 +58,20 @@ export const MachineModule = ({ config }) => {
           const { verbose } = yargs.argv;
 
           const session = new DigitalOcean(doAccessToken, 100);
-          const result = await session.droplets.getAll();
+          const result = await session.droplets.getAll(KUBE_TYPE);
 
           if (verbose) {
             print({ result }, { json: true });
           }
 
-          const boxesRaw = result.droplets.filter((droplet) => { return droplet.name.startsWith('kube'); });
-          const machines = boxesRaw.map((droplet) => {
-            return { name: droplet.name, created_at: droplet.created_at };
+          const machines = result.droplets.map((droplet) => {
+            return {
+              name: droplet.name,
+              created_at: droplet.created_at,
+              memory: droplet.memory,
+              vcpus: droplet.vcpus,
+              ip_address: droplet.networks.v4.find(net => net.type === 'public').ip_address
+            };
           });
 
           print({ machines }, { json: true });
@@ -128,6 +133,19 @@ export const MachineModule = ({ config }) => {
         })
       })
       .command({
+        command: ['delete'],
+        describe: 'Delete a Machine.',
+        builder: yargs => yargs
+          .option('name', { type: 'string' }),
+
+        handler: asyncHandler(async () => {
+          const session = new DigitalOcean(doAccessToken, 100);
+
+          const dropletId = await getIdFromName(session, yargs.argv.name);
+          await session.droplets.deleteById(dropletId);
+        })
+      })
+      .command({
         command: ['info'],
         describe: 'Info about a Machine.',
         builder: yargs => yargs
@@ -137,12 +155,14 @@ export const MachineModule = ({ config }) => {
           const session = new DigitalOcean(doAccessToken, 100);
 
           const dropletId = await getIdFromName(session, yargs.argv.name);
-
           const { droplet: dropletInfo } = await session.droplets.getById(dropletId);
 
           const kube = {
             name: dropletInfo.name,
-            ip_address: dropletInfo.networks.v4[0].ip_address
+            created_at: dropletInfo.created_at,
+            memory: dropletInfo.memory,
+            vcpus: dropletInfo.vcpus,
+            ip_address: dropletInfo.networks.v4.find(net => net.type === 'public').ip_address
           };
 
           print({ kube }, { json: true });
@@ -245,7 +265,8 @@ export const MachineModule = ({ config }) => {
             size: sizeSlug,
             image: 'ubuntu-18-04-x64',
             ssh_keys: sshKeys,
-            user_data: cloudConfigScript
+            user_data: cloudConfigScript,
+            tags: [KUBE_TYPE]
           };
 
           if (verbose) {
