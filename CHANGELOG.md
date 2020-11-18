@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.9](https://www.github.com/dxos/cli/compare/v2.0.8...v2.0.9) (2020-11-18)
+
+
+### Bug Fixes
+
+* Add CLI version option ([ef87ec0](https://www.github.com/dxos/cli/commit/ef87ec09131e67156b313cc303f3fe5c859a1f6d))
+
 ### [2.0.8](https://www.github.com/dxos/cli/compare/v2.0.7...v2.0.8) (2020-11-16)
 
 
