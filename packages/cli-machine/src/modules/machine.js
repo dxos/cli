@@ -38,7 +38,11 @@ export const MachineModule = ({ config }) => {
   const githubAccessToken = config.get('services.machine.githubAccessToken');
   const dnsDomain = config.get('services.machine.dnsDomain');
   // TODO(dboreham): Get from profile
-  const sshKeys = ['ec:e0:6b:82:1e:b2:b7:74:a2:c3:1b:b4:3c:6d:72:a0', 'b1:a9:fa:63:0d:60:d5:6c:31:76:37:52:c7:fe:02:0b'];
+  const sshKeys = [
+    'ec:e0:6b:82:1e:b2:b7:74:a2:c3:1b:b4:3c:6d:72:a0', // David
+    'b1:a9:fa:63:0d:60:d5:6c:31:76:37:52:c7:fe:02:0b', // Thomas
+    '5f:82:c0:88:68:41:26:1b:d7:9f:be:82:24:7c:29:e3' // Egor
+  ];
 
   return ({
     command: ['machine'],
@@ -149,11 +153,12 @@ export const MachineModule = ({ config }) => {
         describe: 'Create a Machine.',
         builder: yargs => yargs
           .option('name', { type: 'string' })
-          .option('memory', { type: 'number', default: '4' })
-          .option('pin', { type: 'boolean', default: false }),
+          .option('memory', { type: 'number', default: 4 })
+          .option('pin', { type: 'boolean', default: false })
+          .option('cliver', { type: 'string', default: '' }),
 
         handler: asyncHandler(async () => {
-          const { verbose, pin } = yargs.argv;
+          const { verbose, pin, cliver, memory } = yargs.argv;
 
           const session = new DigitalOcean(doAccessToken, 100);
 
@@ -198,6 +203,7 @@ export const MachineModule = ({ config }) => {
            - sed -i 's/apt clean//g' install.sh
            - sed -i 's/apt autoclean//g' install.sh
            - sed -i 's/apt autoremove//g' install.sh
+           - export WIRE_CLI_VER="${cliver}"
            - export HOME=/root
            - ./install.sh /opt
            - sed -i s/kube.local/${boxFullyQualifiedName}/g /root/.wire/remote.yml
@@ -210,7 +216,7 @@ export const MachineModule = ({ config }) => {
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
           let sizeSlug = 's-2vcpu-4gb';
-          switch (yargs.argv.memory) {
+          switch (memory) {
             case 1:
               sizeSlug = 's-1vcpu-1gb';
               break;
