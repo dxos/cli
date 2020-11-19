@@ -112,8 +112,8 @@ export const PaymentModule = ({ paymentManager }) => ({
         })
 
         .command({
-          command: ['get [channel]'],
-          describe: 'Get payment channel info.',
+          command: ['info [channel]'],
+          describe: 'Payment channel info.',
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true })
             .option('channel', { type: 'string' }),
@@ -159,5 +159,54 @@ export const PaymentModule = ({ paymentManager }) => ({
             await paymentManager.sendDepositTx(channel, amount);
           })
         })
+
+        .command({
+          command: ['reconcile [channel]'],
+          describe: 'Reconcile deposited funds into the off-chain channel balance.',
+          builder: yargs => yargs
+            .option('interactive', { hidden: true, default: true })
+            .option('channel', { type: 'string' }),
+
+          handler: asyncHandler(async (argv) => {
+            const { channel } = argv;
+
+            assert(channel, 'Invalid channel address.');
+
+            await paymentManager.reconcileDeposit(channel);
+          })
+        })
+    })
+
+    .command({
+      command: ['create [channel] [amount]'],
+      describe: 'Create payment coupon.',
+      builder: yargs => yargs
+        .option('interactive', { hidden: true, default: true })
+        .option('channel', { type: 'string' })
+        .option('amount', { type: 'string' }),
+
+      handler: asyncHandler(async (argv) => {
+        const { channel, amount } = argv;
+
+        assert(channel, 'Invalid channel address.');
+        assert(amount, 'Invalid amount.');
+
+        const coupon = await paymentManager.createTransfer(channel, amount);
+        log(coupon);
+      })
+    })
+
+    .command({
+      command: ['redeem [coupon]'],
+      describe: 'Create payment coupon.',
+      builder: yargs => yargs
+        .option('interactive', { hidden: true, default: true })
+        .option('coupon', { type: 'string' }),
+
+      handler: asyncHandler(async (argv) => {
+        const { coupon } = argv;
+
+        await paymentManager.redeemTransfer(coupon);
+      })
     })
 });

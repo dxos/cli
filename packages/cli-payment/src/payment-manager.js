@@ -5,7 +5,8 @@
 import assert from 'assert';
 import pino from 'pino';
 import { Wallet, utils, providers } from 'ethers';
-import { RestServerNodeService } from '@connext/vector-utils';
+import { TransferNames } from '@connext/vector-types';
+import { RestServerNodeService, getRandomBytes32 } from '@connext/vector-utils';
 
 const DEFAULT_TIMEOUT = '360000';
 
@@ -155,7 +156,7 @@ export class PaymentManager {
     const channel = channelResult.getValue();
     const depositAmt = utils.parseEther(amount);
 
-    console.log({
+    const result = await this._service.sendDepositTx({
       chainId: channel.networkContext.chainId,
       amount: depositAmt.toString(),
       assetId,
@@ -163,20 +164,99 @@ export class PaymentManager {
       publicIdentifier: this._service.publicIdentifier
     });
 
-    const depositTxRes = await this._service.sendDepositTx({
-      chainId: channel.networkContext.chainId,
-      amount: depositAmt.toString(),
-      assetId,
-      channelAddress: channel.channelAddress,
-      publicIdentifier: this._service.publicIdentifier
-    });
-
-    if (depositTxRes.isError) {
-      throw depositTxRes.getError();
+    if (result.isError) {
+      throw result.getError();
     }
 
     const rpcProvider = new providers.JsonRpcProvider(provider);
-    await rpcProvider.waitForTransaction(depositTxRes.getValue().txHash);
+    await rpcProvider.waitForTransaction(result.getValue().txHash);
+  }
+
+  async reconcileDeposit (channelAddress) {
+    assert(channelAddress, 'Invalid channel.');
+
+    const { assetId, provider } = this._config.get('services.payment');
+
+    assert(assetId, 'Invalid asset ID.');
+    assert(provider, 'Invalid payment provider endpoint.');
+
+    await this._connect();
+    const channelResult = await this._service.getStateChannel({ channelAddress, publicIdentifier: this._service.publicIdentifier });
+    if (channelResult.isError) {
+      throw channelResult.getError();
+    }
+
+    const channel = channelResult.getValue();
+    const result = await this._service.reconcileDeposit({
+      assetId,
+      channelAddress: channel.channelAddress,
+      publicIdentifier: this._service.publicIdentifier
+    });
+
+    if (result.isError) {
+      throw result.getError();
+    }
+  }
+
+  async createTransfer (channelAddress, amount) {
+    assert(channelAddress, 'Invalid channel.');
+    assert(amount, 'Invalid amount.');
+
+    await this._connect();
+
+    const { assetId } = this._config.get('services.payment');
+
+    assert(assetId, 'Invalid asset ID.');
+
+    const transferAmt = utils.parseEther(amount);
+    const preImage = getRandomBytes32();
+    const lockHash = utils.soliditySha256(['bytes32'], [preImage]);
+    const result = await this._service.conditionalTransfer({
+      amount: transferAmt.toString(),
+      assetId,
+      channelAddress,
+      type: TransferNames.HashlockTransfer,
+      details: {
+        lockHash,
+        expiry: '0'
+      },
+      publicIdentifier: this._service.publicIdentifier
+    });
+
+    if (result.isError) {
+      throw result.getError();
+    }
+
+    const { transferId } = result.getValue();
+
+    const coupon = {
+      channelAddress,
+      transferId,
+      preImage
+    };
+
+    return Buffer.from(JSON.stringify(coupon)).toString('base64');
+  }
+
+  async redeemTransfer (coupon) {
+    const {
+      channelAddress,
+      transferId,
+      preImage
+    } = JSON.parse(Buffer.from(coupon, 'base64').toString());
+
+    const result = await this._service.resolveTransfer({
+      publicIdentifier: this._service.publicIdentifier,
+      channelAddress,
+      transferResolver: {
+        preImage
+      },
+      transferId
+    });
+
+    if (result.isError) {
+      throw result.getError();
+    }
   }
 
   async _connect () {
