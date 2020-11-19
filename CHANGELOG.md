@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.11](https://www.github.com/dxos/cli/compare/v2.0.10...v2.0.11) (2020-11-19)
+
+
+### Bug Fixes
+
+* Add ENV mappings for wire machine ([d74f2f9](https://www.github.com/dxos/cli/commit/d74f2f9800409d4d99ead624e3a7148fe2a1becc))
+* delete DNS records, register DNS at creation ([458723e](https://www.github.com/dxos/cli/commit/458723e8aad054436fa330637566b69b082736a7))
+
 ### [2.0.10](https://www.github.com/dxos/cli/compare/v2.0.9...v2.0.10) (2020-11-18)
 
 
