@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.12](https://www.github.com/dxos/cli/compare/v2.0.11...v2.0.12) (2020-11-19)
+
+
+### Bug Fixes
+
+* bump (for npm publishing failure) ([7e31da6](https://www.github.com/dxos/cli/commit/7e31da6bb1719b6d9c64e2586edc11e0c8b6dadc))
+
 ### [2.0.11](https://www.github.com/dxos/cli/compare/v2.0.10...v2.0.11) (2020-11-19)
 
 
