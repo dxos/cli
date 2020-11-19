@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
-const { BotFactory, BotContainer, getConfig } = require('@dxos/botkit');
+const { NODE_ENV, NATIVE_ENV, BotFactory, NodeBotContainer, NativeBotContainer, getConfig } = require('@dxos/botkit');
 
 const config = getConfig();
-new BotFactory(config, new BotContainer(config)).start();
+
+new BotFactory(config, {
+  [NODE_ENV]: new NodeBotContainer(config),
+  [NATIVE_ENV]: new NativeBotContainer(config)
+}).start();
