@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.13](https://www.github.com/dxos/cli/compare/v2.0.12...v2.0.13) (2020-11-19)
+
+
+### Bug Fixes
+
+* use latest sdk packages. ([#73](https://www.github.com/dxos/cli/issues/73)) ([9102481](https://www.github.com/dxos/cli/commit/9102481cbc0837bb03bd51c65a7eec3cc77a74e5))
+
 ### [2.0.12](https://www.github.com/dxos/cli/compare/v2.0.11...v2.0.12) (2020-11-19)
 
 
