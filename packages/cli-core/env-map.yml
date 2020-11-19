@@ -10,3 +10,9 @@ WIRE_WNS_BOND_ID:
   path: services.wns.bondId
 WIRE_WNS_CHAIN_ID:
   path: services.wns.chainId
+WIRE_MACHINE_DO_TOKEN:
+  path: services.machine.doAccessToken
+WIRE_MACHINE_GITHUB_TOKEN:
+  path: services.machine.githubAccessToken
+WIRE_MACHINE_DNS_DOMAIN:
+  path: services.machine.dnsDomain
