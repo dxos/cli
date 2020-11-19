@@ -39,6 +39,8 @@ jobs:
           git push --tags -f
           git push --delete origin "${{ steps.release.outputs.tag_name }}"
           yarn lerna publish from-package --force-publish -y --dist-tag="alpha"
+          yarn wire machine delete --name alpha
+          yarn wire machine create --name alpha --cliver '@alpha'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
