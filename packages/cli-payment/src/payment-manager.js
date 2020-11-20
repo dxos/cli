@@ -17,18 +17,15 @@ export class PaymentManager {
   /**
    * @constructor
    * @param {Object} config
-   * @param {Function} getReadlineInterface
    */
-  constructor (config, getReadlineInterface) {
+  constructor (config) {
     assert(config);
-    assert(getReadlineInterface);
 
     this._config = config;
-    this._getReadlineInterface = getReadlineInterface;
     this._connected = false;
   }
 
-  async getId () {
+  async connect () {
     await this._connect();
 
     return { id: this._service.publicIdentifier };
@@ -138,7 +135,34 @@ export class PaymentManager {
     return { channelAddress };
   }
 
-  async sendDepositTx (channelAddress, amount) {
+  async getChannelBalances (channelAddress) {
+    assert(channelAddress, 'Invalid channel.');
+
+    await this._connect();
+    const channelResult = await this._service.getStateChannel({ channelAddress, publicIdentifier: this._service.publicIdentifier });
+    if (channelResult.isError) {
+      throw channelResult.getError();
+    }
+
+    const channel = channelResult.getValue();
+
+    const { assetId } = this._config.get('services.payment');
+
+    assert(assetId, 'Invalid asset ID.');
+
+    const assetIdx = channel.assetIds.findIndex(id => id === assetId);
+
+    const assetBalances = channel.balances[assetIdx];
+
+    const balances = {};
+    assetBalances.to.forEach((address, index) => {
+      balances[address] = utils.formatEther(assetBalances.amount[index]);
+    });
+
+    return balances;
+  }
+
+  async addFunds (channelAddress, amount) {
     assert(channelAddress, 'Invalid channel.');
     assert(amount, 'Invalid amount.');
 
@@ -154,11 +178,9 @@ export class PaymentManager {
     }
 
     const channel = channelResult.getValue();
-    const depositAmt = utils.parseEther(amount);
-
     const result = await this._service.sendDepositTx({
       chainId: channel.networkContext.chainId,
-      amount: depositAmt.toString(),
+      amount: utils.parseEther(amount).toString(),
       assetId,
       channelAddress: channel.channelAddress,
       publicIdentifier: this._service.publicIdentifier
@@ -252,6 +274,28 @@ export class PaymentManager {
         preImage
       },
       transferId
+    });
+
+    if (result.isError) {
+      throw result.getError();
+    }
+  }
+
+  async withdrawFunds (channelAddress, amount) {
+    assert(channelAddress, 'Invalid channel.');
+    assert(amount, 'Invalid amount.');
+
+    const { assetId } = this._config.get('services.payment');
+
+    assert(assetId, 'Invalid asset ID.');
+
+    await this._connect();
+    const result = await this._service.withdraw({
+      publicIdentifier: this._service.publicIdentifier,
+      channelAddress,
+      amount: utils.parseEther(amount).toString(),
+      assetId,
+      recipient: this._service.signerAddress
     });
 
     if (result.isError) {

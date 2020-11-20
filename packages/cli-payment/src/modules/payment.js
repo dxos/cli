@@ -11,7 +11,6 @@ export const PaymentModule = ({ paymentManager }) => ({
   command: ['payment'],
   describe: 'Payment CLI.',
   builder: yargs => yargs
-    .option('server', { type: 'string' })
     .option('interactive', { hidden: true, default: true })
 
     .command({
@@ -75,14 +74,14 @@ export const PaymentModule = ({ paymentManager }) => ({
             .option('interactive', { hidden: true, default: true }),
 
           handler: asyncHandler(async () => {
-            const info = await paymentManager.getId();
+            const info = await paymentManager.connect();
             log(JSON.stringify(info, undefined, 2));
           })
         })
 
         .command({
           command: ['info'],
-          describe: 'Payment channel server info.',
+          describe: 'Payment server info.',
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true }),
 
@@ -143,6 +142,23 @@ export const PaymentModule = ({ paymentManager }) => ({
         })
 
         .command({
+          command: ['balances [channel]'],
+          describe: 'View channel balances.',
+          builder: yargs => yargs
+            .option('interactive', { hidden: true, default: true })
+            .option('channel', { type: 'string' }),
+
+          handler: asyncHandler(async (argv) => {
+            const { channel } = argv;
+
+            assert(channel, 'Invalid channel address.');
+
+            const balances = await paymentManager.getChannelBalances(channel);
+            log(JSON.stringify(balances, undefined, 2));
+          })
+        })
+
+        .command({
           command: ['deposit [channel] [amount]'],
           describe: 'Deposit funds into the channel (initiator only).',
           builder: yargs => yargs
@@ -156,7 +172,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
-            await paymentManager.sendDepositTx(channel, amount);
+            await paymentManager.addFunds(channel, amount);
           })
         })
 
@@ -173,6 +189,24 @@ export const PaymentModule = ({ paymentManager }) => ({
             assert(channel, 'Invalid channel address.');
 
             await paymentManager.reconcileDeposit(channel);
+          })
+        })
+
+        .command({
+          command: ['withdraw [channel] [amount]'],
+          describe: 'Withdraw funds from the channel.',
+          builder: yargs => yargs
+            .option('interactive', { hidden: true, default: true })
+            .option('channel', { type: 'string' })
+            .option('amount', { type: 'string' }),
+
+          handler: asyncHandler(async (argv) => {
+            const { channel, amount } = argv;
+
+            assert(channel, 'Invalid channel address.');
+            assert(amount, 'Invalid amount.');
+
+            await paymentManager.withdrawFunds(channel, amount);
           })
         })
     })

@@ -20,8 +20,8 @@ const WIRE_CONFIG = {
 let paymentManager;
 
 const initPaymentCliState = async (state) => {
-  const { config, getReadlineInterface } = state;
-  paymentManager = new PaymentManager(config, getReadlineInterface);
+  const { config } = state;
+  paymentManager = new PaymentManager(config);
 
   state.paymentManager = paymentManager;
 };
