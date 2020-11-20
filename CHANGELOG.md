@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.14](https://www.github.com/dxos/cli/compare/v2.0.13...v2.0.14) (2020-11-20)
+
+
+### Bug Fixes
+
+* proper botkit version. ([0cf4241](https://www.github.com/dxos/cli/commit/0cf42416fa53bdd0a79dd7db8e248bfebadd9f7e))
+* redeploy Kubes with corresponding CLI versions ([c2fb48f](https://www.github.com/dxos/cli/commit/c2fb48f45d07caa022d52a51abce7ca3c762ab61))
+
 ### [2.0.13](https://www.github.com/dxos/cli/compare/v2.0.12...v2.0.13) (2020-11-19)
 
 
