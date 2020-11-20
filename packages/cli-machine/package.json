@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-machine",
-  "version": "2.0.13-alpha.0",
+  "version": "2.0.14-alpha.0",
   "description": "DxOS Machine CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-machine#readme",
   "license": "GPL-3.0",
@@ -35,7 +35,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/async": "^1.0.0-beta.10",
-    "@dxos/cli-core": "^2.0.13-alpha.0",
+    "@dxos/cli-core": "^2.0.14-alpha.0",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
