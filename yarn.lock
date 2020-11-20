@@ -953,20 +953,20 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@dxos/async@1.0.0-beta.10":
+"@dxos/async@1.0.0-beta.10", "@dxos/async@^1.0.0-beta.10":
   version "1.0.0-beta.10"
   resolved "https://registry.npmjs.org/@dxos/async/-/async-1.0.0-beta.10.tgz#a1247891cbdee3b84614c92d6790a7d7695e9260"
   integrity sha512-U3f1afmdl8KNjK8y89E89G+Cd2l52+Wjww92hZ9IfiU6wOvNsNG9WRruAYCOoRpBMYaEv/QJq+UuLhgD5o8iSQ==
 
-"@dxos/async@^1.0.0-beta.1", "@dxos/async@^1.0.0-beta.8":
+"@dxos/async@^1.0.0-beta.8":
   version "1.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/@dxos/async/-/async-1.0.0-beta.8.tgz#051a47259d17a18e1a77c0ef8056fa0377d95207"
   integrity sha512-sAak4G0ufz2a/SBs28Kgu4TiwyGODPnVxTOYdojdAset7CEM1SpvEci0D7MPU0eCqlB2IMniveIp5paas6i8Vw==
 
-"@dxos/botkit-client@^2.7.11-alpha.0":
-  version "2.7.11-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/botkit-client/-/botkit-client-2.7.11-alpha.0.tgz#64a169783eaa6af0385abe91038e465e953244cc"
-  integrity sha512-PNxd3+wJSAEOaUx2wGaGY7x5/ENFyQrSgYV55o9vzPqqAK0nZsv+moAh+cGCUmO7eY+6/RDHG4eA6TKCzYakVA==
+"@dxos/botkit-client@^2.7.12-alpha.0":
+  version "2.7.12-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/botkit-client/-/botkit-client-2.7.12-alpha.0.tgz#2693794eeeaa8125ae83eace2e19149b2ddb8416"
+  integrity sha512-1OaGqb+hxAb5LZD5BBpvpCKOvLT8yLM2csHS0ZnbE/HKrivh1LeQGIiC9CuP9zcbrNpVfoNQMLJGXDaSUK32+w==
   dependencies:
     "@dxos/async" "1.0.0-beta.10"
     "@dxos/crypto" "^1.0.0-beta.10"
@@ -977,13 +977,13 @@
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
 
-"@dxos/botkit@^2.7.11-alpha.0":
-  version "2.7.11-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/botkit/-/botkit-2.7.11-alpha.0.tgz#b199aa76d9fe76c2efaba51996147b2ab665ab35"
-  integrity sha512-BKrW9gEBj1Ksh6mW7wSYsZMhJrJaGrBKoEpQi2H7HhybacB5V3Y/U/2NH18QmxIozHCEekphvzhJb7cu5m134Q==
+"@dxos/botkit@^2.7.12-alpha.0":
+  version "2.7.12-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/botkit/-/botkit-2.7.12-alpha.0.tgz#eb76572ab5b3be7141d8d63737918c6a896db5e9"
+  integrity sha512-TOTLauEjuL0c5/olEmWVcJb34z0c6oQVIXuzsU9vpEEZ+5aiEPVmorR+8BZs4mudGQP54jZQFLXIOXMJjx7BjA==
   dependencies:
     "@dxos/async" "1.0.0-beta.10"
-    "@dxos/client" "^2.7.11-alpha.0"
+    "@dxos/client" "^2.7.12-alpha.0"
     "@dxos/config" "^1.0.0-beta.73"
     "@dxos/credentials" "^2.0.0"
     "@dxos/crypto" "^1.0.0-beta.10"
@@ -1023,10 +1023,10 @@
     source-map-support "^0.5.12"
     tiny-lru "^7.0.6"
 
-"@dxos/client@^2.7.11-alpha.0":
-  version "2.7.11-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/client/-/client-2.7.11-alpha.0.tgz#214119373834b22694cbe80566e5144879a3eee3"
-  integrity sha512-Ruuz0q/lyy+OJj/K2gGg0qU6hEs0zSjMZQFF39krhcUWN8Ia8UfFKlC4V87VWXTBmeqXLvaAfn6QqAFFkgaX9w==
+"@dxos/client@^2.7.12-alpha.0":
+  version "2.7.12-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/client/-/client-2.7.12-alpha.0.tgz#59ccc1e383007bce02bbeed02ca727f585b57162"
+  integrity sha512-ZrPXLwbczS6b6nY7I1tPXsTiZs6/bElTctDzxrLHkGonYtEUZR6FXaVOSi3V0zEChte6ImiofnqGwZIwXdiNfA==
   dependencies:
     "@dxos/async" "1.0.0-beta.10"
     "@dxos/credentials" "^2.0.0"
@@ -1101,10 +1101,52 @@
   optionalDependencies:
     webpack "^4.10.0"
 
-"@dxos/credentials@^2.0.0", "@dxos/credentials@^2.1.5":
+"@dxos/credentials@^2.0.0":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@dxos/credentials/-/credentials-2.1.5.tgz#a9751e461ea5fe5b9f3fef90a33048d2af3ac71b"
   integrity sha512-ZZtG+mnVdjxWjszLhvrIgEpuVxfEsF4f0SGw+ZY9cKOCNAPO9xOmDbK7Umfv0919RBmo2BAWdRYZf3oDZNurCw==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/codec-protobuf" "^0.2.0"
+    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/feed-store" "^1.2.0-beta.23"
+    "@dxos/protocol" "^1.1.0-beta.1"
+    "@types/debug" "^4.1.5"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/pify" "^3.0.2"
+    "@types/pump" "^1.1.0"
+    bip39 "^3.0.2"
+    buffer-json-encoding "^1.0.2"
+    crypto-js "^3.1.9-1"
+    debug "^4.1.1"
+    encoding-down "^6.3.0"
+    end-of-stream "^1.4.1"
+    hypercore-crypto "^1.0.0"
+    hypercore-protocol "^6.11.1"
+    hypertrie "^3.8.0"
+    json-stable-stringify "^1.0.1"
+    leveldown "^5.4.1"
+    levelup "^4.3.2"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.isobject "^3.0.2"
+    lodash.isplainobject "^4.0.6"
+    lodash.mapvalues "^4.6.0"
+    lodash.matches "^4.6.0"
+    memdown "^5.1.0"
+    moment "^2.24.0"
+    ngraph.graph "^18.0.1"
+    pump "^3.0.0"
+    queue-microtask "^1.1.2"
+    random-access-memory "^3.1.1"
+    source-map-support "^0.5.12"
+    stream-to-array "^2.3.0"
+    uuid "^3.3.2"
+
+"@dxos/credentials@^2.1.10-beta.0":
+  version "2.1.10"
+  resolved "https://registry.npmjs.org/@dxos/credentials/-/credentials-2.1.10.tgz#8966e12e5e0c73484e29d2a2ec429027a51999c0"
+  integrity sha512-p0z4IbT7FJ9hge34M/xlXEpAU63+SBa6Y97/eGXkFFT2oBIOO4VimOzcnt7nYmqVfANNbdIALkPAF8OnFTS1yw==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.0"
@@ -9349,7 +9391,7 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-jsondown@dxos/jsondown:
+"jsondown@github:dxos/jsondown":
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:
