@@ -55,3 +55,7 @@
   - mdns
   describe: MDNS operations.
   moduleName: "@dxos/cli-mdns"
+- command:
+    - file
+  describe: File operations.
+  moduleName: "@dxos/cli-file"
