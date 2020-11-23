@@ -95,7 +95,11 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
-          const botId = await botFactoryClient.sendSpawnRequest(botName, { env, ipfsCID, ipfsEndpoint, id, name });
+
+          // TODO(ashwin): Create payment.
+          const payment = null;
+
+          const botId = await botFactoryClient.sendSpawnRequest(botName, { env, ipfsCID, ipfsEndpoint, id, name, payment });
 
           print({ botId }, { json });
 
