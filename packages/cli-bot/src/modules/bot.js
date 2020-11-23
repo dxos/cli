@@ -9,6 +9,7 @@ import clean from 'lodash-clean';
 import { load } from 'js-yaml';
 import readPkgUp from 'read-pkg-up';
 
+import { PaymentClient, encodeObjToBase64 } from '@dxos/client';
 import { BotFactoryClient } from '@dxos/botkit-client';
 import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees, isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
@@ -87,17 +88,27 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           .option('ipfsEndpoint', { type: 'string' })
           .option('id', { type: 'string' })
           .option('name', { type: 'string' })
-          .option('bot-name', { type: 'string' }),
+          .option('bot-name', { type: 'string' })
+          .option('payment', { type: 'string' })
+          .option('channel', { type: 'string' })
+          .option('amount', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name } = argv;
+          const { botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name, channel, amount } = argv;
           const { interactive } = cliState;
+          let { payment } = argv;
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
 
-          // TODO(ashwin): Create payment.
-          const payment = null;
+          // TODO(ashwin): Create payment here instead of accepting as CLI arg.
+          if (!payment) {
+            const paymentClient = new PaymentClient(config);
+            await paymentClient.connect();
+            const transfer = await paymentClient.createTransfer(channel, amount);
+            console.log('transfer', JSON.stringify(transfer));
+            payment = encodeObjToBase64(transfer);
+          }
 
           const botId = await botFactoryClient.sendSpawnRequest(botName, { env, ipfsCID, ipfsEndpoint, id, name, payment });
 

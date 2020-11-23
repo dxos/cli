@@ -5,7 +5,7 @@
 import { createCLI } from '@dxos/cli-core';
 
 import { PaymentModule } from './modules/payment';
-import { PaymentManager } from './payment-manager';
+import { PaymentClient } from '@dxos/client';
 
 import info from '../extension.yml';
 
@@ -17,13 +17,13 @@ const WIRE_CONFIG = {
   enableInteractive: true
 };
 
-let paymentManager;
+let paymentClient;
 
 const initPaymentCliState = async (state) => {
   const { config } = state;
-  paymentManager = new PaymentManager(config);
+  paymentClient = new PaymentClient(config);
 
-  state.paymentManager = paymentManager;
+  state.paymentClient = paymentClient;
 };
 
 module.exports = createCLI(

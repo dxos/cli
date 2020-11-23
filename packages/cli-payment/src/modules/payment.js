@@ -4,10 +4,11 @@
 
 import assert from 'assert';
 
+import { encodeObjToBase64, decodeBase64ToObj } from '@dxos/client';
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-export const PaymentModule = ({ paymentManager }) => ({
+export const PaymentModule = ({ paymentClient }) => ({
   command: ['payment'],
   describe: 'Payment CLI.',
   builder: yargs => yargs
@@ -26,7 +27,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             .option('interactive', { hidden: true, default: true }),
 
           handler: asyncHandler(async () => {
-            const address = await paymentManager.getWalletAddress();
+            const address = await paymentClient.getWalletAddress();
             log(JSON.stringify({ address }, undefined, 2));
           })
         })
@@ -38,7 +39,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             .option('interactive', { hidden: true, default: true }),
 
           handler: asyncHandler(async () => {
-            const balance = await paymentManager.getWalletBalance();
+            const balance = await paymentClient.getWalletBalance();
             log(JSON.stringify({ balance }, undefined, 2));
           })
         })
@@ -57,7 +58,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             assert(address, 'Invalid address.');
             assert(amount, 'Invalid amount.');
 
-            const txReceipt = await paymentManager.sendFunds(address, amount);
+            const txReceipt = await paymentClient.sendFunds(address, amount);
             log(JSON.stringify(txReceipt, undefined, 2));
           })
         })
@@ -74,7 +75,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             .option('interactive', { hidden: true, default: true }),
 
           handler: asyncHandler(async () => {
-            const info = await paymentManager.connect();
+            const info = await paymentClient.connect();
             log(JSON.stringify(info, undefined, 2));
           })
         })
@@ -86,7 +87,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             .option('interactive', { hidden: true, default: true }),
 
           handler: asyncHandler(async () => {
-            const info = await paymentManager.getNodeInfo();
+            const info = await paymentClient.getNodeInfo();
             log(JSON.stringify(info, undefined, 2));
           })
         })
@@ -105,7 +106,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             .option('interactive', { hidden: true, default: true }),
 
           handler: asyncHandler(async () => {
-            const channels = await paymentManager.listChannels();
+            const channels = await paymentClient.listChannels();
             log(JSON.stringify(channels, undefined, 2));
           })
         })
@@ -120,7 +121,7 @@ export const PaymentModule = ({ paymentManager }) => ({
           handler: asyncHandler(async (argv) => {
             const { channel } = argv;
 
-            const info = await paymentManager.getChannelInfo(channel);
+            const info = await paymentClient.getChannelInfo(channel);
             log(JSON.stringify(info, undefined, 2));
           })
         })
@@ -136,7 +137,7 @@ export const PaymentModule = ({ paymentManager }) => ({
 
             assert(counterparty, 'Invalid counterparty ID.');
 
-            const channel = await paymentManager.setupChannel(counterparty);
+            const channel = await paymentClient.setupChannel(counterparty);
             log(JSON.stringify(channel, undefined, 2));
           })
         })
@@ -153,7 +154,7 @@ export const PaymentModule = ({ paymentManager }) => ({
 
             assert(channel, 'Invalid channel address.');
 
-            const balances = await paymentManager.getChannelBalances(channel);
+            const balances = await paymentClient.getChannelBalances(channel);
             log(JSON.stringify(balances, undefined, 2));
           })
         })
@@ -172,7 +173,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
-            await paymentManager.addFunds(channel, amount);
+            await paymentClient.addFunds(channel, amount);
           })
         })
 
@@ -188,7 +189,7 @@ export const PaymentModule = ({ paymentManager }) => ({
 
             assert(channel, 'Invalid channel address.');
 
-            await paymentManager.reconcileDeposit(channel);
+            await paymentClient.reconcileDeposit(channel);
           })
         })
 
@@ -206,7 +207,7 @@ export const PaymentModule = ({ paymentManager }) => ({
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
-            await paymentManager.withdrawFunds(channel, amount);
+            await paymentClient.withdrawFunds(channel, amount);
           })
         })
     })
@@ -225,8 +226,8 @@ export const PaymentModule = ({ paymentManager }) => ({
         assert(channel, 'Invalid channel address.');
         assert(amount, 'Invalid amount.');
 
-        const coupon = await paymentManager.createTransfer(channel, amount);
-        log(coupon);
+        const transfer = await paymentClient.createTransfer(channel, amount);
+        log(encodeObjToBase64(transfer));
       })
     })
 
@@ -240,7 +241,7 @@ export const PaymentModule = ({ paymentManager }) => ({
       handler: asyncHandler(async (argv) => {
         const { coupon } = argv;
 
-        await paymentManager.redeemTransfer(coupon);
+        await paymentClient.redeemTransfer(decodeBase64ToObj(coupon));
       })
     })
 });
