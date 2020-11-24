@@ -213,35 +213,108 @@ export const PaymentModule = ({ paymentClient }) => ({
     })
 
     .command({
-      command: ['create [channel] [amount]'],
-      describe: 'Create payment coupon.',
+      command: ['transfer'],
+      describe: 'Payment channel transfer operations.',
       builder: yargs => yargs
         .option('interactive', { hidden: true, default: true })
-        .option('channel', { type: 'string' })
-        .option('amount', { type: 'string' }),
 
-      handler: asyncHandler(async (argv) => {
-        const { channel, amount } = argv;
+        .command({
+          command: ['create [channel] [amount]'],
+          describe: 'Create transfer.',
+          builder: yargs => yargs
+            .option('interactive', { hidden: true, default: true })
+            .option('channel', { type: 'string' })
+            .option('amount', { type: 'string' }),
 
-        assert(channel, 'Invalid channel address.');
-        assert(amount, 'Invalid amount.');
+          handler: asyncHandler(async (argv) => {
+            const { channel, amount } = argv;
 
-        const transfer = await paymentClient.createTransfer(channel, amount);
-        log(encodeObjToBase64(transfer));
-      })
+            assert(channel, 'Invalid channel address.');
+            assert(amount, 'Invalid amount.');
+
+            const transfer = await paymentClient.createTransfer(channel, amount);
+            log(JSON.stringify(transfer, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['get [id]'],
+          describe: 'Get transfer info.',
+          builder: yargs => yargs
+            .option('interactive', { hidden: true, default: true })
+            .option('id', { type: 'string' }),
+
+          handler: asyncHandler(async (argv) => {
+            const { id } = argv;
+
+            assert(id, 'Invalid transferId');
+
+            const transfer = await paymentClient.getTransfer(id);
+            log(JSON.stringify(transfer, undefined, 2));
+          })
+        })
+
+        .command({
+          command: ['resolve [channel] [transferId] [preImage]'],
+          describe: 'Get transfer info.',
+          builder: yargs => yargs
+            .option('interactive', { hidden: true, default: true })
+            .option('channel', { type: 'string' })
+            .option('transferId', { type: 'string' })
+            .option('preImage', { type: 'string' }),
+
+          handler: asyncHandler(async (argv) => {
+            const { channel, transferId, preImage } = argv;
+
+            assert(channel, 'Invalid channel');
+            assert(transferId, 'Invalid transferId');
+            assert(preImage, 'Invalid preImage');
+
+            await paymentClient.redeemTransfer(channel, transferId, preImage);
+          })
+        })
     })
 
     .command({
-      command: ['redeem [coupon]'],
-      describe: 'Create payment coupon.',
+      command: ['coupon'],
+      describe: 'Payment coupon operations.',
       builder: yargs => yargs
         .option('interactive', { hidden: true, default: true })
-        .option('coupon', { type: 'string' }),
 
-      handler: asyncHandler(async (argv) => {
-        const { coupon } = argv;
+        .command({
+          command: ['create [channel] [amount]'],
+          describe: 'Create payment coupon.',
+          builder: yargs => yargs
+            .option('interactive', { hidden: true, default: true })
+            .option('channel', { type: 'string' })
+            .option('amount', { type: 'string' }),
 
-        await paymentClient.redeemTransfer(decodeBase64ToObj(coupon));
-      })
+          handler: asyncHandler(async (argv) => {
+            const { channel, amount } = argv;
+
+            assert(channel, 'Invalid channel address.');
+            assert(amount, 'Invalid amount.');
+
+            const transfer = await paymentClient.createTransfer(channel, amount);
+            log(encodeObjToBase64(transfer));
+          })
+        })
+
+        .command({
+          command: ['redeem [coupon]'],
+          describe: 'Create payment coupon.',
+          builder: yargs => yargs
+            .option('interactive', { hidden: true, default: true })
+            .option('coupon', { type: 'string' }),
+
+          handler: asyncHandler(async (argv) => {
+            const { coupon } = argv;
+
+            assert(coupon, 'Invalid coupon.');
+
+            const { channelAddress, transferId, preImage } = decodeBase64ToObj(coupon);
+            await paymentClient.redeemTransfer(channelAddress, transferId, preImage);
+          })
+        })
     })
 });
