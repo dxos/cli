@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.16](https://www.github.com/dxos/cli/compare/v2.0.15...v2.0.16) (2020-11-24)
+
+
+### Bug Fixes
+
+* add file operations to `wire ipfs` ([#77](https://www.github.com/dxos/cli/issues/77)) ([5622261](https://www.github.com/dxos/cli/commit/562226131f29ce28bbdd6882e8ad2633bf4fc5d6))
+* add Let's Encrypt support ([#76](https://www.github.com/dxos/cli/issues/76)) ([46e0541](https://www.github.com/dxos/cli/commit/46e05413e035602b33df4c67d1eab32ca0c9ff46))
+
 ### [2.0.15](https://www.github.com/dxos/cli/compare/v2.0.14...v2.0.15) (2020-11-24)
 
 
