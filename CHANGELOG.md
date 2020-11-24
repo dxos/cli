@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.17](https://www.github.com/dxos/cli/compare/v2.0.16...v2.0.17) (2020-11-24)
+
+
+### Bug Fixes
+
+* wire machine creds for CI ([986bbc8](https://www.github.com/dxos/cli/commit/986bbc832b1977335ccf4a8f6ce05751a3e40f98))
+
 ### [2.0.16](https://www.github.com/dxos/cli/compare/v2.0.15...v2.0.16) (2020-11-24)
 
 
