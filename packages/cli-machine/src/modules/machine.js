@@ -50,13 +50,15 @@ const getRecordIdFromName = async (session, domain, name) => {
  */
 export const MachineModule = ({ config }) => {
   const doAccessToken = config.get('services.machine.doAccessToken');
+  const email = config.get('services.machine.email');
   const githubAccessToken = config.get('services.machine.githubAccessToken');
   const dnsDomain = config.get('services.machine.dnsDomain');
   // TODO(dboreham): Get from profile
   const sshKeys = [
     'ec:e0:6b:82:1e:b2:b7:74:a2:c3:1b:b4:3c:6d:72:a0', // David
     'b1:a9:fa:63:0d:60:d5:6c:31:76:37:52:c7:fe:02:0b', // Thomas
-    '5f:82:c0:88:68:41:26:1b:d7:9f:be:82:24:7c:29:e3' // Egor
+    '5f:82:c0:88:68:41:26:1b:d7:9f:be:82:24:7c:29:e3', // Egor
+    '15:f7:37:d4:34:79:38:6d:97:e9:fe:bc:ae:3c:03:ae' // Alex
   ];
 
   return ({
@@ -193,10 +195,15 @@ export const MachineModule = ({ config }) => {
           .option('name', { type: 'string' })
           .option('memory', { type: 'number', default: 4 })
           .option('pin', { type: 'boolean', default: false })
-          .option('cliver', { type: 'string', default: '' }),
+          .option('cliver', { type: 'string', default: '' })
+          .option('letsencrypt', { type: 'boolean', default: false })
+          .option('email', { type: 'string', default: email }),
 
         handler: asyncHandler(async () => {
-          const { verbose, pin, cliver, memory } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, email } = yargs.argv;
+          if (letsencrypt) {
+            assert(email, '--email is required with --letsencrypt');
+          }
 
           const session = new DigitalOcean(doAccessToken, 100);
 
@@ -255,7 +262,10 @@ export const MachineModule = ({ config }) => {
            - cp ./conf/systemd/kube.service /etc/systemd/system
            - systemctl enable kube
            - systemctl start kube
+           - if [ "${letsencrypt ? 1 : 0}" = "1" ]; then certbot --apache -d ${boxFullyQualifiedName} -n --agree-tos -m ${email}; fi
+           - /etc/init.d/apache2 restart
         `;
+          // TODO(telackey): Replace with organizational email.
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
           let sizeSlug = 's-2vcpu-4gb';

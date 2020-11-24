@@ -16,3 +16,5 @@ WIRE_MACHINE_GITHUB_TOKEN:
   path: services.machine.githubAccessToken
 WIRE_MACHINE_DNS_DOMAIN:
   path: services.machine.dnsDomain
+WIRE_MACHINE_EMAIL:
+  path: services.machine.email
