@@ -40,9 +40,15 @@
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
+    "cli-progress": "^3.8.2",
+    "end-of-stream-promise": "^1.0.0",
+    "get-folder-size": "^2.0.1",
+    "ipfs-http-client": "^48.1.1",
+    "it-to-stream": "^0.1.2",
     "lodash-clean": "^2.2.1",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
+    "mime-types": "^2.1.27",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
