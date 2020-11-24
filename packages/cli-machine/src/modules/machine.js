@@ -50,6 +50,7 @@ const getRecordIdFromName = async (session, domain, name) => {
  */
 export const MachineModule = ({ config }) => {
   const doAccessToken = config.get('services.machine.doAccessToken');
+  const email = config.get('services.machine.email');
   const githubAccessToken = config.get('services.machine.githubAccessToken');
   const dnsDomain = config.get('services.machine.dnsDomain');
   // TODO(dboreham): Get from profile
@@ -195,10 +196,14 @@ export const MachineModule = ({ config }) => {
           .option('memory', { type: 'number', default: 4 })
           .option('pin', { type: 'boolean', default: false })
           .option('cliver', { type: 'string', default: '' })
-          .option('letsencrypt', { type: 'boolean', default: false }),
+          .option('letsencrypt', { type: 'boolean', default: false })
+          .option('email', { type: 'string', default: email }),
 
         handler: asyncHandler(async () => {
-          const { verbose, pin, cliver, letsencrypt, memory } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, email } = yargs.argv;
+          if (letsencrypt) {
+            assert(email, '--email is required with --letsencrypt');
+          }
 
           const session = new DigitalOcean(doAccessToken, 100);
 
@@ -257,7 +262,7 @@ export const MachineModule = ({ config }) => {
            - cp ./conf/systemd/kube.service /etc/systemd/system
            - systemctl enable kube
            - systemctl start kube
-           - if [ "${letsencrypt ? 1 : 0}" = "1" ]; then certbot --apache -d ${boxFullyQualifiedName} -n --agree-tos -m thomas@wireline.io; fi
+           - if [ "${letsencrypt ? 1 : 0}" = "1" ]; then certbot --apache -d ${boxFullyQualifiedName} -n --agree-tos -m ${email}; fi
            - /etc/init.d/apache2 restart
         `;
           // TODO(telackey): Replace with organizational email.
