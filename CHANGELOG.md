@@ -1,5 +1,64 @@
 # Changelog
 
+### [2.0.16](https://www.github.com/dxos/cli/compare/v2.0.15...v2.0.16) (2020-11-24)
+
+
+### Bug Fixes
+
+* add file operations to `wire ipfs` ([#77](https://www.github.com/dxos/cli/issues/77)) ([5622261](https://www.github.com/dxos/cli/commit/562226131f29ce28bbdd6882e8ad2633bf4fc5d6))
+* add Let's Encrypt support ([#76](https://www.github.com/dxos/cli/issues/76)) ([46e0541](https://www.github.com/dxos/cli/commit/46e05413e035602b33df4c67d1eab32ca0c9ff46))
+
+### [2.0.15](https://www.github.com/dxos/cli/compare/v2.0.14...v2.0.15) (2020-11-24)
+
+
+### Bug Fixes
+
+* Get rid of jq. ([#78](https://www.github.com/dxos/cli/issues/78)) ([386880e](https://www.github.com/dxos/cli/commit/386880ee666e6fad395892799cc0a97c44fc85a8))
+
+### [2.0.14](https://www.github.com/dxos/cli/compare/v2.0.13...v2.0.14) (2020-11-20)
+
+
+### Bug Fixes
+
+* proper botkit version. ([0cf4241](https://www.github.com/dxos/cli/commit/0cf42416fa53bdd0a79dd7db8e248bfebadd9f7e))
+* redeploy Kubes with corresponding CLI versions ([c2fb48f](https://www.github.com/dxos/cli/commit/c2fb48f45d07caa022d52a51abce7ca3c762ab61))
+
+### [2.0.13](https://www.github.com/dxos/cli/compare/v2.0.12...v2.0.13) (2020-11-19)
+
+
+### Bug Fixes
+
+* use latest sdk packages. ([#73](https://www.github.com/dxos/cli/issues/73)) ([9102481](https://www.github.com/dxos/cli/commit/9102481cbc0837bb03bd51c65a7eec3cc77a74e5))
+
+### [2.0.12](https://www.github.com/dxos/cli/compare/v2.0.11...v2.0.12) (2020-11-19)
+
+
+### Bug Fixes
+
+* bump (for npm publishing failure) ([7e31da6](https://www.github.com/dxos/cli/commit/7e31da6bb1719b6d9c64e2586edc11e0c8b6dadc))
+
+### [2.0.11](https://www.github.com/dxos/cli/compare/v2.0.10...v2.0.11) (2020-11-19)
+
+
+### Bug Fixes
+
+* Add ENV mappings for wire machine ([d74f2f9](https://www.github.com/dxos/cli/commit/d74f2f9800409d4d99ead624e3a7148fe2a1becc))
+* delete DNS records, register DNS at creation ([458723e](https://www.github.com/dxos/cli/commit/458723e8aad054436fa330637566b69b082736a7))
+
+### [2.0.10](https://www.github.com/dxos/cli/compare/v2.0.9...v2.0.10) (2020-11-18)
+
+
+### Bug Fixes
+
+* Add wire machine delete and kube tags. ([bfb9201](https://www.github.com/dxos/cli/commit/bfb920148918f7b32031fb2a60a5a1624457970a))
+
+### [2.0.9](https://www.github.com/dxos/cli/compare/v2.0.8...v2.0.9) (2020-11-18)
+
+
+### Bug Fixes
+
+* Add CLI version option ([ef87ec0](https://www.github.com/dxos/cli/commit/ef87ec09131e67156b313cc303f3fe5c859a1f6d))
+
 ### [2.0.8](https://www.github.com/dxos/cli/compare/v2.0.7...v2.0.8) (2020-11-16)
 
 

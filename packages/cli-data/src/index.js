@@ -3,7 +3,6 @@
 //
 
 import defaultsDeep from 'lodash.defaultsdeep';
-import ram from 'random-access-memory';
 import os from 'os';
 
 import { Client } from '@dxos/client';
@@ -39,7 +38,10 @@ const _createClient = async (config, models) => {
   // TODO(dboreham): Allow feedstore to be persisted.
 
   const dataClient = new Client({
-    storage: ram,
+    storage: {
+      type: 'ram',
+      keyStorage: 'ram'
+    },
     swarm: config.swarm
   });
 
