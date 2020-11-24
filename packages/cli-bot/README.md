@@ -27,7 +27,7 @@ For example:
 
 ```bash
 $ cd examples/echo-bot
-$ wire bot factory start --local-dev
+$ wire bot factory start --local-dev --reset
   bot-factory {"started":true,"topic":"83e8b9ac8d7a22d096673f2f55b13346f225fd060fe869fab9c26042716753b5","peerId":"83e8b9ac8d7a22d096673f2f55b13346f225fd060fe869fab9c26042716753b5","localDev":true}
 ```
 
@@ -138,11 +138,11 @@ $ wire bot factory start
 From another terminal spawn new bot instance using bot factory topic .
 
 ```bash
-$ wire bot spawn --bot-id="wrn:bot:dxos.org/echo" --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e
+$ wire bot spawn --bot-name="wrn://dxos/bot/example" --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e
 
 key     value
 ------  ----------------------------------------------------------------
-botUID  55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
+botId  55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
 ```
 
 Create a new party.
@@ -155,10 +155,10 @@ $ wire party create
 [wire]>
 ```
 
-Using bot factory topic and bot UID invite previously spawned bot to the party.
+Using bot factory topic and bot Id invite previously spawned bot to the party.
 
 ```bash
-[wire]> bot invite --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e --bot-uid 55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
+[wire]> bot invite --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e --bot-id 55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
 
 Inviting bot 55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef to join 'bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483' party with invitation: {"swarmKey":"c05c32751bb1a70fe70d801e4101c706c729f1bdf622f14cd3e9721effe1a2e8","invitation":"784cf2ab3ce3bb1be56dec738b9ab1d8a020cc95a54b619acdd084471f3ae154","hash":"3d36a6188a28a22f4b8f794ee9433cce6ca1b9b3"}
 ```

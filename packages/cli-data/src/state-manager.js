@@ -6,7 +6,7 @@ import assert from 'assert';
 
 import { generatePasscode } from '@dxos/credentials';
 import { keyToBuffer, keyToString, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
-import { InvitationDescriptor } from '@dxos/party-manager';
+import { InvitationDescriptor } from '@dxos/echo-db';
 
 const DEFAULT_ITEM_UPDATE_HANDLER = () => {};
 

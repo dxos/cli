@@ -28,5 +28,7 @@ jobs:
           git tag -f "v$VERSION-beta.0"
           git push --tags -f
           yarn lerna publish from-package --force-publish -y --dist-tag="beta"
+          yarn wire machine delete --name beta
+          yarn wire machine create --name beta --cliver '@beta'
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

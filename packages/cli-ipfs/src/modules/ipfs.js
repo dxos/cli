@@ -10,6 +10,7 @@ import { spawnSync } from 'child_process';
 
 import { Runnable, stopService, asyncHandler, print } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
+import { download, publish, query, register } from '../handlers';
 
 const IPFS_EXEC = 'ipfs';
 const IPFS_PROCESS_NAME = 'ipfs';
@@ -137,10 +138,11 @@ export const IPFSModule = ({ config }) => ({
           assert(name, 'Invalid Name.');
 
           switch (thing) {
-            case 'app': {
-              const { records: apps } = await registry.resolveNames([name]);
-              assert(apps[0], 'App not found in WNS.');
-              hash = get(apps, '[0].attributes.package["/"]');
+            case 'app':
+            case 'file': {
+              const { records } = await registry.resolveNames([name]);
+              assert(records[0], 'Item not found in WNS.');
+              hash = get(records, '[0].attributes.package["/"]');
               break;
             }
             case 'bot': {
@@ -195,4 +197,50 @@ export const IPFSModule = ({ config }) => ({
         }
       })
     })
+
+    // Download a file.
+    .command({
+      command: ['download [outdir]'],
+      describe: 'Download File from IPFS.',
+      builder: yargs => yargs
+        .positional('outdir', { type: 'string', default: '.' })
+        .option('quiet', { type: 'boolean', default: false })
+        .option('name', { type: 'string', required: false })
+        .option('id', { type: 'string', required: false })
+        .option('timeout', { type: 'string', default: '20m' }),
+      handler: asyncHandler(download(config))
+    })
+
+    // Upload files.
+    .command({
+      command: ['upload <target>'],
+      describe: 'Upload a file to WNS.',
+      builder: yargs => yargs
+        .positional('target', { type: 'string', required: true })
+        .strict()
+        .version(false)
+        .option('quiet', { type: 'boolean', default: false })
+        .alias('q', 'quiet')
+        .option('name', { type: 'array' })
+        .option('gas', { type: 'string' })
+        .option('fees', { type: 'string' })
+        .option('timeout', { type: 'string', default: '20m' }),
+      handler: asyncHandler(async argv => {
+        const result = await publish(config)(argv);
+        await register(config)({ ...argv, ...result });
+      })
+    })
+
+    // Query files.
+    .command({
+      command: ['query'],
+      describe: 'Query files.',
+      builder: yargs => yargs
+        .option('id')
+        .option('name')
+        .option('namespace'),
+
+      handler: asyncHandler(query(config))
+    })
+
 });

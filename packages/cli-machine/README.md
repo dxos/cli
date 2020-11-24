@@ -26,7 +26,7 @@ $ wire machine list
 }
 ```
 
-`wire machine create --name <optionalkubename>`
+`wire machine create --name <optionalkubename> --size <optionalmemorysize>`
 
 ```
 $ wire machine create
@@ -36,6 +36,8 @@ $ wire machine create
   }
 }
 ```
+
+Memory sizes supported: 1,2,4,8,16,32G. Note that sizes smaller than 4G may not allow base Kube services to operate.
 
 `wire machine publish --name <kubename>`
 
