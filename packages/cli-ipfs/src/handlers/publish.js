@@ -11,14 +11,13 @@ import pify from 'pify';
 import folderSize from 'get-folder-size';
 import cliProgress from 'cli-progress';
 
-import { log } from '@dxos/debug';
+import { logError } from '@dxos/debug';
 
 const getFolderSize = pify(folderSize);
 
-export const publish = config => async ({ timeout, path: target, quiet }) => {
-  if (!quiet) {
-    log(`Publishing ${target}...`);
-  }
+export const publish = config => async ({ timeout, target, quiet }) => {
+  assert(target, 'target path is required');
+  !quiet && logError(`Uploading ${target}...`);
 
   const ipfsServer = config.get('services.ipfs.server');
   assert(ipfsServer, 'Invalid IPFS Server.');
@@ -44,7 +43,7 @@ export const publish = config => async ({ timeout, path: target, quiet }) => {
     total = stat.size;
   }
 
-  const bar = quiet ? { update: () => {}, start: () => {}, noop: () => {}, stop: () => {} }
+  const bar = quiet ? { update: () => {}, start: () => {}, stop: () => {} }
     : new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
   bar.start(total, 0);
 

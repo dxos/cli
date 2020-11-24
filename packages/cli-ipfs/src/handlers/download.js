@@ -11,7 +11,7 @@ import IpfsHttpClient from 'ipfs-http-client';
 import { Registry } from '@wirelineio/registry-client';
 const toStream = require('it-to-stream');
 
-export const download = config => async ({ timeout, name, id, out = '.' }) => {
+export const download = config => async ({ timeout, name, id, outdir = '.' }) => {
   assert(name || id, '--name or --id required');
 
   const ipfsServer = config.get('services.ipfs.server');
@@ -41,6 +41,10 @@ export const download = config => async ({ timeout, name, id, out = '.' }) => {
   const record = records[0];
   const fileName = record.attributes.fileName;
 
+  if (!fs.existsSync(outdir)) {
+    fs.mkdirSync(outdir);
+  }
+
   // eslint-disable-next-line
   for await (const item of ipfs.get(record.attributes.package['/'])) {
     let filePath = item.path;
@@ -48,7 +52,7 @@ export const download = config => async ({ timeout, name, id, out = '.' }) => {
       const parts = item.path.split('/');
       filePath = parts.length === 1 ? fileName : path.join(fileName, ...parts.slice(1));
     }
-    const fullPath = path.join(out, filePath);
+    const fullPath = path.join(outdir, filePath);
     console.error(fullPath);
     if (item.type === 'dir') {
       fs.mkdirSync(fullPath);

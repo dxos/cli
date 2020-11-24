@@ -5,12 +5,12 @@
 import assert from 'assert';
 
 import { getGasAndFees } from '@dxos/cli-core';
-import { log } from '@dxos/debug';
+import { log, logError } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
 import { FILE_TYPE } from '../config';
 
 export const register = (config) => async (argv) => {
-  const { verbose, namespace, 'dry-run': noop, txKey, name, cid, contentType, fileName } = argv;
+  const { txKey, name, cid, contentType, fileName, quiet = false } = argv;
   const wnsConfig = config.get('services.wns');
   const { server, userKey, bondId, chainId } = wnsConfig;
 
@@ -19,9 +19,7 @@ export const register = (config) => async (argv) => {
   assert(bondId, 'Invalid WNS bond ID.');
   assert(chainId, 'Invalid WNS chain ID.');
 
-  assert(name, 'Invalid WRN.');
-
-  log(`Registering ${name} @ ${cid}...`);
+  !quiet && logError('Registering ...');
 
   const record = {
     type: FILE_TYPE,
@@ -33,27 +31,17 @@ export const register = (config) => async (argv) => {
   };
 
   const registry = new Registry(server, chainId);
-
-  if (verbose || noop) {
-    log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
-  }
-
   const fee = getGasAndFees(argv, wnsConfig);
 
-  let recordId;
-  if (!noop) {
-    const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
-    recordId = result.data;
-    log(`Record ID: ${recordId}`);
-  }
+  const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
+  const recordId = result.data;
+  log(recordId);
 
-  // eslint-disable-next-line
-  for await (const wrn of name) {
-    log(`Assigning name ${wrn}...`);
-    if (!noop) {
+  if (name && name.length) {
+    // eslint-disable-next-line
+    for await (const wrn of name) {
       await registry.setName(wrn, recordId, userKey, fee);
+      log(wrn);
     }
   }
-
-  log(`Registered ${name} @ ${recordId}.`);
 };
