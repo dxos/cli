@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.15](https://www.github.com/dxos/cli/compare/v2.0.14...v2.0.15) (2020-11-24)
+
+
+### Bug Fixes
+
+* Get rid of jq. ([#78](https://www.github.com/dxos/cli/issues/78)) ([386880e](https://www.github.com/dxos/cli/commit/386880ee666e6fad395892799cc0a97c44fc85a8))
+
 ### [2.0.14](https://www.github.com/dxos/cli/compare/v2.0.13...v2.0.14) (2020-11-20)
 
 
