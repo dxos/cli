@@ -21,18 +21,14 @@ export const prepareExec = (command) => {
  */
 export const isGlobalYarn = async (packageName) => {
   return new Promise((resolve, reject) => {
-    const args = 'list -g --depth 0 --json --silent | jq \'.dependencies\' | jq -r \'keys[]\'';
+    const args = 'list -g --depth 0 --json --silent';
 
     exec(`${prepareExec('npm')} ${args}`, (err, data) => {
       if (err) {
         reject(err);
       } else {
         try {
-          if (String(data).split('\n').includes(packageName)) {
-            resolve(false);
-          } else {
-            resolve(true);
-          }
+          resolve(!(Object.keys(JSON.parse(String(data)).dependencies).includes(packageName)));
         } catch (err) {
           reject(err);
         }
