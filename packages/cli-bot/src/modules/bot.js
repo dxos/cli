@@ -69,6 +69,34 @@ const getBotFactoryRecord = (fields) => {
 };
 
 /**
+ * Create payment.
+ * @param {object} config
+ * @param {string} coupon
+ * @param {string} channel
+ * @param {string} amount
+ */
+const createPayment = async (config, coupon, channel, amount) => {
+  let payment;
+
+  if (coupon) {
+    payment = decodeBase64ToObj(coupon);
+  }
+
+  // Create payment/transfer for the spawn request, if not using coupon.
+  const paymentClient = new PaymentClient(config);
+  await paymentClient.connect();
+
+  if (!payment) {
+    assert(channel, 'Invalid channel.');
+    assert(amount, 'Invalid amount.');
+
+    payment = await paymentClient.createTransfer(channel, amount);
+  }
+
+  return payment;
+};
+
+/**
  * Bot CLI module.
  */
 export const BotModule = ({ getClient, config, stateManager, cliState }) => {
@@ -94,29 +122,13 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           .option('amount', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name, channel, amount, coupon } = argv;
+          const { botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name, coupon, channel, amount } = argv;
           const { interactive } = cliState;
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
 
-          let payment;
-
-          if (coupon) {
-            payment = decodeBase64ToObj(coupon);
-          }
-
-          // Create payment/transfer for the spawn request, if not using coupon.
-          const paymentClient = new PaymentClient(config);
-          await paymentClient.connect();
-
-          if (!payment) {
-            assert(channel, 'Invalid channel.');
-            assert(amount, 'Invalid amount.');
-
-            payment = await paymentClient.createTransfer(channel, amount);
-          }
-
+          const payment = await createPayment(config, coupon, channel, amount);
           const botId = await botFactoryClient.sendSpawnRequest(botName, { env, ipfsCID, ipfsEndpoint, id, name, payment });
 
           print({ botId }, { json });
@@ -197,10 +209,13 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
         builder: yargs => yargs
           .option('topic', { alias: 't', type: 'string' })
           .option('bot-id', { type: 'string' })
-          .option('spec', { alias: 's', type: 'json' }),
+          .option('spec', { alias: 's', type: 'json' })
+          .option('coupon', { type: 'string' })
+          .option('channel', { type: 'string' })
+          .option('amount', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { topic, botId, spec } = argv;
+          const { topic, botId, spec, coupon, channel, amount } = argv;
 
           assert(topic, 'Invalid topic.');
           assert(botId, 'Invalid Bot Id.');
@@ -220,7 +235,9 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
 
           const invitationObject = invitation.toQueryParameters();
           log(`Inviting bot ${botId} to join '${party}' party with invitation: ${JSON.stringify(invitationObject)}.`);
-          await botFactoryClient.sendInvitationRequest(botId, party, botSpec, invitationObject);
+
+          const payment = await createPayment(config, coupon, channel, amount);
+          await botFactoryClient.sendInvitationRequest(botId, party, botSpec, invitationObject, payment);
 
           await botFactoryClient.close();
         })
