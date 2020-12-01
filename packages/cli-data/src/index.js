@@ -38,20 +38,18 @@ const _createClient = async (config, models) => {
   // TODO(dboreham): Allow feedstore to be persisted.
 
   const dataClient = new Client({
-    storage: {
-      type: 'ram',
-      keyStorage: 'ram'
-    },
     swarm: config.swarm
   });
 
   await dataClient.initialize();
 
-  // TODO(dboreham): Allow seed phrase to be supplied by the user.
-  const { publicKey, secretKey } = createKeyPair();
-  const username = `cli:${os.userInfo().username}`;
+  if (!dataClient.getProfile()) {
+    // TODO(dboreham): Allow seed phrase to be supplied by the user.
+    const { publicKey, secretKey } = createKeyPair();
+    const username = `cli:${os.userInfo().username}`;
 
-  await dataClient.createProfile({ publicKey, secretKey, username });
+    await dataClient.createProfile({ publicKey, secretKey, username });
+  }
 
   // Register models from other extensions.
   // eslint-disable-next-line

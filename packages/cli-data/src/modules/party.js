@@ -6,7 +6,6 @@ import assert from 'assert';
 import path from 'path';
 import queryString from 'query-string';
 
-import { keyToString } from '@dxos/crypto';
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
@@ -66,7 +65,7 @@ export const PartyModule = ({ stateManager }) => ({
 
       handler: asyncHandler(async () => {
         const party = await stateManager.createParty();
-        log(JSON.stringify({ partyKey: keyToString(party.key) }, null, 2));
+        log(JSON.stringify({ partyKey: party.key.toHex() }, null, 2));
       })
     })
 
