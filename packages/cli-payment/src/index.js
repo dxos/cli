@@ -3,9 +3,9 @@
 //
 
 import { createCLI } from '@dxos/cli-core';
+import { PaymentClient } from '@dxos/client';
 
 import { PaymentModule } from './modules/payment';
-import { PaymentClient } from '@dxos/client';
 
 import info from '../extension.yml';
 
@@ -21,8 +21,8 @@ let paymentClient;
 
 const initPaymentCliState = async (state) => {
   const { config } = state;
-  paymentClient = new PaymentClient(config);
 
+  paymentClient = new PaymentClient(config);
   state.paymentClient = paymentClient;
 };
 

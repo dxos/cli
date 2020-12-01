@@ -9,7 +9,7 @@ import clean from 'lodash-clean';
 import { load } from 'js-yaml';
 import readPkgUp from 'read-pkg-up';
 
-import { PaymentClient, decodeBase64ToObj } from '@dxos/client';
+import { createPayment } from '@dxos/client';
 import { BotFactoryClient } from '@dxos/botkit-client';
 import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees, isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
@@ -66,34 +66,6 @@ const getBotFactoryRecord = (fields) => {
   };
 
   return record;
-};
-
-/**
- * Create payment.
- * @param {object} config
- * @param {string} coupon
- * @param {string} channel
- * @param {string} amount
- */
-const createPayment = async (config, coupon, channel, amount) => {
-  let payment;
-
-  if (coupon) {
-    payment = decodeBase64ToObj(coupon);
-  }
-
-  // Create payment/transfer for the spawn request, if not using coupon.
-  const paymentClient = new PaymentClient(config);
-  await paymentClient.connect();
-
-  if (!payment) {
-    assert(channel, 'Invalid channel.');
-    assert(amount, 'Invalid amount.');
-
-    payment = await paymentClient.createTransfer(channel, amount);
-  }
-
-  return payment;
 };
 
 /**
