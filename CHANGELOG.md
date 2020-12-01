@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.20](https://www.github.com/dxos/cli/compare/v2.0.19...v2.0.20) (2020-12-01)
+
+
+### Bug Fixes
+
+* add dep. ([a1ff1bc](https://www.github.com/dxos/cli/commit/a1ff1bc3a0e224d43f302a67617717cbb8c7c435))
+
 ### [2.0.19](https://www.github.com/dxos/cli/compare/v2.0.18...v2.0.19) (2020-12-01)
 
 
