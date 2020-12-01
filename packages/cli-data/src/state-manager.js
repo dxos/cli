@@ -5,7 +5,7 @@
 import assert from 'assert';
 
 import { generatePasscode } from '@dxos/credentials';
-import { keyToBuffer, keyToString, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
+import { keyToBuffer, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
 import { InvitationDescriptor } from '@dxos/echo-db';
 
 const DEFAULT_ITEM_UPDATE_HANDLER = () => {};
@@ -115,7 +115,7 @@ export class StateManager {
 
             this._party = party;
 
-            partyKey = keyToString(party.key);
+            partyKey = party.key.toHex();
           }
 
           this._parties.set(partyKey, { partyKey, useCredentials: !!invitation });
@@ -134,7 +134,7 @@ export class StateManager {
     await this.setItem();
     const party = await this._client.echo.createParty();
 
-    const topic = keyToString(party.key);
+    const topic = party.key.toHex();
     // TODO(egor): useCredentials is always true now, so we can factor it out.
     this._parties.set(topic, { partyKey: topic, useCredentials: true });
 
