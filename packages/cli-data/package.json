@@ -40,7 +40,7 @@
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
     "@dxos/echo-db": "2.6.7-alpha.0",
-    "@dxos/random-access-multi-storage": "^1.1.0-beta.4",
+    "@dxos/random-access-multi-storage": "1.1.0-beta.7",
     "assert": "^2.0.0",
     "js-yaml": "^3.13.1",
     "lodash.defaultsdeep": "^4.6.1",
