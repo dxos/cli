@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.18](https://www.github.com/dxos/cli/compare/v2.0.17...v2.0.18) (2020-12-01)
+
+
+### Bug Fixes
+
+* updates for the latest deps. ([#84](https://www.github.com/dxos/cli/issues/84)) ([53a1f38](https://www.github.com/dxos/cli/commit/53a1f3895c9a551240446f2061e4956a60b33192))
+
 ### [2.0.17](https://www.github.com/dxos/cli/compare/v2.0.16...v2.0.17) (2020-11-24)
 
 
