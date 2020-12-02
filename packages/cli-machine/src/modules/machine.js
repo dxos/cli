@@ -280,8 +280,8 @@ export const MachineModule = ({ config }) => {
            - export WIRE_WNS_USER_KEY=${userKey}
            - export WIRE_WNS_BOND_ID=${bondId}
            - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}"; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}"; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
         `;
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
