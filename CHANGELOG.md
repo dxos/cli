@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.21](https://www.github.com/dxos/cli/compare/v2.0.20...v2.0.21) (2020-12-02)
+
+
+### Bug Fixes
+
+* add auto-registration ([d86e3b6](https://www.github.com/dxos/cli/commit/d86e3b68fb39b774c9db7194c4d5f9c54d5704b5))
+* include FQDN in registration ([9d4e9be](https://www.github.com/dxos/cli/commit/9d4e9bec747bec94daa8f192799b3ff541e4f234))
+
 ### [2.0.20](https://www.github.com/dxos/cli/compare/v2.0.19...v2.0.20) (2020-12-01)
 
 
