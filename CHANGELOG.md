@@ -1,5 +1,26 @@
 # Changelog
 
+### [2.0.20](https://www.github.com/dxos/cli/compare/v2.0.19...v2.0.20) (2020-12-01)
+
+
+### Bug Fixes
+
+* add dep. ([a1ff1bc](https://www.github.com/dxos/cli/commit/a1ff1bc3a0e224d43f302a67617717cbb8c7c435))
+
+### [2.0.19](https://www.github.com/dxos/cli/compare/v2.0.18...v2.0.19) (2020-12-01)
+
+
+### Bug Fixes
+
+* use specific deps. ([55ac8a5](https://www.github.com/dxos/cli/commit/55ac8a53feeefed26c345b1ce4baaf94eb290a4c))
+
+### [2.0.18](https://www.github.com/dxos/cli/compare/v2.0.17...v2.0.18) (2020-12-01)
+
+
+### Bug Fixes
+
+* updates for the latest deps. ([#84](https://www.github.com/dxos/cli/issues/84)) ([53a1f38](https://www.github.com/dxos/cli/commit/53a1f3895c9a551240446f2061e4956a60b33192))
+
 ### [2.0.17](https://www.github.com/dxos/cli/compare/v2.0.16...v2.0.17) (2020-11-24)
 
 
