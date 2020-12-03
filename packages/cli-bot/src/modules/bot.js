@@ -9,7 +9,7 @@ import clean from 'lodash-clean';
 import { load } from 'js-yaml';
 import readPkgUp from 'read-pkg-up';
 
-import { createPayment } from '@dxos/client';
+import { PaymentClient } from '@dxos/client';
 import { BotFactoryClient } from '@dxos/botkit-client';
 import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees, isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
@@ -90,17 +90,17 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           .option('name', { type: 'string' })
           .option('bot-name', { type: 'string' })
           .option('coupon', { type: 'string' })
-          .option('channel', { type: 'string' })
-          .option('amount', { type: 'string' }),
+          .option('contract', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name, coupon, channel, amount } = argv;
+          const { botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name, coupon, contract } = argv;
           const { interactive } = cliState;
 
           const client = await getClient();
           const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
 
-          const payment = await createPayment(config, coupon, channel, amount);
+          const paymentClient = new PaymentClient(config);
+          const payment = await paymentClient.createPayment(coupon, contract);
           const botId = await botFactoryClient.sendSpawnRequest(botName, { env, ipfsCID, ipfsEndpoint, id, name, payment });
 
           print({ botId }, { json });
@@ -183,11 +183,10 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           .option('bot-id', { type: 'string' })
           .option('spec', { alias: 's', type: 'json' })
           .option('coupon', { type: 'string' })
-          .option('channel', { type: 'string' })
-          .option('amount', { type: 'string' }),
+          .option('contract', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { topic, botId, spec, coupon, channel, amount } = argv;
+          const { topic, botId, spec, coupon, contract } = argv;
 
           assert(topic, 'Invalid topic.');
           assert(botId, 'Invalid Bot Id.');
@@ -208,7 +207,8 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           const invitationObject = invitation.toQueryParameters();
           log(`Inviting bot ${botId} to join '${party}' party with invitation: ${JSON.stringify(invitationObject)}.`);
 
-          const payment = await createPayment(config, coupon, channel, amount);
+          const paymentClient = new PaymentClient(config);
+          const payment = await paymentClient.createPayment(coupon, contract);
           await botFactoryClient.sendInvitationRequest(botId, party, botSpec, invitationObject, payment);
 
           await botFactoryClient.close();

@@ -287,15 +287,18 @@ export const PaymentModule = ({ paymentClient }) => ({
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true })
             .option('channel', { type: 'string' })
-            .option('amount', { type: 'string' }),
+            .option('amount', { type: 'string' })
+            .option('contractId', { type: 'string' }),
 
           handler: asyncHandler(async (argv) => {
-            const { channel, amount } = argv;
+            const { channel, amount, contractId } = argv;
 
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
             const transfer = await paymentClient.createTransfer(channel, amount);
+            transfer.contractId = contractId;
+
             log(encodeObjToBase64(transfer));
           })
         })
