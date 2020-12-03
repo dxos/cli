@@ -146,7 +146,7 @@ export const MachineModule = ({ config }) => {
               await registry.deleteName(`${wrnRoot}/service/bot-factory/${name}`, userKey, fee);
             } catch (e) {}
             try {
-              verbose && print('Removing kube service record...');
+              verbose && print('Removing kube record...');
               await registry.deleteName(`${wrnRoot}/kube/${name}`, userKey, fee);
             } catch (e) {}
           }
@@ -192,6 +192,7 @@ export const MachineModule = ({ config }) => {
           .option('pin', { type: 'boolean', default: false })
           .option('register', { type: 'boolean', default: false })
           .option('cliver', { type: 'string', default: '' })
+          .option('dns-ttl', { type: 'number', default: 300 })
           .option('letsencrypt', { type: 'boolean', default: false })
           .option('email', { type: 'string', default: email }),
 
@@ -204,7 +205,7 @@ export const MachineModule = ({ config }) => {
 
           running = true;
 
-          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
           }
@@ -337,7 +338,14 @@ export const MachineModule = ({ config }) => {
           }
 
           const ipAddress = droplet.networks.v4.find(net => net.type === 'public').ip_address;
-          const dnsResult = await session.domains.createRecord(dnsDomain, { type: 'A', name: boxName, data: ipAddress, tags: [KUBE_TYPE] });
+          const dnsResult = await session.domains.createRecord(dnsDomain, {
+            type: 'A',
+            name: boxName,
+            data: ipAddress,
+            ttl: dnsTtl,
+            tags: [KUBE_TYPE]
+          });
+
           if (verbose) {
             print({ dnsResult }, { json: true });
           }
