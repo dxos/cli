@@ -14,7 +14,7 @@ Scenario
 ```bash
 $ git clone git@github.com:connext/vector.git
 $ cd vector
-$ git checkout vector-0.0.12
+$ git checkout vector-0.0.25
 $ make duet
 $ make start-duet
 $ make test-duet
