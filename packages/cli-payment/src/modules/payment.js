@@ -288,16 +288,16 @@ export const PaymentModule = ({ paymentClient }) => ({
             .option('interactive', { hidden: true, default: true })
             .option('channel', { type: 'string' })
             .option('amount', { type: 'string' })
-            .option('contractId', { type: 'string' }),
+            .option('contract', { type: 'string' }),
 
           handler: asyncHandler(async (argv) => {
-            const { channel, amount, contractId } = argv;
+            const { channel, amount, contract } = argv;
 
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
             const transfer = await paymentClient.createTransfer(channel, amount);
-            transfer.contractId = contractId;
+            transfer.contractId = contract;
 
             log(encodeObjToBase64(transfer));
           })

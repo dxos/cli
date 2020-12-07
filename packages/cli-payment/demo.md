@@ -50,7 +50,7 @@ Charlie inspects payment server info, starts interactive terminal:
 ```bash
 $ wire-dev --profile charlie payment server info
 {
-  "id": "indra8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
+  "id": "vector8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
   "address": "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832",
   "balance": "0.0"
 }
@@ -62,7 +62,7 @@ Dave inspects payment server info, starts interactive terminal:
 ```bash
 $ wire-dev --profile dave payment server info
 {
-  "id": "indra5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3",
+  "id": "vector5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3",
   "address": "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63",
   "balance": "0.0"
 }
@@ -80,7 +80,7 @@ Charlie inspects server balance again in existing CLI session:
 ```bash
 [wire]> payment server info
 {
-  "id": "indra8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
+  "id": "vector8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
   "address": "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832",
   "balance": "100.0"
 }
@@ -96,7 +96,7 @@ Charlie and Dave list channels on their payment servers:
 Charlie sets up a channel between himself and Dave:
 
 ```bash
-[wire]> payment channel setup indra5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3
+[wire]> payment channel setup vector5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3
 {
   "channelAddress": "0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859"
 }
@@ -186,6 +186,9 @@ Either side can inspect detailed channel state:
   "processedDepositsB": [
     "10000000000000000000"
   ],
+  "defundNonces": [
+    "1"
+  ],
   "networkContext": {
     "chainId": 1337,
     "channelFactoryAddress": "0x345cA3e014Aaf5dcA488057592ee47305D9B3e10",
@@ -194,9 +197,9 @@ Either side can inspect detailed channel state:
   },
   "nonce": 2,
   "alice": "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63",
-  "aliceIdentifier": "indra5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3",
+  "aliceIdentifier": "vector5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3",
   "bob": "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832",
-  "bobIdentifier": "indra8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
+  "bobIdentifier": "vector8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
   "timeout": "360000",
   "latestUpdate": {
     "assetId": "0x0000000000000000000000000000000000000000",
@@ -215,14 +218,13 @@ Either side can inspect detailed channel state:
       "totalDepositsAlice": "0",
       "totalDepositsBob": "10000000000000000000"
     },
-    "fromIdentifier": "indra8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
+    "fromIdentifier": "vector8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
     "nonce": 2,
-    "aliceSignature": "0xfa0b4f705143b54cb88e1488f3caf461ca82ec170ef1bbd70a4dee631a75f2a31c328b0d6303e70562e0ce83e1b3af1dd7c3ad4ecc86475705dbe6652f190fed1c",
-    "bobSignature": "0x5fe63cdacc287ff5166452d3800d22b4a9032bf7c587be3c1ca71d4f41742a3d57b17bf4a89df539ecdbc2681acebb2eb1533451decd6de8ff9267d965664d201b",
-    "toIdentifier": "indra5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3",
+    "aliceSignature": "0xedce1d0f5defd5c14d7bcd88751fd75bde525434f30b1c3f9060e65acfbdbd65788edaeef5c05ed572f9d74007c6652e07ea3169d331a3dae9b7276eeac39e6a1b",
+    "bobSignature": "0xe69be44d3ade538bef8e1002f177ddf4118fb398b2a3fd38e8277b707b8f69b057461e74310a752a2d2328681d3600559512a4b8f6a7fabc948c65cc463381bf1c",
+    "toIdentifier": "vector5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3",
     "type": "deposit"
   },
-  "defundNonce": "1",
   "inDispute": false
 }
 ```
@@ -298,7 +300,109 @@ Charlie/Dave withdraw fund from the channel to their server (vector bug?):
 }
 ```
 
-### Bot Demo
+### Service Contract (Bot Factory) Demo
+
+Charlie creates a contract file:
+
+```bash
+$ cat contract.yml
+record:
+  type: 'contract'
+  name: 'Bot Factory Service Contract (Charlie/Dave)'
+  version: '0.1.0'
+  consumerAddress: '0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832'
+  providerAddress: '0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63'
+  expiryTime: 1617235200000
+  chargeType: 'per-request'
+  channelAddress: '0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859'
+  assetId: '0x0000000000000000000000000000000000000000'
+  amount: '0.1'
+```
+
+Charlie signs the contract and sends it over to Dave:
+
+```bash
+$ wire-dev --profile charlie wns record sign --filename contract.yml > contract-charlie-signed.yml
+$ cat contract-charlie-signed.yml
+record:
+  type: contract
+  name: Bot Factory Service Contract (Charlie/Dave)
+  version: 0.1.0
+  consumerAddress: '0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832'
+  providerAddress: '0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63'
+  expiryTime: 1617235200000
+  chargeType: per-request
+  channelAddress: '0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859'
+  assetId: '0x0000000000000000000000000000000000000000'
+  amount: '0.1'
+signatures:
+  - pubKey: 61rphyEC6tEq0pxTI2Sy97VlWCSZhA/PRaUfFlQjhQcpYfTfYtg=
+    sig: >-
+      k/Je6WvqsmyzupSZrYqZPO8WUOx8ClAR31IKfN/hY8Vp63QBJl8roGbU5MBHfbz5GOF1Dv+Wpc2IRlNghdwdrQ==
+```
+
+Dave inspects and signs the contract:
+
+```bash
+$ wire-dev --profile dave wns record sign --filename contract-charlie-signed.yml > contract-charlie-n-dave-signed.yml
+$ cat contract-charlie-n-dave-signed.yml
+record:
+  type: contract
+  name: Bot Factory Service Contract (Charlie/Dave)
+  version: 0.1.0
+  consumerAddress: '0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832'
+  providerAddress: '0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63'
+  expiryTime: 1617235200000
+  chargeType: per-request
+  channelAddress: '0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859'
+  assetId: '0x0000000000000000000000000000000000000000'
+  amount: '0.1'
+signatures:
+  - pubKey: 61rphyEC6tEq0pxTI2Sy97VlWCSZhA/PRaUfFlQjhQcpYfTfYtg=
+    sig: >-
+      k/Je6WvqsmyzupSZrYqZPO8WUOx8ClAR31IKfN/hY8Vp63QBJl8roGbU5MBHfbz5GOF1Dv+Wpc2IRlNghdwdrQ==
+  - pubKey: 61rphyEDdKE3OUeb1lRTxPbVX5q31mMTJE6G21ql3XTGS9KQcvg=
+    sig: >-
+      4YxYKFHB2B0oGgqMy+RZ8CYI4q+Ugq5laAZag4MD/LsxX7rQPedHafPxlnLbLIUAKuplymhFoJNbc0hzDE1e+Q==
+```
+
+Either party can publish the final signed contract on-chain, noting the resulting contract ID:
+
+```bash
+$ wire-dev --profile charlie wns record publish --filename contract-charlie-n-dave-signed.yml --raw-payload
+bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
+```
+
+Inspect the on-chain contract signed by both parties:
+
+```bash
+$ wire-dev --profile charlie wns record get --id bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
+[
+  {
+    "id": "bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q",
+    "names": null,
+    "owners": [
+      "0815c2be340326fdf10cd927854c2e96a2d495c3",
+      "6ee3328f65c8566cd5451e49e97a767d10a8adf7"
+    ],
+    "bondId": "8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3",
+    "createTime": "2020-12-07T15:26:20.627934000",
+    "expiryTime": "2021-12-07T15:26:20.627934000",
+    "attributes": {
+      "amount": "0.1",
+      "channelAddress": "0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859",
+      "chargeType": "per-request",
+      "expiryTime": 1617235200000,
+      "name": "Bot Factory Service Contract (Charlie/Dave)",
+      "version": "0.1.0",
+      "assetId": "0x0000000000000000000000000000000000000000",
+      "consumerAddress": "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832",
+      "providerAddress": "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63",
+      "type": "contract"
+    }
+  }
+]
+```
 
 Dave starts a Bot Factory (running in local dev mode):
 
@@ -314,18 +418,19 @@ $ WIRE_PAYMENT_ENDPOINT=http://localhost:8004 wire-dev --profile dave bot factor
 Charlie spawns a Chess Bot, sending an in-band micropayment (copy `topic` from Bot Factory console):
 
 ```bash
-$ DEBUG=botkit-client wire-dev --profile charlie bot spawn --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --channel 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 --amount 0.1
+$ DEBUG=botkit-client wire-dev --profile charlie bot spawn --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
 ```
 
 Dave's terminal:
 
 ```bash
-  bot-factory Received command: {"options":{"payment":{"channelAddress":"0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859","transferId":"0x0ee7e2a64e4f538dbeef20d33d8cf06e090e612147640825ebcad5819bbec473","preImage":"0x1fb8d572090bd1af9ae9823e9d43c9880aeb95b6ac3ebe64f4f474f2702b1e2e"}},"__type_url":"dxos.protocol.bot.Spawn"} +7m
-  bot-factory Spawn bot request for ChessBot env: native +4ms
-  bot-factory Validating received payment: {"assetId":"0x0000000000000000000000000000000000000000","balances":{"0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832":"0.1","0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63":"0.0"},"channelAddress":"0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859","transferId":"0x0ee7e2a64e4f538dbeef20d33d8cf06e090e612147640825ebcad5819bbec473"} +105ms
-  bot-factory Spawned bot: {"pid":76934,"command":"yarn","args":["--silent","babel-watch","--use-polling","src/main.js"],"wireEnv":{"WIRE_BOT_CONTROL_TOPIC":"38f544064e2660bc8332aaac78625587262736782aa0ba5e9778715455abb81a","WIRE_BOT_UID":"70e1d0e212d9f62b11fb8b919f7b016e0b377fd60b3e04f90add0794567cd5ad","WIRE_BOT_NAME":"bot:ChessBot Lion","WIRE_BOT_CWD":"/Users/ashwinp/projects/dxos/arena/bots/chess-bot/.bots/70e1d0e212d9f62b11fb8b919f7b016e0b377fd60b3e04f90add0794567cd5ad","WIRE_BOT_RESTARTED":"false"},"cwd":"/Users/ashwinp/projects/dxos/arena/bots/chess-bot/.bots/70e1d0e212d9f62b11fb8b919f7b016e0b377fd60b3e04f90add0794567cd5ad"} +198ms
-  bot-factory:76934 regitered wrn://protocol.dxos.org/arena/chess
-  bot-factory:76934  +0ms
+  bot-factory Received command: {"options":{"payment":{"channelAddress":"0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859","transferId":"0xa196f829832cdcf974508fd560ca67f9fe519e8d86d2fa95c048e8956b809540","preImage":"0x4ad44cbfd9617b32ffd69961d57861f260aca2168ed81aa11e70262b0567df95","contractId":"bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q"}},"__type_url":"dxos.protocol.bot.Spawn"} +23s
+  bot-factory Spawn bot request for ChessBot env: native +5ms
+  client Contract: {"id":"bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q","names":null,"owners":["0815c2be340326fdf10cd927854c2e96a2d495c3","6ee3328f65c8566cd5451e49e97a767d10a8adf7"],"bondId":"8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3","createTime":"2020-12-07T15:26:20.627934000","expiryTime":"2021-12-07T15:26:20.627934000","attributes":{"consumerAddress":"0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832","name":"Bot Factory Service Contract (Charlie/Dave)","providerAddress":"0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63","version":"0.1.0","amount":"0.1","chargeType":"per-request","expiryTime":1617235200000,"type":"contract","assetId":"0x0000000000000000000000000000000000000000","channelAddress":"0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859"}} +0ms
+  client Validating received payment: {"assetId":"0x0000000000000000000000000000000000000000","balances":{"0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832":"0.1","0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63":"0.0"},"channelAddress":"0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859","transferId":"0xa196f829832cdcf974508fd560ca67f9fe519e8d86d2fa95c048e8956b809540"} +103ms
+  bot-factory Spawned bot: {"pid":59163,"command":"yarn","args":["--silent","babel-watch","--use-polling","src/main.js"],"wireEnv":{"WIRE_BOT_CONTROL_TOPIC":"83d673d97bcad7f54ff64a44041f935776fde32eea20635bb20790ee5ad94c5d","WIRE_BOT_UID":"0df9c4e649bcaa37d9adccf15365f083933b7dc9e51ed64ee36d21eb3d615845","WIRE_BOT_NAME":"bot:ChessBot Harbor Porpoise","WIRE_BOT_CWD":"/Users/ashwinp/projects/dxos/arena/bots/chess-bot/.bots/0df9c4e649bcaa37d9adccf15365f083933b7dc9e51ed64ee36d21eb3d615845","WIRE_BOT_RESTARTED":"false"},"cwd":"/Users/ashwinp/projects/dxos/arena/bots/chess-bot/.bots/0df9c4e649bcaa37d9adccf15365f083933b7dc9e51ed64ee36d21eb3d615845"} +445ms
+  bot-factory:59163 regitered wrn://protocol.dxos.org/arena/chess
+  bot-factory:59163  +0ms
 ```
 
 Charlie's terminal:
@@ -335,19 +440,24 @@ Charlie's terminal:
   botkit-client Sending spawn request for bot undefined +0ms
 key    value
 -----  ----------------------------------------------------------------
-botId  70e1d0e212d9f62b11fb8b919f7b016e0b377fd60b3e04f90add0794567cd5ad
+botId  0df9c4e649bcaa37d9adccf15365f083933b7dc9e51ed64ee36d21eb3d615845
 ```
 
-Charlie spawns a Chess Bot, using a coupon create in the CLI for payment:
+Charlie spawns a Chess Bot, using a coupon created in the CLI for payment:
 
 ```bash
-$ DEBUG=botkit-client wire-dev --profile charlie bot spawn --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --coupon eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDA2NmRiODk0MjM2MTYyYWIwNjJlY2UwNjg0MjAyZDBjYTMyMDQ3YmJkZjY0MDUyYjVmNTdiZWY3ZjU5OTAzOWMiLCJwcmVJbWFnZSI6IjB4YmM2OWQxOTBiYzA2NDM5MjJmODhhNzZkYzU5MmE4ZmE3ZjRmZTQ2YjIxM2MwYjRkYmYxYzQ1MDI4OTJjYjE3NCJ9
+[wire]> payment coupon create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0.1 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
+eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDlkMzRiY2NhNzBkYTIwMjdmZjljMGM3YjVlMjAyODFiNjJlZGVmNmEzMmQ5NTQ2N2Y2MWZjMzVjZmEwN2I4NzUiLCJwcmVJbWFnZSI6IjB4ZjUyY2Y3NjBkNGUxNDAxZTFhODliMmVlMWNlNjUwZjYyNGUxYzVmNTFiZmFkYmZkMzE1NzExMzk5YWIyMGQ0NCIsImNvbnRyYWN0SWQiOiJiYWZ5cmVpZnNtY2V5cXdmNGxuemM1aGN5cXFveno2bGhmenNqYmkyemh2bXVkZnQ1YWJhcWNkb2YzcSJ9
+```
+
+```bash
+$ DEBUG=botkit-client wire-dev --profile charlie bot spawn --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --coupon eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDlkMzRiY2NhNzBkYTIwMjdmZjljMGM3YjVlMjAyODFiNjJlZGVmNmEzMmQ5NTQ2N2Y2MWZjMzVjZmEwN2I4NzUiLCJwcmVJbWFnZSI6IjB4ZjUyY2Y3NjBkNGUxNDAxZTFhODliMmVlMWNlNjUwZjYyNGUxYzVmNTFiZmFkYmZkMzE1NzExMzk5YWIyMGQ0NCIsImNvbnRyYWN0SWQiOiJiYWZ5cmVpZnNtY2V5cXdmNGxuemM1aGN5cXFveno2bGhmenNqYmkyemh2bXVkZnQ1YWJhcWNkb2YzcSJ9
 
   botkit-client Bot factory peer connected +0ms
   botkit-client Sending spawn request for bot undefined +1ms
 key    value
 -----  ----------------------------------------------------------------
-botId  918e615bc21a22b13c5fa6e0f84fcd62bdb64b2035c5b440799788a36859ab2e
+botId  6cad478818fffb7cec95d3671682257620726d73288ec4821dd8334a35ddfa48
 ```
 
 Spending an used coupon doesn't work (left as an exercise to the reader).
@@ -360,7 +470,7 @@ $ DEBUG=botkit-client wire-dev --profile charlie party create
   "partyKey": "dd2382327900a5de068fb8ac88370f3293e7bf3f5c7e1205649fd1e0eb360d95"
 }
 
-[wire]> bot invite --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --channel 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 --amount 0.1 --bot-id 918e615bc21a22b13c5fa6e0f84fcd62bdb64b2035c5b440799788a36859ab2e
+[wire]> bot invite --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q --bot-id 918e615bc21a22b13c5fa6e0f84fcd62bdb64b2035c5b440799788a36859ab2e
 ```
 
 Charlie plays Chess with the bot:
