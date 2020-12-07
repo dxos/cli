@@ -10,7 +10,7 @@ import { asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { humanize } from '@dxos/crypto';
 
-export const PartyModule = ({ stateManager }) => ({
+export const PartyModule = ({ stateManager, getClient }) => ({
   command: ['party'],
   describe: 'Party CLI.',
   builder: yargs => yargs
@@ -71,8 +71,26 @@ export const PartyModule = ({ stateManager }) => ({
     })
 
     .command({
+      command: ['members'],
+      describe: 'List party members.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        const client = await getClient();
+        const keyring = client.echo.keyring;
+        const partyKeys = new Map();
+
+        stateManager.party.queryMembers().value.forEach(member => partyKeys.set(member.publicKey.toHex(), keyring.getKey(member.publicKey)));
+
+        print(Array.from(partyKeys.values()).filter(Boolean), { json });
+      })
+    })
+
+    .command({
       command: ['items'],
-      describe: 'List items.',
+      describe: 'List party items.',
       builder: yargs => yargs,
 
       handler: asyncHandler(async (argv) => {
