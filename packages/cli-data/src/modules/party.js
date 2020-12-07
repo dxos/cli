@@ -6,10 +6,11 @@ import assert from 'assert';
 import path from 'path';
 import queryString from 'query-string';
 
-import { asyncHandler } from '@dxos/cli-core';
+import { asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
+import { humanize } from '@dxos/crypto';
 
-export const PartyModule = ({ stateManager }) => ({
+export const PartyModule = ({ stateManager, getClient }) => ({
   command: ['party'],
   describe: 'Party CLI.',
   builder: yargs => yargs
@@ -66,6 +67,46 @@ export const PartyModule = ({ stateManager }) => ({
       handler: asyncHandler(async () => {
         const party = await stateManager.createParty();
         log(JSON.stringify({ partyKey: party.key.toHex() }, null, 2));
+      })
+    })
+
+    .command({
+      command: ['members'],
+      describe: 'List party members.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        const client = await getClient();
+        const keyring = client.echo.keyring;
+        const partyKeys = new Map();
+
+        stateManager.party.queryMembers().value.forEach(member => partyKeys.set(member.publicKey.toHex(), keyring.getKey(member.publicKey)));
+
+        print(Array.from(partyKeys.values()).filter(Boolean), { json });
+      })
+    })
+
+    .command({
+      command: ['items'],
+      describe: 'List party items.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        const items = stateManager.party.database.queryItems().value;
+        const result = (items || []).map(item => {
+          const modelName = Object.getPrototypeOf(item.model).constructor.name;
+          return {
+            id: humanize(item.id),
+            type: item.type,
+            modelType: item.model._meta.type,
+            modelName
+          };
+        });
+        print(result, { json });
       })
     })
 
