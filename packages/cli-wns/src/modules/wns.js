@@ -8,6 +8,7 @@ import kill from 'tree-kill';
 import { spawn, spawnSync } from 'child_process';
 import clean from 'lodash-clean';
 import yaml from 'node-yaml';
+import jsYaml from 'js-yaml';
 import inquirer from 'inquirer';
 import url from 'url';
 import { ensureFileSync, removeSync } from 'fs-extra';
@@ -23,8 +24,9 @@ import {
   getGasAndFees
 } from '@dxos/cli-core';
 
+import { keyToBuffer } from '@dxos/crypto';
 import { log } from '@dxos/debug';
-import { Registry, Account } from '@wirelineio/registry-client';
+import { Registry, Account, Payload, Record, Signature } from '@wirelineio/registry-client';
 
 import { requestFaucetTokens } from './faucet';
 
@@ -265,10 +267,11 @@ export const WNSModule = ({ config }) => ({
           command: ['publish'],
           describe: 'Register record.',
           builder: yargs => yargs
-            .option('bond-id', { type: 'string' }),
+            .option('bond-id', { type: 'string' })
+            .option('raw-payload', { type: 'boolean' }),
 
           handler: asyncHandler(async argv => {
-            const { txKey, filename, verbose } = argv;
+            const { txKey, filename, rawPayload, verbose } = argv;
             const wnsConfig = config.get('services.wns');
             const { server, userKey, bondId, chainId } = getConnectionInfo(argv, wnsConfig);
 
@@ -277,6 +280,9 @@ export const WNSModule = ({ config }) => ({
             assert(bondId, 'Invalid Bond ID.');
             assert(chainId, 'Invalid WNS Chain ID.');
 
+            const registry = new Registry(server, chainId);
+            const fee = getGasAndFees(argv, wnsConfig);
+
             let file = null;
             if (filename) {
               file = path.join(process.cwd(), filename);
@@ -284,10 +290,19 @@ export const WNSModule = ({ config }) => ({
               file = 0; // stdin
             }
 
-            const { record } = await yaml.read(file);
-            const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
-            const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
+            const { record: recordObj, signatures: signatureObjs = [] } = await yaml.read(file);
+
+            if (!rawPayload) {
+              const result = await registry.setRecord(userKey, recordObj, txKey, bondId, fee);
+              log(verbose ? JSON.stringify(result, undefined, 2) : result.data);
+
+              return;
+            }
+
+            const record = new Record(recordObj);
+            const signatures = signatureObjs.map(sigObj => new Signature(sigObj.pubKey, sigObj.sig));
+            const payload = new Payload(record, ...signatures);
+            const result = await registry.publishRecordPayload(txKey || userKey, payload, bondId, fee);
 
             log(verbose ? JSON.stringify(result, undefined, 2) : result.data);
           })
@@ -309,6 +324,35 @@ export const WNSModule = ({ config }) => ({
             const result = await registry.getRecordsByIds([id]);
 
             log(JSON.stringify(result, undefined, 2));
+          })
+        })
+
+        // Sign record.
+        .command({
+          command: ['sign'],
+          describe: 'Sign record.',
+          handler: asyncHandler(async argv => {
+            const { filename } = argv;
+            const wnsConfig = config.get('services.wns');
+            const { userKey } = getConnectionInfo(argv, wnsConfig);
+
+            assert(userKey, 'Invalid User Key.');
+
+            let file = null;
+            if (filename) {
+              file = path.join(process.cwd(), filename);
+            } else {
+              file = 0; // stdin
+            }
+
+            const { record: recordObj, signatures: signatureObjs = [] } = await yaml.read(file);
+            const record = new Record(recordObj);
+            const signatures = signatureObjs.map(sigObj => new Signature(sigObj.pubKey, sigObj.sig));
+            const payload = new Payload(record, ...signatures);
+            const account = new Account(keyToBuffer(userKey));
+            account.signPayload(payload);
+
+            log(jsYaml.dump({ record: recordObj, signatures: payload.signatures.map(sig => sig.serialize()) }));
           })
         })
 
