@@ -60,4 +60,3 @@
   describe: Payment management.
   moduleName: "@dxos/cli-payment"
   initRequired: true
-  destroyRequired: true

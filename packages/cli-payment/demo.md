@@ -410,7 +410,7 @@ Dave starts a Bot Factory (running in local dev mode):
 $ cd ~/projects/dxos/arena/bots/chess-bot
 $ rm service.yml
 
-$ WIRE_PAYMENT_ENDPOINT=http://localhost:8004 wire-dev --profile dave bot factory start --local-dev
+$ DEBUG="client,bot-factory" WIRE_PAYMENT_ENDPOINT=http://localhost:8004 wire-dev --profile dave bot factory start --local-dev
   bot-factory Started BotFactory with node,native containers. +0ms
   bot-factory {"started":true,"topic":"58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27","peerId":"58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27","localDev":true,"controlTopic":"38f544064e2660bc8332aaac78625587262736782aa0ba5e9778715455abb81a"} +51ms
 ```
