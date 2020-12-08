@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.23](https://www.github.com/dxos/cli/compare/v2.0.22...v2.0.23) (2020-12-08)
+
+
+### Bug Fixes
+
+* add alias ([#93](https://www.github.com/dxos/cli/issues/93)) ([0905e84](https://www.github.com/dxos/cli/commit/0905e84645085aa24419dae3cfc0c35adf5d76d0))
+
 ### [2.0.22](https://www.github.com/dxos/cli/compare/v2.0.21...v2.0.22) (2020-12-08)
 
 
