@@ -8,7 +8,7 @@ import { encodeObjToBase64, decodeBase64ToObj } from '@dxos/client';
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-export const PaymentModule = ({ paymentClient }) => ({
+export const PaymentModule = ({ config, paymentClient }) => ({
   command: ['payment'],
   describe: 'Payment CLI.',
   builder: yargs => yargs
@@ -165,15 +165,21 @@ export const PaymentModule = ({ paymentClient }) => ({
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true })
             .option('channel', { type: 'string' })
+            .option('asset', { type: 'string' })
             .option('amount', { type: 'string' }),
 
           handler: asyncHandler(async (argv) => {
-            const { channel, amount } = argv;
+            const { channel, asset, amount } = argv;
 
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
-            await paymentClient.addFunds(channel, amount);
+            const { assetId: defaultAsset } = config.get('services.payment');
+            const assetId = asset || defaultAsset;
+
+            assert(assetId, 'Invalid asset.');
+
+            await paymentClient.addFunds(channel, assetId, amount);
           })
         })
 
@@ -182,14 +188,20 @@ export const PaymentModule = ({ paymentClient }) => ({
           describe: 'Reconcile deposited funds into the off-chain channel balance.',
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true })
-            .option('channel', { type: 'string' }),
+            .option('channel', { type: 'string' })
+            .option('asset', { type: 'string' }),
 
           handler: asyncHandler(async (argv) => {
-            const { channel } = argv;
+            const { channel, asset } = argv;
 
             assert(channel, 'Invalid channel address.');
 
-            await paymentClient.reconcileDeposit(channel);
+            const { assetId: defaultAsset } = config.get('services.payment');
+            const assetId = asset || defaultAsset;
+
+            assert(assetId, 'Invalid asset.');
+
+            await paymentClient.reconcileDeposit(channel, assetId);
           })
         })
 
@@ -199,15 +211,21 @@ export const PaymentModule = ({ paymentClient }) => ({
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true })
             .option('channel', { type: 'string' })
+            .option('asset', { type: 'string' })
             .option('amount', { type: 'string' }),
 
           handler: asyncHandler(async (argv) => {
-            const { channel, amount } = argv;
+            const { channel, asset, amount } = argv;
 
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
-            await paymentClient.withdrawFunds(channel, amount);
+            const { assetId: defaultAsset } = config.get('services.payment');
+            const assetId = asset || defaultAsset;
+
+            assert(assetId, 'Invalid asset.');
+
+            await paymentClient.withdrawFunds(channel, assetId, amount);
           })
         })
     })
@@ -224,15 +242,21 @@ export const PaymentModule = ({ paymentClient }) => ({
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true })
             .option('channel', { type: 'string' })
+            .option('asset', { type: 'string' })
             .option('amount', { type: 'string' }),
 
           handler: asyncHandler(async (argv) => {
-            const { channel, amount } = argv;
+            const { channel, asset, amount } = argv;
 
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
-            const transfer = await paymentClient.createTransfer(channel, amount);
+            const { assetId: defaultAsset } = config.get('services.payment');
+            const assetId = asset || defaultAsset;
+
+            assert(assetId, 'Invalid asset.');
+
+            const transfer = await paymentClient.createTransfer(channel, assetId, amount);
             log(JSON.stringify(transfer, undefined, 2));
           })
         })
@@ -287,16 +311,22 @@ export const PaymentModule = ({ paymentClient }) => ({
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true })
             .option('channel', { type: 'string' })
+            .option('asset', { type: 'string' })
             .option('amount', { type: 'string' })
             .option('contract', { type: 'string' }),
 
           handler: asyncHandler(async (argv) => {
-            const { channel, amount, contract } = argv;
+            const { channel, asset, amount, contract } = argv;
 
             assert(channel, 'Invalid channel address.');
             assert(amount, 'Invalid amount.');
 
-            const transfer = await paymentClient.createTransfer(channel, amount);
+            const { assetId: defaultAsset } = config.get('services.payment');
+            const assetId = asset || defaultAsset;
+
+            assert(assetId, 'Invalid asset.');
+
+            const transfer = await paymentClient.createTransfer(channel, assetId, amount);
             transfer.contractId = contract;
 
             log(encodeObjToBase64(transfer));
