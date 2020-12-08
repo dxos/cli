@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.0.22](https://www.github.com/dxos/cli/compare/v2.0.21...v2.0.22) (2020-12-08)
+
+
+### Bug Fixes
+
+* add command history. ([#92](https://www.github.com/dxos/cli/issues/92)) ([f9415d8](https://www.github.com/dxos/cli/commit/f9415d8cc40bdb27cfbb529e1cdf2a736f76bb0d))
+* add party commands. ([#91](https://www.github.com/dxos/cli/issues/91)) ([8cdd8bf](https://www.github.com/dxos/cli/commit/8cdd8bfe4b7e98a9f53c16984705dba841d86bda))
+* shorten DNS TTL by default ([62be8bf](https://www.github.com/dxos/cli/commit/62be8bfed4e98818430c1d489fe1d057075caf17))
+
 ### [2.0.21](https://www.github.com/dxos/cli/compare/v2.0.20...v2.0.21) (2020-12-02)
 
 
