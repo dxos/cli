@@ -272,7 +272,6 @@ export class App {
       this._rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
-        terminal: false, // Prevent output from being echoed.
         prompt: `[${this._prompt}]> `
       });
     }
