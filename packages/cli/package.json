@@ -12,7 +12,8 @@
     "url": "git+https://github.com/dxos/cli.git"
   },
   "bin": {
-    "wire": "bin/wire.js"
+    "wire": "bin/wire.js",
+    "dx": "bin/wire.js"
   },
   "files": [
     "bin/",
