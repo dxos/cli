@@ -175,13 +175,18 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
         builder: yargs => yargs
           .option('topic', { alias: 't', type: 'string' })
           .option('bot-id', { type: 'string' })
-          .option('spec', { alias: 's', type: 'json' }),
+          .option('spec', { alias: 's', type: 'json' })
+          .option('env', { type: 'string' })
+          .option('ipfsCID', { type: 'string' })
+          .option('ipfsEndpoint', { type: 'string' })
+          .option('id', { type: 'string' })
+          .option('name', { type: 'string' })
+          .option('bot-name', { type: 'string' }),
 
         handler: asyncHandler(async argv => {
-          const { topic, botId, spec } = argv;
+          const { topic, botId, spec, botName, json, env, ipfsCID, ipfsEndpoint, id, name } = argv;
 
           assert(topic, 'Invalid topic.');
-          assert(botId, 'Invalid Bot Id.');
 
           const botSpec = spec ? JSON.parse(spec) : {};
 
@@ -195,10 +200,16 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
           if (!stateManager.isOpenParty(party)) {
             invitation = await stateManager.createSignatureInvitation(party, topic);
           }
-
           const invitationObject = invitation.toQueryParameters();
-          log(`Inviting bot ${botId} to join '${party}' party with invitation: ${JSON.stringify(invitationObject)}.`);
-          await botFactoryClient.sendInvitationRequest(botId, party, botSpec, invitationObject);
+
+          log(`Inviting bot ${botId || botName || ''} to join '${party}' party with invitation: ${JSON.stringify(invitationObject)}.`);
+          if (botId) {
+            await botFactoryClient.sendInvitationRequest(botId, party, botSpec, invitationObject);
+          } else {
+            const botId = await botFactoryClient.sendSpawnAndInviteRequest(botName, party, invitationObject, { env, ipfsCID, ipfsEndpoint, id, name });
+
+            print({ botId }, { json });
+          }
 
           await botFactoryClient.close();
         })
