@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.24](https://www.github.com/dxos/cli/compare/v2.0.23...v2.0.24) (2020-12-09)
+
+
+### Bug Fixes
+
+* deps and cleanup. ([#95](https://www.github.com/dxos/cli/issues/95)) ([0ee0a12](https://www.github.com/dxos/cli/commit/0ee0a1288bbaff07c2c833ffa5de163209b4003e))
+
 ### [2.0.23](https://www.github.com/dxos/cli/compare/v2.0.22...v2.0.23) (2020-12-08)
 
 
