@@ -16,6 +16,8 @@ import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
 const KUBE_TYPE = 'wrn:kube';
+const DEFAULT_WRN_ROOT = 'wrn://dxos';
+let running = false;
 
 /**
  * @param {DigitalOceanSession} session
@@ -96,75 +98,67 @@ export const MachineModule = ({ config }) => {
         })
       })
       .command({
-        command: ['publish'],
-        describe: 'Publish a machine.',
-        builder: yargs => yargs
-          .option('name', { type: 'string' })
-          .option('gas', { type: 'string' })
-          .option('fees', { type: 'string' }),
-
-        handler: asyncHandler(async (argv) => {
-          const { verbose } = yargs.argv;
-
-          const boxName = yargs.argv.name;
-          const fullyQualifiedBoxName = `${boxName}.${dnsDomain}`;
-          const wnsBoxName = `${dnsDomain}/${boxName}`;
-
-          const wnsConfig = config.get('services.wns');
-          const { server, userKey, bondId, chainId } = wnsConfig;
-          const registry = new Registry(server, chainId);
-
-          const version = '1.0.0';
-
-          const boxRecord = {
-            type: KUBE_TYPE,
-            name: wnsBoxName,
-            url: `https://${fullyQualifiedBoxName}`,
-            version
-          };
-
-          const fee = getGasAndFees(argv, wnsConfig);
-          const result = await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
-
-          if (verbose) {
-            print({ result }, { json: true });
-          }
-
-          const machineData = {
-            name: boxName,
-            dns_name: fullyQualifiedBoxName,
-            wns_record_id: result.data
-          };
-
-          print({ machine_data: machineData }, { json: true });
-        })
-      })
-      .command({
         command: ['delete'],
         describe: 'Delete a Machine.',
         builder: yargs => yargs
-          .option('name', { type: 'string' }),
+          .option('name', { type: 'string', require: true })
+          .option('verbose', { type: 'boolean', default: false })
+          .option('wrn-root', { type: 'string', default: DEFAULT_WRN_ROOT }),
 
         handler: asyncHandler(async () => {
-          const { name } = yargs.argv;
+          if (running) {
+            // TODO(telackey): Why is this double-executing?!
+            await waitForCondition(() => !running);
+            return;
+          }
+          running = true;
+
+          const { name, wrnRoot, verbose } = yargs.argv;
           const session = new DigitalOcean(doAccessToken, 100);
 
+          verbose && print('Removing machine...');
           const dropletId = await getDropletIdFromName(session, name);
           if (dropletId) {
-            await session.droplets.deleteById(dropletId);
+            try {
+              await session.droplets.deleteById(dropletId);
+            } catch (e) {}
           }
 
+          verbose && print('Removing DNS record...');
           const recordId = await getRecordIdFromName(session, dnsDomain, name);
           if (recordId) {
-            await session.domains.deleteRecord(dnsDomain, recordId);
+            try {
+              await session.domains.deleteRecord(dnsDomain, recordId);
+            } catch (e) {}
           }
+
+          const wnsConfig = config.get('services.wns');
+          const { server, userKey, bondId, chainId } = wnsConfig;
+          if (server && userKey && bondId && chainId) {
+            const registry = new Registry(server, chainId);
+            const fee = getGasAndFees(yargs.argv, wnsConfig);
+            try {
+              verbose && print('Removing ipfs service record...');
+              await registry.deleteName(`${wrnRoot}/service/ipfs/${name}`, userKey, fee);
+            } catch (e) {}
+            try {
+              verbose && print('Removing bot-factory service record...');
+              await registry.deleteName(`${wrnRoot}/service/bot-factory/${name}`, userKey, fee);
+            } catch (e) {}
+            try {
+              verbose && print('Removing kube record...');
+              await registry.deleteName(`${wrnRoot}/kube/${name}`, userKey, fee);
+            } catch (e) {}
+          }
+
+          running = false;
         })
       })
       .command({
         command: ['info'],
         describe: 'Info about a Machine.',
         builder: yargs => yargs
-          .option('name', { type: 'string' }),
+          .option('name', { type: 'string', required: true }),
 
         handler: asyncHandler(async () => {
           const { name } = yargs.argv;
@@ -193,16 +187,33 @@ export const MachineModule = ({ config }) => {
         describe: 'Create a Machine.',
         builder: yargs => yargs
           .option('name', { type: 'string' })
+          .option('wrn-root', { type: 'string', default: DEFAULT_WRN_ROOT })
           .option('memory', { type: 'number', default: 4 })
           .option('pin', { type: 'boolean', default: false })
+          .option('register', { type: 'boolean', default: false })
           .option('cliver', { type: 'string', default: '' })
+          .option('dns-ttl', { type: 'number', default: 300 })
           .option('letsencrypt', { type: 'boolean', default: false })
           .option('email', { type: 'string', default: email }),
 
         handler: asyncHandler(async () => {
-          const { verbose, pin, cliver, letsencrypt, memory, email } = yargs.argv;
+          if (running) {
+            // TODO(telackey): Why is this double-executing?!
+            await waitForCondition(() => !running);
+            return;
+          }
+
+          running = true;
+
+          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
+          }
+
+          const wnsConfig = config.get('services.wns');
+          const { server, userKey, bondId, chainId } = wnsConfig;
+          if (register) {
+            assert(server && userKey && bondId && chainId, 'Missing WNS config.');
           }
 
           const session = new DigitalOcean(doAccessToken, 100);
@@ -263,9 +274,16 @@ export const MachineModule = ({ config }) => {
            - systemctl enable kube
            - systemctl start kube
            - if [ "${letsencrypt ? 1 : 0}" = "1" ]; then certbot --apache -d ${boxFullyQualifiedName} -n --agree-tos -m ${email}; fi
+           - sleep 2
            - /etc/init.d/apache2 restart
+           - cd /opt/kube/scripts
+           - export WIRE_WNS_ENDPOINT=${server}
+           - export WIRE_WNS_USER_KEY=${userKey}
+           - export WIRE_WNS_BOND_ID=${bondId}
+           - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
         `;
-          // TODO(telackey): Replace with organizational email.
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
           let sizeSlug = 's-2vcpu-4gb';
@@ -320,7 +338,14 @@ export const MachineModule = ({ config }) => {
           }
 
           const ipAddress = droplet.networks.v4.find(net => net.type === 'public').ip_address;
-          const dnsResult = await session.domains.createRecord(dnsDomain, { type: 'A', name: boxName, data: ipAddress, tags: [KUBE_TYPE] });
+          const dnsResult = await session.domains.createRecord(dnsDomain, {
+            type: 'A',
+            name: boxName,
+            data: ipAddress,
+            ttl: dnsTtl,
+            tags: [KUBE_TYPE]
+          });
+
           if (verbose) {
             print({ dnsResult }, { json: true });
           }
@@ -335,6 +360,23 @@ export const MachineModule = ({ config }) => {
           };
 
           print({ machine }, { json: true });
+
+          if (register) {
+            const registry = new Registry(server, chainId);
+            const boxRecord = {
+              type: KUBE_TYPE,
+              name: boxName,
+              url: `https://${boxFullyQualifiedName}`,
+              version: '1.0.0'
+            };
+
+            const fee = getGasAndFees(yargs.argv, wnsConfig);
+            const result = await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
+            await registry.setName(`${wrnRoot}/kube/${boxName}`, result.data, userKey, fee);
+            print({ record: result.data, wrn: `${wrnRoot}/kube/${boxName}` }, { json: true });
+          }
+
+          running = false;
         })
       })
   });

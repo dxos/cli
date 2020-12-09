@@ -73,8 +73,7 @@ export class App {
 
     // http://yargs.js.org/docs/#api-failfn
     .fail(msg => {
-      logError(msg);
-      process.exit(1);
+      throw new Error(msg);
     });
 
   _modules = [];
@@ -272,7 +271,6 @@ export class App {
       this._rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
-        terminal: false, // Prevent output from being echoed.
         prompt: `[${this._prompt}]> `
       });
     }

@@ -6,6 +6,7 @@ name: beta - Publish to NPM
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
