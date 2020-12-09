@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-pad",
-  "version": "2.0.23-alpha.0",
+  "version": "2.0.24-alpha.0",
   "description": "DxOS Pad CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-pad#readme",
   "license": "GPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.0.23-alpha.0",
+    "@dxos/cli-core": "^2.0.24-alpha.0",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
