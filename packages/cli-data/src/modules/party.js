@@ -6,8 +6,9 @@ import assert from 'assert';
 import path from 'path';
 import queryString from 'query-string';
 
-import { asyncHandler } from '@dxos/cli-core';
+import { asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
+import { humanize } from '@dxos/crypto';
 
 export const PartyModule = ({ stateManager }) => ({
   command: ['party'],
@@ -66,6 +67,42 @@ export const PartyModule = ({ stateManager }) => ({
       handler: asyncHandler(async () => {
         const party = await stateManager.createParty();
         log(JSON.stringify({ partyKey: party.key.toHex() }, null, 2));
+      })
+    })
+
+    .command({
+      command: ['members'],
+      describe: 'List party members.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        const members = stateManager.party.queryMembers().value;
+
+        print(Array.from(members).filter(Boolean), { json });
+      })
+    })
+
+    .command({
+      command: ['items'],
+      describe: 'List party items.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        const items = stateManager.party.database.queryItems().value;
+        const result = (items || []).map(item => {
+          const modelName = Object.getPrototypeOf(item.model).constructor.name;
+          return {
+            id: humanize(item.id),
+            type: item.type,
+            modelType: item.model._meta.type,
+            modelName
+          };
+        });
+        print(result, { json });
       })
     })
 

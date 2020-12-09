@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-data",
-  "version": "2.0.20",
+  "version": "2.0.24-alpha.0",
   "description": "DxOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
   "license": "GPL-3.0",
@@ -13,7 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-data": "bin/wire-data.js"
+    "wire-data": "bin/wire-data.js",
+    "dx-data": "bin/wire-data.js"
   },
   "files": [
     "bin/",
@@ -34,8 +35,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.0.20",
-    "@dxos/client": "2.7.23-alpha.0",
+    "@dxos/cli-core": "^2.0.24-alpha.0",
+    "@dxos/client": "2.7.35-alpha.0",
     "@dxos/credentials": "^2.1.10-beta.0",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",

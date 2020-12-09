@@ -26,7 +26,7 @@ $ wire machine list
 }
 ```
 
-`wire machine create --name <optionalkubename> --size <optionalmemorysize>`
+`wire machine create --name <optionalkubename> --memory <optionalmemorysize>`
 
 ```
 $ wire machine create

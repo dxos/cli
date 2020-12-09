@@ -1,5 +1,36 @@
 # Changelog
 
+### [2.0.24](https://www.github.com/dxos/cli/compare/v2.0.23...v2.0.24) (2020-12-09)
+
+
+### Bug Fixes
+
+* deps and cleanup. ([#95](https://www.github.com/dxos/cli/issues/95)) ([0ee0a12](https://www.github.com/dxos/cli/commit/0ee0a1288bbaff07c2c833ffa5de163209b4003e))
+
+### [2.0.23](https://www.github.com/dxos/cli/compare/v2.0.22...v2.0.23) (2020-12-08)
+
+
+### Bug Fixes
+
+* add alias ([#93](https://www.github.com/dxos/cli/issues/93)) ([0905e84](https://www.github.com/dxos/cli/commit/0905e84645085aa24419dae3cfc0c35adf5d76d0))
+
+### [2.0.22](https://www.github.com/dxos/cli/compare/v2.0.21...v2.0.22) (2020-12-08)
+
+
+### Bug Fixes
+
+* add command history. ([#92](https://www.github.com/dxos/cli/issues/92)) ([f9415d8](https://www.github.com/dxos/cli/commit/f9415d8cc40bdb27cfbb529e1cdf2a736f76bb0d))
+* add party commands. ([#91](https://www.github.com/dxos/cli/issues/91)) ([8cdd8bf](https://www.github.com/dxos/cli/commit/8cdd8bfe4b7e98a9f53c16984705dba841d86bda))
+* shorten DNS TTL by default ([62be8bf](https://www.github.com/dxos/cli/commit/62be8bfed4e98818430c1d489fe1d057075caf17))
+
+### [2.0.21](https://www.github.com/dxos/cli/compare/v2.0.20...v2.0.21) (2020-12-02)
+
+
+### Bug Fixes
+
+* add auto-registration ([d86e3b6](https://www.github.com/dxos/cli/commit/d86e3b68fb39b774c9db7194c4d5f9c54d5704b5))
+* include FQDN in registration ([9d4e9be](https://www.github.com/dxos/cli/commit/9d4e9bec747bec94daa8f192799b3ff541e4f234))
+
 ### [2.0.20](https://www.github.com/dxos/cli/compare/v2.0.19...v2.0.20) (2020-12-01)
 
 
