@@ -992,7 +992,7 @@
     tree-kill "^1.2.2"
     uuidv4 "^6.0.2"
 
-"@dxos/broadcast@1.0.0-beta.11", "@dxos/broadcast@^1.0.0-beta.6":
+"@dxos/broadcast@1.0.0-beta.11", "@dxos/broadcast@^1.0.0-beta.2":
   version "1.0.0-beta.11"
   resolved "https://registry.npmjs.org/@dxos/broadcast/-/broadcast-1.0.0-beta.11.tgz#531a1e709332ab64b14b29b859343a8a09a9e0ba"
   integrity sha512-3EYET2GxFdl2/s3OqNmL27wMPLDoyt9hasdBuwpGCytGNud8XHtfbXI03UJsNSVMZqPkBH1H2HGs4IDO5iig2w==
@@ -1070,7 +1070,7 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/codec-protobuf@1.1.1":
+"@dxos/codec-protobuf@1.1.1", "@dxos/codec-protobuf@^1.1.0-beta.9":
   version "1.1.1"
   resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-1.1.1.tgz#905bba854905e49d30c8ba3426057b3261f35a17"
   integrity sha512-z2VDf5sqBG/0fNEYC1bYmsaiGBP3gaQ6BKodHvLHkUgFImxszAzbjdBVm7waXqQU19CXKkahKTbfrjtLKLzdZQ==
@@ -1099,14 +1099,14 @@
   optionalDependencies:
     webpack "^4.10.0"
 
-"@dxos/credentials@2.1.12-alpha.0", "@dxos/credentials@^2.1.12-alpha.0":
-  version "2.1.12-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/credentials/-/credentials-2.1.12-alpha.0.tgz#19106f0579c2d239209b24dd38f3c59b842ae9a4"
-  integrity sha512-/nDlsIhpl/HwJn2TQcZZhdrKriB/erUGl+8lJP67rBeedK/ciNltUjqDa8Jw5xIB/Zpc9A3L35YCRZpaU1IFdg==
+"@dxos/credentials@2.1.10-beta.0":
+  version "2.1.10-beta.0"
+  resolved "https://registry.npmjs.org/@dxos/credentials/-/credentials-2.1.10-beta.0.tgz#3b452e8b1089ed97fb6236ec2f4e6d72d99b599d"
+  integrity sha512-hk2tmApGap4u6GSW9EJfyoBidz97Qy+Ah2NROWMEBrypASdODPhEnwW3JXbO5Pr8ormd9vQdIxxsIfDRyns1Gg==
   dependencies:
-    "@dxos/async" "^1.0.0-beta.10"
+    "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.0"
-    "@dxos/crypto" "^1.0.5"
+    "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/feed-store" "^1.2.0-beta.23"
     "@dxos/protocol" "^1.1.0-beta.1"
     "@types/debug" "^4.1.5"
@@ -1141,14 +1141,14 @@
     stream-to-array "^2.3.0"
     uuid "^3.3.2"
 
-"@dxos/credentials@^2.1.10-beta.0":
-  version "2.1.10"
-  resolved "https://registry.npmjs.org/@dxos/credentials/-/credentials-2.1.10.tgz#8966e12e5e0c73484e29d2a2ec429027a51999c0"
-  integrity sha512-p0z4IbT7FJ9hge34M/xlXEpAU63+SBa6Y97/eGXkFFT2oBIOO4VimOzcnt7nYmqVfANNbdIALkPAF8OnFTS1yw==
+"@dxos/credentials@2.1.12-alpha.0", "@dxos/credentials@^2.1.12-alpha.0":
+  version "2.1.12-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/credentials/-/credentials-2.1.12-alpha.0.tgz#19106f0579c2d239209b24dd38f3c59b842ae9a4"
+  integrity sha512-/nDlsIhpl/HwJn2TQcZZhdrKriB/erUGl+8lJP67rBeedK/ciNltUjqDa8Jw5xIB/Zpc9A3L35YCRZpaU1IFdg==
   dependencies:
-    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/async" "^1.0.0-beta.10"
     "@dxos/codec-protobuf" "^0.2.0"
-    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/crypto" "^1.0.5"
     "@dxos/feed-store" "^1.2.0-beta.23"
     "@dxos/protocol" "^1.1.0-beta.1"
     "@types/debug" "^4.1.5"
@@ -1407,7 +1407,7 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/network-manager@1.0.0-beta.113", "@dxos/network-manager@^1.0.0-beta.108", "@dxos/network-manager@^1.0.0-beta.113":
+"@dxos/network-manager@1.0.0-beta.113", "@dxos/network-manager@^1.0.0-beta.108":
   version "1.0.0-beta.113"
   resolved "https://registry.npmjs.org/@dxos/network-manager/-/network-manager-1.0.0-beta.113.tgz#0b3e9c670088e82868b69ea5b67dacfc37452865"
   integrity sha512-CLqxPnZZD+BsjRKdzBdKVsRbLkm4OKmNszZ94exXUCreu6DNYP9AGUqMsoWqcTIu1fp/w+8WIjbR5hpPIUfKcg==
@@ -1482,29 +1482,27 @@
     "@dxos/protocol" "1.1.0-beta.21"
     debug "^4.1.1"
 
-"@dxos/protocol-plugin-messenger@^1.1.0-alpha.4":
-  version "1.1.0-beta.21"
-  resolved "https://registry.npmjs.org/@dxos/protocol-plugin-messenger/-/protocol-plugin-messenger-1.1.0-beta.21.tgz#b06390954786d108769b3c6404e726573775ed94"
-  integrity sha512-N1EY8ZSQ9cD93yEZz0ZBo1cwgx6pw1o1TbmmoicCGjDh7DI+rX8wGiNhHJGYzE1fZG7meDqy1U1Fozat4QKQKw==
+"@dxos/protocol-plugin-messenger@1.1.0-alpha.4":
+  version "1.1.0-alpha.4"
+  resolved "https://registry.npmjs.org/@dxos/protocol-plugin-messenger/-/protocol-plugin-messenger-1.1.0-alpha.4.tgz#aea143a9f6ca85ba69544acaf1c4134c0a9a7a49"
+  integrity sha512-W2XibtuUzbcQQfQR6KjF3qLyRFU2g4o66s+KJiLcK4IWI4y3CVnihvOoXoWfrYvzX4SCPxxw/slXQaCRR5rgGQ==
   dependencies:
-    "@dxos/broadcast" "^1.0.0-beta.6"
-    "@dxos/codec-protobuf" "1.1.0-beta.10"
-    "@dxos/protocol" "^1.1.0-beta.21"
+    "@dxos/broadcast" "^1.0.0-beta.2"
+    "@dxos/codec-protobuf" "^1.1.0-beta.9"
+    "@dxos/protocol" "^1.1.0-alpha.4"
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
-"@dxos/protocol-plugin-presence@^1.1.0-alpha.4":
-  version "1.1.0-beta.21"
-  resolved "https://registry.npmjs.org/@dxos/protocol-plugin-presence/-/protocol-plugin-presence-1.1.0-beta.21.tgz#52eda5ffb27a6cb02c6f87ce3b51afb26a2ef5cb"
-  integrity sha512-AodMxY4u3TWpNYS5Kf4zbHauMyOmIpEfF4swbc3pFli0lyEvhEp4rODj2yaK7RDi+U0N4q5/yyviiDHEflRstA==
+"@dxos/protocol-plugin-presence@1.1.0-alpha.4":
+  version "1.1.0-alpha.4"
+  resolved "https://registry.npmjs.org/@dxos/protocol-plugin-presence/-/protocol-plugin-presence-1.1.0-alpha.4.tgz#addd8220f60b994860343bc4e38d8fd5ce2cfaf6"
+  integrity sha512-n1xi2WfQlP/B3c9hIdVHp05hELqb+pqyb3DtUIX/4FGLsxgI2WQjPTfxACgewrGIlUfxz9eBiioJo9bBN8KOMQ==
   dependencies:
-    "@dxos/broadcast" "^1.0.0-beta.6"
-    "@dxos/codec-protobuf" "1.1.0-beta.10"
-    "@dxos/protocol" "^1.1.0-beta.21"
-    buffer-json-encoding "^1.0.2"
+    "@dxos/broadcast" "^1.0.0-beta.2"
+    "@dxos/codec-protobuf" "^1.1.0-beta.9"
+    "@dxos/protocol" "^1.1.0-alpha.4"
     debug "^4.1.1"
     ngraph.graph "^19.0.1"
-    p-limit "^3.0.2"
     queue-microtask "^1.1.2"
     source-map-support "^0.5.12"
 
@@ -1519,7 +1517,7 @@
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
-"@dxos/protocol@1.1.0-beta.21", "@dxos/protocol@^1.1.0-beta.1", "@dxos/protocol@^1.1.0-beta.21":
+"@dxos/protocol@1.1.0-beta.21", "@dxos/protocol@^1.1.0-alpha.4", "@dxos/protocol@^1.1.0-beta.1", "@dxos/protocol@^1.1.0-beta.21":
   version "1.1.0-beta.21"
   resolved "https://registry.npmjs.org/@dxos/protocol/-/protocol-1.1.0-beta.21.tgz#f408b1dc1b62f22d1e1622ff2cae07bbf903948a"
   integrity sha512-6Yfem13SddgRtWmgO5TjPPO/gJR7oPeGaGwU9fiFPPugyo+gY/kiOF+nbJ8ATQLy+V9uTZKUq8d4IoAUH/S6xw==
@@ -9564,7 +9562,7 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-"jsondown@github:dxos/jsondown":
+jsondown@dxos/jsondown:
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:

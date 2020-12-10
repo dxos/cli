@@ -38,9 +38,9 @@
     "@dxos/cli-core": "^2.0.24-alpha.0",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@dxos/network-manager": "^1.0.0-beta.113",
-    "@dxos/protocol-plugin-messenger": "^1.1.0-alpha.4",
-    "@dxos/protocol-plugin-presence": "^1.1.0-alpha.4",
+    "@dxos/network-manager": "1.0.0-beta.113",
+    "@dxos/protocol-plugin-messenger": "1.1.0-alpha.4",
+    "@dxos/protocol-plugin-presence": "1.1.0-alpha.4",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^11.0.0"
