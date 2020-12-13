@@ -19,6 +19,10 @@ export const PROFILE_ROOT = '.wire/profile';
 // Default profile, ALWAYS a symlink.
 export const DEFAULT_PROFILE_SYMLINK = 'default';
 
+export const PACKAGE_JSON_FILENAME = 'package.json';
+export const DEFAULT_PACKAGE_JSON_ATTRIBUTES = ['name', 'version', 'author', 'license', 'description',
+  'keywords', 'homepage', 'repository', 'bugs'];
+
 export const getProfilePath = (profile) => {
   return path.join(os.homedir(), PROFILE_ROOT, `${profile}.yml`);
 };
