@@ -4,12 +4,12 @@
 
 import assert from 'assert';
 import clean from 'lodash-clean';
-import isEqual from 'lodash.isequal';
 
-import { BOT_CONFIG_FILENAME } from '@dxos/botkit';
-import { readFile, writeFile, getGasAndFees } from '@dxos/cli-core';
+import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
+
+import { getBotConfig, updateBotConfig } from '../../config';
 
 export const register = (config, { getBotRecord }) => async (argv) => {
   const { verbose, version, namespace, 'dry-run': noop, txKey } = argv;
@@ -21,7 +21,7 @@ export const register = (config, { getBotRecord }) => async (argv) => {
   assert(bondId, 'Invalid WNS Bond ID.');
   assert(chainId, 'Invalid WNS Chain ID.');
 
-  const { names = [], build, ...botConfig } = await readFile(BOT_CONFIG_FILENAME);
+  const { names = [], build, ...botConfig } = await getBotConfig();
   const { name = names } = argv;
 
   assert(Array.isArray(name), 'Invalid Bot Record Name.');
@@ -47,9 +47,7 @@ export const register = (config, { getBotRecord }) => async (argv) => {
 
   let botId;
   if (!noop) {
-    if (!isEqual(conf, botConfig)) {
-      await writeFile(conf, BOT_CONFIG_FILENAME);
-    }
+    await updateBotConfig(conf);
     const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
     botId = result.data;
     log(`Record ID: ${botId}`);
