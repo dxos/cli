@@ -3,6 +3,7 @@
 //
 
 import assert from 'assert';
+import { spawnSync } from 'child_process';
 import clean from 'lodash-clean';
 
 import { getGasAndFees } from '@dxos/cli-core';
@@ -33,6 +34,17 @@ export const register = (config, { getBotRecord }) => async (argv) => {
 
   assert(conf.name, 'Invalid Bot Name.');
   assert(conf.version, 'Invalid Bot Version.');
+
+  const { status, stdout } = spawnSync('git', [
+    'describe',
+    '--tags',
+    '--first-parent',
+    '--abbrev=99',
+    '--long',
+    '--dirty',
+    '--always'
+  ], { shell: true });
+  conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
 
   const record = getBotRecord(conf, namespace);
 
