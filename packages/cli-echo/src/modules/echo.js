@@ -68,4 +68,29 @@ export const EchoModule = ({ stateManager }) => ({
         }, { json });
       })
     })
+
+    .command({
+      command: ['update'],
+      describe: 'Update echo items.',
+      builder: yargs => yargs
+        .option('itemId')
+        .option('props', { type: 'json' }),
+
+      handler: asyncHandler(async (argv) => {
+        const { props, itemId, json } = argv;
+
+        const item = await stateManager.party.database.getItem(itemId);
+        // eslint-disable-next-line
+        for (const key in props) {
+          await item.model.setProperty(key, props[key]);
+        }
+
+        print({
+          id: item.id,
+          type: item.type,
+          parent: item.parent,
+          props: JSON.stringify(item.model.toObject())
+        }, { json });
+      })
+    })
 });
