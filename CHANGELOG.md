@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.28](https://www.github.com/dxos/cli/compare/v2.0.27...v2.0.28) (2020-12-14)
+
+
+### Bug Fixes
+
+* add resolutions. ([bfdb818](https://www.github.com/dxos/cli/commit/bfdb818feb7f27c305055bfcab58830fabb52611))
+* extension, not addon ([0f76eff](https://www.github.com/dxos/cli/commit/0f76efff570466019c956e6c15fd318bf49648d5))
+
 ### [2.0.27](https://www.github.com/dxos/cli/compare/v2.0.26...v2.0.27) (2020-12-14)
 
 
