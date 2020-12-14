@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.0.27](https://www.github.com/dxos/cli/compare/v2.0.26...v2.0.27) (2020-12-14)
+
+
+### Bug Fixes
+
+* add bot repo & repo version. ([#100](https://www.github.com/dxos/cli/issues/100)) ([1460ef4](https://www.github.com/dxos/cli/commit/1460ef4e127580dc22ae3f43bdccc8ca12734664))
+* add echo cli. ([#105](https://www.github.com/dxos/cli/issues/105)) ([c99696a](https://www.github.com/dxos/cli/commit/c99696abbf38ce95335cfbc9ba942bc46b902062))
+* help output. ([#104](https://www.github.com/dxos/cli/issues/104)) ([cc85d38](https://www.github.com/dxos/cli/commit/cc85d381a153416eac6778845cfd42ab8aad7370))
+
 ### [2.0.26](https://www.github.com/dxos/cli/compare/v2.0.25...v2.0.26) (2020-12-12)
 
 
