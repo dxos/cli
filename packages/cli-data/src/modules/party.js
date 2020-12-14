@@ -18,7 +18,7 @@ export const PartyModule = ({ stateManager }) => ({
 
     // Join party.
     .command({
-      command: ['$0 [party-key]', 'join [party-key]', 'switch [party-key]'],
+      command: ['join [party-key]', 'switch [party-key]'],
       describe: 'Join party.',
       builder: yargs => yargs
         .option('interactive', { hidden: true, default: true })
