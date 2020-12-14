@@ -522,6 +522,41 @@ Next move: bot:ChessBot Indian Rhinoceros
 Next move: cli:ashwinp
 ```
 
+### ERC20 Token
+
+Using Remix IDE + MetaMask, deploy an ERC20 token contract to the vector chain (RPC provider => http://localhost:8545).
+
+```text
+pragma solidity ^0.6.0;
+
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.3.0/contracts/token/ERC20/ERC20.sol";
+
+contract WIREToken is ERC20 {
+    constructor(uint256 initialSupply) public ERC20("WUSD Stablecoin", "WUSD") {
+        _mint(msg.sender, initialSupply);
+    }
+}
+```
+
+After channel setup, the initiator can transfer ERC20 tokens directly to the channel address.
+
+```bash
+[wire]> payment wallet send 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 10 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
+[wire]> payment channel reconcile 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
+[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+{
+  "0x0000000000000000000000000000000000000000": {
+    "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.0",
+    "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "0.0"
+  },
+  "0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6": {
+    "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.0",
+    "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "10.0"
+  }
+}
+[wire]> payment transfer create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 .1 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
+```
+
 ## Troubleshooting
 
 * CLI error on party create (https://github.com/dxos/cli/issues/83)

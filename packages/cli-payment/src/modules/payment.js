@@ -36,11 +36,19 @@ export const PaymentModule = ({ config, paymentClient }) => ({
           command: ['balance'],
           describe: 'Get wallet balance.',
           builder: yargs => yargs
-            .option('interactive', { hidden: true, default: true }),
+            .option('interactive', { hidden: true, default: true })
+            .option('asset', { type: 'string' }),
 
-          handler: asyncHandler(async () => {
-            const balance = await paymentClient.getWalletBalance();
-            log(JSON.stringify({ balance }, undefined, 2));
+          handler: asyncHandler(async (argv) => {
+            const { asset } = argv;
+
+            const { assetId: defaultAsset } = config.get('services.payment');
+            const assetId = asset || defaultAsset;
+
+            assert(assetId, 'Invalid asset.');
+
+            const balance = await paymentClient.getWalletBalance(assetId);
+            log(JSON.stringify(balance, undefined, 2));
           })
         })
 
@@ -50,15 +58,21 @@ export const PaymentModule = ({ config, paymentClient }) => ({
           builder: yargs => yargs
             .option('interactive', { hidden: true, default: true })
             .option('address', { type: 'string' })
+            .option('asset', { type: 'string' })
             .option('amount', { type: 'string' }),
 
           handler: asyncHandler(async (argv) => {
-            const { address, amount } = argv;
+            const { address, amount, asset } = argv;
 
             assert(address, 'Invalid address.');
             assert(amount, 'Invalid amount.');
 
-            const txReceipt = await paymentClient.sendFunds(address, amount);
+            const { assetId: defaultAsset } = config.get('services.payment');
+            const assetId = asset || defaultAsset;
+
+            assert(assetId, 'Invalid asset.');
+
+            const txReceipt = await paymentClient.sendFunds(address, assetId, amount);
             log(JSON.stringify(txReceipt, undefined, 2));
           })
         })
