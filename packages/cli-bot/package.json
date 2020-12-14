@@ -81,6 +81,9 @@
     "semistandard": "14.2.0",
     "uuid": "^3.3.3"
   },
+  "resolutions": {
+    "@dxos/network-manager": "1.0.0-beta.113"
+  },
   "semistandard": {
     "parser": "babel-eslint",
     "env": [
