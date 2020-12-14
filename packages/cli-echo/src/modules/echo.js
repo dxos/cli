@@ -7,7 +7,11 @@
 
 import { asyncHandler, print } from '@dxos/cli-core';
 // import { log } from '@dxos/debug';
-import { humanize } from '@dxos/crypto';
+
+import { ObjectModel } from '@dxos/object-model';
+// import { humanize } from '@dxos/crypto';
+
+const DEFAULT_ITEM_TYPE = 'wrn://dxos.org/item/general';
 
 export const EchoModule = ({ stateManager }) => ({
   command: ['echo'],
@@ -16,7 +20,7 @@ export const EchoModule = ({ stateManager }) => ({
     .option('echo-key')
 
     .command({
-      command: ['items'],
+      command: ['list'],
       describe: 'List echo items.',
       builder: yargs => yargs,
 
@@ -27,13 +31,41 @@ export const EchoModule = ({ stateManager }) => ({
         const result = (items || []).map(item => {
           const modelName = Object.getPrototypeOf(item.model).constructor.name;
           return {
-            id: humanize(item.id),
+            id: item.id,
+            // humanizedId: humanize(item.id),
             type: item.type,
             modelType: item.model._meta.type,
             modelName
           };
         });
         print(result, { json });
+      })
+    })
+
+    .command({
+      command: ['create'],
+      describe: 'Create echo items.',
+      builder: yargs => yargs
+        .option('type', { default: DEFAULT_ITEM_TYPE })
+        .option('parent')
+        .option('props', { type: 'json' }),
+
+      handler: asyncHandler(async (argv) => {
+        const { type, parent, props, json } = argv;
+
+        const item = await stateManager.party.database.createItem({
+          model: ObjectModel,
+          type,
+          parent,
+          props
+        });
+
+        print({
+          id: item.id,
+          type: item.type,
+          parent: item.parent,
+          props: JSON.stringify(item.model.toObject())
+        }, { json });
       })
     })
 });
