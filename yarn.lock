@@ -1421,18 +1421,18 @@
     debug "^4.1.1"
     wrtc "^0.4.3"
 
-"@dxos/object-model@2.6.9-alpha.0", "@dxos/object-model@^2.6.9-alpha.0":
-  version "2.6.9-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/object-model/-/object-model-2.6.9-alpha.0.tgz#13942d4c748228a0880800f53b9fea3dd733b929"
-  integrity sha512-2t8tm9RmTE6dC2yYZWf0al1Bm2fO67O3yfphrBQtKwCYat66vTsTHV8LjZoMGbYrF0oqTUDNRsM1u4Lz7S0hIA==
+"@dxos/object-model@2.6.7-alpha.0", "@dxos/object-model@^2.6.7-alpha.0":
+  version "2.6.7-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/object-model/-/object-model-2.6.7-alpha.0.tgz#aace47f25f7fa7de1c157ca3d65caf2d90f2fe60"
+  integrity sha512-J7phGzoVX6HyZUTaV3Smgp0fssR3ivmmzB9xkTz1s1zgcCO+7XQ2d3YQ0oXNXigOeCle0WLl5JMiuAlgAW8aKA==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.2"
     "@dxos/crypto" "^1.0.5"
-    "@dxos/echo-protocol" "^2.6.9-alpha.0"
+    "@dxos/echo-protocol" "^2.6.7-alpha.0"
     "@dxos/feed-store" "^1.2.0-beta.30"
-    "@dxos/model-factory" "^2.6.9-alpha.0"
-    "@dxos/util" "^2.6.9-alpha.0"
+    "@dxos/model-factory" "^2.6.7-alpha.0"
+    "@dxos/util" "^2.6.7-alpha.0"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -1446,18 +1446,18 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/object-model@^2.6.7-alpha.0":
-  version "2.6.7-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/object-model/-/object-model-2.6.7-alpha.0.tgz#aace47f25f7fa7de1c157ca3d65caf2d90f2fe60"
-  integrity sha512-J7phGzoVX6HyZUTaV3Smgp0fssR3ivmmzB9xkTz1s1zgcCO+7XQ2d3YQ0oXNXigOeCle0WLl5JMiuAlgAW8aKA==
+"@dxos/object-model@2.6.9-alpha.0", "@dxos/object-model@^2.6.9-alpha.0":
+  version "2.6.9-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/object-model/-/object-model-2.6.9-alpha.0.tgz#13942d4c748228a0880800f53b9fea3dd733b929"
+  integrity sha512-2t8tm9RmTE6dC2yYZWf0al1Bm2fO67O3yfphrBQtKwCYat66vTsTHV8LjZoMGbYrF0oqTUDNRsM1u4Lz7S0hIA==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.2"
     "@dxos/crypto" "^1.0.5"
-    "@dxos/echo-protocol" "^2.6.7-alpha.0"
+    "@dxos/echo-protocol" "^2.6.9-alpha.0"
     "@dxos/feed-store" "^1.2.0-beta.30"
-    "@dxos/model-factory" "^2.6.7-alpha.0"
-    "@dxos/util" "^2.6.7-alpha.0"
+    "@dxos/model-factory" "^2.6.9-alpha.0"
+    "@dxos/util" "^2.6.9-alpha.0"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -15252,10 +15252,8 @@ watchpack@^1.7.4:
   resolved "https://registry.npmjs.org/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
