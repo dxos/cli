@@ -198,24 +198,4 @@ describe('cli-factory', () => {
 
     rlSpy.mockClear();
   });
-
-  test.skip('should not exit process when err happens in interactive mode', async () => {
-    process.argv = ['node', 'jest', 'test', 'test-interactive-command'];
-
-    const rl = new EventEmitter();
-    rl.prompt = jest.fn();
-
-    const rlSpy = jest.spyOn(readline, 'createInterface').mockImplementation(() => rl);
-
-    setTimeout(() => {
-      rl.emit('close');
-    }, 200);
-
-    await cli.run();
-
-    expect(interactiveMockMethod.mock.calls.length).toBe(1);
-    expect(rl.prompt.mock.calls.length).toBe(1);
-
-    rlSpy.mockClear();
-  });
 });
