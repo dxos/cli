@@ -13,6 +13,7 @@ jobs:
     - name: Deploy Kubes
       run: |
         yarn
+        yarn build
         yarn wire profile init \
           --name $WIRE_PROFILE \
           --template-url "$WIRE_PROFILE_URL"
