@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.29](https://www.github.com/dxos/cli/compare/v2.0.28...v2.0.29) (2020-12-15)
+
+
+### Bug Fixes
+
+* update network manager. ([#109](https://www.github.com/dxos/cli/issues/109)) ([9acbf48](https://www.github.com/dxos/cli/commit/9acbf487c691a62f6e2851f53b6aadaa096b8e46))
+
 ### [2.0.28](https://www.github.com/dxos/cli/compare/v2.0.27...v2.0.28) (2020-12-14)
 
 
