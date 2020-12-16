@@ -111,14 +111,28 @@ export const NetModule = ({ config }) => {
           .strict(),
 
         handler: asyncHandler(async (argv) => {
+          const { swarm } = argv;
           let run = true;
 
           process.on('SIGINT', async () => {
             run = false;
           });
 
-          const { join } = await createNetworkManager(config, PublicKey.from(argv.swarm));
+          const { net, join } = await createNetworkManager(config, PublicKey.from(swarm));
           const leave = join();
+          print(`LISTEN ${swarm}`);
+
+          net.on('connect', (peerId) => {
+            print(`connect: ${peerId.toString('hex')}`);
+          });
+
+          net.on('receive', (peerId, data) => {
+            print(`receive: ${peerId.toString('hex')} ${data.length} bytes`);
+          });
+
+          net.on('disconnect', (peerId) => {
+            print(`disconnect: ${peerId.toString('hex')}`);
+          });
 
           await waitForCondition(() => !run);
           await leave();
