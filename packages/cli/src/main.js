@@ -47,7 +47,9 @@ const init = async (state) => {
       await pluggableModule.init();
     }
 
-    extensions.push(pluggableModule.export.bind(pluggableModule));
+    if (pluggableModule.pluggable.installed) {
+      extensions.push(pluggableModule.export.bind(pluggableModule));
+    }
 
     if (extension.destroyRequired) {
       destroyers.push(pluggableModule.destroy.bind(pluggableModule));
