@@ -25,7 +25,7 @@ const createNetworkManager = async (config, swarm, target) => {
 
   const join = () => networkManager.joinProtocolSwarm({ topic: swarm, peerId: nodeId, protocol: provider, topology });
 
-  return { net, networkManager, join };
+  return { nodeId, net, networkManager, join };
 };
 
 /**
@@ -118,9 +118,9 @@ export const NetModule = ({ config }) => {
             run = false;
           });
 
-          const { net, join } = await createNetworkManager(config, PublicKey.from(swarm));
+          const { nodeId, net, join } = await createNetworkManager(config, PublicKey.from(swarm));
           const leave = join();
-          print(`LISTEN ${swarm}`);
+          print(`LISTEN ${swarm} (${nodeId.toHex()})`);
 
           net.on('connect', (peerId) => {
             print(`connect: ${peerId.toString('hex')}`);
