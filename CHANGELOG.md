@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.30](https://www.github.com/dxos/cli/compare/v2.0.29...v2.0.30) (2020-12-16)
+
+
+### Bug Fixes
+
+* proper cli extension loading. ([#112](https://www.github.com/dxos/cli/issues/112)) ([995eb9b](https://www.github.com/dxos/cli/commit/995eb9bd6ab52208ad2e1051cd8047f9b160929f))
+
 ### [2.0.29](https://www.github.com/dxos/cli/compare/v2.0.28...v2.0.29) (2020-12-15)
 
 
