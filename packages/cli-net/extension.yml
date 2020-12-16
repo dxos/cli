@@ -1,0 +1,6 @@
+name: dxos/cli-net
+version: 0.0.1
+displayName: cli-net
+description: Network operations.
+command:
+  - net
