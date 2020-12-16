@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.31](https://www.github.com/dxos/cli/compare/v2.0.30...v2.0.31) (2020-12-16)
+
+
+### Bug Fixes
+
+* use "machine" for consistency ([c2c3940](https://www.github.com/dxos/cli/commit/c2c39406da17e60b7a236a6dfd70e022c96d225e))
+
 ### [2.0.30](https://www.github.com/dxos/cli/compare/v2.0.29...v2.0.30) (2020-12-16)
 
 
