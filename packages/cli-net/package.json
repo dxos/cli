@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-network": "bin/wire-network.js",
-    "dx-network": "bin/wire-network.js"
+    "wire-network": "bin/wire-net.js",
+    "dx-network": "bin/wire-net.js"
   },
   "files": [
     "bin/",
