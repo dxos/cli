@@ -1,0 +1,6 @@
+name: dxos/cli-echo
+version: 0.0.1
+displayName: cli-echo
+description: Echo operations.
+command:
+  - echo

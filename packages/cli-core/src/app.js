@@ -207,12 +207,16 @@ export class App {
           log(output.toString());
         }
 
+        if (output && output.command === 'help' && output.output) {
+          log(output.output.toString());
+        }
+
         return result;
       };
 
       const result = await exec();
 
-      if (this._enableInteractive && interactive && !argv) {
+      if (this._enableInteractive && interactive && !argv && result.command !== 'help') {
         return this.startInteractive();
       }
       if (poll) {

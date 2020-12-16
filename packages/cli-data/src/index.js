@@ -14,7 +14,7 @@ import { StateManager } from './state-manager';
 
 import info from '../extension.yml';
 
-const WIRE_CLI_BASE_COMMAND = 'wire';
+const WIRE_CLI_BASE_COMMAND = 'dx';
 
 const WIRE_CONFIG = {
   prompt: WIRE_CLI_BASE_COMMAND,

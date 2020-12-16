@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-peer",
-  "version": "2.0.24-beta.0",
+  "version": "2.0.30-alpha.0",
   "description": "DxOS Peer CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-peer#readme",
   "license": "GPL-3.0",
@@ -35,12 +35,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.0.24-beta.0",
+    "@dxos/cli-core": "^2.0.30-alpha.0",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@dxos/network-manager": "^1.0.0-beta.113",
-    "@dxos/protocol-plugin-messenger": "^1.1.0-alpha.4",
-    "@dxos/protocol-plugin-presence": "^1.1.0-alpha.4",
+    "@dxos/network-manager": "1.0.0-beta.119",
+    "@dxos/protocol-plugin-messenger": "1.1.0-alpha.4",
+    "@dxos/protocol-plugin-presence": "1.1.0-alpha.4",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^11.0.0"
