@@ -35,7 +35,8 @@ export const EchoModule = ({ stateManager }) => ({
             // humanizedId: humanize(item.id),
             type: item.type,
             modelType: item.model._meta.type,
-            modelName
+            modelName,
+            deleted: !!item.model.toObject().deleted
           };
         });
         print(result, { json });
@@ -84,6 +85,48 @@ export const EchoModule = ({ stateManager }) => ({
         for (const key in props) {
           await item.model.setProperty(key, props[key]);
         }
+
+        print({
+          id: item.id,
+          type: item.type,
+          parent: item.parent,
+          props: JSON.stringify(item.model.toObject())
+        }, { json });
+      })
+    })
+
+    .command({
+      command: ['delete [itemId]'],
+      describe: 'Delete echo items.',
+      builder: yargs => yargs
+        .option('itemId'),
+
+      handler: asyncHandler(async (argv) => {
+        const { itemId, json } = argv;
+
+        const item = await stateManager.party.database.getItem(itemId);
+        await item.model.setProperty('deleted', true);
+
+        print({
+          id: item.id,
+          type: item.type,
+          parent: item.parent,
+          props: JSON.stringify(item.model.toObject())
+        }, { json });
+      })
+    })
+
+    .command({
+      command: ['restore [itemId]'],
+      describe: 'Restore echo items.',
+      builder: yargs => yargs
+        .option('itemId'),
+
+      handler: asyncHandler(async (argv) => {
+        const { itemId, json } = argv;
+
+        const item = await stateManager.party.database.getItem(itemId);
+        await item.model.setProperty('deleted', false);
 
         print({
           id: item.id,
