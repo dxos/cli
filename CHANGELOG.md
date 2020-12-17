@@ -1,5 +1,64 @@
 # Changelog
 
+### [2.0.32](https://www.github.com/dxos/cli/compare/v2.0.31...v2.0.32) (2020-12-17)
+
+
+### Bug Fixes
+
+* disable extension fix. ([f27d9ec](https://www.github.com/dxos/cli/commit/f27d9ec6dc212a0703ecf88d914856146b092cde))
+
+### [2.0.31](https://www.github.com/dxos/cli/compare/v2.0.30...v2.0.31) (2020-12-16)
+
+
+### Bug Fixes
+
+* use "machine" for consistency ([c2c3940](https://www.github.com/dxos/cli/commit/c2c39406da17e60b7a236a6dfd70e022c96d225e))
+
+### [2.0.30](https://www.github.com/dxos/cli/compare/v2.0.29...v2.0.30) (2020-12-16)
+
+
+### Bug Fixes
+
+* proper cli extension loading. ([#112](https://www.github.com/dxos/cli/issues/112)) ([995eb9b](https://www.github.com/dxos/cli/commit/995eb9bd6ab52208ad2e1051cd8047f9b160929f))
+
+### [2.0.29](https://www.github.com/dxos/cli/compare/v2.0.28...v2.0.29) (2020-12-15)
+
+
+### Bug Fixes
+
+* update network manager. ([#109](https://www.github.com/dxos/cli/issues/109)) ([9acbf48](https://www.github.com/dxos/cli/commit/9acbf487c691a62f6e2851f53b6aadaa096b8e46))
+
+### [2.0.28](https://www.github.com/dxos/cli/compare/v2.0.27...v2.0.28) (2020-12-14)
+
+
+### Bug Fixes
+
+* add resolutions. ([bfdb818](https://www.github.com/dxos/cli/commit/bfdb818feb7f27c305055bfcab58830fabb52611))
+* extension, not addon ([0f76eff](https://www.github.com/dxos/cli/commit/0f76efff570466019c956e6c15fd318bf49648d5))
+
+### [2.0.27](https://www.github.com/dxos/cli/compare/v2.0.26...v2.0.27) (2020-12-14)
+
+
+### Bug Fixes
+
+* add bot repo & repo version. ([#100](https://www.github.com/dxos/cli/issues/100)) ([1460ef4](https://www.github.com/dxos/cli/commit/1460ef4e127580dc22ae3f43bdccc8ca12734664))
+* add echo cli. ([#105](https://www.github.com/dxos/cli/issues/105)) ([c99696a](https://www.github.com/dxos/cli/commit/c99696abbf38ce95335cfbc9ba942bc46b902062))
+* help output. ([#104](https://www.github.com/dxos/cli/issues/104)) ([cc85d38](https://www.github.com/dxos/cli/commit/cc85d381a153416eac6778845cfd42ab8aad7370))
+
+### [2.0.26](https://www.github.com/dxos/cli/compare/v2.0.25...v2.0.26) (2020-12-12)
+
+
+### Bug Fixes
+
+* stick to old network manager. ([#98](https://www.github.com/dxos/cli/issues/98)) ([aeadd98](https://www.github.com/dxos/cli/commit/aeadd988fd4228be1dedeecb2ae07dfdf9dde204))
+
+### [2.0.25](https://www.github.com/dxos/cli/compare/v2.0.24...v2.0.25) (2020-12-10)
+
+
+### Bug Fixes
+
+* proper deps. ([6efb2c4](https://www.github.com/dxos/cli/commit/6efb2c481c256156a5837bca2b61e325ae41761b))
+
 ### [2.0.24](https://www.github.com/dxos/cli/compare/v2.0.23...v2.0.24) (2020-12-09)
 
 

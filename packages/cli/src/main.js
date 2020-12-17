@@ -25,7 +25,7 @@ const { logError } = getLoggers();
 
 const pkg = readPkgUp.sync({ cwd: __dirname });
 
-const WIRE_CLI_BASE_COMMAND = 'wire';
+const WIRE_CLI_BASE_COMMAND = 'dx';
 
 const WIRE_CONFIG = {
   prompt: WIRE_CLI_BASE_COMMAND,
@@ -47,7 +47,9 @@ const init = async (state) => {
       await pluggableModule.init();
     }
 
+    // if (pluggableModule.pluggable.installed) {
     extensions.push(pluggableModule.export.bind(pluggableModule));
+    // }
 
     if (extension.destroyRequired) {
       destroyers.push(pluggableModule.destroy.bind(pluggableModule));

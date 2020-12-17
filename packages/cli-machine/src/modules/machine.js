@@ -164,12 +164,12 @@ export const MachineModule = ({ config }) => {
           const { name } = yargs.argv;
           const session = new DigitalOcean(doAccessToken, 100);
 
-          let kube = {};
+          let machine = {};
           const dropletId = await getDropletIdFromName(session, name);
 
           if (dropletId) {
             const { droplet } = await session.droplets.getById(dropletId);
-            kube = {
+            machine = {
               name: droplet.name,
               created_at: droplet.created_at,
               memory: droplet.memory,
@@ -179,7 +179,7 @@ export const MachineModule = ({ config }) => {
             };
           }
 
-          print({ kube }, { json: true });
+          print({ machine }, { json: true });
         })
       })
       .command({
@@ -194,6 +194,7 @@ export const MachineModule = ({ config }) => {
           .option('cliver', { type: 'string', default: '' })
           .option('dns-ttl', { type: 'number', default: 300 })
           .option('letsencrypt', { type: 'boolean', default: false })
+          .option('extension', { type: 'array', default: [] })
           .option('email', { type: 'string', default: email }),
 
         handler: asyncHandler(async () => {
@@ -205,10 +206,12 @@ export const MachineModule = ({ config }) => {
 
           running = true;
 
-          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl, extension } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
           }
+
+          const radicle = !!extension.find(entry => entry === 'dxos/radicle-seed-node');
 
           const wnsConfig = config.get('services.wns');
           const { server, userKey, bondId, chainId } = wnsConfig;
@@ -265,6 +268,7 @@ export const MachineModule = ({ config }) => {
            - sed -i 's/apt autoclean//g' install.sh
            - sed -i 's/apt autoremove//g' install.sh
            - export WIRE_CLI_VER="${cliver}"
+           - if [ ! -z "${cliver}" ]; then sed -i "s/'latest'/'${cliver.replace('@', '')}'/g" /opt/kube/local.yml; fi
            - export HOME=/root
            - ./install.sh /opt
            - sed -i s/kube.local/${boxFullyQualifiedName}/g /root/.wire/remote.yml
@@ -283,6 +287,7 @@ export const MachineModule = ({ config }) => {
            - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
+           - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi
         `;
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
