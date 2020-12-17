@@ -4,13 +4,13 @@
 
 import { createCLI } from '@dxos/cli-core';
 
-import { NetModule } from './modules/net';
+import { MeshModule } from './modules/mesh';
 
 import info from '../extension.yml';
 
 module.exports = createCLI(
   {
-    modules: [NetModule],
+    modules: [MeshModule],
     dir: __dirname,
     main: !module.parent,
     info

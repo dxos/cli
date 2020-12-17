@@ -1,8 +1,8 @@
 {
-  "name": "@dxos/cli-net",
+  "name": "@dxos/cli-mesh",
   "version": "2.0.29-alpha.0",
   "description": "DxOS Network CLI",
-  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-network#readme",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-mesh#readme",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-network": "bin/wire-net.js",
-    "dx-network": "bin/wire-net.js"
+    "wire-mesh": "bin/wire-mesh.js",
+    "dx-mesh": "bin/wire-mesh.js"
   },
   "files": [
     "bin/",

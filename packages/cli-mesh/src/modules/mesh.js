@@ -29,12 +29,12 @@ const createNetworkManager = async (config, swarm, target) => {
 };
 
 /**
- * Net CLI module.
+ * Mesh CLI module.
  */
-export const NetModule = ({ config }) => {
+export const MeshModule = ({ config }) => {
   return ({
-    command: ['net'],
-    describe: 'Net CLI.',
+    command: ['mesh'],
+    describe: 'mesh CLI',
     builder: yargs => yargs
 
       .command({

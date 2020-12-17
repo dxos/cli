@@ -60,6 +60,6 @@
   describe: Echo operations.
   moduleName: "@dxos/cli-echo"
 - command:
-  - net
-  describe: Net operations.
-  moduleName: "@dxos/cli-net"
+  - mesh
+  describe: Mesh operations.
+  moduleName: "@dxos/cli-mesh"
