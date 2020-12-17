@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.32](https://www.github.com/dxos/cli/compare/v2.0.31...v2.0.32) (2020-12-17)
+
+
+### Bug Fixes
+
+* disable extension fix. ([f27d9ec](https://www.github.com/dxos/cli/commit/f27d9ec6dc212a0703ecf88d914856146b092cde))
+
 ### [2.0.31](https://www.github.com/dxos/cli/compare/v2.0.30...v2.0.31) (2020-12-16)
 
 
