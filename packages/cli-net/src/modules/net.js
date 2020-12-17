@@ -76,10 +76,14 @@ export const NetModule = ({ config }) => {
           const start = performanceNow();
           leave = join();
 
-          net.on('connect', async (peerId) => {
+          net.on('connect', async ({ peerId, infoProvider }) => {
             setConnected(peerId);
+            const connInfo = await infoProvider();
             const elapsed = performanceNow() - start;
-            print(`connected to ${peerId.toString('hex')} time=${elapsed.toFixed(3)} ms`);
+
+            const peerStr = `${peerId.toString('hex')} (${connInfo.socket.remoteAddress}:${connInfo.socket.remotePort}` +
+            `${connInfo.webrtc.candidates.remote.protocol}/${connInfo.webrtc.candidates.local.type})`;
+            print(`connected to ${peerStr} time=${elapsed.toFixed(3)} ms`);
 
             // eslint-disable-next-line
             while (run) {
@@ -87,7 +91,7 @@ export const NetModule = ({ config }) => {
               const data = Buffer.from(randomBytes(bytes));
               const response = await net.send(peerId, data);
               const elapsed = performanceNow() - start;
-              print(`${response.data.length} bytes from ${peerId.toString('hex')} time=${elapsed.toFixed(3)} ms`);
+              print(`${response.data.length} bytes from ${peerStr} time=${elapsed.toFixed(3)} ms`);
               await sleep(750);
             }
           });
@@ -122,15 +126,18 @@ export const NetModule = ({ config }) => {
           const leave = join();
           print(`LISTEN ${swarm} (${nodeId.toHex()})`);
 
-          net.on('connect', (peerId) => {
-            print(`connect: ${peerId.toString('hex')}`);
+          net.on('connect', async ({ peerId, infoProvider }) => {
+            const connInfo = await infoProvider();
+            const peerStr = `${peerId.toString('hex')} (${connInfo.socket.remoteAddress}:${connInfo.socket.remotePort}` +
+              `${connInfo.webrtc.candidates.remote.protocol}/${connInfo.webrtc.candidates.local.type})`;
+            print(`connect: ${peerStr}`);
           });
 
-          net.on('receive', (peerId, data) => {
+          net.on('receive', ({ peerId, data }) => {
             print(`receive: ${peerId.toString('hex')} ${data.length} bytes`);
           });
 
-          net.on('disconnect', (peerId) => {
+          net.on('disconnect', ({ peerId }) => {
             print(`disconnect: ${peerId.toString('hex')}`);
           });
 
