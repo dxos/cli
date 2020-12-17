@@ -166,7 +166,7 @@ export class NetProtocolPlugin extends EventEmitter {
     }
 
     const { response } = await extension.send(data, { oneway });
-    this.emit('response', { peerId, requestId, response, infoProvider: () => aboutPeer(protocol) });
+    this.emit('response', { peerId, requestId, data: response, infoProvider: () => aboutPeer(protocol) });
     return response;
   }
 
@@ -176,7 +176,7 @@ export class NetProtocolPlugin extends EventEmitter {
 
     // echo
     const response = data;
-    this.emit('receive', { peerId, response, protocol, infoProvider: () => aboutPeer(protocol) });
+    this.emit('respond', { peerId, data, protocol, infoProvider: () => aboutPeer(protocol) });
     return response;
   }
 
@@ -222,8 +222,8 @@ export const netProtocolProvider = (swarmKey, nodeId) => {
   plugin.on('send', ({ peerId, requestId, data }) => {
     log(`send: ${swarmKey.toString('hex')}.${peerId.toString('hex')} req: ${requestId} data: [${data.toString('hex')}]`);
   });
-  plugin.on('response', ({ peerId, requestId, response }) => {
-    log(`response: ${swarmKey.toString('hex')}.${peerId.toString('hex')} req: ${requestId} response: [${response.data.toString('hex')}]`);
+  plugin.on('response', ({ peerId, requestId, data }) => {
+    log(`response: ${swarmKey.toString('hex')}.${peerId.toString('hex')} req: ${requestId} data: [${data.toString('hex')}]`);
   });
   plugin.on('respond', ({ peerId, data }) => {
     log(`respond: ${swarmKey.toString('hex')}.${peerId.toString('hex')} data: [${data.toString('hex')}]`);
