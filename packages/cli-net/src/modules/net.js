@@ -82,7 +82,7 @@ export const NetModule = ({ config }) => {
             const elapsed = performanceNow() - start;
 
             const peerStr = `${peerId.toString('hex')} (${connInfo.webrtc.candidates.remote.ip}:${connInfo.webrtc.candidates.remote.port}/` +
-            `${connInfo.webrtc.candidates.remote.protocol} ${connInfo.webrtc.candidates.local.type})`;
+            `${connInfo.webrtc.candidates.remote.protocol} ${connInfo.webrtc.candidates.remote.type})`;
             print(`connected to ${peerStr} time=${elapsed.toFixed(3)} ms`);
 
             // eslint-disable-next-line
@@ -129,7 +129,7 @@ export const NetModule = ({ config }) => {
           net.on('connect', async ({ peerId, infoProvider }) => {
             const connInfo = await infoProvider();
             const peerStr = `${peerId.toString('hex')} (${connInfo.webrtc.candidates.remote.ip}:${connInfo.webrtc.candidates.remote.port}/` +
-              `${connInfo.webrtc.candidates.remote.protocol} ${connInfo.webrtc.candidates.local.type})`;
+              `${connInfo.webrtc.candidates.remote.protocol} ${connInfo.webrtc.candidates.remote.type})`;
             print(`connect: ${peerStr}`);
           });
 
