@@ -13,6 +13,13 @@ import { ObjectModel } from '@dxos/object-model';
 
 const DEFAULT_ITEM_TYPE = 'wrn://dxos.org/item/general';
 
+const displayItem = ({ id, type, parent, model }) => ({
+  id,
+  type,
+  parent,
+  props: JSON.stringify(model.toObject())
+});
+
 export const EchoModule = ({ stateManager }) => ({
   command: ['echo'],
   describe: 'Echo CLI.',
@@ -61,12 +68,7 @@ export const EchoModule = ({ stateManager }) => ({
           props
         });
 
-        print({
-          id: item.id,
-          type: item.type,
-          parent: item.parent,
-          props: JSON.stringify(item.model.toObject())
-        }, { json });
+        print(displayItem(item), { json });
       })
     })
 
@@ -86,12 +88,7 @@ export const EchoModule = ({ stateManager }) => ({
           await item.model.setProperty(key, props[key]);
         }
 
-        print({
-          id: item.id,
-          type: item.type,
-          parent: item.parent,
-          props: JSON.stringify(item.model.toObject())
-        }, { json });
+        print(displayItem(item), { json });
       })
     })
 
@@ -107,12 +104,7 @@ export const EchoModule = ({ stateManager }) => ({
         const item = await stateManager.party.database.getItem(itemId);
         await item.model.setProperty('deleted', true);
 
-        print({
-          id: item.id,
-          type: item.type,
-          parent: item.parent,
-          props: JSON.stringify(item.model.toObject())
-        }, { json });
+        print(displayItem(item), { json });
       })
     })
 
@@ -128,12 +120,7 @@ export const EchoModule = ({ stateManager }) => ({
         const item = await stateManager.party.database.getItem(itemId);
         await item.model.setProperty('deleted', false);
 
-        print({
-          id: item.id,
-          type: item.type,
-          parent: item.parent,
-          props: JSON.stringify(item.model.toObject())
-        }, { json });
+        print(displayItem(item), { json });
       })
     })
 });

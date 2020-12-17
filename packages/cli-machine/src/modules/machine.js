@@ -164,12 +164,12 @@ export const MachineModule = ({ config }) => {
           const { name } = yargs.argv;
           const session = new DigitalOcean(doAccessToken, 100);
 
-          let kube = {};
+          let machine = {};
           const dropletId = await getDropletIdFromName(session, name);
 
           if (dropletId) {
             const { droplet } = await session.droplets.getById(dropletId);
-            kube = {
+            machine = {
               name: droplet.name,
               created_at: droplet.created_at,
               memory: droplet.memory,
@@ -179,7 +179,7 @@ export const MachineModule = ({ config }) => {
             };
           }
 
-          print({ kube }, { json: true });
+          print({ machine }, { json: true });
         })
       })
       .command({
