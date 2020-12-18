@@ -76,9 +76,9 @@ export const MeshModule = ({ config }) => {
           const start = performanceNow();
           leave = join();
 
-          net.on('connect', async ({ peerId, infoProvider }) => {
+          net.on('connect', async ({ peerId }) => {
             setConnected(peerId);
-            const connInfo = await infoProvider();
+            const connInfo = await net.peerConnectionInfo(peerId);
             const elapsed = performanceNow() - start;
 
             const peerStr = `${peerId.toString('hex')} (${connInfo.webrtc.candidates.remote.ip}:${connInfo.webrtc.candidates.remote.port}/` +
@@ -126,8 +126,8 @@ export const MeshModule = ({ config }) => {
           const leave = join();
           print(`LISTEN ${swarm} (${nodeId.toHex()})`);
 
-          net.on('connect', async ({ peerId, infoProvider }) => {
-            const connInfo = await infoProvider();
+          net.on('connect', async ({ peerId }) => {
+            const connInfo = await net.peerConnectionInfo(peerId);
             const peerStr = `${peerId.toString('hex')} (${connInfo.webrtc.candidates.remote.ip}:${connInfo.webrtc.candidates.remote.port}/` +
               `${connInfo.webrtc.candidates.remote.protocol} ${connInfo.webrtc.candidates.remote.type})`;
             print(`connect: ${peerStr}`);

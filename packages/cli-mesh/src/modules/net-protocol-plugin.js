@@ -5,7 +5,6 @@
 import assert from 'assert';
 import debug from 'debug';
 import { EventEmitter } from 'events';
-import get from 'lodash.get';
 
 import { keyToString, createId } from '@dxos/crypto';
 import { protocolFactory } from '@dxos/network-manager';
@@ -21,10 +20,12 @@ const getPeerId = (protocol) => {
 };
 
 const webrtcDetails = async (protocol) => {
-  const peer = get(protocol, 'stream._readableState.pipes');
+  // TODO(telackey): there does not seem to be a public accessor to this object.
+  const peer = protocol.stream?._readableState?.pipes;
   if (!peer) {
     return {};
   }
+
   const rawStats = [...await peer._pc.getStats()];
   const nominated = {};
 
@@ -42,41 +43,46 @@ const webrtcDetails = async (protocol) => {
 
   const stats = {
     bytes: {
-      sent: get(nominated, 'pair.bytesSent', -1),
-      received: get(nominated, 'pair.bytesReceived', -1)
+      sent: nominated?.pair?.bytesSent ?? -1,
+      received: nominated?.pair?.bytesReceived ?? -1
     },
     requests: {
-      sent: get(nominated, 'pair.requestsSent', -1),
-      received: get(nominated, 'pair.requestsReceived', -1)
+      sent: nominated?.pair?.requestsSent ?? -1,
+      received: nominated?.pair?.requestsReceived ?? -1
     },
     responses: {
-      sent: get(nominated, 'pair.responsesSent', -1),
-      received: get(nominated, 'pair.responsesReceived', -1)
+      sent: nominated?.pair?.responsesSent ?? -1,
+      received: nominated?.pair?.responsesReceived ?? -1
     }
   };
 
   const candidates = {
     local: {
-      id: get(nominated, 'pair.localCandidateId'),
-      type: get(nominated, 'local.candidateType'),
-      ip: get(nominated, 'local.ip', peer.localAddress),
-      port: get(nominated, 'local.port', peer.localPort),
-      protocol: get(nominated, 'local.protocol'),
-      relayProtocol: get(nominated, 'local.relayProtocol')
+      id: nominated?.pair?.localCandidateId,
+      type: nominated?.local?.candidateType,
+      ip: nominated?.local?.ip ?? peer?.localAddress,
+      port: nominated?.local.port ?? peer?.localPort,
+      protocol: nominated?.local.protocol,
+      relayProtocol: nominated?.local?.relayProtocol
     },
     remote: {
-      id: get(nominated, 'pair.remoteCandidateId'),
-      type: get(nominated, 'remote.candidateType'),
-      ip: get(nominated, 'remote.ip', peer.remoteAddress),
-      port: get(nominated, 'remote.port', peer.remotePort),
-      protocol: get(nominated, 'remote.protocol')
+      id: nominated?.pair?.remoteCandidateId,
+      type: nominated?.remote?.candidateType,
+      ip: nominated?.remote?.ip ?? peer.remoteAddress,
+      port: nominated?.remote?.port ?? peer.remotePort,
+      protocol: nominated?.remote?.protocol
     }
   };
   return { candidates, stats };
 };
 
 const aboutPeer = async (protocol) => {
-  const peer = get(protocol, 'stream._readableState.pipes');
+  // TODO(telackey): there does not seem to be a public accessor to this object.
+  const peer = protocol.stream?._readableState?.pipes;
+  if (!peer) {
+    return {};
+  }
+
   return {
     socket: {
       channelName: peer.channelName,
@@ -140,6 +146,18 @@ export class NetProtocolPlugin extends EventEmitter {
 
   /**
    * @param peerId {Buffer} Must be the value passed to the constructor on the responding node.
+   * @return {Promise<void>}
+   */
+  async peerConnectionInfo (peerId) {
+    assert(Buffer.isBuffer(peerId));
+    const peerIdStr = keyToString(peerId);
+    const protocol = this._peers.get(peerIdStr);
+
+    return protocol ? aboutPeer(protocol) : undefined;
+  }
+
+  /**
+   * @param peerId {Buffer} Must be the value passed to the constructor on the responding node.
    * @param data {Buffer} Data to send
    * @param [oneway=false] {boolean} Whether to expect a response.
    */
@@ -158,7 +176,7 @@ export class NetProtocolPlugin extends EventEmitter {
     }
 
     const requestId = createId();
-    this.emit('send', { peerId, requestId, protocol, data, infoProvider: () => aboutPeer(protocol) });
+    this.emit('send', { peerId, requestId, protocol, data });
 
     if (oneway) {
       await extension.send(data, { oneway });
@@ -166,17 +184,17 @@ export class NetProtocolPlugin extends EventEmitter {
     }
 
     const { response } = await extension.send(data, { oneway });
-    this.emit('response', { peerId, requestId, data: response, infoProvider: () => aboutPeer(protocol) });
+    this.emit('response', { peerId, requestId, data: response });
     return response;
   }
 
   async _onMessage (protocol, { data }) {
     const peerId = getPeerId(protocol);
-    this.emit('receive', { peerId, data, protocol, infoProvider: () => aboutPeer(protocol) });
+    this.emit('receive', { peerId, data, protocol });
 
     // echo
     const response = data;
-    this.emit('respond', { peerId, data, protocol, infoProvider: () => aboutPeer(protocol) });
+    this.emit('respond', { peerId, data, protocol });
     return response;
   }
 
@@ -188,7 +206,7 @@ export class NetProtocolPlugin extends EventEmitter {
     }
 
     this._peers.set(peerIdStr, protocol);
-    this.emit('connect', { peerId, protocol, infoProvider: () => aboutPeer(protocol) });
+    this.emit('connect', { peerId, protocol });
   }
 
   _onClose (protocol) {
