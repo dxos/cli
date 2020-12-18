@@ -43,7 +43,7 @@ const getRunnableExtension = ({ modules, getModules, version, options = {} }) =>
  */
 const getRunnable = ({ modules, getModules, version, init, destroy, options = {} }) => {
   return async () => {
-    // Pipe warnings ot logs
+    // Pipe warnings to logs.
     console.warn = debugLog;
     loadCerts();
 
