@@ -19,9 +19,9 @@ import { ExtensionModule } from './modules/extension';
 import knownExtensionList from '../known-extensions.yml';
 import { listInstalled } from './extensions';
 
-const knownExtensions = yaml.load(knownExtensionList);
-
 const { logError } = getLoggers();
+
+const knownExtensions = yaml.load(knownExtensionList);
 
 const pkg = readPkgUp.sync({ cwd: __dirname });
 
@@ -47,9 +47,9 @@ const init = async (state) => {
       await pluggableModule.init();
     }
 
-    if (pluggableModule.pluggable.installed) {
-      extensions.push(pluggableModule.export.bind(pluggableModule));
-    }
+    // if (pluggableModule.pluggable.installed) {
+    extensions.push(pluggableModule.export.bind(pluggableModule));
+    // }
 
     if (extension.destroyRequired) {
       destroyers.push(pluggableModule.destroy.bind(pluggableModule));

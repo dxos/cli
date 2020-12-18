@@ -1,5 +1,19 @@
 # Changelog
 
+### [2.0.33](https://www.github.com/dxos/cli/compare/v2.0.32...v2.0.33) (2020-12-18)
+
+
+### Bug Fixes
+
+* latest deps; pipe warnings to debug ([#117](https://www.github.com/dxos/cli/issues/117)) ([ffd7e83](https://www.github.com/dxos/cli/commit/ffd7e8325fa1a2592e68de86ad8dd2aedb10b44c))
+
+### [2.0.32](https://www.github.com/dxos/cli/compare/v2.0.31...v2.0.32) (2020-12-17)
+
+
+### Bug Fixes
+
+* disable extension fix. ([f27d9ec](https://www.github.com/dxos/cli/commit/f27d9ec6dc212a0703ecf88d914856146b092cde))
+
 ### [2.0.31](https://www.github.com/dxos/cli/compare/v2.0.30...v2.0.31) (2020-12-16)
 
 
