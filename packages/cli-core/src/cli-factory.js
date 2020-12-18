@@ -24,7 +24,7 @@ const COMMANDS_PERMIT_NO_PROFILE = [
   'services'
 ];
 
-const { log, logError } = getLoggers();
+const { log, debugLog, logError } = getLoggers();
 
 /**
  * Provides command executor in form of CLI extension.
@@ -43,6 +43,8 @@ const getRunnableExtension = ({ modules, getModules, version, options = {} }) =>
  */
 const getRunnable = ({ modules, getModules, version, init, destroy, options = {} }) => {
   return async () => {
+    // Pipe warnings ot logs
+    console.warn = debugLog;
     loadCerts();
 
     const argv = process.argv.slice(2);
