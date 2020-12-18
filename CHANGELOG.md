@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.34](https://www.github.com/dxos/cli/compare/v2.0.33...v2.0.34) (2020-12-18)
+
+
+### Bug Fixes
+
+* cli-mesh ([#116](https://www.github.com/dxos/cli/issues/116)) ([65c10b2](https://www.github.com/dxos/cli/commit/65c10b21508d27819f371b4379c8dae6699ef160))
+
 ### [2.0.33](https://www.github.com/dxos/cli/compare/v2.0.32...v2.0.33) (2020-12-18)
 
 
