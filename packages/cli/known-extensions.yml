@@ -59,3 +59,7 @@
   - echo
   describe: Echo operations.
   moduleName: "@dxos/cli-echo"
+- command:
+  - mesh
+  describe: Mesh operations.
+  moduleName: "@dxos/cli-mesh"
