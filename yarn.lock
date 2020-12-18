@@ -1005,6 +1005,40 @@
     source-map-support "^0.5.12"
     tiny-lru "^7.0.6"
 
+"@dxos/cli-core@^2.0.29-alpha.0":
+  version "2.0.32"
+  resolved "https://registry.yarnpkg.com/@dxos/cli-core/-/cli-core-2.0.32.tgz#e908f1d70fdb2a980c435e138c0b47a6e449cedd"
+  integrity sha512-SRRaRVNlF6J+AWyR4vADTbuGiKsGChWzzyQcCnPAysgTOjdmDrWzi9NLZjTcdiK1euLKmpH5QNMRn10qOCqf3Q==
+  dependencies:
+    "@babel/runtime" "7.7.2"
+    "@dxos/config" "^1.0.0-beta.67"
+    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/debug" "^1.0.0-beta.67"
+    assert "^2.0.0"
+    console.table "^0.10.0"
+    download "^7.1.0"
+    find-root "^1.1.0"
+    fs-extra "^8.1.0"
+    js-yaml "^3.13.1"
+    lodash.defaults "^4.2.0"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.isarray "^4.0.0"
+    lodash.omit "^4.5.0"
+    lodash.set "^4.3.2"
+    mkdirp "^0.5.1"
+    ndjson-parse "^1.0.4"
+    node-yaml "^4.0.1"
+    ora "^3.4.0"
+    pify "^5.0.0"
+    pm2 "^4.2.3"
+    read-pkg-up "^6.0.0"
+    syswide-cas "^5.3.0"
+    tree-kill "^1.2.1"
+    yargs "^11.0.0"
+    yargs-parser "^18.1.2"
+    yargs-unparser "1.5.0"
+
 "@dxos/client@2.7.44":
   version "2.7.44"
   resolved "https://registry.npmjs.org/@dxos/client/-/client-2.7.44.tgz#4bbfea39f6e27385d7a020330d528103205fe7bd"
@@ -1323,7 +1357,7 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/network-manager@1.0.0-beta.119":
+"@dxos/network-manager@1.0.0-beta.119", "@dxos/network-manager@^1.0.0-beta.119":
   version "1.0.0-beta.119"
   resolved "https://registry.npmjs.org/@dxos/network-manager/-/network-manager-1.0.0-beta.119.tgz#2ca032fd5aa06897fc8aad0d7bef341ef70c3938"
   integrity sha512-NV3YzlckVoHnU/Z523HDIl105uvX0yOReGeKutTeg0FbNUO6jXBF7ZdOFV93+gHCEKDwvUahuE7Wic3W9x5xrg==
@@ -9552,7 +9586,7 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-"jsondown@github:dxos/jsondown":
+jsondown@dxos/jsondown:
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:
