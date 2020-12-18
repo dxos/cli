@@ -20,7 +20,9 @@ const getPeerId = (protocol) => {
 };
 
 const webrtcDetails = async (protocol) => {
-  // TODO(telackey): there does not seem to be a public accessor to this object.
+  // TODO(telackey): there does not seem to be a public accessor in hypercore to this Peer object.
+  // We need to keep investigating to determine whether there is, or is another way to obtain
+  // the connection details.
   const peer = protocol.stream?._readableState?.pipes;
   if (!peer) {
     return {};
@@ -77,7 +79,9 @@ const webrtcDetails = async (protocol) => {
 };
 
 const aboutPeer = async (protocol) => {
-  // TODO(telackey): there does not seem to be a public accessor to this object.
+  // TODO(telackey): there does not seem to be a public accessor in hypercore to this Peer object.
+  // We need to keep investigating to determine whether there is, or is another way to obtain
+  // the connection details.
   const peer = protocol.stream?._readableState?.pipes;
   if (!peer) {
     return {};
