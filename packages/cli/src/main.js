@@ -19,9 +19,9 @@ import { ExtensionModule } from './modules/extension';
 import knownExtensionList from '../known-extensions.yml';
 import { listInstalled } from './extensions';
 
-const knownExtensions = yaml.load(knownExtensionList);
-
 const { logError } = getLoggers();
+
+const knownExtensions = yaml.load(knownExtensionList);
 
 const pkg = readPkgUp.sync({ cwd: __dirname });
 
