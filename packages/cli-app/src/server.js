@@ -24,7 +24,7 @@ const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
   response.body.pipe(res);
 };
 
-// TODO(burdon): Create global WRN util class/function (create/parse).
+// TODO(burdon): Use WRN util class.
 const normalizeWrn = (wrn) => {
   if (wrn.startsWith('wrn:')) {
     wrn = wrn.slice(4).replace(/^\/*/, '');
@@ -38,27 +38,31 @@ const getConfigFilePath = (file = '') => {
 };
 
 /**
+ * Test:
+ * yarn server
+ * curl -I localhost:5999/app/wrn:dxos:application
+ *
  * @param {Object} config
  * @param {String} config.registryEndpoint endpoint
  * @param {Number} config.port
  * @param {String} config.ipfsGateway
  */
-export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, namespace }) => {
+export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile }) => {
   const registry = new Registry(registryEndpoint, chainId);
   const cache = new Map();
 
   const getCid = async (wrn) => {
     const cached = cache.get(wrn);
     if (cached && Date.now() < cached.expiration) {
-      console.log(`Cached answer ${wrn} -> ${cached.cid}`);
+      console.log(`Cached ${wrn} -> ${cached.cid}`);
       return cached.cid;
     }
 
     console.log(`Resolving ${wrn}`);
-
     const attributes = clean({ wrn });
     const { records: apps } = await registry.resolveNames([wrn]);
     console.log(apps);
+
     // Should resolve to only one record.
     if (apps && apps.length === 1) {
       const cid = get(apps, '[0].attributes.package["/"]');
@@ -75,7 +79,8 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   const ipfsRoute = ipfsRouter(ipfsGateway);
 
   // Router handler.
-  const appVersionHandler = async (req, res) => {
+  // TODO(burdon): Document usage.
+  const appFileHandler = async (req, res) => {
     let { wrn } = req.params;
     let resourcePath = req.path || '/';
 
@@ -97,17 +102,18 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     }
 
     console.log(`WRN: ${wrn}, resource: ${resourcePath}`);
-
     const cid = await getCid(wrn);
-
     if (!cid) {
       console.log(`Cannot find CID for ${wrn}`);
       return res.status(404).send('Not found');
     }
+
+    console.log('CID:', cid);
     return ipfsRoute(cid)(req, res, resourcePath);
   };
 
-  // Config handler
+  // Config handler.
+  // TODO(burdon): Document usage.
   const configHandler = async (req, res) => {
     try {
       const path = getConfigFilePath(configFile);
@@ -115,6 +121,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
         console.log(`File ${path} does NOT exists.`);
         return res.json({});
       }
+
       res.json(yaml.load(fs.readFileSync(path)));
     } catch (err) {
       console.log(err);
@@ -126,7 +133,9 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   const app = express();
 
   app.use('/config/config.json', configHandler);
-  app.use(`${BASE_URL}/:wrn/`, appVersionHandler);
+
+  // TODO(burdon): Remove wrn prefix.
+  app.use(`${BASE_URL}/:wrn/`, appFileHandler);
 
   return app.listen(port, () => {
     console.log(`Server started on ${port}.`);

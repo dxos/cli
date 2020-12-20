@@ -29,6 +29,7 @@
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "server": "npm build && npm run cli app serve start",
     "test": "jest --rootDir ./src --verbose --passWithNoTests --runInBand --no-cache"
   },
   "jest": {
