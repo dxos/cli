@@ -6,6 +6,9 @@ import assert from 'assert';
 
 const PREFIX = 'wrn://';
 
+// TODO(burdon): NOTE Current names will change
+// wrn://dxos/application/console => wrn://dxos:application/console
+
 // Example: wrn://dxos:app/console@alpha
 const PATTERN = new RegExp(PREFIX + '(.+):(.+)');
 
@@ -25,6 +28,11 @@ export class WRN {
   static parse (name) {
     const [, authority, path] = name.match(PATTERN);
     return new WRN(authority, path);
+  }
+
+  // TODO(burdon): Convert to legacy format. (Reset registry?)
+  static legacy (resource) {
+    return `${PREFIX}${resource.authority}/${resource.path}`;
   }
 
   constructor (authority, path) {

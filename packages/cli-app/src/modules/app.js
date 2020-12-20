@@ -118,7 +118,7 @@ export const AppModule = ({ config }) => {
             command: ['start', '$0'],
             describe: 'Start server Applications from WNS.',
             builder: yargs => yargs.version(false)
-              .option('namespace')
+              .option('namespace') // TODO(burdon): Not used?
               .option('log-file', { type: 'string' })
               .option('proc-name', { type: 'string' })
               .option('daemon')
