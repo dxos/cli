@@ -18,7 +18,7 @@ $ wire party create
 ## Party joining
 
 Use `wire party join <PARTY KEY>` command in order to join a party.
-If an invitation link was created in any DxOS app, use `--url` attribute to pass invitation url, e.g.
+If an invitation link was created in any DXOS app, use `--url` attribute to pass invitation url, e.g.
 
 ```
 $ wire party join e6f6c2ba96d972fa56ab3c74cd6453b1fc8384a5bc63ccac701767880d120d92 --url https://xbox3.bozemanpass.com/app/d.boreh.am/dbeditor@0.0.16/#/auth?swarmKey=ee8b175d762dd6a054e066e900b9f39a70587f04fbb4b874d84837353c38c3ba&invitation=4b7d885a1b5927971656b5606c49439c4232e4fed0da5a91cf10678cb55cf88a&hash=78ca686ea23d0ddaaf69eddbc3a413490cecc3d3
@@ -48,7 +48,7 @@ Invite another CLI instance:
 [wire]>
 ```
 
-Invite any DxOS app user using `--app-url` attribute:
+Invite any DXOS app user using `--app-url` attribute:
 
 ```
 [wire]> party invite --app-url https://demo.boxes.dxos.network/app/ashwinp.com/editor@0.0.12

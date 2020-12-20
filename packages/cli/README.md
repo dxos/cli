@@ -16,7 +16,7 @@ $ npm install --global @dxos/cli@beta
 
 ### Extensions
 
-In order to install CLI extensions, one could leverage automatic installation mechanism (for DxOS extensions only):
+In order to install CLI extensions, one could leverage automatic installation mechanism (for DXOS extensions only):
 
 ```bash
 $ wire wns

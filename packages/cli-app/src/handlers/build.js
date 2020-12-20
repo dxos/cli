@@ -32,5 +32,6 @@ export const build = (config, { getAppRecord }) => async ({ verbose }) => {
     process.exit(status);
   }
 
+  // TODO(burdon): Standardize OK messages for commands (only if versbose).
   log('Build Ok.');
 };

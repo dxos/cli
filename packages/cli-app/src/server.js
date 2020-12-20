@@ -24,10 +24,12 @@ const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
   response.body.pipe(res);
 };
 
+// TODO(burdon): Create global WRN util class/function (create/parse).
 const normalizeWrn = (wrn) => {
   if (wrn.startsWith('wrn:')) {
     wrn = wrn.slice(4).replace(/^\/*/, '');
   }
+
   return `wrn://${wrn.replace(/:/g, '/')}`;
 };
 
@@ -64,8 +66,8 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
       cache.set(wrn, { cid, expiration: Date.now() + MAX_CACHE_AGE });
       return cid;
     }
-    console.log(`Found ${apps.length} apps.`, apps.map(({ name, version }) => `${name}@${version}`).join(' '));
 
+    console.log(`Found ${apps.length} apps.`, apps.map(({ name, version }) => `${name}@${version}`).join(' '));
     console.log(JSON.stringify(attributes));
   };
 
@@ -77,8 +79,8 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     let { wrn } = req.params;
     let resourcePath = req.path || '/';
 
+    // TODO(burdon): Util for WRN handling.
     wrn = decodeURIComponent(wrn);
-
     if (wrn.startsWith('wrn:')) {
       wrn = normalizeWrn(wrn);
     } else {

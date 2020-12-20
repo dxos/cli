@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-bot",
   "version": "2.0.34-alpha.0",
-  "description": "DxOS Bot CLI",
+  "description": "DXOS Bot CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-bot#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
