@@ -8,6 +8,8 @@ import { log } from '@dxos/debug';
 import { APP_TYPE, DEFAULT_PORT, BASE_URL } from '../config';
 import { build, publish, register, query, serve } from '../handlers';
 
+const getPublicUrl = ({ name, version }) => `${BASE_URL}/${name}@${version}`;
+
 /**
  * @param {object} config
  * @param {string} namespace
@@ -25,8 +27,6 @@ const getAppRecord = (config, namespace) => {
 
   return record;
 };
-
-const getPublicUrl = ({ name, version }) => `${BASE_URL}/${name}@${version}`;
 
 /**
  * App CLI module.
