@@ -9,6 +9,7 @@ import path from 'path';
 import { getProfileName } from '@dxos/cli-core';
 
 export const STORAGE_ROOT = '.wire/storage';
+export const CLI_DEFAULT_PERSISTENT = true;
 
 export const getProfileAndStorage = (storagePath, profilePath) => {
   const profileName = getProfileName(profilePath);
@@ -17,4 +18,15 @@ export const getProfileAndStorage = (storagePath, profilePath) => {
   }
   fs.ensureDirSync(storagePath);
   return { storagePath, profileName };
+};
+
+export const resetStorageForProfile = (storagePath, profilePath) => {
+  if (!storagePath) {
+    storagePath = path.join(os.homedir(), STORAGE_ROOT, getProfileName(profilePath));
+  }
+  fs.emptyDirSync(storagePath);
+};
+
+export const resetStorage = () => {
+  fs.emptyDirSync(path.join(os.homedir(), STORAGE_ROOT));
 };

@@ -10,13 +10,13 @@ import { createCLI } from '@dxos/cli-core';
 import { keyToBuffer, createKeyPair } from '@dxos/crypto';
 
 import { PartyModule } from './modules/party';
+import { StorageModule } from './modules/storage';
 import { StateManager } from './state-manager';
-import { getProfileAndStorage } from './config';
+import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
 
 import info from '../extension.yml';
 
 const CLI_BASE_COMMAND = 'dx';
-const CLI_DEFAULT_PERSISTENT = true;
 
 const CLI_CONFIG = {
   prompt: CLI_BASE_COMMAND,
@@ -104,7 +104,7 @@ const destroyDataCliState = async () => {
 module.exports = createCLI(
   {
     options: CLI_CONFIG,
-    modules: [PartyModule],
+    modules: [PartyModule, StorageModule],
     dir: __dirname,
     main: !module.parent,
     init: initDataCliState,
