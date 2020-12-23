@@ -10017,6 +10017,13 @@ lockfile-lint@^4.3.7:
     lockfile-lint-api "^5.1.6"
     yargs "^15.0.2"
 
+lockfile@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/lockfile/-/lockfile-1.0.4.tgz#07f819d25ae48f87e538e6578b6964a4981a5609"
+  integrity sha512-cvbTwETRfsFh4nHsL1eGWapU1XFi5Ot9E85sWAwia7Y7EgB7vfqcZhTKZ+l7hCGxSPoushMv5GKhT5PdLv03WA==
+  dependencies:
+    signal-exit "^3.0.2"
+
 lodash-clean@^2.2.1:
   version "2.2.2"
   resolved "https://registry.npmjs.org/lodash-clean/-/lodash-clean-2.2.2.tgz#6db795369862ec0f0b671ddb8bc01426cb660874"

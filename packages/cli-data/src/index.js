@@ -11,19 +11,23 @@ import { keyToBuffer, createKeyPair } from '@dxos/crypto';
 
 import { PartyModule } from './modules/party';
 import { StateManager } from './state-manager';
+import { getProfileAndStorage } from './config';
 
 import info from '../extension.yml';
 
-const WIRE_CLI_BASE_COMMAND = 'dx';
+const CLI_BASE_COMMAND = 'dx';
+const CLI_DEFAULT_PERSISTENT = true;
 
-const WIRE_CONFIG = {
-  prompt: WIRE_CLI_BASE_COMMAND,
+const CLI_CONFIG = {
+  prompt: CLI_BASE_COMMAND,
   baseCommand: '',
   enableInteractive: true
 };
 
-const _createClient = async (config, models) => {
+const _createClient = async (config, models, options) => {
   const { client = {}, services: { signal: { server }, ice }, cli } = config.values;
+  const { storagePath, persistent, profileName } = options;
+
   const clientConf = {
     swarm: {
       signal: server,
@@ -34,11 +38,13 @@ const _createClient = async (config, models) => {
     }
   };
   config = defaultsDeep({}, clientConf, client);
-  // TODO(dboreham): Allow keyring to be persisted.
-  // TODO(dboreham): Allow feedstore to be persisted.
 
   const dataClient = new Client({
-    swarm: config.swarm
+    swarm: config.swarm,
+    storage: {
+      persistent,
+      path: persistent ? storagePath : undefined
+    }
   });
 
   await dataClient.initialize();
@@ -46,7 +52,7 @@ const _createClient = async (config, models) => {
   if (!dataClient.getProfile()) {
     // TODO(dboreham): Allow seed phrase to be supplied by the user.
     const { publicKey, secretKey } = createKeyPair();
-    const username = `cli:${os.userInfo().username}`;
+    const username = `cli:${os.userInfo().username}:${profileName}`;
 
     await dataClient.createProfile({ publicKey, secretKey, username });
   }
@@ -61,9 +67,9 @@ const _createClient = async (config, models) => {
 };
 
 let client;
-const createClientGetter = (config, models) => async () => {
+const createClientGetter = (config, models, options) => async () => {
   if (!client) {
-    client = await _createClient(config, models);
+    client = await _createClient(config, models, options);
   }
   return client;
 };
@@ -71,9 +77,16 @@ const createClientGetter = (config, models) => async () => {
 let stateManager;
 
 const initDataCliState = async (state) => {
-  const { config, getReadlineInterface, models } = state;
-  const getClient = await createClientGetter(config, models);
-  stateManager = new StateManager(getClient, getReadlineInterface);
+  const { config, getReadlineInterface, models, profilePath } = state;
+
+  const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);
+  const persistent = config.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT);
+
+  const getClient = await createClientGetter(config, models, { persistent, storagePath, profileName });
+
+  stateManager = new StateManager(getClient, getReadlineInterface, {
+    storagePath: persistent ? storagePath : undefined
+  });
 
   state.getClient = getClient;
   state.stateManager = stateManager;
@@ -83,11 +96,14 @@ const destroyDataCliState = async () => {
   if (client) {
     await client.destroy();
   }
+  if (stateManager) {
+    await stateManager.destroy();
+  }
 };
 
 module.exports = createCLI(
   {
-    options: WIRE_CONFIG,
+    options: CLI_CONFIG,
     modules: [PartyModule],
     dir: __dirname,
     main: !module.parent,

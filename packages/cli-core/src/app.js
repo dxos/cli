@@ -83,7 +83,7 @@ export class App {
    * @param {Object} config
    */
   constructor (config = {}) {
-    const { config: cliConfig, state, options, version } = config;
+    const { config: cliConfig, state, options, version, profilePath } = config;
     const { prompt, baseCommand, enableInteractive = false } = options;
 
     this._version = version;
@@ -102,7 +102,8 @@ export class App {
         cliState: {
           interactive: false
         },
-        models: []
+        models: [],
+        profilePath
       };
     }
 
