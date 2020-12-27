@@ -20,7 +20,7 @@ const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
  */
 export const UninstallModule = () => ({
   command: ['uninstall'],
-  describe: 'Uninstall DXOS CLI and extensions.',
+  describe: 'Uninstall CLI and extensions.',
 
   builder: yargs => yargs
     .version(false)
