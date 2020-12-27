@@ -71,7 +71,7 @@ const getRunnable = ({ modules, getModules, version, init, destroy, options = {}
       config = await getConfig(profilePath);
     }
 
-    const app = new App({ modules, getModules, config, options, version });
+    const app = new App({ modules, getModules, config, options, version, profilePath });
 
     try {
       if (init) {

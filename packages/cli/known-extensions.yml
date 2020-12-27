@@ -6,6 +6,7 @@
   moduleName: "@dxos/cli-wns"
 - command:
   - party
+  - storage
   describe: Party management.
   moduleName: "@dxos/cli-data"
   initRequired: true
