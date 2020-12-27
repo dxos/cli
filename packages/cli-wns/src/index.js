@@ -10,11 +10,9 @@ import { RegistryModule } from './modules/registry';
 
 import info from '../extension.yml';
 
-module.exports = createCLI(
-  {
-    modules: [KeysModule, RegistryModule, FaucetModule],
-    dir: __dirname,
-    main: !module.parent,
-    info
-  }
-);
+module.exports = createCLI({
+  modules: [KeysModule, RegistryModule, FaucetModule],
+  dir: __dirname,
+  main: !module.parent,
+  info
+});

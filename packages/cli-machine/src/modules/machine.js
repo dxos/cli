@@ -2,12 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-// TODO(dboreham):
-//   Move meat into handlers dir
-//   Figure out how to log from a cli program
+// TODO(dboreham): Move meat into handlers dir.
+// TODO(dboreham): Figure out how to log from a cli program.
 
 import assert from 'assert';
 import crypto from 'crypto';
+import yaml from 'js-yaml';
 
 import DigitalOcean from 'do-wrapper';
 
@@ -15,8 +15,11 @@ import { waitForCondition } from '@dxos/async';
 import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
+import SSH_KEYS from '../../ssh-keys.yml';
+
 const KUBE_TYPE = 'wrn:kube';
 const DEFAULT_WRN_ROOT = 'wrn://dxos';
+
 let running = false;
 
 /**
@@ -48,29 +51,25 @@ const getRecordIdFromName = async (session, domain, name) => {
 };
 
 /**
- * Machine CLI module.
+ * KUBE Machine CLI module.
  */
 export const MachineModule = ({ config }) => {
   const doAccessToken = config.get('services.machine.doAccessToken');
   const email = config.get('services.machine.email');
   const githubAccessToken = config.get('services.machine.githubAccessToken');
   const dnsDomain = config.get('services.machine.dnsDomain');
-  // TODO(dboreham): Get from profile
-  const sshKeys = [
-    'ec:e0:6b:82:1e:b2:b7:74:a2:c3:1b:b4:3c:6d:72:a0', // David
-    'b1:a9:fa:63:0d:60:d5:6c:31:76:37:52:c7:fe:02:0b', // Thomas
-    '5f:82:c0:88:68:41:26:1b:d7:9f:be:82:24:7c:29:e3', // Egor
-    '15:f7:37:d4:34:79:38:6d:97:e9:fe:bc:ae:3c:03:ae' // Alex
-  ];
+
+  // TODO(dboreham): Get from profile.
+  const { keys: sshKeys } = yaml.load(SSH_KEYS);
 
   return ({
     command: ['machine'],
-    describe: 'Machine CLI.',
+    describe: 'KUBE machine CLI.',
     builder: yargs => yargs
 
       .command({
         command: ['list'],
-        describe: 'List Machines.',
+        describe: 'List virtual machines.',
         builder: yargs => yargs,
 
         handler: asyncHandler(async () => {
@@ -99,7 +98,7 @@ export const MachineModule = ({ config }) => {
       })
       .command({
         command: ['delete'],
-        describe: 'Delete a Machine.',
+        describe: 'Delete a virtual machine.',
         builder: yargs => yargs
           .option('name', { type: 'string', require: true })
           .option('verbose', { type: 'boolean', default: false })
@@ -156,7 +155,7 @@ export const MachineModule = ({ config }) => {
       })
       .command({
         command: ['info'],
-        describe: 'Info about a Machine.',
+        describe: 'Get information about a virtual machine.',
         builder: yargs => yargs
           .option('name', { type: 'string', required: true }),
 
@@ -184,7 +183,7 @@ export const MachineModule = ({ config }) => {
       })
       .command({
         command: ['create'],
-        describe: 'Create a Machine.',
+        describe: 'Create a new virtual machine.',
         builder: yargs => yargs
           .option('name', { type: 'string' })
           .option('wrn-root', { type: 'string', default: DEFAULT_WRN_ROOT })

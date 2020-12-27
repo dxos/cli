@@ -104,17 +104,15 @@ const destroyMock = jest.fn();
 const exitSpy = jest.spyOn(process, 'exit').mockImplementation(() => {});
 
 beforeEach(() => {
-  cli = createCLI(
-    {
-      options: WIRE_CONFIG,
-      modules: [TestModule],
-      dir: __dirname,
-      main: false,
-      info,
-      init: initMock,
-      destroy: destroyMock
-    }
-  );
+  cli = createCLI({
+    options: WIRE_CONFIG,
+    modules: [TestModule],
+    dir: __dirname,
+    main: false,
+    info,
+    init: initMock,
+    destroy: destroyMock
+  });
 });
 
 describe('cli-factory - setup', () => {

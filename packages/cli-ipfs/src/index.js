@@ -8,11 +8,9 @@ import { IPFSModule } from './modules/ipfs';
 
 import info from '../extension.yml';
 
-module.exports = createCLI(
-  {
-    modules: [IPFSModule],
-    dir: __dirname,
-    main: !module.parent,
-    info
-  }
-);
+module.exports = createCLI({
+  modules: [IPFSModule],
+  dir: __dirname,
+  main: !module.parent,
+  info
+});

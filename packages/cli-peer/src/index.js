@@ -8,11 +8,9 @@ import { PeerModule } from './modules/peer';
 
 import info from '../extension.yml';
 
-module.exports = createCLI(
-  {
-    modules: [PeerModule],
-    dir: __dirname,
-    main: !module.parent,
-    info
-  }
-);
+module.exports = createCLI({
+  modules: [PeerModule],
+  dir: __dirname,
+  main: !module.parent,
+  info
+});

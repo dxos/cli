@@ -8,11 +8,9 @@ import { MeshModule } from './modules/mesh';
 
 import info from '../extension.yml';
 
-module.exports = createCLI(
-  {
-    modules: [MeshModule],
-    dir: __dirname,
-    main: !module.parent,
-    info
-  }
-);
+module.exports = createCLI({
+  modules: [MeshModule],
+  dir: __dirname,
+  main: !module.parent,
+  info
+});

@@ -22,7 +22,7 @@ import {
  */
 export const ProfileModule = () => ({
   command: ['profile'],
-  describe: 'Profile management.',
+  describe: 'CLI profile management.',
 
   builder: yargs => yargs
     .command({

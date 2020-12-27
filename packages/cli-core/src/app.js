@@ -59,7 +59,7 @@ export class App {
       type: 'boolean'
     })
     .option('profile', {
-      description: 'Profile',
+      description: 'Set the profile',
       demand: false
     })
     .option(FORWARD_OPTION, {
