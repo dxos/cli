@@ -1,6 +1,6 @@
 name: dxos/cli-console
 version: 0.0.1
 displayName: cli-console
-description: Server for DXOS Console
+description: KUBE console extension.
 command:
   - console

@@ -18,7 +18,7 @@ import { addInstalled, removeInstalled, listInstalled } from '../extensions';
  */
 export const ExtensionModule = ({ getReadlineInterface }) => ({
   command: ['extension'],
-  describe: 'CLI Extensions.',
+  describe: 'CLI extensions.',
 
   builder: yargs => yargs
 

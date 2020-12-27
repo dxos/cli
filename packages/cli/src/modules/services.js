@@ -12,7 +12,7 @@ import { asyncHandler, print, listServices, getLogs, restartService, stopService
  */
 export const ServicesModule = () => ({
   command: ['service', 'services'],
-  describe: 'Services.',
+  describe: 'KUBE service management.',
 
   handler: asyncHandler(async argv => {
     const { json } = argv;

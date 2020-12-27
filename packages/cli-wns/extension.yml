@@ -1,7 +1,7 @@
 name: dxos/cli-wns
 version: 0.0.1
 displayName: cli-wns
-description: WNS management.
+description: Registry extension.
 command:
   - wns
   - faucet

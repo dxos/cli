@@ -1,6 +1,6 @@
 name: dxos/cli-mdns
 version: 0.0.1
 displayName: cli-mdns
-description: MDNS management.
+description: MDNS extension.
 command:
   - mdns
