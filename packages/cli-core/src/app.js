@@ -17,13 +17,20 @@ const VERSION_COMMAND = 'version';
 const { log, logError } = getLoggers();
 
 // http://patorjk.com/software/taag/#p=testall&f=Patorjk-HeX&t=DXOS
-const BANNER = '\n' +
+const BANNER1 = '\n' +
   '________  ____  ___________    _________\n' +
   '\\______ \\ \\   \\/  /\\_____  \\  /   _____/\n' +
   ' |    |  \\ \\     /  /   |   \\ \\_____  \\ \n' +
   ' |    `   \\/     \\ /    |    \\/        \\\n' +
   '/_______  /___/\\  \\\\_______  /_______  /   Command Line Interface\n' +
   '        \\/      \\_/        \\/        \\/\n\n';
+
+const BANNER2 = '\n' +
+  '_/\\/\\/\\/\\/\\____/\\/\\____/\\/\\____/\\/\\/\\/\\______/\\/\\/\\/\\_\n' +
+  '_/\\/\\____/\\/\\____/\\/\\/\\/\\____/\\/\\____/\\/\\__/\\/\\_______\n' +
+  '_/\\/\\____/\\/\\______/\\/\\______/\\/\\____/\\/\\____/\\/\\/\\___\n' +
+  '_/\\/\\____/\\/\\____/\\/\\/\\/\\____/\\/\\____/\\/\\________/\\/\\_\n' +
+  '_/\\/\\/\\/\\/\\____/\\/\\____/\\/\\____/\\/\\/\\/\\____/\\/\\/\\/\\___    Command Line Interface\n\n';
 
 /**
  * CLI app.
@@ -150,7 +157,7 @@ export class App {
         // Bug: yargs resets help settings after first usage of external CLI, so need to set it again.
         .help(true)
 
-        .usage(BANNER + '$0 [command]')
+        .usage(BANNER2 + '$0 [command]')
 
         // eslint-disable-next-line
         .parse(input, context, async (err, argv, output) => {
