@@ -25,14 +25,14 @@ function validChars (str) {
 // TODO(burdon): Rename DXN.
 // TODO(burdon): Factor out to registry-client.
 export class WRN {
-  static parse (name) {
-    const [, authority, path] = name.match(PATTERN);
-    return new WRN(authority, path);
-  }
-
   // TODO(burdon): Convert to legacy format. (Reset registry?)
   static legacy (resource) {
     return `${PREFIX}${resource.authority}/${resource.path}`;
+  }
+
+  static parse (name) {
+    const [, authority, path] = name.match(PATTERN);
+    return new WRN(authority, path);
   }
 
   constructor (authority, path) {

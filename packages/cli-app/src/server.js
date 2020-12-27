@@ -88,7 +88,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   const resolver = new Resolver(registry);
 
   // IPFS gateway handler.
-  const ipfsRoute = ipfsRouter(ipfsGateway);
+  const ipfsProxy = ipfsRouter(ipfsGateway);
 
   //
   // Config file handler.
@@ -114,17 +114,18 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   //
   const appFileHandler = async (req, res) => {
     const route = req.params[0];
+    // TODO(burdon): Make backwards compatible: dxos:application:console@alpha/service_worker.js
     const [authority, path, file = '/'] = route.split(':');
     const resource = new WRN(authority, path);
 
     // TODO(burdon): Hack to adapt current names.
-    const name = WRN.legacy(resource);
+    const name = WRN.legacy(resource); // String(resource);
     const cid = await resolver.lookupCID(name);
     if (!cid) {
       return res.status(404);
     }
 
-    return ipfsRoute(cid)(req, res, file);
+    return ipfsProxy(cid)(req, res, file);
   };
 
   // Start configuring express app.
