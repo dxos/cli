@@ -48,7 +48,7 @@
     "lodash.get": "^4.4.2",
     "node-yaml": "^4.0.1",
     "tree-kill": "^1.2.1",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

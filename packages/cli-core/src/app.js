@@ -84,6 +84,11 @@ export class App {
     // http://yargs.js.org/docs/#api-reference-version
     .version(false)
 
+    // https://yargs.js.org/docs/#api-reference-parserconfigurationobj
+    .parserConfiguration({
+      'sort-commands': true
+    })
+
     // http://yargs.js.org/docs/#api-exitprocessenable
     .exitProcess(false)
 
@@ -156,7 +161,6 @@ export class App {
       this._parser
         // Bug: yargs resets help settings after first usage of external CLI, so need to set it again.
         .help(true)
-
         .usage(BANNER2 + '$0 [command]')
 
         // eslint-disable-next-line
@@ -238,10 +242,10 @@ export class App {
       };
 
       const result = await exec();
-
       if (this._enableInteractive && interactive && !argv && result.command !== 'help') {
         return this.startInteractive();
       }
+
       if (poll) {
         // Poll command.
         const delay = poll === true ? 5000 : Number(poll);
