@@ -82,7 +82,7 @@ export const ProfileModule = () => ({
     const profilePath = getActiveProfilePath();
     if (!profilePath) {
       print('No active profile. Enter the following command to set the active profile:');
-      print('wire profile set <NAME>');
+      print('dx profile set <NAME>');
       return;
     }
 

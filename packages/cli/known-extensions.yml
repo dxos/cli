@@ -2,7 +2,7 @@
   - wns
   - faucet
   - keys
-  describe: WNS management.
+  describe: Registry management.
   moduleName: "@dxos/cli-wns"
 - command:
   - party
@@ -58,9 +58,9 @@
   moduleName: "@dxos/cli-mdns"
 - command:
   - echo
-  describe: Echo operations.
+  describe: ECHO operations.
   moduleName: "@dxos/cli-echo"
 - command:
   - mesh
-  describe: Mesh operations.
+  describe: MESH operations.
   moduleName: "@dxos/cli-mesh"

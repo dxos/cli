@@ -16,9 +16,19 @@ const VERSION_COMMAND = 'version';
 
 const { log, logError } = getLoggers();
 
+// http://patorjk.com/software/taag/#p=testall&f=Patorjk-HeX&t=DXOS
+const BANNER = '\n' +
+  '________  ____  ___________    _________\n' +
+  '\\______ \\ \\   \\/  /\\_____  \\  /   _____/\n' +
+  ' |    |  \\ \\     /  /   |   \\ \\_____  \\ \n' +
+  ' |    `   \\/     \\ /    |    \\/        \\\n' +
+  '/_______  /___/\\  \\\\_______  /_______  /   Command Line Interface\n' +
+  '        \\/      \\_/        \\/        \\/\n\n';
+
 /**
  * CLI app.
  */
+// TODO(burdon): Rename Main?
 export class App {
   /**
    * Yargs parser.
@@ -56,13 +66,15 @@ export class App {
       type: 'json'
     })
     // Required for extensions.
+    // TODO(burdon): Document.
     .option('mnemonic', {
       type: 'array'
     })
 
     // http://yargs.js.org/docs/#api-help
-    .help()
+    .help(true)
 
+    // http://yargs.js.org/docs/#api-reference-version
     .version(false)
 
     // http://yargs.js.org/docs/#api-exitprocessenable
@@ -135,9 +147,11 @@ export class App {
 
       // http://yargs.js.org/docs/#api-parseargs-context-parsecallback
       this._parser
-        // Bug: yargs resets help settings after first usage of external CLI,
-        // so need to set it again.
-        .help()
+        // Bug: yargs resets help settings after first usage of external CLI, so need to set it again.
+        .help(true)
+
+        .usage(BANNER + '$0 [command]')
+
         // eslint-disable-next-line
         .parse(input, context, async (err, argv, output) => {
           // Strip command name if in CLI mode.
@@ -183,6 +197,7 @@ export class App {
         return;
       }
 
+      // TODO(burdon): Document?
       const forwardIndex = this._args.findIndex(arg => arg === '--');
       if (forwardIndex !== -1) {
         const forwardArgs = JSON.stringify({ args: this._args.slice(forwardIndex + 1) });
@@ -279,6 +294,7 @@ export class App {
         prompt: `[${this._prompt}]> `
       });
     }
+
     return this._rl;
   }
 }

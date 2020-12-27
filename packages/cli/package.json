@@ -12,8 +12,8 @@
     "url": "git+https://github.com/dxos/cli.git"
   },
   "bin": {
-    "wire": "bin/wire.js",
-    "dx": "bin/wire.js"
+    "dx": "bin/dx.js",
+    "wire": "bin/dx.js"
   },
   "files": [
     "bin/",
@@ -24,6 +24,7 @@
     "build:watch": "yarn run build --watch",
     "clean": "rm -rf ./dist",
     "dev": "babel-node ./src/main.js",
+    "dx": "babel-node ./src/main.js",
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",

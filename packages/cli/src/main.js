@@ -8,15 +8,15 @@ import uniqBy from 'lodash.uniqby';
 
 import { getLoggers, createCLI } from '@dxos/cli-core';
 
-import { PluggableModule } from './modules/pluggable';
+import knownExtensionList from '../known-extensions.yml';
 
+import { PluggableModule } from './modules/pluggable';
 import { CertModule } from './modules/cert';
 import { ProfileModule } from './modules/profile';
 import { ServicesModule } from './modules/services';
 import { UpgradeModule, UninstallModule } from './modules/installation';
 import { ExtensionModule } from './modules/extension';
 
-import knownExtensionList from '../known-extensions.yml';
 import { listInstalled } from './extensions';
 
 const { logError } = getLoggers();

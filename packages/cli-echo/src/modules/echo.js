@@ -22,7 +22,7 @@ const displayItem = ({ id, type, parent, model }) => ({
 
 export const EchoModule = ({ stateManager }) => ({
   command: ['echo'],
-  describe: 'Echo CLI.',
+  describe: 'ECHO database.',
   builder: yargs => yargs
     .option('echo-key')
 

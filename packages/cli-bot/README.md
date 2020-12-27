@@ -4,16 +4,16 @@ Read [concepts](https://github.com/dxos/sdk/tree/master/packages/botkit) first, 
 
 Commands:
 
-* `wire bot publish` - Publish bot packages to IPFS.
-* `wire bot register` - Register a bot in WNS.
-* `wire bot query` - Query bot in WNS.
-* `wire bot factory start` - Start a bot factory.
-* `wire bot spawn` - Spawn new bot instance.
-* `wire bot factory status` - Obtain bot factory status.
+* `dx bot publish` - Publish bot packages to IPFS.
+* `dx bot register` - Register a bot in WNS.
+* `dx bot query` - Query bot in WNS.
+* `dx bot factory start` - Start a bot factory.
+* `dx bot spawn` - Spawn new bot instance.
+* `dx bot factory status` - Obtain bot factory status.
 
 Bot management commands: 
 
-* `wire bot stop` - Stop bot.
+* `dx bot stop` - Stop bot.
 * `wire bot start` - Start bot.
 * `wire bot restart` - Restart bot.
 * `wire bot kill` - Stop bot and remove all its data.

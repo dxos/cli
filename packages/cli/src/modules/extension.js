@@ -42,16 +42,13 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
       })
     })
 
-  // // Query.
+  // TODO(burdon): Find extensions via registry.
+  // Query.
   // .command({
   //   command: ['query'],
-  //   describe: 'Query WNS for CLI extensions',
-  //   builder: yargs => yargs
-  //     .option('url'),
-
-  //   handler: asyncHandler(async argv => {
-
-  //   })
+  //   describe: 'Query registry for CLI extensions',
+  //   builder: yargs => yargs.option('url'),
+  //   handler: asyncHandler(async argv => {})
   // })
 
     // Install.
@@ -65,7 +62,6 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
       handler: asyncHandler(async argv => {
         const { module: moduleName, version, npmClient } = argv;
-
         assert(moduleName, 'Invalid extension.');
 
         const pluggable = new Pluggable({ moduleName, version });
