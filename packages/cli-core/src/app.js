@@ -44,6 +44,7 @@ export class App {
         alias: 'v'
       }
     })
+
     .option({
       json: {
         description: 'JSON output',
@@ -52,21 +53,26 @@ export class App {
         type: 'boolean'
       }
     })
+
     .option('dry-run', {
       description: 'Dry run',
       demand: false,
       default: false,
       type: 'boolean'
     })
+
     .option('profile', {
-      description: 'Set the profile',
+      description: 'Sets the profile',
       demand: false
     })
+
+    // TODO(burdon): Document or remove?
     .option(FORWARD_OPTION, {
       type: 'json'
     })
+
     // Required for extensions.
-    // TODO(burdon): Document.
+    // TODO(burdon): Move to registry extension?
     .option('mnemonic', {
       type: 'array'
     })
