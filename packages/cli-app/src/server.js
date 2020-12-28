@@ -5,11 +5,11 @@
 import assert from 'assert';
 import debug from 'debug';
 import express from 'express';
-import fetch from 'node-fetch';
 import fs from 'fs';
+import fetch from 'node-fetch';
 import get from 'lodash.get';
-import { join } from 'path';
 import os from 'os';
+import { join } from 'path';
 import urlJoin from 'url-join';
 import yaml from 'js-yaml';
 
@@ -115,23 +115,24 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   const appFileHandler = async (req, res) => {
     const route = req.params[0];
 
-    let resource;
     let file;
-    // TODO(egorgripasov): Deprecated - remove.
+    let resource;
+    // TODO(egorgripasov): Deprecated (backwards comptatible).
     if (/^wrn(:|%)/i.test(route)) {
-      const [wrn, ...filePath] = route.split('/');
+      const [name, ...filePath] = route.split('/');
       if (!filePath.length) {
         return res.redirect(`${req.originalUrl}/`);
       }
-      file = `/${filePath.join('/')}`;
 
-      const [authority, ...rest] = decodeURIComponent(wrn).slice(4).replace(/^\/*/, '').split(':');
+      file = `/${filePath.join('/')}`;
+      const [authority, ...rest] = decodeURIComponent(name).slice(4).replace(/^\/*/, '').split(':');
       resource = new WRN(authority, rest.join('/'));
     } else {
       const [authority, path, filePath] = route.split(':');
       if (!filePath) {
         return res.redirect(`${req.originalUrl.replace(/\/$/, '')}:/`);
       }
+
       file = filePath;
       resource = new WRN(authority, path);
     }
