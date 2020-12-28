@@ -1,7 +1,7 @@
 {
   "name": "@dxos/cli-kit",
   "version": "2.0.34",
-  "description": "DxOS CLI Kit",
+  "description": "DXOS CLI Monorepo",
   "private": true,
   "scripts": {
     "build": "lerna run build",
@@ -18,7 +18,7 @@
     "url": "git+https://github.com/dxos/cli.git"
   },
   "keywords": [],
-  "author": "DxOS.org",
+  "author": "DXOS.org",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"

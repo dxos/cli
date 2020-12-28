@@ -20,11 +20,12 @@ const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
  */
 export const UninstallModule = () => ({
   command: ['uninstall'],
-  describe: 'Uninstall dxos cli and extensions.',
+  describe: 'Uninstall CLI and extensions.',
 
   builder: yargs => yargs
     .version(false)
     .option('npm-client'),
+
   handler: asyncHandler(async argv => {
     const { npmClient } = argv;
 
@@ -39,8 +40,6 @@ export const UninstallModule = () => ({
         await pluggableModule.uninstallModule(npmClient, { spinner });
         await removeInstalled(pluggableModule.moduleName);
       }
-    } else {
-      log('No extensions found.');
     }
 
     // Remove main cli.
@@ -67,7 +66,6 @@ export const UpgradeModule = ({ config }) => ({
 
   handler: asyncHandler(async argv => {
     const { channel, version, force, npmClient } = argv;
-
     const newVersion = version || channel;
     assert(newVersion, 'Invalid Version.');
 

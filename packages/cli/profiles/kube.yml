@@ -21,7 +21,7 @@ cli:
   npmClient: 'npm' # npm|yarn
   channel: 'beta'
 
-# DxOS services.
+# DXOS services.
 services:
   wns:
     server: 'https://node1.dxos.network/wns/api'

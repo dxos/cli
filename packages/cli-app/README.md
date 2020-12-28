@@ -17,12 +17,12 @@ All this operations can be resumed with one command:
 > You could use optional `--name` argument in order to assign specific name to the record.
 
 ```
-$ wire app deploy --name "wrn://dxos/application/example"
+$ dx app deploy --name "wrn://dxos/application/example"
 ```
 
 ### Build app.
 
-Before you publish your app you need to build it using `wire app build`.
+Before you publish your app you need to build it using `dx app build`.
 
 Your `app.yml` MUST be present and it must have `name` and `version` defined.
 
@@ -41,13 +41,13 @@ build: yarn dist
 Then run:
 
 ```bash
-$ wire app build
+$ dx app build
 ```
 
 ### Publish to IPFS
 
 ```bash
-$ wire app publish
+$ dx app publish
 ```
 
 ### Registration
@@ -69,13 +69,13 @@ package:
 > You could use optional `--name` argument in order to assign specific name to the record.
 
 ```bash
-$ wire app register --name "wrn://dxos/application/example"
+$ dx app register --name "wrn://dxos/application/example"
 ```
 
 ### Query
 
 ```bash
-$ wire app query
+$ dx app query
 
 [
   {
@@ -104,10 +104,10 @@ $ wire app query
 
 ### Serve Apps
 
-Once apps are published to IPFS, a WNS record and name have been registered, we can use `wire app serve` to serve the distributed files.
+Once apps are published to IPFS, a WNS record and name have been registered, we can use `dx app serve` to serve the distributed files.
 
 ```bash
-wire app serve
+dx app serve
 ```
 
 - `port`: Which port to start the server. Defaults to `5999`

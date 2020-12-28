@@ -93,9 +93,9 @@ export const promptUrl = async (name, message) => {
   }]);
 };
 
-export const WNSModule = ({ config }) => ({
-  command: ['wns', 'w'],
-  describe: 'WNS tools',
+export const RegistryModule = ({ config }) => ({
+  command: ['registry', 'reg', 'wns', 'w'], // TODO(burdon): Remove WNS.
+  describe: 'Registry operations',
   builder: yargs => yargs
 
     .option('endpoint', { alias: 'server' })

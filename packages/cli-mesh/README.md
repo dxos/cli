@@ -1,6 +1,6 @@
 # mesh CLI
 
-`wire mesh` provides simple networking tools
+`dx mesh` provides simple networking tools
 
 ## Commands
 

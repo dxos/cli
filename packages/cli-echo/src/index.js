@@ -8,11 +8,9 @@ import { EchoModule } from './modules/echo';
 
 import info from '../extension.yml';
 
-module.exports = createCLI(
-  {
-    modules: [EchoModule],
-    dir: __dirname,
-    main: !module.parent,
-    info
-  }
-);
+module.exports = createCLI({
+  modules: [EchoModule],
+  dir: __dirname,
+  main: !module.parent,
+  info
+});

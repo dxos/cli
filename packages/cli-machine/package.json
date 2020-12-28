@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-machine",
   "version": "2.0.34-alpha.0",
-  "description": "DxOS Machine CLI",
+  "description": "DXOS Machine CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-machine#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -45,7 +45,7 @@
     "lodash-clean": "^2.2.1",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

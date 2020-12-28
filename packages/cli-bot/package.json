@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-bot",
   "version": "2.0.34-alpha.0",
-  "description": "DxOS Bot CLI",
+  "description": "DXOS Bot CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-bot#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -57,7 +57,7 @@
     "node-yaml": "^4.0.1",
     "read-pkg-up": "^6.0.0",
     "semver": "^7.1.1",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

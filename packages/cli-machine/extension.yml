@@ -1,6 +1,6 @@
 name: dxos/cli-machine
 version: 0.0.1
 displayName: cli-machine
-description: Machine operations.
+description: KUBE machine extension.
 command:
   - machine

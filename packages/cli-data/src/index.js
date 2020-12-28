@@ -101,14 +101,12 @@ const destroyDataCliState = async () => {
   }
 };
 
-module.exports = createCLI(
-  {
-    options: CLI_CONFIG,
-    modules: [PartyModule, StorageModule],
-    dir: __dirname,
-    main: !module.parent,
-    init: initDataCliState,
-    destroy: destroyDataCliState,
-    info
-  }
-);
+module.exports = createCLI({
+  options: CLI_CONFIG,
+  modules: [PartyModule, StorageModule],
+  dir: __dirname,
+  main: !module.parent,
+  init: initDataCliState,
+  destroy: destroyDataCliState,
+  info
+});

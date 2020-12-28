@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-peer",
   "version": "2.0.34-alpha.0",
-  "description": "DxOS Peer CLI",
+  "description": "DXOS Peer CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-peer#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -43,7 +43,7 @@
     "@dxos/protocol-plugin-presence": "1.1.0-alpha.4",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

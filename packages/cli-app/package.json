@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-app",
   "version": "2.0.34-alpha.0",
-  "description": "DxOS App CLI",
+  "description": "DXOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -29,6 +29,7 @@
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "server": "npm run build && npm run cli app serve start",
     "test": "jest --rootDir ./src --verbose --passWithNoTests --runInBand --no-cache"
   },
   "jest": {
@@ -58,7 +59,8 @@
     "node-fetch": "^2.6.0",
     "node-yaml": "^4.0.1",
     "semver": "^7.1.1",
-    "yargs": "^11.0.0"
+    "url-join": "^4.0.1",
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

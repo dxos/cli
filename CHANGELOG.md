@@ -130,14 +130,14 @@
 
 ### Bug Fixes
 
-* wire machine creds for CI ([986bbc8](https://www.github.com/dxos/cli/commit/986bbc832b1977335ccf4a8f6ce05751a3e40f98))
+* dx machine creds for CI ([986bbc8](https://www.github.com/dxos/cli/commit/986bbc832b1977335ccf4a8f6ce05751a3e40f98))
 
 ### [2.0.16](https://www.github.com/dxos/cli/compare/v2.0.15...v2.0.16) (2020-11-24)
 
 
 ### Bug Fixes
 
-* add file operations to `wire ipfs` ([#77](https://www.github.com/dxos/cli/issues/77)) ([5622261](https://www.github.com/dxos/cli/commit/562226131f29ce28bbdd6882e8ad2633bf4fc5d6))
+* add file operations to `dx ipfs` ([#77](https://www.github.com/dxos/cli/issues/77)) ([5622261](https://www.github.com/dxos/cli/commit/562226131f29ce28bbdd6882e8ad2633bf4fc5d6))
 * add Let's Encrypt support ([#76](https://www.github.com/dxos/cli/issues/76)) ([46e0541](https://www.github.com/dxos/cli/commit/46e05413e035602b33df4c67d1eab32ca0c9ff46))
 
 ### [2.0.15](https://www.github.com/dxos/cli/compare/v2.0.14...v2.0.15) (2020-11-24)
@@ -174,7 +174,7 @@
 
 ### Bug Fixes
 
-* Add ENV mappings for wire machine ([d74f2f9](https://www.github.com/dxos/cli/commit/d74f2f9800409d4d99ead624e3a7148fe2a1becc))
+* Add ENV mappings for dx machine ([d74f2f9](https://www.github.com/dxos/cli/commit/d74f2f9800409d4d99ead624e3a7148fe2a1becc))
 * delete DNS records, register DNS at creation ([458723e](https://www.github.com/dxos/cli/commit/458723e8aad054436fa330637566b69b082736a7))
 
 ### [2.0.10](https://www.github.com/dxos/cli/compare/v2.0.9...v2.0.10) (2020-11-18)
@@ -182,7 +182,7 @@
 
 ### Bug Fixes
 
-* Add wire machine delete and kube tags. ([bfb9201](https://www.github.com/dxos/cli/commit/bfb920148918f7b32031fb2a60a5a1624457970a))
+* Add dx machine delete and kube tags. ([bfb9201](https://www.github.com/dxos/cli/commit/bfb920148918f7b32031fb2a60a5a1624457970a))
 
 ### [2.0.9](https://www.github.com/dxos/cli/compare/v2.0.8...v2.0.9) (2020-11-18)
 

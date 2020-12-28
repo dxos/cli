@@ -6,14 +6,15 @@ import assert from 'assert';
 
 import { stopService, Runnable } from '@dxos/cli-core';
 
-const APP_SERVE_PROCESS_NAME = 'app-server';
+const APP_SERVER_PROCESS_NAME = 'app-server';
+const APP_SERVER_BINARY = 'wire-app-server';
+
 const DEFAULT_LOG_FILE = '/var/log/app-server.log';
 
-const bin = 'wire-app-server';
-const serverRunnable = new Runnable(bin, []);
+const serverRunnable = new Runnable(APP_SERVER_BINARY, []);
 
-export const start = config => async ({
-  namespace, port, daemon, procName = APP_SERVE_PROCESS_NAME, logFile = DEFAULT_LOG_FILE
+export const start = (config) => async ({
+  namespace, port, daemon, procName = APP_SERVER_PROCESS_NAME, logFile = DEFAULT_LOG_FILE
 }) => {
   const endpoint = config.get('services.wns.server');
   const chainId = config.get('services.wns.chainId');
@@ -29,10 +30,13 @@ export const start = config => async ({
     detached: daemon
   };
 
+  // TODO(burdon): Document array.
   serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || ''], options);
 };
 
-export const stop = (/* config */) => async ({ procName = APP_SERVE_PROCESS_NAME }) => {
+export const stop = (/* config */) => async ({
+  procName = APP_SERVER_PROCESS_NAME
+}) => {
   await stopService(procName);
 };
 

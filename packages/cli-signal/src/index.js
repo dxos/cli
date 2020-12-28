@@ -8,11 +8,9 @@ import { SignalModule } from './modules/signal';
 
 import info from '../extension.yml';
 
-module.exports = createCLI(
-  {
-    modules: [SignalModule],
-    dir: __dirname,
-    main: !module.parent,
-    info
-  }
-);
+module.exports = createCLI({
+  modules: [SignalModule],
+  dir: __dirname,
+  main: !module.parent,
+  info
+});
