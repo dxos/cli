@@ -150,10 +150,12 @@ export class App {
     return new Promise((resolve, reject) => {
       const context = {};
 
+      if (!interactive) {
+        this._parser.usage(BANNER + '$0 [command]');
+      }
+
       // http://yargs.js.org/docs/#api-parseargs-context-parsecallback
       this._parser
-        .usage(BANNER + '$0 [command]')
-
         // Bug: yargs resets help settings after first usage of external CLI, so need to set it again.
         .help(true)
 
@@ -226,10 +228,6 @@ export class App {
 
         if (!interactive && output && !output.argv) {
           log(output.toString());
-        }
-
-        if (output && output.command === 'help' && output.output) {
-          log(output.output.toString());
         }
 
         return result;
