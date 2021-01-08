@@ -1,5 +1,13 @@
 # DXOS CLI
 
+## Testing
+
+To test the CLI in dev mode:
+
+```bash
+$ yarn dx help
+```
+
 ## Installation
 
 Install CLI globally:
@@ -16,20 +24,22 @@ $ npm install --global @dxos/cli@beta
 
 ### Extensions
 
-In order to install CLI extensions, one could leverage automatic installation mechanism (for DxOS extensions only):
+In order to install CLI extensions, one could leverage automatic installation mechanism (for DXOS extensions only):
+
+TODO(burdon): Rename registry.
 
 ```bash
-$ wire wns
+$ dx wns
 ```
 
 ```bash
-$ wire app
+$ dx app
 ```
 
-In order to install arbitrary extension, `wire extension install` command could be used:
+In order to install arbitrary extension, `dx extension install` command could be used:
 
 ```
-$ wire extension install @dxos/cli-ipfs --version beta
+$ dx extension install @dxos/cli-ipfs --version beta
 
 ✔ Installing @dxos/cli-ipfs@beta
 ```
@@ -37,7 +47,7 @@ $ wire extension install @dxos/cli-ipfs --version beta
 View installed extensions: 
 
 ```
-$ wire extension list
+$ dx extension list
 
 extension       command  version       description
 --------------  -------  ------------  -----------------------
@@ -49,7 +59,7 @@ extension       command  version       description
 Uninstall extension:
 
 ```
-$ wire extension uninstall @dxos/cli-ipfs
+$ dx extension uninstall @dxos/cli-ipfs
 
 Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it? (Yes/No): y
 ✔ Uninstalling @dxos/cli-ipfs
@@ -57,13 +67,13 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 
 ## Upgrade
 
-An older version of the CLI could be upgraded via `wire upgrade` command.
+An older version of the CLI could be upgraded via `dx upgrade` command.
 
 ```
-$ wire version
+$ dx version
 v1.0.1-beta.15
 
-$ wire upgrade --force
+$ dx upgrade --force
 Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 ✔ Uninstalling @dxos/cli-data
 ✔ Uninstalling @dxos/cli-signal
@@ -76,7 +86,7 @@ Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 ✔ Installing @dxos/cli-signal
 ✔ Installing @dxos/cli-data
 
-$ wire version
+$ dx version
 v1.0.1-beta.16
 ```
 
@@ -93,34 +103,34 @@ $ yarn info @dxos/cli versions --json | jq '.data[-1]'
 Check installed version:
 
 ```bash
-$ wire version
+$ dx version
 ```
 
 If those outputs are different, make sure to remove old versions of `wire`.
 Remove old CLI and extensions, installed globally.
 
-Starting v1.0.0-beta.30, `wire uninstall` and `wire upgrade` commands are available.
+Starting v1.0.0-beta.30, `dx uninstall` and `dx upgrade` commands are available.
 
 To remove CLI and all extensions:
 
 ```
-$ wire uninstall --npm-client yarn
+$ dx uninstall --npm-client yarn
 ```
 
 To force upgrade CLI and all installed extensions to the latest:
 
 ```
-$ wire upgrade --npm-client yarn --force
+$ dx upgrade --npm-client yarn --force
 ```
 
 `--version` attribute could be supplied in order to upgrade/downgrade to a specific version.
 
 ## Setup
 
-In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `wire cert import` command. For the case of XBOX, import command would look like:
+In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `dx cert import` command. For the case of XBOX, import command would look like:
 
 ```bash
-$ wire cert import --url https://xbox.local/xbox.pem
+$ dx cert import --url https://xbox.local/xbox.pem
 ```
 
 TODO(egor): Host cert on .well-known endpoint.
@@ -138,41 +148,41 @@ To create a profile from a template, pass a profile name and template URL.
 Example:
 
 ```bash
-$ wire profile init --name devnet --template-url https://git.io/Jfrn4
+$ dx profile init --name devnet --template-url https://git.io/Jfrn4
 ```
 
 Profiles are stored in the `~/.wire/profile` folder. To further customize a profile, edit the profile configuration file.
 
 To activate/use a profile, do one of the following (highest to lowest precedence):
 
-1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `wire --profile devnet wns status`
+1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile devnet wns status`
 2. export `WIRE_PROFILE` in the shell, with the name of the profile, e.g. `export WIRE_PROFILE=devnet`
-3. Set it as the default for the system, e.g. `wire profile set devnet`
+3. Set it as the default for the system, e.g. `dx profile set devnet`
 
 Note: The first profile created automatically becomes the system default.
 
 View the name of the active profile:
 
 ```bash
-$ wire profile
+$ dx profile
 ```
 
 View the configuration values for the active profile:
 
 ```bash
-$ wire profile config
+$ dx profile config
 ```
 
 View the configuration values for a given profile:
 
 ```bash
-$ wire profile config <NAME>
+$ dx profile config <NAME>
 ```
 
 View the profile used for a command (using the `--dry-run` flag):
 
 ```bash
-$ wire wns status --dry-run
+$ dx wns status --dry-run
 Profile: /Users/ashwinp/.wire/profile/devnet.yml
 ```
 
@@ -189,15 +199,15 @@ ENV variables are also used to pass configuration between CLI and spawned proces
 All the CLI modules support `help` flag that provides desired command clarification, e.g.
 
 ```bash
-$ wire help
+$ dx help
 ```
 
 ```bash
-$ wire app help
+$ dx app help
 ```
 
 ```bash
-$ wire app register help
+$ dx app register help
 ```
 
 ## Extensions

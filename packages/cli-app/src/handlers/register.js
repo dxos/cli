@@ -3,6 +3,7 @@
 //
 
 import assert from 'assert';
+import { spawnSync } from 'child_process';
 import clean from 'lodash-clean';
 
 import { getGasAndFees } from '@dxos/cli-core';
@@ -10,7 +11,6 @@ import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
 
 import { loadAppConfig, updateAppConfig } from './config';
-import { spawnSync } from 'child_process';
 
 export const register = (config, { getAppRecord }) => async (argv) => {
   const { verbose, version, namespace, 'dry-run': noop, txKey, name } = argv;

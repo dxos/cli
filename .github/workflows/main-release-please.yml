@@ -6,6 +6,7 @@ name: main - release-please
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: dxos/release-please-action@v0.0.100
         id: release
@@ -39,8 +40,17 @@ jobs:
           git push --tags -f
           git push --delete origin "${{ steps.release.outputs.tag_name }}"
           yarn lerna publish from-package --force-publish -y --dist-tag="alpha"
-          yarn wire machine delete --name alpha
-          yarn wire machine create --name alpha --cliver '@alpha'
+          yarn dx profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
+          yarn dx machine delete --name alpha
+          sleep 10
+          yarn dx machine create --name alpha --cliver '@alpha' --register
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          WIRE_PROFILE: ci
+          WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
+          WIRE_WNS_USER_KEY: ${{secrets.wns_user_key}}
+          WIRE_WNS_BOND_ID: ${{secrets.wns_bond_id}}
+          WIRE_MACHINE_DO_TOKEN: ${{secrets.wire_machine_do_token}}
+          WIRE_MACHINE_GITHUB_TOKEN: ${{secrets.wire_machine_github_token}}
+          WIRE_MACHINE_DNS_DOMAIN: ${{secrets.wire_machine_dns_domain}}
         if: ${{ steps.release.outputs.release_created }}

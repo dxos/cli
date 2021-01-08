@@ -21,6 +21,7 @@ export class PluggableModule {
     if (!this._pluggable) {
       this._pluggable = Pluggable.create(this._config);
     }
+
     return this._pluggable;
   }
 

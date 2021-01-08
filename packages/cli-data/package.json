@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-data",
-  "version": "2.0.14-alpha.0",
-  "description": "DxOS Data CLI",
+  "version": "2.0.34-alpha.0",
+  "description": "DXOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -13,7 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-data": "bin/wire-data.js"
+    "wire-data": "bin/wire-data.js",
+    "dx-data": "bin/wire-data.js"
   },
   "files": [
     "bin/",
@@ -34,19 +35,21 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.0.14-alpha.0",
-    "@dxos/client": "^2.7.12-alpha.0",
-    "@dxos/credentials": "^2.1.10-beta.0",
+    "@dxos/cli-core": "^2.0.34-alpha.0",
+    "@dxos/client": "2.7.44",
+    "@dxos/credentials": "2.1.10-beta.0",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@dxos/echo-db": "^2.6.4-alpha.0",
-    "@dxos/random-access-multi-storage": "^1.1.0-beta.4",
+    "@dxos/echo-db": "2.6.17",
+    "@dxos/random-access-multi-storage": "1.1.0-beta.7",
     "assert": "^2.0.0",
+    "fs-extra": "^8.1.0",
     "js-yaml": "^3.13.1",
+    "lockfile": "^1.0.4",
     "lodash.defaultsdeep": "^4.6.1",
     "query-string": "^6.12.1",
     "random-access-memory": "^3.1.1",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

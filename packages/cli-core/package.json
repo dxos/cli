@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-core",
-  "version": "2.0.14-alpha.0",
+  "version": "2.0.34-alpha.0",
   "description": "CLI Core",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -55,9 +55,9 @@
     "read-pkg-up": "^6.0.0",
     "syswide-cas": "^5.3.0",
     "tree-kill": "^1.2.1",
-    "yargs": "^11.0.0",
-    "yargs-parser": "^18.1.2",
-    "yargs-unparser": "1.5.0"
+    "yargs": "^16.2.0",
+    "yargs-parser": "^19.0.4",
+    "yargs-unparser": "^1.6.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

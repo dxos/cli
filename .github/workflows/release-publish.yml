@@ -6,6 +6,7 @@ name: release - Publish to NPM
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -21,14 +22,21 @@ jobs:
           yarn build
           yarn test
           git reset --hard
-          VERSION=`cat package.json | grep '"version":' | awk '{ print $2 }' | sed 's/[",]//g'` 
+          VERSION=`cat package.json | grep '"version":' | awk '{ print $2 }' | sed 's/[",]//g'`
           yarn lerna version $VERSION --no-git-tag-version -y
           git commit -am "v$VERSION"
           git push
           git tag -f "v$VERSION"
           git push --tags -f
           yarn lerna publish from-package --force-publish -y
-          yarn wire machine delete --name release
-          yarn wire machine create --name release
+          yarn dx profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
+          # yarn dx machine delete --name release
+          # sleep 10
+          # yarn dx machine create --name release
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          WIRE_PROFILE: ci
+          WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
+          WIRE_MACHINE_DO_TOKEN: ${{secrets.wire_machine_do_token}}
+          WIRE_MACHINE_GITHUB_TOKEN: ${{secrets.wire_machine_github_token}}
+          WIRE_MACHINE_DNS_DOMAIN: ${{secrets.wire_machine_dns_domain}}

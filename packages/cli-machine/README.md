@@ -1,10 +1,10 @@
 # Machine CLI
 
-`wire machine` allows automated creation and management of kubes in cloud hosting.
+`dx machine` allows automated creation and management of kubes in cloud hosting.
 
 ## Commands
 
-`wire machine list`
+`dx machine list`
 
 ```
 $ wire machine list
@@ -26,7 +26,7 @@ $ wire machine list
 }
 ```
 
-`wire machine create --name <optionalkubename> --size <optionalmemorysize>`
+`wire machine create --name <optionalkubename> --memory <optionalmemorysize>`
 
 ```
 $ wire machine create

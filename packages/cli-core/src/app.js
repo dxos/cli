@@ -3,11 +3,11 @@
 //
 
 import assert from 'assert';
+import get from 'lodash.get';
+import omit from 'lodash.omit';
 import readline from 'readline';
 import unparse from 'yargs-unparser';
 import yargs from 'yargs/yargs';
-import get from 'lodash.get';
-import omit from 'lodash.omit';
 
 import { getLoggers } from './util/log';
 
@@ -16,9 +16,19 @@ const VERSION_COMMAND = 'version';
 
 const { log, logError } = getLoggers();
 
+// http://patorjk.com/software/taag/#p=testall&f=Patorjk-HeX&t=DXOS
+const BANNER = '\n' +
+  '______________/\\/\\/\\/\\/\\____/\\/\\____/\\/\\____/\\/\\/\\/\\______/\\/\\/\\/\\______________\n' +
+  '______________/\\/\\____/\\/\\____/\\/\\/\\/\\____/\\/\\____/\\/\\__/\\/\\____________________\n' +
+  '______________/\\/\\____/\\/\\______/\\/\\______/\\/\\____/\\/\\____/\\/\\/\\________________\n' +
+  '______________/\\/\\____/\\/\\____/\\/\\/\\/\\____/\\/\\____/\\/\\________/\\/\\______________\n' +
+  '______________/\\/\\/\\/\\/\\____/\\/\\____/\\/\\____/\\/\\/\\/\\____/\\/\\/\\/\\________________\n\n' +
+  '                           DXOS Command Line Interface \n\n';
+
 /**
  * CLI app.
  */
+// TODO(burdon): Rename Main?
 export class App {
   /**
    * Yargs parser.
@@ -34,6 +44,7 @@ export class App {
         alias: 'v'
       }
     })
+
     .option({
       json: {
         description: 'JSON output',
@@ -42,28 +53,40 @@ export class App {
         type: 'boolean'
       }
     })
+
     .option('dry-run', {
       description: 'Dry run',
       demand: false,
       default: false,
       type: 'boolean'
     })
+
     .option('profile', {
-      description: 'Profile',
+      description: 'Sets the profile',
       demand: false
     })
+
+    // TODO(burdon): Document or remove?
     .option(FORWARD_OPTION, {
       type: 'json'
     })
+
     // Required for extensions.
+    // TODO(burdon): Move to registry extension?
     .option('mnemonic', {
       type: 'array'
     })
 
     // http://yargs.js.org/docs/#api-help
-    .help()
+    .help(true)
 
+    // http://yargs.js.org/docs/#api-reference-version
     .version(false)
+
+    // https://yargs.js.org/docs/#api-reference-parserconfigurationobj
+    .parserConfiguration({
+      'sort-commands': true
+    })
 
     // http://yargs.js.org/docs/#api-exitprocessenable
     .exitProcess(false)
@@ -73,8 +96,7 @@ export class App {
 
     // http://yargs.js.org/docs/#api-failfn
     .fail(msg => {
-      logError(msg);
-      process.exit(1);
+      throw new Error(msg);
     });
 
   _modules = [];
@@ -84,7 +106,7 @@ export class App {
    * @param {Object} config
    */
   constructor (config = {}) {
-    const { config: cliConfig, state, options, version } = config;
+    const { config: cliConfig, state, options, version, profilePath } = config;
     const { prompt, baseCommand, enableInteractive = false } = options;
 
     this._version = version;
@@ -103,7 +125,8 @@ export class App {
         cliState: {
           interactive: false
         },
-        models: []
+        models: [],
+        profilePath
       };
     }
 
@@ -133,11 +156,15 @@ export class App {
     return new Promise((resolve, reject) => {
       const context = {};
 
+      if (!interactive) {
+        this._parser.usage(BANNER + '$0 [command]');
+      }
+
       // http://yargs.js.org/docs/#api-parseargs-context-parsecallback
       this._parser
-        // Bug: yargs resets help settings after first usage of external CLI,
-        // so need to set it again.
-        .help()
+        // Bug: yargs resets help settings after first usage of external CLI, so need to set it again.
+        .help(true)
+
         // eslint-disable-next-line
         .parse(input, context, async (err, argv, output) => {
           // Strip command name if in CLI mode.
@@ -183,6 +210,7 @@ export class App {
         return;
       }
 
+      // TODO(burdon): Document?
       const forwardIndex = this._args.findIndex(arg => arg === '--');
       if (forwardIndex !== -1) {
         const forwardArgs = JSON.stringify({ args: this._args.slice(forwardIndex + 1) });
@@ -212,10 +240,10 @@ export class App {
       };
 
       const result = await exec();
-
-      if (this._enableInteractive && interactive && !argv) {
+      if (this._enableInteractive && interactive && !argv && result.command !== 'help') {
         return this.startInteractive();
       }
+
       if (poll) {
         // Poll command.
         const delay = poll === true ? 5000 : Number(poll);
@@ -272,10 +300,10 @@ export class App {
       this._rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
-        terminal: false, // Prevent output from being echoed.
         prompt: `[${this._prompt}]> `
       });
     }
+
     return this._rl;
   }
 }

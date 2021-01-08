@@ -6,8 +6,7 @@ import assert from 'assert';
 import path from 'path';
 import queryString from 'query-string';
 
-import { keyToString } from '@dxos/crypto';
-import { asyncHandler } from '@dxos/cli-core';
+import { asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 export const PartyModule = ({ stateManager }) => ({
@@ -18,7 +17,7 @@ export const PartyModule = ({ stateManager }) => ({
 
     // Join party.
     .command({
-      command: ['$0 [party-key]', 'join [party-key]', 'switch [party-key]'],
+      command: ['join [party-key]', 'switch [party-key]', 'use [party-key]'],
       describe: 'Join party.',
       builder: yargs => yargs
         .option('interactive', { hidden: true, default: true })
@@ -26,7 +25,7 @@ export const PartyModule = ({ stateManager }) => ({
         .option('invitation-url'),
 
       handler: asyncHandler(async argv => {
-        const { partyKey, invitationUrl, invitation } = argv;
+        const { partyKey, invitationUrl, invitation, json } = argv;
 
         assert(partyKey || invitation || invitationUrl, 'Invalid party.');
 
@@ -40,19 +39,60 @@ export const PartyModule = ({ stateManager }) => ({
         await stateManager.joinParty(partyKey, invite);
 
         if (/^[0-9a-f]{64}$/i.test(partyKey)) {
-          log(JSON.stringify({ partyKey }, null, 2));
+          print({ partyKey }, { json });
         }
       })
     })
 
     // Current party.
     .command({
-      command: ['current'],
-      describe: 'Current party.',
+      command: ['info'],
+      describe: 'Current party info.',
       builder: yargs => yargs,
 
-      handler: asyncHandler(async () => {
-        log(JSON.stringify({ currentParty: stateManager.currentParty }, null, 2));
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        print({ party: stateManager.currentParty }, { json });
+      })
+    })
+
+    // Open party.
+    .command({
+      command: ['open'],
+      describe: 'Current party.',
+      builder: yargs => yargs
+        .option('interactive', { hidden: true, default: true }),
+
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        const party = await stateManager.getParty();
+        if (!party) {
+          throw new Error('You don\'t have any available parties yet, create new one or use invitation to join existing party.');
+        }
+        await party.open();
+
+        print({ party: party.key.toHex() }, { json });
+      })
+    })
+
+    // List parties.
+    .command({
+      command: ['list'],
+      describe: 'List parties.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        const parties = Array.from(stateManager.parties.values()).map(({ partyKey, ...rest }) => ({
+          party: partyKey,
+          ...rest,
+          current: partyKey === stateManager.currentParty
+        }));
+
+        print(parties, { json });
       })
     })
 
@@ -64,9 +104,25 @@ export const PartyModule = ({ stateManager }) => ({
         .option('interactive', { hidden: true, default: true })
         .option('secured', { alias: 's', type: 'boolean', default: true }),
 
-      handler: asyncHandler(async () => {
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
         const party = await stateManager.createParty();
-        log(JSON.stringify({ partyKey: keyToString(party.key) }, null, 2));
+        print({ party: party.key.toHex() }, { json });
+      })
+    })
+
+    .command({
+      command: ['members'],
+      describe: 'List party members.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv) => {
+        const { json } = argv;
+
+        const members = stateManager.party.queryMembers().value;
+
+        print(Array.from(members).filter(Boolean), { json });
       })
     })
 

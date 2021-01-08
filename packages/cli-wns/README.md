@@ -5,7 +5,7 @@
 Registering records in WNS requires an account. To create an account, activate the required profile and run the following command:
 
 ```bash
-$ wire wns account create
+$ dx wns account create
 ? Post a Tweet with text 'Fund cosmos1jeh4d8ym99t235p22n6j4lyyf9wk56jgzjq9dk' and paste the URL: "<PASTE TWEET URL HERE>"
 Requesting funds from faucet...
 Got funds from faucet:
@@ -53,7 +53,7 @@ These commands require `wire` CLI to be configured, and a profile to be active.
 Get node status:
 
 ```bash
-$ wire wns status
+$ dx wns status
 {
   "version": "0.3.0",
   "node": {
@@ -87,13 +87,13 @@ $ wire wns status
 Create account (automatically requests faucet funds, creates a bond and updates profile config):
 
 ```bash
-$ wire wns account create
+$ dx wns account create
 ```
 
 Get account details:
 
 ```bash
-$ wire wns account get --address cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
+$ dx wns account get --address cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
 [
   {
     "address": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
@@ -113,7 +113,7 @@ $ wire wns account get --address cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
 Request funds from faucet:
 
 ```bash
-$ wire faucet request --post-url "<TWEET URL>"
+$ dx faucet request --post-url "<TWEET URL>"
 {
   "requestTokens": {
     "status": true,
@@ -131,7 +131,7 @@ $ wire faucet request --post-url "<TWEET URL>"
 Send tokens:
 
 ```bash
-$ wire wns tokens send --address cosmos1w5q7xy9sk8hqvlklftdfdkc3kgsd90cxlkwvty --type uwire --quantity 1000000000
+$ dx wns tokens send --address cosmos1w5q7xy9sk8hqvlklftdfdkc3kgsd90cxlkwvty --type uwire --quantity 1000000000
 [
   {
     "address": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
@@ -184,13 +184,13 @@ record:
 Publish record (see below for commands to create/query bonds):
 
 ```bash
-$ wire wns record publish --filename bot.yml
+$ dx wns record publish --filename bot.yml
 ```
 
 Get record:
 
 ```bash
-$ wire wns record get --id bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e
+$ dx wns record get --id bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e
 [
   {
     "id": "bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e",
@@ -231,13 +231,13 @@ $ wire wns record get --id bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvo
 List records:
 
 ```bash
-$ wire wns record list
+$ dx wns record list
 ```
 
 Reserve authority:
 
 ```bash
-$ wire wns authority reserve dxos
+$ dx wns authority reserve dxos
 {
   "hash": "DADF18AF6F11457572CE2AC419CA65F0824012FC409E3E9B964DD0FDE59DD506",
   "height": 169,
@@ -268,19 +268,19 @@ $ wire wns authority reserve dxos
 Create sub-authority (same owner as parent authority):
 
 ```bash
-$ wire wns authority reserve echo.dxos
+$ dx wns authority reserve echo.dxos
 ```
 
 Create sub-authority (custom owner for sub-authority):
 
 ```bash
-$ wire wns authority reserve kube.dxos --owner cosmos1rm3ctz5etfrqaal3sp555wh57gcv5lwgx09wxc
+$ dx wns authority reserve kube.dxos --owner cosmos1rm3ctz5etfrqaal3sp555wh57gcv5lwgx09wxc
 ```
 
 Check authority information:
 
 ```bash
-$ wire wns authority whois dxos
+$ dx wns authority whois dxos
 {
   "meta": {
     "height": "179"
@@ -298,7 +298,7 @@ $ wire wns authority whois dxos
 Set name:
 
 ```bash
-$ wire wns name set wrn://dxos/bot/chess bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e
+$ dx wns name set wrn://dxos/bot/chess bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e
 {
   "hash": "D80ED581A784C97EF852AFE2FD5EB7A13A9CC234422A2175FF213387F65EBA32",
   "height": 201,
@@ -329,7 +329,7 @@ $ wire wns name set wrn://dxos/bot/chess bafyreihvapkvblaiwuwsehluyfmxnuovot2bdy
 Lookup name information:
 
 ```bash
-$ wire wns name lookup wrn://dxos/bot/chess
+$ dx wns name lookup wrn://dxos/bot/chess
 {
   "meta": {
     "height": "212"
@@ -348,7 +348,7 @@ $ wire wns name lookup wrn://dxos/bot/chess
 Resolve name:
 
 ```bash
-$ wire wns name resolve wrn://dxos/bot/chess
+$ dx wns name resolve wrn://dxos/bot/chess
 {
   "meta": {
     "height": "234"
@@ -396,7 +396,7 @@ $ wire wns name resolve wrn://dxos/bot/chess
 Delete name:
 
 ```bash
-$ wire wns name delete wrn://dxos/bot/chess
+$ dx wns name delete wrn://dxos/bot/chess
 {
   "hash": "98270DC01026E6A02E708ECD0699C1FD0233E280A7B9631EFB57BFB21577145B",
   "height": 244,
@@ -423,7 +423,7 @@ $ wire wns name delete wrn://dxos/bot/chess
   ]
 }
 
-$ wire wns name resolve wrn://dxos/bot/chess
+$ dx wns name resolve wrn://dxos/bot/chess
 {
   "meta": {
     "height": "254"
@@ -437,13 +437,13 @@ $ wire wns name resolve wrn://dxos/bot/chess
 Create bond:
 
 ```bash
-$ wire wns bond create --type uwire --quantity 1000
+$ dx wns bond create --type uwire --quantity 1000
 ```
 
 List bonds:
 
 ```bash
-$ wire wns bond list
+$ dx wns bond list
 [
   {
     "id": "288425db041a7dff6e06e966067625479ae80b29d4c36f9360634eb0cbe2961d",

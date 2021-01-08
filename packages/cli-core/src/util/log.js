@@ -40,6 +40,7 @@ export const getLoggers = (name = CLI_DEBUG_NAMESPACE) => {
 
   return {
     log,
+    debugLog,
     logError: logErrorWithDebug
   };
 };

@@ -1,62 +1,80 @@
-- command:
+#
+# TODO(burdon): Move to registry (or generate from local extension.yml files).
+# NOTE: Maintain sorted.
+#
+
+- moduleName: "@dxos/cli-app"
+  describe: Application proxy service.
+  command:
+  - app
+
+- moduleName: "@dxos/cli-bot"
+  describe: Bot service management.
+  command:
+  - bot
+
+- moduleName: "@dxos/cli-console"
+  describe: KUBE console management.
+  command:
+  - console
+
+- moduleName: "@dxos/cli-data"
+  describe: Party operations.
+  command:
+  - party
+  - storage
+  initRequired: true
+  destroyRequired: true
+
+- moduleName: "@dxos/cli-echo"
+  describe: ECHO operations.
+  command:
+  - echo
+
+- moduleName: "@dxos/cli-ipfs"
+  describe: IPFS operations.
+  command:
+  - ipfs
+
+- moduleName: "@dxos/cli-machine"
+  describe: KUBE machine management.
+  command:
+  - machine
+
+- moduleName: "@dxos/cli-mdns"
+  describe: MDNS operations.
+  moduleName: "@dxos/cli-mdns"
+  command:
+  - mdns
+
+- moduleName: "@dxos/cli-mesh"
+  describe: MESH operations.
+  command:
+  - mesh
+
+- moduleName: "@dxos/cli-pad"
+  describe: Pad management.
+  command:
+  - pad
+
+- moduleName: "@dxos/cli-payment"
+  describe: Payment management.
+  command:
+  - payment
+
+- moduleName: "@dxos/cli-peer"
+  describe: Peer operations.
+  command:
+  - peer
+
+- moduleName: "@dxos/cli-signal"
+  describe: Signal server management.
+  command:
+  - signal
+
+- moduleName: "@dxos/cli-wns"
+  describe: DXNS registry operations.
+  command:
   - wns
   - faucet
   - keys
-  describe: WNS management.
-  moduleName: "@dxos/cli-wns"
-- command:
-  - party
-  describe: Party management.
-  moduleName: "@dxos/cli-data"
-  initRequired: true
-  destroyRequired: true
-- command:
-  - app
-  describe: Application management.
-  moduleName: "@dxos/cli-app"
-- command:
-  - pad
-  describe: Pad management.
-  moduleName: "@dxos/cli-pad"
-- command:
-  - bot
-  describe: Bot operations.
-  moduleName: "@dxos/cli-bot"
-- command:
-  - dashboard
-  describe: Dashboard management.
-  moduleName: "@dxos/cli-dashboard"
-- command:
-  - chess
-  describe: Chess operations.
-  moduleName: "@dxos/cli-chess"
-  initRequired: true
-- command:
-    - console
-  describe: Console management.
-  moduleName: "@dxos/cli-console"
-- command:
-  - peer
-  describe: Peer operations.
-  moduleName: "@dxos/cli-peer"
-- command:
-  - signal
-  describe: Signal operations.
-  moduleName: "@dxos/cli-signal"
-- command:
-  - ipfs
-  describe: IPFS operations.
-  moduleName: "@dxos/cli-ipfs"
-- command:
-  - machine
-  describe: Machine operations.
-  moduleName: "@dxos/cli-machine"
-- command:
-  - mdns
-  describe: MDNS operations.
-  moduleName: "@dxos/cli-mdns"
-- command:
-  - payment
-  describe: Payment management.
-  moduleName: "@dxos/cli-payment"
-  initRequired: true

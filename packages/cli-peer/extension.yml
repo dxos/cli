@@ -1,6 +1,6 @@
 name: dxos/cli-peer
 version: 0.0.1
 displayName: cli-peer
-description: Peer operations.
+description: Peer extension.
 command:
   - peer

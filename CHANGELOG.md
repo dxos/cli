@@ -1,5 +1,152 @@
 # Changelog
 
+### [2.0.34](https://www.github.com/dxos/cli/compare/v2.0.33...v2.0.34) (2020-12-18)
+
+
+### Bug Fixes
+
+* cli-mesh ([#116](https://www.github.com/dxos/cli/issues/116)) ([65c10b2](https://www.github.com/dxos/cli/commit/65c10b21508d27819f371b4379c8dae6699ef160))
+
+### [2.0.33](https://www.github.com/dxos/cli/compare/v2.0.32...v2.0.33) (2020-12-18)
+
+
+### Bug Fixes
+
+* latest deps; pipe warnings to debug ([#117](https://www.github.com/dxos/cli/issues/117)) ([ffd7e83](https://www.github.com/dxos/cli/commit/ffd7e8325fa1a2592e68de86ad8dd2aedb10b44c))
+
+### [2.0.32](https://www.github.com/dxos/cli/compare/v2.0.31...v2.0.32) (2020-12-17)
+
+
+### Bug Fixes
+
+* disable extension fix. ([f27d9ec](https://www.github.com/dxos/cli/commit/f27d9ec6dc212a0703ecf88d914856146b092cde))
+
+### [2.0.31](https://www.github.com/dxos/cli/compare/v2.0.30...v2.0.31) (2020-12-16)
+
+
+### Bug Fixes
+
+* use "machine" for consistency ([c2c3940](https://www.github.com/dxos/cli/commit/c2c39406da17e60b7a236a6dfd70e022c96d225e))
+
+### [2.0.30](https://www.github.com/dxos/cli/compare/v2.0.29...v2.0.30) (2020-12-16)
+
+
+### Bug Fixes
+
+* proper cli extension loading. ([#112](https://www.github.com/dxos/cli/issues/112)) ([995eb9b](https://www.github.com/dxos/cli/commit/995eb9bd6ab52208ad2e1051cd8047f9b160929f))
+
+### [2.0.29](https://www.github.com/dxos/cli/compare/v2.0.28...v2.0.29) (2020-12-15)
+
+
+### Bug Fixes
+
+* update network manager. ([#109](https://www.github.com/dxos/cli/issues/109)) ([9acbf48](https://www.github.com/dxos/cli/commit/9acbf487c691a62f6e2851f53b6aadaa096b8e46))
+
+### [2.0.28](https://www.github.com/dxos/cli/compare/v2.0.27...v2.0.28) (2020-12-14)
+
+
+### Bug Fixes
+
+* add resolutions. ([bfdb818](https://www.github.com/dxos/cli/commit/bfdb818feb7f27c305055bfcab58830fabb52611))
+* extension, not addon ([0f76eff](https://www.github.com/dxos/cli/commit/0f76efff570466019c956e6c15fd318bf49648d5))
+
+### [2.0.27](https://www.github.com/dxos/cli/compare/v2.0.26...v2.0.27) (2020-12-14)
+
+
+### Bug Fixes
+
+* add bot repo & repo version. ([#100](https://www.github.com/dxos/cli/issues/100)) ([1460ef4](https://www.github.com/dxos/cli/commit/1460ef4e127580dc22ae3f43bdccc8ca12734664))
+* add echo cli. ([#105](https://www.github.com/dxos/cli/issues/105)) ([c99696a](https://www.github.com/dxos/cli/commit/c99696abbf38ce95335cfbc9ba942bc46b902062))
+* help output. ([#104](https://www.github.com/dxos/cli/issues/104)) ([cc85d38](https://www.github.com/dxos/cli/commit/cc85d381a153416eac6778845cfd42ab8aad7370))
+
+### [2.0.26](https://www.github.com/dxos/cli/compare/v2.0.25...v2.0.26) (2020-12-12)
+
+
+### Bug Fixes
+
+* stick to old network manager. ([#98](https://www.github.com/dxos/cli/issues/98)) ([aeadd98](https://www.github.com/dxos/cli/commit/aeadd988fd4228be1dedeecb2ae07dfdf9dde204))
+
+### [2.0.25](https://www.github.com/dxos/cli/compare/v2.0.24...v2.0.25) (2020-12-10)
+
+
+### Bug Fixes
+
+* proper deps. ([6efb2c4](https://www.github.com/dxos/cli/commit/6efb2c481c256156a5837bca2b61e325ae41761b))
+
+### [2.0.24](https://www.github.com/dxos/cli/compare/v2.0.23...v2.0.24) (2020-12-09)
+
+
+### Bug Fixes
+
+* deps and cleanup. ([#95](https://www.github.com/dxos/cli/issues/95)) ([0ee0a12](https://www.github.com/dxos/cli/commit/0ee0a1288bbaff07c2c833ffa5de163209b4003e))
+
+### [2.0.23](https://www.github.com/dxos/cli/compare/v2.0.22...v2.0.23) (2020-12-08)
+
+
+### Bug Fixes
+
+* add alias ([#93](https://www.github.com/dxos/cli/issues/93)) ([0905e84](https://www.github.com/dxos/cli/commit/0905e84645085aa24419dae3cfc0c35adf5d76d0))
+
+### [2.0.22](https://www.github.com/dxos/cli/compare/v2.0.21...v2.0.22) (2020-12-08)
+
+
+### Bug Fixes
+
+* add command history. ([#92](https://www.github.com/dxos/cli/issues/92)) ([f9415d8](https://www.github.com/dxos/cli/commit/f9415d8cc40bdb27cfbb529e1cdf2a736f76bb0d))
+* add party commands. ([#91](https://www.github.com/dxos/cli/issues/91)) ([8cdd8bf](https://www.github.com/dxos/cli/commit/8cdd8bfe4b7e98a9f53c16984705dba841d86bda))
+* shorten DNS TTL by default ([62be8bf](https://www.github.com/dxos/cli/commit/62be8bfed4e98818430c1d489fe1d057075caf17))
+
+### [2.0.21](https://www.github.com/dxos/cli/compare/v2.0.20...v2.0.21) (2020-12-02)
+
+
+### Bug Fixes
+
+* add auto-registration ([d86e3b6](https://www.github.com/dxos/cli/commit/d86e3b68fb39b774c9db7194c4d5f9c54d5704b5))
+* include FQDN in registration ([9d4e9be](https://www.github.com/dxos/cli/commit/9d4e9bec747bec94daa8f192799b3ff541e4f234))
+
+### [2.0.20](https://www.github.com/dxos/cli/compare/v2.0.19...v2.0.20) (2020-12-01)
+
+
+### Bug Fixes
+
+* add dep. ([a1ff1bc](https://www.github.com/dxos/cli/commit/a1ff1bc3a0e224d43f302a67617717cbb8c7c435))
+
+### [2.0.19](https://www.github.com/dxos/cli/compare/v2.0.18...v2.0.19) (2020-12-01)
+
+
+### Bug Fixes
+
+* use specific deps. ([55ac8a5](https://www.github.com/dxos/cli/commit/55ac8a53feeefed26c345b1ce4baaf94eb290a4c))
+
+### [2.0.18](https://www.github.com/dxos/cli/compare/v2.0.17...v2.0.18) (2020-12-01)
+
+
+### Bug Fixes
+
+* updates for the latest deps. ([#84](https://www.github.com/dxos/cli/issues/84)) ([53a1f38](https://www.github.com/dxos/cli/commit/53a1f3895c9a551240446f2061e4956a60b33192))
+
+### [2.0.17](https://www.github.com/dxos/cli/compare/v2.0.16...v2.0.17) (2020-11-24)
+
+
+### Bug Fixes
+
+* dx machine creds for CI ([986bbc8](https://www.github.com/dxos/cli/commit/986bbc832b1977335ccf4a8f6ce05751a3e40f98))
+
+### [2.0.16](https://www.github.com/dxos/cli/compare/v2.0.15...v2.0.16) (2020-11-24)
+
+
+### Bug Fixes
+
+* add file operations to `dx ipfs` ([#77](https://www.github.com/dxos/cli/issues/77)) ([5622261](https://www.github.com/dxos/cli/commit/562226131f29ce28bbdd6882e8ad2633bf4fc5d6))
+* add Let's Encrypt support ([#76](https://www.github.com/dxos/cli/issues/76)) ([46e0541](https://www.github.com/dxos/cli/commit/46e05413e035602b33df4c67d1eab32ca0c9ff46))
+
+### [2.0.15](https://www.github.com/dxos/cli/compare/v2.0.14...v2.0.15) (2020-11-24)
+
+
+### Bug Fixes
+
+* Get rid of jq. ([#78](https://www.github.com/dxos/cli/issues/78)) ([386880e](https://www.github.com/dxos/cli/commit/386880ee666e6fad395892799cc0a97c44fc85a8))
+
 ### [2.0.14](https://www.github.com/dxos/cli/compare/v2.0.13...v2.0.14) (2020-11-20)
 
 
@@ -27,7 +174,7 @@
 
 ### Bug Fixes
 
-* Add ENV mappings for wire machine ([d74f2f9](https://www.github.com/dxos/cli/commit/d74f2f9800409d4d99ead624e3a7148fe2a1becc))
+* Add ENV mappings for dx machine ([d74f2f9](https://www.github.com/dxos/cli/commit/d74f2f9800409d4d99ead624e3a7148fe2a1becc))
 * delete DNS records, register DNS at creation ([458723e](https://www.github.com/dxos/cli/commit/458723e8aad054436fa330637566b69b082736a7))
 
 ### [2.0.10](https://www.github.com/dxos/cli/compare/v2.0.9...v2.0.10) (2020-11-18)
@@ -35,7 +182,7 @@
 
 ### Bug Fixes
 
-* Add wire machine delete and kube tags. ([bfb9201](https://www.github.com/dxos/cli/commit/bfb920148918f7b32031fb2a60a5a1624457970a))
+* Add dx machine delete and kube tags. ([bfb9201](https://www.github.com/dxos/cli/commit/bfb920148918f7b32031fb2a60a5a1624457970a))
 
 ### [2.0.9](https://www.github.com/dxos/cli/compare/v2.0.8...v2.0.9) (2020-11-18)
 

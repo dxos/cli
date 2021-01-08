@@ -1,14 +1,14 @@
 //
-// Copyright 2020 DxOS.
+// Copyright 2020 DXOS.
 //
 
 import fs from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
 import pick from 'lodash.pick';
 
-import { readFile, writeFile } from '@dxos/cli-core';
+import { DEFAULT_PACKAGE_JSON_ATTRIBUTES, PACKAGE_JSON_FILENAME, readFile, writeFile } from '@dxos/cli-core';
 
-import { APP_CONFIG_FILENAME, DEFAULT_PACKAGE_JSON_ATTRIBUTES, PACKAGE_JSON_FILENAME } from '../config';
+import { APP_CONFIG_FILENAME } from '../config';
 
 const DEFAULT_BUILD = 'yarn webpack -p';
 

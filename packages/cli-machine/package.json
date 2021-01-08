@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-machine",
-  "version": "2.0.14-alpha.0",
-  "description": "DxOS Machine CLI",
+  "version": "2.0.34-alpha.0",
+  "description": "DXOS Machine CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-machine#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -13,7 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-machine": "bin/wire-machine.js"
+    "wire-machine": "bin/wire-machine.js",
+    "dx-machine": "bin/wire-machine.js"
   },
   "files": [
     "bin/",
@@ -35,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/async": "^1.0.0-beta.10",
-    "@dxos/cli-core": "^2.0.14-alpha.0",
+    "@dxos/cli-core": "^2.0.34-alpha.0",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
@@ -44,7 +45,7 @@
     "lodash-clean": "^2.2.1",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

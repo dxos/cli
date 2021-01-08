@@ -6,3 +6,4 @@ initRequired: true
 destroyRequired: true
 command:
   - party
+  - storage

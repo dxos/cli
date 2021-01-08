@@ -9,9 +9,9 @@ import readPkgUp from 'read-pkg-up';
 import yaml from 'js-yaml';
 
 import { App } from './app';
+import { getConfig, getActiveProfilePath } from './config';
 import { getLoggers } from './util/log';
 import { loadCerts } from './util/certs';
-import { getConfig, getActiveProfilePath } from './config';
 
 export const EXTENSION_CONFIG_FILENAME = 'extension.yml';
 
@@ -24,7 +24,7 @@ const COMMANDS_PERMIT_NO_PROFILE = [
   'services'
 ];
 
-const { log, logError } = getLoggers();
+const { log, debugLog, logError } = getLoggers();
 
 /**
  * Provides command executor in form of CLI extension.
@@ -43,6 +43,8 @@ const getRunnableExtension = ({ modules, getModules, version, options = {} }) =>
  */
 const getRunnable = ({ modules, getModules, version, init, destroy, options = {} }) => {
   return async () => {
+    // Pipe warnings to logs.
+    console.warn = debugLog;
     loadCerts();
 
     const argv = process.argv.slice(2);
@@ -53,7 +55,7 @@ const getRunnable = ({ modules, getModules, version, init, destroy, options = {}
 
     if (!profileExists && !help && !COMMANDS_PERMIT_NO_PROFILE.includes(command)) {
       log('No active profile. Enter the following command to set the active profile:');
-      log('wire profile set <NAME>');
+      log('dx profile set <NAME>');
       process.exit(1);
     }
 
@@ -61,7 +63,7 @@ const getRunnable = ({ modules, getModules, version, init, destroy, options = {}
       log(`Profile: ${profilePath}`);
     }
 
-    // These defaults are required as during 'wire profile init', there is no config to load, and so no client can be created.
+    // These defaults are required as during 'dx profile init', there is no config to load, and so no client can be created.
     let config = { get: () => ({}) };
 
     // Load config if profile exists.
@@ -69,7 +71,7 @@ const getRunnable = ({ modules, getModules, version, init, destroy, options = {}
       config = await getConfig(profilePath);
     }
 
-    const app = new App({ modules, getModules, config, options, version });
+    const app = new App({ modules, getModules, config, options, version, profilePath });
 
     try {
       if (init) {

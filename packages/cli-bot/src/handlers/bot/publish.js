@@ -9,9 +9,9 @@ import path from 'path';
 import set from 'lodash.set';
 import semverInc from 'semver/functions/inc';
 
-import { BOT_CONFIG_FILENAME } from '@dxos/botkit';
-import { readFile, writeFile } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
+
+import { getBotConfig, updateBotConfig } from '../../config';
 
 export const publish = config => async () => {
   // Upload fails without trailing slash.
@@ -42,7 +42,7 @@ export const publish = config => async () => {
   }));
 
   // Update CIDs in bot.yml.
-  const botConfig = await readFile(BOT_CONFIG_FILENAME);
+  const botConfig = await getBotConfig();
 
   uploads.forEach(upload => {
     const [platform, arch] = path.parse(upload.file).name.split('-');
@@ -51,7 +51,7 @@ export const publish = config => async () => {
   });
 
   botConfig.version = semverInc(botConfig.version, 'patch');
-  await writeFile(botConfig, BOT_CONFIG_FILENAME);
+  await updateBotConfig(botConfig);
 
   log('Package contents have changed.');
   return botConfig;
