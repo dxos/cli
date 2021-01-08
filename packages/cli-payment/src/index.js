@@ -9,10 +9,10 @@ import { PaymentModule } from './modules/payment';
 
 import info from '../extension.yml';
 
-const WIRE_CLI_BASE_COMMAND = 'wire';
+const CLI_BASE_COMMAND = 'dx';
 
-const WIRE_CONFIG = {
-  prompt: WIRE_CLI_BASE_COMMAND,
+const CLI_CONFIG = {
+  prompt: CLI_BASE_COMMAND,
   baseCommand: '',
   enableInteractive: true
 };
@@ -28,7 +28,7 @@ const initPaymentCliState = async (state) => {
 
 module.exports = createCLI(
   {
-    options: WIRE_CONFIG,
+    options: CLI_CONFIG,
     modules: [PaymentModule],
     dir: __dirname,
     main: !module.parent,

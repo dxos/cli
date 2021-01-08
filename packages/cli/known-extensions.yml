@@ -43,7 +43,6 @@
 
 - moduleName: "@dxos/cli-mdns"
   describe: MDNS operations.
-  moduleName: "@dxos/cli-mdns"
   command:
   - mdns
 
@@ -61,6 +60,7 @@
   describe: Payment management.
   command:
   - payment
+  initRequired: true
 
 - moduleName: "@dxos/cli-peer"
   describe: Peer operations.
