@@ -15,6 +15,8 @@ export const KeysModule = () => ({
     .command({
       command: ['generate'],
       describe: 'Generate key.',
+      builder: yargs => yargs
+        .option('mnemonic', { type: 'array' }),
       handler: asyncHandler(async argv => {
         const { json } = argv;
 
