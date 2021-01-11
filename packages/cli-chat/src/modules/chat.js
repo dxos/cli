@@ -167,12 +167,12 @@ class Messenger extends EventEmitter {
 /**
  * Peer CLI module.
  */
-export const PeerModule = ({ getClient }) => ({
-  command: ['$0', 'peer'],
+export const ChatModule = ({ getClient }) => ({
+  command: ['$0', 'chat'],
   describe: 'Peer-to-peer messaging.',
   builder: yargs => yargs
     .command({
-      command: ['messenger'],
+      command: ['open [topic]'],
       describe: 'Messaging between peers by topic.',
       builder: yargs => yargs
         .option('topic', { alias: 't', type: 'string' })

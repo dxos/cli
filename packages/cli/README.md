@@ -216,12 +216,12 @@ $ dx app register help
 | :------------ |
 | [App CLI](https://github.com/dxos/cli/blob/master/packages/cli-app/README.md) |
 | [Bot CLI](https://github.com/dxos/cli/blob/master/packages/cli-bot/README.md) |
+| [Chat CLI](https://github.com/dxos/cli/blob/master/packages/cli-chat/README.md) |
 | [Dashboard CLI](https://github.com/dxos/cli/blob/master/packages/cli-dashboard/README.md) |
 | [Data CLI](https://github.com/dxos/cli/blob/master/packages/cli-data/README.md) |
 | [IPFS CLI](https://github.com/dxos/cli/blob/master/packages/cli-ipfs/README.md) |
 | [Machine CLI](https://github.com/dxos/cli/blob/master/packages/cli-machine/README.md) |
 | [MDNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-mdns/README.md) |
 | [Pad CLI](https://github.com/dxos/cli/blob/master/packages/cli-pad/README.md) |
-| [Peer CLI](https://github.com/dxos/cli/blob/master/packages/cli-peer/README.md) |
 | [Signal CLI](https://github.com/dxos/cli/blob/master/packages/cli-signal/README.md) |
 | [WNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-wns/README.md) |
