@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-signal": "bin/wire-signal.js",
-    "dx-signal": "bin/wire-signal.js"
+    "wire-signal": "bin/dx-signal.js",
+    "dx-signal": "bin/dx-signal.js"
   },
   "files": [
     "bin/",

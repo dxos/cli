@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-bot": "bin/wire-bot.js",
-    "dx-bot": "bin/wire-bot.js"
+    "wire-bot": "bin/dx-bot.js",
+    "dx-bot": "bin/dx-bot.js"
   },
   "files": [
     "bin/",

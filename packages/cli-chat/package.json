@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-peer": "bin/wire-peer.js",
-    "dx-peer": "bin/wire-peer.js"
+    "wire-chat": "bin/dx-chat.js",
+    "dx-chat": "bin/dx-chat.js"
   },
   "files": [
     "bin/",
