@@ -13,6 +13,11 @@
   command:
   - bot
 
+- moduleName: "@dxos/cli-chat"
+  describe: Chat operations.
+  command:
+  - chat
+
 - moduleName: "@dxos/cli-console"
   describe: KUBE console management.
   command:
@@ -30,6 +35,11 @@
   describe: ECHO operations.
   command:
   - echo
+
+- moduleName: "@dxos/cli-halo"
+  describe: Halo operations.
+  command:
+  - halo
 
 - moduleName: "@dxos/cli-ipfs"
   describe: IPFS operations.

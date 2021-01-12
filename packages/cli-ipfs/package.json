@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-ipfs": "bin/wire-ipfs.js",
-    "dx-ipfs": "bin/wire-ipfs.js"
+    "wire-ipfs": "bin/dx-ipfs.js",
+    "dx-ipfs": "bin/dx-ipfs.js"
   },
   "files": [
     "bin/",

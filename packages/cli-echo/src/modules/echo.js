@@ -24,7 +24,6 @@ export const EchoModule = ({ stateManager }) => ({
   command: ['echo'],
   describe: 'ECHO database.',
   builder: yargs => yargs
-    .option('echo-key')
 
     .command({
       command: ['list'],

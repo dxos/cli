@@ -25,6 +25,7 @@
     "clean": "rm -rf ./dist",
     "dev": "babel-node ./src/main.js",
     "dx": "babel-node ./src/main.js",
+    "getExtensions": "./scripts/get-extensions.sh",
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
@@ -71,6 +72,7 @@
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-inline-import": "^3.0.0",
     "jest": "^25.1.0",
+    "jq.node": "^2.2.0",
     "semistandard": "14.2.0"
   },
   "semistandard": {

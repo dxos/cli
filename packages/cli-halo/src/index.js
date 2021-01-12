@@ -4,12 +4,12 @@
 
 import { createCLI } from '@dxos/cli-core';
 
-import { PeerModule } from './modules/peer';
+import { HaloModule } from './modules/halo';
 
 import info from '../extension.yml';
 
 module.exports = createCLI({
-  modules: [PeerModule],
+  modules: [HaloModule],
   dir: __dirname,
   main: !module.parent,
   info

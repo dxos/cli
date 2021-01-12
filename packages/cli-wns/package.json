@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-wns": "bin/wire-wns.js",
-    "dx-wns": "bin/wire-wns.js"
+    "wire-wns": "bin/dx-wns.js",
+    "dx-wns": "bin/dx-wns.js"
   },
   "files": [
     "bin/",

@@ -1,8 +1,8 @@
 {
-  "name": "@dxos/cli-peer",
+  "name": "@dxos/cli-chat",
   "version": "2.0.34-alpha.0",
-  "description": "DXOS Peer CLI",
-  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-peer#readme",
+  "description": "DXOS Chat CLI",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-chat#readme",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-peer": "bin/wire-peer.js",
-    "dx-peer": "bin/wire-peer.js"
+    "wire-chat": "bin/dx-chat.js",
+    "dx-chat": "bin/dx-chat.js"
   },
   "files": [
     "bin/",
@@ -38,9 +38,9 @@
     "@dxos/cli-core": "^2.0.34-alpha.0",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@dxos/network-manager": "1.0.0-beta.119",
-    "@dxos/protocol-plugin-messenger": "1.1.0-alpha.4",
-    "@dxos/protocol-plugin-presence": "1.1.0-alpha.4",
+    "@dxos/network-manager": "~1.0.6",
+    "@dxos/protocol-plugin-messenger": "~1.0.6",
+    "@dxos/protocol-plugin-presence": "~1.0.6",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^16.2.0"

@@ -66,15 +66,16 @@ export class App {
       demand: false
     })
 
-    // TODO(burdon): Document or remove?
+    // Args to pass through to underlying binary (e.g. registry, signal, etc.).
     .option(FORWARD_OPTION, {
-      type: 'json'
+      type: 'json',
+      hidden: true
     })
 
-    // Required for extensions.
-    // TODO(burdon): Move to registry extension?
+    // Special case - required for extensions.
     .option('mnemonic', {
-      type: 'array'
+      type: 'array',
+      hidden: true
     })
 
     // http://yargs.js.org/docs/#api-help
@@ -212,7 +213,8 @@ export class App {
         return;
       }
 
-      // TODO(burdon): Document?
+      // Transform args to forward into format that can be parsed by yargs.
+      // E.g. `dx signal start -- --foo bar` would be transformed into `dx signal start --forward "{ args: ['--foo', 'bar']}"`
       const forwardIndex = this._args.findIndex(arg => arg === '--');
       if (forwardIndex !== -1) {
         const forwardArgs = JSON.stringify({ args: this._args.slice(forwardIndex + 1) });

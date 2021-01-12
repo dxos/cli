@@ -13,10 +13,10 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-app": "bin/wire-app.js",
-    "wire-app-server": "bin/wire-app-server.js",
-    "dx-app": "bin/wire-app.js",
-    "dx-app-server": "bin/wire-app-server.js"
+    "wire-app": "bin/dx-app.js",
+    "wire-app-server": "bin/dx-app-server.js",
+    "dx-app": "bin/dx-app.js",
+    "dx-app-server": "bin/dx-app-server.js"
   },
   "files": [
     "bin/",
