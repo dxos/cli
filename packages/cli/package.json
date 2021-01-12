@@ -72,8 +72,9 @@
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-inline-import": "^3.0.0",
     "jest": "^25.1.0",
-    "jq.node": "^2.2.0",
-    "semistandard": "14.2.0"
+    "json2yaml": "^1.1.0",
+    "semistandard": "14.2.0",
+    "yaml2json": "^1.0.2"
   },
   "semistandard": {
     "parser": "babel-eslint",
