@@ -20,12 +20,11 @@
     "dist/es"
   ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
-    "build:watch": "yarn run build --watch",
+    "build": "npm run prebuild && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
     "clean": "rm -rf ./dist",
     "dev": "babel-node ./src/main.js",
     "dx": "babel-node ./src/main.js",
-    "getExtensions": "./scripts/get-extensions.sh",
+    "prebuild": "./scripts/get-extensions.sh",
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
