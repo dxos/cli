@@ -11,8 +11,8 @@ import { Messenger as MessengerPlugin } from '@dxos/protocol-plugin-messenger';
 import { Presence } from '@dxos/protocol-plugin-presence';
 
 import { asyncHandler } from '@dxos/cli-core';
-import { humanize, keyToBuffer, keyToString } from '@dxos/crypto';
-import { protocolFactory } from '@dxos/network-manager';
+import { humanize, keyToBuffer, keyToString, PublicKey } from '@dxos/crypto';
+import { protocolFactory, MMSTTopology } from '@dxos/network-manager';
 import { log } from '@dxos/debug';
 
 const DEFAULT_TOPIC = '0000000000000000000000000000000000000000000000000000000000000000';
@@ -167,12 +167,12 @@ class Messenger extends EventEmitter {
 /**
  * Peer CLI module.
  */
-export const PeerModule = ({ getClient }) => ({
-  command: ['$0', 'peer'],
+export const ChatModule = ({ getClient }) => ({
+  command: ['$0', 'chat'],
   describe: 'Peer-to-peer messaging.',
   builder: yargs => yargs
     .command({
-      command: ['messenger'],
+      command: ['open [topic]'],
       describe: 'Messaging between peers by topic.',
       builder: yargs => yargs
         .option('topic', { alias: 't', type: 'string' })
@@ -182,24 +182,24 @@ export const PeerModule = ({ getClient }) => ({
         const { generateTopic } = argv;
 
         let { topic } = argv;
-        let topicAsBuffer;
 
         if (generateTopic && !topic) {
-          topicAsBuffer = keyPair().publicKey;
-          topic = keyToString(topicAsBuffer);
+          topic = keyToString(keyPair().publicKey);
         }
 
         topic = topic || DEFAULT_TOPIC;
-
-        if (!topicAsBuffer) {
-          topicAsBuffer = keyToBuffer(topic);
-        }
 
         const peerId = keyPair().publicKey;
         const messenger = new Messenger(peerId, topic);
 
         const client = await getClient();
-        await client.networkManager.joinProtocolSwarm(topicAsBuffer, messenger.createProtocolProvider());
+
+        await client.networkManager.joinProtocolSwarm({
+          topic: PublicKey.from(keyToBuffer(topic)),
+          protocol: messenger.createProtocolProvider(),
+          peerId: PublicKey.from(peerId),
+          topology: new MMSTTopology()
+        });
 
         await messenger.start();
       })

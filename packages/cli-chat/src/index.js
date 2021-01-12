@@ -4,12 +4,12 @@
 
 import { createCLI } from '@dxos/cli-core';
 
-import { PeerModule } from './modules/peer';
+import { ChatModule } from './modules/chat';
 
 import info from '../extension.yml';
 
 module.exports = createCLI({
-  modules: [PeerModule],
+  modules: [ChatModule],
   dir: __dirname,
   main: !module.parent,
   info
