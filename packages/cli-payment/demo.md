@@ -37,7 +37,8 @@ Branches:
 In CLI repo root:
 
 ```bash
-$ yarn link "@dxos/sdk"
+$ yarn link "@wirelineio/registry-client"
+$ yarn link "@dxos/client"
 $ yarn link "@dxos/botkit"
 $ yarn link "@dxos/botkit-client"
 $ yarn link "@dxos/cli-chess"
@@ -581,5 +582,4 @@ After channel setup, the initiator can transfer ERC20 tokens directly to the cha
 
 ## Troubleshooting
 
-* CLI error on party create (https://github.com/dxos/cli/issues/83)
 * Check signal server config in CLI profile if CLI can't connect to Bot Factory.
