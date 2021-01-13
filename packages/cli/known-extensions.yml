@@ -90,7 +90,7 @@
     describe: "Payment extension."
     command:
       - "payment"
-    initRequired: false
+    initRequired: true
   -
     moduleName: "@dxos/cli-signal"
     describe: "Signal server extension."
