@@ -20,12 +20,11 @@
     "dist/es"
   ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
-    "build:watch": "yarn run build --watch",
+    "build": "npm run prebuild && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
     "clean": "rm -rf ./dist",
     "dev": "babel-node ./src/main.js",
     "dx": "babel-node ./src/main.js",
-    "getExtensions": "./scripts/get-extensions.sh",
+    "prebuild": "./scripts/get-extensions.sh &> /dev/null",
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
@@ -72,8 +71,9 @@
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-inline-import": "^3.0.0",
     "jest": "^25.1.0",
-    "jq.node": "^2.2.0",
-    "semistandard": "14.2.0"
+    "json2yaml": "^1.1.0",
+    "semistandard": "14.2.0",
+    "yaml2json": "^1.0.2"
   },
   "semistandard": {
     "parser": "babel-eslint",
