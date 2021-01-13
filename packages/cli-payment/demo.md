@@ -34,11 +34,33 @@ Branches:
 * `cli` => ashwinp-payment-cli
 * `yarn link` repos together
 
+In CLI repo root:
+
+```bash
+$ yarn link "@dxos/sdk"
+$ yarn link "@dxos/botkit"
+$ yarn link "@dxos/botkit-client"
+$ yarn link "@dxos/cli-chess"
+```
+
+Update `cli/packages/cli/known-extensions.yml` and add an entry for the Chess CLI:
+
+```yaml
+  -
+    moduleName: "@dxos/cli-chess"
+    describe: "Chess extension."
+    command:
+      - "chess"
+    initRequired: true
+```
+
+Disable `prebuild` step in `cli/package.json` to prevent re-generation of the above file and then build the CLI repo again.
+
 Local CLI alias:
 
 ```bash
-$ alias wire-dev
-wire-dev='node ~/projects/dxos/cli/packages/cli/bin/wire.js'
+$ alias dx-dev
+dx-dev='node ~/projects/dxos/cli/packages/cli/bin/dx.js'
 ```
 
 ## Demo
@@ -48,37 +70,37 @@ wire-dev='node ~/projects/dxos/cli/packages/cli/bin/wire.js'
 Charlie inspects payment server info, starts interactive terminal:
 
 ```bash
-$ wire-dev --profile charlie payment server info
+$ dx-dev --profile charlie payment server info
 {
   "id": "vector8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
   "address": "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832",
   "balance": "0.0"
 }
-[wire]>
+[dx]>
 ```
 
 Dave inspects payment server info, starts interactive terminal:
 
 ```bash
-$ wire-dev --profile dave payment server info
+$ dx-dev --profile dave payment server info
 {
   "id": "vector5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3",
   "address": "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63",
   "balance": "0.0"
 }
-[wire]>
+[dx]>
 ```
 
 Fund Charlie's server address using the faucet:
 
 ```bash
-$ wire-dev --profile faucet payment wallet send 0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832 100
+$ dx-dev --profile faucet payment wallet send 0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832 100
 ```
 
 Charlie inspects server balance again in existing CLI session:
 
 ```bash
-[wire]> payment server info
+[dx]> payment server info
 {
   "id": "vector8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
   "address": "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832",
@@ -89,14 +111,14 @@ Charlie inspects server balance again in existing CLI session:
 Charlie and Dave list channels on their payment servers:
 
 ```bash
-[wire]> payment channel list
+[dx]> payment channel list
 []
 ```
 
 Charlie sets up a channel between himself and Dave:
 
 ```bash
-[wire]> payment channel setup vector5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3
+[dx]> payment channel setup vector5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3
 {
   "channelAddress": "0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859"
 }
@@ -105,7 +127,7 @@ Charlie sets up a channel between himself and Dave:
 Charlie and Dave again list channels on their payment servers:
 
 ```bash
-[wire]> payment channel list
+[dx]> payment channel list
 [
   "0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859"
 ]
@@ -114,34 +136,34 @@ Charlie and Dave again list channels on their payment servers:
 Inspect channel balances:
 
 ```bash
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {}
 ```
 
 Charlie deposits funds into the channel:
 
 ```bash
-[wire]> payment channel deposit 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 10
+[dx]> payment channel deposit 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 10
 ```
 
 Charlie inspects server and channel balances:
 
 ```bash
-[wire]> payment server info
+[dx]> payment server info
 {
   "id": "indra8WxfqTu8EC2FLM6g4y6TgbSrx4EPP9jeDFQk3VBsBM7Jv8NakR",
   "address": "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832",
   "balance": "89.999832"
 }
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {}
 ```
 
 Charlie reconciles channel balance with on-chain deposit:
 
 ```bash
-[wire]> payment channel reconcile 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment channel reconcile 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {
   "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.0",
   "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "10.0"
@@ -151,7 +173,7 @@ Charlie reconciles channel balance with on-chain deposit:
 Dave inspects channel balances:
 
 ```bash
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {
   "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.0",
   "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "10.0"
@@ -161,7 +183,7 @@ Dave inspects channel balances:
 Either side can inspect detailed channel state:
 
 ```bash
-[wire]> payment channel info 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment channel info 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {
   "assetIds": [
     "0x0000000000000000000000000000000000000000"
@@ -232,13 +254,13 @@ Either side can inspect detailed channel state:
 Charlie creates a hash-locked transfer (micropayment) for Dave:
 
 ```bash
-[wire]> payment transfer create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 .1
+[dx]> payment transfer create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 .1
 {
   "channelAddress": "0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859",
   "transferId": "0x7998d9147729f2dbc9d4356f3690ac2cbc61a93f9bc65ee92578a48eb5d332c8",
   "preImage": "0x207c471b020e4f332d5245fdd0f8fb50b0aebb6e51d6816d6449fa63a58b9055"
 }
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {
   "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.0",
   "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "9.9"
@@ -248,8 +270,8 @@ Charlie creates a hash-locked transfer (micropayment) for Dave:
 Dave resolves the transfer using the pre-image provided by Charlie:
 
 ```bash
-[wire]> payment transfer resolve 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0x7998d9147729f2dbc9d4356f3690ac2cbc61a93f9bc65ee92578a48eb5d332c8 0x207c471b020e4f332d5245fdd0f8fb50b0aebb6e51d6816d6449fa63a58b9055
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment transfer resolve 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0x7998d9147729f2dbc9d4356f3690ac2cbc61a93f9bc65ee92578a48eb5d332c8 0x207c471b020e4f332d5245fdd0f8fb50b0aebb6e51d6816d6449fa63a58b9055
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {
   "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.1",
   "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "9.9"
@@ -259,15 +281,15 @@ Dave resolves the transfer using the pre-image provided by Charlie:
 Charlie create a coupon:
 
 ```bash
-[wire]> payment coupon create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0.1
+[dx]> payment coupon create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0.1
 eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDBmODgyOTA2MmRmNjk1NjQ1NWJjMzg3OThmYjJiN2Q3NDkyMmJlOGYwMzhhMTk3OTNjNWE5N2Q4ZDQ4ODI4YTAiLCJwcmVJbWFnZSI6IjB4ZmI1MjEzNzBkYTJmNDRmODA2YjU1NjI3OTE4ODI2MWJmYWQ4NDQwNDY0MTVjNDk3ZmEzMDJmMWQyNWQ1ZjMyMSJ9
 ```
 
 Dave redeems the coupon:
 
 ```bash
-[wire]> payment coupon redeem eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDBmODgyOTA2MmRmNjk1NjQ1NWJjMzg3OThmYjJiN2Q3NDkyMmJlOGYwMzhhMTk3OTNjNWE5N2Q4ZDQ4ODI4YTAiLCJwcmVJbWFnZSI6IjB4ZmI1MjEzNzBkYTJmNDRmODA2YjU1NjI3OTE4ODI2MWJmYWQ4NDQwNDY0MTVjNDk3ZmEzMDJmMWQyNWQ1ZjMyMSJ9
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment coupon redeem eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDBmODgyOTA2MmRmNjk1NjQ1NWJjMzg3OThmYjJiN2Q3NDkyMmJlOGYwMzhhMTk3OTNjNWE5N2Q4ZDQ4ODI4YTAiLCJwcmVJbWFnZSI6IjB4ZmI1MjEzNzBkYTJmNDRmODA2YjU1NjI3OTE4ODI2MWJmYWQ4NDQwNDY0MTVjNDk3ZmEzMDJmMWQyNWQ1ZjMyMSJ9
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {
   "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.2",
   "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "9.8"
@@ -277,7 +299,7 @@ Dave redeems the coupon:
 Reedeming a used pre-image/coupon fails:
 
 ```bash
-[wire]> payment coupon redeem eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDBmODgyOTA2MmRmNjk1NjQ1NWJjMzg3OThmYjJiN2Q3NDkyMmJlOGYwMzhhMTk3OTNjNWE5N2Q4ZDQ4ODI4YTAiLCJwcmVJbWFnZSI6IjB4ZmI1MjEzNzBkYTJmNDRmODA2YjU1NjI3OTE4ODI2MWJmYWQ4NDQwNDY0MTVjNDk3ZmEzMDJmMWQyNWQ1ZjMyMSJ9
+[dx]> payment coupon redeem eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDBmODgyOTA2MmRmNjk1NjQ1NWJjMzg3OThmYjJiN2Q3NDkyMmJlOGYwMzhhMTk3OTNjNWE5N2Q4ZDQ4ODI4YTAiLCJwcmVJbWFnZSI6IjB4ZmI1MjEzNzBkYTJmNDRmODA2YjU1NjI3OTE4ODI2MWJmYWQ4NDQwNDY0MTVjNDk3ZmEzMDJmMWQyNWQ1ZjMyMSJ9
 
 Error: Request failed with status code 500
 ```
@@ -285,14 +307,14 @@ Error: Request failed with status code 500
 Charlie/Dave withdraw fund from the channel to their server (vector bug?):
 
 ```bash
-[wire]> payment channel withdraw 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0.1
+[dx]> payment channel withdraw 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0.1
 
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {
   "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.1",
   "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "9.8"
 }
-[wire]> payment server info
+[dx]> payment server info
 {
   "id": "indra5ArRsL26avPNyfvJd2qMAppsEVeJv11n31ex542T9gCd5B1cP3",
   "address": "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63",
@@ -322,7 +344,7 @@ record:
 Charlie signs the contract and sends it over to Dave:
 
 ```bash
-$ wire-dev --profile charlie wns record sign --filename contract.yml > contract-charlie-signed.yml
+$ dx-dev --profile charlie wns record sign --filename contract.yml > contract-charlie-signed.yml
 $ cat contract-charlie-signed.yml
 record:
   type: contract
@@ -344,7 +366,7 @@ signatures:
 Dave inspects and signs the contract:
 
 ```bash
-$ wire-dev --profile dave wns record sign --filename contract-charlie-signed.yml > contract-charlie-n-dave-signed.yml
+$ dx-dev --profile dave wns record sign --filename contract-charlie-signed.yml > contract-charlie-n-dave-signed.yml
 $ cat contract-charlie-n-dave-signed.yml
 record:
   type: contract
@@ -369,14 +391,14 @@ signatures:
 Either party can publish the final signed contract on-chain, noting the resulting contract ID:
 
 ```bash
-$ wire-dev --profile charlie wns record publish --filename contract-charlie-n-dave-signed.yml --raw-payload
+$ dx-dev --profile charlie wns record publish --filename contract-charlie-n-dave-signed.yml --raw-payload
 bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
 ```
 
 Inspect the on-chain contract signed by both parties:
 
 ```bash
-$ wire-dev --profile charlie wns record get --id bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
+$ dx-dev --profile charlie wns record get --id bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
 [
   {
     "id": "bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q",
@@ -410,7 +432,7 @@ Dave starts a Bot Factory (running in local dev mode):
 $ cd ~/projects/dxos/arena/bots/chess-bot
 $ rm service.yml
 
-$ DEBUG="client,bot-factory" WIRE_PAYMENT_ENDPOINT=http://localhost:8004 wire-dev --profile dave bot factory start --local-dev
+$ DEBUG="client,bot-factory" WIRE_PAYMENT_ENDPOINT=http://localhost:8004 dx-dev --profile dave bot factory start --local-dev
   bot-factory Started BotFactory with node,native containers. +0ms
   bot-factory {"started":true,"topic":"58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27","peerId":"58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27","localDev":true,"controlTopic":"38f544064e2660bc8332aaac78625587262736782aa0ba5e9778715455abb81a"} +51ms
 ```
@@ -418,7 +440,7 @@ $ DEBUG="client,bot-factory" WIRE_PAYMENT_ENDPOINT=http://localhost:8004 wire-de
 Charlie spawns a Chess Bot, sending an in-band micropayment (copy `topic` from Bot Factory console):
 
 ```bash
-$ DEBUG=botkit-client wire-dev --profile charlie bot spawn --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
+$ DEBUG=botkit-client dx-dev --profile charlie bot spawn --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
 ```
 
 Dave's terminal:
@@ -446,12 +468,12 @@ botId  0df9c4e649bcaa37d9adccf15365f083933b7dc9e51ed64ee36d21eb3d615845
 Charlie spawns a Chess Bot, using a coupon created in the CLI for payment:
 
 ```bash
-[wire]> payment coupon create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0.1 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
+[dx]> payment coupon create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 0.1 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q
 eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDlkMzRiY2NhNzBkYTIwMjdmZjljMGM3YjVlMjAyODFiNjJlZGVmNmEzMmQ5NTQ2N2Y2MWZjMzVjZmEwN2I4NzUiLCJwcmVJbWFnZSI6IjB4ZjUyY2Y3NjBkNGUxNDAxZTFhODliMmVlMWNlNjUwZjYyNGUxYzVmNTFiZmFkYmZkMzE1NzExMzk5YWIyMGQ0NCIsImNvbnRyYWN0SWQiOiJiYWZ5cmVpZnNtY2V5cXdmNGxuemM1aGN5cXFveno2bGhmenNqYmkyemh2bXVkZnQ1YWJhcWNkb2YzcSJ9
 ```
 
 ```bash
-$ DEBUG=botkit-client wire-dev --profile charlie bot spawn --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --coupon eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDlkMzRiY2NhNzBkYTIwMjdmZjljMGM3YjVlMjAyODFiNjJlZGVmNmEzMmQ5NTQ2N2Y2MWZjMzVjZmEwN2I4NzUiLCJwcmVJbWFnZSI6IjB4ZjUyY2Y3NjBkNGUxNDAxZTFhODliMmVlMWNlNjUwZjYyNGUxYzVmNTFiZmFkYmZkMzE1NzExMzk5YWIyMGQ0NCIsImNvbnRyYWN0SWQiOiJiYWZ5cmVpZnNtY2V5cXdmNGxuemM1aGN5cXFveno2bGhmenNqYmkyemh2bXVkZnQ1YWJhcWNkb2YzcSJ9
+$ DEBUG=botkit-client dx-dev --profile charlie bot spawn --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --coupon eyJjaGFubmVsQWRkcmVzcyI6IjB4NDc4MDlDRDMyMThjNjlhQjIxQmVFZThhZDZhN2I3RWM1RTAyNjg1OSIsInRyYW5zZmVySWQiOiIweDlkMzRiY2NhNzBkYTIwMjdmZjljMGM3YjVlMjAyODFiNjJlZGVmNmEzMmQ5NTQ2N2Y2MWZjMzVjZmEwN2I4NzUiLCJwcmVJbWFnZSI6IjB4ZjUyY2Y3NjBkNGUxNDAxZTFhODliMmVlMWNlNjUwZjYyNGUxYzVmNTFiZmFkYmZkMzE1NzExMzk5YWIyMGQ0NCIsImNvbnRyYWN0SWQiOiJiYWZ5cmVpZnNtY2V5cXdmNGxuemM1aGN5cXFveno2bGhmenNqYmkyemh2bXVkZnQ1YWJhcWNkb2YzcSJ9
 
   botkit-client Bot factory peer connected +0ms
   botkit-client Sending spawn request for bot undefined +1ms
@@ -465,18 +487,18 @@ Spending an used coupon doesn't work (left as an exercise to the reader).
 Charlie create a Party and invites a spawned Bot, sending a micropayment in-band:
 
 ```bash
-$ DEBUG=botkit-client wire-dev --profile charlie party create
+$ DEBUG=botkit-client dx-dev --profile charlie party create
 {
   "partyKey": "dd2382327900a5de068fb8ac88370f3293e7bf3f5c7e1205649fd1e0eb360d95"
 }
 
-[wire]> bot invite --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q --bot-id 918e615bc21a22b13c5fa6e0f84fcd62bdb64b2035c5b440799788a36859ab2e
+[dx]> bot invite --topic 58246306fc6db3c9235b9ee59f3426539988f465e1bb6919dce1edb169081c27 --contract bafyreifsmceyqwf4lnzc5hcyqqozz6lhfzsjbi2zhvmudft5abaqcdof3q --bot-id 918e615bc21a22b13c5fa6e0f84fcd62bdb64b2035c5b440799788a36859ab2e
 ```
 
 Charlie plays Chess with the bot:
 
 ```bash
-[wire]> chess create
+[dx]> chess create
 
 Party members:
 0) cli:ashwinp
@@ -491,8 +513,8 @@ cli:ashwinp selected to play white.
 bot:ChessBot Indian Rhinoceros selected to play black.
 
 Game ID: 1aba1d91269a680b00dda5363ee21a9f7fa34f4fe9aace9eaaff2e61c515f3eb
-[wire]> chess move d2 d4
-[wire]>
+[dx]> chess move d2 d4
+[dx]>
    +------------------------+
  8 | r  n  b  q  k  b  n  r |
  7 | p  p  p  p  p  p  p  p |
@@ -506,7 +528,7 @@ Game ID: 1aba1d91269a680b00dda5363ee21a9f7fa34f4fe9aace9eaaff2e61c515f3eb
      a  b  c  d  e  f  g  h
 
 Next move: bot:ChessBot Indian Rhinoceros
-[wire]>
+[dx]>
    +------------------------+
  8 | r  n  b  q  k  b  n  r |
  7 | p  p  p  p  p  .  p  p |
@@ -541,9 +563,9 @@ contract WIREToken is ERC20 {
 After channel setup, the initiator can transfer ERC20 tokens directly to the channel address.
 
 ```bash
-[wire]> payment wallet send 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 10 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
-[wire]> payment channel reconcile 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
-[wire]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
+[dx]> payment wallet send 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 10 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
+[dx]> payment channel reconcile 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
+[dx]> payment channel balances 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859
 {
   "0x0000000000000000000000000000000000000000": {
     "0x95B7e93A3aF19AcAE95aD120d4D8307bF1a6Be63": "0.0",
@@ -554,7 +576,7 @@ After channel setup, the initiator can transfer ERC20 tokens directly to the cha
     "0x119a11d0D1686C7330cA0650E26Fd6889Fbeb832": "10.0"
   }
 }
-[wire]> payment transfer create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 .1 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
+[dx]> payment transfer create 0x47809CD3218c69aB21BeEe8ad6a7b7Ec5E026859 .1 --asset 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
 ```
 
 ## Troubleshooting
