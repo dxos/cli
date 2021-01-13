@@ -20,7 +20,7 @@
     "dist/es"
   ],
   "scripts": {
-    "build": "npm run prebuild && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
+    "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
     "clean": "rm -rf ./dist",
     "dev": "babel-node ./src/main.js",
     "dx": "babel-node ./src/main.js",

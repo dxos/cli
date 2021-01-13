@@ -47,9 +47,8 @@ const init = async (state) => {
       await pluggableModule.init();
     }
 
-    // if (pluggableModule.pluggable.installed) {
-    extensions.push(pluggableModule.export.bind(pluggableModule));
-    // }
+    // eslint-disable-next-line
+    extensions.push(...pluggableModule.export.call(pluggableModule));
 
     if (extension.destroyRequired) {
       destroyers.push(pluggableModule.destroy.bind(pluggableModule));

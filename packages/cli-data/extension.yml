@@ -4,6 +4,10 @@ displayName: cli-data
 description: Party management.
 initRequired: true
 destroyRequired: true
-command:
-  - party
-  - storage
+command: 
+  - 
+    command: "party"
+    describe: "Party management."
+  - 
+    command: "storage"
+    describe: "Storage management."
