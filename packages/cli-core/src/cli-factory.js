@@ -109,13 +109,16 @@ export const createCLI = (options = {}) => {
     return;
   }
 
+  const { command, ...restInfo } = yaml.load(info);
+
   return {
     run,
     runAsExtension: getRunnableExtension({ modules, getModules, version, options: cliOptions }),
     init,
     destroy,
     info: {
-      ...yaml.load(info),
+      command: command ? command.map(cmd => typeof cmd === 'object' ? cmd.command : cmd) : undefined,
+      ...restInfo,
       package: {
         name: pkg.package.name,
         version: pkg.package.version

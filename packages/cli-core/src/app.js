@@ -199,6 +199,7 @@ export class App {
       if (this._getModules) {
         this._modules = await this._getModules();
       }
+
       for (const module of this._modules) {
         this._parser.command(module(this.state));
       }
