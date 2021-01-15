@@ -322,11 +322,10 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
               .option('single-instance', { type: 'boolean', default: false })
               .option('detached', { type: 'boolean', alias: 'daemon', default: false })
               .option('log-file', { type: 'string' })
-              .option('proc-name', { type: 'string', default: BOT_FACTORY_PROCESS_NAME })
-              .option('ipc-port', { type: 'string' }),
+              .option('proc-name', { type: 'string', default: BOT_FACTORY_PROCESS_NAME }),
 
             handler: asyncHandler(async argv => {
-              const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset, verbose, ipcPort } = argv;
+              const { localDev, singleInstance, logFile = DEFAULT_LOG_FILE, detached, procName, reset, verbose } = argv;
 
               let { topic, secretKey } = argv;
               if (!topic || !secretKey) {
@@ -342,12 +341,11 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
                 ).join(','),
                 NODE_OPTIONS: '',
                 ...mapToKeyValues(load(envmap), config.values),
-                WIRE_BOT_RESET: reset,
-                WIRE_BOT_TOPIC: topic,
-                WIRE_BOT_SECRET_KEY: secretKey,
-                WIRE_BOT_LOCAL_DEV: localDev,
-                WIRE_CLI_NODE_PATH: await getGlobalModulesPath(await isGlobalYarn(pkg.package.name)),
-                ...(ipcPort ? { WIRE_IPC_PORT: ipcPort } : {}),
+                DX_BOT_RESET: reset,
+                DX_BOT_TOPIC: topic,
+                DX_BOT_SECRET_KEY: secretKey,
+                DX_BOT_LOCAL_DEV: localDev,
+                DX_CLI_NODE_PATH: await getGlobalModulesPath(await isGlobalYarn(pkg.package.name)),
                 ...(detached ? { DEBUG_HIDE_DATE: true } : {})
               };
 

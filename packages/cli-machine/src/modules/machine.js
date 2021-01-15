@@ -266,7 +266,7 @@ export const MachineModule = ({ config }) => {
            - sed -i 's/apt clean//g' install.sh
            - sed -i 's/apt autoclean//g' install.sh
            - sed -i 's/apt autoremove//g' install.sh
-           - export WIRE_CLI_VER="${cliver}"
+           - export DX_CLI_VER="${cliver}"
            - if [ ! -z "${cliver}" ]; then sed -i "s/'latest'/'${cliver.replace('@', '')}'/g" /opt/kube/local.yml; fi
            - export HOME=/root
            - ./install.sh /opt
@@ -280,9 +280,9 @@ export const MachineModule = ({ config }) => {
            - sleep 2
            - /etc/init.d/apache2 restart
            - cd /opt/kube/scripts
-           - export WIRE_WNS_ENDPOINT=${server}
-           - export WIRE_WNS_USER_KEY=${userKey}
-           - export WIRE_WNS_BOND_ID=${bondId}
+           - export DX_WNS_ENDPOINT=${server}
+           - export DX_WNS_USER_KEY=${userKey}
+           - export DX_WNS_BOND_ID=${bondId}
            - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.dx/bots/service.yml" ]; do sleep 1; done; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
