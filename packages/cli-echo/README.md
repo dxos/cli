@@ -24,7 +24,7 @@ Activate devnet-moon profile:
 
 ```
 $ dx profile init --name devnet-moon --template-url https://git.io/JUkhm
-$ export WIRE_PROFILE="devnet-moon"
+$ export DX_PROFILE="devnet-moon"
 ```
 
 Install required extensions:

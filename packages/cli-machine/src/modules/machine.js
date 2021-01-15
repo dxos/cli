@@ -270,7 +270,7 @@ export const MachineModule = ({ config }) => {
            - if [ ! -z "${cliver}" ]; then sed -i "s/'latest'/'${cliver.replace('@', '')}'/g" /opt/kube/local.yml; fi
            - export HOME=/root
            - ./install.sh /opt
-           - sed -i s/kube.local/${boxFullyQualifiedName}/g /root/.wire/remote.yml
+           - sed -i s/kube.local/${boxFullyQualifiedName}/g /root/.dx/remote.yml
            - sed -i s/kube.local/${boxFullyQualifiedName}/g /etc/apache2/sites-available/000-default.conf
            - sed -i s/kube.local/${boxFullyQualifiedName}/g /etc/apache2/sites-available/default-ssl.conf
            - cp ./conf/systemd/kube.service /etc/systemd/system
@@ -283,7 +283,7 @@ export const MachineModule = ({ config }) => {
            - export WIRE_WNS_ENDPOINT=${server}
            - export WIRE_WNS_USER_KEY=${userKey}
            - export WIRE_WNS_BOND_ID=${bondId}
-           - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.dx/bots/service.yml" ]; do sleep 1; done; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi

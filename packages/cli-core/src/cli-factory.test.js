@@ -9,7 +9,7 @@ import EventEmitter from 'events';
 import { createCLI } from './cli-factory';
 import { asyncHandler } from './util/async';
 
-const WIRE_CLI_BASE_COMMAND = 'wire';
+const WIRE_CLI_BASE_COMMAND = 'dx';
 
 const WIRE_CONFIG = {
   prompt: WIRE_CLI_BASE_COMMAND,
@@ -34,7 +34,7 @@ jest.spyOn(console, 'log').mockImplementation(() => {});
 const mockMethod = jest.fn();
 const interactiveMockMethod = jest.fn();
 
-process.env.WIRE_PROFILE = 'test';
+process.env.DX_PROFILE = 'test';
 
 const TestModule = () => {
   return ({

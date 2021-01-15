@@ -73,7 +73,7 @@ const getBotFactoryRecord = (fields) => {
  * Bot CLI module.
  */
 export const BotModule = ({ getClient, config, stateManager, getReadlineInterface, cliState }) => {
-  assert(getClient, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
+  assert(getClient, 'DXOS client is required, run \'dx extension install @dxos/cli-data\'');
 
   return {
     command: ['bot'],
@@ -269,7 +269,7 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
 
         handler: asyncHandler(async argv => {
           const { version } = await publish(config)(argv);
-          log(`Run 'wire bot register' to register the new bot version: ${version}`);
+          log(`Run 'dx bot register' to register the new bot version: ${version}`);
         })
       })
 

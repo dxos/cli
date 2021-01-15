@@ -1,6 +1,6 @@
 # Bot CLI
 
-Read [concepts](https://github.com/dxos/sdk/tree/master/packages/botkit) first, if unfamiliar with how bots work.
+Read [concepts](https://github.com/dxos/sdk/tree/main/bot/botkit) first, if unfamiliar with how bots work.
 
 Commands:
 
@@ -14,10 +14,10 @@ Commands:
 Bot management commands: 
 
 * `dx bot stop` - Stop bot.
-* `wire bot start` - Start bot.
-* `wire bot restart` - Restart bot.
-* `wire bot kill` - Stop bot and remove all its data.
-* `wire bot factory reset` - Stop all runinng bots and remove all the data.
+* `dx bot start` - Start bot.
+* `dx bot restart` - Restart bot.
+* `dx bot kill` - Stop bot and remove all its data.
+* `dx bot factory reset` - Stop all runinng bots and remove all the data.
 
 ## Local Development
 
@@ -27,7 +27,7 @@ For example:
 
 ```bash
 $ cd examples/echo-bot
-$ wire bot factory start --local-dev --reset
+$ dx bot factory start --local-dev --reset
   bot-factory {"started":true,"topic":"83e8b9ac8d7a22d096673f2f55b13346f225fd060fe869fab9c26042716753b5","peerId":"83e8b9ac8d7a22d096673f2f55b13346f225fd060fe869fab9c26042716753b5","localDev":true}
 ```
 
@@ -38,9 +38,8 @@ Use the swarm `topic` from the output to connect to the bot factory, e.g. to spa
 Bot binary packages are published to IPFS. Bot metadata is registered in WNS.
 
 Note:
-* Ensure the `wire` CLI is configured correctly.
+* Ensure the `dx` CLI is configured correctly.
 * Cross compilation doesn't work correctly, so binaries are built on the corresponding platform.
-
 
 Create self-contained bot packages for supported platforms.
 
@@ -52,10 +51,10 @@ $ yarn package:macos-x64
 Upload the packages to IPFS.
 
 ```bash
-$ wire bot publish
+$ dx bot publish
 Uploaded macos-x64.tgz to IPFS, CID: QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn
 Package contents have changed.
-Run 'wire bot register' to register the new bot version: 1.0.53
+Run 'dx bot register' to register the new bot version: 1.0.53
 ```
 
 Inspect bot.yml before registering.
@@ -80,13 +79,13 @@ Register the bot with WNS.
 > You could use optional `--name` argument in order to assign specific name to the record.
 
 ```bash
-$ wire bot register --name "wrn://dxos/bot/example"
+$ dx bot register --name "wrn://dxos/bot/example"
 ```
 
 Query registered bot.
 
 ```bash
-$ wire bot query
+$ dx bot query
 [
   {
     "id": "bafyreialjdlezoavldq6wun6i4p3oq6iln4pniqmodweo4ut3q4n3kgxni",
@@ -130,7 +129,7 @@ Start the bot factory. The `topic` logged by bot-factory is the swarm topic that
 ```bash
 $ cd dxos/botkit
 
-$ wire bot factory start
+$ dx bot factory start
   bot-factory {"started":true,"topic":"0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e","peerId":"0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e","localDev":false}
 ```
 > Bot factory will attempt to restart previously running bots unless you provide `--reset` flag.
@@ -138,7 +137,7 @@ $ wire bot factory start
 From another terminal spawn new bot instance using bot factory topic .
 
 ```bash
-$ wire bot spawn --bot-name="wrn://dxos/bot/example" --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e
+$ dx bot spawn --bot-name="wrn://dxos/bot/example" --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e
 
 key     value
 ------  ----------------------------------------------------------------
@@ -148,17 +147,17 @@ botId  55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
 Create a new party.
 
 ```bash
-$ wire party create
+$ dx party create
 {
   "partyKey": "bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483"
 }
-[wire]>
+[dx]>
 ```
 
 Using bot factory topic and bot Id invite previously spawned bot to the party.
 
 ```bash
-[wire]> bot invite --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e --bot-id 55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
+[dx]> bot invite --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e --bot-id 55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
 
 Inviting bot 55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef to join 'bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483' party with invitation: {"swarmKey":"c05c32751bb1a70fe70d801e4101c706c729f1bdf622f14cd3e9721effe1a2e8","invitation":"784cf2ab3ce3bb1be56dec738b9ab1d8a020cc95a54b619acdd084471f3ae154","hash":"3d36a6188a28a22f4b8f794ee9433cce6ca1b9b3"}
 ```
@@ -170,7 +169,7 @@ Bot factory should download and spawn the bot:
   bot-factory Spawn bot request forwrn:bot:dxos.org/echo +1ms
   bot-factory Downloading bot package: http://127.0.0.1:8888/ipfs/QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn +678ms
   bot-factory Bot package downloaded: /Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj +1s
-  bot-factory Spawned bot: {"pid":39899,"command":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/main.bin","args":[],"wireEnv":{"WIRE_BOT_IPC_SERVER":"bot-39752","WIRE_BOT_UID":"55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","WIRE_BOT_NAME":"bot:Store Pygmy Marmoset","WIRE_BOT_CWD":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/.bots/55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","WIRE_BOT_RESTARTED":false},"cwd":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/.bots/55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef"} +20ms
+  bot-factory Spawned bot: {"pid":39899,"command":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/main.bin","args":[],"dxEnv":{"WIRE_BOT_IPC_SERVER":"bot-39752","WIRE_BOT_UID":"55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","WIRE_BOT_NAME":"bot:Store Pygmy Marmoset","WIRE_BOT_CWD":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/.bots/55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","WIRE_BOT_RESTARTED":false},"cwd":"/Users/egorgripasov/Projects/dxos/tests/botfactory/out/bots/QmV4MRDvTyrBfVVk7aXUxYtRWYWkv86pSYVME49XMHJ6xj/.bots/55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef"} +20ms
   bot-factory Received command: {"botUID":"55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","topic":"bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483","modelOptions":"{}","invitation":"{\"swarmKey\":\"35769cec26533f9f4b4bb889320e473343902a9a8a210089b986e2cbd4ce47b9\",\"invitation\":\"bd996bd739be0187266830186d61fcbed21eece6c26c92be20c146b35ba28cf1\",\"hash\":\"a19549792f280a43d5fc9ad628393167a83fa744\"}","__type_url":"dxos.protocol.bot.Invite"} +3s
   bot-factory Invite bot request for '55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef': {"botUID":"55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef","topic":"bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483","modelOptions":"{}","invitation":"{\"swarmKey\":\"35769cec26533f9f4b4bb889320e473343902a9a8a210089b986e2cbd4ce47b9\",\"invitation\":\"bd996bd739be0187266830186d61fcbed21eece6c26c92be20c146b35ba28cf1\",\"hash\":\"a19549792f280a43d5fc9ad628393167a83fa744\"}","__type_url":"dxos.protocol.bot.Invite"} +0ms
 ```
@@ -180,7 +179,7 @@ Note: The bot package is downloaded to the `botkit/out/bots/<CID>` folder. Delet
 Check out bot factory status.
 
 ```bash
-$ wire bot factory status --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e | jq
+$ dx bot factory status --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e | jq
 {
   "started": true,
   "version": "1.0.0-beta.87",
@@ -205,7 +204,7 @@ $ wire bot factory status --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba1
 Get status of running BotFactory:
 
 ```bash
-$ wire bot factory status --topic=$(wire wns name resolve wrn://dxos/service/bot-factory/apollo1 | jq -r '.records[0].attributes.topic') | jq
+$ dx bot factory status --topic=$(dx wns name resolve wrn://dxos/service/bot-factory/apollo1 | jq -r '.records[0].attributes.topic') | jq
 {
   "started": true,
   "version": "1.0.0-moon.4",
@@ -239,5 +238,5 @@ $ wire bot factory status --topic=$(wire wns name resolve wrn://dxos/service/bot
 Hard reset BotFactory (kills all bots, removes all the data/keys, restarts BotFactory):
 
 ```bash
-$ wire bot factory reset --hard --topic=$(wire wns name resolve wrn://dxos/service/bot-factory/apollo2 | jq -r '.records[0].attributes.topic')
+$ dx bot factory reset --hard --topic=$(dx wns name resolve wrn://dxos/service/bot-factory/apollo2 | jq -r '.records[0].attributes.topic')
 ```

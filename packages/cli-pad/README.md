@@ -1,9 +1,5 @@
 # Pad CLI
 
-## Setup
-
-A number of config variables are required in order to run CLI. One could either provide those in ~/.wire/config.yml in format of yaml.
-
 ## Operations
 
 To deploy pads we need a number of steps:

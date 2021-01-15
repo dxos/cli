@@ -8,7 +8,7 @@ import path from 'path';
 
 import { getProfileName } from '@dxos/cli-core';
 
-export const STORAGE_ROOT = '.wire/storage';
+export const STORAGE_ROOT = '.dx/storage';
 export const CLI_DEFAULT_PERSISTENT = true;
 
 export const getProfileAndStorage = (storagePath, profilePath) => {

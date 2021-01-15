@@ -7,7 +7,7 @@
 `dx machine list`
 
 ```
-$ wire machine list
+$ dx machine list
 {
   "machines": [
     {
@@ -26,10 +26,10 @@ $ wire machine list
 }
 ```
 
-`wire machine create --name <optionalkubename> --memory <optionalmemorysize>`
+`dx machine create --name <optionalkubename> --memory <optionalmemorysize>`
 
 ```
-$ wire machine create
+$ dx machine create
 {
   "machine": {
     "name": "kube087f310c"
@@ -39,10 +39,10 @@ $ wire machine create
 
 Memory sizes supported: 1,2,4,8,16,32G. Note that sizes smaller than 4G may not allow base Kube services to operate.
 
-`wire machine publish --name <kubename>`
+`dx machine publish --name <kubename>`
 
 ``` 
-$ /home/david/projects/dxos/incubator/node_modules/.bin/wire machine publish --name kube087f310c
+$ /home/david/projects/dxos/incubator/node_modules/.bin/dx machine publish --name kube087f310c
 {
   "machine_data": {
     "name": "kube087f310c",
@@ -57,7 +57,7 @@ $ /home/david/projects/dxos/incubator/node_modules/.bin/wire machine publish --n
 Obtain an [API access token for Digital Ocean](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/) 
 and a [GitHub Personal Access Token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line):
 
-In wire profile:
+In dx profile:
 ```
 services:
   machine:

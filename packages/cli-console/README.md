@@ -1,11 +1,6 @@
 # Dashboard CLI
 
-## Setup
-
-A number of config variables is required in order to run CLI. One could either provide those in ~/.wire/config.yml in format of yaml.
-
-
-### Install / Upgrade
+## Install / Upgrade
 
 To install or upgrade a version of the dashboard run:
 
@@ -13,12 +8,12 @@ To install or upgrade a version of the dashboard run:
 dx dashboard install
 ```
 
-This will install globally the latest version of the dashboard. The default npmClient (`npm`) is configured in your config.yml as `cli.npmClient`.
+This will install globally the latest version of the dashboard. The default npmClient (`npm`) is configured in your profile config as `cli.npmClient`.
 
 > You can also use `--npmClient` param to specify the desired client ('npm|yarn');
 
 
-### Start / Stop
+## Start / Stop
 
 To start the service:
 

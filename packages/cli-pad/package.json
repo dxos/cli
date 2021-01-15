@@ -13,7 +13,6 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-pad": "bin/dx-pad.js",
     "dx-pad": "bin/dx-pad.js"
   },
   "files": [

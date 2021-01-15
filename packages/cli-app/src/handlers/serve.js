@@ -7,7 +7,7 @@ import assert from 'assert';
 import { stopService, Runnable } from '@dxos/cli-core';
 
 const APP_SERVER_PROCESS_NAME = 'app-server';
-const APP_SERVER_BINARY = 'wire-app-server';
+const APP_SERVER_BINARY = 'dx-app-server';
 
 const DEFAULT_LOG_FILE = '/var/log/app-server.log';
 

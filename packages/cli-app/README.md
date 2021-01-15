@@ -1,9 +1,5 @@
 # App CLI
 
-## Setup
-
-A number of config variables are required in order to run CLI. One could either provide those in ~/.wire/config.yml in format of yaml.
-
 ## Operations
 
 To deploy apps we need a number of steps:
@@ -129,7 +125,7 @@ Because URI-encoded URL's are difficult to enter manually, there is an optimizat
 #### Apps config endpoints:
 
 If using `dxos/config` dynamic configuration each app can request config from a config endpoint (`/config/config.json`).
-This endpoint will serve a JSON-formatted representation of the YAML file located at `~/.wire/remote.yml`. The location of the YAML can be modified in the global configuration file:
+This endpoint will serve a JSON-formatted representation of the YAML file located at `~/.dx/remote.yml`. The location of the YAML can be modified in the global configuration file:
 
 ```yaml
 cli:
