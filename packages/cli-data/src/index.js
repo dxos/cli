@@ -79,17 +79,19 @@ let stateManager;
 const initDataCliState = async (state) => {
   const { config, getReadlineInterface, models, profilePath } = state;
 
-  const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);
-  const persistent = config.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT);
+  if (profilePath) {
+    const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);
+    const persistent = config.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT);
 
-  const getClient = await createClientGetter(config, models, { persistent, storagePath, profileName });
+    const getClient = await createClientGetter(config, models, { persistent, storagePath, profileName });
 
-  stateManager = new StateManager(getClient, getReadlineInterface, {
-    storagePath: persistent ? storagePath : undefined
-  });
+    stateManager = new StateManager(getClient, getReadlineInterface, {
+      storagePath: persistent ? storagePath : undefined
+    });
 
-  state.getClient = getClient;
-  state.stateManager = stateManager;
+    state.getClient = getClient;
+    state.stateManager = stateManager;
+  }
 };
 
 const destroyDataCliState = async () => {

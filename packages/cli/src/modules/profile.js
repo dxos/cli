@@ -62,13 +62,13 @@ export const ProfileModule = () => ({
     })
 
     .command({
-      command: ['config [name]'],
+      command: ['config [profile]'],
       describe: 'Profile config.',
 
       handler: asyncHandler(async argv => {
-        const { name } = argv;
+        const { profile } = argv;
 
-        const profilePath = (name ? getProfilePath(name) : getActiveProfilePath());
+        const profilePath = (profile ? getProfilePath(profile) : getActiveProfilePath());
         if (!fs.existsSync(profilePath)) {
           print(`Profile not found: ${profilePath}`);
           return;
