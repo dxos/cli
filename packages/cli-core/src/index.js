@@ -10,3 +10,4 @@ export * from './util/async';
 export * from './util/yaml';
 export * from './util/fees';
 export * from './util/npm';
+export * from './util/template';

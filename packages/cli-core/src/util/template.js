@@ -95,40 +95,40 @@ export class TemplateHelper {
       downloadPath || (downloadPath = `./${repoInfo.repo}`); // if no path is specified, use the ./{repo-name}
     }
 
-    let downloadServicePath;
+    let downloadPackagePath;
 
     if (repoInfo.isSubdir) {
-      downloadServicePath = path.join(os.tmpdir(), repoInfo.repo);
+      downloadPackagePath = path.join(os.tmpdir(), repoInfo.repo);
     } else if (path.isAbsolute(downloadPath)) {
-      downloadServicePath = downloadPath;
+      downloadPackagePath = downloadPath;
     } else {
-      downloadServicePath = path.join(process.cwd(), downloadPath);
+      downloadPackagePath = path.join(process.cwd(), downloadPath);
     }
 
-    let servicePath;
+    let packagePath;
 
     if (path.isAbsolute(downloadPath)) {
-      servicePath = downloadPath;
+      packagePath = downloadPath;
     } else {
-      servicePath = path.join(process.cwd(), downloadPath);
+      packagePath = path.join(process.cwd(), downloadPath);
     }
 
-    if ((await pathExists(servicePath)) && path.resolve(process.cwd(), downloadPath) !== process.cwd() && !force) {
+    if ((await pathExists(packagePath)) && path.resolve(process.cwd(), downloadPath) !== process.cwd() && !force) {
       throw new Error('Folder already exists!');
     }
 
     await download(
       repoInfo.downloadUrl,
-      downloadServicePath,
+      downloadPackagePath,
       githubToken ? { headers: { Authorization: `token ${githubToken}` }, ...CONFIG } : CONFIG
     );
 
     if (repoInfo.isSubdir) {
-      const directory = path.join(downloadServicePath, repoInfo.pathToDir);
-      await copy(directory, servicePath);
-      await remove(downloadServicePath);
+      const directory = path.join(downloadPackagePath, repoInfo.pathToDir);
+      await copy(directory, packagePath);
+      await remove(downloadPackagePath);
     }
 
-    return servicePath;
+    return packagePath;
   }
 }
