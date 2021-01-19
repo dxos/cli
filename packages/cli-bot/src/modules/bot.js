@@ -13,7 +13,7 @@ import { BotFactoryClient } from '@dxos/botkit-client';
 import { TemplateHelper, Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees, isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
 import { log } from '@dxos/debug';
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 
 import { build, publish, register } from '../handlers/bot';
 import envmap from '../../env-map.yml';

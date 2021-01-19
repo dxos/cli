@@ -8,7 +8,7 @@ import isEqual from 'lodash.isequal';
 
 import { readFile, writeFile, getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 
 import { PAD_CONFIG_FILENAME } from '../config';
 

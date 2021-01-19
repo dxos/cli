@@ -8,7 +8,7 @@ import { boolean } from 'boolean';
 import { spawnSync } from 'child_process';
 
 import { sleep } from '@dxos/async';
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;

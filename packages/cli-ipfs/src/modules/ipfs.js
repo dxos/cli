@@ -9,7 +9,7 @@ import fs from 'fs';
 import { spawnSync } from 'child_process';
 
 import { Runnable, stopService, asyncHandler, print } from '@dxos/cli-core';
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 import { download, publish, query, register } from '../handlers';
 
 const IPFS_EXEC = 'ipfs';

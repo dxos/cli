@@ -24,7 +24,7 @@ import {
 } from '@dxos/cli-core';
 
 import { log } from '@dxos/debug';
-import { Registry, Account } from '@wirelineio/registry-client';
+import { Registry, Account } from '@dxos/registry-client';
 
 import { requestFaucetTokens } from './faucet';
 

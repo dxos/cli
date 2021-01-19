@@ -13,7 +13,7 @@ import DigitalOcean from 'do-wrapper';
 
 import { waitForCondition } from '@dxos/async';
 import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 
 import SSH_KEYS from '../../ssh-keys.yml';
 

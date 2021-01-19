@@ -8,7 +8,8 @@ import fs from 'fs';
 import path from 'path';
 import IpfsHttpClient from 'ipfs-http-client';
 
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
+
 const toStream = require('it-to-stream');
 
 export const download = config => async ({ timeout, name, id, outdir = '.' }) => {

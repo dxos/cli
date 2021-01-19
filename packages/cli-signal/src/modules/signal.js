@@ -3,12 +3,11 @@
 //
 
 import assert from 'assert';
-
 import clean from 'lodash-clean';
-
 import { spawn } from 'child_process';
+
 import { Runnable, sanitizeEnv, stopService, asyncHandler } from '@dxos/cli-core';
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 import { log } from '@dxos/debug';
 
 const SIGNAL_PROCESS_NAME = 'signal';

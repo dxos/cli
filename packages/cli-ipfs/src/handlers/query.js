@@ -6,7 +6,7 @@ import assert from 'assert';
 import clean from 'lodash-clean';
 
 import { log } from '@dxos/debug';
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 
 import { FILE_TYPE } from '../config';
 

@@ -13,7 +13,7 @@ import { join } from 'path';
 import urlJoin from 'url-join';
 import yaml from 'js-yaml';
 
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 
 import { WRN } from './util/WRN';
 
