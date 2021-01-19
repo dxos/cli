@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import { pathExists, copy, remove } from 'fs-extra';
+import { pathExists, copy, remove, emptyDir } from 'fs-extra';
 import download from 'download';
 import os from 'os';
 import path from 'path';
@@ -113,8 +113,12 @@ export class TemplateHelper {
       packagePath = path.join(process.cwd(), downloadPath);
     }
 
-    if ((await pathExists(packagePath)) && path.resolve(process.cwd(), downloadPath) !== process.cwd() && !force) {
-      throw new Error('Folder already exists!');
+    if ((await pathExists(packagePath)) && path.resolve(process.cwd(), downloadPath) !== process.cwd()) {
+      if (!force) {
+        throw new Error('Folder already exists!');
+      } else {
+        await emptyDir(packagePath);
+      }
     }
 
     await download(

@@ -38,7 +38,7 @@ const DEFAULT_LOG_FILE = '/var/log/bot-factory.log';
 
 const botFactoryRunnable = new Runnable(BOT_FACTORY_EXEC, [BOT_FACTORY_PATH]);
 
-const DEFAULT_TEMPLATE = 'https://github.com/wirelineio/logbot-template';
+const DEFAULT_TEMPLATE = '';
 
 /**
  * @param {object} fields
@@ -72,7 +72,7 @@ const getBotFactoryRecord = (fields) => {
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ getClient, config, stateManager, cliState }) => {
+export const BotModule = ({ getClient, config, stateManager, getReadlineInterface, cliState }) => {
   assert(getClient, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
 
   return {
@@ -574,12 +574,25 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
             return;
           }
 
-          // if force - ask user: all pervious data from folder would be lost - do you want to proceed?
-          // if user replies yes - continue.
+          const rl = getReadlineInterface();
+
+          const askUser = async (question) => new Promise(resolve => {
+            rl.question(question, answer => {
+              resolve(answer);
+            });
+          });
+
+          if (force) {
+            const answer = await askUser('All pervious data from folder would be lost - do you want to proceed? ');
+            if (!answer.toString().toLowerCase().startsWith('y')) {
+              return;
+            }
+          }
+          rl.close();
 
           const created = await TemplateHelper.downloadTemplateFromRepo(template, githubToken, path || name, force);
-          const basename = created.split('/').slice(-1)[0];
 
+          const basename = created.split('/').slice(-1)[0];
           log(`./${basename} <- ${template}`);
         })
       })
