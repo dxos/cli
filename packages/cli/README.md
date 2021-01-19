@@ -74,8 +74,8 @@ $ dx version
 v2.0.30
 
 $ dx upgrade --force
-Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
-✔ Uninstalling @dxos/cli-data
+Found extensions: @dxos/cli-party, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
+✔ Uninstalling @dxos/cli-party
 ✔ Uninstalling @dxos/cli-signal
 ✔ Uninstalling @dxos/cli-bot
 ✔ Uninstalling @dxos/cli-app
@@ -84,7 +84,7 @@ Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 ✔ Installing @dxos/cli-app
 ✔ Installing @dxos/cli-bot
 ✔ Installing @dxos/cli-signal
-✔ Installing @dxos/cli-data
+✔ Installing @dxos/cli-party
 
 $ dx version
 v2.0.32
@@ -221,5 +221,5 @@ $ dx app register help
 | [Machine CLI](https://github.com/dxos/cli/blob/master/packages/cli-machine/README.md) |
 | [MDNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-mdns/README.md) |
 | [Pad CLI](https://github.com/dxos/cli/blob/master/packages/cli-pad/README.md) |
-| [Party CLI](https://github.com/dxos/cli/blob/master/packages/cli-data/README.md) |
+| [Party CLI](https://github.com/dxos/cli/blob/master/packages/cli-party/README.md) |
 | [Signal CLI](https://github.com/dxos/cli/blob/master/packages/cli-signal/README.md) |

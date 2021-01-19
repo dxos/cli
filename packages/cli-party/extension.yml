@@ -1,6 +1,6 @@
-name: dxos/cli-data
+name: dxos/cli-party
 version: 0.0.1
-displayName: cli-data
+displayName: cli-party
 description: Party management.
 initRequired: true
 destroyRequired: true

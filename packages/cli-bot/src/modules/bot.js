@@ -73,7 +73,7 @@ const getBotFactoryRecord = (fields) => {
  * Bot CLI module.
  */
 export const BotModule = ({ getClient, config, stateManager, getReadlineInterface, cliState }) => {
-  assert(getClient, 'DXOS client is required, run \'dx extension install @dxos/cli-data\'');
+  assert(getClient, 'DXOS client is required, run \'dx extension install @dxos/cli-party\'');
 
   return {
     command: ['bot'],

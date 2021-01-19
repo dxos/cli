@@ -29,18 +29,6 @@
     initRequired: false
     destroyRequired: false
   - 
-    moduleName: "@dxos/cli-data"
-    describe: "Party management."
-    command: 
-      - 
-        command: "party"
-        describe: "Party management."
-      - 
-        command: "storage"
-        describe: "Storage management."
-    initRequired: true
-    destroyRequired: true
-  - 
     moduleName: "@dxos/cli-echo"
     describe: "ECHO extension."
     command: 
@@ -89,6 +77,18 @@
       - "pad"
     initRequired: false
     destroyRequired: false
+  - 
+    moduleName: "@dxos/cli-party"
+    describe: "Party management."
+    command: 
+      - 
+        command: "party"
+        describe: "Party management."
+      - 
+        command: "storage"
+        describe: "Storage management."
+    initRequired: true
+    destroyRequired: true
   - 
     moduleName: "@dxos/cli-signal"
     describe: "Signal server extension."

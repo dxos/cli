@@ -1,8 +1,8 @@
 {
-  "name": "@dxos/cli-data",
+  "name": "@dxos/cli-party",
   "version": "2.0.34-alpha.0",
-  "description": "DXOS Data CLI",
-  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
+  "description": "DXOS Party CLI",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-party#readme",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
@@ -13,7 +13,7 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "dx-data": "bin/dx-data.js"
+    "dx-party": "bin/dx-party.js"
   },
   "files": [
     "bin/",
