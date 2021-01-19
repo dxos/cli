@@ -15,9 +15,9 @@ const appPath = tmpFolder();
 describe('downloadTemplateFromRepo', () => {
   test('it should download template', async () => {
     const result = await TemplateHelper.downloadTemplateFromRepo(DEFAULT_TEMPLATE, null, appPath, false);
-    const folderLength = fs.readdirSync(appPath).length;
+    const files = fs.readdirSync(appPath);
     expect(result).toBe(appPath);
-    expect(folderLength).toBeGreaterThan(0);
+    expect(files.length).toBeGreaterThan(0);
   });
 
   test('it should throw the error that folder already exists', async () => {

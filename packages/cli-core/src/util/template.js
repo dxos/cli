@@ -28,8 +28,7 @@ export class TemplateHelper {
 
     // Validate if given url is a valid GitHub url.
     if (url.hostname !== 'github.com' || !owner || !repo) {
-      throw new Error(`The URL must be a valid GitHub URL, e.g.:
-        https://github.com/wirelineio/service-template`);
+      throw new Error('The URL must be a valid GitHub URL.');
     }
 
     let pathToDir = '';

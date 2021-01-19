@@ -583,7 +583,7 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
           });
 
           if (force) {
-            const answer = await askUser('All pervious data from folder would be lost - do you want to proceed? ');
+            const answer = await askUser('All pervious data on destination folder would be lost - do you want to proceed? (yes/no): ');
             if (!answer.toString().toLowerCase().startsWith('y')) {
               return;
             }
