@@ -24,7 +24,7 @@ export class TemplateHelper {
     const isSubdir = parts.length > 4;
     const owner = parts[1];
     const repo = parts[2];
-    const branch = isSubdir ? parts[4] : 'master';
+    const branch = isSubdir ? parts[4] : 'main';
 
     // Validate if given url is a valid GitHub url.
     if (url.hostname !== 'github.com' || !owner || !repo) {
