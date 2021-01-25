@@ -10,7 +10,7 @@ import { load } from 'js-yaml';
 import readPkgUp from 'read-pkg-up';
 
 import { BotFactoryClient } from '@dxos/botkit-client';
-import { Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees, isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
+import { TemplateHelper, Runnable, sanitizeEnv, stopService, asyncHandler, print, getGasAndFees, isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
 import { log } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
@@ -37,6 +37,8 @@ const BOT_FACTORY_PATH = path.join(__dirname, '../runnable/bot-factory.js');
 const DEFAULT_LOG_FILE = '/var/log/bot-factory.log';
 
 const botFactoryRunnable = new Runnable(BOT_FACTORY_EXEC, [BOT_FACTORY_PATH]);
+
+const DEFAULT_TEMPLATE = '';
 
 /**
  * @param {object} fields
@@ -70,7 +72,7 @@ const getBotFactoryRecord = (fields) => {
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ getClient, config, stateManager, cliState }) => {
+export const BotModule = ({ getClient, config, stateManager, getReadlineInterface, cliState }) => {
   assert(getClient, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
 
   return {
@@ -552,6 +554,47 @@ export const BotModule = ({ getClient, config, stateManager, cliState }) => {
               }
             })
           })
+      })
+
+      // Create bot.
+      .command({
+        command: ['create [name]'],
+        describe: 'Create bot from template.',
+        builder: yargs => yargs
+          .option('template', { default: DEFAULT_TEMPLATE })
+          .option('path')
+          .option('name')
+          .option('force', { type: 'boolean' })
+          .option('github-token'),
+
+        handler: asyncHandler(async argv => {
+          const { template, path, githubToken, name, force, 'dry-run': noop } = argv;
+
+          if (noop) {
+            return;
+          }
+
+          const rl = getReadlineInterface();
+
+          const askUser = async (question) => new Promise(resolve => {
+            rl.question(question, answer => {
+              resolve(answer);
+            });
+          });
+
+          if (force) {
+            const answer = await askUser('All pervious data on destination folder would be lost - do you want to proceed? (yes/no): ');
+            if (!answer.toString().toLowerCase().startsWith('y')) {
+              return;
+            }
+          }
+          rl.close();
+
+          const created = await TemplateHelper.downloadTemplateFromRepo(template, githubToken, path || name, force);
+
+          const basename = created.split('/').slice(-1)[0];
+          log(`./${basename} <- ${template}`);
+        })
       })
   };
 };
