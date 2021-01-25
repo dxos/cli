@@ -10,7 +10,7 @@ import { exec } from 'child_process';
  */
 export const prepareExec = (command) => {
   if (command === 'npm') {
-    command = '[ -s "$NVM_DIR/nvm.sh" ] && unset PREFIX && \. "$NVM_DIR/nvm.sh" ; npm'; // eslint-disable-line no-useless-escape
+    command = '[ -s "$NVM_DIR/nvm.sh" ] && [[ "$(which node)" == *".nvm"* ]] && unset PREFIX && \. "$NVM_DIR/nvm.sh" ; npm'; // eslint-disable-line no-useless-escape
   }
   return command;
 };
