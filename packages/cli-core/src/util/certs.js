@@ -10,7 +10,7 @@ import set from 'lodash.set';
 import { ensureDir } from 'fs-extra';
 import download from 'download';
 
-export const CERTS_PATH = '~/.wire/certs';
+export const CERTS_PATH = '~/.dx/certs';
 
 const certPath = CERTS_PATH.replace('~', os.homedir());
 

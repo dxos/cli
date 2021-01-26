@@ -13,7 +13,6 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-halo": "bin/dx-halo.js",
     "dx-halo": "bin/dx-halo.js"
   },
   "files": [

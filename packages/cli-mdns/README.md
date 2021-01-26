@@ -10,7 +10,7 @@ To install or upgrade a version of the mdns run:
 $ dx mdns install
 ```
 
-This will install globally the latest version of mdns. The default npmClient (`npm`) is configured in your config.yml as `cli.npmClient`.
+This will install globally the latest version of mdns. The default npmClient (`npm`) is configured in your profile config as `cli.npmClient`.
 
 > You can also use `--npmClient` param to specify the desired client ('npm|yarn');
 

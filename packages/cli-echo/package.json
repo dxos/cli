@@ -13,7 +13,6 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-echo": "bin/dx-echo.js",
     "dx-echo": "bin/dx-echo.js"
   },
   "files": [

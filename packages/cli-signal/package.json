@@ -13,7 +13,6 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-signal": "bin/dx-signal.js",
     "dx-signal": "bin/dx-signal.js"
   },
   "files": [
@@ -37,7 +36,7 @@
     "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^2.0.34-alpha.0",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@wirelineio/registry-client": "^1.1.0-beta.0",
+    "@dxos/registry-client": "~1.1.2",
     "lodash-clean": "^2.2.1",
     "yargs": "^16.2.0"
   },

@@ -25,10 +25,10 @@ const knownExtensions = yaml.load(KNOWN_EXTENSIONS);
 
 const pkg = readPkgUp.sync({ cwd: __dirname });
 
-const WIRE_CLI_BASE_COMMAND = 'dx';
+const CLI_BASE_COMMAND = 'dx';
 
-const WIRE_CONFIG = {
-  prompt: WIRE_CLI_BASE_COMMAND,
+const CLI_CONFIG = {
+  prompt: CLI_BASE_COMMAND,
   baseCommand: '',
   enableInteractive: true
 };
@@ -72,7 +72,7 @@ const modules = [
 ];
 
 module.exports = createCLI({
-  options: WIRE_CONFIG,
+  options: CLI_CONFIG,
   dir: __dirname,
   main: !module.parent,
   init,

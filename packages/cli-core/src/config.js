@@ -14,8 +14,7 @@ import { Config, mapFromKeyValues } from '@dxos/config';
 
 import envmap from '../env-map.yml';
 
-// TODO(burdon): Change to ~/.dxos
-export const PROFILE_ROOT = '.wire/profile';
+export const PROFILE_ROOT = '.dx/profile';
 
 // Default profile, ALWAYS a symlink.
 export const DEFAULT_PROFILE_SYMLINK = 'default';
@@ -39,7 +38,7 @@ export const getProfileName = (profilePath) => {
 
 /**
  * Set given profile as the default.
- * Creates symlink from `~/.wire/profile/default` -> `~/.wire/profile/<profile>.yml`.
+ * Creates symlink from `~/.dx/profile/default` -> `~/.dx/profile/<profile>.yml`.
  * @param {string} profile
  * @param {boolean} overwrite
  */
@@ -58,14 +57,14 @@ export const setProfileAsDefault = async (profile, overwrite = true) => {
 
 /**
  * Get active profile path.
- * Precedence: param (from argv), WIRE_PROFILE ENV, default symlink.
+ * Precedence: param (from argv), DX_PROFILE ENV, default symlink.
  * @param {string} profile
  */
 export const getActiveProfilePath = (profile) => {
   const defaultProfilePath = getDefaultProfilePath();
   const defaultProfileExists = fs.existsSync(defaultProfilePath);
 
-  profile = profile || process.env.WIRE_PROFILE;
+  profile = profile || process.env.DX_PROFILE;
   if (!profile && !defaultProfileExists) {
     return null;
   }

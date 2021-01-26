@@ -29,14 +29,14 @@ jobs:
           git tag -f "v$VERSION"
           git push --tags -f
           yarn lerna publish from-package --force-publish -y
-          yarn dx profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
+          yarn dx profile init --name $DX_PROFILE --template-url "$DX_PROFILE_URL"
           # yarn dx machine delete --name release
           # sleep 10
           # yarn dx machine create --name release
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          WIRE_PROFILE: ci
-          WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
-          WIRE_MACHINE_DO_TOKEN: ${{secrets.wire_machine_do_token}}
-          WIRE_MACHINE_GITHUB_TOKEN: ${{secrets.wire_machine_github_token}}
-          WIRE_MACHINE_DNS_DOMAIN: ${{secrets.wire_machine_dns_domain}}
+          DX_PROFILE: ci
+          DX_PROFILE_URL: ${{secrets.dx_profile_url}}
+          DX_MACHINE_DO_TOKEN: ${{secrets.dx_machine_do_token}}
+          DX_MACHINE_GITHUB_TOKEN: ${{secrets.dx_machine_github_token}}
+          DX_MACHINE_DNS_DOMAIN: ${{secrets.dx_machine_dns_domain}}

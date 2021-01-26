@@ -13,7 +13,6 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-bot": "bin/dx-bot.js",
     "dx-bot": "bin/dx-bot.js"
   },
   "files": [
@@ -41,7 +40,7 @@
     "@dxos/config": "^1.0.0-beta.67",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@wirelineio/registry-client": "^1.1.0-beta.0",
+    "@dxos/registry-client": "~1.1.2",
     "assert": "^2.0.0",
     "chance": "^1.1.3",
     "fs-extra": "^8.1.0",
