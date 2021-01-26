@@ -25,8 +25,8 @@ import {
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
-const BOT_TYPE = 'wrn:bot';
-const BOT_FACTORY_TYPE = 'wrn:bot-factory';
+const BOT_TYPE = 'dxn:bot';
+const BOT_FACTORY_TYPE = 'dxn:bot-factory';
 
 const BOT_FACTORY_DEBUG_NAMESPACES = ['bot-factory', 'bot-factory:*'];
 
@@ -229,10 +229,10 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
         handler: asyncHandler(async argv => {
           const { id, name, namespace } = argv;
 
-          const { server, chainId } = config.get('services.wns');
+          const { server, chainId } = config.get('services.registry');
 
-          assert(server, 'Invalid WNS endpoint.');
-          assert(chainId, 'Invalid WNS Chain ID.');
+          assert(server, 'Invalid Registry endpoint.');
+          assert(chainId, 'Invalid Registry Chain ID.');
 
           const registry = new Registry(server, chainId);
 
@@ -378,14 +378,14 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
               .option('topic', { type: 'string' }),
 
             handler: asyncHandler(async (argv) => {
-              const wnsConfig = config.get('services.wns');
-              const { server, userKey, bondId, chainId } = wnsConfig;
+              const registryConfig = config.get('services.registry');
+              const { server, userKey, bondId, chainId } = registryConfig;
               const { verbose, 'dry-run': noop, data, txKey, name = [], version } = argv;
 
-              assert(server, 'Invalid WNS endpoint.');
-              assert(userKey, 'Invalid WNS userKey.');
-              assert(bondId, 'Invalid WNS Bond ID.');
-              assert(chainId, 'Invalid WNS Chain ID.');
+              assert(server, 'Invalid Registry endpoint.');
+              assert(userKey, 'Invalid Registry userKey.');
+              assert(bondId, 'Invalid Registry Bond ID.');
+              assert(chainId, 'Invalid Registry Chain ID.');
 
               assert(Array.isArray(name), 'Invalid BotFactory Record Name.');
               assert(version, 'Invalid BotFactory Version.');
@@ -400,7 +400,7 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
               }
 
               const registry = new Registry(server, chainId);
-              const fee = getGasAndFees(argv, wnsConfig);
+              const fee = getGasAndFees(argv, registryConfig);
 
               const record = getBotFactoryRecord({ ...data, version, topic });
               log(`Registering ${record.name || ''} v${record.version}...`);
@@ -416,10 +416,10 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
               }
 
               // eslint-disable-next-line
-              for await (const wrn of name) {
-                log(`Assigning name ${wrn}...`);
+              for await (const dxn of name) {
+                log(`Assigning name ${dxn}...`);
                 if (!noop) {
-                  await registry.setName(wrn, factoryId, userKey, fee);
+                  await registry.setName(dxn, factoryId, userKey, fee);
                 }
               }
             })
@@ -437,10 +437,10 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
             handler: asyncHandler(async argv => {
               const { id, name, namespace } = argv;
 
-              const { server, chainId } = config.get('services.wns');
+              const { server, chainId } = config.get('services.registry');
 
-              assert(server, 'Invalid WNS endpoint.');
-              assert(chainId, 'Invalid WNS Chain ID.');
+              assert(server, 'Invalid Registry endpoint.');
+              assert(chainId, 'Invalid Registry Chain ID.');
 
               const registry = new Registry(server, chainId);
 

@@ -2,14 +2,14 @@
 # ENV mapping
 #
 
-DX_WNS_ENDPOINT:
-  path: services.wns.server
-DX_WNS_USER_KEY:
-  path: services.wns.userKey
-DX_WNS_BOND_ID:
-  path: services.wns.bondId
-DX_WNS_CHAIN_ID:
-  path: services.wns.chainId
+DX_REGISTRY_ENDPOINT:
+  path: services.registry.server
+DX_REGISTRY_USER_KEY:
+  path: services.registry.userKey
+DX_REGISTRY_BOND_ID:
+  path: services.registry.bondId
+DX_REGISTRY_CHAIN_ID:
+  path: services.registry.chainId
 DX_MACHINE_DO_TOKEN:
   path: services.machine.doAccessToken
 DX_MACHINE_GITHUB_TOKEN:

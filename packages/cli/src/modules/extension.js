@@ -75,7 +75,7 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
           let action = 'upgrade';
 
-          // TODO(egorgripasov): Read verison number from WNS.
+          // TODO(egorgripasov): Read verison number from Registry.
           if (version && valid(version) && installedVersion) {
             const comp = compare(version, installedVersion);
             switch (comp) {

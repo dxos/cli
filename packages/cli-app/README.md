@@ -6,14 +6,14 @@ To deploy apps we need a number of steps:
 
 - build: This generates the ditribution files along with configuration specific for the given app.yml
 - publish: Upload the dist folder to IPFS. Update the hash in the app.yml
-- register: Use app.yml to generate a record in WNS.
+- register: Use app.yml to generate a record in Registry.
 
 All this operations can be resumed with one command:
 
 > You could use optional `--name` argument in order to assign specific name to the record.
 
 ```
-$ dx app deploy --name "wrn://dxos/application/example"
+$ dx app deploy --name "dxn://dxos/application/example"
 ```
 
 ### Build app.
@@ -65,7 +65,7 @@ package:
 > You could use optional `--name` argument in order to assign specific name to the record.
 
 ```bash
-$ dx app register --name "wrn://dxos/application/example"
+$ dx app register --name "dxn://dxos/application/example"
 ```
 
 ### Query
@@ -77,7 +77,7 @@ $ dx app query
   {
     "id": "bafyreicjftv7di4x4og7gbxnrtqsqchiqcdchxnemnfiuqet35h2jzfww4",
     "names": [
-      "wrn://dxos/application/example"
+      "dxn://dxos/application/example"
     ],
     "owners": [
       "6ee3328f65c8566cd5451e49e97a767d10a8adf7"
@@ -89,7 +89,7 @@ $ dx app query
       "package": {
         "/": "QmbPxkLXcHxWcUquhSEVCP5mUNQBLezjETGLzaDWmLscba"
       },
-      "type": "wrn:app",
+      "type": "dxn:app",
       "version": "0.0.1",
       "build": "yarn dist",
       "name": "Example App"
@@ -100,7 +100,7 @@ $ dx app query
 
 ### Serve Apps
 
-Once apps are published to IPFS, a WNS record and name have been registered, we can use `dx app serve` to serve the distributed files.
+Once apps are published to IPFS, a Registry record and name have been registered, we can use `dx app serve` to serve the distributed files.
 
 ```bash
 dx app serve
@@ -110,15 +110,15 @@ dx app serve
 
 The application will hosted at:
 
-- GET: `/app/${WRN}/`
+- GET: `/app/${DXN}/`
 
-Since WRN's can contain characters which are reserved in URL's, it is often necessary to URI-escape the WRN portion of the URL.
+Since DXN's can contain characters which are reserved in URL's, it is often necessary to URI-escape the DXN portion of the URL.
 
-For example, with the WRN `wrn://dxos/application/example` the URL is: 
+For example, with the DXN `dxn://dxos/application/example` the URL is: 
 
-- GET: `/app/wrn%3A%2F%2Fdxos%2Fapplication%2Fexample/`
+- GET: `/app/dxn%3A%2F%2Fdxos%2Fapplication%2Fexample/`
 
-Because URI-encoded URL's are difficult to enter manually, there is an optimization for short WRN's of the form `wrn://<org>/<appname>` that does not require any URI-encoding of the name.  For example, with the short WRN `wrn://dxos/example`, this plain URL can be used:
+Because URI-encoded URL's are difficult to enter manually, there is an optimization for short DXN's of the form `dxn://<org>/<appname>` that does not require any URI-encoding of the name.  For example, with the short DXN `dxn://dxos/example`, this plain URL can be used:
 
 - GET: `/app/dxos/example/`
 

@@ -17,8 +17,8 @@ import { Registry } from '@dxos/registry-client';
 
 import SSH_KEYS from '../../ssh-keys.yml';
 
-const KUBE_TYPE = 'wrn:kube';
-const DEFAULT_WRN_ROOT = 'wrn://dxos';
+const KUBE_TYPE = 'dxn:kube';
+const DEFAULT_DXN_ROOT = 'dxn://dxos';
 
 let running = false;
 
@@ -102,7 +102,7 @@ export const MachineModule = ({ config }) => {
         builder: yargs => yargs
           .option('name', { type: 'string', require: true })
           .option('verbose', { type: 'boolean', default: false })
-          .option('wrn-root', { type: 'string', default: DEFAULT_WRN_ROOT }),
+          .option('dxn-root', { type: 'string', default: DEFAULT_DXN_ROOT }),
 
         handler: asyncHandler(async () => {
           if (running) {
@@ -112,7 +112,7 @@ export const MachineModule = ({ config }) => {
           }
           running = true;
 
-          const { name, wrnRoot, verbose } = yargs.argv;
+          const { name, dxnRoot, verbose } = yargs.argv;
           const session = new DigitalOcean(doAccessToken, 100);
 
           verbose && print('Removing machine...');
@@ -131,22 +131,22 @@ export const MachineModule = ({ config }) => {
             } catch (e) {}
           }
 
-          const wnsConfig = config.get('services.wns');
-          const { server, userKey, bondId, chainId } = wnsConfig;
+          const registryConfig = config.get('services.registry');
+          const { server, userKey, bondId, chainId } = registryConfig;
           if (server && userKey && bondId && chainId) {
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(yargs.argv, wnsConfig);
+            const fee = getGasAndFees(yargs.argv, registryConfig);
             try {
               verbose && print('Removing ipfs service record...');
-              await registry.deleteName(`${wrnRoot}/service/ipfs/${name}`, userKey, fee);
+              await registry.deleteName(`${dxnRoot}/service/ipfs/${name}`, userKey, fee);
             } catch (e) {}
             try {
               verbose && print('Removing bot-factory service record...');
-              await registry.deleteName(`${wrnRoot}/service/bot-factory/${name}`, userKey, fee);
+              await registry.deleteName(`${dxnRoot}/service/bot-factory/${name}`, userKey, fee);
             } catch (e) {}
             try {
               verbose && print('Removing kube record...');
-              await registry.deleteName(`${wrnRoot}/kube/${name}`, userKey, fee);
+              await registry.deleteName(`${dxnRoot}/kube/${name}`, userKey, fee);
             } catch (e) {}
           }
 
@@ -186,7 +186,7 @@ export const MachineModule = ({ config }) => {
         describe: 'Create a new virtual machine.',
         builder: yargs => yargs
           .option('name', { type: 'string' })
-          .option('wrn-root', { type: 'string', default: DEFAULT_WRN_ROOT })
+          .option('dxn-root', { type: 'string', default: DEFAULT_DXN_ROOT })
           .option('memory', { type: 'number', default: 4 })
           .option('pin', { type: 'boolean', default: false })
           .option('register', { type: 'boolean', default: false })
@@ -205,17 +205,17 @@ export const MachineModule = ({ config }) => {
 
           running = true;
 
-          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl, extension } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, email, register, dxnRoot, dnsTtl, extension } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
           }
 
           const radicle = !!extension.find(entry => entry === 'dxos/radicle-seed-node');
 
-          const wnsConfig = config.get('services.wns');
-          const { server, userKey, bondId, chainId } = wnsConfig;
+          const registryConfig = config.get('services.registry');
+          const { server, userKey, bondId, chainId } = registryConfig;
           if (register) {
-            assert(server && userKey && bondId && chainId, 'Missing WNS config.');
+            assert(server && userKey && bondId && chainId, 'Missing Registry config.');
           }
 
           const session = new DigitalOcean(doAccessToken, 100);
@@ -260,7 +260,7 @@ export const MachineModule = ({ config }) => {
            - cd ..
            - cp -r kube /opt
            - echo "export KUBE_FQDN=${boxFullyQualifiedName}" >> /opt/kube/etc/kube.env
-           - echo "export KUBE_PIN_WNS_OBJECTS=${pin ? 1 : 0}" >> /opt/kube/etc/kube.env
+           - echo "export KUBE_PIN_REGISTRY_OBJECTS=${pin ? 1 : 0}" >> /opt/kube/etc/kube.env
            - cd /opt/kube/scripts
            - sed -i 's/run_installer "ssh" install_ssh_key/#run_installer "ssh" install_ssh_key/g' install.sh
            - sed -i 's/apt clean//g' install.sh
@@ -280,12 +280,12 @@ export const MachineModule = ({ config }) => {
            - sleep 2
            - /etc/init.d/apache2 restart
            - cd /opt/kube/scripts
-           - export DX_WNS_ENDPOINT=${server}
-           - export DX_WNS_USER_KEY=${userKey}
-           - export DX_WNS_BOND_ID=${bondId}
+           - export DX_REGISTRY_ENDPOINT=${server}
+           - export DX_REGISTRY_USER_KEY=${userKey}
+           - export DX_REGISTRY_BOND_ID=${bondId}
            - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.dx/bots/service.yml" ]; do sleep 1; done; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${dxnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${dxnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi
         `;
 
@@ -374,10 +374,10 @@ export const MachineModule = ({ config }) => {
               version: '1.0.0'
             };
 
-            const fee = getGasAndFees(yargs.argv, wnsConfig);
+            const fee = getGasAndFees(yargs.argv, registryConfig);
             const result = await registry.setRecord(userKey, boxRecord, undefined, bondId, fee);
-            await registry.setName(`${wrnRoot}/kube/${boxName}`, result.data, userKey, fee);
-            print({ record: result.data, wrn: `${wrnRoot}/kube/${boxName}` }, { json: true });
+            await registry.setName(`${dxnRoot}/kube/${boxName}`, result.data, userKey, fee);
+            print({ record: result.data, dxn: `${dxnRoot}/kube/${boxName}` }, { json: true });
           }
 
           running = false;

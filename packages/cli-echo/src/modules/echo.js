@@ -11,7 +11,7 @@ import { asyncHandler, print } from '@dxos/cli-core';
 import { ObjectModel } from '@dxos/object-model';
 // import { humanize } from '@dxos/crypto';
 
-const DEFAULT_ITEM_TYPE = 'wrn://dxos.org/item/general';
+const DEFAULT_ITEM_TYPE = 'dxn://dxos.org/item/general';
 
 const displayItem = ({ id, type, parent, model }) => ({
   id,

@@ -12,7 +12,7 @@ Optional `--daemon` flag allows to start IPFS as a daemon, with enabled autorest
 
 In case of starting as a daemon, one need to make sure process has write access to log file, located by default at `/var/log/ipfs.log`. Alternative location of the log file could be defined via optional `--log-file` parameter.
 
-By default, started IPFS node swarms with other DXOS IPFS nodes, bootstrapped from WNS. Interval of swarm connections could be defined with `--connect-interval` (in seconds), default is `300`. WNS bootstrap could be turned on/off using `--wns-bootstrap` flag, which is `true` by default.
+By default, started IPFS node swarms with other DXOS IPFS nodes, bootstrapped from Registry. Interval of swarm connections could be defined with `--connect-interval` (in seconds), default is `300`. Registry bootstrap could be turned on/off using `--registry-bootstrap` flag, which is `true` by default.
 
 ```
 $ dx ipfs start --daemon --log-file "/tmp/ipfs.log"
@@ -24,7 +24,7 @@ In case when IPFS was started as a daemon, `dx ipfs stop` command could be used 
 
 ### IPFS find.
 
-`dx ipfs find` command is used to find file in IPFS nodes, both registered and not registred with WNS. Command requires IPFS node running locally.
+`dx ipfs find` command is used to find file in IPFS nodes, both registered and not registred with Registry. Command requires IPFS node running locally.
 
 Command supports lookup of app, bot or just hash, e.g.:
 

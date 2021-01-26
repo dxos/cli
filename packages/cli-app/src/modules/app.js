@@ -111,12 +111,12 @@ export const AppModule = ({ config }) => {
       // Serve apps.
       .command({
         command: ['serve'],
-        describe: 'Serve app from WNS.',
+        describe: 'Serve app from Registry.',
         builder: yargs => yargs
           // start server.
           .command({
             command: ['start', '$0'],
-            describe: 'Start server Applications from WNS.',
+            describe: 'Start server Applications from Registry.',
             builder: yargs => yargs.version(false)
               .option('namespace') // TODO(burdon): Not used?
               .option('log-file', { type: 'string' })

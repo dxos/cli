@@ -16,10 +16,10 @@ export const download = config => async ({ timeout, name, id, outdir = '.' }) =>
   assert(name || id, '--name or --id required');
 
   const ipfsServer = config.get('services.ipfs.server');
-  const { server, chainId } = config.get('services.wns');
+  const { server, chainId } = config.get('services.registry');
 
-  assert(server, 'Invalid WNS endpoint.');
-  assert(chainId, 'Invalid WNS Chain ID.');
+  assert(server, 'Invalid Registry endpoint.');
+  assert(chainId, 'Invalid Registry Chain ID.');
   assert(ipfsServer, 'Invalid IPFS Server.');
 
   const registry = new Registry(server, chainId);

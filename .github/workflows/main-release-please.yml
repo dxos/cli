@@ -48,8 +48,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           DX_PROFILE: ci
           DX_PROFILE_URL: ${{secrets.dx_profile_url}}
-          DX_WNS_USER_KEY: ${{secrets.wns_user_key}}
-          DX_WNS_BOND_ID: ${{secrets.wns_bond_id}}
+          DX_REGISTRY_USER_KEY: ${{secrets.registry_user_key}}
+          DX_REGISTRY_BOND_ID: ${{secrets.registry_bond_id}}
           DX_MACHINE_DO_TOKEN: ${{secrets.dx_machine_do_token}}
           DX_MACHINE_GITHUB_TOKEN: ${{secrets.dx_machine_github_token}}
           DX_MACHINE_DNS_DOMAIN: ${{secrets.dx_machine_dns_domain}}

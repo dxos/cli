@@ -28,19 +28,19 @@ import { Registry, Account } from '@dxos/registry-client';
 
 import { requestFaucetTokens } from './faucet';
 
-const WNS_EXEC = 'wnsd';
-const WNS_PROCESS_NAME = 'wns';
-const WNS_DEFAULT_LOG_FILE = '/var/log/wns.log';
-const WNS_LOCAL_TCP_ENDPOINT = 'tcp://localhost:26657';
+const REGISTRY_EXEC = 'dxnsd';
+const REGISTRY_PROCESS_NAME = 'dxns';
+const REGISTRY_DEFAULT_LOG_FILE = '/var/log/dxns.log';
+const REGISTRY_LOCAL_TCP_ENDPOINT = 'tcp://localhost:26657';
 
-const WNS_LITE_EXEC = 'wnsd-lite';
-const WNS_LITE_PROCESS_NAME = 'wns-lite';
-const WNS_LITE_DEFAULT_LOG_FILE = '/var/log/wns-lite.log';
-const WNS_LITE_SERVER_CONFIG_DIR = '~/.wire/wnsd-lite';
+const REGISTRY_LITE_EXEC = 'dxnsd-lite';
+const REGISTRY_LITE_PROCESS_NAME = 'dxns-lite';
+const REGISTRY_LITE_DEFAULT_LOG_FILE = '/var/log/dxns-lite.log';
+const REGISTRY_LITE_SERVER_CONFIG_DIR = '~/.dx/dxnsd-lite';
 
-const WNS_CLI_EXEC = 'wnscli';
+const REGISTRY_CLI_EXEC = 'dxnscli';
 
-const FAUCET_TOKEN = 'uwire';
+const FAUCET_TOKEN = 'udxt';
 const FAUCET_AMOUNT = '1000000000';
 
 const getConnectionInfo = (argv, config) => {
@@ -94,7 +94,7 @@ export const promptUrl = async (name, message) => {
 };
 
 export const RegistryModule = ({ config }) => ({
-  command: ['registry', 'reg', 'wns', 'w'], // TODO(burdon): Remove WNS.
+  command: ['registry', 'reg'],
   describe: 'Registry operations',
   builder: yargs => yargs
 
@@ -116,10 +116,10 @@ export const RegistryModule = ({ config }) => ({
     .option('background', { type: 'boolean', alias: 'daemon', default: false })
     .option('user', { default: 'root' })
 
-    // Start WNS.
+    // Start Registry.
     .command({
       command: ['start'],
-      describe: 'Start local WNS.',
+      describe: 'Start local Registry.',
       builder: yargs => yargs
         .option('log-file', { type: 'string' })
         .option('lite', { type: 'boolean', default: false })
@@ -135,62 +135,62 @@ export const RegistryModule = ({ config }) => ({
         let options;
 
         if (lite) {
-          const chainId = config.get('services.wns.chainId');
+          const chainId = config.get('services.registry.chainId');
 
           assert(node, 'Invalid Bootstrap node.');
           assert(chainId, 'Invalid Chain Id.');
 
           args = ['start', '--node', node, ...forwardArgs];
           options = {
-            name: WNS_LITE_PROCESS_NAME,
-            logFile: logFile || WNS_LITE_DEFAULT_LOG_FILE
+            name: REGISTRY_LITE_PROCESS_NAME,
+            logFile: logFile || REGISTRY_LITE_DEFAULT_LOG_FILE
           };
 
-          // Reset wns-lite.
+          // Reset dxns-lite.
           if (reset) {
-            removeSync(WNS_LITE_SERVER_CONFIG_DIR.replace('~', os.homedir()));
-            spawnSync(WNS_LITE_EXEC, ['init', '--chain-id', chainId, '--from-node', '--node', node]);
+            removeSync(REGISTRY_LITE_SERVER_CONFIG_DIR.replace('~', os.homedir()));
+            spawnSync(REGISTRY_LITE_EXEC, ['init', '--chain-id', chainId, '--from-node', '--node', node]);
           }
 
-          runnable = new Runnable(WNS_LITE_EXEC);
+          runnable = new Runnable(REGISTRY_LITE_EXEC);
         } else {
           args = ['start', '--gql-server', '--gql-playground', ...forwardArgs];
           options = {
-            name: WNS_PROCESS_NAME,
-            logFile: logFile || WNS_DEFAULT_LOG_FILE
+            name: REGISTRY_PROCESS_NAME,
+            logFile: logFile || REGISTRY_DEFAULT_LOG_FILE
           };
 
-          runnable = new Runnable(WNS_EXEC);
+          runnable = new Runnable(REGISTRY_EXEC);
         }
 
         await runnable.run(args, { ...options, detached: background });
       })
     })
 
-    // Stop WNS.
+    // Stop Registry.
     .command({
       command: ['stop'],
-      describe: 'Stop local WNS.',
+      describe: 'Stop local Registry.',
       handler: asyncHandler(async () => {
-        await stopService(WNS_PROCESS_NAME);
+        await stopService(REGISTRY_PROCESS_NAME);
       })
     })
 
-    // Reset WNS.
+    // Reset Registry.
     .command({
       command: ['reset'],
-      describe: 'Reset local WNS.',
+      describe: 'Reset local Registry.',
       handler: asyncHandler(async argv => {
         const { user } = argv;
 
         const resetRegistry = async () => new Promise(resolve => {
-          const args = ['tx', 'nameservice', 'clear', '--from', user, '--node', WNS_LOCAL_TCP_ENDPOINT, '--yes'];
+          const args = ['tx', 'nameservice', 'clear', '--from', user, '--node', REGISTRY_LOCAL_TCP_ENDPOINT, '--yes'];
 
           const options = {
             stdio: 'inherit'
           };
 
-          const registrycli = spawn(WNS_CLI_EXEC, args, options);
+          const registrycli = spawn(REGISTRY_CLI_EXEC, args, options);
 
           registrycli.on('exit', () => {
             resolve();
@@ -209,11 +209,11 @@ export const RegistryModule = ({ config }) => ({
 
     .command({
       command: ['status'],
-      describe: 'Get WNS status.',
+      describe: 'Get Registry status.',
       handler: asyncHandler(async argv => {
-        const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-        assert(server, 'Invalid WNS endpoint.');
-        assert(chainId, 'Invalid WNS Chain ID.');
+        const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+        assert(server, 'Invalid Registry endpoint.');
+        assert(chainId, 'Invalid Registry Chain ID.');
 
         const registry = new Registry(server, chainId);
         const result = await registry.getStatus();
@@ -233,9 +233,9 @@ export const RegistryModule = ({ config }) => ({
       handler: asyncHandler(async argv => {
         const { variables = '{}', filename } = argv;
 
-        const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-        assert(server, 'Invalid WNS endpoint.');
-        assert(chainId, 'Invalid WNS Chain ID.');
+        const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+        assert(server, 'Invalid Registry endpoint.');
+        assert(chainId, 'Invalid Registry Chain ID.');
 
         const registry = new Registry(server, chainId);
 
@@ -269,13 +269,13 @@ export const RegistryModule = ({ config }) => ({
 
           handler: asyncHandler(async argv => {
             const { txKey, filename, verbose } = argv;
-            const wnsConfig = config.get('services.wns');
-            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, wnsConfig);
+            const registryConfig = config.get('services.registry');
+            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, registryConfig);
 
-            assert(server, 'Invalid WNS endpoint.');
+            assert(server, 'Invalid Registry endpoint.');
             assert(userKey, 'Invalid User Key.');
             assert(bondId, 'Invalid Bond ID.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             let file = null;
             if (filename) {
@@ -286,7 +286,7 @@ export const RegistryModule = ({ config }) => ({
 
             const { record } = await yaml.read(file);
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
 
             log(verbose ? JSON.stringify(result, undefined, 2) : result.data);
@@ -301,9 +301,9 @@ export const RegistryModule = ({ config }) => ({
             const { id } = argv;
             assert(id, 'Invalid Record ID.');
 
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
             const result = await registry.getRecordsByIds([id]);
@@ -323,11 +323,11 @@ export const RegistryModule = ({ config }) => ({
             .option('all', { type: 'boolean', default: false }),
 
           handler: asyncHandler(async argv => {
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
             const { type, name, bondId, all } = argv;
 
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
 
@@ -350,13 +350,13 @@ export const RegistryModule = ({ config }) => ({
             .option('mnemonic', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const wnsConfig = config.get('services.wns');
-            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, wnsConfig);
+            const registryConfig = config.get('services.registry');
+            const { server, userKey, bondId, chainId } = getConnectionInfo(argv, registryConfig);
 
-            assert(server, 'Invalid WNS endpoint.');
+            assert(server, 'Invalid Registry endpoint.');
             assert(!userKey, 'User key already exists.');
             assert(!bondId, 'Bond already exists.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const faucetServer = config.get('services.faucet.server');
 
@@ -394,7 +394,7 @@ export const RegistryModule = ({ config }) => ({
             const privateKey = account.getPrivateKey();
 
             log('Creating a bond...');
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             await registry.createBond([{ denom: FAUCET_TOKEN, amount: FAUCET_AMOUNT }], privateKey, fee);
             const bondsResult = await registry.queryBonds({ owner: address });
 
@@ -422,8 +422,8 @@ export const RegistryModule = ({ config }) => ({
 
             // Update config file.
             const configToUpdate = yaml.readSync(profilePath);
-            configToUpdate.services.wns.userKey = privateKey;
-            configToUpdate.services.wns.bondId = newBondId;
+            configToUpdate.services.registry.userKey = privateKey;
+            configToUpdate.services.registry.bondId = newBondId;
             yaml.writeSync(profilePath, configToUpdate);
 
             // Save secrets file.
@@ -441,9 +441,9 @@ export const RegistryModule = ({ config }) => ({
           handler: asyncHandler(async argv => {
             let { address } = argv;
 
-            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             if (!address && privateKey) {
               address = new Account(Buffer.from(privateKey, 'hex')).getCosmosAddress();
@@ -476,17 +476,17 @@ export const RegistryModule = ({ config }) => ({
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-            assert(server, 'Invalid WNS endpoint.');
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const account = new Account(Buffer.from(privateKey, 'hex'));
             const fromAddress = account.formattedCosmosAddress;
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             await registry.sendCoins([{ denom, amount }], toAddress, privateKey, fee);
             const result = await registry.getAccounts([fromAddress, toAddress]);
             log(JSON.stringify(result, undefined, 2));
@@ -506,9 +506,9 @@ export const RegistryModule = ({ config }) => ({
             const { id } = argv;
             console.assert(id, 'Bond Id is required.');
 
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
 
@@ -525,9 +525,9 @@ export const RegistryModule = ({ config }) => ({
             .option('owner', { type: 'string' }),
 
           handler: asyncHandler(async argv => {
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
 
@@ -551,14 +551,14 @@ export const RegistryModule = ({ config }) => ({
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-            assert(server, 'Invalid WNS endpoint.');
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.createBond([{ denom, amount }], privateKey, fee);
             log(verbose ? JSON.stringify(result, undefined, 2) : result.data);
           })
@@ -578,14 +578,14 @@ export const RegistryModule = ({ config }) => ({
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-            assert(server, 'Invalid WNS endpoint.');
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.refillBond(id, [{ denom, amount }], privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
@@ -605,14 +605,14 @@ export const RegistryModule = ({ config }) => ({
             assert(denom, 'Invalid Type.');
             assert(amount, 'Invalid Quantity.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-            assert(server, 'Invalid WNS endpoint.');
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.withdrawBond(id, [{ denom, amount }], privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
@@ -626,14 +626,14 @@ export const RegistryModule = ({ config }) => ({
             const { id } = argv;
             assert(id, 'Invalid Bond ID.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-            assert(server, 'Invalid WNS endpoint.');
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.cancelBond(id, privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
@@ -651,14 +651,14 @@ export const RegistryModule = ({ config }) => ({
             assert(id, 'Invalid Record ID.');
             assert(bondId, 'Invalid Bond ID.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-            assert(server, 'Invalid WNS endpoint.');
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.associateBond(id, bondId, privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
@@ -672,14 +672,14 @@ export const RegistryModule = ({ config }) => ({
             const { id } = argv;
             assert(id, 'Invalid Record ID.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-            assert(server, 'Invalid WNS endpoint.');
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.dissociateBond(id, privateKey, fee);
             log(JSON.stringify(result, undefined, 2));
           })
@@ -700,14 +700,14 @@ export const RegistryModule = ({ config }) => ({
                 const { bondId } = argv;
                 assert(bondId, 'Invalid Bond ID.');
 
-                const wnsConfig = config.get('services.wns');
-                const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-                assert(server, 'Invalid WNS endpoint.');
+                const registryConfig = config.get('services.registry');
+                const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+                assert(server, 'Invalid Registry endpoint.');
                 assert(privateKey, 'Invalid Transaction Key.');
-                assert(chainId, 'Invalid WNS Chain ID.');
+                assert(chainId, 'Invalid Registry Chain ID.');
 
                 const registry = new Registry(server, chainId);
-                const fee = getGasAndFees(argv, wnsConfig);
+                const fee = getGasAndFees(argv, registryConfig);
                 const result = await registry.dissociateRecords(bondId, privateKey, fee);
                 log(JSON.stringify(result, undefined, 2));
               })
@@ -726,14 +726,14 @@ export const RegistryModule = ({ config }) => ({
                 assert(oldBondId, 'Invalid Old Bond ID.');
                 assert(newBondId, 'Invalid New Bond ID.');
 
-                const wnsConfig = config.get('services.wns');
-                const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
-                assert(server, 'Invalid WNS endpoint.');
+                const registryConfig = config.get('services.registry');
+                const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
+                assert(server, 'Invalid Registry endpoint.');
                 assert(privateKey, 'Invalid Transaction Key.');
-                assert(chainId, 'Invalid WNS Chain ID.');
+                assert(chainId, 'Invalid Registry Chain ID.');
 
                 const registry = new Registry(server, chainId);
-                const fee = getGasAndFees(argv, wnsConfig);
+                const fee = getGasAndFees(argv, registryConfig);
                 const result = await registry.reassociateRecords(oldBondId, newBondId, privateKey, fee);
                 log(JSON.stringify(result, undefined, 2));
               })
@@ -755,15 +755,15 @@ export const RegistryModule = ({ config }) => ({
             const { name, owner } = argv;
             assert(name, 'Invalid authority name.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
 
-            assert(server, 'Invalid WNS endpoint.');
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.reserveAuthority(name, privateKey, fee, owner);
 
             log(JSON.stringify(result, undefined, 2));
@@ -777,9 +777,9 @@ export const RegistryModule = ({ config }) => ({
             const { name } = argv;
             assert(name, 'Invalid authority name.');
 
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
             const result = await registry.lookupAuthorities([name]);
@@ -801,15 +801,15 @@ export const RegistryModule = ({ config }) => ({
             assert(name, 'Invalid Name.');
             assert(id, 'Invalid Record ID.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
 
-            assert(server, 'Invalid WNS endpoint.');
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.setName(name, id, privateKey, fee);
 
             log(JSON.stringify(result, undefined, 2));
@@ -823,15 +823,15 @@ export const RegistryModule = ({ config }) => ({
             const { name } = argv;
             assert(name, 'Invalid Name.');
 
-            const wnsConfig = config.get('services.wns');
-            const { server, privateKey, chainId } = getConnectionInfo(argv, wnsConfig);
+            const registryConfig = config.get('services.registry');
+            const { server, privateKey, chainId } = getConnectionInfo(argv, registryConfig);
 
-            assert(server, 'Invalid WNS endpoint.');
+            assert(server, 'Invalid Registry endpoint.');
             assert(privateKey, 'Invalid Transaction Key.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
-            const fee = getGasAndFees(argv, wnsConfig);
+            const fee = getGasAndFees(argv, registryConfig);
             const result = await registry.deleteName(name, privateKey, fee);
 
             log(JSON.stringify(result, undefined, 2));
@@ -848,9 +848,9 @@ export const RegistryModule = ({ config }) => ({
             const { name, history } = argv;
             assert(name, 'Invalid Name.');
 
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
             const result = await registry.lookupNames([name], history);
@@ -865,9 +865,9 @@ export const RegistryModule = ({ config }) => ({
           handler: asyncHandler(async argv => {
             const { name } = argv;
 
-            const { server, chainId } = getConnectionInfo(argv, config.get('services.wns'));
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            const { server, chainId } = getConnectionInfo(argv, config.get('services.registry'));
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
 
@@ -879,7 +879,7 @@ export const RegistryModule = ({ config }) => ({
 
     .command({
       command: ['migrate'],
-      describe: 'WNS chain migration tools.',
+      describe: 'Registry chain migration tools.',
       builder: yargs => yargs
         .option('from-file', { type: 'string' })
         .option('to-file', { type: 'string' })
@@ -995,7 +995,7 @@ export const RegistryModule = ({ config }) => ({
                 address: account,
                 coins: [
                   {
-                    denom: 'uwire',
+                    denom: 'udxt',
                     amount
                   }
                 ],
