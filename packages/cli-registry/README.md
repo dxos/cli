@@ -1,17 +1,17 @@
-# WNS CLI
+# Registry CLI
 
 ## Account Setup
 
-Registering records in WNS requires an account. To create an account, activate the required profile and run the following command:
+Registering records in Registry requires an account. To create an account, activate the required profile and run the following command:
 
 ```bash
-$ dx wns account create
+$ dx registry account create
 ? Post a Tweet with text 'Fund cosmos1jeh4d8ym99t235p22n6j4lyyf9wk56jgzjq9dk' and paste the URL: "<PASTE TWEET URL HERE>"
 Requesting funds from faucet...
 Got funds from faucet:
 [
   {
-    "type": "uwire",
+    "type": "udxt",
     "quantity": 1000000000
   }
 ]
@@ -26,10 +26,10 @@ There is no way to recover the account and associated funds if this mnemonic is 
   "address": "cosmos1jeh4d8ym99t235p22n6j4lyyf9wk56jgzjq9dk",
   "bondId": "0b73fdcbbf7033c51c405cbcb4498ddcf1a9c6b6d17873e22db34f39e3f3ca3c"
 }
-Mnemonic saved to ~/.wire/profile/devnet.secrets.yml
+Mnemonic saved to ~/.dx/profile/devnet.secrets.yml
 ```
 
-The profile configuration file is automatically updated with the WNS account private key and bond.
+The profile configuration file is automatically updated with the Registry account private key and bond.
 
 ## Gas and Fees
 
@@ -43,22 +43,22 @@ The `gas` and `fees` can be set to some default values in the profile, and can b
 Example:
 
 ```bash
-$ wns bond create --type uwire --quantity 1000000000 --gas 200000 --fees 200000uwire
+$ dx registry bond create --type udxt --quantity 1000000000 --gas 200000 --fees 200000udxt
 ```
 
 ## Operations
 
-These commands require `wire` CLI to be configured, and a profile to be active.
+These commands require `dx` CLI to be configured, and a profile to be active.
 
 Get node status:
 
 ```bash
-$ dx wns status
+$ dx registry status
 {
   "version": "0.3.0",
   "node": {
     "id": "f31006c3c9c56a3fc118661110c16a00eaef3635",
-    "network": "wireline",
+    "network": "devnet",
     "moniker": "Ashwins-MacBook-Pro-2.local"
   },
   "sync": {
@@ -87,13 +87,13 @@ $ dx wns status
 Create account (automatically requests faucet funds, creates a bond and updates profile config):
 
 ```bash
-$ dx wns account create
+$ dx registry account create
 ```
 
 Get account details:
 
 ```bash
-$ dx wns account get --address cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
+$ dx registry account get --address cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
 [
   {
     "address": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
@@ -102,7 +102,7 @@ $ dx wns account get --address cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
     "sequence": "2",
     "balance": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": "89990000000000"
       }
     ]
@@ -120,7 +120,7 @@ $ dx faucet request --post-url "<TWEET URL>"
     "error": null,
     "tokens": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": 1000000000
       }
     ]
@@ -131,7 +131,7 @@ $ dx faucet request --post-url "<TWEET URL>"
 Send tokens:
 
 ```bash
-$ dx wns tokens send --address cosmos1w5q7xy9sk8hqvlklftdfdkc3kgsd90cxlkwvty --type uwire --quantity 1000000000
+$ dx registry tokens send --address cosmos1w5q7xy9sk8hqvlklftdfdkc3kgsd90cxlkwvty --type udxt --quantity 1000000000
 [
   {
     "address": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
@@ -140,7 +140,7 @@ $ dx wns tokens send --address cosmos1w5q7xy9sk8hqvlklftdfdkc3kgsd90cxlkwvty --t
     "sequence": "3",
     "balance": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": "89989000000000"
       }
     ]
@@ -152,7 +152,7 @@ $ dx wns tokens send --address cosmos1w5q7xy9sk8hqvlklftdfdkc3kgsd90cxlkwvty --t
     "sequence": "0",
     "balance": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": "1000000000"
       }
     ]
@@ -184,13 +184,13 @@ record:
 Publish record (see below for commands to create/query bonds):
 
 ```bash
-$ dx wns record publish --filename bot.yml
+$ dx registry record publish --filename bot.yml
 ```
 
 Get record:
 
 ```bash
-$ dx wns record get --id bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e
+$ dx registry record get --id bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e
 [
   {
     "id": "bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e",
@@ -231,13 +231,13 @@ $ dx wns record get --id bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotc
 List records:
 
 ```bash
-$ dx wns record list
+$ dx registry record list
 ```
 
 Reserve authority:
 
 ```bash
-$ dx wns authority reserve dxos
+$ dx registry authority reserve dxos
 {
   "hash": "DADF18AF6F11457572CE2AC419CA65F0824012FC409E3E9B964DD0FDE59DD506",
   "height": 169,
@@ -268,19 +268,19 @@ $ dx wns authority reserve dxos
 Create sub-authority (same owner as parent authority):
 
 ```bash
-$ dx wns authority reserve echo.dxos
+$ dx registry authority reserve echo.dxos
 ```
 
 Create sub-authority (custom owner for sub-authority):
 
 ```bash
-$ dx wns authority reserve kube.dxos --owner cosmos1rm3ctz5etfrqaal3sp555wh57gcv5lwgx09wxc
+$ dx registry authority reserve kube.dxos --owner cosmos1rm3ctz5etfrqaal3sp555wh57gcv5lwgx09wxc
 ```
 
 Check authority information:
 
 ```bash
-$ dx wns authority whois dxos
+$ dx registry authority whois dxos
 {
   "meta": {
     "height": "179"
@@ -298,11 +298,11 @@ $ dx wns authority whois dxos
 Set name:
 
 ```bash
-$ dx wns name set wrn://dxos/bot/chess bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e
+$ dx registry name set dxn://dxos/bot/chess bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e
 {
   "hash": "D80ED581A784C97EF852AFE2FD5EB7A13A9CC234422A2175FF213387F65EBA32",
   "height": 201,
-  "data": "wrn://dxos/bot/chess",
+  "data": "dxn://dxos/bot/chess",
   "log": [
     {
       "msg_index": 0,
@@ -329,7 +329,7 @@ $ dx wns name set wrn://dxos/bot/chess bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyih
 Lookup name information:
 
 ```bash
-$ dx wns name lookup wrn://dxos/bot/chess
+$ dx registry name lookup dxn://dxos/bot/chess
 {
   "meta": {
     "height": "212"
@@ -348,7 +348,7 @@ $ dx wns name lookup wrn://dxos/bot/chess
 Resolve name:
 
 ```bash
-$ dx wns name resolve wrn://dxos/bot/chess
+$ dx registry name resolve dxn://dxos/bot/chess
 {
   "meta": {
     "height": "234"
@@ -357,7 +357,7 @@ $ dx wns name resolve wrn://dxos/bot/chess
     {
       "id": "bafyreihvapkvblaiwuwsehluyfmxnuovot2bdyihr755wux4bnvotcb36e",
       "names": [
-        "wrn://dxos/bot/chess"
+        "dxn://dxos/bot/chess"
       ],
       "owners": [
         "6ee3328f65c8566cd5451e49e97a767d10a8adf7"
@@ -396,11 +396,11 @@ $ dx wns name resolve wrn://dxos/bot/chess
 Delete name:
 
 ```bash
-$ dx wns name delete wrn://dxos/bot/chess
+$ dx registry name delete dxn://dxos/bot/chess
 {
   "hash": "98270DC01026E6A02E708ECD0699C1FD0233E280A7B9631EFB57BFB21577145B",
   "height": 244,
-  "data": "wrn://dxos/bot/chess",
+  "data": "dxn://dxos/bot/chess",
   "log": [
     {
       "msg_index": 0,
@@ -423,7 +423,7 @@ $ dx wns name delete wrn://dxos/bot/chess
   ]
 }
 
-$ dx wns name resolve wrn://dxos/bot/chess
+$ dx registry name resolve dxn://dxos/bot/chess
 {
   "meta": {
     "height": "254"
@@ -437,20 +437,20 @@ $ dx wns name resolve wrn://dxos/bot/chess
 Create bond:
 
 ```bash
-$ dx wns bond create --type uwire --quantity 1000
+$ dx registry bond create --type udxt --quantity 1000
 ```
 
 List bonds:
 
 ```bash
-$ dx wns bond list
+$ dx registry bond list
 [
   {
     "id": "288425db041a7dff6e06e966067625479ae80b29d4c36f9360634eb0cbe2961d",
     "owner": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
     "balance": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": "1000"
       }
     ]
@@ -460,7 +460,7 @@ $ dx wns bond list
     "owner": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
     "balance": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": "9999000000"
       }
     ]
@@ -471,14 +471,14 @@ $ dx wns bond list
 Get bond:
 
 ```bash
-$ wire wns bond get --id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3
+$ dx registry bond get --id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3
 [
   {
     "id": "8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3",
     "owner": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
     "balance": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": "9999000000"
       }
     ]
@@ -489,14 +489,14 @@ $ wire wns bond get --id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b0
 Query bonds by owner:
 
 ```bash
-$ wire wns bond list --owner cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
+$ dx registry bond list --owner cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
 [
   {
     "id": "288425db041a7dff6e06e966067625479ae80b29d4c36f9360634eb0cbe2961d",
     "owner": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
     "balance": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": "1000"
       }
     ]
@@ -506,7 +506,7 @@ $ wire wns bond list --owner cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
     "owner": "cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094",
     "balance": [
       {
-        "type": "uwire",
+        "type": "udxt",
         "quantity": "9999000000"
       }
     ]
@@ -517,59 +517,59 @@ $ wire wns bond list --owner cosmos1wh8vvd0ymc5nt37h29z8kk2g2ays45ct2qu094
 Refill bond:
 
 ```bash
-$ wire wns bond refill --id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3 --type uwire --quantity 1000
+$ dx registry bond refill --id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3 --type uwire --quantity 1000
 ```
 
 Withdraw funds from bond:
 
 ```bash
-$ wire wns bond withdraw --id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3 --type uwire --quantity 500
+$ dx registry bond withdraw --id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3 --type uwire --quantity 500
 ```
 
 Cancel bond:
 
 ```bash
-$ wire wns bond cancel --id 288425db041a7dff6e06e966067625479ae80b29d4c36f9360634eb0cbe2961d
+$ dx registry bond cancel --id 288425db041a7dff6e06e966067625479ae80b29d4c36f9360634eb0cbe2961d
 ```
 
 Associate bond (with record):
 
 ```bash
-$ wire wns bond associate --id QmYDtNCKtTu6u6jaHaFAC5PWZXcj7fAmry6NoWwMaixFHz --bond-id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3
+$ dx registry bond associate --id QmYDtNCKtTu6u6jaHaFAC5PWZXcj7fAmry6NoWwMaixFHz --bond-id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3
 ```
 
 Disassociate bond (from record):
 
 ```bash
-$ wire wns bond dissociate --id QmYDtNCKtTu6u6jaHaFAC5PWZXcj7fAmry6NoWwMaixFHz
+$ dx registry bond dissociate --id QmYDtNCKtTu6u6jaHaFAC5PWZXcj7fAmry6NoWwMaixFHz
 ```
 
 Dissociate all records from bond:
 
 ```bash
-$ wire wns bond records dissociate --bond-id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3
+$ dx registry bond records dissociate --bond-id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3
 ```
 
 Reassociate records (switch bond):
 
 ```bash
-$ wire wns bond records reassociate --old-bond-id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3 --new-bond-id 146b5ed7a2771ae2e6b323f334f1c2d1134fd7917eb72dea9c88457e912785ab
+$ dx registry bond records reassociate --old-bond-id 8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3 --new-bond-id 146b5ed7a2771ae2e6b323f334f1c2d1134fd7917eb72dea9c88457e912785ab
 ```
 
 Run arbitrary query:
 
 ```bash
-$ wire wns query '{ getStatus { version }}'
+$ dx registry query '{ getStatus { version }}'
 ```
 
 For more complex query:
 
 ```bash
-$ echo 'query ($refs: [String!]) { resolveRecords(refs: $refs) { id type name version }}' | wire wns query --variables='{ "refs": ["wrn:bot:dxos.org/echo"] }'
+$ echo 'query ($refs: [String!]) { resolveRecords(refs: $refs) { id type name version }}' | dx registry query --variables='{ "refs": ["dxn:bot:dxos.org/echo"] }'
 ```
 
 Read query from file:
 
 ```bash
-$ wire wns query --filename='<file_with_query>' --variables='{ "refs": ["wrn:bot:dxos.org/echo"] }'
+$ dx registry query --filename='<file_with_query>' --variables='{ "refs": ["dxn:bot:dxos.org/echo"] }'
 ```

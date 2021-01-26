@@ -70,7 +70,7 @@ export const AppModule = ({ config }) => {
     // Deploy pad.
       .command({
         command: ['deploy'],
-        describe: 'Deploy Pad to WNS.',
+        describe: 'Deploy Pad to Registry.',
         builder: yargs => yargs
           .strict(false)
           .version(false)

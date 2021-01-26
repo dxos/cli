@@ -15,7 +15,7 @@ import yaml from 'js-yaml';
 
 import { Registry } from '@dxos/registry-client';
 
-import { WRN } from './util/WRN';
+import { DXN } from './util/DXN';
 
 import { BASE_URL, DEFAULT_PORT } from './config';
 
@@ -76,7 +76,7 @@ class Resolver {
 /**
  * Test:
  * yarn server
- * curl -I localhost:5999/app/wrn:dxos:application
+ * curl -I localhost:5999/app/dxn:dxos:application
  *
  * @param {Object} config
  * @param {String} config.registryEndpoint endpoint
@@ -118,7 +118,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     let file;
     let resource;
     // TODO(egorgripasov): Deprecated (backwards comptatible).
-    if (/^wrn(:|%)/i.test(route)) {
+    if (/^dxn(:|%)/i.test(route)) {
       const [name, ...filePath] = route.split('/');
       if (!filePath.length) {
         return res.redirect(`${req.originalUrl}/`);
@@ -126,7 +126,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
 
       file = `/${filePath.join('/')}`;
       const [authority, ...rest] = decodeURIComponent(name).slice(4).replace(/^\/*/, '').split(':');
-      resource = new WRN(authority, rest.join('/'));
+      resource = new DXN(authority, rest.join('/'));
     } else {
       const [authority, path, filePath] = route.split(':');
       if (!filePath) {
@@ -134,11 +134,11 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
       }
 
       file = filePath;
-      resource = new WRN(authority, path);
+      resource = new DXN(authority, path);
     }
 
     // TODO(burdon): Hack to adapt current names.
-    const name = WRN.legacy(resource); // String(resource);
+    const name = DXN.legacy(resource); // String(resource);
     const cid = await resolver.lookupCID(name);
 
     if (!cid) {

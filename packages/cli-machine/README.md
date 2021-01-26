@@ -47,7 +47,7 @@ $ /home/david/projects/dxos/incubator/node_modules/.bin/dx machine publish --nam
   "machine_data": {
     "name": "kube087f310c",
     "dns_name": "kube087f310c.boxes.dxos.network",
-    "wrn": "kube.dxos.network/box087f310c"
+    "dxn": "kube.dxos.network/box087f310c"
   }
 }
 ```

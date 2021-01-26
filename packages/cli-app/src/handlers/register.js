@@ -14,20 +14,20 @@ import { loadAppConfig, updateAppConfig } from './config';
 
 export const register = (config, { getAppRecord }) => async (argv) => {
   const { verbose, version, namespace, 'dry-run': noop, txKey, name } = argv;
-  const wnsConfig = config.get('services.wns');
-  const { server, userKey, bondId, chainId } = wnsConfig;
+  const registryConfig = config.get('services.registry');
+  const { server, userKey, bondId, chainId } = registryConfig;
 
-  assert(server, 'Invalid WNS endpoint.');
-  assert(userKey, 'Invalid WNS userKey.');
-  assert(bondId, 'Invalid WNS bond ID.');
-  assert(chainId, 'Invalid WNS chain ID.');
+  assert(server, 'Invalid Registry endpoint.');
+  assert(userKey, 'Invalid Registry userKey.');
+  assert(bondId, 'Invalid Registry bond ID.');
+  assert(chainId, 'Invalid Registry chain ID.');
 
   const conf = {
     ...await loadAppConfig(),
     ...clean({ version })
   };
 
-  assert(name, 'Invalid WRN.');
+  assert(name, 'Invalid DXN.');
   assert(conf.name, 'Invalid app name.');
   assert(conf.version, 'Invalid app version.');
 
@@ -51,7 +51,7 @@ export const register = (config, { getAppRecord }) => async (argv) => {
     log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
   }
 
-  const fee = getGasAndFees(argv, wnsConfig);
+  const fee = getGasAndFees(argv, registryConfig);
 
   let appId;
   if (!noop) {
@@ -62,10 +62,10 @@ export const register = (config, { getAppRecord }) => async (argv) => {
   }
 
   // eslint-disable-next-line
-  for await (const wrn of name) {
-    log(`Assigning name ${wrn}...`);
+  for await (const dxn of name) {
+    log(`Assigning name ${dxn}...`);
     if (!noop) {
-      await registry.setName(wrn, appId, userKey, fee);
+      await registry.setName(dxn, appId, userKey, fee);
     }
   }
 

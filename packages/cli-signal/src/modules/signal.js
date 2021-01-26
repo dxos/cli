@@ -14,7 +14,7 @@ const SIGNAL_PROCESS_NAME = 'signal';
 const DEFAULT_LOG_FILE = '/var/log/signal.log';
 
 const LIMIT = 5;
-const RECORD_TYPE = 'wrn:service';
+const RECORD_TYPE = 'dxn:service';
 const SERVICE_TYPE = 'signal';
 
 /**
@@ -63,8 +63,8 @@ export const SignalModule = ({ config }) => {
           .strict(false)
           .help(false)
           .option('help')
-          .option('wns-bootstrap', {
-            describe: 'start with wns bootstrap',
+          .option('registry-bootstrap', {
+            describe: 'start with registry bootstrap',
             type: 'boolean',
             default: true
           })
@@ -79,14 +79,14 @@ export const SignalModule = ({ config }) => {
           logFile = DEFAULT_LOG_FILE,
           procName,
           verbose,
-          wnsBootstrap,
+          registryBootstrap,
           ...argv
         }) => {
-          if (wnsBootstrap && !argv.help) {
-            const { server, chainId } = config.get('services.wns');
+          if (registryBootstrap && !argv.help) {
+            const { server, chainId } = config.get('services.registry');
 
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            assert(server, 'Invalid Registry endpoint.');
+            assert(chainId, 'Invalid Registry Chain ID.');
 
             const registry = new Registry(server, chainId);
             const attributes = clean({ type: RECORD_TYPE, service: SERVICE_TYPE });

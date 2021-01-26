@@ -6,7 +6,7 @@ To deploy pads we need a number of steps:
 
 - build: This generates the ditribution files along with configuration specific for the given pad.yml
 - publish: Upload the dist folder to IPFS. Update the hash in the pad.yml
-- register: Use pad.yml to generate a record in WNS.
+- register: Use pad.yml to generate a record in Registry.
 
 All this operations can be resumed with one command:
 
@@ -74,7 +74,7 @@ $ yarn run dx pad query --name 'dxos.org/example-pad'
 [
   {
     "id": "QmUSmSPUBhPSXSGaHhUDxBn3cjG2gjJ9BiUznvUBiJo37F",
-    "type": "wrn:pad",
+    "type": "dxn:pad",
     "name": "dxos.org/example-pad",
     "version": "0.0.1",
     "owners": [
@@ -86,7 +86,7 @@ $ yarn run dx pad query --name 'dxos.org/example-pad'
     "attributes": {
       "displayName": "Example Pad",
       "name": "dxos.org/example-pad",
-      "type": "wrn:pad",
+      "type": "dxn:pad",
       "version": "0.0.1"
     }
   }

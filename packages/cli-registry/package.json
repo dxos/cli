@@ -1,8 +1,8 @@
 {
-  "name": "@dxos/cli-wns",
+  "name": "@dxos/cli-registry",
   "version": "2.0.34-alpha.0",
-  "description": "WNS CLI",
-  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-wns#readme",
+  "description": "Registry CLI",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-registry#readme",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
@@ -13,7 +13,7 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "dx-wns": "bin/dx-wns.js"
+    "dx-registry": "bin/dx-registry.js"
   },
   "files": [
     "bin/",

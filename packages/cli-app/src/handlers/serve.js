@@ -16,12 +16,12 @@ const serverRunnable = new Runnable(APP_SERVER_BINARY, []);
 export const start = (config) => async ({
   namespace, port, daemon, procName = APP_SERVER_PROCESS_NAME, logFile = DEFAULT_LOG_FILE
 }) => {
-  const endpoint = config.get('services.wns.server');
-  const chainId = config.get('services.wns.chainId');
+  const endpoint = config.get('services.registry.server');
+  const chainId = config.get('services.registry.chainId');
   const ipfsGateway = config.get('services.ipfs.gateway');
   const configFile = config.get('cli.app.serve.config');
 
-  assert(endpoint, 'Invalid WNS Endpoint.');
+  assert(endpoint, 'Invalid Registry Endpoint.');
   assert(ipfsGateway, 'Invalid IPFS Gateway.');
 
   const options = {

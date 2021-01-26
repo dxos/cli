@@ -4,12 +4,12 @@
 
 import assert from 'assert';
 
-const PREFIX = 'wrn://';
+const PREFIX = 'dxn://';
 
 // TODO(burdon): NOTE Current names will change
-// wrn://dxos/application/console => wrn://dxos:application/console
+// dxn://dxos/application/console => dxn://dxos:application/console
 
-// Example: wrn://dxos:app/console@alpha
+// Example: dxn://dxos:app/console@alpha
 const PATTERN = new RegExp(PREFIX + '(.+):(.+)');
 
 // TODO(burdon): Enforce in registry.
@@ -24,7 +24,7 @@ function validChars (str) {
 
 // TODO(burdon): Rename DXN.
 // TODO(burdon): Factor out to registry-client.
-export class WRN {
+export class DXN {
   // TODO(burdon): Convert to legacy format. (Reset registry?)
   static legacy (resource) {
     return `${PREFIX}${resource.authority}/${resource.path}`;
@@ -32,7 +32,7 @@ export class WRN {
 
   static parse (name) {
     const [, authority, path] = name.match(PATTERN);
-    return new WRN(authority, path);
+    return new DXN(authority, path);
   }
 
   constructor (authority, path) {

@@ -12,7 +12,7 @@ import { Registry } from '@dxos/registry-client';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;
-const RECORD_TYPE = 'wrn:service';
+const RECORD_TYPE = 'dxn:service';
 const SERVICE_TYPE = 'ipfs';
 const SERVICE_EXEC = 'ipfs';
 const SVC_NAME = 'ipfs-swarm-connect';
@@ -89,7 +89,7 @@ export class SwarmConnector {
 
 const [registryEndpoint, chainId, interval, allowIPv6] = process.argv.slice(2);
 
-assert(registryEndpoint, 'Invalid WNS endpoint.');
-assert(chainId, 'Invalid WNS Chain ID.');
+assert(registryEndpoint, 'Invalid Registry endpoint.');
+assert(chainId, 'Invalid Registry Chain ID.');
 
 new SwarmConnector({ registryEndpoint, chainId, interval, allowIPv6 }).start();

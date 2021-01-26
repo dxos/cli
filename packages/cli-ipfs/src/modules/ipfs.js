@@ -21,7 +21,7 @@ const IPFS_SWARM_CONNECTOR_PROCESS_NAME = 'ipfs-swarm-connect';
 const IPFS_SWARM_CONNECTOR_PATH = path.join(__dirname, '../runnable/swarm-connect.js');
 const IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE = '/var/log/ipfs-swarm-connect.log';
 
-const RECORD_TYPE = 'wrn:service';
+const RECORD_TYPE = 'dxn:service';
 const SERVICE_TYPE = 'ipfs';
 
 const ipfsRunnable = new Runnable(IPFS_EXEC);
@@ -42,8 +42,8 @@ export const IPFSModule = ({ config }) => ({
         .option('daemon', { type: 'boolean', default: false })
         .option('log-file', { type: 'string', default: IPFS_DEFAULT_LOG_FILE })
         .option('proc-name', { type: 'string', default: IPFS_PROCESS_NAME })
-        .option('wns-bootstrap', {
-          describe: 'Start with WNS bootstrap',
+        .option('registry-bootstrap', {
+          describe: 'Start with Registry bootstrap',
           type: 'boolean',
           default: true
         })
@@ -52,10 +52,10 @@ export const IPFSModule = ({ config }) => ({
         .option('max-memory', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
-        const { logFile, daemon, procName, forward, connectInterval, connectIpv6, wnsBootstrap, maxMemory } = argv;
+        const { logFile, daemon, procName, forward, connectInterval, connectIpv6, registryBootstrap, maxMemory } = argv;
         const forwardArgs = forward ? JSON.parse(forward).args : [];
 
-        if (wnsBootstrap && connectInterval >= 0) {
+        if (registryBootstrap && connectInterval >= 0) {
           const swarmConnectorOptions = {
             name: IPFS_SWARM_CONNECTOR_PROCESS_NAME,
             detached: daemon,
@@ -63,7 +63,7 @@ export const IPFSModule = ({ config }) => ({
             logFile: IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE,
             background: true
           };
-          const { server, chainId } = config.get('services.wns');
+          const { server, chainId } = config.get('services.registry');
           await swarmConnectRunable.run(
             [server, chainId, connectInterval * 1000, connectIpv6],
             swarmConnectorOptions
@@ -116,9 +116,9 @@ export const IPFSModule = ({ config }) => ({
         .option('platform', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
-        const { server, chainId } = config.get('services.wns');
-        assert(server, 'Invalid WNS endpoint.');
-        assert(chainId, 'Invalid WNS Chain ID.');
+        const { server, chainId } = config.get('services.registry');
+        assert(server, 'Invalid Registry endpoint.');
+        assert(chainId, 'Invalid Registry Chain ID.');
 
         const registry = new Registry(server, chainId);
 
@@ -141,14 +141,14 @@ export const IPFSModule = ({ config }) => ({
             case 'app':
             case 'file': {
               const { records } = await registry.resolveNames([name]);
-              assert(records[0], 'Item not found in WNS.');
+              assert(records[0], 'Item not found in Registry.');
               hash = get(records, '[0].attributes.package["/"]');
               break;
             }
             case 'bot': {
               assert(platform, 'Invalid platform.');
               const { records: bots } = await registry.resolveNames([name]);
-              assert(bots[0], 'Bot not found in WNS.');
+              assert(bots[0], 'Bot not found in Registry.');
               hash = get(bots, `[0].attributes.package.${platform.replace('-', '.')}["/"]`);
               break;
             }
@@ -180,13 +180,13 @@ export const IPFSModule = ({ config }) => ({
           return { node: hash, registered: false };
         });
 
-        const wnsRegisteredCount = result.filter(({ registered }) => registered).length;
+        const registryRegisteredCount = result.filter(({ registered }) => registered).length;
 
         const info = {
           ...(thing !== hash ? { name, type: thing } : {}),
           hash,
-          'wns-registered-nodes-found': wnsRegisteredCount,
-          'non-wns-registered-nodes-found': result.length - wnsRegisteredCount
+          'registry-registered-nodes-found': registryRegisteredCount,
+          'non-registry-registered-nodes-found': result.length - registryRegisteredCount
         };
 
         if (json) {
@@ -214,7 +214,7 @@ export const IPFSModule = ({ config }) => ({
     // Upload files.
     .command({
       command: ['upload <target>'],
-      describe: 'Upload a file to WNS.',
+      describe: 'Upload a file to Registry.',
       builder: yargs => yargs
         .positional('target', { type: 'string', required: true })
         .strict()

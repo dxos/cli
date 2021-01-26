@@ -29,7 +29,7 @@ In order to install CLI extensions, one could leverage automatic installation me
 TODO(burdon): Rename registry.
 
 ```bash
-$ dx wns
+$ dx registry
 ```
 
 ```bash
@@ -51,7 +51,6 @@ $ dx extension list
 
 extension       command          version         description
 --------------  ---------------  --------------  -----------------------
-@dxos/cli-wns   wns,faucet,keys  2.0.32          WNS management.
 @dxos/cli-bot   bot              2.0.32          Bot operations.
 @dxos/cli-app   app              2.0.32          Application management.
 ```
@@ -151,7 +150,7 @@ Profiles are stored in the `~/.dx/profile` folder. To further customize a profil
 
 To activate/use a profile, do one of the following (highest to lowest precedence):
 
-1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile devnet wns status`
+1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile devnet registry status`
 2. export `DX_PROFILE` in the shell, with the name of the profile, e.g. `export DX_PROFILE=devnet`
 3. Set it as the default for the system, e.g. `dx profile set devnet`
 
@@ -178,7 +177,7 @@ $ dx profile config <NAME>
 View the profile used for a command (using the `--dry-run` flag):
 
 ```bash
-$ dx wns status --dry-run
+$ dx registry status --dry-run
 Profile: /Users/ashwinp/.dx/profile/devnet.yml
 ```
 
@@ -215,11 +214,11 @@ $ dx app register help
 | [Chat CLI](https://github.com/dxos/cli/blob/master/packages/cli-chat/README.md) |
 | [Dashboard CLI](https://github.com/dxos/cli/blob/master/packages/cli-dashboard/README.md) |
 | [ECHO CLI](https://github.com/dxos/cli/blob/master/packages/cli-echo/README.md) |
-| [DXNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-wns/README.md) |
 | [HALO CLI](https://github.com/dxos/cli/blob/master/packages/cli-halo/README.md) |
 | [IPFS CLI](https://github.com/dxos/cli/blob/master/packages/cli-ipfs/README.md) |
 | [Machine CLI](https://github.com/dxos/cli/blob/master/packages/cli-machine/README.md) |
 | [MDNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-mdns/README.md) |
 | [Pad CLI](https://github.com/dxos/cli/blob/master/packages/cli-pad/README.md) |
 | [Party CLI](https://github.com/dxos/cli/blob/master/packages/cli-party/README.md) |
+| [Registry CLI](https://github.com/dxos/cli/blob/master/packages/cli-registry/README.md) |
 | [Signal CLI](https://github.com/dxos/cli/blob/master/packages/cli-signal/README.md) |

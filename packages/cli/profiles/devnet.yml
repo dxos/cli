@@ -23,13 +23,13 @@ cli:
 
 # DXOS services.
 services:
-  wns:
-    server: 'https://node1.dxos.network/wns/api'
+  registry:
+    server: 'https://node1.dxos.network/registry/api'
     userKey:
     bondId:
     chainId: 'devnet-2'
     gas: '200000'
-    fees: '200000uwire'
+    fees: '200000udxt'
   ipfs:
     server: '/ip4/127.0.0.1/tcp/5001'
     gateway: 'http://127.0.0.1:8888/ipfs/'

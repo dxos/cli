@@ -12,13 +12,13 @@ import { FILE_TYPE } from '../config';
 
 export const register = (config) => async (argv) => {
   const { txKey, name, cid, contentType, fileName, quiet = false } = argv;
-  const wnsConfig = config.get('services.wns');
-  const { server, userKey, bondId, chainId } = wnsConfig;
+  const registryConfig = config.get('services.registry');
+  const { server, userKey, bondId, chainId } = registryConfig;
 
-  assert(server, 'Invalid WNS endpoint.');
-  assert(userKey, 'Invalid WNS userKey.');
-  assert(bondId, 'Invalid WNS bond ID.');
-  assert(chainId, 'Invalid WNS chain ID.');
+  assert(server, 'Invalid Registry endpoint.');
+  assert(userKey, 'Invalid Registry userKey.');
+  assert(bondId, 'Invalid Registry bond ID.');
+  assert(chainId, 'Invalid Registry chain ID.');
 
   !quiet && logError('Registering ...');
 
@@ -32,7 +32,7 @@ export const register = (config) => async (argv) => {
   };
 
   const registry = new Registry(server, chainId);
-  const fee = getGasAndFees(argv, wnsConfig);
+  const fee = getGasAndFees(argv, registryConfig);
 
   const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
   const recordId = result.data;
@@ -40,9 +40,9 @@ export const register = (config) => async (argv) => {
 
   if (name && name.length) {
     // eslint-disable-next-line
-    for await (const wrn of name) {
-      await registry.setName(wrn, recordId, userKey, fee);
-      log(wrn);
+    for await (const dxn of name) {
+      await registry.setName(dxn, recordId, userKey, fee);
+      log(dxn);
     }
   }
 };

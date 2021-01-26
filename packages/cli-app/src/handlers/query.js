@@ -13,9 +13,9 @@ import { APP_TYPE } from '../config';
 export const query = config => async argv => {
   const { id, name, namespace } = argv;
 
-  const { server, chainId } = config.get('services.wns');
-  assert(server, 'Invalid WNS endpoint.');
-  assert(chainId, 'Invalid WNS Chain ID.');
+  const { server, chainId } = config.get('services.registry');
+  assert(server, 'Invalid Registry endpoint.');
+  assert(chainId, 'Invalid Registry Chain ID.');
 
   const registry = new Registry(server, chainId);
 
