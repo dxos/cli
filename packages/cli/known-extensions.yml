@@ -90,18 +90,11 @@
     initRequired: true
     destroyRequired: true
   - 
-    moduleName: "@dxos/cli-signal"
-    describe: "Signal server extension."
-    command: 
-      - "signal"
-    initRequired: false
-    destroyRequired: false
-  - 
-    moduleName: "@dxos/cli-wns"
+    moduleName: "@dxos/cli-registry"
     describe: "Registry extension."
     command: 
       - 
-        command: "wns"
+        command: "registry"
         describe: "Registry operations."
       - 
         command: "faucet"
@@ -109,6 +102,13 @@
       - 
         command: "keys"
         describe: "Keys management."
+    initRequired: false
+    destroyRequired: false
+  - 
+    moduleName: "@dxos/cli-signal"
+    describe: "Signal server extension."
+    command: 
+      - "signal"
     initRequired: false
     destroyRequired: false
 
