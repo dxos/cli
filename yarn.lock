@@ -1637,10 +1637,10 @@
     random-access-memory "^3.1.1"
     random-access-web "^2.0.3"
 
-"@dxos/registry-client@~1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-1.1.0.tgz#097791e1321a891b6f43cfb06493cf9b823d6137"
-  integrity sha512-MqqOsY86qNXNa5ICg1qvul5n8/lu1vrubONOnBWVlrRY71Rtxw1RMXQZn2jja6bLFZqTS1S/VoJzlsTfDz3NMQ==
+"@dxos/registry-client@~1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-1.1.2.tgz#b4e3b8871d79b81ffb3ec1b87a02417507efa3c7"
+  integrity sha512-v3Y5SMZKamrvajmmc5s8uD5t65i7ZOI49J+Q/ll6h+7OJjFJ1HKr0WGIXaLJG6yrJQ+scJMBRelhbOXVJiiPwQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@graphql-tools/schema" "^6.0.16"
