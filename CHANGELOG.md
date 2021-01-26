@@ -1,5 +1,15 @@
 # Changelog
 
+### [2.0.35](https://www.github.com/dxos/cli/compare/v2.0.34...v2.0.35) (2021-01-26)
+
+
+### Bug Fixes
+
+* add persistence to CLI; rewrite party commands. ([#125](https://www.github.com/dxos/cli/issues/125)) ([a8c38f2](https://www.github.com/dxos/cli/commit/a8c38f2b1d676509daaa5eaf3fc63b2715e4c410))
+* check if node from nvm is used. ([#137](https://www.github.com/dxos/cli/issues/137)) ([a626af4](https://www.github.com/dxos/cli/commit/a626af490c5a43d99275469af36b26cbb438a959))
+* fix help output. ([#132](https://www.github.com/dxos/cli/issues/132)) ([6c83a15](https://www.github.com/dxos/cli/commit/6c83a154085f61ee8f8c6f301c03d7e290fece9c))
+* various err fix. ([#135](https://www.github.com/dxos/cli/issues/135)) ([b26aa2e](https://www.github.com/dxos/cli/commit/b26aa2eefb1d2830621e2629771c326afe5d5e9d))
+
 ### [2.0.34](https://www.github.com/dxos/cli/compare/v2.0.33...v2.0.34) (2020-12-18)
 
 
