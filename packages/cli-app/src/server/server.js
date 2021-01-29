@@ -12,12 +12,14 @@ import os from 'os';
 import { join } from 'path';
 import urlJoin from 'url-join';
 import yaml from 'js-yaml';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 
 import { Registry } from '@wirelineio/registry-client';
 
-import { WRN } from './util/WRN';
-
-import { BASE_URL, DEFAULT_PORT } from './config';
+import { COOKIE_SECRET, LOGIN_PATH, authHandler, authMiddleware } from './auth';
+import { WRN } from '../util/WRN';
+import { BASE_URL, DEFAULT_PORT } from '../config';
 
 const MAX_CACHE_AGE = 120 * 1000;
 
@@ -83,7 +85,7 @@ class Resolver {
  * @param {Number} config.port
  * @param {String} config.ipfsGateway
  */
-export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile }) => {
+export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp }) => {
   const registry = new Registry(registryEndpoint, chainId);
   const resolver = new Resolver(registry);
 
@@ -151,11 +153,18 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   // Start configuring express app.
   const app = express();
 
+  // Middleware.
+  app.use(cookieParser(COOKIE_SECRET, { signed: true }));
+  app.use(bodyParser.urlencoded({ extended: false }));
+
   // Serve config file.
   app.use(CONFIG_PATH, configHandler);
 
+  // Authentication.
+  app.use(LOGIN_PATH, authHandler);
+
   // Proxy app files.
-  app.use(new RegExp(BASE_URL + '/(.+)'), appFileHandler);
+  app.use(new RegExp(BASE_URL + '/(.+)'), authMiddleware(loginApp), appFileHandler);
 
   return app.listen(port, () => {
     log(`Server started on ${port}.`);

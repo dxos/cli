@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const [port, ipfsGateway, registryEndpoint, chainId, configFile, namespace] = process.argv.slice(2);
+const [port, ipfsGateway, registryEndpoint, chainId, configFile, namespace, loginApp] = process.argv.slice(2);
 
-require('../dist/es/server').serve({ port, ipfsGateway, registryEndpoint, chainId, configFile, namespace });
+require('../dist/es/server/server').serve({ port, ipfsGateway, registryEndpoint, chainId, configFile, namespace, loginApp });
