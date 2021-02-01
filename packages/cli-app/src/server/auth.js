@@ -11,8 +11,8 @@ debug.enable('dxos:*');
 
 const COOKIE_MAX_AGE = 15;
 
-export const LOGIN_PATH = '/auth/login';
-export const OTP_QR_PATH = '/auth/setup';
+export const LOGIN_PATH = '/app/auth';
+export const OTP_QR_PATH = '/app/auth-setup';
 
 // TODO(egorgripasov): Permanent secret per kube.
 export const COOKIE_SECRET = 'supersecret';
@@ -20,7 +20,7 @@ export const COOKIE_SECRET = 'supersecret';
 export const authMiddleware = (loginApp) => async (req, res, next) => {
   if (!req.signedCookies.auth) {
     log('Not authenticated.');
-    // TODO(egorgripasov): Redirect to loginApp.
+    // TODO(egorgripasov): Redirect to keyhole.
     return res.redirect(`${LOGIN_PATH}?redirect=${encodeURIComponent(req.originalUrl)}`);
   } else {
     next();
@@ -41,7 +41,7 @@ export const authHandler = async (req, res) => {
   }
 
   // TODO(egorgripasov): Remove.
-  res.send(`<html><form method="post" action="${req.originalUrl}">Password: <input name="otp" type="text" /></form><p><a href="${OTP_QR_PATH}" target="_blank">Setup 2FA</a></p></html>`);
+  res.send(`<html style="display: flex; justify-content: center; margin-top:30%;"><form method="post" action="${req.originalUrl}">Password: <input name="otp" type="text" /></form></html>`);
 };
 
 export const authSetupHandler = async (req, res) => {
