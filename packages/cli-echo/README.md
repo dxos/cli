@@ -32,7 +32,7 @@ Install required extensions:
 ```
 $ dx extension install @dxos/cli-data --version alpha
 $ dx extension install @dxos/cli-echo --version alpha
-$ dx extension install @dxos/cli-wns --version alpha
+$ dx extension install @dxos/cli-registry --version alpha
 ```
 
 Verify installed extensions:
@@ -43,7 +43,7 @@ extension       command          version         description
 --------------  ---------------  --------------  -----------------
 @dxos/cli-data  party            2.0.31-alpha.0  Party management.
 @dxos/cli-echo  echo             2.0.31-alpha.0  Echo operations.
-@dxos/cli-wns   wns,faucet,keys  2.0.31-alpha.0  WNS management.
+@dxos/cli-registry   wns,faucet,keys  2.0.31-alpha.0  WNS management.
 ```
 
 ### Party

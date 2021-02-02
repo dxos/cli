@@ -97,7 +97,7 @@
     initRequired: false
     destroyRequired: false
   - 
-    moduleName: "@dxos/cli-wns"
+    moduleName: "@dxos/cli-registry"
     describe: "Registry extension."
     command: 
       - 

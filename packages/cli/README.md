@@ -224,4 +224,4 @@ $ dx app register help
 | [MDNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-mdns/README.md) |
 | [Pad CLI](https://github.com/dxos/cli/blob/master/packages/cli-pad/README.md) |
 | [Signal CLI](https://github.com/dxos/cli/blob/master/packages/cli-signal/README.md) |
-| [WNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-wns/README.md) |
+| [WNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-registry/README.md) |

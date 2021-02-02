@@ -1,6 +1,6 @@
-name: dxos/cli-wns
+name: dxos/cli-registry
 version: 0.0.1
-displayName: cli-wns
+displayName: cli-registry
 description: Registry extension.
 command:
   - 
