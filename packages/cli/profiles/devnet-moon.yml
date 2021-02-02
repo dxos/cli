@@ -6,7 +6,7 @@ cli:
   app:
     serve:
       config: '~/.wire/remote.yml'
-      loginApp: 'wrn://dxos/application/login'
+      loginApp: 'dxos:application/keyhole'
   console:
     package: '@dxos/console-server'
     channel: 'beta'

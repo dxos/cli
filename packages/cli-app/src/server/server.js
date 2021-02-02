@@ -3,6 +3,7 @@
 //
 
 import assert from 'assert';
+import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
 import fs from 'fs';
@@ -17,13 +18,15 @@ import cookieParser from 'cookie-parser';
 
 import { Registry } from '@wirelineio/registry-client';
 
-import { COOKIE_SECRET, LOGIN_PATH, OTP_QR_PATH, authHandler, authSetupHandler, authMiddleware } from './auth';
+import { LOGIN_PATH, OTP_QR_PATH, authHandler, authSetupHandler, authMiddleware } from './auth';
 import { WRN } from '../util/WRN';
 import { BASE_URL, DEFAULT_PORT } from '../config';
 
 const MAX_CACHE_AGE = 120 * 1000;
 
 const CONFIG_PATH = '/config/config.json';
+
+const DEFAULT_KEYPHRASE = 'kube';
 
 const log = debug('dxos:cli-app:server');
 debug.enable('dxos:*');
@@ -85,7 +88,7 @@ class Resolver {
  * @param {Number} config.port
  * @param {String} config.ipfsGateway
  */
-export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp }) => {
+export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, keyPhrase = DEFAULT_KEYPHRASE }) => {
   const registry = new Registry(registryEndpoint, chainId);
   const resolver = new Resolver(registry);
 
@@ -154,15 +157,16 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   const app = express();
 
   // Middleware.
-  app.use(cookieParser(COOKIE_SECRET, { signed: true }));
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cors());
+  app.use(cookieParser(keyPhrase, { signed: true }));
+  app.use(bodyParser.json());
 
   // Serve config file.
   app.use(CONFIG_PATH, configHandler);
 
   // Authentication.
-  app.use(LOGIN_PATH, authHandler);
-  app.use(OTP_QR_PATH, authSetupHandler);
+  app.use(LOGIN_PATH, authHandler(keyPhrase));
+  app.use(OTP_QR_PATH, authSetupHandler(keyPhrase));
 
   // Proxy app files.
   app.use(new RegExp(BASE_URL + '/(.+)'), authMiddleware(loginApp), appFileHandler);

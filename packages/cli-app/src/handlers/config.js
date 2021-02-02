@@ -14,7 +14,7 @@ const DEFAULT_BUILD = 'yarn webpack -p';
 
 export const updateAppConfig = async config => {
   let appConfig = fs.existsSync(APP_CONFIG_FILENAME) ? await readFile(APP_CONFIG_FILENAME) : {};
-  appConfig = defaultsDeep({}, appConfig, config);
+  appConfig = defaultsDeep({}, config, appConfig);
 
   await writeFile(appConfig, APP_CONFIG_FILENAME);
 };
