@@ -25,10 +25,10 @@ cli:
 # DXOS services.
 services:
   wns:
-    server: 'https://wns1.kube.moon.dxos.network/api'
+    server: 'https://wns.kube.moon.dxos.network/api'
     userKey:
     bondId:
-    chainId: 'devnet-2'
+    chainId: 'moon'
     gas: '200000'
     fees: '200000uwire'
   ipfs:

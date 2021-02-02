@@ -20,6 +20,8 @@ export const start = (config) => async ({
   const chainId = config.get('services.wns.chainId');
   const ipfsGateway = config.get('services.ipfs.gateway');
   const configFile = config.get('cli.app.serve.config');
+  const loginApp = config.get('cli.app.serve.loginApp');
+  const keyPhrase = config.get('cli.app.serve.keyPhrase');
 
   assert(endpoint, 'Invalid WNS Endpoint.');
   assert(ipfsGateway, 'Invalid IPFS Gateway.');
@@ -31,7 +33,7 @@ export const start = (config) => async ({
   };
 
   // TODO(burdon): Document array.
-  serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || ''], options);
+  serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || '', loginApp, keyPhrase], options);
 };
 
 export const stop = (/* config */) => async ({

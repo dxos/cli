@@ -19,6 +19,7 @@ import SSH_KEYS from '../../ssh-keys.yml';
 
 const KUBE_TYPE = 'wrn:kube';
 const DEFAULT_WRN_ROOT = 'wrn://dxos';
+const DEFAULT_KEYPHRASE = 'kube';
 
 let running = false;
 
@@ -194,7 +195,8 @@ export const MachineModule = ({ config }) => {
           .option('dns-ttl', { type: 'number', default: 300 })
           .option('letsencrypt', { type: 'boolean', default: false })
           .option('extension', { type: 'array', default: [] })
-          .option('email', { type: 'string', default: email }),
+          .option('email', { type: 'string', default: email })
+          .option('key-phrase', { type: 'string ', default: DEFAULT_KEYPHRASE }),
 
         handler: asyncHandler(async () => {
           if (running) {
@@ -205,7 +207,7 @@ export const MachineModule = ({ config }) => {
 
           running = true;
 
-          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl, extension } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl, extension, keyPhrase } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
           }
@@ -283,6 +285,7 @@ export const MachineModule = ({ config }) => {
            - export WIRE_WNS_ENDPOINT=${server}
            - export WIRE_WNS_USER_KEY=${userKey}
            - export WIRE_WNS_BOND_ID=${bondId}
+           - export WIRE_APP_SERVER_KEYPHRASE=${keyPhrase}
            - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
