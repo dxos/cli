@@ -148,7 +148,7 @@ To create a profile from a template, pass a profile name and template URL.
 Example:
 
 ```bash
-$ dx profile init --name devnet --template-url https://git.io/Jfrn4
+$ dx profile init --name devnet --template-url https://git.io/JtEvr
 ```
 
 Profiles are stored in the `~/.wire/profile` folder. To further customize a profile, edit the profile configuration file.
