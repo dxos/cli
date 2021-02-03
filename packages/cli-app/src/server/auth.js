@@ -10,7 +10,7 @@ import { generateQRCode, verifyToken } from '../util/OTP';
 const log = debug('dxos:cli-app:server:auth');
 debug.enable('dxos:*');
 
-const COOKIE_MAX_AGE = 15;
+const COOKIE_MAX_AGE = 60;
 
 export const LOGIN_PATH = '/app/auth';
 export const OTP_QR_PATH = '/app/auth-setup';
