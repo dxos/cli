@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.36](https://www.github.com/dxos/cli/compare/v2.0.35...v2.0.36) (2021-02-03)
+
+
+### Bug Fixes
+
+* kube related fixes. ([#142](https://www.github.com/dxos/cli/issues/142)) ([3939b5a](https://www.github.com/dxos/cli/commit/3939b5a3e1503726ed36dbac0cfc61dd1153506f))
+
 ### [2.0.35](https://www.github.com/dxos/cli/compare/v2.0.34...v2.0.35) (2021-02-02)
 
 
