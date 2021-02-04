@@ -18,6 +18,7 @@ import { Registry } from '@wirelineio/registry-client';
 import SSH_KEYS from '../../ssh-keys.yml';
 
 const KUBE_TYPE = 'wrn:kube';
+const KUBE_TAG = 'kube';
 const DEFAULT_WRN_ROOT = 'wrn://dxos';
 const DEFAULT_KEYPHRASE = 'kube';
 
@@ -46,7 +47,7 @@ const getRecordIdFromName = async (session, domain, name) => {
   assert(session);
   assert(domain);
   assert(name);
-  const result = await session.domains.getAllRecords(domain, KUBE_TYPE);
+  const result = await session.domains.getAllRecords(domain, KUBE_TAG);
   const [target] = result.domain_records.filter(record => record.name === name) || [];
   return target ? target.id : undefined;
 };
@@ -77,7 +78,7 @@ export const MachineModule = ({ config }) => {
           const { verbose } = yargs.argv;
 
           const session = new DigitalOcean(doAccessToken, 100);
-          const result = await session.droplets.getAll(KUBE_TYPE);
+          const result = await session.droplets.getAll(KUBE_TAG);
 
           if (verbose) {
             print({ result }, { json: true });
@@ -324,7 +325,7 @@ export const MachineModule = ({ config }) => {
             image: 'ubuntu-18-04-x64',
             ssh_keys: sshKeys,
             user_data: cloudConfigScript,
-            tags: [KUBE_TYPE]
+            tags: [KUBE_TAG]
           };
 
           if (verbose) {
@@ -350,7 +351,7 @@ export const MachineModule = ({ config }) => {
             name: boxName,
             data: ipAddress,
             ttl: dnsTtl,
-            tags: [KUBE_TYPE]
+            tags: [KUBE_TAG]
           });
 
           if (verbose) {
