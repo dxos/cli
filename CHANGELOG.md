@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.37](https://www.github.com/dxos/cli/compare/v2.0.36...v2.0.37) (2021-02-04)
+
+
+### Bug Fixes
+
+* proper tag for machine. ([3647aca](https://www.github.com/dxos/cli/commit/3647acafd0807d5be455c50cec067bbba6442bf6))
+
 ### [2.0.36](https://www.github.com/dxos/cli/compare/v2.0.35...v2.0.36) (2021-02-03)
 
 
