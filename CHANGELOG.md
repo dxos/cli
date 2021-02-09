@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.38](https://www.github.com/dxos/cli/compare/v2.0.37...v2.0.38) (2021-02-09)
+
+
+### Bug Fixes
+
+* profile check. ([09e8b06](https://www.github.com/dxos/cli/commit/09e8b06cea89811473684da5636ea76567be089c))
+
 ### [2.0.37](https://www.github.com/dxos/cli/compare/v2.0.36...v2.0.37) (2021-02-04)
 
 
