@@ -107,7 +107,7 @@ export class App {
    * @param {Object} config
    */
   constructor (config = {}) {
-    const { config: cliConfig, state, options, version, profilePath } = config;
+    const { config: cliConfig, state, options, version, profilePath, profileExists } = config;
     const { prompt, baseCommand, enableInteractive = false } = options;
 
     this._version = version;
@@ -127,7 +127,8 @@ export class App {
           interactive: false
         },
         models: [],
-        profilePath
+        profilePath,
+        profileExists
       };
     }
 

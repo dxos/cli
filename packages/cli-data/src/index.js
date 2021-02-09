@@ -77,9 +77,9 @@ const createClientGetter = (config, models, options) => async () => {
 let stateManager;
 
 const initDataCliState = async (state) => {
-  const { config, getReadlineInterface, models, profilePath } = state;
+  const { config, getReadlineInterface, models, profilePath, profileExists } = state;
 
-  if (profilePath) {
+  if (profilePath && profileExists) {
     const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);
     const persistent = config.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT);
 
