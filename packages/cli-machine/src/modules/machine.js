@@ -21,6 +21,7 @@ const KUBE_TYPE = 'wrn:kube';
 const KUBE_TAG = 'kube';
 const DEFAULT_WRN_ROOT = 'wrn://dxos';
 const DEFAULT_KEYPHRASE = 'kube';
+const GITHUB_ORG = 'alienlaboratories';
 
 let running = false;
 
@@ -59,6 +60,7 @@ export const MachineModule = ({ config }) => {
   const doAccessToken = config.get('services.machine.doAccessToken');
   const email = config.get('services.machine.email');
   const githubAccessToken = config.get('services.machine.githubAccessToken');
+  const npmAccessToken = config.get('services.machine.npmAccessToken');
   const dnsDomain = config.get('services.machine.dnsDomain');
 
   // TODO(dboreham): Get from profile.
@@ -214,6 +216,7 @@ export const MachineModule = ({ config }) => {
           }
 
           const radicle = !!extension.find(entry => entry === 'dxos/radicle-seed-node');
+          const substrate = !!extension.find(entry => entry === 'substrate');
 
           const wnsConfig = config.get('services.wns');
           const { server, userKey, bondId, chainId } = wnsConfig;
@@ -258,6 +261,7 @@ export const MachineModule = ({ config }) => {
          runcmd:
            - curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
            - chmod +x /usr/local/bin/docker-compose
+           - echo "${githubAccessToken}" | docker login https://ghcr.io -u ${GITHUB_ORG} --password-stdin
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
            - cd ..
@@ -272,6 +276,7 @@ export const MachineModule = ({ config }) => {
            - export WIRE_CLI_VER="${cliver}"
            - if [ ! -z "${cliver}" ]; then sed -i "s/'latest'/'${cliver.replace('@', '')}'/g" /opt/kube/local.yml; fi
            - export HOME=/root
+           - echo "//registry.npmjs.org/:_authToken=${npmAccessToken}" >> $HOME/.npmrc
            - ./install.sh /opt
            - sed -i s/kube.local/${boxFullyQualifiedName}/g /root/.wire/remote.yml
            - sed -i s/kube.local/${boxFullyQualifiedName}/g /etc/apache2/sites-available/000-default.conf
@@ -291,6 +296,7 @@ export const MachineModule = ({ config }) => {
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi
+           - if [ "${substrate ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 9944:9944 ghcr.io/alienlaboratories/substrate-node:latest node-template --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external; fi
         `;
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
