@@ -14,6 +14,8 @@ WIRE_MACHINE_DO_TOKEN:
   path: services.machine.doAccessToken
 WIRE_MACHINE_GITHUB_TOKEN:
   path: services.machine.githubAccessToken
+WIRE_MACHINE_NPM_TOKEN:
+  path: services.machine.npmAccessToken
 WIRE_MACHINE_DNS_DOMAIN:
   path: services.machine.dnsDomain
 WIRE_MACHINE_EMAIL:
