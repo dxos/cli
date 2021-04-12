@@ -21,7 +21,6 @@ const KUBE_TYPE = 'wrn:kube';
 const KUBE_TAG = 'kube';
 const DEFAULT_WRN_ROOT = 'wrn://dxos';
 const DEFAULT_KEYPHRASE = 'kube';
-const GITHUB_ORG = 'alienlaboratories';
 
 let running = false;
 
@@ -60,6 +59,7 @@ export const MachineModule = ({ config }) => {
   const doAccessToken = config.get('services.machine.doAccessToken');
   const email = config.get('services.machine.email');
   const githubAccessToken = config.get('services.machine.githubAccessToken');
+  const githubUsername = config.get('services.machine.githubUsername');
   const npmAccessToken = config.get('services.machine.npmAccessToken');
   const dnsDomain = config.get('services.machine.dnsDomain');
 
@@ -261,7 +261,7 @@ export const MachineModule = ({ config }) => {
          runcmd:
            - curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
            - chmod +x /usr/local/bin/docker-compose
-           - echo "${githubAccessToken}" | docker login https://ghcr.io -u ${GITHUB_ORG} --password-stdin
+           - echo "${githubAccessToken}" | docker login https://ghcr.io -u ${githubUsername} --password-stdin
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
            - cd ..

@@ -3,14 +3,17 @@
 //
 
 import Docker from 'dockerode';
+import yaml from 'js-yaml';
 
-import { log } from '@dxos/debug';
+// TODO(egorgripasov): Extend with default values, etc.
+export const getImageInfo = (image) => yaml.load(image);
 
 export class DockerImage {
   constructor (options) {
     const { imageName, ports, args, auth } = options;
 
     this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:latest`;
+
     this._ports = ports;
     this._args = args || [];
     this._auth = auth;
@@ -18,9 +21,8 @@ export class DockerImage {
     this._docker = new Docker();
   }
 
-  async pull () {
-    if (await this.imageExists()) {
-      log('Image exists!');
+  async pull (force = false) {
+    if (await this.imageExists() && !force) {
       return this._docker.getImage(this._imageName);
     }
 
@@ -37,7 +39,6 @@ export class DockerImage {
           if (error) {
             reject(error);
           }
-          log('Image pull: ', output);
           resolve(this._docker.getImage(this._imageName));
         }, () => {});
       });
@@ -50,10 +51,13 @@ export class DockerImage {
   }
 
   async createContainer () {
-    await this.pull();
+    if (!(await this.imageExists())) {
+      throw new Error(`Image '${this._imageName}' doesn't exists`);
+    }
 
     return new Promise((resolve, reject) => {
       this._docker.createContainer({
+        // TODO(egorgripasov): Add volumes.
         Image: this._imageName,
         Tty: true,
         ExposedPorts: Object.entries(this._ports).reduce((acc, [key]) => {

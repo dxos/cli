@@ -2,35 +2,52 @@
 // Copyright 2020 DXOS.org
 //
 
-import { asyncHandler, DockerImage } from '@dxos/cli-core';
+import { DockerImage, asyncHandler, getImageInfo } from '@dxos/cli-core';
+
+import image from '../../image.yml';
 
 // import { log } from '@dxos/debug';
 
-export const DXNSModule = ({ config }) => ({
-  command: ['dxns'],
-  describe: 'DXNS operations.',
-  builder: yargs => yargs
+export const DXNSModule = ({ config }) => {
+  const imageInfo = getImageInfo(image);
 
-    .command({
-      command: ['start'],
-      describe: 'Start DXNS.',
+  const auth = {
+    username: config.get('services.machine.githubUsername'),
+    password: config.get('services.machine.githubAccessToken'),
+    serveraddress: `https://${imageInfo.imageName.split('/')[0]}`
+  };
 
-      handler: asyncHandler(async () => {
-        const image = new DockerImage({
-          imageName: 'ghcr.io/alienlaboratories/substrate-node',
-          args: ['node-template', '--dev', '--tmp', '--rpc-cors', 'all', '-lsync=warn', '-lconsole-debug', '--ws-external', '--rpc-external'],
-          ports: { '9944/tcp': '9944' },
-          auth: {
-            username: 'alienlaboratories',
-            password: config.get('services.machine.githubAccessToken'),
-            auth: '',
-            email: 'gripasovegor@gmail.com',
-            serveraddress: 'https://ghcr.io'
-          }
-        });
+  return ({
+    command: ['dxns'],
+    describe: 'DXNS operations.',
+    builder: yargs => yargs
 
-        await image.createContainer();
-        // log(container);
+      .command({
+        command: ['install', 'update'],
+        describe: 'Start DXNS.',
+
+        builder: yargs => yargs
+          .option('force', { type: 'boolean', default: false, description: 'Force install / update' }),
+
+        handler: asyncHandler(async argv => {
+          const { force } = argv;
+
+          const dockerImage = new DockerImage({ ...imageInfo, auth });
+
+          await dockerImage.pull(force);
+        })
       })
-    })
-});
+
+      .command({
+        command: ['start'],
+        describe: 'Start DXNS.',
+
+        handler: asyncHandler(async () => {
+          const dockerImage = new DockerImage(imageInfo);
+
+          await dockerImage.createContainer();
+          // log(container);
+        })
+      })
+  });
+};
