@@ -268,6 +268,7 @@ export const MachineModule = ({ config }) => {
            - cp -r kube /opt
            - echo "export KUBE_FQDN=${boxFullyQualifiedName}" >> /opt/kube/etc/kube.env
            - echo "export KUBE_PIN_WNS_OBJECTS=${pin ? 1 : 0}" >> /opt/kube/etc/kube.env
+           - echo "export WIRE_APP_SERVER_KEYPHRASE=${keyPhrase}" >> /opt/kube/etc/kube.env
            - cd /opt/kube/scripts
            - sed -i 's/run_installer "ssh" install_ssh_key/#run_installer "ssh" install_ssh_key/g' install.sh
            - sed -i 's/apt clean//g' install.sh
@@ -291,7 +292,6 @@ export const MachineModule = ({ config }) => {
            - export WIRE_WNS_ENDPOINT=${server}
            - export WIRE_WNS_USER_KEY=${userKey}
            - export WIRE_WNS_BOND_ID=${bondId}
-           - export WIRE_APP_SERVER_KEYPHRASE=${keyPhrase}
            - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
