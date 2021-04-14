@@ -130,4 +130,8 @@ export class DockerContainer {
       });
     });
   }
+
+  async stop () {
+    return this._container.stop();
+  }
 }

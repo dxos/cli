@@ -62,5 +62,15 @@ export const DXNSModule = ({ config }) => {
           await container.logs(tail, follow);
         })
       })
+
+      .command({
+        command: ['stop'],
+        describe: 'Start DXNS.',
+
+        handler: asyncHandler(async () => {
+          const container = await DockerContainer.find(imageInfo.imageName);
+          await container.stop();
+        })
+      })
   });
 };
