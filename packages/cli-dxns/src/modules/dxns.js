@@ -6,6 +6,8 @@ import { DockerImage, DockerContainer, asyncHandler, getImageInfo } from '@dxos/
 
 import image from '../../image.yml';
 
+const DXNS_PROCESS_NAME = 'dxns';
+
 export const DXNSModule = ({ config }) => {
   const imageInfo = getImageInfo(image);
 
@@ -25,12 +27,13 @@ export const DXNSModule = ({ config }) => {
         describe: 'Start DXNS.',
 
         builder: yargs => yargs
-          .option('force', { type: 'boolean', default: false, description: 'Force install / update' }),
+          .option('force', { type: 'boolean', default: false, description: 'Force install / update' })
+          .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' }),
 
         handler: asyncHandler(async argv => {
-          const { force } = argv;
+          const { force, name } = argv;
 
-          const dockerImage = new DockerImage({ ...imageInfo, auth });
+          const dockerImage = new DockerImage({ ...imageInfo, auth, name });
 
           await dockerImage.pull(force);
         })
@@ -40,8 +43,12 @@ export const DXNSModule = ({ config }) => {
         command: ['start'],
         describe: 'Start DXNS.',
 
-        handler: asyncHandler(async () => {
-          const dockerImage = new DockerImage(imageInfo);
+        builder: yargs => yargs
+          .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' }),
+
+        handler: asyncHandler(async argv => {
+          const { name } = argv;
+          const dockerImage = new DockerImage({ ...imageInfo, name });
 
           await dockerImage.createContainer();
         })
@@ -52,13 +59,15 @@ export const DXNSModule = ({ config }) => {
         describe: 'DXNS logs.',
 
         builder: yargs => yargs
+          .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' })
           .option('follow', { type: 'boolean', default: false, description: 'Follow logs' })
           .option('tail', { type: 'number', default: 100, description: 'Number of lines' }),
 
         handler: asyncHandler(async argv => {
-          const { tail, follow } = argv;
+          const { tail, follow, name } = argv;
+          const { imageName } = imageInfo;
 
-          const container = await DockerContainer.find(imageInfo.imageName);
+          const container = await DockerContainer.find({ imageName, name });
           await container.logs(tail, follow);
         })
       })
@@ -67,8 +76,14 @@ export const DXNSModule = ({ config }) => {
         command: ['stop'],
         describe: 'Start DXNS.',
 
-        handler: asyncHandler(async () => {
-          const container = await DockerContainer.find(imageInfo.imageName);
+        builder: yargs => yargs
+          .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' }),
+
+        handler: asyncHandler(async argv => {
+          const { name } = argv;
+          const { imageName } = imageInfo;
+
+          const container = await DockerContainer.find({ imageName, name });
           await container.stop();
         })
       })

@@ -15,11 +15,12 @@ export const getImageInfo = (image) => yaml.load(image);
 
 export class DockerImage {
   constructor (options) {
-    const { imageName, ports, args, auth } = options;
+    const { imageName, name, ports, args, auth } = options;
 
     assert(imageName);
 
     this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:latest`;
+    this._name = name;
 
     this._ports = ports;
     this._args = args || [];
@@ -63,6 +64,7 @@ export class DockerImage {
     return new Promise((resolve, reject) => {
       docker.createContainer({
         // TODO(egorgripasov): Add volumes.
+        name: this._name,
         Image: this._imageName,
         Tty: true,
         ExposedPorts: Object.entries(this._ports).reduce((acc, [key]) => {
@@ -94,15 +96,19 @@ export class DockerImage {
 }
 
 export class DockerContainer {
-  static async find (imageName) {
-    imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:latest`;
+  static async find (filter) {
+    const { imageName, name } = filter;
+
+    assert(imageName || name);
+
+    const image = imageName ? (imageName.indexOf(':') > 0 ? imageName : `${imageName}:latest`) : undefined;
     // TODO(egorgripasov): Running same container multiple times, i.e. find by Name.
     return new Promise((resolve, reject) => {
       docker.listContainers((err, containers) => {
         if (err) {
           reject(err);
         }
-        const containerInfo = containers.find(info => info.Image === imageName);
+        const containerInfo = containers.find(info => (name && info.Names.includes(`/${name}`)) || (image && info.Image === image));
         resolve(new DockerContainer(docker.getContainer(containerInfo.Id)));
       });
     });
