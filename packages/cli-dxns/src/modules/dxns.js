@@ -2,11 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import { DockerImage, asyncHandler, getImageInfo } from '@dxos/cli-core';
+import { DockerImage, DockerContainer, asyncHandler, getImageInfo } from '@dxos/cli-core';
 
 import image from '../../image.yml';
-
-// import { log } from '@dxos/debug';
 
 export const DXNSModule = ({ config }) => {
   const imageInfo = getImageInfo(image);
@@ -46,7 +44,22 @@ export const DXNSModule = ({ config }) => {
           const dockerImage = new DockerImage(imageInfo);
 
           await dockerImage.createContainer();
-          // log(container);
+        })
+      })
+
+      .command({
+        command: ['logs'],
+        describe: 'DXNS logs.',
+
+        builder: yargs => yargs
+          .option('follow', { type: 'boolean', default: false, description: 'Follow logs' })
+          .option('tail', { type: 'number', default: 100, description: 'Number of lines' }),
+
+        handler: asyncHandler(async argv => {
+          const { tail, follow } = argv;
+
+          const container = await DockerContainer.find(imageInfo.imageName);
+          await container.logs(tail, follow);
         })
       })
   });

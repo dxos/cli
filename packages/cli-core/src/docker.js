@@ -2,8 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
+import assert from 'assert';
 import Docker from 'dockerode';
 import yaml from 'js-yaml';
+
+import { log } from '@dxos/debug';
+
+const docker = new Docker();
 
 // TODO(egorgripasov): Extend with default values, etc.
 export const getImageInfo = (image) => yaml.load(image);
@@ -12,51 +17,51 @@ export class DockerImage {
   constructor (options) {
     const { imageName, ports, args, auth } = options;
 
+    assert(imageName);
+
     this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:latest`;
 
     this._ports = ports;
     this._args = args || [];
     this._auth = auth;
-
-    this._docker = new Docker();
   }
 
   async pull (force = false) {
     if (await this.imageExists() && !force) {
-      return this._docker.getImage(this._imageName);
+      return docker.getImage(this._imageName);
     }
 
     return new Promise((resolve, reject) => {
-      this._docker.pull(this._imageName, { authconfig: this._auth }, (err, stream) => {
+      docker.pull(this._imageName, { authconfig: this._auth }, (err, stream) => {
         if (err) {
           reject(err);
         }
         if (!stream) {
-          throw new Error(`Image '${this._imageName}' doesn't exists`);
+          throw new Error(`Auth credentials are invalid or Image '${this._imageName}' doesn't exists.`);
         }
 
-        this._docker.modem.followProgress(stream, (error, output) => {
+        docker.modem.followProgress(stream, (error, output) => {
           if (error) {
             reject(error);
           }
-          resolve(this._docker.getImage(this._imageName));
+          resolve(docker.getImage(this._imageName));
         }, () => {});
       });
     });
   }
 
   async imageExists () {
-    const images = await this._docker.listImages({ filters: { reference: [this._imageName] } });
+    const images = await docker.listImages({ filters: { reference: [this._imageName] } });
     return images.length > 0;
   }
 
   async createContainer () {
     if (!(await this.imageExists())) {
-      throw new Error(`Image '${this._imageName}' doesn't exists`);
+      throw new Error(`Image '${this._imageName}' doesn't exists.`);
     }
 
     return new Promise((resolve, reject) => {
-      this._docker.createContainer({
+      docker.createContainer({
         // TODO(egorgripasov): Add volumes.
         Image: this._imageName,
         Tty: true,
@@ -81,8 +86,47 @@ export class DockerImage {
           if (err) {
             reject(err);
           }
-          resolve(container);
+          resolve(new DockerContainer(container));
         });
+      });
+    });
+  }
+}
+
+export class DockerContainer {
+  static async find (imageName) {
+    imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:latest`;
+    // TODO(egorgripasov): Running same container multiple times, i.e. find by Name.
+    return new Promise((resolve, reject) => {
+      docker.listContainers((err, containers) => {
+        if (err) {
+          reject(err);
+        }
+        const containerInfo = containers.find(info => info.Image === imageName);
+        resolve(new DockerContainer(docker.getContainer(containerInfo.Id)));
+      });
+    });
+  }
+
+  constructor (container) {
+    assert(container);
+
+    this._container = container;
+  }
+
+  async logs (tail = 100, follow = false) {
+    return new Promise((resolve, reject) => {
+      this._container.logs({ stdout: true, stderr: true, follow, tail }, (err, logs) => {
+        if (err) {
+          reject(err);
+        }
+
+        if (!follow) {
+          log(logs.toString('utf8'));
+        } else {
+          logs.on('data', chunk => log(chunk.toString('utf8')));
+          logs.on('end', resolve);
+        }
       });
     });
   }
