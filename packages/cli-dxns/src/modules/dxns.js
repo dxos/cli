@@ -27,13 +27,12 @@ export const DXNSModule = ({ config }) => {
         describe: 'Start DXNS.',
 
         builder: yargs => yargs
-          .option('force', { type: 'boolean', default: false, description: 'Force install / update' })
-          .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' }),
+          .option('force', { type: 'boolean', default: false, description: 'Force install / update' }),
 
         handler: asyncHandler(async argv => {
-          const { force, name } = argv;
+          const { force } = argv;
 
-          const dockerImage = new DockerImage({ ...imageInfo, auth, name });
+          const dockerImage = new DockerImage({ ...imageInfo, auth });
 
           await dockerImage.pull(force);
         })
@@ -48,9 +47,10 @@ export const DXNSModule = ({ config }) => {
 
         handler: asyncHandler(async argv => {
           const { name } = argv;
-          const dockerImage = new DockerImage({ ...imageInfo, name });
+          const dockerImage = new DockerImage(imageInfo);
 
-          await dockerImage.createContainer();
+          const container = await dockerImage.getOrCreateContainer(name);
+          await container.start();
         })
       })
 
@@ -68,6 +68,9 @@ export const DXNSModule = ({ config }) => {
           const { imageName } = imageInfo;
 
           const container = await DockerContainer.find({ imageName, name });
+          if (!container) {
+            throw new Error(`Unable to find "${name}" service.`);
+          }
           await container.logs(tail, follow);
         })
       })
@@ -84,6 +87,9 @@ export const DXNSModule = ({ config }) => {
           const { imageName } = imageInfo;
 
           const container = await DockerContainer.find({ imageName, name });
+          if (!container) {
+            throw new Error(`Unable to find "${name}" service.`);
+          }
           await container.stop();
         })
       })
