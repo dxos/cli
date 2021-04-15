@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.39](https://www.github.com/dxos/cli/compare/v2.0.38...v2.0.39) (2021-04-15)
+
+
+### Bug Fixes
+
+* add docker wrapper. ([#150](https://www.github.com/dxos/cli/issues/150)) ([e8f2c4c](https://www.github.com/dxos/cli/commit/e8f2c4c97990f1e31eb9690fedc105bb63a8ec75))
+
 ### [2.0.38](https://www.github.com/dxos/cli/compare/v2.0.37...v2.0.38) (2021-02-09)
 
 
