@@ -4,6 +4,7 @@
 
 export * from './cli-factory';
 export * from './config';
+export * from './docker';
 export * from './runnable';
 export * from './util/log';
 export * from './util/async';

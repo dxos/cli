@@ -41,6 +41,13 @@
     initRequired: true
     destroyRequired: true
   - 
+    moduleName: "@dxos/cli-dxns"
+    describe: "DXNS extension."
+    command: 
+      - "dxns"
+    initRequired: false
+    destroyRequired: false
+  - 
     moduleName: "@dxos/cli-echo"
     describe: "ECHO extension."
     command: 
