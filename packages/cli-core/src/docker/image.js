@@ -89,7 +89,7 @@ export class DockerImage {
         if (err) {
           return reject(err);
         }
-        resolve(new DockerContainer(container));
+        resolve(new DockerContainer(container), { name, started: false });
       });
     });
   }
