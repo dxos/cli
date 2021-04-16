@@ -75,6 +75,9 @@
     "semistandard": "14.2.0",
     "uuid": "^3.3.3"
   },
+  "resolutions": {
+    "peer-id": "0.14.6"
+  },
   "semistandard": {
     "parser": "babel-eslint",
     "env": [

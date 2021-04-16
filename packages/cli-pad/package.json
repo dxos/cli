@@ -69,6 +69,9 @@
     "prettier": "^1.14.2",
     "semistandard": "14.2.0"
   },
+  "resolutions": {
+    "peer-id": "0.14.6"
+  },
   "semistandard": {
     "parser": "babel-eslint",
     "env": [
