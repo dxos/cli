@@ -29,9 +29,6 @@
       "packages/*"
     ]
   },
-  "resolutions": {
-    "peer-id": "0.14.6"
-  },
   "lint-staged": {
     "*.js": "semistandard"
   },
