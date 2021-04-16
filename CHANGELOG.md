@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.40](https://www.github.com/dxos/cli/compare/v2.0.39...v2.0.40) (2021-04-16)
+
+
+### Bug Fixes
+
+* Attempt to fix broken npm module. ([7c65410](https://www.github.com/dxos/cli/commit/7c654102ba592ae4081e406fc15a0481b2af84bc))
+
 ### [2.0.39](https://www.github.com/dxos/cli/compare/v2.0.38...v2.0.39) (2021-04-15)
 
 
