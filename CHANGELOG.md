@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.41](https://www.github.com/dxos/cli/compare/v2.0.40...v2.0.41) (2021-04-16)
+
+
+### Bug Fixes
+
+* stick to working IPFS package. ([b6745f6](https://www.github.com/dxos/cli/commit/b6745f6a4a0628dccbdfeee5cf329a5e520b9729))
+
 ### [2.0.40](https://www.github.com/dxos/cli/compare/v2.0.39...v2.0.40) (2021-04-16)
 
 
