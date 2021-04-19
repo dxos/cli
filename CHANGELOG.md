@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.42](https://www.github.com/dxos/cli/compare/v2.0.41...v2.0.42) (2021-04-19)
+
+
+### Bug Fixes
+
+* updates for container commands. ([128cbfc](https://www.github.com/dxos/cli/commit/128cbfc05a9be21faa318b77411b028e2dcb1fd7))
+
 ### [2.0.41](https://www.github.com/dxos/cli/compare/v2.0.40...v2.0.41) (2021-04-16)
 
 
