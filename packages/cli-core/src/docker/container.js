@@ -4,6 +4,7 @@
 
 import assert from 'assert';
 import Docker from 'dockerode';
+import prettyBytes from 'pretty-bytes';
 
 import { log } from '@dxos/debug';
 
@@ -12,10 +13,6 @@ export const CONTAINER_PREFIX = 'dxos_';
 const docker = new Docker();
 
 const RUNNING_STATE = 'running';
-
-const getContainerName = (containerInfo) => {
-  return containerInfo.Names[0].replace(`/${CONTAINER_PREFIX}`, '');
-};
 
 export class DockerContainer {
   static async find (filter) {
@@ -32,7 +29,7 @@ export class DockerContainer {
         }
         const containerInfo = containers.find(info => (name && info.Names.includes(`/${CONTAINER_PREFIX}${name}`)) || (!name && image && info.Image === image));
         resolve(containerInfo
-          ? new DockerContainer(docker.getContainer(containerInfo.Id), { name: getContainerName(containerInfo), started: containerInfo.State === RUNNING_STATE })
+          ? new DockerContainer(docker.getContainer(containerInfo.Id), containerInfo)
           : null);
       });
     });
@@ -46,7 +43,7 @@ export class DockerContainer {
         }
         const dockerContainers = containers
           .filter(info => !!info.Names.find(name => name.startsWith(`/${CONTAINER_PREFIX}`)))
-          .map(containerInfo => new DockerContainer(docker.getContainer(containerInfo.Id), { name: getContainerName(containerInfo), started: containerInfo.State === RUNNING_STATE }));
+          .map(containerInfo => new DockerContainer(docker.getContainer(containerInfo.Id), containerInfo));
 
         resolve(dockerContainers);
       });
@@ -55,14 +52,13 @@ export class DockerContainer {
 
   constructor (container, containerInfo) {
     assert(container);
-
     assert(containerInfo);
-    const { name, started } = containerInfo;
-    assert(name);
 
-    this._name = name;
     this._container = container;
-    this._started = started;
+    this._containerInfo = containerInfo;
+
+    this._started = containerInfo.State === RUNNING_STATE;
+    this._name = containerInfo.Names[0].replace(`/${CONTAINER_PREFIX}`, '');
   }
 
   get name () {
@@ -71,6 +67,14 @@ export class DockerContainer {
 
   get started () {
     return this._started;
+  }
+
+  get state () {
+    return this._containerInfo.State;
+  }
+
+  get ports () {
+    return this._containerInfo.Ports;
   }
 
   async start () {
@@ -106,5 +110,23 @@ export class DockerContainer {
 
   async stop () {
     return this._container.stop();
+  }
+
+  async stats () {
+    // eslint-disable-next-line
+    const { cpu_stats, precpu_stats, memory_stats } = await this._container.stats({ stream: false });
+
+    let cpuPercent = 0.0;
+    const cpuDelta = cpu_stats.cpu_usage.total_usage - precpu_stats.cpu_usage.total_usage;
+    const systemDelta = cpu_stats.system_cpu_usage - precpu_stats.system_cpu_usage;
+
+    if (systemDelta > 0.0 && cpuDelta > 0.0) {
+      cpuPercent = (cpuDelta / systemDelta) * cpu_stats.cpu_usage.percpu_usage.length * 100.0;
+    }
+
+    return {
+      cpu: `${cpuPercent.toFixed(2)}%`,
+      memory: prettyBytes(memory_stats.usage)
+    };
   }
 }

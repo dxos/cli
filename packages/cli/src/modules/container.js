@@ -28,7 +28,12 @@ export const ContainerModule = () => ({
         const { json } = argv;
 
         const containers = await DockerContainer.list();
-        print(containers.map(container => ({ name: container.name, running: container.started })), { json });
+        print(await Promise.all(containers.map(async container => ({
+          name: container.name,
+          state: container.state,
+          ports: container.ports.filter(port => port.PublicPort).map(port => port.PublicPort).join(','),
+          ...(await container.stats())
+        }))), { json });
       })
     })
 

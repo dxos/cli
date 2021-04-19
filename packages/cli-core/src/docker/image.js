@@ -89,7 +89,8 @@ export class DockerImage {
         if (err) {
           return reject(err);
         }
-        resolve(new DockerContainer(container), { name, started: false });
+
+        DockerContainer.find({ imageName: this._imageName, name }).then(container => resolve(container));
       });
     });
   }
