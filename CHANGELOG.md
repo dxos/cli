@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.43](https://www.github.com/dxos/cli/compare/v2.0.42...v2.0.43) (2021-04-20)
+
+
+### Bug Fixes
+
+* better upgrade mechanism for docker. ([6c6b51b](https://www.github.com/dxos/cli/commit/6c6b51bda24099e32f0fcbfdd895d5f5cd5776b1))
+* docker restart & list fixes. ([8da6398](https://www.github.com/dxos/cli/commit/8da6398924d6a7ee4a9312382652632495d3cd29))
+
 ### [2.0.42](https://www.github.com/dxos/cli/compare/v2.0.41...v2.0.42) (2021-04-19)
 
 
