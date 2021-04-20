@@ -31,7 +31,11 @@ export const ContainerModule = () => ({
         print(await Promise.all(containers.map(async container => ({
           name: container.name,
           state: container.state,
-          ports: container.ports.filter(port => port.PublicPort).map(port => port.PublicPort).join(','),
+          ports: container.ports
+            .filter(port => port.PublicPort)
+            .map(port => port.PublicPort)
+            .filter((value, index, arr) => arr.indexOf(value) === index)
+            .join(','),
           ...(await container.stats())
         }))), { json });
       })
@@ -75,6 +79,26 @@ export const ContainerModule = () => ({
           throw new Error(`Unable to find "${name}" service.`);
         }
         await container.stop();
+      })
+    })
+
+    // Restart.
+    .command({
+      command: ['restart [name]'],
+      describe: 'Restart service.',
+      builder: yargs => yargs
+        .option('name'),
+
+      handler: asyncHandler(async argv => {
+        const { name } = argv;
+
+        assert(name, 'Invalid Process Name.');
+
+        const container = await DockerContainer.find({ name });
+        if (!container) {
+          throw new Error(`Unable to find "${name}" service.`);
+        }
+        await container.restart();
       })
     })
 });

@@ -39,7 +39,7 @@ export class DockerContainer {
     });
   }
 
-  static async list (options) {
+  static async list (options = {}) {
     const { id } = options;
 
     return new Promise((resolve, reject) => {
@@ -122,6 +122,10 @@ export class DockerContainer {
     return this._container.stop();
   }
 
+  async restart () {
+    return this._container.restart();
+  }
+
   async stats () {
     // eslint-disable-next-line
     const { cpu_stats, precpu_stats, memory_stats } = await this._container.stats({ stream: false });
@@ -136,7 +140,7 @@ export class DockerContainer {
 
     return {
       cpu: `${cpuPercent.toFixed(2)}%`,
-      memory: prettyBytes(memory_stats.usage)
+      memory: memory_stats.usage ? prettyBytes(memory_stats.usage) : '0'
     };
   }
 
