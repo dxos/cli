@@ -23,11 +23,11 @@ export const DXNSModule = ({ config }) => {
     builder: yargs => yargs
 
       .command({
-        command: ['install', 'update'],
-        describe: 'Start DXNS.',
+        command: ['install'],
+        describe: 'Install DXNS.',
 
         builder: yargs => yargs
-          .option('force', { type: 'boolean', default: false, description: 'Force install / update' }),
+          .option('force', { type: 'boolean', default: false, description: 'Force install' }),
 
         handler: asyncHandler(async argv => {
           const { force } = argv;
@@ -35,6 +35,26 @@ export const DXNSModule = ({ config }) => {
           const dockerImage = new DockerImage({ ...imageInfo, auth });
 
           await dockerImage.pull(force);
+        })
+      })
+
+      .command({
+        command: ['upgrade'],
+        describe: 'Upgrade DXNS.',
+
+        handler: asyncHandler(async () => {
+          const { imageName } = imageInfo;
+
+          const container = await DockerContainer.find({ imageName });
+          if (container && container.started) {
+            throw new Error('Unable to upgrade DXNS while it\'s running.');
+          }
+
+          // TODO(egorgripasov): Already up-to-date message.
+          const dockerImage = new DockerImage({ ...imageInfo, auth });
+          await dockerImage.pull(true);
+
+          await DockerImage.cleanNotLatest(imageName);
         })
       })
 

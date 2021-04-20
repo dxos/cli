@@ -10,16 +10,35 @@ import { CONTAINER_PREFIX, DockerContainer } from './container';
 
 const docker = new Docker();
 
+const LATEST_TAG = 'latest';
+
 // TODO(egorgripasov): Extend with default values, etc.
 export const getImageInfo = (image) => yaml.load(image);
 
 export class DockerImage {
+  static async cleanNotLatest (imageName) {
+    assert(imageName);
+
+    imageName = imageName.split(':')[0];
+    const images = await docker.listImages({ filters: { reference: [imageName] } });
+    const outdatedImages = images.filter(image => !image.RepoTags || !image.RepoTags.includes(`${imageName}:${LATEST_TAG}`));
+
+    for await (const outdatedImage of outdatedImages) {
+      const containers = await DockerContainer.list({ id: outdatedImage.Id });
+      for await (const container of containers) {
+        await container.destroy();
+      }
+
+      await docker.getImage(outdatedImage.Id).remove({ force: true });
+    }
+  }
+
   constructor (options) {
     const { imageName, ports, args, auth } = options;
 
     assert(imageName);
 
-    this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:latest`;
+    this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:${LATEST_TAG}`;
 
     this._ports = ports;
     this._args = args || [];
@@ -85,7 +104,7 @@ export class DockerImage {
           }, {})
         },
         Cmd: [...this._args, ...args]
-      }, (err, container) => {
+      }, (err) => {
         if (err) {
           return reject(err);
         }

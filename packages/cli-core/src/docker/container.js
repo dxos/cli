@@ -8,11 +8,15 @@ import prettyBytes from 'pretty-bytes';
 
 import { log } from '@dxos/debug';
 
+import { getLoggers } from '../util/log';
+
 export const CONTAINER_PREFIX = 'dxos_';
 
 const docker = new Docker();
 
 const RUNNING_STATE = 'running';
+
+const { logError } = getLoggers();
 
 export class DockerContainer {
   static async find (filter) {
@@ -35,14 +39,16 @@ export class DockerContainer {
     });
   }
 
-  static async list () {
+  static async list (options) {
+    const { id } = options;
+
     return new Promise((resolve, reject) => {
       docker.listContainers({ all: true }, (err, containers) => {
         if (err) {
           return reject(err);
         }
         const dockerContainers = containers
-          .filter(info => !!info.Names.find(name => name.startsWith(`/${CONTAINER_PREFIX}`)))
+          .filter(info => (!id || (id && info.Image === id)) && !!info.Names.find(name => name.startsWith(`/${CONTAINER_PREFIX}`)))
           .map(containerInfo => new DockerContainer(docker.getContainer(containerInfo.Id), containerInfo));
 
         resolve(dockerContainers);
@@ -75,6 +81,10 @@ export class DockerContainer {
 
   get ports () {
     return this._containerInfo.Ports;
+  }
+
+  get image () {
+    return this._containerInfo.Image;
   }
 
   async start () {
@@ -128,5 +138,14 @@ export class DockerContainer {
       cpu: `${cpuPercent.toFixed(2)}%`,
       memory: prettyBytes(memory_stats.usage)
     };
+  }
+
+  async destroy () {
+    try {
+      await this._container.kill();
+    } catch (err) {
+      logError(err);
+    }
+    await this._container.remove({ force: true });
   }
 }
