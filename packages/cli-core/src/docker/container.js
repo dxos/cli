@@ -8,15 +8,11 @@ import prettyBytes from 'pretty-bytes';
 
 import { log } from '@dxos/debug';
 
-import { getLoggers } from '../util/log';
-
 export const CONTAINER_PREFIX = 'dxos_';
 
 const docker = new Docker();
 
 const RUNNING_STATE = 'running';
-
-const { logError } = getLoggers();
 
 export class DockerContainer {
   static async find (filter) {
@@ -140,16 +136,11 @@ export class DockerContainer {
 
     return {
       cpu: `${cpuPercent.toFixed(2)}%`,
-      memory: memory_stats.usage ? prettyBytes(memory_stats.usage) : '0'
+      memory: memory_stats.stats && memory_stats.stats.active_anon ? prettyBytes(memory_stats.stats.active_anon) : '0'
     };
   }
 
   async destroy () {
-    try {
-      await this._container.kill();
-    } catch (err) {
-      logError(err);
-    }
     await this._container.remove({ force: true });
   }
 }
