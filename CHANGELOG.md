@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.0.44](https://www.github.com/dxos/cli/compare/v2.0.43...v2.0.44) (2021-04-22)
+
+
+### Bug Fixes
+
+* command change for service. ([5f43fe2](https://www.github.com/dxos/cli/commit/5f43fe2bf2b106fc4908852e1077f87d32e77c9a))
+* dockerize signal server. ([fab7b03](https://www.github.com/dxos/cli/commit/fab7b03065b4b4f19b440b87a16c77486a6117e4))
+* multiple docker wrapper fixes. ([1adc778](https://www.github.com/dxos/cli/commit/1adc7787a0ffb66b4e4318b4bb210b3f55e10053))
+
 ### [2.0.43](https://www.github.com/dxos/cli/compare/v2.0.42...v2.0.43) (2021-04-20)
 
 
