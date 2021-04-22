@@ -1,0 +1,5 @@
+imageName: 'ghcr.io/dxos/signal'
+args:
+  - 'signal'
+ports:
+  4000/tcp: '4000'

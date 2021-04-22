@@ -89,7 +89,7 @@ export class DockerImage {
         throw new Error(`Service '${name}' is already running.`);
       }
 
-      if (args.sort().join() === container.command.split(' ').sort().join()) {
+      if (args.join(' ') === container.command) {
         return container;
       }
       // If command is different, rm container.

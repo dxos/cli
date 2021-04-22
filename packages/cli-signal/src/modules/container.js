@@ -6,9 +6,10 @@ import { DockerImage, DockerContainer, asyncHandler, getImageInfo } from '@dxos/
 
 import image from '../../image.yml';
 
-const DXNS_PROCESS_NAME = 'dxns';
+const DXNS_PROCESS_NAME = 'signal';
+const SIGNAL_BIN = 'signal';
 
-export const DXNSModule = ({ config }) => {
+export const SignalContainerModule = ({ config }) => {
   const imageInfo = getImageInfo(image);
 
   const auth = {
@@ -18,13 +19,13 @@ export const DXNSModule = ({ config }) => {
   };
 
   return ({
-    command: ['dxns'],
-    describe: 'DXNS operations.',
+    command: ['container-signal'],
+    describe: 'Signal operations.',
     builder: yargs => yargs
 
       .command({
         command: ['install'],
-        describe: 'Install DXNS.',
+        describe: 'Install Signal.',
 
         builder: yargs => yargs
           .option('force', { type: 'boolean', default: false, description: 'Force install' }),
@@ -40,7 +41,7 @@ export const DXNSModule = ({ config }) => {
 
       .command({
         command: ['upgrade'],
-        describe: 'Upgrade DXNS.',
+        describe: 'Upgrade Signal.',
 
         handler: asyncHandler(async () => {
           const { imageName } = imageInfo;
@@ -60,23 +61,33 @@ export const DXNSModule = ({ config }) => {
 
       .command({
         command: ['start'],
-        describe: 'Start DXNS.',
+        describe: 'Start Signal.',
 
         builder: yargs => yargs
+          .strict(false)
           .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' }),
 
         handler: asyncHandler(async argv => {
           const { name } = argv;
           const dockerImage = new DockerImage(imageInfo);
 
-          const container = await dockerImage.getOrCreateContainer(name);
+          const args = Object.entries(argv).filter(([k, v]) => !k.includes('-') && Boolean(v)).reduce((prev, [key, value]) => {
+            if (value !== false && !['$0', '_', 'name'].includes(key)) {
+              return [...prev, ...[`--${key}`, value !== true ? value : undefined].filter(Boolean)];
+            }
+            return prev;
+          }, []);
+
+          args.unshift(SIGNAL_BIN);
+
+          const container = await dockerImage.getOrCreateContainer(name, args);
           await container.start();
         })
       })
 
       .command({
         command: ['logs'],
-        describe: 'DXNS logs.',
+        describe: 'Signal logs.',
 
         builder: yargs => yargs
           .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' })
@@ -97,7 +108,7 @@ export const DXNSModule = ({ config }) => {
 
       .command({
         command: ['stop'],
-        describe: 'Stop DXNS.',
+        describe: 'Stop Signal.',
 
         builder: yargs => yargs
           .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' }),

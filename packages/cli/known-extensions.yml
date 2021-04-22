@@ -100,7 +100,12 @@
     moduleName: "@dxos/cli-signal"
     describe: "Signal server extension."
     command: 
-      - "signal"
+      - 
+        command: "signal"
+        describe: "Signal server as process."
+      - 
+        command: "container-signal"
+        describe: "Signal server as container."
     initRequired: false
     destroyRequired: false
   - 
