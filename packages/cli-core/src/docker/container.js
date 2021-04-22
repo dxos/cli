@@ -83,6 +83,10 @@ export class DockerContainer {
     return this._containerInfo.Image;
   }
 
+  get command () {
+    return this._containerInfo.Command;
+  }
+
   async start () {
     if (!this._started) {
       return new Promise((resolve, reject) => {

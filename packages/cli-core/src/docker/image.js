@@ -37,11 +37,12 @@ export class DockerImage {
     const { imageName, ports, args, auth } = options;
 
     assert(imageName);
+    assert(args && args.length);
 
     this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:${LATEST_TAG}`;
 
     this._ports = ports;
-    this._args = args || [];
+    this._args = args;
     this._auth = auth;
   }
 
@@ -74,15 +75,25 @@ export class DockerImage {
     return images.length > 0;
   }
 
-  async getOrCreateContainer (name, args = []) {
+  async getOrCreateContainer (name, args) {
     // TODO(egorgripasov): Forward logs to /var/logs?
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
     }
 
+    args = args || this._args;
+
     const container = await DockerContainer.find({ imageName: this._imageName, name });
     if (container) {
-      return container;
+      if (container.started) {
+        throw new Error(`Service '${name}' is already running.`);
+      }
+
+      if (args.sort().join() === container.command.split(' ').sort().join()) {
+        return container;
+      }
+      // If command is different, rm container.
+      await container.destroy();
     }
 
     return new Promise((resolve, reject) => {
@@ -103,7 +114,7 @@ export class DockerImage {
             return acc;
           }, {})
         },
-        Cmd: [...this._args, ...args]
+        Cmd: args
       }, (err) => {
         if (err) {
           return reject(err);
