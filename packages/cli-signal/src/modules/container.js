@@ -63,6 +63,7 @@ export const SignalContainerModule = ({ config }) => {
         command: ['start'],
         describe: 'Start Signal.',
 
+        // TODO(egorgripasov): Is bootstrap from DXNS is still in use?
         builder: yargs => yargs
           .strict(false)
           .option('name', { type: 'string', default: DXNS_PROCESS_NAME, description: 'Container name' }),
