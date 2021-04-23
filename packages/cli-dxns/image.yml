@@ -1,4 +1,4 @@
-imageName: 'ghcr.io/alienlaboratories/substrate-node'
+imageName: 'ghcr.io/dxos/substrate-node'
 args:
   - 'node-template'
   - '--dev'

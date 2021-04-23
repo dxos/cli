@@ -296,7 +296,7 @@ export const MachineModule = ({ config }) => {
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi
-           - if [ "${substrate ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 9944:9944 ghcr.io/alienlaboratories/substrate-node:latest node-template --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external; fi
+           - if [ "${substrate ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 9944:9944 ghcr.io/dxos/substrate-node:latest node-template --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external; fi
         `;
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
