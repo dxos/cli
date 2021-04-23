@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.45](https://www.github.com/dxos/cli/compare/v2.0.44...v2.0.45) (2021-04-23)
+
+
+### Bug Fixes
+
+* use dxos images. ([8822f06](https://www.github.com/dxos/cli/commit/8822f06a0ce90adfa40c71d65c6623e2b68cde34))
+
 ### [2.0.44](https://www.github.com/dxos/cli/compare/v2.0.43...v2.0.44) (2021-04-22)
 
 
