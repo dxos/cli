@@ -1,0 +1,7 @@
+version: '3'
+services:
+  signal:
+    image: "ghcr.io/dxos/signal"
+    container_name: signal
+    network_mode: host
+    command: signal

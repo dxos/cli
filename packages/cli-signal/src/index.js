@@ -5,13 +5,14 @@
 import { createCLI } from '@dxos/cli-core';
 
 import { SignalModule } from './modules/signal';
-import { SignalContainerModule } from './modules/container';
 
 import info from '../extension.yml';
+import compose from '../docker-compose.yml';
 
 module.exports = createCLI({
-  modules: [SignalModule, SignalContainerModule],
+  modules: [SignalModule],
   dir: __dirname,
   main: !module.parent,
-  info
+  info,
+  compose
 });
