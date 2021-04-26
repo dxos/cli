@@ -1,0 +1,8 @@
+version: '3'
+services:
+  dxns:
+    image: "ghcr.io/dxos/substrate-node"
+    container_name: dxns
+    ports:
+      - 9944: '9944'
+    command: node-template --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external

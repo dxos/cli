@@ -34,16 +34,17 @@ export class DockerImage {
   }
 
   constructor (options) {
-    const { imageName, ports, networkMode, args, auth } = options;
+    const { service, auth } = options;
+    const { image: imageName, ports, command, network_mode: networkMode } = service;
 
     assert(imageName);
-    assert(args && args.length);
+    assert(command);
 
     this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:${LATEST_TAG}`;
 
     this._networkMode = networkMode;
     this._ports = ports;
-    this._args = args;
+    this._command = command;
     this._auth = auth;
   }
 
@@ -82,7 +83,7 @@ export class DockerImage {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
     }
 
-    args = args || this._args;
+    args = args || this._command.splt(' ');
 
     const container = await DockerContainer.find({ imageName: this._imageName, name });
     if (container) {
@@ -104,7 +105,7 @@ export class DockerImage {
         Image: this._imageName,
         Tty: true,
         ...(this._ports ? {
-          ExposedPorts: Object.entries(this._ports).reduce((acc, [key]) => {
+          ExposedPorts: Object.entries(Object.assign(...this._ports)).reduce((acc, [key]) => {
             acc[key] = {};
             return acc;
           }, {})
@@ -112,7 +113,7 @@ export class DockerImage {
         HostConfig: {
           ...(this._networkMode ? { NetworkMode: this._networkMode } : {}),
           ...(this._ports ? {
-            PortBindings: Object.entries(this._ports).reduce((acc, [key, value]) => {
+            PortBindings: Object.entries(Object.assign(...this._ports)).reduce((acc, [key, value]) => {
               acc[key] = [{
                 HostPort: value
               }];

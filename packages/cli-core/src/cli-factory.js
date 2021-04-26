@@ -94,7 +94,7 @@ const getRunnable = ({ modules, getModules, version, init, destroy, options = {}
  * @param {{ init:function, destroy: function, dir: string, main: boolean, modules: array, getModules: function, options: object }} options
  */
 export const createCLI = (options = {}) => {
-  const { modules, getModules, init, destroy, dir, main, options: cliOptions, info } = options;
+  const { modules, getModules, init, destroy, dir, main, options: cliOptions, info, compose } = options;
 
   assert(dir);
   assert(info, `Invalid ${EXTENSION_CONFIG_FILENAME} file.`);
@@ -110,6 +110,8 @@ export const createCLI = (options = {}) => {
   }
 
   const { command, ...restInfo } = yaml.load(info);
+  // TODO(egorgripasov): Docker compose.
+  const dockerCompose = compose ? yaml.load(compose) : undefined;
 
   return {
     run,
@@ -123,6 +125,7 @@ export const createCLI = (options = {}) => {
         name: pkg.package.name,
         version: pkg.package.version
       }
-    }
+    },
+    dockerCompose
   };
 };

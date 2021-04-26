@@ -1,4 +1,0 @@
-imageName: 'ghcr.io/dxos/signal'
-args:
-  - 'signal'
-networkMode: 'host'
