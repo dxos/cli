@@ -34,13 +34,14 @@ export class DockerImage {
   }
 
   constructor (options) {
-    const { imageName, ports, args, auth } = options;
+    const { imageName, ports, networkMode, args, auth } = options;
 
     assert(imageName);
     assert(args && args.length);
 
     this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:${LATEST_TAG}`;
 
+    this._networkMode = networkMode;
     this._ports = ports;
     this._args = args;
     this._auth = auth;
@@ -102,17 +103,22 @@ export class DockerImage {
         name: `${CONTAINER_PREFIX}${name}`,
         Image: this._imageName,
         Tty: true,
-        ExposedPorts: Object.entries(this._ports).reduce((acc, [key]) => {
-          acc[key] = {};
-          return acc;
-        }, {}),
-        HostConfig: {
-          PortBindings: Object.entries(this._ports).reduce((acc, [key, value]) => {
-            acc[key] = [{
-              HostPort: value
-            }];
+        ...(this._ports ? {
+          ExposedPorts: Object.entries(this._ports).reduce((acc, [key]) => {
+            acc[key] = {};
             return acc;
           }, {})
+        } : {}),
+        HostConfig: {
+          ...(this._networkMode ? { NetworkMode: this._networkMode } : {}),
+          ...(this._ports ? {
+            PortBindings: Object.entries(this._ports).reduce((acc, [key, value]) => {
+              acc[key] = [{
+                HostPort: value
+              }];
+              return acc;
+            }, {})
+          } : {})
         },
         Cmd: args
       }, (err) => {
