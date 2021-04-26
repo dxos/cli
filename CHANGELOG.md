@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.46](https://www.github.com/dxos/cli/compare/v2.0.45...v2.0.46) (2021-04-26)
+
+
+### Bug Fixes
+
+* add key for Przemek ([ccaf739](https://www.github.com/dxos/cli/commit/ccaf739cea62ede3f87c4f2b4ff707b211de51ba))
+* docker NetworkMode ([96567e7](https://www.github.com/dxos/cli/commit/96567e7dae407dce8b4032252247822159df7135))
+
 ### [2.0.45](https://www.github.com/dxos/cli/compare/v2.0.44...v2.0.45) (2021-04-23)
 
 
