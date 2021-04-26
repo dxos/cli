@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.47](https://www.github.com/dxos/cli/compare/v2.0.46...v2.0.47) (2021-04-26)
+
+
+### Bug Fixes
+
+* use container ext for install/start ([#159](https://www.github.com/dxos/cli/issues/159)) ([4f80be8](https://www.github.com/dxos/cli/commit/4f80be837ad5d9d78cd9b7dadcf4b6a387f7f475))
+
 ### [2.0.46](https://www.github.com/dxos/cli/compare/v2.0.45...v2.0.46) (2021-04-26)
 
 
