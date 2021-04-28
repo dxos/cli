@@ -22,5 +22,11 @@ WIRE_MACHINE_DNS_DOMAIN:
   path: services.machine.dnsDomain
 WIRE_MACHINE_EMAIL:
   path: services.machine.email
+WIRE_IPFS_GATEWAY:
+  path: services.ipfs.gateway
+WIRE_APP_SERVER_CONFIG:
+  path: cli.app.serve.config
+WIRE_APP_SERVER_LOGIN_APP:
+  path: cli.app.serve.loginApp
 WIRE_APP_SERVER_KEYPHRASE:
   path: cli.app.serve.keyPhrase

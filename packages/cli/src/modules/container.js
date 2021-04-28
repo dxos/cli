@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 
-import { asyncHandler, print, DockerContainer, DockerImage } from '@dxos/cli-core';
+import { asyncHandler, print, DockerContainer, DockerImage, mapConfigToEnv } from '@dxos/cli-core';
 
 import { Pluggable } from '../pluggable';
 
@@ -95,10 +95,11 @@ export const ContainerModule = ({ config }) => {
         builder: yargs => yargs
           .option('from', { describe: 'Extension name', required: true })
           .option('service', { describe: 'Service to install', required: true })
-          .option('name', { type: 'string', description: 'Container name' }),
+          .option('name', { type: 'string', description: 'Container name' })
+          .option('forward-env', { type: 'boolean', description: 'Forward ENV', default: false }),
 
         handler: asyncHandler(async argv => {
-          const { from: moduleName, service: serviceName, forward } = argv;
+          const { from: moduleName, service: serviceName, forward, forwardEnv } = argv;
 
           const service = getServiceInfo(moduleName, serviceName);
           const dockerImage = new DockerImage({ service });
@@ -108,7 +109,12 @@ export const ContainerModule = ({ config }) => {
 
           const { name = service.container_name } = argv;
 
-          const container = await dockerImage.getOrCreateContainer(name, command);
+          let env;
+          if (forwardEnv) {
+            env = Object.entries(mapConfigToEnv(config)).map(([key, value]) => `${key}=${value}`);
+          }
+
+          const container = await dockerImage.getOrCreateContainer(name, command, env);
           await container.start();
         })
       })
