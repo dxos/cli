@@ -111,6 +111,9 @@ export class DockerImage {
           }, {})
         } : {}),
         HostConfig: {
+          RestartPolicy: {
+            Name: 'unless-stopped'
+          },
           ...(this._networkMode ? { NetworkMode: this._networkMode } : {}),
           ...(this._ports ? {
             PortBindings: Object.entries(Object.assign(...this._ports)).reduce((acc, [key, value]) => {
