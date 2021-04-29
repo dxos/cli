@@ -1,9 +1,7 @@
 name: Publish DXOS Service container to GitHub Registry
 
 on:
-  push:
-    branches:
-      - egorgripasov/app-server-docker
+  workflow_dispatch
 
 jobs:
   # Push image to GitHub Packages.
