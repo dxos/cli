@@ -5,6 +5,7 @@
 import assert from 'assert';
 import Docker from 'dockerode';
 import yaml from 'js-yaml';
+import hash from 'object-hash';
 
 import { CONTAINER_PREFIX, DockerContainer } from './container';
 
@@ -77,7 +78,7 @@ export class DockerImage {
     return images.length > 0;
   }
 
-  async getOrCreateContainer (name, args) {
+  async getOrCreateContainer (name, args, env = null, binds = []) {
     // TODO(egorgripasov): Forward logs to /var/logs?
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
@@ -85,15 +86,19 @@ export class DockerImage {
 
     args = args || this._command.splt(' ');
 
+    const argsHash = hash(args);
+    const envHash = hash(env || []);
+
     const container = await DockerContainer.find({ imageName: this._imageName, name });
     if (container) {
       if (container.started) {
         throw new Error(`Service '${name}' is already running.`);
       }
 
-      if (args.join(' ') === container.command) {
+      if (argsHash === container.labels.cmd && envHash === container.labels.env) {
         return container;
       }
+
       // If command is different, rm container.
       await container.destroy();
     }
@@ -103,7 +108,12 @@ export class DockerImage {
         // TODO(egorgripasov): Add volumes.
         name: `${CONTAINER_PREFIX}${name}`,
         Image: this._imageName,
+        Labels: {
+          cmd: argsHash,
+          env: envHash
+        },
         Tty: true,
+        ...(env ? { Env: env } : {}),
         ...(this._ports ? {
           ExposedPorts: Object.entries(Object.assign(...this._ports)).reduce((acc, [key]) => {
             acc[key] = {};
@@ -114,6 +124,7 @@ export class DockerImage {
           RestartPolicy: {
             Name: 'unless-stopped'
           },
+          Binds: binds,
           ...(this._networkMode ? { NetworkMode: this._networkMode } : {}),
           ...(this._ports ? {
             PortBindings: Object.entries(Object.assign(...this._ports)).reduce((acc, [key, value]) => {

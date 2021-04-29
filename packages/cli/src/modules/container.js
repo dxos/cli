@@ -4,11 +4,12 @@
 
 import assert from 'assert';
 
-import { asyncHandler, print, DockerContainer, DockerImage } from '@dxos/cli-core';
+import { asyncHandler, print, DockerContainer, DockerImage, mapConfigToEnv } from '@dxos/cli-core';
 
 import { Pluggable } from '../pluggable';
 
 const DEFAULT_LOG_LINES = 100;
+const DEFAULT_CONFIG_PATH = '/Users/root/.wire/profile/local.yml';
 
 const getServiceInfo = (moduleName, serviceName) => {
   assert(moduleName, 'Invalid extension.');
@@ -35,7 +36,7 @@ const getAuth = (config, imageInfo) => ({
  * Container CLI module.
  * @returns {object}
  */
-export const ContainerModule = ({ config }) => {
+export const ContainerModule = ({ config, profilePath }) => {
   return ({
     command: ['container'],
     describe: 'KUBE container management.',
@@ -95,10 +96,11 @@ export const ContainerModule = ({ config }) => {
         builder: yargs => yargs
           .option('from', { describe: 'Extension name', required: true })
           .option('service', { describe: 'Service to install', required: true })
-          .option('name', { type: 'string', description: 'Container name' }),
+          .option('name', { type: 'string', description: 'Container name' })
+          .option('forward-env', { type: 'boolean', description: 'Forward ENV', default: false }),
 
         handler: asyncHandler(async argv => {
-          const { from: moduleName, service: serviceName, forward } = argv;
+          const { from: moduleName, service: serviceName, forward, forwardEnv } = argv;
 
           const service = getServiceInfo(moduleName, serviceName);
           const dockerImage = new DockerImage({ service });
@@ -108,7 +110,18 @@ export const ContainerModule = ({ config }) => {
 
           const { name = service.container_name } = argv;
 
-          const container = await dockerImage.getOrCreateContainer(name, command);
+          let env;
+          if (forwardEnv) {
+            env = Object.entries(process.env).map(([key, value]) => `${key}=${value}`);
+          } else {
+            env = Object.entries(mapConfigToEnv(config)).map(([key, value]) => `${key}=${value}`);
+          }
+
+          const binds = [
+            `${profilePath}:${DEFAULT_CONFIG_PATH}`
+          ];
+
+          const container = await dockerImage.getOrCreateContainer(name, command, env, binds);
           await container.start();
         })
       })

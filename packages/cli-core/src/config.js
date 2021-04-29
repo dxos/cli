@@ -10,7 +10,7 @@ import path from 'path';
 import download from 'download';
 
 import { createId } from '@dxos/crypto';
-import { Config, mapFromKeyValues } from '@dxos/config';
+import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
 
 import envmap from '../env-map.yml';
 
@@ -124,4 +124,13 @@ export const getConfig = (configFilePath, argvConf = {}) => {
   );
 
   return config;
+};
+
+/**
+ * @param {Object} config
+ */
+export const mapConfigToEnv = (config) => {
+  assert(config);
+
+  return mapToKeyValues(yaml.load(envmap), config.values);
 };

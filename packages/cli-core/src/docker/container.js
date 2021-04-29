@@ -83,8 +83,8 @@ export class DockerContainer {
     return this._containerInfo.Image;
   }
 
-  get command () {
-    return this._containerInfo.Command.replace(/^docker-entrypoint.sh /, '');
+  get labels () {
+    return this._containerInfo.Labels;
   }
 
   async start () {
