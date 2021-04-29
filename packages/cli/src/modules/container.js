@@ -111,6 +111,8 @@ export const ContainerModule = ({ config }) => {
 
           let env;
           if (forwardEnv) {
+            env = Object.entries(process.env).map(([key, value]) => `${key}=${value}`);
+          } else {
             env = Object.entries(mapConfigToEnv(config)).map(([key, value]) => `${key}=${value}`);
           }
 
