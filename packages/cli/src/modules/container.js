@@ -9,6 +9,7 @@ import { asyncHandler, print, DockerContainer, DockerImage, mapConfigToEnv } fro
 import { Pluggable } from '../pluggable';
 
 const DEFAULT_LOG_LINES = 100;
+const DEFAULT_CONFIG_PATH = '/Users/root/.wire/profile/local.yml';
 
 const getServiceInfo = (moduleName, serviceName) => {
   assert(moduleName, 'Invalid extension.');
@@ -35,7 +36,7 @@ const getAuth = (config, imageInfo) => ({
  * Container CLI module.
  * @returns {object}
  */
-export const ContainerModule = ({ config }) => {
+export const ContainerModule = ({ config, profilePath }) => {
   return ({
     command: ['container'],
     describe: 'KUBE container management.',
@@ -116,7 +117,11 @@ export const ContainerModule = ({ config }) => {
             env = Object.entries(mapConfigToEnv(config)).map(([key, value]) => `${key}=${value}`);
           }
 
-          const container = await dockerImage.getOrCreateContainer(name, command, env);
+          const binds = [
+            `${profilePath}:${DEFAULT_CONFIG_PATH}`
+          ];
+
+          const container = await dockerImage.getOrCreateContainer(name, command, env, binds);
           await container.start();
         })
       })

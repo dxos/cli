@@ -78,7 +78,7 @@ export class DockerImage {
     return images.length > 0;
   }
 
-  async getOrCreateContainer (name, args, env) {
+  async getOrCreateContainer (name, args, env = null, binds = []) {
     // TODO(egorgripasov): Forward logs to /var/logs?
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
@@ -124,6 +124,7 @@ export class DockerImage {
           RestartPolicy: {
             Name: 'unless-stopped'
           },
+          Binds: binds,
           ...(this._networkMode ? { NetworkMode: this._networkMode } : {}),
           ...(this._ports ? {
             PortBindings: Object.entries(Object.assign(...this._ports)).reduce((acc, [key, value]) => {
