@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.48](https://www.github.com/dxos/cli/compare/v2.0.47...v2.0.48) (2021-04-29)
+
+
+### Bug Fixes
+
+* add restart policy to docker container. ([694c187](https://www.github.com/dxos/cli/commit/694c1877af861b6f21f71cd010eddeba33c10e87))
+* app server as docker container ([#162](https://www.github.com/dxos/cli/issues/162)) ([aa3043a](https://www.github.com/dxos/cli/commit/aa3043ac4189d725bc97558880f715c29e4549ec))
+
 ### [2.0.47](https://www.github.com/dxos/cli/compare/v2.0.46...v2.0.47) (2021-04-26)
 
 
