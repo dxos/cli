@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.49](https://www.github.com/dxos/cli/compare/v2.0.48...v2.0.49) (2021-05-02)
+
+
+### Bug Fixes
+
+* docker net host as option. ([5ca044b](https://www.github.com/dxos/cli/commit/5ca044b1eb2741889cc71ddf0b9557933190e359))
+
 ### [2.0.48](https://www.github.com/dxos/cli/compare/v2.0.47...v2.0.48) (2021-04-29)
 
 
