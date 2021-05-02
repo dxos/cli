@@ -12,6 +12,7 @@ import { CONTAINER_PREFIX, DockerContainer } from './container';
 const docker = new Docker();
 
 const LATEST_TAG = 'latest';
+const HOST_NETWORK_MODE = 'host';
 
 // TODO(egorgripasov): Extend with default values, etc.
 export const getImageInfo = (image) => yaml.load(image);
@@ -78,7 +79,7 @@ export class DockerImage {
     return images.length > 0;
   }
 
-  async getOrCreateContainer (name, args, env = null, binds = []) {
+  async getOrCreateContainer (name, args, env = null, binds = [], hostNet = false) {
     // TODO(egorgripasov): Forward logs to /var/logs?
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
@@ -86,8 +87,7 @@ export class DockerImage {
 
     args = args || this._command.splt(' ');
 
-    const argsHash = hash(args);
-    const envHash = hash(env || []);
+    const configHash = hash({ args, env, hostNet });
 
     const container = await DockerContainer.find({ imageName: this._imageName, name });
     if (container) {
@@ -95,7 +95,7 @@ export class DockerImage {
         throw new Error(`Service '${name}' is already running.`);
       }
 
-      if (argsHash === container.labels.cmd && envHash === container.labels.env) {
+      if (configHash === container.labels.configHash) {
         return container;
       }
 
@@ -109,12 +109,11 @@ export class DockerImage {
         name: `${CONTAINER_PREFIX}${name}`,
         Image: this._imageName,
         Labels: {
-          cmd: argsHash,
-          env: envHash
+          configHash
         },
         Tty: true,
         ...(env ? { Env: env } : {}),
-        ...(this._ports ? {
+        ...(this._ports && !hostNet ? {
           ExposedPorts: Object.entries(Object.assign(...this._ports)).reduce((acc, [key]) => {
             acc[key] = {};
             return acc;
@@ -125,8 +124,8 @@ export class DockerImage {
             Name: 'unless-stopped'
           },
           Binds: binds,
-          ...(this._networkMode ? { NetworkMode: this._networkMode } : {}),
-          ...(this._ports ? {
+          ...(this._networkMode === HOST_NETWORK_MODE || hostNet ? { NetworkMode: HOST_NETWORK_MODE } : {}),
+          ...(this._ports && !hostNet ? {
             PortBindings: Object.entries(Object.assign(...this._ports)).reduce((acc, [key, value]) => {
               acc[key] = [{
                 HostPort: value

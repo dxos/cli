@@ -97,10 +97,11 @@ export const ContainerModule = ({ config, profilePath }) => {
           .option('from', { describe: 'Extension name', required: true })
           .option('service', { describe: 'Service to install', required: true })
           .option('name', { type: 'string', description: 'Container name' })
-          .option('forward-env', { type: 'boolean', description: 'Forward ENV', default: false }),
+          .option('forward-env', { type: 'boolean', description: 'Forward ENV', default: false })
+          .option('host-net', { type: 'boolean', description: 'Use host network', default: false }),
 
         handler: asyncHandler(async argv => {
-          const { from: moduleName, service: serviceName, forward, forwardEnv } = argv;
+          const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet } = argv;
 
           const service = getServiceInfo(moduleName, serviceName);
           const dockerImage = new DockerImage({ service });
@@ -121,7 +122,7 @@ export const ContainerModule = ({ config, profilePath }) => {
             `${profilePath}:${DEFAULT_CONFIG_PATH}`
           ];
 
-          const container = await dockerImage.getOrCreateContainer(name, command, env, binds);
+          const container = await dockerImage.getOrCreateContainer(name, command, env, binds, hostNet);
           await container.start();
         })
       })

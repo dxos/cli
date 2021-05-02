@@ -3,5 +3,7 @@ services:
   signal:
     image: "ghcr.io/dxos/signal"
     container_name: signal
-    network_mode: host
+    ports:
+      - 3478: '3478'
+      - 4000: '4000'
     command: signal
