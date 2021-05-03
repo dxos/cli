@@ -4,15 +4,13 @@
 
 import assert from 'assert';
 import Docker from 'dockerode';
-import prettyBytes from 'pretty-bytes';
 
 import { log } from '@dxos/debug';
 
 export const CONTAINER_PREFIX = 'dxos_';
+export const RUNNING_STATE = 'running';
 
 const docker = new Docker();
-
-const RUNNING_STATE = 'running';
 
 export class DockerContainer {
   static async find (filter) {
@@ -139,8 +137,8 @@ export class DockerContainer {
     }
 
     return {
-      cpu: `${cpuPercent.toFixed(2)}%`,
-      memory: memory_stats.stats && memory_stats.stats.active_anon ? prettyBytes(memory_stats.stats.active_anon) : '0'
+      cpu: cpuPercent.toFixed(2),
+      memory: memory_stats.stats && memory_stats.stats.active_anon ? memory_stats.stats.active_anon : 0
     };
   }
 

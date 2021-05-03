@@ -16,7 +16,6 @@ import { ProfileModule } from './modules/profile';
 import { ServicesModule } from './modules/services';
 import { UpgradeModule, UninstallModule } from './modules/installation';
 import { ExtensionModule } from './modules/extension';
-import { ContainerModule } from './modules/container';
 
 import { listInstalled } from './extensions';
 
@@ -69,8 +68,7 @@ const modules = [
   ServicesModule,
   UpgradeModule,
   UninstallModule,
-  ExtensionModule,
-  ContainerModule
+  ExtensionModule
 ];
 
 module.exports = createCLI({
