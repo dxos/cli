@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.50](https://www.github.com/dxos/cli/compare/v2.0.49...v2.0.50) (2021-05-03)
+
+
+### Bug Fixes
+
+* join services and containers. ([#164](https://www.github.com/dxos/cli/issues/164)) ([53e8b5a](https://www.github.com/dxos/cli/commit/53e8b5ad2c90345cb7d59d8afa0b33bef841476e))
+
 ### [2.0.49](https://www.github.com/dxos/cli/compare/v2.0.48...v2.0.49) (2021-05-02)
 
 
