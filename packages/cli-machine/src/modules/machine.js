@@ -16,6 +16,7 @@ import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
 import SSH_KEYS from '../../ssh-keys.yml';
+import KubeServices from '../../services.yml';
 
 const KUBE_TYPE = 'wrn:kube';
 const KUBE_TAG = 'kube';
@@ -65,6 +66,7 @@ export const MachineModule = ({ config }) => {
 
   // TODO(dboreham): Get from profile.
   const { keys: sshKeys } = yaml.load(SSH_KEYS);
+  const services = yaml.load(KubeServices);
 
   return ({
     command: ['machine'],
@@ -216,7 +218,6 @@ export const MachineModule = ({ config }) => {
           }
 
           const radicle = !!extension.find(entry => entry === 'dxos/radicle-seed-node');
-          const substrate = !!extension.find(entry => entry === 'substrate');
 
           const wnsConfig = config.get('services.wns');
           const { server, userKey, bondId, chainId } = wnsConfig;
@@ -226,7 +227,7 @@ export const MachineModule = ({ config }) => {
 
           const session = new DigitalOcean(doAccessToken, 100);
 
-          const boxName = yargs.argv.name ? yargs.argv.name : `kube${crypto.randomBytes(4).toString('hex')}`;
+          const boxName = yargs.argv.name ? yargs.argv.name : `kube-${crypto.randomBytes(4).toString('hex')}`;
           const boxFullyQualifiedName = `${boxName}.${dnsDomain}`;
 
           const dropletId = await getDropletIdFromName(session, boxName);
@@ -261,7 +262,6 @@ export const MachineModule = ({ config }) => {
          runcmd:
            - curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
            - chmod +x /usr/local/bin/docker-compose
-           - echo "${githubAccessToken}" | docker login https://ghcr.io -u ${githubUsername} --password-stdin
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
            - cd ..
@@ -269,6 +269,9 @@ export const MachineModule = ({ config }) => {
            - echo "export KUBE_FQDN=${boxFullyQualifiedName}" >> /opt/kube/etc/kube.env
            - echo "export KUBE_PIN_WNS_OBJECTS=${pin ? 1 : 0}" >> /opt/kube/etc/kube.env
            - echo "export WIRE_APP_SERVER_KEYPHRASE=${keyPhrase}" >> /opt/kube/etc/kube.env
+           - echo "export WIRE_MACHINE_GITHUB_USERNAME=${githubUsername}" >> /opt/kube/etc/kube.env
+           - echo "export WIRE_MACHINE_GITHUB_TOKEN=${githubAccessToken}" >> /opt/kube/etc/kube.env
+           - echo ${JSON.stringify(JSON.stringify(services))} >> /opt/kube/etc/services.json
            - cd /opt/kube/scripts
            - sed -i 's/run_installer "ssh" install_ssh_key/#run_installer "ssh" install_ssh_key/g' install.sh
            - sed -i 's/apt clean//g' install.sh
@@ -296,7 +299,6 @@ export const MachineModule = ({ config }) => {
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
            - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi
-           - if [ "${substrate ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 9944:9944 ghcr.io/dxos/substrate-node:latest node-template --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external; fi
         `;
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/

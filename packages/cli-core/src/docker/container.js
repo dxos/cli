@@ -137,7 +137,7 @@ export class DockerContainer {
     }
 
     return {
-      cpu: cpuPercent.toFixed(2),
+      cpu: Math.round(cpuPercent * 100) / 100,
       memory: memory_stats.stats && memory_stats.stats.active_anon ? memory_stats.stats.active_anon : 0
     };
   }
