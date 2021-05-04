@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.51](https://www.github.com/dxos/cli/compare/v2.0.50...v2.0.51) (2021-05-04)
+
+
+### Bug Fixes
+
+* run services on kube via docker. ([#167](https://www.github.com/dxos/cli/issues/167)) ([ce47cf2](https://www.github.com/dxos/cli/commit/ce47cf2e280842620a05e1b8c71d1825fa3d710c))
+
 ### [2.0.50](https://www.github.com/dxos/cli/compare/v2.0.49...v2.0.50) (2021-05-03)
 
 
