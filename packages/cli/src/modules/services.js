@@ -46,6 +46,11 @@ const getAuth = (config, imageInfo) => ({
   serveraddress: `https://${imageInfo.image.split('/')[0]}`
 });
 
+const getServiceType = async (serviceName) => {
+  const { services = [] } = await listServices();
+  return (services.map(({ name }) => name).includes(serviceName)) ? SERVICE_DAEMON : SERVICE_CONTAINER;
+};
+
 /**
  * Services CLI module.
  * @returns {object}
@@ -180,13 +185,14 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('lines', { type: 'number', default: DEFAULT_LOG_LINES })
         .option('follow', { alias: 'f', type: 'boolean' })
         .option('log-file')
-        .option('running-only', { default: false })
-        .option('type', { type: 'string', default: SERVICE_CONTAINER }),
+        .option('running-only', { default: false }),
 
       handler: asyncHandler(async argv => {
-        const { name, lines, runningOnly, logFile, follow, type: serviceType } = argv;
+        const { name, lines, runningOnly, logFile, follow } = argv;
 
         assert(name, 'Invalid Service Name.');
+
+        const serviceType = await getServiceType(name);
         if (serviceType === SERVICE_DAEMON) {
           await getLogs(name, { lines, runningOnly, logFile, follow });
         } else {
@@ -204,13 +210,14 @@ export const ServicesModule = ({ config, profilePath }) => ({
       command: ['restart [name]'],
       describe: 'Restart serice.',
       builder: yargs => yargs
-        .option('name')
-        .option('type', { type: 'string', default: SERVICE_CONTAINER }),
+        .option('name'),
 
       handler: asyncHandler(async argv => {
-        const { name, type: serviceType } = argv;
+        const { name } = argv;
 
         assert(name, 'Invalid Service Name.');
+
+        const serviceType = await getServiceType(name);
         if (serviceType === SERVICE_DAEMON) {
           await restartService(name);
         } else {
@@ -228,13 +235,14 @@ export const ServicesModule = ({ config, profilePath }) => ({
       command: ['stop [name]'],
       describe: 'Stop service.',
       builder: yargs => yargs
-        .option('name')
-        .option('type', { type: 'string', default: SERVICE_CONTAINER }),
+        .option('name'),
 
       handler: asyncHandler(async argv => {
-        const { name, type: serviceType } = argv;
+        const { name } = argv;
 
         assert(name, 'Invalid Service Name.');
+
+        const serviceType = await getServiceType(name);
         if (serviceType === SERVICE_DAEMON) {
           await stopService(name);
         } else {
