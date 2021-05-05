@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.52](https://www.github.com/dxos/cli/compare/v2.0.51...v2.0.52) (2021-05-05)
+
+
+### Bug Fixes
+
+* auto detect service type. ([2c111f8](https://www.github.com/dxos/cli/commit/2c111f870db8f99be74bb6e22951cdc9c1ebee65))
+
 ### [2.0.51](https://www.github.com/dxos/cli/compare/v2.0.50...v2.0.51) (2021-05-04)
 
 
