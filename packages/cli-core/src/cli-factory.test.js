@@ -2,9 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
+import EventEmitter from 'events';
 import fs from 'fs';
 import readline from 'readline';
-import EventEmitter from 'events';
 
 import { createCLI } from './cli-factory';
 import { asyncHandler } from './util/async';
@@ -22,6 +22,7 @@ const testError = 'unexpected error.';
 
 jest.mock('./config', () => {
   const conf = jest.requireActual('./config');
+  // eslint-disable-next-line
   const { Config } = require('@dxos/config');
   return {
     ...conf,
@@ -66,7 +67,7 @@ const TestModule = () => {
         builder: yargs => yargs
           .option('interactive', { hidden: true, default: true }),
 
-        handler: asyncHandler(async argv => {
+        handler: asyncHandler(async () => {
           interactiveMockMethod();
         })
       })
@@ -77,7 +78,7 @@ const TestModule = () => {
         builder: yargs => yargs
           .option('interactive', { hidden: true, default: true }),
 
-        handler: asyncHandler(async argv => {
+        handler: asyncHandler(async () => {
           throw new Error(testError);
         })
       })
@@ -146,7 +147,7 @@ describe('cli-factory', () => {
   let existsSpy;
 
   beforeAll(() => {
-    existsSpy = jest.spyOn(fs, 'existsSync').mockImplementation(path => true);
+    existsSpy = jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
   });
 
   afterAll(() => {

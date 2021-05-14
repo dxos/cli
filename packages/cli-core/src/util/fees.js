@@ -1,5 +1,5 @@
 //
-// Copyright 2020 Wireline, Inc.
+// Copyright 2020 DXOS.org
 //
 
 import assert from 'assert';
@@ -9,7 +9,9 @@ export const parseGasAndFees = (gas, fees = '') => {
 
   const amount = fees.trim().split(',')
     .map(fee => fee.trim().split(/(\d+)/))
+    // eslint-disable-next-line
     .filter(([_, amount, denom]) => (denom && amount))
+    // eslint-disable-next-line
     .map(([_, amount, denom]) => ({ denom, amount }));
 
   return { amount, gas };

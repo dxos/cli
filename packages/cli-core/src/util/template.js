@@ -2,8 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
-import { pathExists, copy, remove, emptyDir } from 'fs-extra';
 import download from 'download';
+import { pathExists, copy, remove, emptyDir } from 'fs-extra';
 import os from 'os';
 import path from 'path';
 import URL from 'url';

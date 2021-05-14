@@ -4,14 +4,14 @@
 
 import assert from 'assert';
 import fs from 'fs';
-import parse from 'yargs-parser';
-import readPkgUp from 'read-pkg-up';
 import yaml from 'js-yaml';
+import readPkgUp from 'read-pkg-up';
+import parse from 'yargs-parser';
 
 import { App } from './app';
 import { getConfig, getActiveProfilePath } from './config';
-import { getLoggers } from './util/log';
 import { loadCerts } from './util/certs';
+import { getLoggers } from './util/log';
 
 export const EXTENSION_CONFIG_FILENAME = 'extension.yml';
 

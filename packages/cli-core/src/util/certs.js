@@ -2,13 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-import fs from 'fs';
-import os from 'os';
-import url from 'url';
-import path from 'path';
-import set from 'lodash.set';
-import { ensureDir } from 'fs-extra';
 import download from 'download';
+import fs from 'fs-extra';
+import set from 'lodash.set';
+import os from 'os';
+import path from 'path';
+import url from 'url';
 
 export const CERTS_PATH = '~/.wire/certs';
 
@@ -16,12 +15,13 @@ const certPath = CERTS_PATH.replace('~', os.homedir());
 
 export const loadCerts = () => {
   if (fs.existsSync(certPath)) {
-    require('syswide-cas').addCAs(certPath); // eslint-disable-line global-require
+    // eslint-disable-next-line
+    require('syswide-cas').addCAs(certPath);
   }
 };
 
 export const importCert = async (link) => {
-  await ensureDir(certPath);
+  await fs.ensureDir(certPath);
   // Ignore self-signed cert for case of import.
   set(process.env, 'npm_config_strict_ssl', 'false');
 

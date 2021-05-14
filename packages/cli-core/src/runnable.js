@@ -3,12 +3,12 @@
 //
 
 import assert from 'assert';
-import get from 'lodash.get';
-import kill from 'tree-kill';
 import { spawn } from 'child_process';
 import { unlinkSync, existsSync } from 'fs';
-import pm2 from 'pm2';
+import get from 'lodash.get';
 import pify from 'pify';
+import pm2 from 'pm2';
+import kill from 'tree-kill';
 
 const PROCESS_PREFIX = 'dxos.';
 const STATUS_RUNNING = 'online';

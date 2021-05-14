@@ -1,7 +1,12 @@
+//
+// Copyright 2020 DXOS.org
+//
+
 import crypto from 'crypto';
+import fs from 'fs';
 import { tmpdir } from 'os';
 import path from 'path';
-import fs from 'fs';
+
 import { TemplateHelper } from './template';
 
 const TEST_REPO = 'https://github.com/dxos/async';

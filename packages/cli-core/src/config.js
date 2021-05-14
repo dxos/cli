@@ -3,14 +3,14 @@
 //
 
 import assert from 'assert';
-import fs from 'fs-extra';
-import os from 'os';
-import yaml from 'js-yaml';
-import path from 'path';
 import download from 'download';
+import fs from 'fs-extra';
+import yaml from 'js-yaml';
+import os from 'os';
+import path from 'path';
 
-import { createId } from '@dxos/crypto';
 import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
+import { createId } from '@dxos/crypto';
 
 import envmap from './env-map.json';
 
