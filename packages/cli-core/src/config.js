@@ -12,7 +12,7 @@ import download from 'download';
 import { createId } from '@dxos/crypto';
 import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
 
-import envmap from '../env-map.yml';
+import envmap from './env-map.json';
 
 // TODO(burdon): Change to ~/.dxos
 export const PROFILE_ROOT = '.wire/profile';
