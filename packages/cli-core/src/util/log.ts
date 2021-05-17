@@ -8,11 +8,15 @@ import { log, logError, logs } from '@dxos/debug';
 
 const CLI_DEBUG_NAMESPACE = 'dxos:cli';
 
+type PrintOptions = {
+  json?: boolean
+}
+
 /**
  * @param {any} data
- * @param {{ json: boolean }} options
+ * @param {PrintOptions} options
  */
-export const print = (data, options = {}) => {
+export const print = (data: any, options: PrintOptions = {}) => {
   const { json = false } = options;
 
   if (data !== Object(data)) {
@@ -33,7 +37,7 @@ export const print = (data, options = {}) => {
 export const getLoggers = (name = CLI_DEBUG_NAMESPACE) => {
   const { log: debugLog } = logs(name);
 
-  const logErrorWithDebug = err => {
+  const logErrorWithDebug = (err: any) => {
     debugLog(err);
     logError(err);
   };

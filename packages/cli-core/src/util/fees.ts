@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 
-export const parseGasAndFees = (gas, fees = '') => {
+export const parseGasAndFees = (gas: string, fees = '') => {
   assert(gas, 'Invalid gas.');
 
   const amount = fees.trim().split(',')
@@ -17,7 +17,7 @@ export const parseGasAndFees = (gas, fees = '') => {
   return { amount, gas };
 };
 
-export const getGasAndFees = (argv, config = {}) => {
+export const getGasAndFees = (argv: any, config: any = {}) => {
   return parseGasAndFees(
     String(argv.gas || config.gas),
     String(argv.fees || config.fees)

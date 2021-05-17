@@ -8,8 +8,8 @@
  *
  * @param func {Function<{argv}>}
  */
-export const asyncHandler = func => {
-  return argv => {
+export const asyncHandler = (func: Function) => {
+  return (argv: any) => {
     try {
       argv._result = func(argv);
     } catch (err) {

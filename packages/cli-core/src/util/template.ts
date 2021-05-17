@@ -6,7 +6,7 @@ import download from 'download';
 import { pathExists, copy, remove, emptyDir } from 'fs-extra';
 import os from 'os';
 import path from 'path';
-import URL from 'url';
+import URL, { UrlWithStringQuery } from 'url';
 
 const GITHUB_HOSTNAME = 'github.com';
 const CONFIG = { timeout: 30000, extract: true, strip: 1, mode: '755' };
@@ -19,8 +19,8 @@ export class TemplateHelper {
    * @param {Object} url
    * @returns {Object}
    */
-  static parseGitHubURL (url) {
-    const parts = url.pathname.split('/');
+  static parseGitHubURL (url: UrlWithStringQuery) {
+    const parts = url.pathname!.split('/');
     const isSubdir = parts.length > 4;
     const owner = parts[1];
     const repo = parts[2];
@@ -55,7 +55,7 @@ export class TemplateHelper {
    * @throws {Error}
    * @returns {Object}
    */
-  static parseURL (inputUrl) {
+  static parseURL (inputUrl: string) {
     console.assert(inputUrl, 'URL is required');
 
     // eslint-disable-next-line
@@ -83,7 +83,7 @@ export class TemplateHelper {
    * @param {boolean} force
    * @returns {Promise}
    */
-  static async downloadTemplateFromRepo (inputUrl, githubToken, downloadPath, force) {
+  static async downloadTemplateFromRepo (inputUrl: string, githubToken: string | null, downloadPath: string, force: boolean) {
     const repoInfo = TemplateHelper.parseURL(inputUrl);
 
     // If template is in a subdirectory of a repo, use directory name as default build directory.

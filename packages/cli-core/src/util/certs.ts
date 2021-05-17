@@ -20,13 +20,13 @@ export const loadCerts = () => {
   }
 };
 
-export const importCert = async (link) => {
+export const importCert = async (link: string) => {
   await fs.ensureDir(certPath);
   // Ignore self-signed cert for case of import.
   set(process.env, 'npm_config_strict_ssl', 'false');
 
   // eslint-disable-next-line
   const parsedUrl = url.parse(link);
-  const filename = `${Date.now()}-${parsedUrl.host.replace(/\./g, '-')}-${path.basename(parsedUrl.pathname)}`;
+  const filename = `${Date.now()}-${parsedUrl.host!.replace(/\./g, '-')}-${path.basename(parsedUrl.pathname!)}`;
   await download(link, certPath, { filename });
 };

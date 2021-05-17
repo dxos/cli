@@ -4,7 +4,8 @@
     "outDir": "dist",
     "lib": [
       "DOM"
-    ]
+    ],
+    "types": ["node", "jest"],
   },
   "include": [
     "src",
