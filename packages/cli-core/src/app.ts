@@ -30,6 +30,16 @@ const BANNER = '\n' +
  */
 // TODO(burdon): Rename Main?
 export class App {
+  _version: string;
+  _prompt: string;
+  _baseCommand: string;
+  _enableInteractive: boolean;
+  _state: any;
+  _config: any;
+  _getModules: any;
+  _args: any;
+  _rl: any;
+
   /**
    * Yargs parser.
    * @type {Object}
@@ -67,9 +77,12 @@ export class App {
     })
 
     // Args to pass through to underlying binary (e.g. registry, signal, etc.).
-    .option(FORWARD_OPTION, {
-      type: 'json',
-      hidden: true
+    .option({
+      [FORWARD_OPTION]: {
+        // @ts-ignore
+        type: 'json',
+        hidden: true
+      }
     })
 
     // Special case - required for extensions.
@@ -106,7 +119,7 @@ export class App {
    * @constructor
    * @param {Object} config
    */
-  constructor (config = {}) {
+  constructor (config: any = {}) {
     const { config: cliConfig, state, options, version, profilePath, profileExists } = config;
     const { prompt, baseCommand, enableInteractive = false } = options;
 
@@ -152,7 +165,7 @@ export class App {
    * @param input - input string.
    * @param interactive - true if in interactive mode.
    */
-  async parseAsync (input, interactive) {
+  async parseAsync (input: string, interactive: boolean = false): Promise<any> {
     assert(this._parser, 'Invalid command parser.');
 
     return new Promise((resolve, reject) => {
@@ -194,7 +207,7 @@ export class App {
   /**
    * Process the command.
    */
-  async start (argv) {
+  async start (argv?: any) {
     try {
       // Init modules.
       if (this._getModules) {
@@ -202,6 +215,7 @@ export class App {
       }
 
       for (const module of this._modules) {
+        // @ts-ignore
         this._parser.command(module(this.state));
       }
 
@@ -215,7 +229,7 @@ export class App {
 
       // Transform args to forward into format that can be parsed by yargs.
       // E.g. `dx signal start -- --foo bar` would be transformed into `dx signal start --forward "{ args: ['--foo', 'bar']}"`
-      const forwardIndex = this._args.findIndex(arg => arg === '--');
+      const forwardIndex = this._args.findIndex((arg: any) => arg === '--');
       if (forwardIndex !== -1) {
         const forwardArgs = JSON.stringify({ args: this._args.slice(forwardIndex + 1) });
         this._args = [...this._args.slice(0, forwardIndex), `--${FORWARD_OPTION}`, forwardArgs];
@@ -228,8 +242,8 @@ export class App {
       const exec = async () => {
         // Issue: yargs removes quotes.
         // https://github.com/yargs/yargs-parser/issues/180
-        const result = await this.parseAsync(
-          this._args.map(a => String(a).replace(/^{/g, '\'{').replace(/={/g, '=\'{').replace(/}$/g, '}\'')).join(' ')
+        const result: any = await this.parseAsync(
+          this._args.map((a: any) => String(a).replace(/^{/g, '\'{').replace(/={/g, '=\'{').replace(/}$/g, '}\'')).join(' ')
         );
         const { output } = result;
 
@@ -243,7 +257,7 @@ export class App {
         return result;
       };
 
-      const result = await exec();
+      const result: any = await exec();
       if (this._enableInteractive && interactive && !argv && result.command !== 'help') {
         return this.startInteractive();
       }
@@ -275,9 +289,9 @@ export class App {
     this.getReadlineInterface();
 
     // Wait until the readline stream is closed.
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this._rl.prompt();
-      this._rl.on('line', async input => {
+      this._rl.on('line', async (input: string) => {
         try {
           // Merge command line args.
           const command = [this._baseCommand, input].join(' ');

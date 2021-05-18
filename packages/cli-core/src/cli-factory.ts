@@ -26,12 +26,35 @@ const COMMANDS_PERMIT_NO_PROFILE = [
 
 const { log, debugLog, logError } = getLoggers();
 
+export interface ExtensionInfo {
+  modules?: Array<any>,
+  getModules?: Function,
+  version: string,
+  init?: Function,
+  destroy?: Function,
+  options?: any,
+  state?: any,
+}
+
+export interface CLI {
+  modules?: Array<any>,
+  getModules?: Function,
+  init?: Function,
+  destroy?: Function,
+  dir: string,
+  main?: boolean,
+  options?: any,
+  info: any,
+  compose?: string
+}
+
 /**
  * Provides command executor in form of CLI extension.
- * @param {Object} options
+ * @param {ExtensionInfo} options
  */
-const getRunnableExtension = ({ modules, getModules, version, options = {} }) => {
-  return async (state, argv) => {
+const getRunnableExtension = (extension: ExtensionInfo) => {
+  const { modules, getModules, version, options = {} } = extension;
+  return async (state: any, argv: any) => {
     const app = new App({ modules, getModules, state, options, version });
     return app.start(argv);
   };
@@ -39,9 +62,10 @@ const getRunnableExtension = ({ modules, getModules, version, options = {} }) =>
 
 /**
  * Provides command executor in form of standalone CLI.
- * @param {Object} options
+ * @param {ExtensionInfo} options
  */
-const getRunnable = ({ modules, getModules, version, init, destroy, options = {} }) => {
+const getRunnable = (extension: ExtensionInfo) => {
+  const { modules, getModules, version, init, destroy, options = {} } = extension;
   return async () => {
     // Pipe warnings to logs.
     console.warn = debugLog;
@@ -51,7 +75,7 @@ const getRunnable = ({ modules, getModules, version, init, destroy, options = {}
     const { profile, help, dryRun } = parse(argv);
     const [command] = argv;
     const profilePath = getActiveProfilePath(profile);
-    const profileExists = fs.existsSync(profilePath);
+    const profileExists = profilePath && fs.existsSync(profilePath);
 
     if (!profileExists && !help && !COMMANDS_PERMIT_NO_PROFILE.includes(command)) {
       log('No active profile. Enter the following command to set the active profile:');
@@ -68,7 +92,7 @@ const getRunnable = ({ modules, getModules, version, init, destroy, options = {}
 
     // Load config if profile exists.
     if (profileExists) {
-      config = await getConfig(profilePath);
+      config = await getConfig(profilePath!);
     }
 
     const app = new App({ modules, getModules, config, options, version, profilePath, profileExists });
@@ -91,16 +115,16 @@ const getRunnable = ({ modules, getModules, version, init, destroy, options = {}
 
 /**
  * Create new instance of CLI.
- * @param {{ init:function, destroy: function, dir: string, main: boolean, modules: array, getModules: function, options: object }} options
+ * @param {CLI} options
  */
-export const createCLI = (options = {}) => {
+export const createCLI = (options: CLI) => {
   const { modules, getModules, init, destroy, dir, main, options: cliOptions, info, compose } = options;
 
   assert(dir);
   assert(info, `Invalid ${EXTENSION_CONFIG_FILENAME} file.`);
 
   const pkg = readPkgUp.sync({ cwd: dir });
-  const version = `v${pkg.package.version}`;
+  const version = `v${pkg!.package.version}`;
 
   const run = getRunnable({ modules, getModules, version, options: cliOptions, init, destroy });
 
@@ -119,11 +143,11 @@ export const createCLI = (options = {}) => {
     init,
     destroy,
     info: {
-      command: command ? command.map(cmd => typeof cmd === 'object' ? cmd.command : cmd) : undefined,
+      command: command ? command.map((cmd: any) => typeof cmd === 'object' ? cmd.command : cmd) : undefined,
       ...restInfo,
       package: {
-        name: pkg.package.name,
-        version: pkg.package.version
+        name: pkg!.package.name,
+        version: pkg!.package.version
       }
     },
     dockerCompose

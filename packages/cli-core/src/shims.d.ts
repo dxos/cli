@@ -4,3 +4,4 @@
 
 declare module 'console.table';
 declare module 'node-yaml';
+declare module 'yargs-unparser';
