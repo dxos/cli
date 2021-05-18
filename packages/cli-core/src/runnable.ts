@@ -7,8 +7,21 @@ import { spawn } from 'child_process';
 import { unlinkSync, existsSync } from 'fs';
 import get from 'lodash.get';
 import pify from 'pify';
-import pm2 from 'pm2';
+import pm2, { Proc } from 'pm2';
 import kill from 'tree-kill';
+
+export interface RunnableConfig {
+    env: any,
+    name: string,
+    flushLogs?: boolean,
+    singleInstance?: boolean,
+    autorestart?: boolean,
+    interpreter?: string,
+    maxMemory?: string,
+    watch?: boolean,
+    background?: boolean,
+    logFile?: string
+};
 
 const PROCESS_PREFIX = 'dxos.';
 const STATUS_RUNNING = 'online';
@@ -27,8 +40,8 @@ const pm = {
   dump: pify(pm2.dump.bind(pm2))
 };
 
-const withPM2 = (func, dump = false) => {
-  return async (...args) => {
+const withPM2 = (func: Function, dump: boolean = false) => {
+  return async (...args: any) => {
     let result;
     try {
       await pm.connect();
@@ -43,7 +56,7 @@ const withPM2 = (func, dump = false) => {
   };
 };
 
-const _flushLogs = async (name) => {
+const _flushLogs = async (name: string) => {
   const procName = PROCESS_PREFIX + name;
   const descriptors = await pm.describe(procName);
   const logFile = get(descriptors, '[0].pm2_env.pm_out_log_path');
@@ -54,13 +67,13 @@ const _flushLogs = async (name) => {
 };
 
 const _listServices = async () => {
-  let processes = [];
+  let processes: Array<Proc> = [];
   let services = [];
   processes = await pm.list();
-  processes = processes.filter(proc => proc.name.startsWith(PROCESS_PREFIX));
+  processes = processes.filter(proc => proc.name!.startsWith(PROCESS_PREFIX));
 
   services = processes.map(proc => ({
-    name: get(proc, 'name').replace(PROCESS_PREFIX, ''),
+    name: get(proc, 'name', '').replace(PROCESS_PREFIX, ''),
     exec: get(proc, 'pm2_env.pm_exec_path'),
     status: get(proc, 'pm2_env.status'),
     cpu: get(proc, 'monit.cpu'),
@@ -69,9 +82,9 @@ const _listServices = async () => {
   return { services, processes };
 };
 
-const _stopService = async (name) => pm.stop(PROCESS_PREFIX + name);
+const _stopService = async (name: string) => pm.stop(PROCESS_PREFIX + name);
 
-const _restartService = async (name, options = {}) => {
+const _restartService = async (name: string, options: any = {}) => {
   const { flushLogs = true } = options;
   const procName = PROCESS_PREFIX + name;
   if (flushLogs) {
@@ -81,7 +94,7 @@ const _restartService = async (name, options = {}) => {
   await pm.restart(procName);
 };
 
-const _getLogs = async (name, options = {}) => {
+const _getLogs = async (name: string, options: any = {}) => {
   const { lines = 20, runningOnly, follow } = options;
   const procName = PROCESS_PREFIX + name;
 
@@ -117,10 +130,10 @@ export const restartService = withPM2(_restartService, true);
 export const getLogs = withPM2(_getLogs);
 export const flushLogs = withPM2(_flushLogs);
 
-export const sanitizeEnv = env => {
+export const sanitizeEnv = (env: any) => {
   const sanitizedEnv = Object.keys(env)
     .filter(key => key.startsWith('npm_') || !/[a-z]/.test(key))
-    .reduce((obj, key) => {
+    .reduce((obj: any, key: string) => {
       obj[key] = env[key];
       return obj;
     }, {});
@@ -132,13 +145,15 @@ export const sanitizeEnv = env => {
  * Wrapper for executable.
  */
 export class Runnable {
+  _executable: string;
+  _args: Array<any>;
   /**
    * @constructor
    * @param {String} executable
    * @param {Array} args
    * @param {Object} options
    */
-  constructor (executable, args = []) {
+  constructor (executable: string, args: Array<any> = []) {
     assert(executable);
     assert(args);
 
@@ -151,7 +166,7 @@ export class Runnable {
    * @param {Array} args
    * @param {Object} options
    */
-  async run (args = [], options = {}) {
+  async run (args: Array<any> = [], options: any = {}) {
     const { detached } = options;
     if (detached) {
       await this._runDaemon(args, options);
@@ -160,7 +175,7 @@ export class Runnable {
     }
   }
 
-  async _runDaemon (args = [], options = {}) {
+  async _runDaemon (args: Array<any>, options: RunnableConfig) {
     const {
       env,
       name,
@@ -183,7 +198,7 @@ export class Runnable {
       const procName = PROCESS_PREFIX + name;
       if (singleInstance) {
         const processes = await pm.list();
-        const running = get(processes.find(proc => proc.name === procName), 'pm2_env.status') === 'online';
+        const running = get(processes.find((proc: Proc) => proc.name === procName), 'pm2_env.status') === 'online';
         if (running) {
           throw new Error('Process already running.');
         }
@@ -213,8 +228,8 @@ export class Runnable {
     }
   }
 
-  async _run (args = [], options = {}) {
-    return new Promise(resolve => {
+  async _run (args: Array<any>, options: RunnableConfig) {
+    return new Promise<void>(resolve => {
       const { background } = options;
       const child = spawn(this._executable, [...this._args, ...args], { ...options, stdio: 'inherit' });
 
