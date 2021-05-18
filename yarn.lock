@@ -3379,6 +3379,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/dockerode@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.npmjs.org/@types/dockerode/-/dockerode-3.2.3.tgz#ae363b5bfa9f2989dab07f6e7ae3791e6431d145"
+  integrity sha512-nZRhpSxm3PYianRBcRExcHxDvEzYHUPfGCnRL5Fe4/fSEZbtxrRNJ7okzCans3lXxj2t298EynFHGTnTC2f1Iw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/download@^6.2.4":
   version "6.2.4"
   resolved "https://registry.npmjs.org/@types/download/-/download-6.2.4.tgz#d9fb74defe20d75f59a38a9b5b0eb5037d37161a"

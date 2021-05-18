@@ -34,9 +34,6 @@
     "@dxos/config": "^1.0.0-beta.67",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
-    "@types/fs-extra": "^9.0.4",
-    "@types/js-yaml": "^3.12.5",
-    "@types/lodash.get": "^4.4.6",
     "@types/yargs": "^16.0.1",
     "assert": "^2.0.0",
     "console.table": "^0.10.0",
@@ -67,6 +64,7 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
+    "@types/dockerode": "^3.2.3",
     "@types/download": "^6.2.4",
     "@types/fs-extra": "^9.0.4",
     "@types/jest": "^26.0.7",
