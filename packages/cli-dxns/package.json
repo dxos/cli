@@ -19,7 +19,9 @@
   },
   "files": [
     "bin/",
-    "dist/"
+    "dist/",
+    "docker-compose.yml",
+    "extension.yml"
   ],
   "scripts": {
     "build": "tsc",
