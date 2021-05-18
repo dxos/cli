@@ -19,14 +19,12 @@
   },
   "files": [
     "bin/",
-    "dist/",
-    "docker-compose.yml",
-    "extension.yml"
+    "dist/"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -R src/*.yml dist/src",
     "clean": "rm -rf ./dist",
-    "cli": "tx-node ./src/index.ts",
+    "cli": "ts-node ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
@@ -50,6 +48,7 @@
     "eslint": "^7.13.0",
     "jest": "^26.6.3",
     "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
     "typescript": "^4.0.5",
     "uuid": "^3.3.3"
   },
