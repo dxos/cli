@@ -15,10 +15,16 @@ const LATEST_TAG = 'latest';
 const HOST_NETWORK_MODE = 'host';
 
 // TODO(egorgripasov): Extend with default values, etc.
-export const getImageInfo = (image) => yaml.load(image);
+export const getImageInfo = (image: string) => yaml.load(image);
 
 export class DockerImage {
-  static async cleanNotLatest (imageName) {
+  _imageName: string;
+  _networkMode: any;
+  _ports: any;
+  _command: string;
+  _auth: any;
+
+  static async cleanNotLatest (imageName: string) {
     assert(imageName);
 
     imageName = imageName.split(':')[0];
@@ -26,7 +32,7 @@ export class DockerImage {
     const outdatedImages = images.filter(image => !image.RepoTags || !image.RepoTags.includes(`${imageName}:${LATEST_TAG}`));
 
     for await (const outdatedImage of outdatedImages) {
-      const containers = await DockerContainer.list({ id: outdatedImage.Id });
+      const containers: Array<DockerContainer> = await DockerContainer.list({ id: outdatedImage.Id });
       for await (const container of containers) {
         await container.destroy();
       }
@@ -35,7 +41,7 @@ export class DockerImage {
     }
   }
 
-  constructor (options) {
+  constructor (options: any) {
     const { service, auth } = options;
     const { image: imageName, ports, command, network_mode: networkMode } = service;
 
@@ -64,7 +70,7 @@ export class DockerImage {
           throw new Error(`Auth credentials are invalid or Image '${this._imageName}' doesn't exists.`);
         }
 
-        docker.modem.followProgress(stream, (err) => {
+        docker.modem.followProgress(stream, (err: Error) => {
           if (err) {
             return reject(err);
           }
@@ -79,17 +85,17 @@ export class DockerImage {
     return images.length > 0;
   }
 
-  async getOrCreateContainer (name, args, env = null, binds = [], hostNet = false) {
+  async getOrCreateContainer (name: string, args: Array<any>, env: any = null, binds: any = [], hostNet: boolean = false): Promise<DockerContainer> {
     // TODO(egorgripasov): Forward logs to /var/logs?
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
     }
 
-    args = args || this._command.splt(' ');
+    args = args || this._command.split(' ');
 
     const configHash = hash({ args, env, hostNet });
 
-    const container = await DockerContainer.find({ imageName: this._imageName, name });
+    const container: DockerContainer | null = await DockerContainer.find({ imageName: this._imageName, name });
     if (container) {
       if (container.started) {
         throw new Error(`Service '${name}' is already running.`);
@@ -114,7 +120,7 @@ export class DockerImage {
         Tty: true,
         ...(env ? { Env: env } : {}),
         ...(this._ports && !hostNet ? {
-          ExposedPorts: Object.entries(Object.assign(...this._ports)).reduce((acc, [key]) => {
+          ExposedPorts: Object.entries(Object.assign({}, ...this._ports)).reduce((acc: any, [key]) => {
             acc[key] = {};
             return acc;
           }, {})
@@ -126,7 +132,7 @@ export class DockerImage {
           Binds: binds,
           ...(this._networkMode === HOST_NETWORK_MODE || hostNet ? { NetworkMode: HOST_NETWORK_MODE } : {}),
           ...(this._ports && !hostNet ? {
-            PortBindings: Object.entries(Object.assign(...this._ports)).reduce((acc, [key, value]) => {
+            PortBindings: Object.entries(Object.assign({}, ...this._ports)).reduce((acc: any, [key, value]) => {
               acc[key] = [{
                 HostPort: value
               }];
@@ -140,7 +146,7 @@ export class DockerImage {
           return reject(err);
         }
 
-        DockerContainer.find({ imageName: this._imageName, name }).then(container => resolve(container));
+        DockerContainer.find({ imageName: this._imageName, name }).then(container => resolve(container!));
       });
     });
   }

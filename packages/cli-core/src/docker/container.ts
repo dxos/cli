@@ -23,7 +23,7 @@ export class DockerContainer {
   _started: boolean;
   _name: string;
 
-  static async find (filter: ContainerFilter) {
+  static async find (filter: ContainerFilter): Promise<DockerContainer | null> {
     const { imageName, name } = filter;
 
     assert(imageName || name);
@@ -43,7 +43,7 @@ export class DockerContainer {
     });
   }
 
-  static async list (options: any = {}) {
+  static async list (options: any = {}): Promise<Array<DockerContainer>> {
     const { id } = options;
 
     return new Promise((resolve, reject) => {
