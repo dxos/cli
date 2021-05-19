@@ -11,29 +11,30 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
-  "main": "dist/es/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
-    "dist/es"
+    "dist"
   ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
-    "build:watch": "yarn run build --watch",
+    "build": "tsc",
+    "build:watch": "yarn run build -w",
+    "lint": "eslint './src/**/*.{ts,js}'",
     "clean": "rm -rf ./dist",
-    "lint": "semistandard",
-    "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "jest": {
+    "preset": "ts-jest/presets/default",
     "cacheDirectory": "/tmp/jest",
     "testEnvironment": "node",
     "verbose": false
   },
   "dependencies": {
-    "@babel/runtime": "7.7.2",
     "@dxos/config": "^1.0.0-beta.67",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
+    "@types/yargs": "^16.0.1",
     "assert": "^2.0.0",
     "console.table": "^0.10.0",
     "dockerode": "^3.2.1",
@@ -62,32 +63,23 @@
     "yargs-unparser": "^1.6.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/node": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "@babel/plugin-proposal-export-default-from": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-jest": "^25.1.0",
-    "babel-loader": "^8.0.0",
-    "babel-plugin-add-module-exports": "^1.0.0",
-    "babel-plugin-inline-import": "^3.0.0",
-    "jest": "^25.1.0",
-    "semistandard": "14.2.0"
+    "@dxos/eslint-plugin": "~1.0.10",
+    "@types/dockerode": "^3.2.3",
+    "@types/download": "^6.2.4",
+    "@types/fs-extra": "^9.0.4",
+    "@types/jest": "^26.0.7",
+    "@types/js-yaml": "^3.12.5",
+    "@types/lodash.get": "^4.4.6",
+    "@types/lodash.set": "^4.3.6",
+    "@types/lodash.omit": "^4.5.6",
+    "@types/object-hash": "^2.1.0",
+    "eslint": "^7.13.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.0.5"
   },
-  "semistandard": {
-    "parser": "babel-eslint",
-    "env": [
-      "jest",
-      "node",
-      "browser"
-    ],
-    "ignore": [
-      "/node_modules/",
-      "**/node_modules/",
-      "**/dist/"
-    ]
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
   },
   "publishConfig": {
     "access": "public"

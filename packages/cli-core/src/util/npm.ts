@@ -8,7 +8,7 @@ import { exec } from 'child_process';
  * Init nvm if required.
  * @param {String} command
  */
-export const prepareExec = (command) => {
+export const prepareExec = (command: string) => {
   if (command === 'npm') {
     command = '[ -s "$NVM_DIR/nvm.sh" ] && [[ "$(which node)" == *".nvm"* ]] && unset PREFIX && \. "$NVM_DIR/nvm.sh" ; npm'; // eslint-disable-line no-useless-escape
   }
@@ -19,7 +19,7 @@ export const prepareExec = (command) => {
  * Checks if yarn is used as a package manager.
  * @param {String} packageName - package to check.
  */
-export const isGlobalYarn = async (packageName) => {
+export const isGlobalYarn = async (packageName: string) => {
   return new Promise((resolve, reject) => {
     const args = 'list -g --depth 0 --json --silent';
 

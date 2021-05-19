@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-EXTENSION_FILE="./extension.yml"
+EXTENSION_FILE="extension.yml"
 KNOWN_EXTENSIONS_FILE="./known-extensions.yml"
 
 EXTENSIONS="["
@@ -10,11 +10,12 @@ EXTENSIONS="["
 for extensiondir in `find ../ -name 'cli-*' -type d | grep -v node_modules | sort`; do
   pushd $extensiondir
 
-  if [ -f "$EXTENSION_FILE" ]; then
+  EXT_FILE_PATH=`find . -name $EXTENSION_FILE -not -path "./dist/*"`
+  if [ -f "$EXT_FILE_PATH" ]; then
     if [ "$EXTENSIONS" != "[" ]; then
       EXTENSIONS+=","
     fi
-    EXTENSIONS+=` yarn --silent yaml2json "$EXTENSION_FILE"`
+    EXTENSIONS+=` yarn --silent yaml2json "$EXT_FILE_PATH"`
   fi
 
   popd

@@ -3,16 +3,16 @@
 //
 
 import assert from 'assert';
-import fs from 'fs-extra';
-import os from 'os';
-import yaml from 'js-yaml';
-import path from 'path';
 import download from 'download';
+import fs from 'fs-extra';
+import yaml from 'js-yaml';
+import os from 'os';
+import path from 'path';
 
-import { createId } from '@dxos/crypto';
 import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
+import { createId } from '@dxos/crypto';
 
-import envmap from '../env-map.yml';
+import envmap from './env-map.json';
 
 // TODO(burdon): Change to ~/.dxos
 export const PROFILE_ROOT = '.wire/profile';
@@ -25,7 +25,7 @@ export const DEFAULT_PACKAGE_JSON_ATTRIBUTES = [
   'name', 'version', 'author', 'license', 'description', 'keywords', 'homepage', 'repository', 'bugs'
 ];
 
-export const getProfilePath = (profile) => {
+export const getProfilePath = (profile: string) => {
   return path.join(os.homedir(), PROFILE_ROOT, `${profile}.yml`);
 };
 
@@ -33,7 +33,7 @@ export const getDefaultProfilePath = () => {
   return path.join(os.homedir(), PROFILE_ROOT, DEFAULT_PROFILE_SYMLINK);
 };
 
-export const getProfileName = (profilePath) => {
+export const getProfileName = (profilePath: string) => {
   return path.basename(profilePath, '.yml');
 };
 
@@ -43,7 +43,7 @@ export const getProfileName = (profilePath) => {
  * @param {string} profile
  * @param {boolean} overwrite
  */
-export const setProfileAsDefault = async (profile, overwrite = true) => {
+export const setProfileAsDefault = async (profile: string, overwrite = true) => {
   assert(profile, 'Invalid profile name.');
 
   const symlinkPath = getDefaultProfilePath();
@@ -61,7 +61,7 @@ export const setProfileAsDefault = async (profile, overwrite = true) => {
  * Precedence: param (from argv), WIRE_PROFILE ENV, default symlink.
  * @param {string} profile
  */
-export const getActiveProfilePath = (profile) => {
+export const getActiveProfilePath = (profile?: string) => {
   const defaultProfilePath = getDefaultProfilePath();
   const defaultProfileExists = fs.existsSync(defaultProfilePath);
 
@@ -78,7 +78,7 @@ export const getActiveProfilePath = (profile) => {
  * @param {string} profile
  * @param {string} templateUrl
  */
-export const initProfileFromTemplate = async (profile, templateUrl) => {
+export const initProfileFromTemplate = async (profile: string, templateUrl: string) => {
   assert(profile);
   assert(templateUrl);
 
@@ -99,9 +99,9 @@ export const initProfileFromTemplate = async (profile, templateUrl) => {
 /**
  * Get config from default or specified .yml file.
  * @param {string} configFilePath
- * @param {Object} argvConf
+ * @param {object} argvConf
  */
-export const getConfig = (configFilePath, argvConf = {}) => {
+export const getConfig = (configFilePath: string, argvConf = {}) => {
   assert(configFilePath);
 
   if (configFilePath.startsWith('~')) {
@@ -114,11 +114,11 @@ export const getConfig = (configFilePath, argvConf = {}) => {
     throw new Error(`${configFilePath} does not exist.`);
   }
 
-  const customConfig = yaml.load(fs.readFileSync(configFilePath));
+  const customConfig = yaml.load(fs.readFileSync(configFilePath).toString());
 
   const config = new Config(
     argvConf,
-    mapFromKeyValues(yaml.load(envmap), process.env),
+    mapFromKeyValues(yaml.load(envmap.toString()), process.env),
     customConfig,
     { cli: { peerId: createId() } }
   );
@@ -127,10 +127,10 @@ export const getConfig = (configFilePath, argvConf = {}) => {
 };
 
 /**
- * @param {Object} config
+ * @param {object} config
  */
-export const mapConfigToEnv = (config) => {
+export const mapConfigToEnv = (config: any) => {
   assert(config);
 
-  return mapToKeyValues(yaml.load(envmap), config.values);
+  return mapToKeyValues(yaml.load(envmap.toString()), config.values);
 };

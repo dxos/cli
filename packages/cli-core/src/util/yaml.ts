@@ -2,11 +2,15 @@
 // Copyright 2020 DXOS.org
 //
 
-import path from 'path';
-import { read, write } from 'node-yaml';
 import { ensureFile } from 'fs-extra';
+import { read, write } from 'node-yaml';
+import path from 'path';
 
-export const assureFile = async (filename, absolute = false) => {
+type Options = {
+  absolute? : boolean
+}
+
+export const assureFile = async (filename: string, absolute = false) => {
   const file = absolute ? filename : path.join(process.cwd(), filename);
   await ensureFile(file);
   return file;
@@ -15,7 +19,7 @@ export const assureFile = async (filename, absolute = false) => {
 /**
  * @returns {Object}
  */
-export const readFile = async (filename, options = {}) => {
+export const readFile = async (filename: string, options: Options = {}) => {
   const { absolute } = options;
   const file = await assureFile(filename, absolute);
   const data = await read(file) || {};
@@ -26,7 +30,7 @@ export const readFile = async (filename, options = {}) => {
 /**
  * @param {Object} data
  */
-export const writeFile = async (data = {}, filename, options = {}) => {
+export const writeFile = async (data: any = {}, filename: string, options: Options = {}) => {
   const { absolute } = options;
   const file = await assureFile(filename, absolute);
   await write(file, data);

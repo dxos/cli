@@ -3,7 +3,7 @@
 //
 
 import assert from 'assert';
-import Docker from 'dockerode';
+import Docker, { Container } from 'dockerode';
 
 import { log } from '@dxos/debug';
 
@@ -12,8 +12,18 @@ export const RUNNING_STATE = 'running';
 
 const docker = new Docker();
 
+type ContainerFilter = {
+  imageName?: string,
+  name?: string
+}
+
 export class DockerContainer {
-  static async find (filter) {
+  _container: Container;
+  _containerInfo: any;
+  _started: boolean;
+  _name: string;
+
+  static async find (filter: ContainerFilter): Promise<DockerContainer | null> {
     const { imageName, name } = filter;
 
     assert(imageName || name);
@@ -25,7 +35,7 @@ export class DockerContainer {
         if (err) {
           return reject(err);
         }
-        const containerInfo = containers.find(info => (name && info.Names.includes(`/${CONTAINER_PREFIX}${name}`)) || (!name && image && info.Image === image));
+        const containerInfo = containers!.find(info => (name && info.Names.includes(`/${CONTAINER_PREFIX}${name}`)) || (!name && image && info.Image === image));
         resolve(containerInfo
           ? new DockerContainer(docker.getContainer(containerInfo.Id), containerInfo)
           : null);
@@ -33,7 +43,7 @@ export class DockerContainer {
     });
   }
 
-  static async list (options = {}) {
+  static async list (options: any = {}): Promise<Array<DockerContainer>> {
     const { id } = options;
 
     return new Promise((resolve, reject) => {
@@ -41,7 +51,7 @@ export class DockerContainer {
         if (err) {
           return reject(err);
         }
-        const dockerContainers = containers
+        const dockerContainers = containers!
           .filter(info => (!id || (id && info.Image === id)) && !!info.Names.find(name => name.startsWith(`/${CONTAINER_PREFIX}`)))
           .map(containerInfo => new DockerContainer(docker.getContainer(containerInfo.Id), containerInfo));
 
@@ -50,7 +60,7 @@ export class DockerContainer {
     });
   }
 
-  constructor (container, containerInfo) {
+  constructor (container: Container, containerInfo: any) {
     assert(container);
     assert(containerInfo);
 
@@ -87,7 +97,7 @@ export class DockerContainer {
 
   async start () {
     if (!this._started) {
-      return new Promise((resolve, reject) => {
+      return new Promise<void>((resolve, reject) => {
         this._container.start({}, err => {
           if (err) {
             reject(err);
@@ -107,10 +117,10 @@ export class DockerContainer {
         }
 
         if (!follow) {
-          log(logs.toString('utf8'));
+          log(logs!.toString());
         } else {
-          logs.on('data', chunk => log(chunk.toString('utf8')));
-          logs.on('end', resolve);
+          logs!.on('data', chunk => log(chunk.toString()));
+          logs!.on('end', resolve);
         }
       });
     });

@@ -2,9 +2,10 @@
 // Copyright 2020 DXOS.org
 //
 
+import EventEmitter from 'events';
 import fs from 'fs';
 import readline from 'readline';
-import EventEmitter from 'events';
+import { Argv } from 'yargs';
 
 import { createCLI } from './cli-factory';
 import { asyncHandler } from './util/async';
@@ -22,6 +23,7 @@ const testError = 'unexpected error.';
 
 jest.mock('./config', () => {
   const conf = jest.requireActual('./config');
+  // eslint-disable-next-line
   const { Config } = require('@dxos/config');
   return {
     ...conf,
@@ -36,15 +38,30 @@ const interactiveMockMethod = jest.fn();
 
 process.env.WIRE_PROFILE = 'test';
 
+class MockRl extends EventEmitter {
+  prompt: any;
+  terminal: any;
+  line: any;
+  cursor: any;
+  setPrompt: any;
+  question: any;
+  pause: any;
+  resume: any;
+  close: any;
+  write: any;
+  getCursorPos: any;
+  [Symbol.asyncIterator]: any;
+}
+
 const TestModule = () => {
   return ({
     command: ['test'],
     describe: 'Test CLI.',
-    builder: yargs => yargs
+    builder: (yargs: Argv) => yargs
       .command({
         command: ['empty-command'],
         describe: 'Test command.',
-        builder: yargs => yargs
+        builder: (yargs: Argv) => yargs
           .option('test-argument', { type: 'string' }),
 
         handler: asyncHandler(async () => {})
@@ -52,10 +69,10 @@ const TestModule = () => {
       .command({
         command: ['test-command'],
         describe: 'Test command.',
-        builder: yargs => yargs
+        builder: (yargs: Argv) => yargs
           .option('test-argument', { type: 'string' }),
 
-        handler: asyncHandler(async argv => {
+        handler: asyncHandler(async (argv: Argv) => {
           mockMethod(argv);
         })
       })
@@ -63,10 +80,10 @@ const TestModule = () => {
       .command({
         command: ['test-interactive-command'],
         describe: 'Interactive command.',
-        builder: yargs => yargs
+        builder: (yargs: Argv) => yargs
           .option('interactive', { hidden: true, default: true }),
 
-        handler: asyncHandler(async argv => {
+        handler: asyncHandler(async () => {
           interactiveMockMethod();
         })
       })
@@ -74,10 +91,10 @@ const TestModule = () => {
       .command({
         command: ['fail-command'],
         describe: 'Interactive command with error.',
-        builder: yargs => yargs
+        builder: (yargs: Argv) => yargs
           .option('interactive', { hidden: true, default: true }),
 
-        handler: asyncHandler(async argv => {
+        handler: asyncHandler(async () => {
           throw new Error(testError);
         })
       })
@@ -96,12 +113,12 @@ const info = `
     - ${extCommand}
 `;
 
-let cli;
+let cli: any;
 
 const initMock = jest.fn();
 const destroyMock = jest.fn();
 
-const exitSpy = jest.spyOn(process, 'exit').mockImplementation(() => {});
+const exitSpy = jest.spyOn(process, 'exit').mockImplementation();
 
 beforeEach(() => {
   cli = createCLI({
@@ -132,7 +149,7 @@ describe('cli-factory - setup', () => {
   test('exit if no active profile', async () => {
     process.argv = ['node', 'jest', 'test', 'empty-command'];
 
-    const existsSpy = jest.spyOn(fs, 'existsSync').mockImplementation(path => !path.endsWith(`${testProfile}.yml`));
+    const existsSpy = jest.spyOn(fs, 'existsSync').mockImplementation(path => !path.toString().endsWith(`${testProfile}.yml`));
 
     await cli.run();
 
@@ -143,10 +160,10 @@ describe('cli-factory - setup', () => {
 });
 
 describe('cli-factory', () => {
-  let existsSpy;
+  let existsSpy: any;
 
   beforeAll(() => {
-    existsSpy = jest.spyOn(fs, 'existsSync').mockImplementation(path => true);
+    existsSpy = jest.spyOn(fs, 'existsSync').mockImplementation(() => true);
   });
 
   afterAll(() => {
@@ -180,7 +197,7 @@ describe('cli-factory', () => {
   test('call method that enables interactive mode', async () => {
     process.argv = ['node', 'jest', 'test', 'test-interactive-command'];
 
-    const rl = new EventEmitter();
+    const rl = new MockRl();
     rl.prompt = jest.fn();
 
     const rlSpy = jest.spyOn(readline, 'createInterface').mockImplementation(() => rl);
