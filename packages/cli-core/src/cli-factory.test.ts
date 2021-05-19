@@ -2,10 +2,10 @@
 // Copyright 2020 DXOS.org
 //
 
-import { Argv } from 'yargs';
 import EventEmitter from 'events';
 import fs from 'fs';
 import readline from 'readline';
+import { Argv } from 'yargs';
 
 import { createCLI } from './cli-factory';
 import { asyncHandler } from './util/async';

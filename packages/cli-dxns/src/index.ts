@@ -2,8 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
-import path from 'path';
 import { readFileSync } from 'fs';
+import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
 

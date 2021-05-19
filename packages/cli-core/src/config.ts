@@ -43,7 +43,7 @@ export const getProfileName = (profilePath: string) => {
  * @param {string} profile
  * @param {boolean} overwrite
  */
-export const setProfileAsDefault = async (profile: string, overwrite: boolean = true) => {
+export const setProfileAsDefault = async (profile: string, overwrite = true) => {
   assert(profile, 'Invalid profile name.');
 
   const symlinkPath = getDefaultProfilePath();

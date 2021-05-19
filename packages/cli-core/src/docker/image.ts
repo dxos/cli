@@ -85,7 +85,7 @@ export class DockerImage {
     return images.length > 0;
   }
 
-  async getOrCreateContainer (name: string, args: Array<any>, env: any = null, binds: any = [], hostNet: boolean = false): Promise<DockerContainer> {
+  async getOrCreateContainer (name: string, args: Array<any>, env: any = null, binds: any = [], hostNet = false): Promise<DockerContainer> {
     // TODO(egorgripasov): Forward logs to /var/logs?
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);

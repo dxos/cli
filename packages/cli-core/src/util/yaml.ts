@@ -10,7 +10,7 @@ type Options = {
   absolute? : boolean
 }
 
-export const assureFile = async (filename: string, absolute: boolean = false) => {
+export const assureFile = async (filename: string, absolute = false) => {
   const file = absolute ? filename : path.join(process.cwd(), filename);
   await ensureFile(file);
   return file;

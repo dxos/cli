@@ -79,8 +79,7 @@ export class App {
     // Args to pass through to underlying binary (e.g. registry, signal, etc.).
     .option({
       [FORWARD_OPTION]: {
-        // @ts-ignore
-        type: 'json',
+        type: 'string',
         hidden: true
       }
     })
@@ -113,7 +112,7 @@ export class App {
       throw new Error(msg);
     });
 
-  _modules = [];
+  _modules: Array<Function> = [];
 
   /**
    * @constructor
@@ -165,7 +164,7 @@ export class App {
    * @param input - input string.
    * @param interactive - true if in interactive mode.
    */
-  async parseAsync (input: string, interactive: boolean = false): Promise<any> {
+  async parseAsync (input: string, interactive = false): Promise<any> {
     assert(this._parser, 'Invalid command parser.');
 
     return new Promise((resolve, reject) => {
@@ -215,7 +214,6 @@ export class App {
       }
 
       for (const module of this._modules) {
-        // @ts-ignore
         this._parser.command(module(this.state));
       }
 

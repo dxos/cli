@@ -21,7 +21,7 @@ export interface RunnableConfig {
     watch?: boolean,
     background?: boolean,
     logFile?: string
-};
+}
 
 const PROCESS_PREFIX = 'dxos.';
 const STATUS_RUNNING = 'online';
@@ -40,7 +40,7 @@ const pm = {
   dump: pify(pm2.dump.bind(pm2))
 };
 
-const withPM2 = (func: Function, dump: boolean = false) => {
+const withPM2 = (func: Function, dump = false) => {
   return async (...args: any) => {
     let result;
     try {
