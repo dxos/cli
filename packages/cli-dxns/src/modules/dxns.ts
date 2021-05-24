@@ -4,9 +4,18 @@
 
 import { Argv } from 'yargs';
 
-import { asyncHandler } from '@dxos/cli-core';
+import { asyncHandler, print } from '@dxos/cli-core';
 
-export const DXNSModule = () => ({
+import { DXNSClient } from '../';
+
+interface Params {
+  config: any,
+  getDXNSClient: Function
+}
+
+export const DXNSModule = (params: Params) => {
+  const { config, getDXNSClient } = params;
+  return {
   command: ['dxns'],
   describe: 'DXNS operations.',
   builder: (yargs: Argv) => yargs
@@ -14,7 +23,19 @@ export const DXNSModule = () => ({
       command: ['test'],
       describe: 'Test DXNS command.',
 
-      handler: asyncHandler(async () => {
+      handler: asyncHandler(async (argv: any) => {
+        const { json } = argv;
+
+        const client = await getDXNSClient();
+
+        const domains = await client.registryApi.getDomains();
+
+        print(domains.map((domain: any) => ({
+          domainKey: domain.domainKey.toHex(),
+          name: domain.name,
+          owners: domain.owners
+        })), { json });
       })
     })
-});
+}
+};

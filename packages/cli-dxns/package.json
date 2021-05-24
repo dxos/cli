@@ -39,6 +39,9 @@
     "@dxos/cli-core": "^2.0.54-alpha.0",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.67",
+    "@dxos/registry-api": "~0.1.1-alpha.0",
+    "@polkadot/api": "^4.3.1",
+    "@polkadot/keyring": "^6.0.5",
     "assert": "^2.0.0",
     "yargs": "^16.2.0"
   },
