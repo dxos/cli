@@ -2,14 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
+import { ApiPromise, WsProvider } from '@polkadot/api';
+import { Keyring } from '@polkadot/keyring';
 import { readFileSync } from 'fs';
 import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
 import { RegistryApi, AuctionsApi, definitions } from '@dxos/registry-api';
-
-import { ApiPromise, WsProvider } from '@polkadot/api';
-import { Keyring } from '@polkadot/keyring';
 
 import { DXNSModule } from './modules/dxns';
 
@@ -78,7 +77,7 @@ const destroyDXNSCliState = async () => {
   if (client) {
     await client.api.disconnect();
   }
-}
+};
 
 module.exports = createCLI({
   modules: [DXNSModule],
