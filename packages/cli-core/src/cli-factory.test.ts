@@ -50,6 +50,7 @@ class MockRl extends EventEmitter {
   close: any;
   write: any;
   getCursorPos: any;
+  getPrompt: any;
   [Symbol.asyncIterator]: any;
 }
 
