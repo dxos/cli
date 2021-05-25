@@ -118,7 +118,7 @@ export const getConfig = (configFilePath: string, argvConf = {}) => {
 
   const config = new Config(
     argvConf,
-    mapFromKeyValues(yaml.load(envmap.toString()), process.env),
+    mapFromKeyValues(envmap, process.env),
     customConfig,
     { cli: { peerId: createId() } }
   );
@@ -132,5 +132,5 @@ export const getConfig = (configFilePath: string, argvConf = {}) => {
 export const mapConfigToEnv = (config: any) => {
   assert(config);
 
-  return mapToKeyValues(yaml.load(envmap.toString()), config.values);
+  return mapToKeyValues(envmap, config.values);
 };
