@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.53](https://www.github.com/dxos/cli/compare/v2.0.52...v2.0.53) (2021-05-25)
+
+
+### Bug Fixes
+
+* update core modules. ([#171](https://www.github.com/dxos/cli/issues/171)) ([5265d5b](https://www.github.com/dxos/cli/commit/5265d5bfbe5b15e164093d0337951c9e39b878fe))
+* update core modules. ([#173](https://www.github.com/dxos/cli/issues/173)) ([91ce8b3](https://www.github.com/dxos/cli/commit/91ce8b39f8251554e3b51c148687a837c54b2f4e))
+
 ### [2.0.52](https://www.github.com/dxos/cli/compare/v2.0.51...v2.0.52) (2021-05-05)
 
 
