@@ -50,6 +50,7 @@ class MockRl extends EventEmitter {
   close: any;
   write: any;
   getCursorPos: any;
+  getPrompt: any;
   [Symbol.asyncIterator]: any;
 }
 
@@ -200,7 +201,7 @@ describe('cli-factory', () => {
     const rl = new MockRl();
     rl.prompt = jest.fn();
 
-    const rlSpy = jest.spyOn(readline, 'createInterface').mockImplementation(() => rl);
+    const rlSpy = jest.spyOn(readline, 'createInterface').mockImplementation((options: any) => rl);
 
     setTimeout(() => {
       rl.emit('close');
