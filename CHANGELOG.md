@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.54](https://www.github.com/dxos/cli/compare/v2.0.53...v2.0.54) (2021-05-25)
+
+
+### Bug Fixes
+
+* fix config load from env. ([b4c2de1](https://www.github.com/dxos/cli/commit/b4c2de16f84ec4a98f993d66d6c2c28185cc8ad8))
+
 ### [2.0.53](https://www.github.com/dxos/cli/compare/v2.0.52...v2.0.53) (2021-05-25)
 
 
