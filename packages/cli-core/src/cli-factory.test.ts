@@ -201,7 +201,7 @@ describe('cli-factory', () => {
     const rl = new MockRl();
     rl.prompt = jest.fn();
 
-    const rlSpy = jest.spyOn(readline, 'createInterface').mockImplementation((options: any) => rl);
+    const rlSpy = jest.spyOn(readline, 'createInterface').mockImplementation(() => rl);
 
     setTimeout(() => {
       rl.emit('close');
