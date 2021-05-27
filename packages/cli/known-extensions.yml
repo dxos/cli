@@ -45,8 +45,8 @@
     describe: "DXNS extension."
     command: 
       - "dxns"
-    initRequired: false
-    destroyRequired: false
+    initRequired: true
+    destroyRequired: true
   - 
     moduleName: "@dxos/cli-echo"
     describe: "ECHO extension."
