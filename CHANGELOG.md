@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.55](https://www.github.com/dxos/cli/compare/v2.0.54...v2.0.55) (2021-05-27)
+
+
+### Bug Fixes
+
+* dxns commands. ([#175](https://www.github.com/dxos/cli/issues/175)) ([8d0e22b](https://www.github.com/dxos/cli/commit/8d0e22b84812a19c54a7569856bd4073f8da05a4))
+
 ### [2.0.54](https://www.github.com/dxos/cli/compare/v2.0.53...v2.0.54) (2021-05-25)
 
 
