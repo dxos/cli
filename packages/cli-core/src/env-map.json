@@ -11,6 +11,12 @@
   "WIRE_WNS_CHAIN_ID": {
     "path": "services.wns.chainId"
   },
+  "WIRE_DXNS_ENDPOINT": {
+    "path": "services.dxns.server"
+  },
+  "WIRE_DXNS_USER_URI": {
+    "path": "services.dxns.uri"
+  },
   "WIRE_MACHINE_DO_TOKEN": {
     "path": "services.machine.doAccessToken"
   },

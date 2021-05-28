@@ -12,7 +12,8 @@ export const displayRecord = (record: RegistryRecord) => {
     cid: record.cid.toString(),
     schema: record.schema.toString(),
     messageFqn: record.messageFqn,
-    size: record.size
+    size: record.size,
+    data: record.data
   });
 };
 
