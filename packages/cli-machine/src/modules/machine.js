@@ -299,12 +299,14 @@ export const MachineModule = ({ config }) => {
            - export WIRE_WNS_BOND_ID=${bondId}
            - export WIRE_DXNS_ENDPOINT=${dxnsConfig.server}
            - export WIRE_DXNS_USER_URI=${dxnsConfig.uri}
-           - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./kube_auto_publish.sh "https://${boxFullyQualifiedName}" "${boxName}"; fi
            - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then while [ "$(dx service --json | jq '.[] | select(.name=="dxns") | .status' -r)" != "online" ]; do sleep 5; done; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./kube_auto_publish.sh "https://${boxFullyQualifiedName}" "${boxName}"; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
         `;
+
+          // - # if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
+          // - # if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
           let sizeSlug = 's-2vcpu-4gb';
