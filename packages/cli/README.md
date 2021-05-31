@@ -130,7 +130,7 @@ $ dx upgrade --npm-client yarn --force
 In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `dx cert import` command. For the case of XBOX, import command would look like:
 
 ```bash
-$ dx cert import --url https://xbox.local/xbox.pem
+$ dx cert import --url https://kube.local/kube.pem
 ```
 
 TODO(egor): Host cert on .well-known endpoint.
@@ -148,16 +148,16 @@ To create a profile from a template, pass a profile name and template URL.
 Example:
 
 ```bash
-$ dx profile init --name devnet --template-url https://git.io/JtEvr
+$ dx profile init --name moon --template-url https://git.io/JGBAI
 ```
 
 Profiles are stored in the `~/.wire/profile` folder. To further customize a profile, edit the profile configuration file.
 
 To activate/use a profile, do one of the following (highest to lowest precedence):
 
-1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile devnet wns status`
-2. export `WIRE_PROFILE` in the shell, with the name of the profile, e.g. `export WIRE_PROFILE=devnet`
-3. Set it as the default for the system, e.g. `dx profile set devnet`
+1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile moon wns status`
+2. export `WIRE_PROFILE` in the shell, with the name of the profile, e.g. `export WIRE_PROFILE=moon`
+3. Set it as the default for the system, e.g. `dx profile set moon`
 
 Note: The first profile created automatically becomes the system default.
 
