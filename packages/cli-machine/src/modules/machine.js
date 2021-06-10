@@ -66,7 +66,7 @@ export const MachineModule = ({ config }) => {
 
   // TODO(dboreham): Get from profile.
   const { keys: sshKeys } = yaml.load(SSH_KEYS);
-  const services = yaml.load(KubeServices);
+  const defaultServices = yaml.load(KubeServices);
 
   return ({
     command: ['machine'],
@@ -201,7 +201,8 @@ export const MachineModule = ({ config }) => {
           .option('letsencrypt', { type: 'boolean', default: false })
           .option('extension', { type: 'array', default: [] })
           .option('email', { type: 'string', default: email })
-          .option('key-phrase', { type: 'string ', default: DEFAULT_KEYPHRASE }),
+          .option('key-phrase', { type: 'string ', default: DEFAULT_KEYPHRASE })
+          .option('services', { describe: 'Services to run.', type: 'string', default: defaultServices }),
 
         handler: asyncHandler(async () => {
           if (running) {
@@ -212,7 +213,7 @@ export const MachineModule = ({ config }) => {
 
           running = true;
 
-          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl, extension, keyPhrase } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl, extension, keyPhrase, services } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
           }
