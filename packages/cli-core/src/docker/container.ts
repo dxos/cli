@@ -95,6 +95,16 @@ export class DockerContainer {
     return this._containerInfo.Labels;
   }
 
+  get volumes () {
+    const volumesMapping = JSON.parse(this._containerInfo.Labels.volumeLabel);
+    return this._containerInfo.Mounts
+      .filter((vol: any) => vol.Name && vol.Type === 'volume' && volumesMapping[vol.Name])
+      .reduce((acc: any, vol: any) => {
+        acc[volumesMapping[vol.Name]] = { fullName: vol.Name, target: vol.Destination };
+        return acc;
+      }, {});
+  }
+
   async start () {
     if (!this._started) {
       return new Promise<void>((resolve, reject) => {

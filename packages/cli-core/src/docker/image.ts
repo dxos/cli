@@ -8,6 +8,7 @@ import yaml from 'js-yaml';
 import hash from 'object-hash';
 
 import { CONTAINER_PREFIX, DockerContainer } from './container';
+import { DockerVolume } from './volume';
 
 const docker = new Docker();
 
@@ -85,7 +86,7 @@ export class DockerImage {
     return images.length > 0;
   }
 
-  async getOrCreateContainer (name: string, args: Array<any>, env: any = null, binds: any = [], hostNet = false): Promise<DockerContainer> {
+  async getOrCreateContainer (name: string, args: Array<any>, env: any = null, binds: any = [], hostNet = false, volumes: any = []): Promise<DockerContainer> {
     // TODO(egorgripasov): Forward logs to /var/logs?
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
@@ -93,7 +94,7 @@ export class DockerImage {
 
     args = args || this._command.split(' ');
 
-    const configHash = hash({ args, env, hostNet });
+    const configHash = hash({ args, env, hostNet, volumes });
 
     const container: DockerContainer | null = await DockerContainer.find({ imageName: this._imageName, name });
     if (container) {
@@ -109,13 +110,24 @@ export class DockerImage {
       await container.destroy();
     }
 
+    // Create volumes if required.
+    const imageVolumes: any = {};
+    const volumeLabel: any = {};
+    const volumeBinds = await Promise.all(volumes.map(async (vol: any) => {
+      const [volumeName, target] = vol;
+      const volume = await DockerVolume.getOrCreate(volumeName, name) as DockerVolume;
+      imageVolumes[target] = {};
+      volumeLabel[volume.fullName] = volume.name;
+      return `${volume.fullName}:${target}`;
+    }));
+
     return new Promise((resolve, reject) => {
       docker.createContainer({
-        // TODO(egorgripasov): Add volumes.
         name: `${CONTAINER_PREFIX}${name}`,
         Image: this._imageName,
         Labels: {
-          configHash
+          configHash,
+          volumeLabel: JSON.stringify(volumeLabel)
         },
         Tty: true,
         ...(env ? { Env: env } : {}),
@@ -125,11 +137,15 @@ export class DockerImage {
             return acc;
           }, {})
         } : {}),
+        Volumes: imageVolumes,
         HostConfig: {
           RestartPolicy: {
             Name: 'unless-stopped'
           },
-          Binds: binds,
+          Binds: [
+            ...binds,
+            ...volumeBinds
+          ],
           ...(this._networkMode === HOST_NETWORK_MODE || hostNet ? { NetworkMode: HOST_NETWORK_MODE } : {}),
           ...(this._ports && !hostNet ? {
             PortBindings: Object.entries(Object.assign({}, ...this._ports)).reduce((acc: any, [key, value]) => {

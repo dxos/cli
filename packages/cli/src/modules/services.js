@@ -14,7 +14,8 @@ import {
   getLogs,
   restartService,
   stopService,
-  mapConfigToEnv
+  mapConfigToEnv,
+  DockerVolume
 } from '@dxos/cli-core';
 
 import { Pluggable } from '../pluggable';
@@ -160,6 +161,12 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
         const { name = service.container_name } = argv;
 
+        assert(name, 'Service name is required.');
+
+        // TODO(egorgripasov): Share volumes between services.
+        const volumes = (service.volumes || [])
+          .map(volume => volume.split(':')).filter(vol => vol.length === 2);
+
         let env;
         if (forwardEnv) {
           env = Object.entries(process.env).map(([key, value]) => `${key}=${value}`);
@@ -171,7 +178,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
           `${profilePath}:${DEFAULT_CONFIG_PATH}`
         ];
 
-        const container = await dockerImage.getOrCreateContainer(name, command, env, binds, hostNet);
+        const container = await dockerImage.getOrCreateContainer(name, command, env, binds, hostNet, volumes);
         await container.start();
       })
     })
@@ -252,6 +259,41 @@ export const ServicesModule = ({ config, profilePath }) => ({
           }
           await container.stop();
         }
+      })
+    })
+
+    .command({
+      command: ['reset'],
+      describe: 'Reset storage for specific service.',
+      builder: yargs => yargs
+        .option('name', { describe: 'Service name' })
+        .option('volume', { describe: 'Volume name' }),
+
+      handler: asyncHandler(async argv => {
+        const { name, volume, json } = argv;
+
+        const container = await DockerContainer.find({ name });
+        if (!container) {
+          throw new Error(`Unable to find "${name}" service.`);
+        }
+
+        let volumesToDelete = await Promise.all(Object.keys(container.volumes)
+          .filter(vol => !volume || vol === volume)
+          .map(async vol => DockerVolume.get(vol, name))
+        );
+
+        // Kill service container before removing volume.
+        volumesToDelete = volumesToDelete.filter(volume => !!volume);
+        if (volumesToDelete.length) {
+          await container.destroy();
+
+          await Promise.all(volumesToDelete.map(async volume => {
+            if (volume) {
+              await volume.remove();
+            }
+          }));
+        }
+        print(volumesToDelete.map(vol => vol.name), { json });
       })
     })
 });
