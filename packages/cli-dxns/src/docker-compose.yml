@@ -7,4 +7,4 @@ services:
       - 9944: '9944'
     volumes:
       - storage:/dxns/node
-    command: node-template --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external
+    command: node-template --dev --base-path /dxns/node --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external
