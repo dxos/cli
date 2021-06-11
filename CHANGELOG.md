@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.57](https://www.github.com/dxos/cli/compare/v2.0.56...v2.0.57) (2021-06-11)
+
+
+### Bug Fixes
+
+* infrastructure for dxns testnet. ([5ad543b](https://www.github.com/dxos/cli/commit/5ad543ba029a2f0dac15fdaf96394d6d1c91a5cc))
+
 ### [2.0.56](https://www.github.com/dxos/cli/compare/v2.0.55...v2.0.56) (2021-05-28)
 
 
