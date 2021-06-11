@@ -195,14 +195,16 @@ export const MachineModule = ({ config }) => {
           .option('wrn-root', { type: 'string', default: DEFAULT_WRN_ROOT })
           .option('memory', { type: 'number', default: 4 })
           .option('pin', { type: 'boolean', default: false })
+          // TODO(egorgripasov): Remove.
           .option('register', { type: 'boolean', default: false })
+          .option('register-dxns', { type: 'boolean', default: false })
           .option('cliver', { type: 'string', default: '' })
           .option('dns-ttl', { type: 'number', default: 300 })
           .option('letsencrypt', { type: 'boolean', default: false })
           .option('extension', { type: 'array', default: [] })
           .option('email', { type: 'string', default: email })
           .option('key-phrase', { type: 'string ', default: DEFAULT_KEYPHRASE })
-          .option('services', { describe: 'Services to run.', type: 'string', default: defaultServices }),
+          .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) }),
 
         handler: asyncHandler(async () => {
           if (running) {
@@ -213,7 +215,7 @@ export const MachineModule = ({ config }) => {
 
           running = true;
 
-          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl, extension, keyPhrase, services } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, email, register, registerDxns, wrnRoot, dnsTtl, extension, keyPhrase, services } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
           }
@@ -225,6 +227,8 @@ export const MachineModule = ({ config }) => {
           const { server, userKey, bondId, chainId } = wnsConfig;
           if (register) {
             assert(server && userKey && bondId && chainId, 'Missing WNS config.');
+          }
+          if (registerDxns) {
             assert(dxnsConfig.server && dxnsConfig.uri, 'Missing DXNS config.');
           }
 
@@ -274,7 +278,7 @@ export const MachineModule = ({ config }) => {
            - echo "export WIRE_APP_SERVER_KEYPHRASE=${keyPhrase}" >> /opt/kube/etc/kube.env
            - echo "export WIRE_MACHINE_GITHUB_USERNAME=${githubUsername}" >> /opt/kube/etc/kube.env
            - echo "export WIRE_MACHINE_GITHUB_TOKEN=${githubAccessToken}" >> /opt/kube/etc/kube.env
-           - echo ${JSON.stringify(JSON.stringify(services))} >> /opt/kube/etc/services.json
+           - echo ${JSON.stringify(services)} >> /opt/kube/etc/services.json
            - cd /opt/kube/scripts
            - sed -i 's/run_installer "ssh" install_ssh_key/#run_installer "ssh" install_ssh_key/g' install.sh
            - sed -i 's/apt clean//g' install.sh
@@ -301,8 +305,8 @@ export const MachineModule = ({ config }) => {
            - export WIRE_DXNS_ENDPOINT=${dxnsConfig.server}
            - export WIRE_DXNS_USER_URI=${dxnsConfig.uri}
            - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then while [ "$(dx service --json | jq '.[] | select(.name=="dxns") | .status' -r)" != "online" ]; do sleep 5; done; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./kube_auto_publish.sh "https://${boxFullyQualifiedName}" "${boxName}"; fi
+           - if [ "${register || registerDxns ? 1 : 0}" = "1" ]; then while [ "$(dx service --json | jq '.[] | select(.name=="dxns") | .status' -r)" != "online" ]; do sleep 5; done; fi
+           - if [ "${registerDxns ? 1 : 0}" = "1" ]; then ./kube_auto_publish.sh "https://${boxFullyQualifiedName}" "${boxName}"; fi
            - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
         `;
 

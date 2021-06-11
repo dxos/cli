@@ -9,6 +9,7 @@ import { asyncHandler } from '@dxos/cli-core';
 import { listRecords, getRecords, addRecord } from '../handlers/record';
 import { listResources } from '../handlers/resource';
 import { listSchemas, querySchema, getSchema, addSchema } from '../handlers/schema';
+import { setKeys } from '../handlers/setup';
 
 interface Params {
   config: any,
@@ -105,6 +106,24 @@ export const DXNSModule = (params: Params) => {
             command: ['list'],
             describe: 'List resources.',
             handler: asyncHandler(listResources({ getDXNSClient }))
+          })
+      })
+
+      .command({
+        command: ['setup'],
+        describe: 'DXNS Configuration commands.',
+        handler: () => {},
+        builder: yargs => yargs
+          .command({
+            command: ['keys'],
+            describe: 'Setup keys for single Node.',
+            builder: yargs => yargs
+              .option('mnemonic', { required: true, type: 'string' })
+              .option('server', { required: true, type: 'string' })
+              .option('type', { required: true, type: 'string' })
+              .option('publicKey', { required: true, type: 'string' }),
+
+            handler: asyncHandler(setKeys())
           })
       })
   };

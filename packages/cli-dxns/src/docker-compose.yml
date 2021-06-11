@@ -4,7 +4,9 @@ services:
     image: "ghcr.io/dxos/substrate-node"
     container_name: dxns
     ports:
-      - 9944: '9944'
+      - 9945: '9945'
+      - 9933: '9933'
+      - 30333: '30333'
     volumes:
       - storage:/dxns/node
-    command: node-template --dev --base-path /dxns/node --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external
+    command: node-template --base-path /dxns/node --rpc-cors all -lsync=warn -lconsole-debug --chain /chain/customSpecRaw.json --port 30333 --ws-port 9945 --rpc-port 9933 --rpc-methods Unsafe --ws-external --rpc-external

@@ -98,7 +98,8 @@ export class App {
 
     // https://yargs.js.org/docs/#api-reference-parserconfigurationobj
     .parserConfiguration({
-      'sort-commands': true
+      'sort-commands': true,
+      'parse-numbers': false
     })
 
     // http://yargs.js.org/docs/#api-exitprocessenable
