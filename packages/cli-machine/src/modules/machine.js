@@ -22,6 +22,7 @@ const KUBE_TYPE = 'wrn:kube';
 const KUBE_TAG = 'kube';
 const DEFAULT_WRN_ROOT = 'wrn://dxos';
 const DEFAULT_KEYPHRASE = 'kube';
+const DEFAULT_REGION = 'nyc3';
 
 let running = false;
 
@@ -194,6 +195,7 @@ export const MachineModule = ({ config }) => {
           .option('name', { type: 'string' })
           .option('wrn-root', { type: 'string', default: DEFAULT_WRN_ROOT })
           .option('memory', { type: 'number', default: 4 })
+          .option('region', { type: 'string', default: DEFAULT_REGION })
           .option('pin', { type: 'boolean', default: false })
           // TODO(egorgripasov): Remove.
           .option('register', { type: 'boolean', default: false })
@@ -215,7 +217,7 @@ export const MachineModule = ({ config }) => {
 
           running = true;
 
-          const { verbose, pin, cliver, letsencrypt, memory, email, register, registerDxns, wrnRoot, dnsTtl, extension, keyPhrase, services } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, region, email, register, registerDxns, wrnRoot, dnsTtl, extension, keyPhrase, services } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
           }
@@ -340,7 +342,7 @@ export const MachineModule = ({ config }) => {
 
           const createParameters = {
             name: boxName,
-            region: 'nyc3',
+            region,
             size: sizeSlug,
             image: 'ubuntu-18-04-x64',
             ssh_keys: sshKeys,
