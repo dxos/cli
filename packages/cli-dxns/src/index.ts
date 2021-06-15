@@ -7,6 +7,7 @@ import { Keyring } from '@polkadot/keyring';
 import { readFileSync } from 'fs';
 import path from 'path';
 
+import { sleep } from '@dxos/async';
 import { createCLI } from '@dxos/cli-core';
 import { RegistryApi, AuctionsApi, definitions } from '@dxos/registry-api';
 
@@ -53,6 +54,10 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
 
     const registryApi = new RegistryApi(api, keypair);
     const auctionsApi = new AuctionsApi(api, keypair);
+
+    // Some operations are failing due to something not being initialized.
+    // TODO(egorgripasov): Figure out why this happens.
+    await sleep(1000);
 
     return {
       api,

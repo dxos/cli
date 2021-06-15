@@ -6,6 +6,7 @@ import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
+import { getBalance, increaseBalance } from '../handlers/balance';
 import { listRecords, getRecords, addRecord } from '../handlers/record';
 import { listResources } from '../handlers/resource';
 import { listSchemas, querySchema, getSchema, addSchema } from '../handlers/schema';
@@ -124,6 +125,31 @@ export const DXNSModule = (params: Params) => {
               .option('publicKey', { required: true, type: 'string' }),
 
             handler: asyncHandler(setKeys())
+          })
+      })
+
+      .command({
+        command: ['balance'],
+        describe: 'Balance commands.',
+        handler: () => {},
+        builder: yargs => yargs
+          .command({
+            command: ['get [account]'],
+            describe: 'Get account balance.',
+            builder: yargs => yargs
+              .option('account', { type: 'string' }),
+
+            handler: asyncHandler(getBalance({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['increase [account]'],
+            describe: 'Increase account balance.',
+            builder: yargs => yargs
+              .option('account', { type: 'string' })
+              .option('amount', { type: 'string' }),
+
+            handler: asyncHandler(increaseBalance({ getDXNSClient }))
           })
       })
   };
