@@ -34,7 +34,7 @@ services:
     gas: '200000'
     fees: '200000uwire'
   dxns:
-    server: 'wss://apollo1.kube.moon.dxos.network/substrate/'
+    server: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
     uri:
   machine:
     doAccessToken: ''

@@ -34,7 +34,7 @@ services:
     gas: '200000'
     fees: '200000uwire'
   dxns:
-    server: 'wss://kube.local/dxns/'
+    server: 'wss://kube.local/dxns/ws'
     uri:
   ipfs:
     server: 'https://kube.local/dxos/ipfs/api'
