@@ -92,6 +92,8 @@ export class DockerImage {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
     }
 
+    hostNet = hostNet && process.platform !== 'darwin';
+
     args = args || this._command.split(' ');
 
     const configHash = hash({ args, env, hostNet, volumes });
