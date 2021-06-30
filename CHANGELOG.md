@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.58](https://www.github.com/dxos/cli/compare/v2.0.57...v2.0.58) (2021-06-30)
+
+
+### Bug Fixes
+
+* docker - don't allow host-net on macos. ([6d35765](https://www.github.com/dxos/cli/commit/6d35765b9359432b0fe173128d75f32b115c2312))
+
 ### [2.0.57](https://www.github.com/dxos/cli/compare/v2.0.56...v2.0.57) (2021-06-11)
 
 
