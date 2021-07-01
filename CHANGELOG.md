@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.59](https://www.github.com/dxos/cli/compare/v2.0.58...v2.0.59) (2021-07-01)
+
+
+### Bug Fixes
+
+* profile to pass to docker container. ([84e9369](https://www.github.com/dxos/cli/commit/84e936969b0bf227b835753fee49b4d34334b28c))
+
 ### [2.0.58](https://www.github.com/dxos/cli/compare/v2.0.57...v2.0.58) (2021-06-30)
 
 
