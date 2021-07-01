@@ -1,13 +1,5 @@
 # DXOS CLI
 
-## Testing
-
-To test the CLI in dev mode:
-
-```bash
-$ yarn dx help
-```
-
 ## Installation
 
 Install CLI globally:
@@ -20,6 +12,15 @@ or
 
 ```
 $ npm install --global @dxos/cli@beta
+```
+*Note: You will need to be logged into your npm account in the terminal for this to work*
+
+## Testing
+
+To test the CLI in dev mode:
+
+```bash
+$ dx help
 ```
 
 ### Extensions
@@ -44,7 +45,7 @@ $ dx extension install @dxos/cli-ipfs --version beta
 ✔ Installing @dxos/cli-ipfs@beta
 ```
 
-View installed extensions: 
+View installed extensions:
 
 ```
 $ dx extension list
@@ -64,67 +65,6 @@ $ dx extension uninstall @dxos/cli-ipfs
 Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it? (Yes/No): y
 ✔ Uninstalling @dxos/cli-ipfs
 ```
-
-## Upgrade
-
-An older version of the CLI could be upgraded via `dx upgrade` command.
-
-```
-$ dx version
-v1.0.1-beta.15
-
-$ dx upgrade --force
-Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
-✔ Uninstalling @dxos/cli-data
-✔ Uninstalling @dxos/cli-signal
-✔ Uninstalling @dxos/cli-bot
-✔ Uninstalling @dxos/cli-app
-✔ Uninstalling @dxos/cli
-✔ Installing @dxos/cli
-✔ Installing @dxos/cli-app
-✔ Installing @dxos/cli-bot
-✔ Installing @dxos/cli-signal
-✔ Installing @dxos/cli-data
-
-$ dx version
-v1.0.1-beta.16
-```
-
-## Troubleshooting
-
-Most of the weirdness in CLI behaviour could be caused by any combination of previously installed CLIs and extensions, especially from the beta channel;
-
-Check latest available version:
-
-```bash
-$ yarn info @dxos/cli versions --json | jq '.data[-1]'
-```
-
-Check installed version:
-
-```bash
-$ dx version
-```
-
-If those outputs are different, make sure to remove old versions of `wire`.
-Remove old CLI and extensions, installed globally.
-
-Starting v1.0.0-beta.30, `dx uninstall` and `dx upgrade` commands are available.
-
-To remove CLI and all extensions:
-
-```
-$ dx uninstall --npm-client yarn
-```
-
-To force upgrade CLI and all installed extensions to the latest:
-
-```
-$ dx upgrade --npm-client yarn --force
-```
-
-`--version` attribute could be supplied in order to upgrade/downgrade to a specific version.
-
 ## Setup
 
 In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `dx cert import` command. For the case of XBOX, import command would look like:
@@ -193,6 +133,67 @@ Multiple templates can be created and shared with others to use different config
 While the usage of ENV variables is minimized, CLI still uses WNS related variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](env-map.yml)
 
 ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
+
+## Upgrade
+
+An older version of the CLI could be upgraded via `dx upgrade` command.
+
+```
+$ dx version
+v1.0.1-beta.15
+
+$ dx upgrade --force
+Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
+✔ Uninstalling @dxos/cli-data
+✔ Uninstalling @dxos/cli-signal
+✔ Uninstalling @dxos/cli-bot
+✔ Uninstalling @dxos/cli-app
+✔ Uninstalling @dxos/cli
+✔ Installing @dxos/cli
+✔ Installing @dxos/cli-app
+✔ Installing @dxos/cli-bot
+✔ Installing @dxos/cli-signal
+✔ Installing @dxos/cli-data
+
+$ dx version
+v1.0.1-beta.16
+```
+
+## Troubleshooting
+
+Most of the weirdness in CLI behaviour could be caused by any combination of previously installed CLIs and extensions, especially from the beta channel;
+
+Check latest available version:
+
+```bash
+$ yarn info @dxos/cli versions --json | jq '.data[-1]'
+```
+
+Check installed version:
+
+```bash
+$ dx version
+```
+
+If those outputs are different, make sure to remove old versions of `wire`.
+Remove old CLI and extensions, installed globally.
+
+Starting v1.0.0-beta.30, `dx uninstall` and `dx upgrade` commands are available.
+
+To remove CLI and all extensions:
+
+```
+$ dx uninstall --npm-client yarn
+```
+
+To force upgrade CLI and all installed extensions to the latest:
+
+```
+$ dx upgrade --npm-client yarn --force
+```
+
+`--version` attribute could be supplied in order to upgrade/downgrade to a specific version.
+
 
 ## Commands
 
