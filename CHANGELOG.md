@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.60](https://www.github.com/dxos/cli/compare/v2.0.59...v2.0.60) (2021-07-01)
+
+
+### Bug Fixes
+
+* app-server to expose port. ([b1a53ea](https://www.github.com/dxos/cli/commit/b1a53ea7753303bcd6276dbc0cf8357dcff8840f))
+
 ### [2.0.59](https://www.github.com/dxos/cli/compare/v2.0.58...v2.0.59) (2021-07-01)
 
 
