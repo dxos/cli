@@ -18,7 +18,7 @@ import cookieParser from 'cookie-parser';
 
 import { Registry } from '@wirelineio/registry-client';
 
-import { LOGIN_PATH, /* OTP_QR_PATH, */ authHandler, /* authSetupHandler, */ authMiddleware } from './auth';
+import { WALLET_LOGIN_PATH, LOGIN_PATH, /* OTP_QR_PATH, */ authHandler, /* authSetupHandler, */ authMiddleware, walletAuthHandler } from './auth';
 import { WRN } from '../util/WRN';
 import { BASE_URL, DEFAULT_PORT } from '../config';
 
@@ -167,6 +167,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   // Authentication.
   app.use(LOGIN_PATH, authHandler(keyPhrase));
   // app.use(OTP_QR_PATH, authSetupHandler(keyPhrase));
+  app.use(WALLET_LOGIN_PATH, walletAuthHandler);
 
   // Proxy app files.
   app.use(new RegExp(BASE_URL + '/(.+)'), authMiddleware(loginApp), appFileHandler);
