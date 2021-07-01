@@ -1,0 +1,36 @@
+{
+  "name": "@dxos/docs-cli",
+  "version": "1.0.0-beta.19",
+  "private": true,
+  "description": "DXOS Documentation",
+  "keywords": [
+    "dxos",
+    "gatsby",
+    "docs"
+  ],
+  "license": "GPL-3.0",
+  "author": "info@dxos.org",
+  "scripts": {
+    "clean": "gatsby clean",
+    "dev": "gatsby develop --port 8003",
+    "cp-socialcard": "cp -f ./src/gatsby-theme-apollo-docs/components/social-card.js ./node_modules/gatsby-theme-apollo-docs/src/components/social-card.js",
+    "cp-socialcard-bg": "cp -f ./node_modules/@dxos/docs-theme/src/assets/img/social-bg.jpg ./node_modules/gatsby-theme-apollo-docs/src/assets/social-bg.jpg",
+    "postinstall": "yarn cp-socialcard && yarn cp-socialcard-bg",
+    "build": "yarn clean && gatsby build --prefix-paths && mkdir -p cli && mv public/* cli && mv cli public/",
+    "test": "jest --rootDir ./assets/content --passWithNoTests"
+  },
+  "dependencies": {
+    "@dxos/docs-theme": "^1.0.0-beta.19",
+    "gatsby": "^2.17.11",
+    "gatsby-plugin-sharp": "^2.6.14",
+    "gatsby-source-filesystem": "^2.3.14",
+    "gatsby-theme-apollo-core": "^3.0.17",
+    "gatsby-theme-apollo-docs": "^4.3.5",
+    "gatsby-transformer-sharp": "^2.5.7",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  }
+}
