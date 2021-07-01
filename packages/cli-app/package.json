@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-app",
-  "version": "2.0.60-alpha.0",
+  "version": "2.0.61-alpha.0",
   "description": "DXOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
   "license": "AGPL-3.0",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.0.60-alpha.0",
+    "@dxos/cli-core": "^2.0.61-alpha.0",
     "@dxos/debug": "^1.0.0-beta.67",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
