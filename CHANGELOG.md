@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.61](https://www.github.com/dxos/cli/compare/v2.0.60...v2.0.61) (2021-07-01)
+
+
+### Bug Fixes
+
+* proper conf path for docker. ([4aeb2f9](https://www.github.com/dxos/cli/commit/4aeb2f929955728f454e2b92fea4afd150a5312e))
+
 ### [2.0.60](https://www.github.com/dxos/cli/compare/v2.0.59...v2.0.60) (2021-07-01)
 
 
