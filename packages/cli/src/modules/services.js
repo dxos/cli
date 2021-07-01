@@ -149,10 +149,11 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('name', { type: 'string', description: 'Container name' })
         .option('profile-path', { type: 'string', description: 'Profile to pass to container.', default: profilePath })
         .option('forward-env', { type: 'boolean', description: 'Forward ENV', default: false })
+        .option('forward-dx-env', { type: 'boolean', description: 'Forward DX ENV', default: false })
         .option('host-net', { type: 'boolean', description: 'Use host network', default: false }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile } = argv;
+        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile, 'forward-dx-env': forwardDxEnv } = argv;
 
         const service = getServiceInfo(moduleName, serviceName);
         const dockerImage = new DockerImage({ service });
@@ -171,7 +172,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
         let env;
         if (forwardEnv) {
           env = Object.entries(process.env).map(([key, value]) => `${key}=${value}`);
-        } else {
+        } else if (forwardDxEnv) {
           env = Object.entries(mapConfigToEnv(config)).map(([key, value]) => `${key}=${value}`);
         }
 
