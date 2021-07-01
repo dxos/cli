@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.62](https://www.github.com/dxos/cli/compare/v2.0.61...v2.0.62) (2021-07-01)
+
+
+### Bug Fixes
+
+* don't fowrawd env to docker container by default. ([031e194](https://www.github.com/dxos/cli/commit/031e194dbb92bb94ec3819afd5c740bd0649c4d9))
+
 ### [2.0.61](https://www.github.com/dxos/cli/compare/v2.0.60...v2.0.61) (2021-07-01)
 
 
