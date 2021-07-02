@@ -3,7 +3,6 @@
 //
 
 const themeOptions = require("@dxos/docs-theme/theme-options");
-
 module.exports = {
   pathPrefix: "/cli",
   plugins: [
@@ -34,7 +33,7 @@ module.exports = {
         sidebarCategories: {
           null: ["index", "cli"]
         }
-      }
+      } 
     }
   ]
 };
