@@ -29,9 +29,9 @@ module.exports = {
         root: __dirname,
         githubRepo: "dxos/cli",
         description: "DXOS - The Decentralized Operating System",
-        subtitle: "DXOS cli",
+        subtitle: "DXOS CLI",
         sidebarCategories: {
-          null: ["index", "cli"]
+          null: ["index", "how-to-use-it"]
         }
       } 
     }
