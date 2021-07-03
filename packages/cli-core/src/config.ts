@@ -25,6 +25,8 @@ export const DEFAULT_PACKAGE_JSON_ATTRIBUTES = [
   'name', 'version', 'author', 'license', 'description', 'keywords', 'homepage', 'repository', 'bugs'
 ];
 
+export const ENVS = Object.keys(envmap);
+
 export const getProfilePath = (profile: string) => {
   return path.join(os.homedir(), PROFILE_ROOT, `${profile}.yml`);
 };

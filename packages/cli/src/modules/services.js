@@ -6,6 +6,7 @@ import assert from 'assert';
 
 import {
   RUNNING_STATE,
+  ENVS,
   DockerContainer,
   DockerImage,
   asyncHandler,
@@ -148,12 +149,11 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('service', { describe: 'Service to install', required: true })
         .option('name', { type: 'string', description: 'Container name' })
         .option('profile-path', { type: 'string', description: 'Profile to pass to container.', default: profilePath })
-        .option('forward-env', { type: 'boolean', description: 'Forward ENV', default: false })
-        .option('forward-dx-env', { type: 'boolean', description: 'Forward DX ENV', default: false })
+        .option('forward-env', { type: 'string', description: 'ENV to forward. Could be "full", "system", "config"' })
         .option('host-net', { type: 'boolean', description: 'Use host network', default: false }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile, 'forward-dx-env': forwardDxEnv } = argv;
+        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile } = argv;
 
         const service = getServiceInfo(moduleName, serviceName);
         const dockerImage = new DockerImage({ service });
@@ -170,10 +170,16 @@ export const ServicesModule = ({ config, profilePath }) => ({
           .map(volume => volume.split(':')).filter(vol => vol.length === 2);
 
         let env;
-        if (forwardEnv) {
-          env = Object.entries(process.env).map(([key, value]) => `${key}=${value}`);
-        } else if (forwardDxEnv) {
-          env = Object.entries(mapConfigToEnv(config)).map(([key, value]) => `${key}=${value}`);
+        switch (forwardEnv) {
+          case 'full':
+            env = Object.entries(process.env).map(([key, value]) => `${key}=${value}`);
+            break;
+          case 'system':
+            env = Object.entries(process.env).filter(([key]) => ENVS.includes(key)).map(([key, value]) => `${key}=${value}`);
+            break;
+          case 'config':
+            env = Object.entries(mapConfigToEnv(config)).map(([key, value]) => `${key}=${value}`);
+            break;
         }
 
         const binds = [
