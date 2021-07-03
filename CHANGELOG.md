@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://www.github.com/dxos/cli/compare/v2.0.62...v2.1.0) (2021-07-03)
+
+
+### Features
+
+* **chore:** upgrade docs-theme ([#190](https://www.github.com/dxos/cli/issues/190)) ([3cdd277](https://www.github.com/dxos/cli/commit/3cdd277cb8eb10abdae1d71a8a86411041779d9b))
+* add docs template ([#188](https://www.github.com/dxos/cli/issues/188)) ([aaf57f4](https://www.github.com/dxos/cli/commit/aaf57f4f814a2e2ac58b32097f4ad2ade2e661df))
+
+
+### Bug Fixes
+
+* various settings for env import for docker. ([c57568c](https://www.github.com/dxos/cli/commit/c57568c15ef6562969ea003816c4883b94d7da9f))
+
 ### [2.0.62](https://www.github.com/dxos/cli/compare/v2.0.61...v2.0.62) (2021-07-01)
 
 
