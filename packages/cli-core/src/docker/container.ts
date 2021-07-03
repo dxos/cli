@@ -158,7 +158,8 @@ export class DockerContainer {
 
     return {
       cpu: Math.round(cpuPercent * 100) / 100,
-      memory: memory_stats.stats && memory_stats.stats.active_anon ? memory_stats.stats.active_anon : 0
+      // https://docs.docker.com/engine/api/v1.41/#operation/ContainerStats
+      memory: memory_stats.stats && memory_stats.usage ? memory_stats.usage - memory_stats.stats.cache : 0
     };
   }
 
