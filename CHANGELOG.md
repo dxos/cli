@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.1.1](https://www.github.com/dxos/cli/compare/v2.1.0...v2.1.1) (2021-07-03)
+
+
+### Bug Fixes
+
+* fix docker memory stats. ([2a5888b](https://www.github.com/dxos/cli/commit/2a5888b69adfe3881d07b10fc9faee8bdc145a52))
+
 ## [2.1.0](https://www.github.com/dxos/cli/compare/v2.0.62...v2.1.0) (2021-07-03)
 
 
