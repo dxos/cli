@@ -15,14 +15,6 @@ $ npm install --global @dxos/cli@beta
 ```
 *Note: You will need to be logged into your npm account in the terminal for this to work*
 
-## Testing
-
-To test the CLI in dev mode:
-
-```bash
-$ dx help
-```
-
 ### Extensions
 
 In order to install CLI extensions, one could leverage automatic installation mechanism (for DXOS extensions only):
@@ -65,6 +57,30 @@ $ dx extension uninstall @dxos/cli-ipfs
 Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it? (Yes/No): y
 ✔ Uninstalling @dxos/cli-ipfs
 ```
+## Commands
+
+All the CLI modules support `help` flag that provides desired command clarification, e.g.
+
+```bash
+$ dx help
+```
+
+```bash
+$ dx app help
+```
+
+```bash
+$ dx app register help
+```
+
+## Testing
+
+To test the CLI in dev mode:
+
+```bash
+$ dx help
+```
+
 ## Setup
 
 In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `dx cert import` command. For the case of XBOX, import command would look like:
@@ -78,6 +94,8 @@ TODO(egor): Host cert on .well-known endpoint.
 Corresponding certificate would be downloaded to `~/.wire/certs` and considered by CLI as "trusted".
 
 ### Profiles
+
+<mark>Everything looks good except for this part. I have a few questions about this. I think I got it to work but these instructions don't work.
 
 To use the CLI, a profile needs to be created and activated.
 
@@ -193,23 +211,6 @@ $ dx upgrade --npm-client yarn --force
 ```
 
 `--version` attribute could be supplied in order to upgrade/downgrade to a specific version.
-
-
-## Commands
-
-All the CLI modules support `help` flag that provides desired command clarification, e.g.
-
-```bash
-$ dx help
-```
-
-```bash
-$ dx app help
-```
-
-```bash
-$ dx app register help
-```
 
 ## Extensions
 
