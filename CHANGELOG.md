@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.1.2](https://www.github.com/dxos/cli/compare/v2.1.1...v2.1.2) (2021-07-05)
+
+
+### Bug Fixes
+
+* add kube cli extension. ([#192](https://www.github.com/dxos/cli/issues/192)) ([d72071e](https://www.github.com/dxos/cli/commit/d72071e8bc6cf2afad6c98f6d07a6e32ae216378))
+
 ### [2.1.1](https://www.github.com/dxos/cli/compare/v2.1.0...v2.1.1) (2021-07-03)
 
 
