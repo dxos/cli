@@ -69,6 +69,13 @@
     initRequired: false
     destroyRequired: false
   - 
+    moduleName: "@dxos/cli-kube"
+    describe: "KUBE extension."
+    command: 
+      - "kube"
+    initRequired: false
+    destroyRequired: false
+  - 
     moduleName: "@dxos/cli-machine"
     describe: "KUBE machine extension."
     command: 
