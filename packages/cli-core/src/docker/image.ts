@@ -24,6 +24,7 @@ export class DockerImage {
   _ports: any;
   _command: string;
   _auth: any;
+  _hostname: string;
 
   static async cleanNotLatest (imageName: string) {
     assert(imageName);
@@ -44,7 +45,7 @@ export class DockerImage {
 
   constructor (options: any) {
     const { service, auth } = options;
-    const { image: imageName, ports, command, network_mode: networkMode } = service;
+    const { image: imageName, ports, command, network_mode: networkMode, hostname } = service;
 
     assert(imageName);
     assert(command);
@@ -55,6 +56,7 @@ export class DockerImage {
     this._ports = ports;
     this._command = command;
     this._auth = auth;
+    this._hostname = hostname;
   }
 
   async pull (force = false) {
@@ -96,7 +98,7 @@ export class DockerImage {
 
     args = args || this._command.split(' ');
 
-    const configHash = hash({ args, env, hostNet, volumes });
+    const configHash = hash({ args, env, hostNet, volumes, binds });
 
     const container: DockerContainer | null = await DockerContainer.find({ imageName: this._imageName, name });
     if (container) {
@@ -132,6 +134,7 @@ export class DockerImage {
           volumeLabel: JSON.stringify(volumeLabel)
         },
         Tty: true,
+        ...(this._hostname ? { Hostname: this._hostname } : {}),
         ...(env ? { Env: env } : {}),
         ...(this._ports && !hostNet ? {
           ExposedPorts: Object.entries(Object.assign({}, ...this._ports)).reduce((acc: any, [key]) => {
