@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/async": "^1.0.2-alpha.0",
+    "@dxos/async": "2.10.8",
     "@dxos/cli-core": "^2.0.29-alpha.0",
-    "@dxos/network-manager": "^1.0.0-beta.119",
+    "@dxos/network-manager": "2.10.8",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "do-wrapper": "^4.1.2",

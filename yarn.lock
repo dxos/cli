@@ -1004,15 +1004,10 @@
     "@types/through2" "^2.0.36"
     lodash.merge "^4.6.2"
 
-"@dxos/async@^1.0.0-beta.10", "@dxos/async@^1.0.0-beta.8", "@dxos/async@~1.0.0-beta.10":
+"@dxos/async@^1.0.0-beta.8":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@dxos/async/-/async-1.0.0.tgz#691f5b6908e09942c62e603c7a6abc0e9010c92a"
   integrity sha512-8yoPxp86GvPBTWBSnbOYwcPouml2G2V3tyFNZXqhPaZ7EfDFKUSWdoN4wzqJ/FdGWbc/vaMBPdx9ufGXgqeh/A==
-
-"@dxos/async@^1.0.2-alpha.0", "@dxos/async@~1.0.2-alpha.0":
-  version "1.0.2-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/async/-/async-1.0.2-alpha.0.tgz#cb46d597567a178225e8a67b71cf5e3e5e257a68"
-  integrity sha512-d9UgIaLbmuYHP24WASQX8OI1GJbJVy2021VqczIuDF0m3C5tHIqC7yr75L5eC4BAalEQoPGYcpWnzgD6ZpjiBw==
 
 "@dxos/botkit-client@2.10.8":
   version "2.10.8"
@@ -1169,17 +1164,6 @@
     through2 "^3.0.1"
     wrtc "^0.4.6"
 
-"@dxos/codec-protobuf@1.1.0-beta.10":
-  version "1.1.0-beta.10"
-  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-1.1.0-beta.10.tgz#f217e871a4e4a8c4665ae02ac1a9dfba1b264c44"
-  integrity sha512-4EZg4kpvNZQ9s1ufs2TXP/ReYE/riB5t6+yJYI+ZHDtEXRPVtgoreSzZyiSMboPTG3fqanH0pe4lW6nuBzwiiA==
-  dependencies:
-    assert "^2.0.0"
-    buffer "^5.4.3"
-    lodash.merge "^4.6.2"
-    protobufjs "^6.9.0"
-    source-map-support "^0.5.12"
-
 "@dxos/codec-protobuf@1.1.0-beta.11":
   version "1.1.0-beta.11"
   resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-1.1.0-beta.11.tgz#2325420040ce97a450390e097ae60f525a62b80c"
@@ -1203,13 +1187,6 @@
   version "0.2.2"
   resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-0.2.2.tgz#364a24e83cb70497dbcec0defe42016348fcabd6"
   integrity sha512-DkFkkciaSLbn6jnD8wwfpzyEOhwMHRQHHNJziN+NmfEWbhmvgyUAWsB4cVmvaGfaYWEhOrmloBtBZMMn6XDilw==
-  dependencies:
-    protobufjs "^6.10.1"
-
-"@dxos/codec-protobuf@~1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-1.1.1.tgz#905bba854905e49d30c8ba3426057b3261f35a17"
-  integrity sha512-z2VDf5sqBG/0fNEYC1bYmsaiGBP3gaQ6BKodHvLHkUgFImxszAzbjdBVm7waXqQU19CXKkahKTbfrjtLKLzdZQ==
   dependencies:
     protobufjs "^6.10.1"
 
@@ -1293,7 +1270,7 @@
     humanhash "^1.0.4"
     hypercore-crypto "^1.0.0"
 
-"@dxos/crypto@^1.0.0-beta.1", "@dxos/crypto@^1.0.5", "@dxos/crypto@~1.0.7":
+"@dxos/crypto@^1.0.0-beta.1", "@dxos/crypto@^1.0.5":
   version "1.0.7"
   resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-1.0.7.tgz#7f80f2712302037e0a29bb1f6d023fdab899c14b"
   integrity sha512-ED+AChA9N8hIMgTcuopNhe81xICykEAP0dKILiTJpBCqiEXyzRClLBkdIY4n6UJUpBmVvrnBLRxw8IU/+jVijg==
@@ -1499,27 +1476,6 @@
     ws "^7.4.4"
     xor-distance "^2.0.0"
 
-"@dxos/network-manager@^1.0.0-beta.119":
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/@dxos/network-manager/-/network-manager-1.0.8.tgz#9668a15c19741a1ee7e1a4b0f50cb4b4709057a2"
-  integrity sha512-Guyy3gsXjf7g5CXPyLgUdslNyPq9GUn2G96xX7aefS+wBj6HaCDzKTeSffvMkH3k0X1dATcGKbZt2k8CyiPsog==
-  dependencies:
-    "@dxos/async" "~1.0.2-alpha.0"
-    "@dxos/crypto" "~1.0.7"
-    "@dxos/metrics" "~1.0.0-beta.9"
-    "@dxos/protocol" "1.0.8"
-    "@dxos/util" "~2.6.22"
-    "@types/mocha" "^8.0.4"
-    "@types/simple-peer" "^9.6.1"
-    "@types/ws" "^7.4.0"
-    assert "^2.0.0"
-    debug "^4.1.1"
-    isomorphic-ws "^4.0.1"
-    nanomessage-rpc "^3.0.0"
-    simple-peer "^9.9.3"
-    wrtc "^0.4.6"
-    xor-distance "^2.0.0"
-
 "@dxos/object-model@2.10.8":
   version "2.10.8"
   resolved "https://registry.npmjs.org/@dxos/object-model/-/object-model-2.10.8.tgz#a5d76e491a490f937ebfcbef088d34ba447d949d"
@@ -1614,24 +1570,6 @@
     "@dxos/protocol" "2.10.8"
     buffer-json-encoding "^1.0.2"
     debug "^4.1.1"
-
-"@dxos/protocol@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/@dxos/protocol/-/protocol-1.0.8.tgz#080161006fae43adfe8cdb3b0318345ac883e956"
-  integrity sha512-A5yvU+7aDVM7tzz0/Vesr5H8pqpzfg/X5KwSbWj24oO7xLRml27S7Or5I2EJoj2tcgMlSRMqe2cJCSJ+JZ1Mog==
-  dependencies:
-    "@dxos/codec-protobuf" "1.1.0-beta.10"
-    assert "^2.0.0"
-    buffer-json-encoding "^1.0.2"
-    debug "^4.1.1"
-    end-of-stream "^1.4.4"
-    humanhash "^1.0.4"
-    hypercore-protocol "^6.11.1"
-    nanoerror "^1.2.1"
-    nanomessage "^5.4.0"
-    nanoresource-promise "^2.0.0"
-    signal-promise "^1.0.3"
-    source-map-support "^0.5.12"
 
 "@dxos/protocol@2.10.8":
   version "2.10.8"
@@ -1742,27 +1680,6 @@
     js-data-structs "^1.1.2"
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
-
-"@dxos/util@~2.6.22":
-  version "2.6.22"
-  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.6.22.tgz#b728ff60353557da93d4ae60a53bb5f7d2a1976b"
-  integrity sha512-XTTbh8kv5ROQnbTsZNUDRTZfQeHsbzbSrTjP2bOXBZGX4iIrK/EPqOeNrCPhHeakOIHK0LTVCesypomiyPDtlA==
-  dependencies:
-    "@dxos/async" "~1.0.0-beta.10"
-    "@dxos/codec-protobuf" "~1.1.1"
-    "@dxos/crypto" "~1.0.7"
-    "@types/debug" "^4.1.1"
-    "@types/end-of-stream" "^1.4.0"
-    "@types/lodash" "^4.14.159"
-    "@types/node" "^14.0.9"
-    "@types/stream-buffers" "^3.0.2"
-    "@types/through2" "^2.0.36"
-    debug "^4.1.1"
-    hypercore "^7.7.1"
-    js-data-structs "^1.1.2"
-    lodash.merge "^4.6.2"
-    protobufjs "^6.9.0"
-    source-map-support "^0.5.12"
 
 "@eslint/eslintrc@^0.4.1":
   version "0.4.1"
@@ -3879,11 +3796,6 @@
   version "1.2.1"
   resolved "https://registry.npmjs.org/@types/minimist/-/minimist-1.2.1.tgz#283f669ff76d7b8260df8ab7a4262cc83d988256"
   integrity sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==
-
-"@types/mocha@^8.0.4":
-  version "8.2.2"
-  resolved "https://registry.npmjs.org/@types/mocha/-/mocha-8.2.2.tgz#91daa226eb8c2ff261e6a8cbf8c7304641e095e0"
-  integrity sha512-Lwh0lzzqT5Pqh6z61P3c3P5nm6fzQK/MMHl9UKeneAeInVflBSz1O2EkX6gM6xfJd7FBXBY5purtLx7fUiZ7Hw==
 
 "@types/node-fetch@^2.5.10", "@types/node-fetch@^2.5.8":
   version "2.5.10"
