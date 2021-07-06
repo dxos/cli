@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-ipfs",
-  "version": "2.0.40-alpha.0",
+  "version": "2.1.2-alpha.0",
   "description": "DXOS IPFS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-ipfs#readme",
   "license": "AGPL-3.0",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/async": "^1.0.0-beta.10",
-    "@dxos/cli-core": "^2.0.40-alpha.0",
+    "@dxos/cli-core": "^2.1.2-alpha.0",
     "@dxos/debug": "^1.0.0-beta.67",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
@@ -44,7 +44,7 @@
     "cli-progress": "^3.8.2",
     "end-of-stream-promise": "^1.0.0",
     "get-folder-size": "^2.0.1",
-    "ipfs-http-client": "^48.1.1",
+    "ipfs-http-client": "48.1.1",
     "it-to-stream": "^0.1.2",
     "lodash-clean": "^2.2.1",
     "lodash.get": "^4.4.2",
@@ -73,9 +73,6 @@
     "prettier": "^1.14.2",
     "semistandard": "14.2.0",
     "uuid": "^3.3.3"
-  },
-  "resolutions": {
-    "peer-id": "0.14.6"
   },
   "semistandard": {
     "parser": "babel-eslint",

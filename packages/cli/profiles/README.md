@@ -4,9 +4,6 @@ This folder contains sample profile templates to use in `dx profile init --name 
 
 ## Templates
 
-* `local`: `dx profile init --name local --template-url https://git.io/Jfrn0`
-* `devnet`: `dx profile init --name devnet --template-url https://git.io/Jfrn4`
-* `devnet-moon`: `dx profile init --name devnet-moon --template-url https://git.io/JUkhm`
-* `kube`: `dx profile init --name kube --template-url https://git.io/Jfrnz`
-
-* `moon`: `dx profile init --name moon --template-url https://git.io/JtEvr`
+* `local`: `dx profile init --name local --template-url https://git.io/JGBbQ`
+* `kube`: `dx profile init --name kube --template-url https://git.io/JnmuN`
+* `moon`: `dx profile init --name moon --template-url https://git.io/Jnmus`

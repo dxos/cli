@@ -227,6 +227,11 @@ export class Pluggable {
     return require(this.modulePath).info;
   }
 
+  getDockerCompose () {
+    this._cleanCache();
+    return require(this.modulePath).dockerCompose;
+  }
+
   _cleanCache () {
     delete require.cache[require.resolve(this.modulePath)];
   }
