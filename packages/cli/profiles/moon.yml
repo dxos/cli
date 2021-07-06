@@ -7,35 +7,47 @@ cli:
     serve:
       config: '~/.wire/remote.yml'
       loginApp: 'dxos:application/keyhole'
+      keyPhrase: 'GoxWtucubK'
   console:
     package: '@dxos/console-server'
-    channel: 'beta'
+    channel: 'alpha'
     bin: 'dxos-console'
-  signal:
-    package: '@dxos/signal'
-    channel: 'beta'
-    bin: 'dxos-signal'
   mdns:
     package: '@dxos/mdns'
     channel: 'beta'
     bin: 'dxos-mdns'
-  npmClient: 'npm' # npm|yarn
-  channel: 'beta'
+  signal:
+    package: '@dxos/signal'
+    channel: 'alpha'
+    bin: 'dxos-signal'
+  npmClient: 'yarn' # npm|yarn
+  channel: 'alpha'
 
 # DXOS services.
 services:
   wns:
     server: 'https://wns.kube.moon.dxos.network/api'
+    webui: 'https://wns.kube.moon.dxos.network/console'
     userKey:
     bondId:
     chainId: 'moon'
     gas: '200000'
     fees: '200000uwire'
+  dxns:
+    server: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
+    uri:
+  machine:
+    doAccessToken: ''
+    githubAccessToken: ''
+    githubUsername: ''
+    dnsDomain: 'kube.moon.dxos.network'
+    npmAccessToken: ''
   ipfs:
-    server: '/ip4/127.0.0.1/tcp/5001'
-    gateway: 'http://127.0.0.1:8888/ipfs/'
+    server: 'https://ipfs.kube.moon.dxos.network/dxos/ipfs/api'
+    gateway: 'https://ipfs.kube.moon.dxos.network/dxos/ipfs/gateway/'
   signal:
     server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
+    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
   ice:
     - urls: 'stun:apollo1.kube.moon.dxos.network:3478'
     - urls: 'turn:apollo1.kube.moon.dxos.network:3478'
@@ -47,5 +59,10 @@ services:
       credential: 'dxos'
   faucet:
     server: 'https://faucet.kube.moon.dxos.network/api'
+  kube:
+    publicUrl: '/console'
+  app:
+    prefix: '/app'
+    server: 'https://apollo1.kube.moon.dxos.network'
 system:
   certEndpoint: ''

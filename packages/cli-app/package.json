@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-app",
-  "version": "2.0.40-alpha.0",
+  "version": "2.1.2-alpha.0",
   "description": "DXOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
   "license": "AGPL-3.0",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.0.40-alpha.0",
+    "@dxos/cli-core": "^2.1.2-alpha.0",
     "@dxos/debug": "^1.0.0-beta.67",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
@@ -52,7 +52,7 @@
     "fs-extra": "^8.1.0",
     "get-folder-size": "^2.0.1",
     "hypercore-crypto": "^1.0.0",
-    "ipfs-http-client": "^48.0.0",
+    "ipfs-http-client": "48.1.1",
     "js-yaml": "^3.13.1",
     "lodash-clean": "^2.2.1",
     "lodash.defaultsdeep": "^4.6.1",
@@ -89,9 +89,6 @@
     "prettier": "^1.14.2",
     "semistandard": "14.2.0",
     "uuid": "^3.3.3"
-  },
-  "resolutions": {
-    "peer-id": "0.14.6"
   },
   "semistandard": {
     "parser": "babel-eslint",

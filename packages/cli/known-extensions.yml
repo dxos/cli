@@ -45,8 +45,8 @@
     describe: "DXNS extension."
     command: 
       - "dxns"
-    initRequired: false
-    destroyRequired: false
+    initRequired: true
+    destroyRequired: true
   - 
     moduleName: "@dxos/cli-echo"
     describe: "ECHO extension."
@@ -66,6 +66,13 @@
     describe: "IPFS extension."
     command: 
       - "ipfs"
+    initRequired: false
+    destroyRequired: false
+  - 
+    moduleName: "@dxos/cli-kube"
+    describe: "KUBE extension."
+    command: 
+      - "kube"
     initRequired: false
     destroyRequired: false
   - 
@@ -100,7 +107,12 @@
     moduleName: "@dxos/cli-signal"
     describe: "Signal server extension."
     command: 
-      - "signal"
+      - 
+        command: "signal"
+        describe: "Signal server as process."
+      - 
+        command: "container-signal"
+        describe: "Signal server as container."
     initRequired: false
     destroyRequired: false
   - 

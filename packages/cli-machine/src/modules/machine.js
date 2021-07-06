@@ -16,11 +16,13 @@ import { asyncHandler, print, getGasAndFees } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
 import SSH_KEYS from '../../ssh-keys.yml';
+import KubeServices from '../../services.yml';
 
 const KUBE_TYPE = 'wrn:kube';
 const KUBE_TAG = 'kube';
 const DEFAULT_WRN_ROOT = 'wrn://dxos';
 const DEFAULT_KEYPHRASE = 'kube';
+const DEFAULT_REGION = 'nyc3';
 
 let running = false;
 
@@ -65,6 +67,7 @@ export const MachineModule = ({ config }) => {
 
   // TODO(dboreham): Get from profile.
   const { keys: sshKeys } = yaml.load(SSH_KEYS);
+  const defaultServices = yaml.load(KubeServices);
 
   return ({
     command: ['machine'],
@@ -192,14 +195,18 @@ export const MachineModule = ({ config }) => {
           .option('name', { type: 'string' })
           .option('wrn-root', { type: 'string', default: DEFAULT_WRN_ROOT })
           .option('memory', { type: 'number', default: 4 })
+          .option('region', { type: 'string', default: DEFAULT_REGION })
           .option('pin', { type: 'boolean', default: false })
+          // TODO(egorgripasov): Remove.
           .option('register', { type: 'boolean', default: false })
+          .option('register-dxns', { type: 'boolean', default: false })
           .option('cliver', { type: 'string', default: '' })
           .option('dns-ttl', { type: 'number', default: 300 })
           .option('letsencrypt', { type: 'boolean', default: false })
           .option('extension', { type: 'array', default: [] })
           .option('email', { type: 'string', default: email })
-          .option('key-phrase', { type: 'string ', default: DEFAULT_KEYPHRASE }),
+          .option('key-phrase', { type: 'string ', default: DEFAULT_KEYPHRASE })
+          .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) }),
 
         handler: asyncHandler(async () => {
           if (running) {
@@ -210,23 +217,26 @@ export const MachineModule = ({ config }) => {
 
           running = true;
 
-          const { verbose, pin, cliver, letsencrypt, memory, email, register, wrnRoot, dnsTtl, extension, keyPhrase } = yargs.argv;
+          const { verbose, pin, cliver, letsencrypt, memory, region, email, register, registerDxns, wrnRoot, dnsTtl, extension, keyPhrase, services } = yargs.argv;
           if (letsencrypt) {
             assert(email, '--email is required with --letsencrypt');
           }
 
           const radicle = !!extension.find(entry => entry === 'dxos/radicle-seed-node');
-          const substrate = !!extension.find(entry => entry === 'substrate');
 
           const wnsConfig = config.get('services.wns');
+          const dxnsConfig = config.get('services.dxns');
           const { server, userKey, bondId, chainId } = wnsConfig;
           if (register) {
             assert(server && userKey && bondId && chainId, 'Missing WNS config.');
           }
+          if (registerDxns) {
+            assert(dxnsConfig.server && dxnsConfig.uri, 'Missing DXNS config.');
+          }
 
           const session = new DigitalOcean(doAccessToken, 100);
 
-          const boxName = yargs.argv.name ? yargs.argv.name : `kube${crypto.randomBytes(4).toString('hex')}`;
+          const boxName = yargs.argv.name ? yargs.argv.name : `kube-${crypto.randomBytes(4).toString('hex')}`;
           const boxFullyQualifiedName = `${boxName}.${dnsDomain}`;
 
           const dropletId = await getDropletIdFromName(session, boxName);
@@ -261,7 +271,6 @@ export const MachineModule = ({ config }) => {
          runcmd:
            - curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
            - chmod +x /usr/local/bin/docker-compose
-           - echo "${githubAccessToken}" | docker login https://ghcr.io -u ${githubUsername} --password-stdin
            - git clone https://${githubAccessToken}@github.com/dxos/kube.git kube
            - cd kube
            - cd ..
@@ -269,6 +278,9 @@ export const MachineModule = ({ config }) => {
            - echo "export KUBE_FQDN=${boxFullyQualifiedName}" >> /opt/kube/etc/kube.env
            - echo "export KUBE_PIN_WNS_OBJECTS=${pin ? 1 : 0}" >> /opt/kube/etc/kube.env
            - echo "export WIRE_APP_SERVER_KEYPHRASE=${keyPhrase}" >> /opt/kube/etc/kube.env
+           - echo "export WIRE_MACHINE_GITHUB_USERNAME=${githubUsername}" >> /opt/kube/etc/kube.env
+           - echo "export WIRE_MACHINE_GITHUB_TOKEN=${githubAccessToken}" >> /opt/kube/etc/kube.env
+           - echo ${JSON.stringify(services)} >> /opt/kube/etc/services.json
            - cd /opt/kube/scripts
            - sed -i 's/run_installer "ssh" install_ssh_key/#run_installer "ssh" install_ssh_key/g' install.sh
            - sed -i 's/apt clean//g' install.sh
@@ -292,12 +304,16 @@ export const MachineModule = ({ config }) => {
            - export WIRE_WNS_ENDPOINT=${server}
            - export WIRE_WNS_USER_KEY=${userKey}
            - export WIRE_WNS_BOND_ID=${bondId}
-           - if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
-           - if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
+           - export WIRE_DXNS_ENDPOINT=${dxnsConfig.server}
+           - export WIRE_DXNS_USER_URI=${dxnsConfig.uri}
            - if [ "${radicle ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 8889:8889 -p 12345:12345/udp -e 'PUBLIC_ADDR=${boxFullyQualifiedName}:12345' dxos/radicle-seed-node; fi
-           - if [ "${substrate ? 1 : 0}" = "1" ]; then docker run -d --restart=always -p 9944:9944 ghcr.io/alienlaboratories/substrate-node:latest node-template --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --rpc-external; fi
+           - if [ "${register || registerDxns ? 1 : 0}" = "1" ]; then while [ "$(dx service --json | jq '.[] | select(.name=="dxns") | .status' -r)" != "online" ]; do sleep 5; done; fi
+           - if [ "${registerDxns ? 1 : 0}" = "1" ]; then ./kube_auto_publish.sh "https://${boxFullyQualifiedName}" "${boxName}"; fi
+           - if [ "${register ? 1 : 0}" = "1" ]; then ./ipfs_auto_publish.sh "${wrnRoot}/service/ipfs/${boxName}" "${boxFullyQualifiedName}"; fi
         `;
+
+          // - # if [ "${register ? 1 : 0}" = "1" ]; then while [ ! -f "$HOME/.wire/bots/service.yml" ]; do sleep 1; done; fi
+          // - # if [ "${register ? 1 : 0}" = "1" ]; then ./botfactory_auto_publish.sh "${wrnRoot}/service/bot-factory/${boxName}" "${boxFullyQualifiedName}"; fi
 
           // from https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/
           let sizeSlug = 's-2vcpu-4gb';
@@ -326,7 +342,7 @@ export const MachineModule = ({ config }) => {
 
           const createParameters = {
             name: boxName,
-            region: 'nyc3',
+            region,
             size: sizeSlug,
             image: 'ubuntu-18-04-x64',
             ssh_keys: sshKeys,
