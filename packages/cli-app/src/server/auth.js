@@ -26,7 +26,7 @@ export const authMiddleware = (loginApp) => async (req, res, next) => {
 };
 
 export const walletAuthHandler = async (req, res) => {
-  const keys = ['adac1715081b6e2aa649c52d37a6e8f8c0c106252b324fb66b5046ac5e6e4794'];
+  const keys = ['27b73bfd09bd389eac621bd1529a9554184e67860ce21466b27d359c16c6b546'];
   if (keys.includes(req.body.key)) {
     return res.sendStatus(200);
   } else {
