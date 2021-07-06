@@ -70,7 +70,7 @@ Multiple templates can be created and shared with others to use different config
 
 In order to install CLI extensions, one could leverage automatic installation mechanism (for DXOS extensions only):
 
-TODO(burdon): Rename registry.
+<!--TODO(burdon): Rename registry.-->
 
 ```bash
 $ dx wns
@@ -124,14 +124,6 @@ $ dx app help
 $ dx app register help
 ```
 
-## Testing
-
-To test the CLI in dev mode:
-
-```bash
-$ dx help
-```
-
 ## Setup
 
 ### Certification
@@ -142,7 +134,7 @@ In order for CLI to support custom certificate authorities, one would need to im
 $ dx cert import --url https://kube.local/kube.pem
 ```
 
-TODO(egor): Host cert on .well-known endpoint.
+<!--TODO(egor): Host cert on .well-known endpoint.-->
 
 Corresponding certificate would be downloaded to `~/.wire/certs` and considered by CLI as "trusted".
 
