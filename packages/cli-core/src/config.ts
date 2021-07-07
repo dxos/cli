@@ -17,6 +17,8 @@ import envmap from './env-map.json';
 // TODO(burdon): Change to ~/.dxos
 export const PROFILE_ROOT = '.wire/profile';
 
+export const STORAGE_ROOT = '.wire/storage';
+
 // Default profile, ALWAYS a symlink.
 export const DEFAULT_PROFILE_SYMLINK = 'default';
 
