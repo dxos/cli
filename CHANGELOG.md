@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.1.4](https://www.github.com/dxos/cli/compare/v2.1.3...v2.1.4) (2021-07-07)
+
+
+### Bug Fixes
+
+* share more data between kube and services. ([12c7f18](https://www.github.com/dxos/cli/commit/12c7f18b292bbed74868406ade76436e3131978a))
+
 ### [2.1.3](https://www.github.com/dxos/cli/compare/v2.1.2...v2.1.3) (2021-07-07)
 
 
