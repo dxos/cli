@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.1.3](https://www.github.com/dxos/cli/compare/v2.1.2...v2.1.3) (2021-07-07)
+
+
+### Bug Fixes
+
+* pass echo & halo storage to DXOS service. ([#198](https://www.github.com/dxos/cli/issues/198)) ([4b28c6f](https://www.github.com/dxos/cli/commit/4b28c6fe7973ee1766c0a69c815b158bd1643eb3))
+
 ### [2.1.2](https://www.github.com/dxos/cli/compare/v2.1.1...v2.1.2) (2021-07-05)
 
 
