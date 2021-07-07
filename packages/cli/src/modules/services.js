@@ -3,9 +3,12 @@
 //
 
 import assert from 'assert';
+import path from 'path';
+import os from 'os';
 
 import {
   RUNNING_STATE,
+  STORAGE_ROOT,
   ENVS,
   DockerContainer,
   DockerImage,
@@ -23,6 +26,7 @@ import { Pluggable } from '../pluggable';
 
 const DEFAULT_LOG_LINES = 100;
 const DEFAULT_CONFIG_PATH = '/root/.wire/profile/local.yml';
+const DEFAULT_STORAGE_PATH = path.join('/root', STORAGE_ROOT);
 
 const SERVICE_DAEMON = 'daemon';
 const SERVICE_CONTAINER = 'container';
@@ -150,10 +154,12 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('name', { type: 'string', description: 'Container name' })
         .option('profile-path', { type: 'string', description: 'Profile to pass to container.', default: profilePath })
         .option('forward-env', { type: 'string', description: 'ENV to forward. Could be "full", "system", "config"' })
-        .option('host-net', { type: 'boolean', description: 'Use host network', default: false }),
+        .option('host-net', { type: 'boolean', description: 'Use host network', default: false })
+        .option('storage-path', { type: 'string', description: 'Path to ECHO and HALO storage.', default: path.join(os.homedir(), STORAGE_ROOT) })
+        .option('binds', { type: 'array', description: 'Additional volume binds.' }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile } = argv;
+        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile, storagePath, binds: additionalBinds = [] } = argv;
 
         const service = getServiceInfo(moduleName, serviceName);
         const dockerImage = new DockerImage({ service });
@@ -183,7 +189,9 @@ export const ServicesModule = ({ config, profilePath }) => ({
         }
 
         const binds = [
-          `${profile}:${DEFAULT_CONFIG_PATH}`
+          `${profile}:${DEFAULT_CONFIG_PATH}`,
+          `${storagePath}:${DEFAULT_STORAGE_PATH}:rw`,
+          ...additionalBinds
         ];
 
         const container = await dockerImage.getOrCreateContainer(name, command, env, binds, hostNet, volumes);
