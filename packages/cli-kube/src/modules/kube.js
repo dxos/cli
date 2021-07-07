@@ -53,7 +53,9 @@ export const KubeModule = ({ config }) => ({
 
     .command({
       command: ['upgrade'],
-      describe: 'Install KUBE.',
+      describe: 'Upgrade KUBE.',
+      builder: yargs => yargs
+        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' }),
 
       handler: asyncHandler(async argv => {
         const { auth: authRequired } = argv;
@@ -99,7 +101,8 @@ export const KubeModule = ({ config }) => ({
 
         const binds = [
           '/var/run/docker.sock:/var/run/docker.sock:rw',
-          `${KUBE_PROFILE_PATH}:/root/.wire/kube:rw`
+          `${KUBE_PROFILE_PATH}/config:/root/.wire/kube:rw`,
+          `${KUBE_PROFILE_PATH}/storage:/root/.wire/storage:rw`
         ];
 
         // TODO(egorgripasov): Rm hardcoded WIRE.
