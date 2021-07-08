@@ -148,7 +148,7 @@ The following URLs will be available:
 You can setup whitelist of public keys of profile identities in the Wallet Extension that can authenticated through endpoint `/wallet/auth`. In order to do so create a file in your DXOS profile folder named `keyhole-whitelist.yml`. The file has to have the following structure:
 
 ```yaml
-  publicKeys:
+  whitelistedPublicKeys:
     - <PUBLIC_KEY_1>
     - <PUBLIC_KEY_2>
     - ...

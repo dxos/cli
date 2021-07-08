@@ -39,7 +39,7 @@ export const walletAuthHandler = async (req, res) => {
   }
 
   const whitelist = yaml.load(fs.readFileSync(path));
-  const keys = whitelist.publicKeys ?? [];
+  const keys = whitelist.whitelistedPublicKeys ?? [];
 
   if (req.body.key && keys.includes(req.body.key)) {
     log('Found public key in the whitelist');
