@@ -31,9 +31,16 @@ module.exports = {
         description: "DXOS - The Decentralized Operating System",
         subtitle: "DXOS CLI",
         sidebarCategories: {
-          null: ["index", "how-to-use-it"]
+          null: [
+            "index",
+            "installation",
+            "profile-creation",
+            "profile-keys-setup",
+            "profile-authority"
+          ],
+          "CLI APP": ["cli-app/app-deployment"]
         }
-      } 
+      }
     }
   ]
 };

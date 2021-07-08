@@ -1,0 +1,23 @@
+---
+title: Profile Keys Setup
+description: Identify yourself
+---
+
+## User keys
+
+Some services will request you extra credentials, for example our service called `wns` requests you to have 
+`bondId` and `userKey` to deploy an application into a Kube Network.
+
+### Example
+
+Set up your keys bondId and userKey:
+profile directory: `~/.wire/profile/<PROFILE>.yml`
+Here are the demo `bondId` and `userKey` credentials:
+
+```
+    userKey: 'b1e4e95dd3e3294f15869b56697b5e3bdcaa24d9d0af1be9ee57d5a59457843a'
+    bondId: '8e340dd7cf6fc91c27eeefce9cca1406c262e93fd6f3a4f3b1e99b01161fcef3'
+```
+
+Under the service wns located in your profile yml, fill up those credentials.
+Now next time you have to deploy an app you will use them.
