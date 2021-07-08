@@ -1,13 +1,5 @@
 # DXOS CLI
 
-## Testing
-
-To test the CLI in dev mode:
-
-```bash
-$ yarn dx help
-```
-
 ## Installation
 
 Install CLI globally:
@@ -21,12 +13,64 @@ or
 ```
 $ npm install --global @dxos/cli@beta
 ```
+*Note: You will need to be logged into your npm account in the terminal for this to work*
+
+### Profiles
+
+To use the CLI, a profile needs to be created and activated.
+
+The CLI supports creating multiple profiles with different configurations from downloadable templates, and switching between them.
+
+To create a profile from a template, pass a profile name and template URL.
+
+Example:
+
+```bash
+$ dx profile init --name moon --template-url https://git.io/Jnmus
+```
+
+Profiles are stored in the `~/.wire/profile` folder. To further customize a profile, edit the profile configuration file.
+
+To activate/use a profile, do one of the following (highest to lowest precedence):
+
+1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile moon wns status`
+2. export `WIRE_PROFILE` in the shell, with the name of the profile, e.g. `export WIRE_PROFILE=moon`
+3. Set it as the default for the system, e.g. `dx profile set moon`
+
+Note: The first profile created automatically becomes the system default.
+
+View the name of the active profile:
+
+```bash
+$ dx profile
+```
+
+View the configuration values for the active profile:
+
+```bash
+$ dx profile config
+```
+
+View the configuration values for a given profile:
+
+```bash
+$ dx profile config <NAME>
+```
+
+View the profile used for a command (using the `--dry-run` flag):
+
+```bash
+$ dx wns status --dry-run
+Profile: /Users/ashwinp/.wire/profile/devnet.yml
+```
+
+Multiple templates can be created and shared with others to use different configuration values. Some [sample templates](./profiles/README.md) are included in the repo.
 
 ### Extensions
 
 In order to install CLI extensions, one could leverage automatic installation mechanism (for DXOS extensions only):
 
-TODO(burdon): Rename registry.
+<!--TODO(burdon): Rename registry.-->
 
 ```bash
 $ dx wns
@@ -44,7 +88,7 @@ $ dx extension install @dxos/cli-ipfs --version beta
 ✔ Installing @dxos/cli-ipfs@beta
 ```
 
-View installed extensions: 
+View installed extensions:
 
 ```
 $ dx extension list
@@ -64,6 +108,41 @@ $ dx extension uninstall @dxos/cli-ipfs
 Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it? (Yes/No): y
 ✔ Uninstalling @dxos/cli-ipfs
 ```
+## Commands
+
+All the CLI modules support `help` flag that provides desired command clarification, e.g.
+
+```bash
+$ dx help
+```
+
+```bash
+$ dx app help
+```
+
+```bash
+$ dx app register help
+```
+
+## Setup
+
+### Certification
+
+In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `dx cert import` command. For the case of XBOX, import command would look like:
+
+```bash
+$ dx cert import --url https://kube.local/kube.pem
+```
+
+<!--TODO(egor): Host cert on .well-known endpoint.-->
+
+Corresponding certificate would be downloaded to `~/.wire/certs` and considered by CLI as "trusted".
+
+### Environment Variables
+
+While the usage of ENV variables is minimized, CLI still uses WNS related variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](env-map.yml)
+
+ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
 
 ## Upgrade
 
@@ -124,91 +203,6 @@ $ dx upgrade --npm-client yarn --force
 ```
 
 `--version` attribute could be supplied in order to upgrade/downgrade to a specific version.
-
-## Setup
-
-In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `dx cert import` command. For the case of XBOX, import command would look like:
-
-```bash
-$ dx cert import --url https://kube.local/kube.pem
-```
-
-TODO(egor): Host cert on .well-known endpoint.
-
-Corresponding certificate would be downloaded to `~/.wire/certs` and considered by CLI as "trusted".
-
-### Profiles
-
-To use the CLI, a profile needs to be created and activated.
-
-The CLI supports creating multiple profiles with different configurations from downloadable templates, and switching between them.
-
-To create a profile from a template, pass a profile name and template URL.
-
-Example:
-
-```bash
-$ dx profile init --name moon --template-url https://git.io/Jnmus
-```
-
-Profiles are stored in the `~/.wire/profile` folder. To further customize a profile, edit the profile configuration file.
-
-To activate/use a profile, do one of the following (highest to lowest precedence):
-
-1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile moon wns status`
-2. export `WIRE_PROFILE` in the shell, with the name of the profile, e.g. `export WIRE_PROFILE=moon`
-3. Set it as the default for the system, e.g. `dx profile set moon`
-
-Note: The first profile created automatically becomes the system default.
-
-View the name of the active profile:
-
-```bash
-$ dx profile
-```
-
-View the configuration values for the active profile:
-
-```bash
-$ dx profile config
-```
-
-View the configuration values for a given profile:
-
-```bash
-$ dx profile config <NAME>
-```
-
-View the profile used for a command (using the `--dry-run` flag):
-
-```bash
-$ dx wns status --dry-run
-Profile: /Users/ashwinp/.wire/profile/devnet.yml
-```
-
-Multiple templates can be created and shared with others to use different configuration values. Some [sample templates](./profiles/README.md) are included in the repo.
-
-### Environment Variables
-
-While the usage of ENV variables is minimized, CLI still uses WNS related variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](env-map.yml)
-
-ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
-
-## Commands
-
-All the CLI modules support `help` flag that provides desired command clarification, e.g.
-
-```bash
-$ dx help
-```
-
-```bash
-$ dx app help
-```
-
-```bash
-$ dx app register help
-```
 
 ## Extensions
 
