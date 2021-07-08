@@ -32,7 +32,6 @@ export const authMiddleware = (loginApp) => async (req, res, next) => {
 
 export const walletAuthHandler = async (req, res) => {
   const path = createPath(whitelistFile);
-  console.log(path);
 
   if (!fs.existsSync(path)) {
     log(`No file ${path}, whitelist is empty.`);
