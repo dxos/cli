@@ -31,7 +31,7 @@ const DEFAULT_KEYPHRASE = 'kube';
 const log = debug('dxos:cli-app:server');
 debug.enable('dxos:*');
 
-const createPath = (file = '') => {
+export const createPath = (file = '') => {
   return file.startsWith('~') ? join(os.homedir(), file.substring(1)) : file;
 };
 

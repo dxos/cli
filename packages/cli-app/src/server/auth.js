@@ -3,14 +3,19 @@
 //
 
 import debug from 'debug';
+import fs from 'fs';
+import yaml from 'js-yaml';
 
 import { BASE_URL } from '../config';
 import { generateQRCode, verifyToken } from '../util/OTP';
+import { createPath } from './server';
 
 const log = debug('dxos:cli-app:server:auth');
 debug.enable('dxos:*');
 
 const COOKIE_MAX_AGE = 60;
+
+const whitelistFile = '~/.wire/keyhole-whitelist.yml';
 
 export const LOGIN_PATH = '/app/auth';
 export const OTP_QR_PATH = '/app/auth-setup';
@@ -26,10 +31,22 @@ export const authMiddleware = (loginApp) => async (req, res, next) => {
 };
 
 export const walletAuthHandler = async (req, res) => {
-  const keys = ['27b73bfd09bd389eac621bd1529a9554184e67860ce21466b27d359c16c6b546'];
-  if (keys.includes(req.body.key)) {
+  const path = createPath(whitelistFile);
+  console.log(path);
+
+  if (!fs.existsSync(path)) {
+    log(`No file ${path}, whitelist is empty.`);
+    return res.sendStatus(401);
+  }
+
+  const whitelist = yaml.load(fs.readFileSync(path));
+  const keys = whitelist.publicKeys ?? [];
+
+  if (req.body.key && keys.includes(req.body.key)) {
+    log('Found public key in the whitelist');
     return res.sendStatus(200);
   } else {
+    log('Didn\'t find public key in the whitelist');
     return res.sendStatus(401);
   }
 };
