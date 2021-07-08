@@ -242,7 +242,9 @@ export class Runnable {
       });
 
       child.on('SIGINT', () => {
-        kill(child.pid);
+        if (child.pid) {
+          kill(child.pid);
+        }
         process.exit();
       });
     });
