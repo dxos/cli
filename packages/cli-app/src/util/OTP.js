@@ -19,9 +19,7 @@ const getSecret = (phrase) => {
   return keyEncoder(secret, 'hex');
 };
 
-// export const verifyToken = (keyPhrase, token) => authenticator.verify({ secret: getSecret(keyPhrase), token });
-
-export const verifyToken = () => true;
+export const verifyToken = (keyPhrase, token) => authenticator.verify({ secret: getSecret(keyPhrase), token });
 
 export const generateQRCode = async (keyPhrase) => {
   const otp = authenticator.keyuri(USER, SERVICE, getSecret(keyPhrase));

@@ -52,10 +52,6 @@ export const walletAuthHandler = async (req, res) => {
 };
 
 export const authHandler = (keyPhrase) => async (req, res) => {
-  if (req.body.publicKey) {
-    console.log(req.body);
-    return res.sendStatus(200);
-  }
   const { code } = req.body;
 
   if (code && verifyToken(keyPhrase, code.replace(/\s/g, ''))) {
