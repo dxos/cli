@@ -26,8 +26,8 @@ export const authMiddleware = (loginApp) => async (req, res, next) => {
 };
 
 export const walletAuthHandler = async (req, res) => {
-  const keys = ['adac1715081b6e2aa649c52d37a6e8f8c0c106252b324fb66b5046ac5e6e4794'];
-  if (keys.includes(req.body.key)) {
+  const whitelistedKeys = ['adac1715081b6e2aa649c52d37a6e8f8c0c106252b324fb66b5046ac5e6e4794', 'cf6310f41aa1cfa946e6cd2a56918049da5b7038706b9f8b6106ca361e8c5bdd'];
+  if (whitelistedKeys.includes(req.body.key)) {
     return res.sendStatus(200);
   } else {
     return res.sendStatus(401);
