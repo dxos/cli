@@ -54,6 +54,7 @@ class Resolver {
 
   constructor (registry) {
     assert(registry);
+
     this._registry = registry;
   }
 
