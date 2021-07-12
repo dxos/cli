@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.1.5](https://www.github.com/dxos/cli/compare/v2.1.4...v2.1.5) (2021-07-12)
+
+
+### Bug Fixes
+
+* wallet auth. ([711df1c](https://www.github.com/dxos/cli/commit/711df1c92f556e05c6cbf4b9d753463faf71dcb8))
+
 ### [2.1.4](https://www.github.com/dxos/cli/compare/v2.1.3...v2.1.4) (2021-07-07)
 
 
