@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.1.6](https://www.github.com/dxos/cli/compare/v2.1.5...v2.1.6) (2021-07-13)
+
+
+### Bug Fixes
+
+* update registry-api. ([fabfea8](https://www.github.com/dxos/cli/commit/fabfea858dfc77612dcfd5f6ce8e6704dfbf9bc5))
+
 ### [2.1.5](https://www.github.com/dxos/cli/compare/v2.1.4...v2.1.5) (2021-07-12)
 
 
