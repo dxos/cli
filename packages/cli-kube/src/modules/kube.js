@@ -2,15 +2,16 @@
 // Copyright 2020 DXOS.org
 //
 
+import { readFileSync } from 'fs';
 import yaml from 'js-yaml';
 import path from 'path';
 import os from 'os';
 
 import { RUNNING_STATE, asyncHandler, DockerContainer, DockerImage } from '@dxos/cli-core';
-// import { log } from '@dxos/debug';
+import { log } from '@dxos/debug';
 
-import compose from '../../docker-compose.yml';
-import KubeServices from '../../services.yml';
+const KubeServices = readFileSync(path.join(__dirname, '../services.yml')).toString();
+const compose = readFileSync(path.join(__dirname, '../docker-compose.yml')).toString();
 
 const KUBE_PROFILE_ROOT = '.wire/kube';
 const KUBE_PROFILE_PATH = path.join(os.homedir(), KUBE_PROFILE_ROOT);
@@ -136,6 +137,19 @@ export const KubeModule = ({ config }) => ({
             await container.destroy();
           }
         }));
+      })
+    })
+
+    .command({
+      command: ['deploy'],
+      describe: 'Deploy KUBE to supported Cloud Provider.',
+      builder: yargs => yargs
+        .option('test'),
+
+      handler: asyncHandler(async argv => {
+        const { test } = argv;
+
+        log(test);
       })
     })
 });
