@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.0](https://www.github.com/dxos/cli/compare/v2.1.6...v2.2.0) (2021-07-19)
+
+
+### Features
+
+* **docs:** upgrade docs-theme ([#208](https://www.github.com/dxos/cli/issues/208)) ([75b5689](https://www.github.com/dxos/cli/commit/75b568949e3d878e4c3eb8dc27c7908337e6b261))
+
+
+### Bug Fixes
+
+* kube deploy ([#210](https://www.github.com/dxos/cli/issues/210)) ([148305a](https://www.github.com/dxos/cli/commit/148305ac465dc6fb54466916273de5965e279cba))
+
 ### [2.1.6](https://www.github.com/dxos/cli/compare/v2.1.5...v2.1.6) (2021-07-13)
 
 
