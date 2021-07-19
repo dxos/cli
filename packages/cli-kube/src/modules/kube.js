@@ -4,17 +4,20 @@
 
 import { readFileSync } from 'fs';
 import yaml from 'js-yaml';
-import path from 'path';
 import os from 'os';
+import path from 'path';
 
 import { RUNNING_STATE, asyncHandler, DockerContainer, DockerImage } from '@dxos/cli-core';
-import { log } from '@dxos/debug';
+// import { log } from '@dxos/debug';
+
+import { DigitalOceanProvider } from '../providers';
 
 const KubeServices = readFileSync(path.join(__dirname, '../services.yml')).toString();
 const compose = readFileSync(path.join(__dirname, '../docker-compose.yml')).toString();
 
 const KUBE_PROFILE_ROOT = '.wire/kube';
 const KUBE_PROFILE_PATH = path.join(os.homedir(), KUBE_PROFILE_ROOT);
+const DEFAULT_FQDN = 'kube.local';
 
 const kubeCompose = yaml.load(compose);
 const defaultServices = yaml.load(KubeServices);
@@ -84,7 +87,10 @@ export const KubeModule = ({ config }) => ({
       builder: yargs => yargs
         .option('key-phrase', { type: 'string', description: 'KUBE OTP keyphrase.' })
         .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) })
-        .option('name', { type: 'string', description: 'Container name' }),
+        .option('name', { type: 'string', description: 'Container name' })
+        .option('fqdn', { type: 'string', description: 'Fully Qualified Domain Name.', default: DEFAULT_FQDN })
+        .option('letsencrypt', { type: 'boolean', default: false })
+        .option('email', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
         const containers = await DockerContainer.list();
@@ -96,7 +102,7 @@ export const KubeModule = ({ config }) => ({
 
         const { services: { kube: service } } = kubeCompose;
 
-        const { name = service.container_name, keyPhrase, services } = argv;
+        const { name = service.container_name, keyPhrase, services, fqdn, letsencrypt, email } = argv;
 
         const dockerImage = new DockerImage({ service });
 
@@ -111,8 +117,13 @@ export const KubeModule = ({ config }) => ({
           `WIRE_APP_SERVER_KEYPHRASE=${keyPhrase}`,
           `WIRE_SERVICES=${services}`,
           `HOST_OS=${capitalize(process.platform)}`,
-          `KUBE_PROFILE_PATH=${KUBE_PROFILE_PATH}`
+          `KUBE_PROFILE_PATH=${KUBE_PROFILE_PATH}`,
+          `KUBE_FQDN=${fqdn}`
         ];
+
+        if (letsencrypt) {
+          env.push(`LETS_ENCRYPT_EMAIL=${email}`);
+        }
 
         const container = await dockerImage.getOrCreateContainer(name, undefined, env, binds, true);
         await container.start();
@@ -144,12 +155,24 @@ export const KubeModule = ({ config }) => ({
       command: ['deploy'],
       describe: 'Deploy KUBE to supported Cloud Provider.',
       builder: yargs => yargs
-        .option('test'),
+        .option('name', { type: 'string' })
+        .option('memory', { type: 'number' })
+        .option('region', { type: 'string' })
+        .option('pin', { type: 'boolean', default: false })
+        .option('register', { type: 'boolean', default: false })
+        .option('letsencrypt', { type: 'boolean', default: false })
+        .option('email', { type: 'string' })
+        .option('key-phrase', { type: 'string' })
+        .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) })
+        .option('fqdn', { type: 'string', description: 'Fully Qualified Domain Name.', default: DEFAULT_FQDN }),
 
       handler: asyncHandler(async argv => {
-        const { test } = argv;
+        const { name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, fqdn } = argv;
 
-        log(test);
+        const provider = new DigitalOceanProvider(config);
+
+        const result = await provider.deploy({ name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, fqdn });
+        console.log(result);
       })
     })
 });
