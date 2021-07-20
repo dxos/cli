@@ -76,13 +76,6 @@
     initRequired: false
     destroyRequired: false
   - 
-    moduleName: "@dxos/cli-machine"
-    describe: "KUBE machine extension."
-    command: 
-      - "machine"
-    initRequired: false
-    destroyRequired: false
-  - 
     moduleName: "@dxos/cli-mdns"
     describe: "MDNS extension."
     command: 
