@@ -182,9 +182,25 @@ export const KubeModule = ({ config }) => ({
       handler: asyncHandler(async argv => {
         const { json } = argv;
 
+        // TODO(egorgripasov): Multiple providers.
         const provider = new DigitalOceanProvider(config);
         const result = await provider.list();
         print(result, { json });
+      })
+    })
+
+    .command({
+      command: ['delete'],
+      describe: 'Delete deployed KUBEs.',
+      builder: yargs => yargs
+        .option('name', { type: 'string' }),
+
+      handler: asyncHandler(async argv => {
+        const { name } = argv;
+
+        // TODO(egorgripasov): Multiple providers.
+        const provider = new DigitalOceanProvider(config);
+        await provider.delete(name);
       })
     })
 });

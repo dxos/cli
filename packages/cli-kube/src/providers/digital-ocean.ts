@@ -53,6 +53,15 @@ export class DigitalOceanProvider implements Provider {
     return targetDroplet ? targetDroplet.id : undefined;
   }
 
+  async getRecordIdFromName (domain: string, name: string) {
+    assert(domain);
+    assert(name);
+
+    const result = await this._session.domains.getAllRecords(domain, KUBE_TAG);
+    const [target] = result.domain_records.filter((record: any) => record.name === name) || [];
+    return target ? target.id : undefined;
+  }
+
   async deploy (options: KubeDeployOptions) {
     const { name = `kube-${crypto.randomBytes(4).toString('hex')}`, region = DEFAULT_REGION, memory = DEFAULT_MEMORY, keyPhrase, letsencrypt, email /*, register, pin, services */ } = options;
     const fqdn = `${name}.${this._dnsDomain}`;
@@ -189,5 +198,21 @@ export class DigitalOceanProvider implements Provider {
     });
 
     return machines;
+  }
+
+  async delete (name: string) {
+    const dropletId = await this.getDropletIdFromName(name);
+    if (dropletId) {
+      try {
+        await this._session.droplets.deleteById(dropletId);
+      } catch (e) {}
+    }
+
+    const recordId = await this.getRecordIdFromName(this._dnsDomain, name);
+    if (recordId) {
+      try {
+        await this._session.domains.deleteRecord(this._dnsDomain, recordId);
+      } catch (e) {}
+    }
   }
 }

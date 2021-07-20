@@ -43,4 +43,6 @@ export interface Provider {
   createDNS(options: KubeDomainCreateOptions): Promise<any>
 
   list(): Promise<KUBE[]>
+
+  delete(name: string): Promise<void>
 }
