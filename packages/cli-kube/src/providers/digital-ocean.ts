@@ -2,11 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
 import crypto from 'crypto';
 import DigitalOcean from 'do-wrapper';
 import { readFileSync } from 'fs';
 import yaml from 'js-yaml';
 import path from 'path';
+
+import { waitForCondition } from '@dxos/async';
 
 import { KUBE_TAG, KubeDeployOptions, KubeDomainCreateOptions, Provider } from './common';
 
@@ -15,26 +18,58 @@ const { keys: sshKeys } = yaml.load(SSH_KEYS);
 
 const DEFAULT_REGION = 'nyc3';
 const DEFAULT_MEMORY = 4;
+const DEFAULT_DNS_TTL = 300;
 
 export class DigitalOceanProvider implements Provider {
   _config: any;
   _session: any;
+  _githubAccessToken: string
+  _githubUsername: string
+  _npmAccessToken: string
+  _dnsDomain: string
 
   constructor (config: any) {
     this._config = config;
+
+    this._githubAccessToken = this._config.get('services.machine.githubAccessToken');
+    this._githubUsername = this._config.get('services.machine.githubUsername');
+    this._npmAccessToken = this._config.get('services.machine.npmAccessToken');
+    this._dnsDomain = this._config.get('services.machine.dnsDomain');
+
+    assert(this._githubAccessToken);
+    assert(this._githubUsername);
+    assert(this._npmAccessToken);
+    assert(this._dnsDomain);
 
     const doAccessToken = config.get('services.machine.doAccessToken');
     this._session = new DigitalOcean(doAccessToken, 100);
   }
 
-  async deploy (options: KubeDeployOptions) {
-    // const email = this._config.get('services.machine.email');
-    const githubAccessToken = this._config.get('services.machine.githubAccessToken');
-    const githubUsername = this._config.get('services.machine.githubUsername');
-    const npmAccessToken = this._config.get('services.machine.npmAccessToken');
-    // const dnsDomain = this._config.get('services.machine.dnsDomain');
+  async getDropletIdFromName (name: string) {
+    assert(name);
 
-    const { name = `kube-${crypto.randomBytes(4).toString('hex')}`, region = DEFAULT_REGION, memory = DEFAULT_MEMORY, keyPhrase, fqdn, letsencrypt, email /*, register, pin, services */ } = options;
+    const result = await this._session.droplets.getAll();
+    const [targetDroplet] = result.droplets.filter((droplet: any) => droplet.name === name) || [];
+    return targetDroplet ? targetDroplet.id : undefined;
+  }
+
+  async getRecordIdFromName (domain: string, name: string) {
+    assert(domain);
+    assert(name);
+
+    const result = await this._session.domains.getAllRecords(domain, KUBE_TAG);
+    const [target] = result.domain_records.filter((record: any) => record.name === name) || [];
+    return target ? target.id : undefined;
+  }
+
+  async deploy (options: KubeDeployOptions) {
+    const { name = `kube-${crypto.randomBytes(4).toString('hex')}`, region = DEFAULT_REGION, memory = DEFAULT_MEMORY, keyPhrase, letsencrypt, email /*, register, pin, services */ } = options;
+    const fqdn = `${name}.${this._dnsDomain}`;
+
+    const dropletId = await this.getDropletIdFromName(name);
+    if (dropletId) {
+      throw new Error(`${name} already exists.`);
+    }
 
     const cloudConfigScript =
          `#cloud-config
@@ -64,7 +99,7 @@ export class DigitalOceanProvider implements Provider {
            - curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
            - sudo apt-get install -y nodejs
            - export HOME=/root
-           - echo "//registry.npmjs.org/:_authToken=${npmAccessToken}" >> $HOME/.npmrc
+           - echo "//registry.npmjs.org/:_authToken=${this._npmAccessToken}" >> $HOME/.npmrc
            - npm install --global yarn
            - yarn global add @dxos/cli@alpha
            - dx profile init --name moon --template-url https://git.io/Jnmus
@@ -73,8 +108,8 @@ export class DigitalOceanProvider implements Provider {
            - dx extension install @dxos/cli-dxns --version alpha
            - dx extension install @dxos/cli-app --version alpha
            - dx extension install @dxos/cli-signal --version alpha
-           - export WIRE_MACHINE_GITHUB_USERNAME=${githubUsername}
-           - export WIRE_MACHINE_GITHUB_TOKEN=${githubAccessToken}
+           - export WIRE_MACHINE_GITHUB_USERNAME=${this._githubUsername}
+           - export WIRE_MACHINE_GITHUB_TOKEN=${this._githubAccessToken}
            - dx kube install --auth
            - dx service install --from @dxos/cli-app --service app-server --auth
            - dx service install --from @dxos/cli-dxns --service dxns --auth
@@ -116,10 +151,85 @@ export class DigitalOceanProvider implements Provider {
     };
 
     const result = await this._session.droplets.create(createParameters);
-    return result;
+    const droplet = await waitForCondition(async () => {
+      const { droplet } = await this._session.droplets.getById(result.droplet.id);
+      // eslint-disable-next-line camelcase
+      if (droplet?.networks.v4.find((net: any) => net.type === 'public').ip_address) {
+        return droplet;
+      }
+      return undefined;
+    }, 0, 1000);
+
+    const ipAddress = droplet.networks.v4.find((net: any) => net.type === 'public').ip_address;
+    await this._session.domains.createRecord(this._dnsDomain, {
+      type: 'A',
+      name,
+      data: ipAddress,
+      ttl: DEFAULT_DNS_TTL,
+      tags: [KUBE_TAG]
+    });
+
+    return {
+      name: droplet.name,
+      createdAt: droplet.created_at,
+      memory: droplet.memory,
+      vcpus: droplet.vcpus,
+      ipAddress: ipAddress,
+      fqdn
+    };
   }
 
   async createDNS (options: KubeDomainCreateOptions) {
     console.log(options);
+  }
+
+  async list () {
+    const result = await this._session.droplets.getAll(KUBE_TAG);
+
+    const machines = result.droplets.map((droplet: any) => {
+      return {
+        name: droplet.name,
+        createdAt: droplet.created_at,
+        memory: droplet.memory,
+        vcpus: droplet.vcpus,
+        ipAddress: droplet.networks.v4.find((net: any) => net.type === 'public').ip_address,
+        fqdn: `${droplet.name}.${this._dnsDomain}`
+      };
+    });
+
+    return machines;
+  }
+
+  async delete (name: string) {
+    const dropletId = await this.getDropletIdFromName(name);
+    if (dropletId) {
+      try {
+        await this._session.droplets.deleteById(dropletId);
+      } catch (e) {}
+    }
+
+    const recordId = await this.getRecordIdFromName(this._dnsDomain, name);
+    if (recordId) {
+      try {
+        await this._session.domains.deleteRecord(this._dnsDomain, recordId);
+      } catch (e) {}
+    }
+  }
+
+  async get (name: string) {
+    const dropletId = await this.getDropletIdFromName(name);
+    let kube;
+    if (dropletId) {
+      const { droplet } = await this._session.droplets.getById(dropletId);
+      kube = {
+        name: droplet.name,
+        createdAt: droplet.created_at,
+        memory: droplet.memory,
+        vcpus: droplet.vcpus,
+        ipAddress: droplet.networks.v4.find((net: any) => net.type === 'public').ip_address,
+        fqdn: `${name}.${this._dnsDomain}`
+      };
+    }
+    return kube;
   }
 }

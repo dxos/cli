@@ -7,8 +7,7 @@ import yaml from 'js-yaml';
 import os from 'os';
 import path from 'path';
 
-import { RUNNING_STATE, asyncHandler, DockerContainer, DockerImage } from '@dxos/cli-core';
-// import { log } from '@dxos/debug';
+import { RUNNING_STATE, asyncHandler, DockerContainer, DockerImage, print } from '@dxos/cli-core';
 
 import { DigitalOceanProvider } from '../providers';
 
@@ -121,7 +120,7 @@ export const KubeModule = ({ config }) => ({
           `KUBE_FQDN=${fqdn}`
         ];
 
-        if (letsencrypt) {
+        if (letsencrypt && email) {
           env.push(`LETS_ENCRYPT_EMAIL=${email}`);
         }
 
@@ -163,16 +162,63 @@ export const KubeModule = ({ config }) => ({
         .option('letsencrypt', { type: 'boolean', default: false })
         .option('email', { type: 'string' })
         .option('key-phrase', { type: 'string' })
-        .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) })
-        .option('fqdn', { type: 'string', description: 'Fully Qualified Domain Name.', default: DEFAULT_FQDN }),
+        .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) }),
 
       handler: asyncHandler(async argv => {
-        const { name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, fqdn } = argv;
+        const { name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, json } = argv;
 
+        // TODO(egorgripasov): Multiple providers.
         const provider = new DigitalOceanProvider(config);
 
-        const result = await provider.deploy({ name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, fqdn });
-        console.log(result);
+        const result = await provider.deploy({ name, memory, region, pin, register, letsencrypt, email, keyPhrase, services });
+        print(result, { json });
+      })
+    })
+
+    .command({
+      command: ['get'],
+      describe: 'Get deployed KUBEs info.',
+      builder: yargs => yargs
+        .option('name', { type: 'string' }),
+
+      handler: asyncHandler(async argv => {
+        const { name, json } = argv;
+
+        // TODO(egorgripasov): Multiple providers.
+        const provider = new DigitalOceanProvider(config);
+        const result = await provider.get(name);
+        if (result) {
+          print(result, { json });
+        }
+      })
+    })
+
+    .command({
+      command: ['list'],
+      describe: 'List deployed KUBEs.',
+
+      handler: asyncHandler(async argv => {
+        const { json } = argv;
+
+        // TODO(egorgripasov): Multiple providers.
+        const provider = new DigitalOceanProvider(config);
+        const result = await provider.list();
+        print(result, { json });
+      })
+    })
+
+    .command({
+      command: ['delete'],
+      describe: 'Delete deployed KUBEs.',
+      builder: yargs => yargs
+        .option('name', { type: 'string' }),
+
+      handler: asyncHandler(async argv => {
+        const { name } = argv;
+
+        // TODO(egorgripasov): Multiple providers.
+        const provider = new DigitalOceanProvider(config);
+        await provider.delete(name);
       })
     })
 });

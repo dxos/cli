@@ -1,7 +1,0 @@
-- package: '@dxos/cli-signal'
-  service: 'signal'
-  args: '--asBootstrap'
-- package: '@dxos/cli-app'
-  service: 'app-server'
-- package: '@dxos/cli-dxns'
-  service: 'dxns'
