@@ -215,4 +215,21 @@ export class DigitalOceanProvider implements Provider {
       } catch (e) {}
     }
   }
+
+  async get (name: string) {
+    const dropletId = await this.getDropletIdFromName(name);
+    let kube;
+    if (dropletId) {
+      const { droplet } = await this._session.droplets.getById(dropletId);
+      kube = {
+        name: droplet.name,
+        createdAt: droplet.created_at,
+        memory: droplet.memory,
+        vcpus: droplet.vcpus,
+        ipAddress: droplet.networks.v4.find((net: any) => net.type === 'public').ip_address,
+        fqdn: `${name}.${this._dnsDomain}`
+      };
+    }
+    return kube;
+  }
 }

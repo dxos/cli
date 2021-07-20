@@ -45,4 +45,6 @@ export interface Provider {
   list(): Promise<KUBE[]>
 
   delete(name: string): Promise<void>
+
+  get(name: string): Promise<KUBE | undefined>
 }

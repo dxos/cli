@@ -176,6 +176,24 @@ export const KubeModule = ({ config }) => ({
     })
 
     .command({
+      command: ['get'],
+      describe: 'Get deployed KUBEs info.',
+      builder: yargs => yargs
+        .option('name', { type: 'string' }),
+
+      handler: asyncHandler(async argv => {
+        const { name, json } = argv;
+
+        // TODO(egorgripasov): Multiple providers.
+        const provider = new DigitalOceanProvider(config);
+        const result = await provider.get(name);
+        if (result) {
+          print(result, { json });
+        }
+      })
+    })
+
+    .command({
       command: ['list'],
       describe: 'List deployed KUBEs.',
 
