@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.2.1](https://www.github.com/dxos/cli/compare/v2.2.0...v2.2.1) (2021-07-20)
+
+
+### Bug Fixes
+
+* kube deploy. ([#211](https://www.github.com/dxos/cli/issues/211)) ([4de5041](https://www.github.com/dxos/cli/commit/4de5041bc3b937a63c42b13d7b9bca8718b92519))
+
 ## [2.2.0](https://www.github.com/dxos/cli/compare/v2.1.6...v2.2.0) (2021-07-19)
 
 
