@@ -14,7 +14,6 @@ export interface KubeDeployOptions {
   email: string
   services: string
   keyPhrase: string
-  fqdn: string
 }
 
 export interface KubeDomainCreateOptions {
