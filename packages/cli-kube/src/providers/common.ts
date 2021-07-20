@@ -22,14 +22,25 @@ export interface KubeDomainCreateOptions {
   ipAddress: string
 }
 
+export type KUBE = {
+  name: string
+  createdAt: string,
+  memory: number,
+  vcpus: number,
+  ipAddress: string,
+  fqdn: string
+}
+
 export interface Provider {
   /**
    * Deploy KUBE to a Provider.
    */
-  deploy(options: KubeDeployOptions): Promise<any>
+  deploy(options: KubeDeployOptions): Promise<KUBE>
 
   /**
    * Create DNS record for deployed KUBE.
    */
   createDNS(options: KubeDomainCreateOptions): Promise<any>
+
+  list(): Promise<KUBE[]>
 }

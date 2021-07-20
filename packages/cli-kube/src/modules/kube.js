@@ -167,9 +167,23 @@ export const KubeModule = ({ config }) => ({
       handler: asyncHandler(async argv => {
         const { name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, json } = argv;
 
+        // TODO(egorgripasov): Multiple providers.
         const provider = new DigitalOceanProvider(config);
 
         const result = await provider.deploy({ name, memory, region, pin, register, letsencrypt, email, keyPhrase, services });
+        print(result, { json });
+      })
+    })
+
+    .command({
+      command: ['list'],
+      describe: 'List deployed KUBEs.',
+
+      handler: asyncHandler(async argv => {
+        const { json } = argv;
+
+        const provider = new DigitalOceanProvider(config);
+        const result = await provider.list();
         print(result, { json });
       })
     })

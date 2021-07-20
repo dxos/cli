@@ -23,9 +23,23 @@ const DEFAULT_DNS_TTL = 300;
 export class DigitalOceanProvider implements Provider {
   _config: any;
   _session: any;
+  _githubAccessToken: string
+  _githubUsername: string
+  _npmAccessToken: string
+  _dnsDomain: string
 
   constructor (config: any) {
     this._config = config;
+
+    this._githubAccessToken = this._config.get('services.machine.githubAccessToken');
+    this._githubUsername = this._config.get('services.machine.githubUsername');
+    this._npmAccessToken = this._config.get('services.machine.npmAccessToken');
+    this._dnsDomain = this._config.get('services.machine.dnsDomain');
+
+    assert(this._githubAccessToken);
+    assert(this._githubUsername);
+    assert(this._npmAccessToken);
+    assert(this._dnsDomain);
 
     const doAccessToken = config.get('services.machine.doAccessToken');
     this._session = new DigitalOcean(doAccessToken, 100);
@@ -40,14 +54,8 @@ export class DigitalOceanProvider implements Provider {
   }
 
   async deploy (options: KubeDeployOptions) {
-    // const email = this._config.get('services.machine.email');
-    const githubAccessToken = this._config.get('services.machine.githubAccessToken');
-    const githubUsername = this._config.get('services.machine.githubUsername');
-    const npmAccessToken = this._config.get('services.machine.npmAccessToken');
-    const dnsDomain = this._config.get('services.machine.dnsDomain');
-
     const { name = `kube-${crypto.randomBytes(4).toString('hex')}`, region = DEFAULT_REGION, memory = DEFAULT_MEMORY, keyPhrase, letsencrypt, email /*, register, pin, services */ } = options;
-    const fqdn = `${name}.${dnsDomain}`;
+    const fqdn = `${name}.${this._dnsDomain}`;
 
     const dropletId = await this.getDropletIdFromName(name);
     if (dropletId) {
@@ -82,7 +90,7 @@ export class DigitalOceanProvider implements Provider {
            - curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
            - sudo apt-get install -y nodejs
            - export HOME=/root
-           - echo "//registry.npmjs.org/:_authToken=${npmAccessToken}" >> $HOME/.npmrc
+           - echo "//registry.npmjs.org/:_authToken=${this._npmAccessToken}" >> $HOME/.npmrc
            - npm install --global yarn
            - yarn global add @dxos/cli@alpha
            - dx profile init --name moon --template-url https://git.io/Jnmus
@@ -91,8 +99,8 @@ export class DigitalOceanProvider implements Provider {
            - dx extension install @dxos/cli-dxns --version alpha
            - dx extension install @dxos/cli-app --version alpha
            - dx extension install @dxos/cli-signal --version alpha
-           - export WIRE_MACHINE_GITHUB_USERNAME=${githubUsername}
-           - export WIRE_MACHINE_GITHUB_TOKEN=${githubAccessToken}
+           - export WIRE_MACHINE_GITHUB_USERNAME=${this._githubUsername}
+           - export WIRE_MACHINE_GITHUB_TOKEN=${this._githubAccessToken}
            - dx kube install --auth
            - dx service install --from @dxos/cli-app --service app-server --auth
            - dx service install --from @dxos/cli-dxns --service dxns --auth
@@ -144,7 +152,7 @@ export class DigitalOceanProvider implements Provider {
     }, 0, 1000);
 
     const ipAddress = droplet.networks.v4.find((net: any) => net.type === 'public').ip_address;
-    await this._session.domains.createRecord(dnsDomain, {
+    await this._session.domains.createRecord(this._dnsDomain, {
       type: 'A',
       name,
       data: ipAddress,
@@ -154,15 +162,32 @@ export class DigitalOceanProvider implements Provider {
 
     return {
       name: droplet.name,
-      created_at: droplet.created_at,
+      createdAt: droplet.created_at,
       memory: droplet.memory,
       vcpus: droplet.vcpus,
-      ip_address: ipAddress,
+      ipAddress: ipAddress,
       fqdn
     };
   }
 
   async createDNS (options: KubeDomainCreateOptions) {
     console.log(options);
+  }
+
+  async list () {
+    const result = await this._session.droplets.getAll(KUBE_TAG);
+
+    const machines = result.droplets.map((droplet: any) => {
+      return {
+        name: droplet.name,
+        createdAt: droplet.created_at,
+        memory: droplet.memory,
+        vcpus: droplet.vcpus,
+        ipAddress: droplet.networks.v4.find((net: any) => net.type === 'public').ip_address,
+        fqdn: `${droplet.name}.${this._dnsDomain}`
+      };
+    });
+
+    return machines;
   }
 }
