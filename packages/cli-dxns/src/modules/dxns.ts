@@ -6,7 +6,9 @@ import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
+import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
+import { listDomains, getFreeDomain } from '../handlers/domain';
 import { listRecords, getRecords, addRecord } from '../handlers/record';
 import { listResources } from '../handlers/resource';
 import { listSchemas, querySchema, getSchema, addSchema } from '../handlers/schema';
@@ -150,6 +152,84 @@ export const DXNSModule = (params: Params) => {
               .option('amount', { type: 'string' }),
 
             handler: asyncHandler(increaseBalance({ getDXNSClient }))
+          })
+      })
+
+      .command({
+        command: ['domain'],
+        describe: 'Domain commands.',
+        handler: () => {},
+        builder: yargs => yargs
+          .command({
+            command: ['list'],
+            describe: 'List domains.',
+            handler: asyncHandler(listDomains({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['create'],
+            describe: 'Create free domain.',
+            handler: asyncHandler(getFreeDomain({ getDXNSClient }))
+          })
+      })
+
+      .command({
+        command: ['auction'],
+        describe: 'Auction commands.',
+        handler: () => {},
+        builder: yargs => yargs
+          .command({
+            command: ['create <name> <start-amount>'],
+            describe: 'Create a new auction.',
+            builder: yargs => yargs
+              .option('name', { type: 'string' })
+              .option('start-amount', { type: 'number' }),
+
+            handler: asyncHandler(createAuction({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['bid <name> <amount>'],
+            describe: 'Bid on a given name.',
+            builder: yargs => yargs
+              .option('name', { type: 'string' })
+              .option('amount', { type: 'number' }),
+
+            handler: asyncHandler(bidAuction({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['close <name>'],
+            describe: 'Close an auction after the bidding period.',
+            builder: yargs => yargs
+              .option('name', { type: 'string' }),
+
+            handler: asyncHandler(closeAuction({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['force-close <name>'],
+            describe: 'Force-closes an auction after the bidding period. Available in non-production environments.',
+            builder: yargs => yargs
+              .option('name', { type: 'string' }),
+
+            handler: asyncHandler(forceCloseAuction({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['claim <name>'],
+            describe: 'Claim an auction, if the auction is closed and you are the winner.',
+            builder: yargs => yargs
+              .option('name', { type: 'string' }),
+
+            handler: asyncHandler(claimAuction({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['list'],
+            describe: 'Claim an auction, if the auction is closed and you are the winner.',
+
+            handler: asyncHandler(listAuctions({ getDXNSClient }))
           })
       })
   };
