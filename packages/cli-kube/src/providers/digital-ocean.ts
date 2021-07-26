@@ -14,7 +14,7 @@ import { waitForCondition } from '@dxos/async';
 import { KUBE_TAG, KubeDeployOptions, KubeDomainCreateOptions, Provider } from './common';
 
 const SSH_KEYS = readFileSync(path.join(__dirname, '../ssh-keys.yml')).toString();
-const { keys: sshKeys } = yaml.load(SSH_KEYS);
+const { keys: defaultSSHKeys } = yaml.load(SSH_KEYS);
 
 const DEFAULT_REGION = 'nyc3';
 const DEFAULT_MEMORY = 4;
@@ -63,7 +63,7 @@ export class DigitalOceanProvider implements Provider {
   }
 
   async deploy (options: KubeDeployOptions) {
-    const { name = `kube-${crypto.randomBytes(4).toString('hex')}`, region = DEFAULT_REGION, memory = DEFAULT_MEMORY, keyPhrase, letsencrypt, email /*, register, pin, services */ } = options;
+    const { name = `kube-${crypto.randomBytes(4).toString('hex')}`, region = DEFAULT_REGION, memory = DEFAULT_MEMORY, keyPhrase, letsencrypt, email, sshKeys = defaultSSHKeys /*, register, pin, services */ } = options;
     const fqdn = `${name}.${this._dnsDomain}`;
 
     const dropletId = await this.getDropletIdFromName(name);

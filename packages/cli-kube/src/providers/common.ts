@@ -14,6 +14,7 @@ export interface KubeDeployOptions {
   email: string
   services: string
   keyPhrase: string
+  sshKeys: string[]
 }
 
 export interface KubeDomainCreateOptions {

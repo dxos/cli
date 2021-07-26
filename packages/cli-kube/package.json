@@ -43,6 +43,7 @@
     "@dxos/object-model": "~2.10.12",
     "assert": "^2.0.0",
     "do-wrapper": "4.1.2",
+    "got": "^10.7.0",
     "js-yaml": "^3.13.1",
     "yargs": "^16.2.0"
   },
