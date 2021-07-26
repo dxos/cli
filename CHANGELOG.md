@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.2.2](https://www.github.com/dxos/cli/compare/v2.2.1...v2.2.2) (2021-07-26)
+
+
+### Bug Fixes
+
+* cli-dxns - Add domains and auctions. ([#213](https://www.github.com/dxos/cli/issues/213)) ([a714bc1](https://www.github.com/dxos/cli/commit/a714bc106b947e70222442295040c322170117a4))
+* cli-kube to get list of ssh keys. ([aa8297b](https://www.github.com/dxos/cli/commit/aa8297bfd193d0cfdcc8ba287c7ff03d0a46692f))
+
 ### [2.2.1](https://www.github.com/dxos/cli/compare/v2.2.0...v2.2.1) (2021-07-20)
 
 
