@@ -12,6 +12,7 @@ import { listDomains, getFreeDomain } from '../handlers/domain';
 import { listRecords, getRecords, addRecord } from '../handlers/record';
 import { listResources } from '../handlers/resource';
 import { listSchemas, querySchema, getSchema, addSchema } from '../handlers/schema';
+import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 
 interface Params {
@@ -20,7 +21,7 @@ interface Params {
 }
 
 export const DXNSModule = (params: Params) => {
-  const { getDXNSClient } = params;
+  const { getDXNSClient, config } = params;
   return {
     command: ['dxns'],
     describe: 'DXNS operations.',
@@ -231,6 +232,15 @@ export const DXNSModule = (params: Params) => {
 
             handler: asyncHandler(listAuctions({ getDXNSClient }))
           })
+      })
+
+      .command({
+        command: ['seed'],
+        describe: 'Seed DXNS.',
+        builder: yargs => yargs
+          .option('domain', { type: 'string' }),
+
+        handler: asyncHandler(seedRegistry({ getDXNSClient, config }))
       })
   };
 };
