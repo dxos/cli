@@ -2,16 +2,16 @@ syntax = "proto3";
 
 package dxos;
 
-message DXNS_cid {
+message dxnscid {
   bytes data = 1;
 }
 
-message IPFS_cid {
+message ipfscid {
   bytes data = 1;
 }
 
 message Any {
-  DXNS_cid schema_cid = 1;
+  dxnscid schema_cid = 1;
   string mesage_fqn = 2;
   bytes payload = 3;
 }
@@ -40,7 +40,7 @@ message Service {
 message App {
   RecordAttributes attributes = 1;
   string build = 2;
-  IPFS_cid binary_hash = 3;
+  ipfscid package = 3;
   string repository = 4;
   string repository_version = 5;
   string license = 6;
@@ -52,7 +52,7 @@ message App {
 message Bot {
   RecordAttributes attributes = 1;
   // Either Docker image (new version) or Bin (old version).
-  IPFS_cid binary_hash = 2;
+  ipfscid binary_hash = 2;
   string repository = 3;
   string repository_version = 4;
   string license = 5;
@@ -73,7 +73,7 @@ message BotFactory {
 message File {
   string content_type = 1;
   string file_name = 2;
-  IPFS_cid binary_hash = 3;
+  ipfscid binary_hash = 3;
 
   Any extension = 10;
 }
