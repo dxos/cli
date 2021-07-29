@@ -56,10 +56,12 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   // Register DXOS Schema.
   verbose && log('Registering DXOS schema..');
+
+  pb.common('google/protobuf/descriptor.proto', {});
   const root = await pb.load(SCHEMA_PATH as string);
 
   const hash = await registryApi.addSchema(root);
   await client.registryApi.registerResource(domainKey, DEFAULT_SCHEMA_NAME, hash);
 
-  print({ account, domain }, { json });
+  print({ account, domain, schema: hash.toB58String() }, { json });
 };

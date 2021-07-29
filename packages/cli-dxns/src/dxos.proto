@@ -2,16 +2,18 @@ syntax = "proto3";
 
 package dxos;
 
-message dxnscid {
-  bytes data = 1;
+import "google/protobuf/descriptor.proto";
+
+message HashOptions {
+  string type = 1;
 }
 
-message ipfscid {
-  bytes data = 1;
+extend google.protobuf.FieldOptions {
+  HashOptions hash_options = 50000;
 }
 
 message Any {
-  dxnscid schema_cid = 1;
+  bytes schema = 1 [(hash_options).type = "DXNS_CID"];
   string mesage_fqn = 2;
   bytes payload = 3;
 }
@@ -22,6 +24,10 @@ message RecordAttributes {
   string version = 3;
   string author = 4;
 }
+
+//
+// Records
+//
 
 message KUBE {
   RecordAttributes attributes = 1;
@@ -40,7 +46,7 @@ message Service {
 message App {
   RecordAttributes attributes = 1;
   string build = 2;
-  ipfscid package = 3;
+  bytes hash = 3 [(hash_options).type = "IPFS_CID"];
   string repository = 4;
   string repository_version = 5;
   string license = 6;
@@ -51,8 +57,7 @@ message App {
 
 message Bot {
   RecordAttributes attributes = 1;
-  // Either Docker image (new version) or Bin (old version).
-  ipfscid binary_hash = 2;
+  bytes hash = 2 [(hash_options).type = "IPFS_CID"];
   string repository = 3;
   string repository_version = 4;
   string license = 5;
@@ -73,7 +78,7 @@ message BotFactory {
 message File {
   string content_type = 1;
   string file_name = 2;
-  ipfscid binary_hash = 3;
+  bytes hash = 3 [(hash_options).type = "IPFS_CID"];
 
   Any extension = 10;
 }
