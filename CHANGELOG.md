@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.2.3](https://www.github.com/dxos/cli/compare/v2.2.2...v2.2.3) (2021-07-29)
+
+
+### Bug Fixes
+
+* seed DXNS. ([#215](https://www.github.com/dxos/cli/issues/215)) ([377be31](https://www.github.com/dxos/cli/commit/377be31bc5dde314e10ccd89062892f0165c2a4d))
+
 ### [2.2.2](https://www.github.com/dxos/cli/compare/v2.2.1...v2.2.2) (2021-07-26)
 
 
