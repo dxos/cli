@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-halo",
-  "version": "2.2.2-alpha.0",
+  "version": "2.3.0-alpha.0",
   "description": "DXOS HALO CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-halo#readme",
   "license": "AGPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.2.2-alpha.0",
+    "@dxos/cli-core": "^2.3.0-alpha.0",
     "@dxos/crypto": "~2.10.12",
     "@dxos/debug": "~2.10.12",
     "@dxos/object-model": "~2.10.12",
