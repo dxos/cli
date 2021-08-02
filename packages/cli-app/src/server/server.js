@@ -70,7 +70,8 @@ class Resolver {
     }
 
     const { records } = await this._registry.resolveNames([name]);
-    if (!records.length) {
+
+    if (!records.length || !records[0]) {
       log(`Not found: ${name}`);
       return;
     }
@@ -202,7 +203,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     }
 
     if (!cid) {
-      return res.status(404);
+      return res.status(404).send();
     }
 
     return ipfsProxy(cid)(req, res, file);
