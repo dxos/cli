@@ -14,7 +14,7 @@ import { Registry } from '@wirelineio/registry-client';
 import { loadAppConfig, updateAppConfig } from './config';
 
 export const register = (config, { getAppRecord, getDXNSClient }) => async (argv) => {
-  const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns, schema } = argv;
+  const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns, schema = config.get('services.dxns.schema.cid') } = argv;
   const wnsConfig = config.get('services.wns');
   const { server, userKey, bondId, chainId } = wnsConfig;
 
@@ -72,11 +72,13 @@ export const register = (config, { getAppRecord, getDXNSClient }) => async (argv
       }
     }
   } else {
+    assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(name), 'Name could contain only letters, numbers, dashes or dots.');
+
     // TODO(egorgripasov): Adapter for the new record format. Cleanup.
     const { name: appName, version, author, description, package: pkg, ...rest } = conf;
 
     const client = await getDXNSClient();
-    const fqn = '.dxos.App';
+    const fqn = config.get('services.dxns.schema.fqn.app');
     const schemaCid = CID.from(schema);
 
     const data = {

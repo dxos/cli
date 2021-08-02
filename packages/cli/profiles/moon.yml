@@ -36,6 +36,15 @@ services:
   dxns:
     server: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
     uri:
+    schema:
+      cid:
+      fqn:
+        app: '.dxos.App'
+        bot: '.dxos.Bot'
+        botFactory: '.dxos.BotFactory'
+        KUBE: '.dxos.KUBE'
+        service: '.dxos.Service'
+        file: '.dxos.File'
   machine:
     doAccessToken: ''
     githubAccessToken: ''
