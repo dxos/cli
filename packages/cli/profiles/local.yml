@@ -36,6 +36,15 @@ services:
   dxns:
     server: 'ws://127.0.0.1:9944'
     uri:
+    schema:
+      cid:
+      fqn:
+        app: '.dxos.App'
+        bot: '.dxos.Bot'
+        botFactory: '.dxos.BotFactory'
+        KUBE: '.dxos.KUBE'
+        service: '.dxos.Service'
+        file: '.dxos.File'
   ipfs:
     server: 'http://127.0.0.1:5001'
     gateway: 'http://127.0.0.1:8888/ipfs/'
