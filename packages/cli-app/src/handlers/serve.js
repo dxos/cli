@@ -23,6 +23,8 @@ export const start = (config) => async ({
   const loginApp = config.get('cli.app.serve.loginApp');
   const keyPhrase = config.get('cli.app.serve.keyPhrase');
 
+  const dxnsEndpoint = config.get('services.dxns.server');
+
   assert(endpoint, 'Invalid WNS Endpoint.');
   assert(ipfsGateway, 'Invalid IPFS Gateway.');
 
@@ -33,7 +35,7 @@ export const start = (config) => async ({
   };
 
   // TODO(burdon): Document array.
-  serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || '', loginApp, keyPhrase], options);
+  serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || '', loginApp, keyPhrase, dxnsEndpoint], options);
 };
 
 export const stop = (/* config */) => async ({

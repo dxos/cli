@@ -31,7 +31,7 @@ const getAppRecord = (config, namespace) => {
 /**
  * App CLI module.
  */
-export const AppModule = ({ config }) => {
+export const AppModule = ({ getDXNSClient, config }) => {
   return ({
     command: ['app'],
     describe: 'App CLI.',
@@ -65,12 +65,16 @@ export const AppModule = ({ config }) => {
           .version(false)
           .option('id', { type: 'string' })
           .option('name', { type: 'array' })
+          .option('domain', { type: 'string' })
           .option('version', { type: 'string' })
           .option('namespace', { type: 'string' })
           .option('gas', { type: 'string' })
-          .option('fees', { type: 'string' }),
+          .option('fees', { type: 'string' })
+          .option('schema', { type: 'string' })
+          // TODO(egorgripasov): Remove.
+          .option('dxns', { type: 'boolean', default: false }),
 
-        handler: asyncHandler(register(config, { getAppRecord }))
+        handler: asyncHandler(register(config, { getAppRecord, getDXNSClient }))
       })
 
       // Deploy app.
@@ -82,17 +86,19 @@ export const AppModule = ({ config }) => {
           .version(false)
           .option('id', { type: 'string' })
           .option('name', { type: 'array' })
+          .option('domain', { type: 'string' })
           .option('namespace', { type: 'string' }) // TODO(burdon): Why not required in register above?
           .option('version', { type: 'string' })
           .option('gas', { type: 'string' })
           .option('fees', { type: 'string' })
+          .option('schema', { type: 'string' })
           .option('timeout', { type: 'string', default: '10m' }),
 
         handler: asyncHandler(async argv => {
           log('Preparing to deploy...'); // TODO(burdon): Standardize logging (stages, verbose).
           await build(config, { getAppRecord, getPublicUrl })(argv);
           await publish(config)(argv);
-          await register(config, { getAppRecord })(argv);
+          await register(config, { getAppRecord, getDXNSClient })(argv);
         })
       })
 

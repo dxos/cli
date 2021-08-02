@@ -16,9 +16,11 @@ import yaml from 'js-yaml';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
+import { DXN, CID } from '@dxos/registry-api';
 import { Registry } from '@wirelineio/registry-client';
 
 import { WALLET_LOGIN_PATH, LOGIN_PATH, /* OTP_QR_PATH, */ authHandler, /* authSetupHandler, */ authMiddleware, walletAuthHandler } from './auth';
+import { getRegistryApi } from './dxns';
 import { WRN } from '../util/WRN';
 import { BASE_URL, DEFAULT_PORT } from '../config';
 
@@ -52,12 +54,14 @@ const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
 class Resolver {
   _cache = new Map();
 
-  constructor (registry) {
+  constructor (registry, registryApi) {
     assert(registry);
 
     this._registry = registry;
+    this._registryApi = registryApi;
   }
 
+  // TODO(egorgripasov): Deprecate.
   async lookupCID (name) {
     const cached = this._cache.get(name);
     if (cached && Date.now() < cached.expiration) {
@@ -77,6 +81,28 @@ class Resolver {
     log(`Found ${name} => ${cid}`);
     return cid;
   }
+
+  async lookupCIDinDXNS (id) {
+    const cached = this._cache.get(id);
+    if (cached && Date.now() < cached.expiration) {
+      log(`Cached from DXNS ${id} => ${cached.cid}`);
+      return cached.cid;
+    }
+
+    const record = await this._registryApi.get(DXN.parse(id));
+
+    if (!record) {
+      log(`Not found in DXNS: ${name}`);
+      return;
+    }
+
+    const ipfsCid = CID.from(Buffer.from(get(record, 'data.hash'), 'base64'));
+    const cid = ipfsCid.toString();
+
+    this._cache.set(id, { cid, expiration: Date.now() + MAX_CACHE_AGE });
+    log(`Found in DXNS ${id} => ${cid}`);
+    return cid;
+  }
 }
 
 /**
@@ -89,9 +115,17 @@ class Resolver {
  * @param {Number} config.port
  * @param {String} config.ipfsGateway
  */
-export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, keyPhrase = DEFAULT_KEYPHRASE }) => {
+export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint }) => {
   const registry = new Registry(registryEndpoint, chainId);
-  const resolver = new Resolver(registry);
+
+  // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
+  let registryApi;
+  if (dxnsEndpoint) {
+    try {
+      registryApi = await getRegistryApi(dxnsEndpoint);
+    } catch (err) {}
+  }
+  const resolver = new Resolver(registry, registryApi);
 
   // IPFS gateway handler.
   const ipfsProxy = ipfsRouter(ipfsGateway);
@@ -122,30 +156,50 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     const route = req.params[0];
 
     let file;
-    let resource;
-    // TODO(egorgripasov): Deprecated (backwards comptatible).
-    if (/^wrn(:|%)/i.test(route)) {
-      const [name, ...filePath] = route.split('/');
-      if (!filePath.length) {
-        return res.redirect(`${req.originalUrl}/`);
-      }
+    let cid;
 
-      file = `/${filePath.join('/')}`;
-      const [authority, ...rest] = decodeURIComponent(name).slice(4).replace(/^\/*/, '').split(':');
-      resource = new WRN(authority, rest.join('/'));
-    } else {
-      const [authority, path, filePath] = route.split(':');
-      if (!filePath) {
-        return res.redirect(`${req.originalUrl.replace(/\/$/, '')}:/`);
-      }
+    // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
+    if (registryApi) {
+      try {
+        const [id, ...filePath] = route.split('/');
 
-      file = filePath;
-      resource = new WRN(authority, path);
+        cid = await resolver.lookupCIDinDXNS(id);
+
+        if (cid && !filePath.length) {
+          return res.redirect(`${req.originalUrl}/`);
+        }
+
+        file = `/${(filePath).join('/')}`;
+      } catch (err) {}
     }
 
-    // TODO(burdon): Hack to adapt current names.
-    const name = WRN.legacy(resource); // String(resource);
-    const cid = await resolver.lookupCID(name);
+    // TODO(egorgripasov): Deprecate.
+    if (!cid) {
+      let resource;
+      // TODO(egorgripasov): Deprecated (backwards comptatible).
+      if (/^wrn(:|%)/i.test(route)) {
+        const [name, ...filePath] = route.split('/');
+        if (!filePath.length) {
+          return res.redirect(`${req.originalUrl}/`);
+        }
+
+        file = `/${filePath.join('/')}`;
+        const [authority, ...rest] = decodeURIComponent(name).slice(4).replace(/^\/*/, '').split(':');
+        resource = new WRN(authority, rest.join('/'));
+      } else {
+        const [authority, path, filePath] = route.split(':');
+        if (!filePath) {
+          return res.redirect(`${req.originalUrl.replace(/\/$/, '')}:/`);
+        }
+
+        file = filePath;
+        resource = new WRN(authority, path);
+      }
+
+      // TODO(burdon): Hack to adapt current names.
+      const name = WRN.legacy(resource); // String(resource);
+      cid = await resolver.lookupCID(name);
+    }
 
     if (!cid) {
       return res.status(404);
