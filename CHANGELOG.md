@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.3.0](https://www.github.com/dxos/cli/compare/v2.2.2...v2.3.0) (2021-08-02)
+
+
+### Features
+
+* app register & serve from DXNS. ([#218](https://www.github.com/dxos/cli/issues/218)) ([617ef92](https://www.github.com/dxos/cli/commit/617ef9287009cff22d5df6aa006b4ff634828b68))
+
+
+### Bug Fixes
+
+* seed DXNS. ([#215](https://www.github.com/dxos/cli/issues/215)) ([377be31](https://www.github.com/dxos/cli/commit/377be31bc5dde314e10ccd89062892f0165c2a4d))
+
 ### [2.2.2](https://www.github.com/dxos/cli/compare/v2.2.1...v2.2.2) (2021-07-26)
 
 
