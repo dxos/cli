@@ -92,7 +92,9 @@ export const AppModule = ({ getDXNSClient, config }) => {
           .option('gas', { type: 'string' })
           .option('fees', { type: 'string' })
           .option('schema', { type: 'string' })
-          .option('timeout', { type: 'string', default: '10m' }),
+          .option('timeout', { type: 'string', default: '10m' })
+          // TODO(egorgripasov): Remove.
+          .option('dxns', { type: 'boolean', default: false }),
 
         handler: asyncHandler(async argv => {
           log('Preparing to deploy...'); // TODO(burdon): Standardize logging (stages, verbose).
@@ -109,9 +111,11 @@ export const AppModule = ({ getDXNSClient, config }) => {
         builder: yargs => yargs
           .option('id')
           .option('name')
-          .option('namespace'),
+          .option('namespace')
+          // TODO(egorgripasov): Remove.
+          .option('dxns', { type: 'boolean', default: false }),
 
-        handler: asyncHandler(query(config))
+        handler: asyncHandler(query(config, { getDXNSClient }))
       })
 
       // Serve apps.

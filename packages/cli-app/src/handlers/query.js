@@ -5,32 +5,51 @@
 import assert from 'assert';
 import clean from 'lodash-clean';
 
-import { log } from '@dxos/debug';
+import { print } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
 
 import { APP_TYPE } from '../config';
 
-export const query = config => async argv => {
-  const { id, name, namespace } = argv;
+export const displayApps = (record) => {
+  return ({
+    cid: record.cid.toString(),
+    size: record.size,
+    data: record.data
+  });
+};
 
-  const { server, chainId } = config.get('services.wns');
-  assert(server, 'Invalid WNS endpoint.');
-  assert(chainId, 'Invalid WNS Chain ID.');
-
-  const registry = new Registry(server, chainId);
+export const query = (config, { getDXNSClient }) => async argv => {
+  const { id, name, namespace, dxns } = argv;
 
   let apps = [];
-  if (id) {
-    apps = await registry.getRecordsByIds([id]);
-    apps = apps
-      .filter(b => !name || (name && b.attributes.name === name))
-      .filter(b => !namespace || (namespace && b.attributes.tag === namespace));
+  // TODO(egorgripasov): Deprecate.
+  if (!dxns) {
+    const { server, chainId } = config.get('services.wns');
+    assert(server, 'Invalid WNS endpoint.');
+    assert(chainId, 'Invalid WNS Chain ID.');
+
+    const registry = new Registry(server, chainId);
+
+    if (id) {
+      apps = await registry.getRecordsByIds([id]);
+      apps = apps
+        .filter(b => !name || (name && b.attributes.name === name))
+        .filter(b => !namespace || (namespace && b.attributes.tag === namespace));
+    } else {
+      const attributes = clean({ type: APP_TYPE, name, tag: namespace });
+      apps = await registry.queryRecords(attributes);
+    }
   } else {
-    const attributes = clean({ type: APP_TYPE, name, tag: namespace });
-    apps = await registry.queryRecords(attributes);
+    const client = await getDXNSClient();
+    const fqn = config.get('services.dxns.schema.fqn.app');
+
+    const allRecords = await client.registryApi.getRecords();
+
+    // TODO(egorgripasov): Don't do it on client side.
+    apps = allRecords.filter(({ messageFqn }) => messageFqn === fqn).map(displayApps);
   }
 
   if (apps && apps.length) {
-    log(JSON.stringify(apps, null, 2));
+    print(apps, { json: true });
   }
 };
