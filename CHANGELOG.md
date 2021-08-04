@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.3.1](https://www.github.com/dxos/cli/compare/v2.3.0...v2.3.1) (2021-08-04)
+
+
+### Bug Fixes
+
+* misc small fixes. ([#220](https://www.github.com/dxos/cli/issues/220)) ([d361ec4](https://www.github.com/dxos/cli/commit/d361ec48a96d700227a265abc0fc1f12d8ed5f75))
+
 ## [2.3.0](https://www.github.com/dxos/cli/compare/v2.2.2...v2.3.0) (2021-08-02)
 
 
