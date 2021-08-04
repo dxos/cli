@@ -6,8 +6,10 @@ import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
+import { generateAccount } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
+import { getBlocks } from '../handlers/block';
 import { listDomains, getFreeDomain } from '../handlers/domain';
 import { listRecords, getRecords, addRecord } from '../handlers/record';
 import { listResources } from '../handlers/resource';
@@ -241,6 +243,25 @@ export const DXNSModule = (params: Params) => {
           .option('domain', { type: 'string' }),
 
         handler: asyncHandler(seedRegistry({ getDXNSClient, config }))
+      })
+
+      .command({
+        command: ['account'],
+        describe: 'Account commands.',
+        handler: () => {},
+        builder: yargs => yargs
+          .command({
+            command: ['generate'],
+            describe: 'Generate new account.',
+            handler: asyncHandler(generateAccount())
+          })
+      })
+
+      .command({
+        command: ['block'],
+        describe: 'Get current DXNS block number.',
+
+        handler: asyncHandler(getBlocks({ getDXNSClient }))
       })
   };
 };

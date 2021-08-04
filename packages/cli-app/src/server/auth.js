@@ -21,8 +21,10 @@ export const LOGIN_PATH = '/app/auth';
 export const OTP_QR_PATH = '/app/auth-setup';
 export const WALLET_LOGIN_PATH = '/wallet/auth';
 
-export const authMiddleware = (loginApp) => async (req, res, next) => {
-  if (!req.signedCookies.auth && !req.originalUrl.startsWith(`${BASE_URL}/${loginApp}`)) {
+export const authMiddleware = (loginApp, enabled) => async (req, res, next) => {
+  if (!enabled) {
+    next();
+  } else if (!req.signedCookies.auth && !req.originalUrl.startsWith(`${BASE_URL}/${loginApp}`)) {
     log('Not authenticated.');
     return res.redirect(`${BASE_URL}/${loginApp}#${encodeURIComponent(req.originalUrl)}`);
   } else {

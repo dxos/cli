@@ -3,6 +3,7 @@
 //
 
 import assert from 'assert';
+import { boolean } from 'boolean';
 import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
@@ -116,7 +117,7 @@ class Resolver {
  * @param {Number} config.port
  * @param {String} config.ipfsGateway
  */
-export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint }) => {
+export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, auth, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint }) => {
   const registry = new Registry(registryEndpoint, chainId);
 
   // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
@@ -226,7 +227,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   app.use(WALLET_LOGIN_PATH, walletAuthHandler);
 
   // Proxy app files.
-  app.use(new RegExp(BASE_URL + '/(.+)'), authMiddleware(loginApp), appFileHandler);
+  app.use(new RegExp(BASE_URL + '/(.+)'), authMiddleware(loginApp, boolean(auth)), appFileHandler);
 
   return app.listen(port, () => {
     log(`Server started on ${port}.`);
