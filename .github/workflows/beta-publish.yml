@@ -29,7 +29,7 @@ jobs:
           git tag -f "v$VERSION-beta.0"
           git push --tags -f
           yarn lerna publish from-package --force-publish -y --dist-tag="beta"
-          yarn dx profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
+          # yarn dx profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
           # yarn dx machine delete --name beta
           # sleep 10
           # yarn dx machine create --name beta --cliver '@beta'
