@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-pad",
-  "version": "2.0.32-beta.0",
-  "description": "DxOS Pad CLI",
+  "version": "2.3.1-alpha.0",
+  "description": "DXOS Pad CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-pad#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-pad": "bin/wire-pad.js",
-    "dx-pad": "bin/wire-pad.js"
+    "wire-pad": "bin/dx-pad.js",
+    "dx-pad": "bin/dx-pad.js"
   },
   "files": [
     "bin/",
@@ -35,18 +35,18 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.0.32-beta.0",
-    "@dxos/debug": "^1.0.0-beta.67",
+    "@dxos/cli-core": "^2.3.1-alpha.0",
+    "@dxos/debug": "~2.10.12",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
-    "ipfs-http-client": "^48.0.0",
+    "ipfs-http-client": "48.1.1",
     "js-yaml": "^3.13.1",
     "lodash-clean": "^2.2.1",
     "lodash.isequal": "^4.5.0",
     "lodash.set": "^4.3.2",
     "node-yaml": "^4.0.1",
     "semver": "^7.1.1",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

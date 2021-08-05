@@ -21,6 +21,7 @@ export class PluggableModule {
     if (!this._pluggable) {
       this._pluggable = Pluggable.create(this._config);
     }
+
     return this._pluggable;
   }
 
@@ -38,13 +39,15 @@ export class PluggableModule {
 
   export () {
     const { command, describe } = this._config;
-    return {
-      command,
-      describe,
+
+    return command.map(cmd => (() => ({
+      command: typeof cmd === 'object' ? cmd.command : cmd,
+      describe: typeof cmd === 'object' ? cmd.describe : describe,
       builder: yargs => yargs.help(false).strict(false),
       handler: asyncHandler(async argv => {
         return this.pluggable.run(this._state, argv);
       })
-    };
+    // eslint-disable-next-line
+    })).bind(this));
   }
 }

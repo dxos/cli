@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-ipfs",
-  "version": "2.0.32-beta.0",
-  "description": "DxOS IPFS CLI",
+  "version": "2.3.1-alpha.0",
+  "description": "DXOS IPFS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-ipfs#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-ipfs": "bin/wire-ipfs.js",
-    "dx-ipfs": "bin/wire-ipfs.js"
+    "wire-ipfs": "bin/dx-ipfs.js",
+    "dx-ipfs": "bin/dx-ipfs.js"
   },
   "files": [
     "bin/",
@@ -35,22 +35,22 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/async": "^1.0.0-beta.10",
-    "@dxos/cli-core": "^2.0.32-beta.0",
-    "@dxos/debug": "^1.0.0-beta.67",
+    "@dxos/async": "~2.10.12",
+    "@dxos/cli-core": "^2.3.1-alpha.0",
+    "@dxos/debug": "~2.10.12",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "cli-progress": "^3.8.2",
     "end-of-stream-promise": "^1.0.0",
     "get-folder-size": "^2.0.1",
-    "ipfs-http-client": "^48.1.1",
+    "ipfs-http-client": "48.1.1",
     "it-to-stream": "^0.1.2",
     "lodash-clean": "^2.2.1",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
     "mime-types": "^2.1.27",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

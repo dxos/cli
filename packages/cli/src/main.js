@@ -8,20 +8,20 @@ import uniqBy from 'lodash.uniqby';
 
 import { getLoggers, createCLI } from '@dxos/cli-core';
 
-import { PluggableModule } from './modules/pluggable';
+import KNOWN_EXTENSIONS from '../known-extensions.yml';
 
+import { PluggableModule } from './modules/pluggable';
 import { CertModule } from './modules/cert';
 import { ProfileModule } from './modules/profile';
 import { ServicesModule } from './modules/services';
 import { UpgradeModule, UninstallModule } from './modules/installation';
 import { ExtensionModule } from './modules/extension';
 
-import knownExtensionList from '../known-extensions.yml';
 import { listInstalled } from './extensions';
 
-const knownExtensions = yaml.load(knownExtensionList);
-
 const { logError } = getLoggers();
+
+const knownExtensions = yaml.load(KNOWN_EXTENSIONS);
 
 const pkg = readPkgUp.sync({ cwd: __dirname });
 
@@ -47,9 +47,8 @@ const init = async (state) => {
       await pluggableModule.init();
     }
 
-    // if (pluggableModule.pluggable.installed) {
-    extensions.push(pluggableModule.export.bind(pluggableModule));
-    // }
+    // eslint-disable-next-line
+    extensions.push(...pluggableModule.export.call(pluggableModule));
 
     if (extension.destroyRequired) {
       destroyers.push(pluggableModule.destroy.bind(pluggableModule));
@@ -72,17 +71,15 @@ const modules = [
   ExtensionModule
 ];
 
-module.exports = createCLI(
-  {
-    options: WIRE_CONFIG,
-    dir: __dirname,
-    main: !module.parent,
-    init,
-    destroy,
-    getModules: async () => [...modules, ...extensions],
-    info: {}
-  }
-);
+module.exports = createCLI({
+  options: WIRE_CONFIG,
+  dir: __dirname,
+  main: !module.parent,
+  init,
+  destroy,
+  getModules: async () => [...modules, ...extensions],
+  info: {}
+});
 
 const handleError = err => {
   logError(err);

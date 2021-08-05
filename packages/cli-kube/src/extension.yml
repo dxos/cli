@@ -1,0 +1,6 @@
+name: dxos/cli-kube
+version: 0.0.1
+displayName: cli-kube
+description: KUBE extension.
+command:
+  - kube

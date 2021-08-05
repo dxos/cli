@@ -5,12 +5,12 @@
 /* eslint import/no-dynamic-require: 0 */
 /* eslint global-require: 0 */
 
-import isArray from 'lodash.isarray';
 import { exec } from 'child_process';
-import fs from 'fs';
-import path from 'path';
 import findRoot from 'find-root';
+import fs from 'fs';
+import isArray from 'lodash.isarray';
 import ora from 'ora';
+import path from 'path';
 import readPkgUp from 'read-pkg-up';
 
 import { prepareExec, isGlobalYarn } from '@dxos/cli-core';
@@ -225,6 +225,11 @@ export class Pluggable {
   getInfo () {
     this._cleanCache();
     return require(this.modulePath).info;
+  }
+
+  getDockerCompose () {
+    this._cleanCache();
+    return require(this.modulePath).dockerCompose;
   }
 
   _cleanCache () {

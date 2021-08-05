@@ -27,6 +27,7 @@ export const addInstalled = async (name, info) => {
     describe: description,
     command
   });
+
   return writeFile({ extensions }, filePath, { absolute: true });
 };
 
@@ -38,5 +39,6 @@ export const removeInstalled = async (name) => {
 
 export const listInstalled = async () => {
   const { extensions = [] } = await readFile(filePath, { absolute: true });
+  extensions.sort(({ moduleName: a }, { moduleName: b }) => a > b ? 1 : a < b ? -1 : 0);
   return extensions;
 };

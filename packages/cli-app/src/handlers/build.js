@@ -13,7 +13,7 @@ export const build = (config, { getAppRecord }) => async ({ verbose }) => {
   const conf = await loadAppConfig();
 
   const record = getAppRecord(conf);
-  record.version = semverInc(conf.version, 'patch');
+  record.version = semverInc(conf.version, 'patch'); // TODO(burdon): Pass into getAppRecord.
 
   log(`Building ${record.name}...`);
   const [command, ...args] = conf.build.split(' ');
@@ -32,5 +32,6 @@ export const build = (config, { getAppRecord }) => async ({ verbose }) => {
     process.exit(status);
   }
 
+  // TODO(burdon): Standardize OK messages for commands (only if versbose).
   log('Build Ok.');
 };

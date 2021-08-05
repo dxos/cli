@@ -10,7 +10,7 @@ A number of config variables is required in order to run CLI. One could either p
 To install or upgrade a version of the dashboard run:
 
 ```bash
-wire dashboard install
+dx dashboard install
 ```
 
 This will install globally the latest version of the dashboard. The default npmClient (`npm`) is configured in your config.yml as `cli.npmClient`.
@@ -23,12 +23,12 @@ This will install globally the latest version of the dashboard. The default npmC
 To start the service:
 
 ```bash
-wire dashboard start --port 8888
+dx dashboard start --port 8888
 ```
 > You can use `--detached` to run in background.
 
 Then to stop:
 
 ```bash
-wire dashboard stop
+dx dashboard stop
 ```

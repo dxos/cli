@@ -1,5 +1,327 @@
 # Changelog
 
+### [2.3.1](https://www.github.com/dxos/cli/compare/v2.3.0...v2.3.1) (2021-08-04)
+
+
+### Bug Fixes
+
+* misc small fixes. ([#220](https://www.github.com/dxos/cli/issues/220)) ([d361ec4](https://www.github.com/dxos/cli/commit/d361ec48a96d700227a265abc0fc1f12d8ed5f75))
+
+## [2.3.0](https://www.github.com/dxos/cli/compare/v2.2.2...v2.3.0) (2021-08-02)
+
+
+### Features
+
+* app register & serve from DXNS. ([#218](https://www.github.com/dxos/cli/issues/218)) ([617ef92](https://www.github.com/dxos/cli/commit/617ef9287009cff22d5df6aa006b4ff634828b68))
+
+
+### Bug Fixes
+
+* seed DXNS. ([#215](https://www.github.com/dxos/cli/issues/215)) ([377be31](https://www.github.com/dxos/cli/commit/377be31bc5dde314e10ccd89062892f0165c2a4d))
+
+### [2.2.2](https://www.github.com/dxos/cli/compare/v2.2.1...v2.2.2) (2021-07-26)
+
+
+### Bug Fixes
+
+* cli-dxns - Add domains and auctions. ([#213](https://www.github.com/dxos/cli/issues/213)) ([a714bc1](https://www.github.com/dxos/cli/commit/a714bc106b947e70222442295040c322170117a4))
+* cli-kube to get list of ssh keys. ([aa8297b](https://www.github.com/dxos/cli/commit/aa8297bfd193d0cfdcc8ba287c7ff03d0a46692f))
+
+### [2.2.1](https://www.github.com/dxos/cli/compare/v2.2.0...v2.2.1) (2021-07-20)
+
+
+### Bug Fixes
+
+* kube deploy. ([#211](https://www.github.com/dxos/cli/issues/211)) ([4de5041](https://www.github.com/dxos/cli/commit/4de5041bc3b937a63c42b13d7b9bca8718b92519))
+
+## [2.2.0](https://www.github.com/dxos/cli/compare/v2.1.6...v2.2.0) (2021-07-19)
+
+
+### Features
+
+* **docs:** upgrade docs-theme ([#208](https://www.github.com/dxos/cli/issues/208)) ([75b5689](https://www.github.com/dxos/cli/commit/75b568949e3d878e4c3eb8dc27c7908337e6b261))
+
+
+### Bug Fixes
+
+* kube deploy ([#210](https://www.github.com/dxos/cli/issues/210)) ([148305a](https://www.github.com/dxos/cli/commit/148305ac465dc6fb54466916273de5965e279cba))
+
+### [2.1.6](https://www.github.com/dxos/cli/compare/v2.1.5...v2.1.6) (2021-07-13)
+
+
+### Bug Fixes
+
+* update registry-api. ([fabfea8](https://www.github.com/dxos/cli/commit/fabfea858dfc77612dcfd5f6ce8e6704dfbf9bc5))
+
+### [2.1.5](https://www.github.com/dxos/cli/compare/v2.1.4...v2.1.5) (2021-07-12)
+
+
+### Bug Fixes
+
+* wallet auth. ([711df1c](https://www.github.com/dxos/cli/commit/711df1c92f556e05c6cbf4b9d753463faf71dcb8))
+
+### [2.1.4](https://www.github.com/dxos/cli/compare/v2.1.3...v2.1.4) (2021-07-07)
+
+
+### Bug Fixes
+
+* share more data between kube and services. ([12c7f18](https://www.github.com/dxos/cli/commit/12c7f18b292bbed74868406ade76436e3131978a))
+
+### [2.1.3](https://www.github.com/dxos/cli/compare/v2.1.2...v2.1.3) (2021-07-07)
+
+
+### Bug Fixes
+
+* pass echo & halo storage to DXOS service. ([#198](https://www.github.com/dxos/cli/issues/198)) ([4b28c6f](https://www.github.com/dxos/cli/commit/4b28c6fe7973ee1766c0a69c815b158bd1643eb3))
+
+### [2.1.2](https://www.github.com/dxos/cli/compare/v2.1.1...v2.1.2) (2021-07-05)
+
+
+### Bug Fixes
+
+* add kube cli extension. ([#192](https://www.github.com/dxos/cli/issues/192)) ([d72071e](https://www.github.com/dxos/cli/commit/d72071e8bc6cf2afad6c98f6d07a6e32ae216378))
+
+### [2.1.1](https://www.github.com/dxos/cli/compare/v2.1.0...v2.1.1) (2021-07-03)
+
+
+### Bug Fixes
+
+* fix docker memory stats. ([2a5888b](https://www.github.com/dxos/cli/commit/2a5888b69adfe3881d07b10fc9faee8bdc145a52))
+
+## [2.1.0](https://www.github.com/dxos/cli/compare/v2.0.62...v2.1.0) (2021-07-03)
+
+
+### Features
+
+* **chore:** upgrade docs-theme ([#190](https://www.github.com/dxos/cli/issues/190)) ([3cdd277](https://www.github.com/dxos/cli/commit/3cdd277cb8eb10abdae1d71a8a86411041779d9b))
+* add docs template ([#188](https://www.github.com/dxos/cli/issues/188)) ([aaf57f4](https://www.github.com/dxos/cli/commit/aaf57f4f814a2e2ac58b32097f4ad2ade2e661df))
+
+
+### Bug Fixes
+
+* various settings for env import for docker. ([c57568c](https://www.github.com/dxos/cli/commit/c57568c15ef6562969ea003816c4883b94d7da9f))
+
+### [2.0.62](https://www.github.com/dxos/cli/compare/v2.0.61...v2.0.62) (2021-07-01)
+
+
+### Bug Fixes
+
+* don't fowrawd env to docker container by default. ([031e194](https://www.github.com/dxos/cli/commit/031e194dbb92bb94ec3819afd5c740bd0649c4d9))
+
+### [2.0.61](https://www.github.com/dxos/cli/compare/v2.0.60...v2.0.61) (2021-07-01)
+
+
+### Bug Fixes
+
+* proper conf path for docker. ([4aeb2f9](https://www.github.com/dxos/cli/commit/4aeb2f929955728f454e2b92fea4afd150a5312e))
+
+### [2.0.60](https://www.github.com/dxos/cli/compare/v2.0.59...v2.0.60) (2021-07-01)
+
+
+### Bug Fixes
+
+* app-server to expose port. ([b1a53ea](https://www.github.com/dxos/cli/commit/b1a53ea7753303bcd6276dbc0cf8357dcff8840f))
+
+### [2.0.59](https://www.github.com/dxos/cli/compare/v2.0.58...v2.0.59) (2021-07-01)
+
+
+### Bug Fixes
+
+* profile to pass to docker container. ([84e9369](https://www.github.com/dxos/cli/commit/84e936969b0bf227b835753fee49b4d34334b28c))
+
+### [2.0.58](https://www.github.com/dxos/cli/compare/v2.0.57...v2.0.58) (2021-06-30)
+
+
+### Bug Fixes
+
+* docker - don't allow host-net on macos. ([6d35765](https://www.github.com/dxos/cli/commit/6d35765b9359432b0fe173128d75f32b115c2312))
+
+### [2.0.57](https://www.github.com/dxos/cli/compare/v2.0.56...v2.0.57) (2021-06-11)
+
+
+### Bug Fixes
+
+* infrastructure for dxns testnet. ([5ad543b](https://www.github.com/dxos/cli/commit/5ad543ba029a2f0dac15fdaf96394d6d1c91a5cc))
+
+### [2.0.56](https://www.github.com/dxos/cli/compare/v2.0.55...v2.0.56) (2021-05-28)
+
+
+### Bug Fixes
+
+* dxns config. ([3081e7c](https://www.github.com/dxos/cli/commit/3081e7cc87b93f71941168383194827c38f0afb2))
+
+### [2.0.55](https://www.github.com/dxos/cli/compare/v2.0.54...v2.0.55) (2021-05-27)
+
+
+### Bug Fixes
+
+* dxns commands. ([#175](https://www.github.com/dxos/cli/issues/175)) ([8d0e22b](https://www.github.com/dxos/cli/commit/8d0e22b84812a19c54a7569856bd4073f8da05a4))
+
+### [2.0.54](https://www.github.com/dxos/cli/compare/v2.0.53...v2.0.54) (2021-05-25)
+
+
+### Bug Fixes
+
+* fix config load from env. ([b4c2de1](https://www.github.com/dxos/cli/commit/b4c2de16f84ec4a98f993d66d6c2c28185cc8ad8))
+
+### [2.0.53](https://www.github.com/dxos/cli/compare/v2.0.52...v2.0.53) (2021-05-25)
+
+
+### Bug Fixes
+
+* update core modules. ([#171](https://www.github.com/dxos/cli/issues/171)) ([5265d5b](https://www.github.com/dxos/cli/commit/5265d5bfbe5b15e164093d0337951c9e39b878fe))
+* update core modules. ([#173](https://www.github.com/dxos/cli/issues/173)) ([91ce8b3](https://www.github.com/dxos/cli/commit/91ce8b39f8251554e3b51c148687a837c54b2f4e))
+
+### [2.0.52](https://www.github.com/dxos/cli/compare/v2.0.51...v2.0.52) (2021-05-05)
+
+
+### Bug Fixes
+
+* auto detect service type. ([2c111f8](https://www.github.com/dxos/cli/commit/2c111f870db8f99be74bb6e22951cdc9c1ebee65))
+
+### [2.0.51](https://www.github.com/dxos/cli/compare/v2.0.50...v2.0.51) (2021-05-04)
+
+
+### Bug Fixes
+
+* run services on kube via docker. ([#167](https://www.github.com/dxos/cli/issues/167)) ([ce47cf2](https://www.github.com/dxos/cli/commit/ce47cf2e280842620a05e1b8c71d1825fa3d710c))
+
+### [2.0.50](https://www.github.com/dxos/cli/compare/v2.0.49...v2.0.50) (2021-05-03)
+
+
+### Bug Fixes
+
+* join services and containers. ([#164](https://www.github.com/dxos/cli/issues/164)) ([53e8b5a](https://www.github.com/dxos/cli/commit/53e8b5ad2c90345cb7d59d8afa0b33bef841476e))
+
+### [2.0.49](https://www.github.com/dxos/cli/compare/v2.0.48...v2.0.49) (2021-05-02)
+
+
+### Bug Fixes
+
+* docker net host as option. ([5ca044b](https://www.github.com/dxos/cli/commit/5ca044b1eb2741889cc71ddf0b9557933190e359))
+
+### [2.0.48](https://www.github.com/dxos/cli/compare/v2.0.47...v2.0.48) (2021-04-29)
+
+
+### Bug Fixes
+
+* add restart policy to docker container. ([694c187](https://www.github.com/dxos/cli/commit/694c1877af861b6f21f71cd010eddeba33c10e87))
+* app server as docker container ([#162](https://www.github.com/dxos/cli/issues/162)) ([aa3043a](https://www.github.com/dxos/cli/commit/aa3043ac4189d725bc97558880f715c29e4549ec))
+
+### [2.0.47](https://www.github.com/dxos/cli/compare/v2.0.46...v2.0.47) (2021-04-26)
+
+
+### Bug Fixes
+
+* use container ext for install/start ([#159](https://www.github.com/dxos/cli/issues/159)) ([4f80be8](https://www.github.com/dxos/cli/commit/4f80be837ad5d9d78cd9b7dadcf4b6a387f7f475))
+
+### [2.0.46](https://www.github.com/dxos/cli/compare/v2.0.45...v2.0.46) (2021-04-26)
+
+
+### Bug Fixes
+
+* add key for Przemek ([ccaf739](https://www.github.com/dxos/cli/commit/ccaf739cea62ede3f87c4f2b4ff707b211de51ba))
+* docker NetworkMode ([96567e7](https://www.github.com/dxos/cli/commit/96567e7dae407dce8b4032252247822159df7135))
+
+### [2.0.45](https://www.github.com/dxos/cli/compare/v2.0.44...v2.0.45) (2021-04-23)
+
+
+### Bug Fixes
+
+* use dxos images. ([8822f06](https://www.github.com/dxos/cli/commit/8822f06a0ce90adfa40c71d65c6623e2b68cde34))
+
+### [2.0.44](https://www.github.com/dxos/cli/compare/v2.0.43...v2.0.44) (2021-04-22)
+
+
+### Bug Fixes
+
+* command change for service. ([5f43fe2](https://www.github.com/dxos/cli/commit/5f43fe2bf2b106fc4908852e1077f87d32e77c9a))
+* dockerize signal server. ([fab7b03](https://www.github.com/dxos/cli/commit/fab7b03065b4b4f19b440b87a16c77486a6117e4))
+* multiple docker wrapper fixes. ([1adc778](https://www.github.com/dxos/cli/commit/1adc7787a0ffb66b4e4318b4bb210b3f55e10053))
+
+### [2.0.43](https://www.github.com/dxos/cli/compare/v2.0.42...v2.0.43) (2021-04-20)
+
+
+### Bug Fixes
+
+* better upgrade mechanism for docker. ([6c6b51b](https://www.github.com/dxos/cli/commit/6c6b51bda24099e32f0fcbfdd895d5f5cd5776b1))
+* docker restart & list fixes. ([8da6398](https://www.github.com/dxos/cli/commit/8da6398924d6a7ee4a9312382652632495d3cd29))
+
+### [2.0.42](https://www.github.com/dxos/cli/compare/v2.0.41...v2.0.42) (2021-04-19)
+
+
+### Bug Fixes
+
+* updates for container commands. ([128cbfc](https://www.github.com/dxos/cli/commit/128cbfc05a9be21faa318b77411b028e2dcb1fd7))
+
+### [2.0.41](https://www.github.com/dxos/cli/compare/v2.0.40...v2.0.41) (2021-04-16)
+
+
+### Bug Fixes
+
+* stick to working IPFS package. ([b6745f6](https://www.github.com/dxos/cli/commit/b6745f6a4a0628dccbdfeee5cf329a5e520b9729))
+
+### [2.0.40](https://www.github.com/dxos/cli/compare/v2.0.39...v2.0.40) (2021-04-16)
+
+
+### Bug Fixes
+
+* Attempt to fix broken npm module. ([7c65410](https://www.github.com/dxos/cli/commit/7c654102ba592ae4081e406fc15a0481b2af84bc))
+
+### [2.0.39](https://www.github.com/dxos/cli/compare/v2.0.38...v2.0.39) (2021-04-15)
+
+
+### Bug Fixes
+
+* add docker wrapper. ([#150](https://www.github.com/dxos/cli/issues/150)) ([e8f2c4c](https://www.github.com/dxos/cli/commit/e8f2c4c97990f1e31eb9690fedc105bb63a8ec75))
+
+### [2.0.38](https://www.github.com/dxos/cli/compare/v2.0.37...v2.0.38) (2021-02-09)
+
+
+### Bug Fixes
+
+* profile check. ([09e8b06](https://www.github.com/dxos/cli/commit/09e8b06cea89811473684da5636ea76567be089c))
+
+### [2.0.37](https://www.github.com/dxos/cli/compare/v2.0.36...v2.0.37) (2021-02-04)
+
+
+### Bug Fixes
+
+* proper tag for machine. ([3647aca](https://www.github.com/dxos/cli/commit/3647acafd0807d5be455c50cec067bbba6442bf6))
+
+### [2.0.36](https://www.github.com/dxos/cli/compare/v2.0.35...v2.0.36) (2021-02-03)
+
+
+### Bug Fixes
+
+* kube related fixes. ([#142](https://www.github.com/dxos/cli/issues/142)) ([3939b5a](https://www.github.com/dxos/cli/commit/3939b5a3e1503726ed36dbac0cfc61dd1153506f))
+
+### [2.0.35](https://www.github.com/dxos/cli/compare/v2.0.34...v2.0.35) (2021-02-02)
+
+
+### Bug Fixes
+
+* add moon profile. ([924b1e4](https://www.github.com/dxos/cli/commit/924b1e46a382fa2385d7f29314964c5e450b8158))
+* add persistence to CLI; rewrite party commands. ([#125](https://www.github.com/dxos/cli/issues/125)) ([a8c38f2](https://www.github.com/dxos/cli/commit/a8c38f2b1d676509daaa5eaf3fc63b2715e4c410))
+* app server auth; new naming service. ([#141](https://www.github.com/dxos/cli/issues/141)) ([1a1cd48](https://www.github.com/dxos/cli/commit/1a1cd48735025c577d46dc0cf27e1ff139faec0e))
+* check if node from nvm is used. ([#137](https://www.github.com/dxos/cli/issues/137)) ([a626af4](https://www.github.com/dxos/cli/commit/a626af490c5a43d99275469af36b26cbb438a959))
+* fix help output. ([#132](https://www.github.com/dxos/cli/issues/132)) ([6c83a15](https://www.github.com/dxos/cli/commit/6c83a154085f61ee8f8c6f301c03d7e290fece9c))
+* various err fix. ([#135](https://www.github.com/dxos/cli/issues/135)) ([b26aa2e](https://www.github.com/dxos/cli/commit/b26aa2eefb1d2830621e2629771c326afe5d5e9d))
+
+### [2.0.34](https://www.github.com/dxos/cli/compare/v2.0.33...v2.0.34) (2020-12-18)
+
+
+### Bug Fixes
+
+* cli-mesh ([#116](https://www.github.com/dxos/cli/issues/116)) ([65c10b2](https://www.github.com/dxos/cli/commit/65c10b21508d27819f371b4379c8dae6699ef160))
+
+### [2.0.33](https://www.github.com/dxos/cli/compare/v2.0.32...v2.0.33) (2020-12-18)
+
+
+### Bug Fixes
+
+* latest deps; pipe warnings to debug ([#117](https://www.github.com/dxos/cli/issues/117)) ([ffd7e83](https://www.github.com/dxos/cli/commit/ffd7e8325fa1a2592e68de86ad8dd2aedb10b44c))
+
 ### [2.0.32](https://www.github.com/dxos/cli/compare/v2.0.31...v2.0.32) (2020-12-17)
 
 
@@ -116,14 +438,14 @@
 
 ### Bug Fixes
 
-* wire machine creds for CI ([986bbc8](https://www.github.com/dxos/cli/commit/986bbc832b1977335ccf4a8f6ce05751a3e40f98))
+* dx machine creds for CI ([986bbc8](https://www.github.com/dxos/cli/commit/986bbc832b1977335ccf4a8f6ce05751a3e40f98))
 
 ### [2.0.16](https://www.github.com/dxos/cli/compare/v2.0.15...v2.0.16) (2020-11-24)
 
 
 ### Bug Fixes
 
-* add file operations to `wire ipfs` ([#77](https://www.github.com/dxos/cli/issues/77)) ([5622261](https://www.github.com/dxos/cli/commit/562226131f29ce28bbdd6882e8ad2633bf4fc5d6))
+* add file operations to `dx ipfs` ([#77](https://www.github.com/dxos/cli/issues/77)) ([5622261](https://www.github.com/dxos/cli/commit/562226131f29ce28bbdd6882e8ad2633bf4fc5d6))
 * add Let's Encrypt support ([#76](https://www.github.com/dxos/cli/issues/76)) ([46e0541](https://www.github.com/dxos/cli/commit/46e05413e035602b33df4c67d1eab32ca0c9ff46))
 
 ### [2.0.15](https://www.github.com/dxos/cli/compare/v2.0.14...v2.0.15) (2020-11-24)
@@ -160,7 +482,7 @@
 
 ### Bug Fixes
 
-* Add ENV mappings for wire machine ([d74f2f9](https://www.github.com/dxos/cli/commit/d74f2f9800409d4d99ead624e3a7148fe2a1becc))
+* Add ENV mappings for dx machine ([d74f2f9](https://www.github.com/dxos/cli/commit/d74f2f9800409d4d99ead624e3a7148fe2a1becc))
 * delete DNS records, register DNS at creation ([458723e](https://www.github.com/dxos/cli/commit/458723e8aad054436fa330637566b69b082736a7))
 
 ### [2.0.10](https://www.github.com/dxos/cli/compare/v2.0.9...v2.0.10) (2020-11-18)
@@ -168,7 +490,7 @@
 
 ### Bug Fixes
 
-* Add wire machine delete and kube tags. ([bfb9201](https://www.github.com/dxos/cli/commit/bfb920148918f7b32031fb2a60a5a1624457970a))
+* Add dx machine delete and kube tags. ([bfb9201](https://www.github.com/dxos/cli/commit/bfb920148918f7b32031fb2a60a5a1624457970a))
 
 ### [2.0.9](https://www.github.com/dxos/cli/compare/v2.0.8...v2.0.9) (2020-11-18)
 
