@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://www.github.com/dxos/cli/compare/v2.3.1...v2.4.0) (2021-08-06)
+
+
+### Features
+
+* modify docs to use DXNS. ([#222](https://www.github.com/dxos/cli/issues/222)) ([5f368d8](https://www.github.com/dxos/cli/commit/5f368d84152f714cf8f51c9839442ba56757d5ab))
+
+
+### Bug Fixes
+
+* add missing dep. ([12ef59d](https://www.github.com/dxos/cli/commit/12ef59d20ad3b591099cd17721381c1eab63b326))
+
 ### [2.3.1](https://www.github.com/dxos/cli/compare/v2.3.0...v2.3.1) (2021-08-04)
 
 
