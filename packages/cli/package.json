@@ -43,6 +43,7 @@
     "assert": "^2.0.0",
     "find-root": "^1.1.0",
     "fs-extra": "^8.1.0",
+    "got": "^10.7.0",
     "js-yaml": "^3.13.1",
     "lodash.defaults": "^4.2.0",
     "lodash.defaultsdeep": "^4.6.1",
