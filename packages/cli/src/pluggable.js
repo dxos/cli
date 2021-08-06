@@ -213,6 +213,12 @@ export class Pluggable {
       try {
         await this.installModule(null, { spinner });
         await addInstalled(moduleName, this.getInfo());
+
+        const { init, destroy } = require(this.modulePath);
+        if (init || destroy) {
+          console.log(`${moduleName} was successfully installed. Please run your command again.`);
+          return;
+        }
       } catch (err) {
         console.error(err);
         return;
