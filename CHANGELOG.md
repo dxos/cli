@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.1](https://www.github.com/dxos/cli/compare/v2.4.0...v2.4.1) (2021-08-06)
+
+
+### Bug Fixes
+
+* don't run extension command if init or destroy is required. ([8c16cba](https://www.github.com/dxos/cli/commit/8c16cba9157f8c029711fac8e886ec41d167adec))
+
 ## [2.4.0](https://www.github.com/dxos/cli/compare/v2.3.1...v2.4.0) (2021-08-06)
 
 
