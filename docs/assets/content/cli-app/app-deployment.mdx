@@ -9,12 +9,10 @@ To deploy apps we need a number of steps:
 
 - build: This generates the ditribution files along with configuration specific for the given app.yml
 - publish: Upload the dist folder to IPFS. Update the hash in the app.yml
-- register: Use app.yml to generate a record in WNS.
+- register: Use app.yml to generate a record in DXNS.
 
-All these operations can be resumed with one command:
-
-> You could use optional `--name` argument in order to assign specific name to the record.
+Assuming you are about to deploy "app.foo" Application in fooBar Authority, all these operations can be resumed with one command:
 
 ```
-$ dx app deploy --name "wrn://<AUTHORITY>/application/<APP_NAME>"
+$ dx app deploy --dxns --name "app.foo" --domain "fooBar"
 ```
