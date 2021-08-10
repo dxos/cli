@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-echo",
-  "version": "2.4.1-alpha.0",
+  "version": "2.4.1-beta.0",
   "description": "DXOS ECHO CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-echo#readme",
   "license": "AGPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.4.1-alpha.0",
+    "@dxos/cli-core": "^2.4.1-beta.0",
     "@dxos/crypto": "~2.10.12",
     "@dxos/debug": "~2.10.12",
     "@dxos/object-model": "~2.10.12",
