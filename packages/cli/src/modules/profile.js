@@ -22,7 +22,7 @@ import {
  */
 export const ProfileModule = () => ({
   command: ['profile'],
-  describe: 'Profile commands.',
+  describe: 'CLI profile management.',
 
   builder: yargs => yargs
     .command({
@@ -62,13 +62,13 @@ export const ProfileModule = () => ({
     })
 
     .command({
-      command: ['config [name]'],
+      command: ['config [profile]'],
       describe: 'Profile config.',
 
       handler: asyncHandler(async argv => {
-        const { name } = argv;
+        const { profile } = argv;
 
-        const profilePath = (name ? getProfilePath(name) : getActiveProfilePath());
+        const profilePath = (profile ? getProfilePath(profile) : getActiveProfilePath());
         if (!fs.existsSync(profilePath)) {
           print(`Profile not found: ${profilePath}`);
           return;
@@ -82,7 +82,7 @@ export const ProfileModule = () => ({
     const profilePath = getActiveProfilePath();
     if (!profilePath) {
       print('No active profile. Enter the following command to set the active profile:');
-      print('wire profile set <NAME>');
+      print('dx profile set <NAME>');
       return;
     }
 

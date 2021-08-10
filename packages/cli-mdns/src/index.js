@@ -8,11 +8,9 @@ import { MDNSModule } from './modules/mdns';
 
 import info from '../extension.yml';
 
-module.exports = createCLI(
-  {
-    modules: [MDNSModule],
-    dir: __dirname,
-    main: !module.parent,
-    info
-  }
-);
+module.exports = createCLI({
+  modules: [MDNSModule],
+  dir: __dirname,
+  main: !module.parent,
+  info
+});

@@ -12,11 +12,9 @@ import { asyncHandler, importCert } from '@dxos/cli-core';
  */
 export const CertModule = ({ config }) => ({
   command: ['cert'],
-  describe: 'Certificates.',
+  describe: 'Certificate management.',
 
   builder: yargs => yargs
-
-    // Import.
     .command({
       command: ['import'],
       describe: 'Import certificate.',
@@ -25,7 +23,6 @@ export const CertModule = ({ config }) => ({
 
       handler: asyncHandler(async argv => {
         const { url } = argv;
-
         assert(url, 'Invalid Cert URL.');
         await importCert(url);
       })

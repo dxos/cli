@@ -1,0 +1,72 @@
+{
+  "name": "@dxos/cli-dxns",
+  "version": "2.4.1-alpha.0",
+  "description": "DXOS DXNS CLI",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-halo#readme",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dxos/cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dxos/cli.git"
+  },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "bin": {
+    "wire-halo": "bin/dx-dxns.js",
+    "dx-halo": "bin/dx-dxns.js"
+  },
+  "files": [
+    "bin/",
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc && cp -R src/*.yml src/*.proto dist/src",
+    "clean": "rm -rf ./dist",
+    "cli": "ts-node ./src/index.ts",
+    "lint": "eslint './src/**/*.{ts,js}'",
+    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+  },
+  "jest": {
+    "preset": "ts-jest/presets/default",
+    "testEnvironment": "node",
+    "cacheDirectory": "/tmp/jest",
+    "verbose": false
+  },
+  "dependencies": {
+    "@dxos/async": "~2.10.12",
+    "@dxos/cli-core": "^2.4.1-alpha.0",
+    "@dxos/crypto": "~2.10.12",
+    "@dxos/debug": "~2.10.12",
+    "@dxos/registry-api": "~0.1.1-alpha.2",
+    "@polkadot/api": "4.17.1",
+    "@polkadot/keyring": "6.11.1",
+    "assert": "^2.0.0",
+    "bn.js": "^4.11.9",
+    "node-fetch": "^2.6.0",
+    "protobufjs": "^6.10.2",
+    "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "@dxos/eslint-plugin": "~1.0.10",
+    "@types/jest": "^26.0.7",
+    "eslint": "^7.13.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.0.5",
+    "uuid": "^3.3.3"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
+  },
+  "peerDependencies": {
+    "@dxos/cli": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "c147f853bc07376a163cee05c3c44198387c5655"
+}

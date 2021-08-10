@@ -8,11 +8,9 @@ import { BotModule } from './modules/bot';
 
 import info from '../extension.yml';
 
-module.exports = createCLI(
-  {
-    modules: [BotModule],
-    dir: __dirname,
-    main: !module.parent,
-    info
-  }
-);
+module.exports = createCLI({
+  modules: [BotModule],
+  dir: __dirname,
+  main: !module.parent,
+  info
+});

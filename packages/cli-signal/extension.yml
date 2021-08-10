@@ -1,6 +1,11 @@
 name: dxos/cli-signal
 version: 0.0.1
 displayName: cli-signal
-description: Signal operations.
+description: Signal server extension.
 command:
-  - signal
+  - 
+    command: "signal"
+    describe: "Signal server as process."
+  - 
+    command: "container-signal"
+    describe: "Signal server as container."

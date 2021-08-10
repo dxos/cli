@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli-echo",
-  "version": "2.0.32-alpha.0",
-  "description": "DxOS Echo CLI",
+  "version": "2.4.1-alpha.0",
+  "description": "DXOS ECHO CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-echo#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -13,8 +13,8 @@
   },
   "main": "dist/es/index.js",
   "bin": {
-    "wire-echo": "bin/wire-echo.js",
-    "dx-echo": "bin/wire-echo.js"
+    "wire-echo": "bin/dx-echo.js",
+    "dx-echo": "bin/dx-echo.js"
   },
   "files": [
     "bin/",
@@ -35,12 +35,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.0.32-alpha.0",
-    "@dxos/crypto": "^1.0.0-beta.1",
-    "@dxos/debug": "^1.0.0-beta.67",
-    "@dxos/object-model": "2.6.7-alpha.0",
+    "@dxos/cli-core": "^2.4.1-alpha.0",
+    "@dxos/crypto": "~2.10.12",
+    "@dxos/debug": "~2.10.12",
+    "@dxos/object-model": "~2.10.12",
     "assert": "^2.0.0",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

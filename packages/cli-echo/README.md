@@ -1,6 +1,6 @@
-# Echo CLI
+# ECHO CLI
 
-CLI extension for echo operations.
+CLI extension for ECHO operations.
 
 ## Prerequisites 
 

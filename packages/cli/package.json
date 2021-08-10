@@ -1,9 +1,9 @@
 {
   "name": "@dxos/cli",
-  "version": "2.0.32-alpha.0",
-  "description": "DxOS CLI",
+  "version": "2.4.1-alpha.0",
+  "description": "DXOS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli#readme",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -12,8 +12,8 @@
     "url": "git+https://github.com/dxos/cli.git"
   },
   "bin": {
-    "wire": "bin/wire.js",
-    "dx": "bin/wire.js"
+    "dx": "bin/dx.js",
+    "wire": "bin/dx.js"
   },
   "files": [
     "bin/",
@@ -21,9 +21,10 @@
   ],
   "scripts": {
     "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
-    "build:watch": "yarn run build --watch",
     "clean": "rm -rf ./dist",
     "dev": "babel-node ./src/main.js",
+    "dx": "babel-node ./src/main.js",
+    "prebuild": "./scripts/get-extensions.sh &> /dev/null",
     "lint": "semistandard",
     "lint:fix": "semistandard --fix",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
@@ -36,12 +37,13 @@
   },
   "dependencies": {
     "@babel/runtime": "7.7.2",
-    "@dxos/cli-core": "^2.0.32-alpha.0",
-    "@dxos/debug": "^1.0.0-beta.67",
+    "@dxos/cli-core": "^2.4.1-alpha.0",
+    "@dxos/debug": "~2.10.12",
     "@dxos/random-access-multi-storage": "1.1.0-beta.7",
     "assert": "^2.0.0",
     "find-root": "^1.1.0",
     "fs-extra": "^8.1.0",
+    "got": "^10.7.0",
     "js-yaml": "^3.13.1",
     "lodash.defaults": "^4.2.0",
     "lodash.defaultsdeep": "^4.6.1",
@@ -55,7 +57,7 @@
     "ora": "^3.4.0",
     "read-pkg-up": "^6.0.0",
     "semver": "^7.1.1",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -70,7 +72,9 @@
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-inline-import": "^3.0.0",
     "jest": "^25.1.0",
-    "semistandard": "14.2.0"
+    "json2yaml": "^1.1.0",
+    "semistandard": "14.2.0",
+    "yaml2json": "^1.0.2"
   },
   "semistandard": {
     "parser": "babel-eslint",

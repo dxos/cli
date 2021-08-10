@@ -1,0 +1,27 @@
+---
+title: Profile Keys Setup
+description: Identify yourself
+---
+
+## User keys
+
+Some services will request you extra credentials, for example our service called `DXNS` requests you to have 
+`uri` and `schema` to deploy an application into a Kube Network.
+
+Here are the demo `uri` and `schema` credentials you could use:
+
+```
+    uri: 'vintage rubber quantum goddess install funny acquire crumble finger nuclear demand guess'
+    schema:
+      cid: 'QmVeakWyfz8XK4FmMube6B957SiTTwgLrFFgEdNnVPugUG'
+      fqn:
+        app: '.dxos.App'
+        bot: '.dxos.Bot'
+        botFactory: '.dxos.BotFactory'
+        KUBE: '.dxos.KUBE'
+        service: '.dxos.Service'
+        file: '.dxos.File'
+```
+Under the service `dxns` located in your profile yml, fill up those credentials.
+
+Now next time you have to deploy an app you will use them.

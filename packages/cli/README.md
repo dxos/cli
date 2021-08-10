@@ -13,31 +13,85 @@ or
 ```
 $ npm install --global @dxos/cli@beta
 ```
+*Note: You will need to be logged into your npm account in the terminal for this to work*
+
+### Profiles
+
+To use the CLI, a profile needs to be created and activated.
+
+The CLI supports creating multiple profiles with different configurations from downloadable templates, and switching between them.
+
+To create a profile from a template, pass a profile name and template URL.
+
+Example:
+
+```bash
+$ dx profile init --name moon --template-url https://git.io/JBQdM
+```
+
+Profiles are stored in the `~/.wire/profile` folder. To further customize a profile, edit the profile configuration file.
+
+To activate/use a profile, do one of the following (highest to lowest precedence):
+
+1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile moon wns status`
+2. export `WIRE_PROFILE` in the shell, with the name of the profile, e.g. `export WIRE_PROFILE=moon`
+3. Set it as the default for the system, e.g. `dx profile set moon`
+
+Note: The first profile created automatically becomes the system default.
+
+View the name of the active profile:
+
+```bash
+$ dx profile
+```
+
+View the configuration values for the active profile:
+
+```bash
+$ dx profile config
+```
+
+View the configuration values for a given profile:
+
+```bash
+$ dx profile config <NAME>
+```
+
+View the profile used for a command (using the `--dry-run` flag):
+
+```bash
+$ dx wns status --dry-run
+Profile: /Users/ashwinp/.wire/profile/devnet.yml
+```
+
+Multiple templates can be created and shared with others to use different configuration values. Some [sample templates](./profiles/README.md) are included in the repo.
 
 ### Extensions
 
-In order to install CLI extensions, one could leverage automatic installation mechanism (for DxOS extensions only):
+In order to install CLI extensions, one could leverage automatic installation mechanism (for DXOS extensions only):
+
+<!--TODO(burdon): Rename registry.-->
 
 ```bash
-$ wire wns
+$ dx wns
 ```
 
 ```bash
-$ wire app
+$ dx app
 ```
 
-In order to install arbitrary extension, `wire extension install` command could be used:
+In order to install arbitrary extension, `dx extension install` command could be used:
 
 ```
-$ wire extension install @dxos/cli-ipfs --version beta
+$ dx extension install @dxos/cli-ipfs --version beta
 
 ✔ Installing @dxos/cli-ipfs@beta
 ```
 
-View installed extensions: 
+View installed extensions:
 
 ```
-$ wire extension list
+$ dx extension list
 
 extension       command  version       description
 --------------  -------  ------------  -----------------------
@@ -49,21 +103,56 @@ extension       command  version       description
 Uninstall extension:
 
 ```
-$ wire extension uninstall @dxos/cli-ipfs
+$ dx extension uninstall @dxos/cli-ipfs
 
 Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it? (Yes/No): y
 ✔ Uninstalling @dxos/cli-ipfs
 ```
+## Commands
+
+All the CLI modules support `help` flag that provides desired command clarification, e.g.
+
+```bash
+$ dx help
+```
+
+```bash
+$ dx app help
+```
+
+```bash
+$ dx app register help
+```
+
+## Setup
+
+### Certification
+
+In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `dx cert import` command. For the case of XBOX, import command would look like:
+
+```bash
+$ dx cert import --url https://kube.local/kube.pem
+```
+
+<!--TODO(egor): Host cert on .well-known endpoint.-->
+
+Corresponding certificate would be downloaded to `~/.wire/certs` and considered by CLI as "trusted".
+
+### Environment Variables
+
+While the usage of ENV variables is minimized, CLI still uses WNS related variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](env-map.yml)
+
+ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
 
 ## Upgrade
 
-An older version of the CLI could be upgraded via `wire upgrade` command.
+An older version of the CLI could be upgraded via `dx upgrade` command.
 
 ```
-$ wire version
+$ dx version
 v1.0.1-beta.15
 
-$ wire upgrade --force
+$ dx upgrade --force
 Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 ✔ Uninstalling @dxos/cli-data
 ✔ Uninstalling @dxos/cli-signal
@@ -76,7 +165,7 @@ Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 ✔ Installing @dxos/cli-signal
 ✔ Installing @dxos/cli-data
 
-$ wire version
+$ dx version
 v1.0.1-beta.16
 ```
 
@@ -93,112 +182,27 @@ $ yarn info @dxos/cli versions --json | jq '.data[-1]'
 Check installed version:
 
 ```bash
-$ wire version
+$ dx version
 ```
 
 If those outputs are different, make sure to remove old versions of `wire`.
 Remove old CLI and extensions, installed globally.
 
-Starting v1.0.0-beta.30, `wire uninstall` and `wire upgrade` commands are available.
+Starting v1.0.0-beta.30, `dx uninstall` and `dx upgrade` commands are available.
 
 To remove CLI and all extensions:
 
 ```
-$ wire uninstall --npm-client yarn
+$ dx uninstall --npm-client yarn
 ```
 
 To force upgrade CLI and all installed extensions to the latest:
 
 ```
-$ wire upgrade --npm-client yarn --force
+$ dx upgrade --npm-client yarn --force
 ```
 
 `--version` attribute could be supplied in order to upgrade/downgrade to a specific version.
-
-## Setup
-
-In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `wire cert import` command. For the case of XBOX, import command would look like:
-
-```bash
-$ wire cert import --url https://xbox.local/xbox.pem
-```
-
-TODO(egor): Host cert on .well-known endpoint.
-
-Corresponding certificate would be downloaded to `~/.wire/certs` and considered by CLI as "trusted".
-
-### Profiles
-
-To use the CLI, a profile needs to be created and activated.
-
-The CLI supports creating multiple profiles with different configurations from downloadable templates, and switching between them.
-
-To create a profile from a template, pass a profile name and template URL.
-
-Example:
-
-```bash
-$ wire profile init --name devnet --template-url https://git.io/Jfrn4
-```
-
-Profiles are stored in the `~/.wire/profile` folder. To further customize a profile, edit the profile configuration file.
-
-To activate/use a profile, do one of the following (highest to lowest precedence):
-
-1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `wire --profile devnet wns status`
-2. export `WIRE_PROFILE` in the shell, with the name of the profile, e.g. `export WIRE_PROFILE=devnet`
-3. Set it as the default for the system, e.g. `wire profile set devnet`
-
-Note: The first profile created automatically becomes the system default.
-
-View the name of the active profile:
-
-```bash
-$ wire profile
-```
-
-View the configuration values for the active profile:
-
-```bash
-$ wire profile config
-```
-
-View the configuration values for a given profile:
-
-```bash
-$ wire profile config <NAME>
-```
-
-View the profile used for a command (using the `--dry-run` flag):
-
-```bash
-$ wire wns status --dry-run
-Profile: /Users/ashwinp/.wire/profile/devnet.yml
-```
-
-Multiple templates can be created and shared with others to use different configuration values. Some [sample templates](./profiles/README.md) are included in the repo.
-
-### Environment Variables
-
-While the usage of ENV variables is minimized, CLI still uses WNS related variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](env-map.yml)
-
-ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
-
-## Commands
-
-All the CLI modules support `help` flag that provides desired command clarification, e.g.
-
-```bash
-$ wire help
-```
-
-```bash
-$ wire app help
-```
-
-```bash
-$ wire app register help
-```
 
 ## Extensions
 
@@ -206,12 +210,12 @@ $ wire app register help
 | :------------ |
 | [App CLI](https://github.com/dxos/cli/blob/master/packages/cli-app/README.md) |
 | [Bot CLI](https://github.com/dxos/cli/blob/master/packages/cli-bot/README.md) |
+| [Chat CLI](https://github.com/dxos/cli/blob/master/packages/cli-chat/README.md) |
 | [Dashboard CLI](https://github.com/dxos/cli/blob/master/packages/cli-dashboard/README.md) |
 | [Data CLI](https://github.com/dxos/cli/blob/master/packages/cli-data/README.md) |
 | [IPFS CLI](https://github.com/dxos/cli/blob/master/packages/cli-ipfs/README.md) |
 | [Machine CLI](https://github.com/dxos/cli/blob/master/packages/cli-machine/README.md) |
 | [MDNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-mdns/README.md) |
 | [Pad CLI](https://github.com/dxos/cli/blob/master/packages/cli-pad/README.md) |
-| [Peer CLI](https://github.com/dxos/cli/blob/master/packages/cli-peer/README.md) |
 | [Signal CLI](https://github.com/dxos/cli/blob/master/packages/cli-signal/README.md) |
 | [WNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-wns/README.md) |
