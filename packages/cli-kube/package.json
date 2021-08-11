@@ -19,7 +19,8 @@
   },
   "files": [
     "bin/",
-    "dist/"
+    "dist/",
+    "scripts/"
   ],
   "scripts": {
     "build": "tsc && cp -R src/*.yml dist/src",
@@ -45,6 +46,7 @@
     "do-wrapper": "4.1.2",
     "got": "^10.7.0",
     "js-yaml": "^3.13.1",
+    "yaml2json": "^1.0.2",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
