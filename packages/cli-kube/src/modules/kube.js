@@ -7,7 +7,7 @@ import yaml from 'js-yaml';
 import os from 'os';
 import path from 'path';
 
-import { RUNNING_STATE, asyncHandler, DockerContainer, DockerImage, print } from '@dxos/cli-core';
+import { RUNNING_STATE, asyncHandler, DockerContainer, DockerImage, Runnable, print } from '@dxos/cli-core';
 
 import { DigitalOceanProvider } from '../providers';
 
@@ -220,6 +220,24 @@ export const KubeModule = ({ config }) => ({
         // TODO(egorgripasov): Multiple providers.
         const provider = new DigitalOceanProvider(config);
         await provider.delete(name);
+      })
+    })
+
+    .command({
+      command: ['assemble'],
+      describe: 'Install CLI extensions and Services required for running KUBE.',
+      builder: yargs => yargs.version(false)
+        .option('version', { type: 'string' }),
+
+      handler: asyncHandler(async argv => {
+        const { version } = argv;
+
+        const scriptRunnable = new Runnable(path.join(__dirname, '../../../scripts/install.sh'));
+        const options = {
+          detached: false
+        };
+
+        scriptRunnable.run([version], options);
       })
     })
 });

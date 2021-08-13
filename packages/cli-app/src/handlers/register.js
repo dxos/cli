@@ -18,10 +18,13 @@ export const register = (config, { getAppRecord, getDXNSClient }) => async (argv
   const wnsConfig = config.get('services.wns');
   const { server, userKey, bondId, chainId } = wnsConfig;
 
-  assert(server, 'Invalid WNS endpoint.');
-  assert(userKey, 'Invalid WNS userKey.');
-  assert(bondId, 'Invalid WNS bond ID.');
-  assert(chainId, 'Invalid WNS chain ID.');
+  // TODO(egorgripasov): Deprecate.
+  if (!dxns) {
+    assert(server, 'Invalid WNS endpoint.');
+    assert(userKey, 'Invalid WNS userKey.');
+    assert(bondId, 'Invalid WNS bond ID.');
+    assert(chainId, 'Invalid WNS chain ID.');
+  }
 
   const conf = {
     ...await loadAppConfig(),
