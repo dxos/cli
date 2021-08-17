@@ -40,17 +40,15 @@ jobs:
           git push --tags -f
           git push --delete origin "${{ steps.release.outputs.tag_name }}"
           yarn lerna publish from-package --force-publish -y --dist-tag="alpha"
-          # yarn dx profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
-          # yarn dx machine delete --name alpha
-          # sleep 10
-          # yarn dx machine create --name alpha --cliver '@alpha' --register
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           WIRE_PROFILE: ci
           WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
-          WIRE_WNS_USER_KEY: ${{secrets.wns_user_key}}
-          WIRE_WNS_BOND_ID: ${{secrets.wns_bond_id}}
-          WIRE_MACHINE_DO_TOKEN: ${{secrets.wire_machine_do_token}}
-          WIRE_MACHINE_GITHUB_TOKEN: ${{secrets.wire_machine_github_token}}
-          WIRE_MACHINE_DNS_DOMAIN: ${{secrets.wire_machine_dns_domain}}
+        if: ${{ steps.release.outputs.release_created }}
+      - name: Build and Publish Docker Images
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "${{ secrets.CONTAINER_REGISTRY_TOKEN }}" | docker login https://ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          scripts/docker_build_release.sh dev
         if: ${{ steps.release.outputs.release_created }}

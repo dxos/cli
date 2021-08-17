@@ -1,5 +1,26 @@
 # Changelog
 
+### [2.4.4](https://www.github.com/dxos/cli/compare/v2.4.3...v2.4.4) (2021-08-17)
+
+
+### Bug Fixes
+
+* ignore version from app.yml ([#230](https://www.github.com/dxos/cli/issues/230)) ([c6b9820](https://www.github.com/dxos/cli/commit/c6b98200504238cb724c1c368643817814b0ebdc))
+
+### [2.4.3](https://www.github.com/dxos/cli/compare/v2.4.2...v2.4.3) (2021-08-13)
+
+
+### Bug Fixes
+
+* rm required wns creds for dxns registration. ([#227](https://www.github.com/dxos/cli/issues/227)) ([1572b8d](https://www.github.com/dxos/cli/commit/1572b8da5f58cfe46f2ceea943d711148c6f9790))
+
+### [2.4.2](https://www.github.com/dxos/cli/compare/v2.4.1...v2.4.2) (2021-08-11)
+
+
+### Bug Fixes
+
+* dx kube asseble ([#225](https://www.github.com/dxos/cli/issues/225)) ([ebbcc53](https://www.github.com/dxos/cli/commit/ebbcc538c3dcae8e22e5a9011192968ed3a4baee))
+
 ### [2.4.1](https://www.github.com/dxos/cli/compare/v2.4.0...v2.4.1) (2021-08-06)
 
 
