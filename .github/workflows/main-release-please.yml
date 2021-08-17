@@ -45,3 +45,10 @@ jobs:
           WIRE_PROFILE: ci
           WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
         if: ${{ steps.release.outputs.release_created }}
+      - name: Build and Publish Docker Images
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "${{ secrets.CONTAINER_REGISTRY_TOKEN }}" | docker login https://ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          scripts/docker_build_release.sh dev
+        if: ${{ steps.release.outputs.release_created }}
