@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-app",
-  "version": "2.4.3-alpha.0",
+  "version": "2.4.4-alpha.0",
   "description": "DXOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
   "license": "AGPL-3.0",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.4.3-alpha.0",
+    "@dxos/cli-core": "^2.4.4-alpha.0",
     "@dxos/debug": "~2.10.12",
     "@dxos/registry-api": "~0.1.1-alpha.2",
     "@otplib/plugin-thirty-two": "^12.0.1",
@@ -61,8 +61,8 @@
     "lodash.defaultsdeep": "^4.6.1",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
-    "lodash.pick": "^4.4.0",
     "lodash.omit": "^4.5.0",
+    "lodash.pick": "^4.4.0",
     "lodash.set": "^4.3.2",
     "node-fetch": "^2.6.0",
     "node-yaml": "^4.0.1",

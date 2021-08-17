@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-signal",
-  "version": "2.4.3-alpha.0",
+  "version": "2.4.4-alpha.0",
   "description": "DXOS Signal CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-signal#readme",
   "license": "AGPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.4.3-alpha.0",
+    "@dxos/cli-core": "^2.4.4-alpha.0",
     "@dxos/debug": "~2.10.12",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "lodash-clean": "^2.2.1",
