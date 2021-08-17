@@ -17,13 +17,8 @@ jobs:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
         password: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
-    - name: Build docker image
-      id: docker_build
-      uses: docker/build-push-action@v2
-      with:
-        context: ./packages/cli-app/.
-        file: ./packages/cli-app/Dockerfile
-        push: true
-        tags: ghcr.io/dxos/app-server:latest
-        build-args: |
-            NPM_TOKEN=${{ secrets.NPM_TOKEN }}
+    - name: Build and Publish Docker Image
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          scripts/docker_build_release.sh dev
