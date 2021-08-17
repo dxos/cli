@@ -18,7 +18,7 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
     - name: Build and Publish Docker Image
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          scripts/docker_build_release.sh dev
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: |
+        scripts/docker_build_release.sh dev
