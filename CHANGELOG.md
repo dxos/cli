@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.4](https://www.github.com/dxos/cli/compare/v2.4.3...v2.4.4) (2021-08-17)
+
+
+### Bug Fixes
+
+* ignore version from app.yml ([#230](https://www.github.com/dxos/cli/issues/230)) ([c6b9820](https://www.github.com/dxos/cli/commit/c6b98200504238cb724c1c368643817814b0ebdc))
+
 ### [2.4.3](https://www.github.com/dxos/cli/compare/v2.4.2...v2.4.3) (2021-08-13)
 
 
