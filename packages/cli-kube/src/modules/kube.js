@@ -41,15 +41,16 @@ export const KubeModule = ({ config }) => ({
       describe: 'Install KUBE.',
       builder: yargs => yargs
         .option('force', { type: 'boolean', default: false, description: 'Force install' })
-        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' }),
+        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' })
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(async argv => {
-        const { auth: authRequired, force } = argv;
+        const { auth: authRequired, force, dev } = argv;
         const { services: { kube } } = kubeCompose;
 
         const auth = authRequired ? getAuth(config, kube) : undefined;
 
-        const dockerImage = new DockerImage({ service: kube, auth });
+        const dockerImage = new DockerImage({ service: kube, auth, dev });
         await dockerImage.pull(force);
       })
     })
@@ -58,10 +59,11 @@ export const KubeModule = ({ config }) => ({
       command: ['upgrade'],
       describe: 'Upgrade KUBE.',
       builder: yargs => yargs
-        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' }),
+        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' })
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(async argv => {
-        const { auth: authRequired } = argv;
+        const { auth: authRequired, dev } = argv;
         const { services: { kube } } = kubeCompose;
 
         const auth = authRequired ? getAuth(config, kube) : undefined;
@@ -73,7 +75,7 @@ export const KubeModule = ({ config }) => ({
           throw new Error('Unable to upgrade KUBE while it\'s running.');
         }
 
-        const dockerImage = new DockerImage({ service: kube, auth });
+        const dockerImage = new DockerImage({ service: kube, auth, dev });
         await dockerImage.pull(true);
 
         await DockerImage.cleanNotLatest(imageName);
@@ -89,7 +91,8 @@ export const KubeModule = ({ config }) => ({
         .option('name', { type: 'string', description: 'Container name' })
         .option('fqdn', { type: 'string', description: 'Fully Qualified Domain Name.', default: DEFAULT_FQDN })
         .option('letsencrypt', { type: 'boolean', default: false })
-        .option('email', { type: 'string' }),
+        .option('email', { type: 'string' })
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(async argv => {
         const containers = await DockerContainer.list();
@@ -101,9 +104,9 @@ export const KubeModule = ({ config }) => ({
 
         const { services: { kube: service } } = kubeCompose;
 
-        const { name = service.container_name, keyPhrase, services, fqdn, letsencrypt, email } = argv;
+        const { name = service.container_name, keyPhrase, services, fqdn, letsencrypt, email, dev } = argv;
 
-        const dockerImage = new DockerImage({ service });
+        const dockerImage = new DockerImage({ service, dev });
 
         const binds = [
           '/var/run/docker.sock:/var/run/docker.sock:rw',
