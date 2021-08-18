@@ -120,7 +120,8 @@ export const KubeModule = ({ config }) => ({
           `WIRE_SERVICES=${services}`,
           `HOST_OS=${capitalize(process.platform)}`,
           `KUBE_PROFILE_PATH=${KUBE_PROFILE_PATH}`,
-          `KUBE_FQDN=${fqdn}`
+          `KUBE_FQDN=${fqdn}`,
+          `KUBE_DEV_MODE=${dev ? '1' : '0'}`
         ];
 
         if (letsencrypt && email) {
@@ -230,17 +231,17 @@ export const KubeModule = ({ config }) => ({
       command: ['assemble'],
       describe: 'Install CLI extensions and Services required for running KUBE.',
       builder: yargs => yargs.version(false)
-        .option('version', { type: 'string' }),
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(async argv => {
-        const { version } = argv;
+        const { dev } = argv;
 
         const scriptRunnable = new Runnable(path.join(__dirname, '../../../scripts/install.sh'));
         const options = {
           detached: false
         };
 
-        scriptRunnable.run([version], options);
+        scriptRunnable.run([dev ? '1' : '0'], options);
       })
     })
 });

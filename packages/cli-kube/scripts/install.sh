@@ -8,7 +8,8 @@ export SCRIPT_DIR; SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/nu
 
 SERVICES_FILE_PATH='../dist/src/services.yml'
 
-CLI_VER=${1:-"latest"}
+DEV=${1:-"0"}
+[[ "$DEV" == "1" ]] && CLI_VER="alpha" || CLI_VER="latest"
 
 set -euo pipefail
 
@@ -41,7 +42,10 @@ function install_services {
   yarn --silent yaml2json "$SCRIPT_DIR/$SERVICES_FILE_PATH" | jq -r '.[]|[.package, .service, .args] | @tsv' |
     while IFS=$'\t' read -r package service args; do
       echo Installing $service service from $package package..
-      dx service install --from $package --service $service
+      dx service upgrade \
+        `if [ "$DEV" == "1" ]; then echo "--dev"; fi` \
+        --from $package \
+        --service $service
       echo Done.
     done
 }
