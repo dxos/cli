@@ -167,15 +167,16 @@ export const KubeModule = ({ config }) => ({
         .option('email', { type: 'string' })
         .option('key-phrase', { type: 'string' })
         .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) })
-        .option('ssh-keys', { type: 'array' }),
+        .option('ssh-keys', { type: 'array' })
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(async argv => {
-        const { name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, sshKeys, json } = argv;
+        const { name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, sshKeys, dev, json } = argv;
 
         // TODO(egorgripasov): Multiple providers.
         const provider = new DigitalOceanProvider(config);
 
-        const result = await provider.deploy({ name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, sshKeys });
+        const result = await provider.deploy({ name, memory, region, pin, register, letsencrypt, email, keyPhrase, services, sshKeys, dev });
         print(result, { json });
       })
     })

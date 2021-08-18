@@ -63,13 +63,15 @@ export class DigitalOceanProvider implements Provider {
   }
 
   async deploy (options: KubeDeployOptions) {
-    const { name = `kube-${crypto.randomBytes(4).toString('hex')}`, region = DEFAULT_REGION, memory = DEFAULT_MEMORY, keyPhrase, letsencrypt, email, sshKeys = defaultSSHKeys /*, register, pin, services */ } = options;
+    const { name = `kube-${crypto.randomBytes(4).toString('hex')}`, region = DEFAULT_REGION, memory = DEFAULT_MEMORY, keyPhrase, letsencrypt, email, sshKeys = defaultSSHKeys, services, dev /*, register, pin */ } = options;
     const fqdn = `${name}.${this._dnsDomain}`;
 
     const dropletId = await this.getDropletIdFromName(name);
     if (dropletId) {
       throw new Error(`${name} already exists.`);
     }
+
+    const cliChannel = dev ? 'alpha' : 'latest';
 
     const cloudConfigScript =
          `#cloud-config
@@ -97,25 +99,18 @@ export class DigitalOceanProvider implements Provider {
            - curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
            - chmod +x /usr/local/bin/docker-compose
            - curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-           - sudo apt-get install -y nodejs
+           - sudo apt-get install -y nodejs jq
            - export HOME=/root
            - echo "//registry.npmjs.org/:_authToken=${this._npmAccessToken}" >> $HOME/.npmrc
            - npm install --global yarn
-           - yarn global add @dxos/cli@alpha
+           - yarn global add @dxos/cli@${cliChannel}
            - dx profile init --name moon --template-url https://git.io/JBQdM
            - dx profile set moon
-           - dx extension install @dxos/cli-kube --version alpha
-           - dx extension install @dxos/cli-dxns --version alpha
-           - dx extension install @dxos/cli-app --version alpha
-           - dx extension install @dxos/cli-signal --version alpha
-           - export WIRE_MACHINE_GITHUB_USERNAME=${this._githubUsername}
-           - export WIRE_MACHINE_GITHUB_TOKEN=${this._githubAccessToken}
-           - dx kube install --auth
-           - dx service install --from @dxos/cli-app --service app-server --auth
-           - dx service install --from @dxos/cli-dxns --service dxns --auth
-           - dx service install --from @dxos/cli-signal --service signal --auth
+           - dx extension install @dxos/cli-kube --version ${cliChannel}
+           - dx kube install ${dev ? '--dev' : ''}
+           - dx kube assemble ${dev ? '--dev' : ''}
            - systemctl disable apache2 && systemctl stop apache2
-           - dx kube start --key-phrase="${keyPhrase}" --fqdn="${fqdn}" --letsencrypt=${letsencrypt} --email="${email}"
+           - dx kube start ${dev ? '--dev' : ''} --services='${services}' --key-phrase="${keyPhrase}" --fqdn="${fqdn}" --letsencrypt=${letsencrypt} --email="${email}"
         `;
 
     let sizeSlug = 's-2vcpu-4gb';
