@@ -1,5 +1,19 @@
 # Changelog
 
+### [2.4.6](https://www.github.com/dxos/cli/compare/v2.4.5...v2.4.6) (2021-08-18)
+
+
+### Bug Fixes
+
+* attempt to fix kube assemble. ([#234](https://www.github.com/dxos/cli/issues/234)) ([0b3f7c9](https://www.github.com/dxos/cli/commit/0b3f7c9552e7793ad7b6de756b9be2105cea0acc))
+
+### [2.4.5](https://www.github.com/dxos/cli/compare/v2.4.4...v2.4.5) (2021-08-18)
+
+
+### Bug Fixes
+
+* Docker image channels ([#232](https://www.github.com/dxos/cli/issues/232)) ([36dddfd](https://www.github.com/dxos/cli/commit/36dddfd075042433784dcf868c94473d7951ab6c))
+
 ### [2.4.4](https://www.github.com/dxos/cli/compare/v2.4.3...v2.4.4) (2021-08-17)
 
 

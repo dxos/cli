@@ -10,9 +10,11 @@ import hash from 'object-hash';
 import { CONTAINER_PREFIX, DockerContainer } from './container';
 import { DockerVolume } from './volume';
 
+export const LATEST_TAG = 'latest';
+export const DEV_TAG = 'dev';
+
 const docker = new Docker();
 
-const LATEST_TAG = 'latest';
 const HOST_NETWORK_MODE = 'host';
 
 // TODO(egorgripasov): Extend with default values, etc.
@@ -31,7 +33,7 @@ export class DockerImage {
 
     imageName = imageName.split(':')[0];
     const images = await docker.listImages({ filters: { reference: [imageName] } });
-    const outdatedImages = images.filter(image => !image.RepoTags || !image.RepoTags.includes(`${imageName}:${LATEST_TAG}`));
+    const outdatedImages = images.filter(image => !image.RepoTags || (!image.RepoTags?.includes(`${imageName}:${DEV_TAG}`) && !image.RepoTags?.includes(`${imageName}:${LATEST_TAG}`)));
 
     for await (const outdatedImage of outdatedImages) {
       const containers: Array<DockerContainer> = await DockerContainer.list({ id: outdatedImage.Id });
@@ -44,13 +46,14 @@ export class DockerImage {
   }
 
   constructor (options: any) {
-    const { service, auth } = options;
+    const { service, auth, dev } = options;
     const { image: imageName, ports, command, network_mode: networkMode, hostname } = service;
 
     assert(imageName);
     assert(command);
 
-    this._imageName = imageName.indexOf(':') > 0 ? imageName : `${imageName}:${LATEST_TAG}`;
+    const tag = dev ? DEV_TAG : LATEST_TAG;
+    this._imageName = `${imageName.split(':')[0]}:${tag}`;
 
     this._networkMode = networkMode;
     this._ports = ports;
