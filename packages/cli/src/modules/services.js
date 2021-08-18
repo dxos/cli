@@ -63,7 +63,7 @@ const getServiceType = async (serviceName) => {
  */
 export const ServicesModule = ({ config, profilePath }) => ({
   command: ['service'],
-  describe: 'KUBE service management.',
+  describe: 'DXOS service management.',
 
   handler: asyncHandler(async argv => {
     const { json } = argv;
@@ -102,15 +102,16 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('from', { describe: 'Extension name', required: true })
         .option('service', { describe: 'Service to install', required: true })
         .option('force', { type: 'boolean', default: false, description: 'Force install' })
-        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' }),
+        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' })
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, auth: authRequired, force } = argv;
+        const { from: moduleName, service: serviceName, auth: authRequired, force, dev } = argv;
 
         const service = getServiceInfo(moduleName, serviceName);
         const auth = authRequired ? getAuth(config, service) : undefined;
 
-        const dockerImage = new DockerImage({ service, auth });
+        const dockerImage = new DockerImage({ service, auth, dev });
 
         await dockerImage.pull(force);
       })
@@ -122,10 +123,11 @@ export const ServicesModule = ({ config, profilePath }) => ({
       builder: yargs => yargs
         .option('from', { describe: 'Extension name', required: true })
         .option('service', { describe: 'Service to upgrade', required: true })
-        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' }),
+        .option('auth', { type: 'boolean', default: false, description: 'Authentication required' })
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, auth: authRequired } = argv;
+        const { from: moduleName, service: serviceName, auth: authRequired, dev } = argv;
 
         const service = getServiceInfo(moduleName, serviceName);
         const auth = authRequired ? getAuth(config, service) : undefined;
@@ -138,7 +140,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
         }
 
         // TODO(egorgripasov): Already up-to-date message.
-        const dockerImage = new DockerImage({ service, auth });
+        const dockerImage = new DockerImage({ service, auth, dev });
         await dockerImage.pull(true);
 
         await DockerImage.cleanNotLatest(imageName);
@@ -156,13 +158,14 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('forward-env', { type: 'string', description: 'ENV to forward. Could be "full", "system", "config"' })
         .option('host-net', { type: 'boolean', description: 'Use host network', default: false })
         .option('storage-path', { type: 'string', description: 'Path to ECHO and HALO storage.', default: path.join(os.homedir(), STORAGE_ROOT) })
-        .option('binds', { type: 'array', description: 'Additional volume binds.' }),
+        .option('binds', { type: 'array', description: 'Additional volume binds.' })
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile, storagePath, binds: additionalBinds = [] } = argv;
+        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile, storagePath, binds: additionalBinds = [], dev } = argv;
 
         const service = getServiceInfo(moduleName, serviceName);
-        const dockerImage = new DockerImage({ service });
+        const dockerImage = new DockerImage({ service, dev });
 
         const forwardArgs = forward ? JSON.parse(forward).args : [];
         const command = service.command.split(' ').concat(forwardArgs);
