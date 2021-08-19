@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.7](https://www.github.com/dxos/cli/compare/v2.4.6...v2.4.7) (2021-08-19)
+
+
+### Bug Fixes
+
+* rm unused creds. ([a09d6e0](https://www.github.com/dxos/cli/commit/a09d6e01eb9aa825d833fab1b43f71a879f2b4c3))
+
 ### [2.4.6](https://www.github.com/dxos/cli/compare/v2.4.5...v2.4.6) (2021-08-18)
 
 
