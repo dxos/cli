@@ -23,21 +23,14 @@ const DEFAULT_DNS_TTL = 300;
 export class DigitalOceanProvider implements Provider {
   _config: any;
   _session: any;
-  _githubAccessToken: string
-  _githubUsername: string
   _npmAccessToken: string
   _dnsDomain: string
 
   constructor (config: any) {
     this._config = config;
-
-    this._githubAccessToken = this._config.get('services.machine.githubAccessToken');
-    this._githubUsername = this._config.get('services.machine.githubUsername');
     this._npmAccessToken = this._config.get('services.machine.npmAccessToken');
     this._dnsDomain = this._config.get('services.machine.dnsDomain');
 
-    assert(this._githubAccessToken);
-    assert(this._githubUsername);
     assert(this._npmAccessToken);
     assert(this._dnsDomain);
 
