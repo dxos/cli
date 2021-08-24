@@ -41,15 +41,10 @@
     "@dxos/crypto": "~2.10.12",
     "@dxos/debug": "~2.10.12",
     "@dxos/echo-db": "~2.10.12",
-    "@dxos/random-access-multi-storage": "1.1.0-beta.7",
-    "assert": "^2.0.0",
     "fs-extra": "^8.1.0",
-    "js-yaml": "^3.13.1",
     "lockfile": "^1.0.4",
     "lodash.defaultsdeep": "^4.6.1",
-    "query-string": "^6.12.1",
-    "random-access-memory": "^3.1.1",
-    "yargs": "^16.2.0"
+    "query-string": "^6.12.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

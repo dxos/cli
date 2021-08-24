@@ -39,15 +39,8 @@
   "dependencies": {
     "@dxos/async": "~2.10.12",
     "@dxos/cli-core": "^2.4.7-alpha.0",
-    "@dxos/crypto": "~2.10.12",
-    "@dxos/debug": "~2.10.12",
-    "@dxos/object-model": "~2.10.12",
-    "assert": "^2.0.0",
     "do-wrapper": "4.1.2",
-    "got": "^10.7.0",
-    "js-yaml": "^3.13.1",
-    "yamljs": "^0.3.0",
-    "yargs": "^16.2.0"
+    "js-yaml": "^3.13.1"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",

@@ -37,12 +37,11 @@
     "@babel/runtime": "^7.0.0",
     "@dxos/async": "~2.10.12",
     "@dxos/cli-core": "^2.0.29-alpha.0",
+    "@dxos/crypto": "^2.12.7",
     "@dxos/network-manager": "~2.10.12",
-    "assert": "^2.0.0",
-    "boolean": "^3.0.1",
-    "do-wrapper": "^4.1.2",
-    "performance-now": "^2.1.0",
-    "yargs": "^16.2.0"
+    "@dxos/protocol": "^2.12.7",
+    "debug": "^4.3.2",
+    "performance-now": "^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
