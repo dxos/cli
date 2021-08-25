@@ -1,5 +1,6 @@
 FROM node:12.22.1-alpine
 
+LABEL maintainer="admin@dxos.org"
 LABEL description="DXOS app server."
 
 ARG NPM_TOKEN
