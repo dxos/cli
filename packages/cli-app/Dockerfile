@@ -1,3 +1,5 @@
+FROM node:12.22.1-alpine
+
 LABEL description="DXOS app server."
 
 ARG NPM_TOKEN
