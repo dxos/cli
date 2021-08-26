@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-module.exports = require('../dist/es/index').run();
+module.exports = require('../dist/src/index').run();
