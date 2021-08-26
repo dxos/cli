@@ -5,16 +5,15 @@
 import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
 
-import { Client } from '@dxos/client';
 import { createCLI } from '@dxos/cli-core';
+import { Client } from '@dxos/client';
 import { keyToBuffer, createKeyPair } from '@dxos/crypto';
 
+import info from '../extension.yml';
+import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
 import { PartyModule } from './modules/party';
 import { StorageModule } from './modules/storage';
 import { StateManager } from './state-manager';
-import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
-
-import info from '../extension.yml';
 
 const CLI_BASE_COMMAND = 'dx';
 
