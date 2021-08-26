@@ -20,7 +20,9 @@ RUN mkdir /usr/local/lib/node_modules/fake && cd /usr/local/lib/node_modules/fak
     && npm install --unsafe-perm "@dxos/cli$CLI_VER" "@dxos/cli-dxns$CLI_VER" "@dxos/cli-app$CLI_VER" \
     && cd .. && cp -R fake/node_modules/* . && rm -rf fake && cd ~ \
     && npm install --global --unsafe-perm "@dxos/cli$CLI_VER" "@dxos/cli-dxns$CLI_VER" "@dxos/cli-app$CLI_VER" \
-    && rm -rf /usr/local/lib/node_modules/@dxos/*/node_modules
+    && rm -rf /usr/local/lib/node_modules/@dxos/cli/node_modules \
+    && rm -rf /usr/local/lib/node_modules/@dxos/cli-dxns/node_modules \
+    && rm -rf /usr/local/lib/node_modules/@dxos/cli-app/node_modules
 RUN dx profile init --name local --template-url https://git.io/Jfrn0
 
 EXPOSE 5999
