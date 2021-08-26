@@ -9,6 +9,13 @@ ARG CLI_VER="@latest"
 RUN apk --update add --no-cache python alpine-sdk libtool autoconf automake && rm -rf /var/cache/apk/*
 
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> /root/.npmrc
+# Next layer installs @dxos/cli, @dxos/cli-app and @dxos/cli-dxns globally and forces them to share common dependencies.
+# To do so we create a fake project with npm init and install those packages as dependencies. Now in node_modules folder
+# we have all necessary dependecies - we move them to system node_modules directory located at
+# /usr/local/lib/node_modules. Afterwards we install @dxos/cli, @dxos/cli-app and @dxos/cli-dxns globally and remove all
+# their node_modules directory as we can find the same dependencies in /usr/local/lib/node_modules.
+# Sharing dependencies allows to avoid installing multiple instances of the same dependency, therefore saving a lot of
+# disk space.
 RUN mkdir /usr/local/lib/node_modules/fake && cd /usr/local/lib/node_modules/fake && npm init -y \
     && npm install --unsafe-perm "@dxos/cli$CLI_VER" "@dxos/cli-dxns$CLI_VER" "@dxos/cli-app$CLI_VER" \
     && cd .. && cp -R fake/node_modules/* . && rm -rf fake && cd ~ \
