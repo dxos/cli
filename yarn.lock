@@ -3611,6 +3611,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/lockfile@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@types/lockfile/-/lockfile-1.0.2.tgz#3f77e84171a2b7e3198bd5717c7547a54393baf8"
+  integrity sha512-jD5VbvhfMhaYN4M3qPJuhMVUg3Dfc4tvPvLEAXn6GXbs/ajDFtCQahX37GIE65ipTI3I+hEvNaXS3MYAn9Ce3Q==
+
 "@types/lodash.defaultsdeep@^4.6.6":
   version "4.6.6"
   resolved "https://registry.npmjs.org/@types/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.6.tgz#d2e87c07ec8d0361e4b79aa000815732b210be04"
