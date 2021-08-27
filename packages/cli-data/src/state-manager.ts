@@ -8,9 +8,10 @@ import lockFile from 'lockfile';
 import path from 'path';
 import { promisify } from 'util';
 
-import { generatePasscode } from '@dxos/credentials';
-import { keyToBuffer, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
-import { InvitationDescriptor } from '@dxos/echo-db';
+import { Client } from '@dxos/client';
+import { generatePasscode, SecretProvider, SecretValidator } from '@dxos/credentials';
+import { keyToBuffer, verify, SIGNATURE_LENGTH, PublicKeyLike, PublicKey } from '@dxos/crypto';
+import { InvitationDescriptor, InvitationQueryParameters, Party } from '@dxos/echo-db';
 
 const DEFAULT_ITEM_UPDATE_HANDLER = () => {};
 
@@ -29,18 +30,20 @@ export class StateManager {
    */
   _parties = new Map();
 
-  // TODO(egorgripasov): Deplrecate.
-  _currentParty = null;
+  // TODO(egorgripasov): Deprecate.
+  private _currentParty: string | null = null;
 
-  _party = null;
+  private _party: Party | null = null;
+  private _lockPath: string | undefined
+  private _getReadlineInterface: Function;
+  private _getClient: Function;
+  private _statePath: string | undefined;
+  private _lockAquired: boolean;
+  private _item: any;
+  private _itemUnsubscribe: any;
+  private _client: Client | undefined;
 
-  /**
-   * @constructor
-   * @param {Function} getClient
-   * @param {Function} getReadlineInterface
-   * @param {object} options
-   */
-  constructor (getClient, getReadlineInterface, options) {
+  constructor (getClient: Function, getReadlineInterface: Function, options: {storagePath?: string}) {
     assert(getClient);
     assert(getReadlineInterface);
 
@@ -77,14 +80,14 @@ export class StateManager {
     return this._party;
   }
 
-  isOpenParty (partyKey) {
+  isOpenParty (partyKey: PublicKeyLike) {
     assert(partyKey);
     assert(this._parties.has(partyKey));
 
     return !this._parties.get(partyKey).useCredentials;
   }
 
-  async setItem (item, updateHandler = DEFAULT_ITEM_UPDATE_HANDLER) {
+  async setItem (item?: any, updateHandler: Function = DEFAULT_ITEM_UPDATE_HANDLER) {
     await this._assureClient();
 
     if (this._itemUnsubscribe) {
@@ -113,10 +116,9 @@ export class StateManager {
 
   /**
    * Join Party.
-   * @param {String} partyKey
-   * @param {Object} invitation
    */
-  async joinParty (partyKey, invitation) {
+  async joinParty (partyKey: string, invitation: InvitationQueryParameters) {
+    assert(this._client);
     await this.setItem();
     if (partyKey) {
       if (!/^[0-9a-f]{64}$/i.test(partyKey)) {
@@ -125,16 +127,17 @@ export class StateManager {
       if (!this._parties.has(partyKey)) {
         throw new Error(`Party ${partyKey} in not in a party list.`);
       }
-      const party = await this._client.echo.getParty(keyToBuffer(partyKey));
+      const party = await this._client.echo.getParty(PublicKey.from(partyKey));
+      assert(party);
       await this._setParty(party);
     } else if (invitation) {
       await this._assureClient();
 
       if (invitation) {
-        const secretProvider = () => {
+        const secretProvider: SecretProvider = () => {
           return new Promise(resolve => {
             const rl = this._getReadlineInterface();
-            rl.question('Passcode: ', pin => {
+            rl.question('Passcode: ', (pin: string) => {
               resolve(Buffer.from(pin));
             });
           });
@@ -154,6 +157,7 @@ export class StateManager {
    * Create new Party.
    */
   async createParty () {
+    assert(this._client);
     await this._assureClient();
     await this.setItem();
 
@@ -165,19 +169,20 @@ export class StateManager {
 
   /**
    * Create Secret Invitation.
-   * @param {String} partyKey
    */
-  async createSecretInvitation (partyKey) {
+  async createSecretInvitation (partyKey: string) {
     assert(this._parties.has(partyKey));
     assert(this._parties.get(partyKey).useCredentials);
+    assert(this._client);
 
     const passcode = generatePasscode();
-    const secretProvider = () => Buffer.from(passcode);
-    const secretValidator = (invitation, secret) => secret && secret.equals(invitation.secret);
+    const secretProvider: SecretProvider = async () => Buffer.from(passcode);
+    const secretValidator: SecretValidator = async (invitation, secret) => !!(secret && invitation.secret && secret.equals(invitation.secret));
 
     await this._assureClient();
 
-    const party = await this._client.echo.getParty(keyToBuffer(partyKey));
+    const party = await this._client.echo.getParty(PublicKey.from(partyKey));
+    assert(party);
     const invitation = await party.createInvitation({ secretValidator, secretProvider });
 
     return { invitation: invitation.toQueryParameters(), passcode };
@@ -185,15 +190,14 @@ export class StateManager {
 
   /**
    * Create Signature Invitation.
-   * @param {String} partyKey
-   * @param {String} signatureKey
    */
-  async createSignatureInvitation (partyKey, signatureKey) {
+  async createSignatureInvitation (partyKey: string, signatureKey: string) {
     assert(this._parties.has(partyKey));
     assert(this._parties.get(partyKey).useCredentials);
+    assert(this._client);
 
     // Provided by inviter node.
-    const secretValidator = async (invitation, secret) => {
+    const secretValidator: SecretValidator = async (invitation, secret) => {
       const signature = secret.slice(0, SIGNATURE_LENGTH);
       const message = secret.slice(SIGNATURE_LENGTH);
       return verify(message, signature, keyToBuffer(signatureKey));
@@ -201,7 +205,8 @@ export class StateManager {
 
     await this._assureClient();
 
-    const party = await this._client.echo.getParty(keyToBuffer(partyKey));
+    const party = await this._client.echo.getParty(PublicKey.from(partyKey));
+    assert(party);
     const invitation = await party.createInvitation({ secretValidator });
 
     return invitation;
@@ -233,8 +238,9 @@ export class StateManager {
   }
 
   async _restoreParties () {
+    assert(this._client);
     // Restore parties.
-    let currentParty;
+    let currentParty: string;
     if (this._statePath && fs.existsSync(this._statePath)) {
       await this._putLock();
       const state = await fs.readJson(this._statePath);
@@ -257,7 +263,7 @@ export class StateManager {
     });
   }
 
-  async _setParty (party) {
+  async _setParty (party: Party) {
     this._party = party;
     this._currentParty = party.key.toHex();
     this._parties.set(this._currentParty, { partyKey: this._currentParty, useCredentials: true });

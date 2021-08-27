@@ -10,7 +10,7 @@ import { STORAGE_ROOT, getProfileName } from '@dxos/cli-core';
 
 export const CLI_DEFAULT_PERSISTENT = true;
 
-export const getProfileAndStorage = (storagePath, profilePath) => {
+export const getProfileAndStorage = (storagePath: string, profilePath: string) => {
   const profileName = getProfileName(profilePath);
   if (!storagePath) {
     storagePath = path.join(os.homedir(), STORAGE_ROOT, profileName);
@@ -19,7 +19,7 @@ export const getProfileAndStorage = (storagePath, profilePath) => {
   return { storagePath, profileName };
 };
 
-export const resetStorageForProfile = (storagePath, profilePath) => {
+export const resetStorageForProfile = (storagePath: string, profilePath: string) => {
   if (!storagePath) {
     storagePath = path.join(os.homedir(), STORAGE_ROOT, getProfileName(profilePath));
   }

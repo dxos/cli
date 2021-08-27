@@ -6,11 +6,11 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
 
 import { createCLI } from '@dxos/cli-core';
-import { Client } from '@dxos/client';
+import { Client, ClientConfig } from '@dxos/client';
 import { keyToBuffer, createKeyPair } from '@dxos/crypto';
 
-import info from '../extension.yml';
 import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
+import info from './extension';
 import { PartyModule } from './modules/party';
 import { StorageModule } from './modules/storage';
 import { StateManager } from './state-manager';
@@ -23,7 +23,7 @@ const CLI_CONFIG = {
   enableInteractive: true
 };
 
-const _createClient = async (config, models, options) => {
+const _createClient = async (config: any, models: any[], options: any) => {
   const { client = {}, services: { signal: { server }, ice }, cli } = config.values;
   const { storagePath, persistent, profileName } = options;
 
@@ -65,17 +65,17 @@ const _createClient = async (config, models, options) => {
   return dataClient;
 };
 
-let client;
-const createClientGetter = (config, models, options) => async () => {
+let client: Client;
+const createClientGetter = (config: ClientConfig, models: any[], options: any) => async () => {
   if (!client) {
     client = await _createClient(config, models, options);
   }
   return client;
 };
 
-let stateManager;
+let stateManager: StateManager;
 
-const initDataCliState = async (state) => {
+const initDataCliState = async (state: any) => {
   const { config, getReadlineInterface, models, profilePath, profileExists } = state;
 
   if (profilePath && profileExists) {
