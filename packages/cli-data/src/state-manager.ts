@@ -118,6 +118,7 @@ export class StateManager {
    * Join Party.
    */
   async joinParty (partyKey: string, invitation: InvitationQueryParameters) {
+    await this._assureClient();
     assert(this._client);
     await this.setItem();
     if (partyKey) {
@@ -131,8 +132,6 @@ export class StateManager {
       assert(party);
       await this._setParty(party);
     } else if (invitation) {
-      await this._assureClient();
-
       if (invitation) {
         const secretProvider: SecretProvider = () => {
           return new Promise(resolve => {
@@ -157,8 +156,8 @@ export class StateManager {
    * Create new Party.
    */
   async createParty () {
-    assert(this._client);
     await this._assureClient();
+    assert(this._client);
     await this.setItem();
 
     const party = await this._client.echo.createParty();
@@ -173,13 +172,13 @@ export class StateManager {
   async createSecretInvitation (partyKey: string) {
     assert(this._parties.has(partyKey));
     assert(this._parties.get(partyKey).useCredentials);
-    assert(this._client);
-
+    
     const passcode = generatePasscode();
     const secretProvider: SecretProvider = async () => Buffer.from(passcode);
     const secretValidator: SecretValidator = async (invitation, secret) => !!(secret && invitation.secret && secret.equals(invitation.secret));
-
+    
     await this._assureClient();
+    assert(this._client);
 
     const party = await this._client.echo.getParty(PublicKey.from(partyKey));
     assert(party);
@@ -194,7 +193,6 @@ export class StateManager {
   async createSignatureInvitation (partyKey: string, signatureKey: string) {
     assert(this._parties.has(partyKey));
     assert(this._parties.get(partyKey).useCredentials);
-    assert(this._client);
 
     // Provided by inviter node.
     const secretValidator: SecretValidator = async (invitation, secret) => {
@@ -204,6 +202,8 @@ export class StateManager {
     };
 
     await this._assureClient();
+    assert(this._client);
+
 
     const party = await this._client.echo.getParty(PublicKey.from(partyKey));
     assert(party);
