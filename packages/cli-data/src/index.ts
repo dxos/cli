@@ -2,18 +2,20 @@
 // Copyright 2020 DXOS.org
 //
 
+import * as fs from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
+import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
 import { Client, ClientConfig } from '@dxos/client';
 import { keyToBuffer, createKeyPair } from '@dxos/crypto';
 
 import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
-import info from './extension';
 import { PartyModule } from './modules/party';
 import { StorageModule } from './modules/storage';
 import { StateManager } from './state-manager';
+const info = fs.readFileSync(path.resolve(__dirname, '../extension.yml'));
 
 const CLI_BASE_COMMAND = 'dx';
 
