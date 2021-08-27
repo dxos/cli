@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
-  "main": "dist/es/index.js",
+  "main": "dist/src/index.js",
   "bin": {
     "wire-data": "bin/dx-data.js",
     "dx-data": "bin/dx-data.js"
