@@ -21,7 +21,7 @@
     "dist/src"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp extension.yml dist",
     "clean": "rm -rf ./dist",
     "lint": "eslint './src/**/*.{ts,js}'",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
