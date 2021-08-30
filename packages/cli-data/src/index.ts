@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
 import path from 'path';
@@ -15,7 +15,6 @@ import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
 import { PartyModule } from './modules/party';
 import { StorageModule } from './modules/storage';
 import { StateManager } from './state-manager';
-const info = fs.readFileSync(path.resolve(__dirname, '../extension.yml'));
 
 const CLI_BASE_COMMAND = 'dx';
 
@@ -111,5 +110,5 @@ module.exports = createCLI({
   main: !module.parent,
   init: initDataCliState,
   destroy: destroyDataCliState,
-  info
+  info: readFileSync(path.join(__dirname, './extension.yml')).toString()
 });
