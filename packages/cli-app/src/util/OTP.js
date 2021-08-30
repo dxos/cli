@@ -2,9 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
+import { keyEncoder } from '@otplib/plugin-thirty-two';
 import crypto from 'crypto';
 import { authenticator } from 'otplib';
-import { keyEncoder } from '@otplib/plugin-thirty-two';
 import qrcode from 'qrcode';
 import { promisify } from 'util';
 

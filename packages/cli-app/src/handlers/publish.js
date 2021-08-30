@@ -3,12 +3,12 @@
 //
 
 import assert from 'assert';
-import IpfsHttpClient, { globSource } from 'ipfs-http-client';
-import path from 'path';
-import set from 'lodash.set';
-import pify from 'pify';
-import folderSize from 'get-folder-size';
 import cliProgress from 'cli-progress';
+import folderSize from 'get-folder-size';
+import IpfsHttpClient, { globSource } from 'ipfs-http-client';
+import set from 'lodash.set';
+import path from 'path';
+import pify from 'pify';
 
 import { log } from '@dxos/debug';
 
