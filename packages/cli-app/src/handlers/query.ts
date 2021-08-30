@@ -10,7 +10,7 @@ import { Registry } from '@wirelineio/registry-client';
 
 import { APP_TYPE } from '../config';
 
-export const displayApps = (record) => {
+export const displayApps = (record: any) => {
   return ({
     cid: record.cid.toString(),
     size: record.size,
@@ -18,7 +18,11 @@ export const displayApps = (record) => {
   });
 };
 
-export const query = (config, { getDXNSClient }) => async argv => {
+interface QueryParams {
+  getDXNSClient: Function
+}
+
+export const query = (config: any, { getDXNSClient }: QueryParams) => async (argv: any) => {
   const { id, name, namespace, dxns } = argv;
 
   let apps = [];
@@ -33,8 +37,8 @@ export const query = (config, { getDXNSClient }) => async argv => {
     if (id) {
       apps = await registry.getRecordsByIds([id]);
       apps = apps
-        .filter(b => !name || (name && b.attributes.name === name))
-        .filter(b => !namespace || (namespace && b.attributes.tag === namespace));
+        .filter((b: any) => !name || (name && b.attributes.name === name))
+        .filter((b: any) => !namespace || (namespace && b.attributes.tag === namespace));
     } else {
       const attributes = clean({ type: APP_TYPE, name, tag: namespace });
       apps = await registry.queryRecords(attributes);
@@ -46,7 +50,7 @@ export const query = (config, { getDXNSClient }) => async argv => {
     const allRecords = await client.registryApi.getRecords();
 
     // TODO(egorgripasov): Don't do it on client side.
-    apps = allRecords.filter(({ messageFqn }) => messageFqn === fqn).map(displayApps);
+    apps = allRecords.filter(({ messageFqn }: any) => messageFqn === fqn).map(displayApps);
   }
 
   if (apps && apps.length) {

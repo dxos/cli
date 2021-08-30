@@ -13,9 +13,9 @@ const DEFAULT_LOG_FILE = '/var/log/app-server.log';
 
 const serverRunnable = new Runnable(APP_SERVER_BINARY, []);
 
-export const start = (config) => async ({
+export const start = (config: any) => async ({
   namespace, port, daemon, procName = APP_SERVER_PROCESS_NAME, logFile = DEFAULT_LOG_FILE, auth
-}) => {
+}: any) => {
   const endpoint = config.get('services.wns.server');
   const chainId = config.get('services.wns.chainId');
   const ipfsGateway = config.get('services.ipfs.gateway');

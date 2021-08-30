@@ -15,7 +15,7 @@ const DEFAULT_BUILD = 'yarn webpack -p';
 
 const IGNORED_APP_CONFIG_ATTRIBUTES = ['version'];
 
-export const updateAppConfig = async config => {
+export const updateAppConfig = async (config: any) => {
   let appConfig = fs.existsSync(APP_CONFIG_FILENAME) ? await readFile(APP_CONFIG_FILENAME) : {};
   appConfig = defaultsDeep({}, config, appConfig);
 

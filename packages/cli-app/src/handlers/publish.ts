@@ -5,7 +5,9 @@
 import assert from 'assert';
 import cliProgress from 'cli-progress';
 import folderSize from 'get-folder-size';
-import IpfsHttpClient, { globSource } from 'ipfs-http-client';
+import IpfsHttpClient, {default as ipfs} from 'ipfs-http-client';
+const { globSource } = ipfs as any;
+import { ClientOptions } from 'ipfs-http-client/src/lib/core';
 import set from 'lodash.set';
 import path from 'path';
 import pify from 'pify';
@@ -18,8 +20,13 @@ const getFolderSize = pify(folderSize);
 
 const DEFAULT_DIST_PATH = 'dist';
 
-export const publish = config => async ({ timeout, path: distPath = DEFAULT_DIST_PATH }) => {
-  const conf = await loadAppConfig();
+interface PublishParams {
+  timeout?: ClientOptions['timeout'],
+  path?: string
+}
+
+export const publish = (config: any) => async ({ timeout, path: distPath = DEFAULT_DIST_PATH }: PublishParams) => {
+  const conf: any = await loadAppConfig();
 
   log(`Publishing ${conf.name}...`);
 
@@ -40,7 +47,7 @@ export const publish = config => async ({ timeout, path: distPath = DEFAULT_DIST
   bar.start(total, 0);
 
   // eslint-disable-next-line
-  const addResult = await ipfs.add(source, { progress: bytes => bar.update(bytes) });
+  const addResult = await ipfs.add(source, { progress: (bytes: any) => bar.update(bytes) });
 
   bar.update(total);
   bar.stop();

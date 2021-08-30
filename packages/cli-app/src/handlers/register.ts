@@ -13,7 +13,12 @@ import { Registry } from '@wirelineio/registry-client';
 
 import { loadAppConfig, updateAppConfig } from './config';
 
-export const register = (config, { getAppRecord, getDXNSClient }) => async (argv) => {
+export interface RegisterParams {
+  getAppRecord: Function,
+  getDXNSClient: Function
+}
+
+export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
   const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns, schema = config.get('services.dxns.schema.cid') } = argv;
   const wnsConfig = config.get('services.wns');
   const { server, userKey, bondId, chainId } = wnsConfig;

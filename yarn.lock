@@ -3480,6 +3480,13 @@
   resolved "https://registry.npmjs.org/@types/chance/-/chance-1.1.3.tgz#d19fe9391288d60fdccd87632bfc9ab2b4523fea"
   integrity sha512-X6c6ghhe4/sQh4XzcZWSFaTAUOda38GQHmq9BUanYkOE/EO7ZrkazwKmtsj3xzTjkLWmwULE++23g3d3CCWaWw==
 
+"@types/cli-progress@^3.9.2":
+  version "3.9.2"
+  resolved "https://registry.npmjs.org/@types/cli-progress/-/cli-progress-3.9.2.tgz#6ca355f96268af39bee9f9307f0ac96145639c26"
+  integrity sha512-VO5/X5Ij+oVgEVjg5u0IXVe3JQSKJX+Ev8C5x+0hPy0AuWyW+bF8tbajR7cPFnDGhs7pidztcac+ccrDtk5teA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/debug@^4.1.1":
   version "4.1.6"
   resolved "https://registry.npmjs.org/@types/debug/-/debug-4.1.6.tgz#0b7018723084918a865eff99249c490505df2163"
@@ -3524,6 +3531,13 @@
   version "9.0.12"
   resolved "https://registry.npmjs.org/@types/fs-extra/-/fs-extra-9.0.12.tgz#9b8f27973df8a7a3920e8461517ebf8a7d4fdfaf"
   integrity sha512-I+bsBr67CurCGnSenZZ7v94gd3tc3+Aj2taxMT4yu4ABLuOgOjeFxX3dokG24ztSRg5tnT00sL8BszO7gSMoIw==
+  dependencies:
+    "@types/node" "*"
+
+"@types/get-folder-size@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/@types/get-folder-size/-/get-folder-size-3.0.1.tgz#bedb72ecdaa03a5b5950d2fa5bd8647d565f66de"
+  integrity sha512-TyUyOJjzBYgfVRLusyb7tB7YXv5OgBz98a7gnSQzdaX+bqW1fqvFHRiDKKaFLAtbkYOD21nbZcAFuBxUuknDOQ==
   dependencies:
     "@types/node" "*"
 
@@ -3634,6 +3648,13 @@
   version "4.5.6"
   resolved "https://registry.npmjs.org/@types/lodash.omit/-/lodash.omit-4.5.6.tgz#f2a9518259e481a48ff7ec423420fa8fd58933e2"
   integrity sha512-KXPpOSNX2h0DAG2w7ajpk7TXvWF28ZHs5nJhOJyP0BQHkehgr948RVsToItMme6oi0XJkp19CbuNXkIX8FiBlQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash.pick@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.npmjs.org/@types/lodash.pick/-/lodash.pick-4.4.6.tgz#ae4e8f109e982786313bb6aac4b1a73aefa6e9be"
+  integrity sha512-u8bzA16qQ+8dY280z3aK7PoWb3fzX5ATJ0rJB6F+uqchOX2VYF02Aqa+8aYiHiHgPzQiITqCgeimlyKFy4OA6g==
   dependencies:
     "@types/lodash" "*"
 

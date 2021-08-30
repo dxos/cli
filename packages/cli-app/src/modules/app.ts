@@ -4,17 +4,12 @@
 
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
+import { Argv } from 'yargs';
 
-import { APP_TYPE, DEFAULT_PORT, BASE_URL } from '../config';
+import { APP_TYPE, DEFAULT_PORT } from '../config';
 import { build, publish, register, query, serve } from '../handlers';
 
-const getPublicUrl = ({ name, version }) => `${BASE_URL}/${name}@${version}`;
-
-/**
- * @param {object} config
- * @param {string} namespace
- */
-const getAppRecord = (config, namespace) => {
+const getAppRecord = (config: any, namespace: string) => {
   const record = {
     ...config,
     type: APP_TYPE
@@ -28,29 +23,33 @@ const getAppRecord = (config, namespace) => {
   return record;
 };
 
+interface Params {
+  config: any,
+  getDXNSClient: Function
+}
+
 /**
  * App CLI module.
  */
-export const AppModule = ({ getDXNSClient, config }) => {
+export const AppModule = ({ getDXNSClient, config }: Params) => {
   return ({
     command: ['app'],
     describe: 'App CLI.',
-    builder: yargs => yargs
+    builder: (yargs: Argv) => yargs
 
       // Build app.
       .command({
         command: ['build'],
         describe: 'Build app.',
-        builder: yargs => yargs,
-
-        handler: asyncHandler(build(config, { getAppRecord, getPublicUrl }))
+        builder: (yargs: Argv) => yargs,
+        handler: asyncHandler(build(config, { getAppRecord }))
       })
 
       // Publish app.
       .command({
         command: ['publish'],
         describe: 'Publish app to IPFS.',
-        builder: yargs => yargs
+        builder: (yargs: Argv) => yargs
           .option('path', { type: 'string' })
           .option('timeout', { type: 'string', default: '10m' }),
 
@@ -61,7 +60,7 @@ export const AppModule = ({ getDXNSClient, config }) => {
       .command({
         command: ['register'],
         describe: 'Register app.',
-        builder: yargs => yargs
+        builder: (yargs: Argv) => yargs
           .version(false)
           .option('id', { type: 'string' })
           .option('name', { type: 'array' })
@@ -81,7 +80,7 @@ export const AppModule = ({ getDXNSClient, config }) => {
       .command({
         command: ['deploy'],
         describe: 'Build publish and register app.',
-        builder: yargs => yargs
+        builder: (yargs: Argv) => yargs
           .strict(false)
           .version(false)
           .option('id', { type: 'string' })
@@ -96,9 +95,9 @@ export const AppModule = ({ getDXNSClient, config }) => {
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
-        handler: asyncHandler(async argv => {
+        handler: asyncHandler(async (argv: any) => {
           log('Preparing to deploy...'); // TODO(burdon): Standardize logging (stages, verbose).
-          await build(config, { getAppRecord, getPublicUrl })(argv);
+          await build(config, { getAppRecord })(argv);
           await publish(config)(argv);
           await register(config, { getAppRecord, getDXNSClient })(argv);
         })
@@ -109,9 +108,9 @@ export const AppModule = ({ getDXNSClient, config }) => {
         command: ['query'],
         describe: 'Query apps.',
         builder: yargs => yargs
-          .option('id')
-          .option('name')
-          .option('namespace')
+          .option('id', {})
+          .option('name', {})
+          .option('namespace', {})
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
@@ -122,16 +121,17 @@ export const AppModule = ({ getDXNSClient, config }) => {
       .command({
         command: ['serve'],
         describe: 'Serve app from WNS.',
-        builder: yargs => yargs
+        handler: undefined as any,
+        builder: (yargs: Argv) => yargs
           // start server.
           .command({
             command: ['start', '$0'],
             describe: 'Start server Applications from WNS.',
             builder: yargs => yargs.version(false)
-              .option('namespace') // TODO(burdon): Not used?
+              .option('namespace', {}) // TODO(burdon): Not used?
               .option('log-file', { type: 'string' })
               .option('proc-name', { type: 'string' })
-              .option('daemon')
+              .option('daemon', {})
               .option('port', { type: 'number', default: DEFAULT_PORT })
               .option('auth', { type: 'boolean', default: true }),
 
@@ -145,8 +145,8 @@ export const AppModule = ({ getDXNSClient, config }) => {
             builder: yargs => yargs
               .option('proc-name', { type: 'string' }),
 
-            handler: asyncHandler(serve.stop(config))
+            handler: asyncHandler(serve.stop())
           })
-      })
+      }),
   });
 };
