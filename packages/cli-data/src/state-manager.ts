@@ -172,11 +172,11 @@ export class StateManager {
   async createSecretInvitation (partyKey: string) {
     assert(this._parties.has(partyKey));
     assert(this._parties.get(partyKey).useCredentials);
-    
+
     const passcode = generatePasscode();
     const secretProvider: SecretProvider = async () => Buffer.from(passcode);
     const secretValidator: SecretValidator = async (invitation, secret) => !!(secret && invitation.secret && secret.equals(invitation.secret));
-    
+
     await this._assureClient();
     assert(this._client);
 
@@ -203,7 +203,6 @@ export class StateManager {
 
     await this._assureClient();
     assert(this._client);
-
 
     const party = await this._client.echo.getParty(PublicKey.from(partyKey));
     assert(party);
