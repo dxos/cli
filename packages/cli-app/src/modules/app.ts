@@ -2,9 +2,10 @@
 // Copyright 2020 DXOS.org
 //
 
+import { Argv } from 'yargs';
+
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { Argv } from 'yargs';
 
 import { APP_TYPE, DEFAULT_PORT } from '../config';
 import { build, publish, register, query, serve } from '../handlers';
@@ -147,6 +148,6 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
 
             handler: asyncHandler(serve.stop())
           })
-      }),
+      })
   });
 };

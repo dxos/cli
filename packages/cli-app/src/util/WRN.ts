@@ -2,8 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import { raise } from '@dxos/debug';
 import assert from 'assert';
+
+import { raise } from '@dxos/debug';
 
 const PREFIX = 'wrn://';
 

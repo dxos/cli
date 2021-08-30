@@ -5,8 +5,7 @@
 import assert from 'assert';
 import cliProgress from 'cli-progress';
 import folderSize from 'get-folder-size';
-import IpfsHttpClient, {default as ipfs} from 'ipfs-http-client';
-const { globSource } = ipfs as any;
+import IpfsHttpClient from 'ipfs-http-client';
 import { ClientOptions } from 'ipfs-http-client/src/lib/core';
 import set from 'lodash.set';
 import path from 'path';
@@ -15,6 +14,7 @@ import pify from 'pify';
 import { log } from '@dxos/debug';
 
 import { loadAppConfig, updateAppConfig } from './config';
+const { globSource } = IpfsHttpClient as any;
 
 const getFolderSize = pify(folderSize);
 
