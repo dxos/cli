@@ -5,15 +5,22 @@
 import assert from 'assert';
 import path from 'path';
 import queryString from 'query-string';
+import { Argv } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-export const PartyModule = ({ stateManager }) => ({
+import { StateManager } from '../state-manager';
+
+interface Params {
+  stateManager: StateManager
+}
+
+export const PartyModule = ({ stateManager }: Params) => ({
   command: ['party'],
   describe: 'Party CLI.',
-  builder: yargs => yargs
-    .option('party-key')
+  builder: (yargs: Argv) => yargs
+    .option('party-key', {})
 
     // Join party.
     .command({
@@ -21,10 +28,10 @@ export const PartyModule = ({ stateManager }) => ({
       describe: 'Join party.',
       builder: yargs => yargs
         .option('interactive', { hidden: true, default: true })
-        .option('invitation')
-        .option('invitation-url'),
+        .option('invitation', {})
+        .option('invitation-url', {}),
 
-      handler: asyncHandler(async argv => {
+      handler: asyncHandler(async (argv: any) => {
         const { partyKey, invitationUrl, invitation, json } = argv;
 
         assert(partyKey || invitation || invitationUrl, 'Invalid party.');
@@ -50,7 +57,7 @@ export const PartyModule = ({ stateManager }) => ({
       describe: 'Current party info.',
       builder: yargs => yargs,
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
 
         print({ party: stateManager.currentParty }, { json });
@@ -64,7 +71,7 @@ export const PartyModule = ({ stateManager }) => ({
       builder: yargs => yargs
         .option('interactive', { hidden: true, default: true }),
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
 
         const party = await stateManager.getParty();
@@ -83,7 +90,7 @@ export const PartyModule = ({ stateManager }) => ({
       describe: 'List parties.',
       builder: yargs => yargs,
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
 
         const parties = Array.from(stateManager.parties.values()).map(({ partyKey, ...rest }) => ({
@@ -104,7 +111,7 @@ export const PartyModule = ({ stateManager }) => ({
         .option('interactive', { hidden: true, default: true })
         .option('secured', { alias: 's', type: 'boolean', default: true }),
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
 
         const party = await stateManager.createParty();
@@ -117,10 +124,10 @@ export const PartyModule = ({ stateManager }) => ({
       describe: 'List party members.',
       builder: yargs => yargs,
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
 
-        const members = stateManager.party.queryMembers().value;
+        const members = stateManager.party?.queryMembers().value ?? [];
 
         print(Array.from(members).filter(Boolean), { json });
       })
@@ -131,15 +138,15 @@ export const PartyModule = ({ stateManager }) => ({
       command: ['invite'],
       describe: 'Invite another participant.',
       builder: yargs => yargs
-        .option('app-url'),
+        .option('app-url', {}),
 
-      handler: asyncHandler(async argv => {
+      handler: asyncHandler(async (argv: any) => {
         const { appUrl } = argv;
 
         const party = stateManager.currentParty;
         assert(party, 'Invalid party.');
 
-        let result = { partyKey: party };
+        let result: any = { partyKey: party };
         if (!stateManager.isOpenParty(party)) {
           const { invitation: invite, passcode } = await stateManager.createSecretInvitation(party);
 

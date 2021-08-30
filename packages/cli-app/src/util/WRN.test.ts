@@ -23,6 +23,6 @@ test('Test invalid.', () => {
   ];
 
   invalid.forEach(str => {
-    expect(() => WRN.parse(str)).toThrow();
+    expect(() => WRN.parse(str as any)).toThrow();
   });
 });

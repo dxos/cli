@@ -9,8 +9,12 @@ import { log } from '@dxos/debug';
 
 import { loadAppConfig } from './config';
 
-export const build = (config, { getAppRecord }) => async ({ verbose }) => {
-  const conf = await loadAppConfig();
+export interface BuildParams {
+  getAppRecord: Function
+}
+
+export const build = (config: any, { getAppRecord }: BuildParams) => async ({ verbose }: any) => {
+  const conf: any = await loadAppConfig();
 
   const record = getAppRecord(conf);
   record.version = semverInc(conf.version, 'patch'); // TODO(burdon): Pass into getAppRecord.
@@ -22,7 +26,7 @@ export const build = (config, { getAppRecord }) => async ({ verbose }) => {
   const { status } = spawnSync(command, args, {
     env: {
       ...process.env,
-      CONFIG_DYNAMIC: true
+      CONFIG_DYNAMIC: 'true'
     },
     stdio: verbose && 'inherit'
   });

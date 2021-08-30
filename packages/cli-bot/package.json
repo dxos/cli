@@ -71,7 +71,7 @@
     "babel-loader": "^8.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-inline-import": "^3.0.0",
-    "eslint": "^5.5.0",
+    "eslint": "^7.13.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
