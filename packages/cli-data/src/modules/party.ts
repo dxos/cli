@@ -3,12 +3,13 @@
 //
 
 import assert from 'assert';
-import { Argv } from 'yargs';
 import path from 'path';
 import queryString from 'query-string';
+import { Argv } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
+
 import { StateManager } from '../state-manager';
 
 interface Params {

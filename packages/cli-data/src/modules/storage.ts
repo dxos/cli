@@ -2,8 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import { asyncHandler } from '@dxos/cli-core';
 import { Argv } from 'yargs';
+
+import { asyncHandler } from '@dxos/cli-core';
 
 import { CLI_DEFAULT_PERSISTENT, resetStorage, resetStorageForProfile } from '../config';
 
