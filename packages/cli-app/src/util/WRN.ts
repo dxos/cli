@@ -2,6 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
+import { raise } from '@dxos/debug';
 import assert from 'assert';
 
 const PREFIX = 'wrn://';
@@ -16,7 +17,7 @@ const PATTERN = new RegExp(PREFIX + '(.+):(.+)');
 // a-z A-Z 0-9 _ / - . @ ~
 const VALID_CHARS = /^[\w/\-.@~]+$/;
 
-function validChars (str) {
+function validChars (str: string) {
   const match = str.match(VALID_CHARS);
   assert(match, 'Invalid characters: ' + str);
   return str;
@@ -25,17 +26,20 @@ function validChars (str) {
 // TODO(burdon): Rename DXN.
 // TODO(burdon): Factor out to registry-client.
 export class WRN {
+  readonly _path: string
+  readonly _authority: string
+
   // TODO(burdon): Convert to legacy format. (Reset registry?)
-  static legacy (resource) {
+  static legacy (resource: WRN) {
     return `${PREFIX}${resource.authority}/${resource.path}`;
   }
 
-  static parse (name) {
-    const [, authority, path] = name.match(PATTERN);
+  static parse (name: string) {
+    const [, authority, path] = name.match(PATTERN) ?? raise(new Error(`Could not parse WRN: '${name}'`));
     return new WRN(authority, path);
   }
 
-  constructor (authority, path) {
+  constructor (authority: string, path: string) {
     this._authority = validChars(authority);
     this._path = validChars(path);
   }

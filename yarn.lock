@@ -3729,6 +3729,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/qrcode@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.npmjs.org/@types/qrcode/-/qrcode-1.4.1.tgz#0689f400c3a95d2db040c99c99834faa09ee9dc1"
+  integrity sha512-vxMyr7JM7tYPxu8vUE83NiosWX5DZieCyYeJRoOIg0pAkyofCBzknJ2ycUZkPGDFis2RS8GN/BeJLnRnAPxeCA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/readable-stream@^2.3.9":
   version "2.3.11"
   resolved "https://registry.npmjs.org/@types/readable-stream/-/readable-stream-2.3.11.tgz#942bc4574a1d7ca4368cb9cb4352e3d2b4b51dea"

@@ -73,6 +73,7 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
+    "@types/qrcode": "^1.4.1",
     "eslint": "^7.13.0",
     "jest": "^25.1.0",
     "ts-node": "^9.1.1",
