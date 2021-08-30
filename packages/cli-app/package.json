@@ -24,7 +24,7 @@
     "dx-app-server": "bin/dx-app-server.js"
   },
   "scripts": {
-    "build": "tsc && cp -R src/*.yml dist/src",
+    "build": "tsc && cp -R ./*.yml dist/",
     "clean": "rm -rf ./dist",
     "cli": "ts-node ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
