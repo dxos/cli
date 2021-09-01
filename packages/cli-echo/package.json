@@ -36,9 +36,9 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^2.4.7-alpha.0",
-    "@dxos/crypto": "~2.12.9",
-    "@dxos/debug": "~2.12.9",
-    "@dxos/object-model": "~2.12.9",
+    "@dxos/crypto": "~2.12.10",
+    "@dxos/debug": "~2.12.10",
+    "@dxos/object-model": "~2.12.10",
     "assert": "^2.0.0",
     "yargs": "^16.2.0"
   },
