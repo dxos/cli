@@ -22,7 +22,7 @@ const unlock = promisify(lockFile.unlock);
 
 /**
  * Represents state of the CLI within a party, as well as list of active parties;
- * Provides interface for authentication / ivitation flow within a party.
+ * Provides interface for authentication / invitation flow within a party.
  */
 export class StateManager {
   _parties = new Map<PublicKeyLike, {partyKey: String, useCredentials: Boolean}>();
