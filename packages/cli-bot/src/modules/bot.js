@@ -6,6 +6,7 @@ import assert from 'assert';
 
 import { asyncHandler } from '@dxos/cli-core';
 
+import { spawn } from '../handlers/bot';
 import { install, setup, start } from '../handlers/bot-factory';
 
 
@@ -135,36 +136,20 @@ export const BotModule = ({ getClient, config, stateManager, getReadlineInterfac
           })
       })
 
-      // .command({
-      //   command: ['spawn'],
-      //   describe: 'Spawn new bot instance.',
-      //   builder: yargs => yargs
-      //     .option('topic', { alias: 't', type: 'string' })
-      //     .option('env', { type: 'string' })
-      //     .option('ipfsCID', { type: 'string' })
-      //     .option('ipfsEndpoint', { type: 'string' })
-      //     .option('id', { type: 'string' })
-      //     .option('name', { type: 'string' })
-      //     .option('bot-name', { type: 'string' }),
+      .command({
+        command: ['spawn'],
+        describe: 'Spawn new bot instance.',
+        builder: yargs => yargs
+          .option('topic', { alias: 't', type: 'string' })
+          .option('env', { type: 'string' })
+          .option('ipfsCID', { type: 'string' })
+          .option('ipfsEndpoint', { type: 'string' })
+          .option('id', { type: 'string' })
+          .option('name', { type: 'string' })
+          .option('bot-name', { type: 'string' }),
 
-      //   handler: asyncHandler(async argv => {
-      //     const { botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name } = argv;
-      //     const { interactive } = cliState;
-
-      //     const client = await getClient();
-      //     const botFactoryClient = new BotFactoryClient(client.networkManager, topic);
-      //     const botId = await botFactoryClient.sendSpawnRequest(botName, { env, ipfsCID, ipfsEndpoint, id, name });
-
-      //     print({ botId }, { json });
-
-      //     if (interactive) {
-      //       await botFactoryClient.close();
-      //     } else {
-      //       // Workaround for segfaults from node-wrtc.
-      //       process.exit(0);
-      //     }
-      //   })
-      // })
+          handler: asyncHandler(spawn({ cliState, getClient }))
+      })
 
       // .command({
       //   command: ['send'],
