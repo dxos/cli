@@ -35,6 +35,7 @@ export const start = (config: any) => async ({
   };
 
   // TODO(burdon): Document array.
+  // eslint-disable-next-line
   serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || '', loginApp, auth, keyPhrase, dxnsEndpoint], options);
 };
 

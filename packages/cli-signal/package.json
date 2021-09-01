@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^2.4.7-alpha.0",
-    "@dxos/debug": "~2.10.12",
+    "@dxos/debug": "~2.12.9",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "lodash-clean": "^2.2.1",
     "yargs": "^16.2.0"

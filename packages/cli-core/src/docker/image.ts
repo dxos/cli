@@ -4,8 +4,10 @@
 
 import assert from 'assert';
 import Docker from 'dockerode';
+import { existsSync, readFileSync } from 'fs';
 import yaml from 'js-yaml';
 import hash from 'object-hash';
+import path from 'path';
 
 import { CONTAINER_PREFIX, DockerContainer } from './container';
 import { DockerVolume } from './volume';
@@ -27,6 +29,7 @@ export class DockerImage {
   _command: string;
   _auth: any;
   _hostname: string;
+  _envFiles: string[];
 
   static async cleanNotLatest (imageName: string) {
     assert(imageName);
@@ -47,7 +50,8 @@ export class DockerImage {
 
   constructor (options: any) {
     const { service, auth, dev } = options;
-    const { image: imageName, ports, command, network_mode: networkMode, hostname } = service;
+    // eslint-disable-next-line camelcase
+    const { image: imageName, ports, command, network_mode: networkMode, hostname, env_file = [] } = service;
 
     assert(imageName);
     assert(command);
@@ -60,6 +64,8 @@ export class DockerImage {
     this._command = command;
     this._auth = auth;
     this._hostname = hostname;
+    // eslint-disable-next-line camelcase
+    this._envFiles = env_file;
   }
 
   async pull (force = false) {
@@ -76,7 +82,7 @@ export class DockerImage {
           throw new Error(`Auth credentials are invalid or Image '${this._imageName}' doesn't exists.`);
         }
 
-        docker.modem.followProgress(stream, (err: Error) => {
+        docker.modem.followProgress(stream, (err: Error | null) => {
           if (err) {
             return reject(err);
           }
@@ -96,6 +102,16 @@ export class DockerImage {
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
     }
+
+    // Read env files if any (assuming should exists if provided).
+    this._envFiles.forEach(envFile => {
+      const envFilePath = path.join(process.cwd(), envFile);
+      if (!existsSync(envFilePath)) {
+        throw new Error(`${envFile} env file does not exists.`);
+      }
+      const envs = readFileSync(envFilePath, 'utf8').toString().split('\n').filter(line => line);
+      env = (env || []).concat(envs);
+    });
 
     hostNet = hostNet && process.platform !== 'darwin';
 
@@ -139,12 +155,15 @@ export class DockerImage {
         Tty: true,
         ...(this._hostname ? { Hostname: this._hostname } : {}),
         ...(env ? { Env: env } : {}),
-        ...(this._ports && !hostNet ? {
-          ExposedPorts: Object.entries(Object.assign({}, ...this._ports)).reduce((acc: any, [key]) => {
-            acc[key] = {};
-            return acc;
-          }, {})
-        } : {}),
+        ...(this._ports && !hostNet
+          ? {
+              ExposedPorts: Object.entries(Object.assign({}, ...this._ports)).reduce((acc: any, [key]) => {
+                acc[key] = {};
+                return acc;
+              }, {})
+            }
+          : {}
+        ),
         Volumes: imageVolumes,
         HostConfig: {
           RestartPolicy: {
@@ -155,21 +174,24 @@ export class DockerImage {
             ...volumeBinds
           ],
           ...(this._networkMode === HOST_NETWORK_MODE || hostNet ? { NetworkMode: HOST_NETWORK_MODE } : {}),
-          ...(this._ports && !hostNet ? {
-            PortBindings: Object.entries(Object.assign({}, ...this._ports)).reduce((acc: any, [key, value]) => {
-              acc[key] = [{
-                HostPort: value
-              }];
-              return acc;
-            }, {})
-          } : {})
+          ...(this._ports && !hostNet
+            ? {
+                PortBindings: Object.entries(Object.assign({}, ...this._ports)).reduce((acc: any, [key, value]) => {
+                  acc[key] = [{
+                    HostPort: value
+                  }];
+                  return acc;
+                }, {})
+              }
+            : {}
+          )
         },
         Cmd: args
       }, (err) => {
         if (err) {
           return reject(err);
         }
-
+        // eslint-disable-next-line
         DockerContainer.find({ imageName: this._imageName, name }).then(container => resolve(container!));
       });
     });

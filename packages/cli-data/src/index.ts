@@ -49,12 +49,11 @@ const _createClient = async (config: any, models: any[], options: any) => {
 
   await dataClient.initialize();
 
-  if (!dataClient.getProfile()) {
+  if (!dataClient.halo.getProfile()) {
     // TODO(dboreham): Allow seed phrase to be supplied by the user.
-    const { publicKey, secretKey } = createKeyPair();
     const username = `cli:${os.userInfo().username}:${profileName}`;
 
-    await dataClient.createProfile({ publicKey, secretKey, username });
+    await dataClient.halo.createProfile({ ...createKeyPair(), username });
   }
 
   // Register models from other extensions.

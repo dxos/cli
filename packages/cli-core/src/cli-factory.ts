@@ -129,6 +129,7 @@ export const createCLI = (options: CLI) => {
   const run = getRunnable({ modules, getModules, version, options: cliOptions, init, destroy });
 
   if (main) {
+    // eslint-disable-next-line
     run();
     return;
   }

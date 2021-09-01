@@ -248,7 +248,7 @@ export class StateManager {
 
     const parties = this._client.echo.queryParties();
 
-    parties.value.map(party => {
+    parties.value.forEach(party => {
       const partyKey = party.key.toHex();
       if (!this._parties.has(partyKey)) {
         // TODO(egorgripasov): Deprecate useCredentials.
