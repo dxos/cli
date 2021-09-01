@@ -24,9 +24,11 @@ export const updateAppConfig = async (config: any) => {
 
 export const loadAppConfig = async () => {
   const packageProperties = pick(fs.existsSync(PACKAGE_JSON_FILENAME)
-    ? await readFile(PACKAGE_JSON_FILENAME) : {}, DEFAULT_PACKAGE_JSON_ATTRIBUTES);
+    ? await readFile(PACKAGE_JSON_FILENAME)
+    : {}, DEFAULT_PACKAGE_JSON_ATTRIBUTES);
   const appConfig = omit(fs.existsSync(APP_CONFIG_FILENAME)
-    ? await readFile(APP_CONFIG_FILENAME) : {}, IGNORED_APP_CONFIG_ATTRIBUTES);
+    ? await readFile(APP_CONFIG_FILENAME)
+    : {}, IGNORED_APP_CONFIG_ATTRIBUTES);
 
   return {
     build: DEFAULT_BUILD,

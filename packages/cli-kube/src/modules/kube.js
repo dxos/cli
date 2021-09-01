@@ -242,6 +242,7 @@ export const KubeModule = ({ config }) => ({
           detached: false
         };
 
+        // eslint-disable-next-line
         scriptRunnable.run([dev ? '1' : '0'], options);
       })
     })

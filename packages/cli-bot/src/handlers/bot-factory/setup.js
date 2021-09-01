@@ -20,7 +20,6 @@ const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 const BOT_FACTORY_DEBUG_NAMESPACES = ['bot-factory', 'bot-factory:*'];
 
 export const setup = (config) => async ({ topic, secretKey, localDev, reset }) => {
-
   const botFactoryEnvFile = path.join(process.cwd(), BOTFACTORY_ENV_FILE);
   await fs.ensureFile(botFactoryEnvFile);
 

@@ -5,12 +5,9 @@
 import defaultsDeep from 'lodash.defaultsdeep';
 import pick from 'lodash.pick';
 import fs from 'fs-extra';
-import path from 'path';
-import yaml from 'node-yaml';
 
 import { BOT_CONFIG_FILENAME } from '@dxos/botkit';
 import { DEFAULT_PACKAGE_JSON_ATTRIBUTES, PACKAGE_JSON_FILENAME, readFile, writeFile } from '@dxos/cli-core';
-import { createKeyPair, keyToString } from '@dxos/crypto';
 
 export const BOTFACTORY_ENV_FILE = 'bot-factory.env';
 

@@ -33,4 +33,4 @@ export const start = (config) => async ({ singleInstance, logFile = DEFAULT_LOG_
   const botFactoryRunnable = new Runnable(bin, []);
 
   await botFactoryRunnable.run([], options);
-}
+};
