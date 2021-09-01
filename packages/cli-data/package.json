@@ -30,6 +30,7 @@
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "jest": {
+    "preset": "ts-jest/presets/default",
     "cacheDirectory": "/tmp/jest",
     "verbose": false
   },
