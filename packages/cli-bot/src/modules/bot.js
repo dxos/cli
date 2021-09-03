@@ -6,13 +6,13 @@ import assert from 'assert';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { spawn } from '../handlers/bot';
+import { spawn, invite } from '../handlers/bot';
 import { install, setup, start } from '../handlers/bot-factory';
 
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ getClient, config, /* stateManager, getReadlineInterface, */ cliState }) => {
+export const BotModule = ({ getClient, config, stateManager, /* getReadlineInterface, */ cliState }) => {
   assert(getClient, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
 
   return {
@@ -78,9 +78,28 @@ export const BotModule = ({ getClient, config, /* stateManager, getReadlineInter
           .option('ipfsEndpoint', { type: 'string' })
           .option('id', { type: 'string' })
           .option('name', { type: 'string' })
-          .option('bot-name', { type: 'string' }),
+          .option('bot-name', { type: 'string' })
+          .option('bot-path', { type: 'string' }),
 
         handler: asyncHandler(spawn({ cliState, getClient }))
+      })
+
+      .command({
+        command: ['invite'],
+        describe: 'Invite bot to a party.',
+        builder: yargs => yargs
+          .option('topic', { alias: 't', type: 'string' })
+          .option('bot-id', { type: 'string' })
+          .option('spec', { alias: 's', type: 'json' })
+          .option('env', { type: 'string' })
+          .option('ipfsCID', { type: 'string' })
+          .option('ipfsEndpoint', { type: 'string' })
+          .option('id', { type: 'string' })
+          .option('name', { type: 'string' })
+          .option('bot-name', { type: 'string' })
+          .option('bot-path', { type: 'string' }),
+
+        handler: asyncHandler(invite({ stateManager, getClient }))
       })
   };
 };
