@@ -50,9 +50,7 @@ describe('cli-data: Party', () => {
   });
 
   afterAll(async () => {
-    console.log('stopping...');
     await signalBroker.stop();
-    console.log('stopped');
   });
 
   test('Creates a party.', async () => {
