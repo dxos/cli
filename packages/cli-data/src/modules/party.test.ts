@@ -3,12 +3,13 @@
 //
 
 import { Client } from '@dxos/client';
-import { createKeyPair } from '@dxos/crypto';
+import { createKeyPair, PublicKey } from '@dxos/crypto';
 
 import { StateManager } from '../state-manager';
 import { createCommand } from './commands/create';
 import { createTestBroker } from '@dxos/signal';
 import { listCommand } from './commands/list';
+import { inviteCommand } from './commands/invite';
 
 const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');
@@ -33,7 +34,7 @@ describe('cli-data: Party', () => {
     bobStateManager = new StateManager(() => bob, getReadlineInterface, {});
   })
 
-  test.only('Creates a party.', async () => {
+  test('Creates a party.', async () => {
     expect(await aliceStateManager.getParty()).toBeNull();
     expect(await listCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(0);
 
@@ -45,4 +46,15 @@ describe('cli-data: Party', () => {
     expect(listResult).toHaveLength(1);
     expect(createResult.party).toEqual(listResult[0].party)
   });
+
+  test('Creates an invitation', async () => {
+    await createCommand(aliceStateManager).handler(DEFAULT_ARGS)
+    const inviteResult = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any
+
+    expect(typeof inviteResult).toBe('object')
+    expect(typeof inviteResult.partyKey).toBe('string')
+    expect(typeof inviteResult.invitation).toBe('string')
+    expect(typeof inviteResult.passcode).toBe('string')
+    PublicKey.assertValidPublicKey(PublicKey.from(inviteResult.partyKey))
+  })
 });

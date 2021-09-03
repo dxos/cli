@@ -39,5 +39,6 @@ export const inviteCommand = (stateManager: StateManager): CommandModule => ({
       result = { ...result, passcode };
     }
     log(JSON.stringify(result, null, 2));
+    return result
   }
 });
