@@ -4,7 +4,7 @@
 
 import { CommandModule } from 'yargs';
 
-import { asyncHandler, print } from '@dxos/cli-core';
+import { print } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
 
@@ -19,7 +19,7 @@ export const createCommand = (stateManager: StateManager): CommandModule => ({
     const { json } = argv;
 
     const party = await stateManager.createParty();
-    const data = { party: party.key.toHex() }
+    const data = { party: party.key.toHex() };
     print(data, { json });
     return data;
   }

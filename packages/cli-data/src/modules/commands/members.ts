@@ -4,7 +4,7 @@
 
 import { CommandModule } from 'yargs';
 
-import { asyncHandler, print } from '@dxos/cli-core';
+import { print } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
 
@@ -18,6 +18,8 @@ export const membersCommand = (stateManager: StateManager): CommandModule => ({
 
     const members = stateManager.party?.queryMembers().value ?? [];
 
-    print(Array.from(members).filter(Boolean), { json });
+    const data = Array.from(members).filter(Boolean);
+    print(data, { json });
+    return data;
   }
 });

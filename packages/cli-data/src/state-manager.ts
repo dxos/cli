@@ -114,7 +114,7 @@ export class StateManager {
   /**
    * Join Party.
    */
-  async joinParty (partyKey: string, invitation: InvitationQueryParameters) {
+  async joinParty (partyKey: string, invitation: InvitationQueryParameters, passcode?: string) {
     await this._assureClient();
     assert(this._client);
     await this.setItem();
@@ -131,6 +131,9 @@ export class StateManager {
     } else if (invitation) {
       if (invitation) {
         const secretProvider: SecretProvider = () => {
+          if (passcode) {
+            return Promise.resolve(Buffer.from(passcode));
+          }
           return new Promise(resolve => {
             const rl = this._getReadlineInterface();
             rl.question('Passcode: ', (pin: string) => {

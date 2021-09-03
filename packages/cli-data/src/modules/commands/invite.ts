@@ -6,7 +6,6 @@ import path from 'path';
 import queryString from 'query-string';
 import { CommandModule } from 'yargs';
 
-import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 import { StateManager } from '../../state-manager';
@@ -39,6 +38,6 @@ export const inviteCommand = (stateManager: StateManager): CommandModule => ({
       result = { ...result, passcode };
     }
     log(JSON.stringify(result, null, 2));
-    return result
+    return result;
   }
 });

@@ -32,7 +32,8 @@
   "jest": {
     "preset": "ts-jest/presets/default",
     "cacheDirectory": "/tmp/jest",
-    "verbose": false
+    "verbose": false,
+    "testEnvironment": "node"
   },
   "dependencies": {
     "@dxos/cli-core": "^2.4.7-alpha.0",
@@ -53,6 +54,7 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/signal": "^2.12.10",
     "@types/lockfile": "^1.0.2",
     "eslint": "^7.13.0",
     "jest": "^25.1.0",

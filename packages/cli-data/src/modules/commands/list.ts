@@ -4,7 +4,7 @@
 
 import { CommandModule } from 'yargs';
 
-import { asyncHandler, print } from '@dxos/cli-core';
+import { print } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
 
@@ -23,6 +23,6 @@ export const listCommand = (stateManager: StateManager): CommandModule => ({
     }));
 
     print(parties, { json });
-    return parties
+    return parties;
   }
 });
