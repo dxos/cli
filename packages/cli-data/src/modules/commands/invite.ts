@@ -17,7 +17,7 @@ export const inviteCommand = (stateManager: StateManager): CommandModule => ({
   builder: yargs => yargs
     .option('app-url', {}),
 
-  handler: asyncHandler(async (argv: any) => {
+  handler: async (argv: any) => {
     const { appUrl } = argv;
 
     const party = stateManager.currentParty;
@@ -39,5 +39,5 @@ export const inviteCommand = (stateManager: StateManager): CommandModule => ({
       result = { ...result, passcode };
     }
     log(JSON.stringify(result, null, 2));
-  })
+  }
 });

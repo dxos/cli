@@ -7,10 +7,14 @@ import { createKeyPair } from '@dxos/crypto';
 
 import { StateManager } from '../state-manager';
 import { createCommand } from './commands/create';
+import { createTestBroker } from '@dxos/signal';
+import { listCommand } from './commands/list';
 
 const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');
 };
+
+const DEFAULT_ARGS = {$0: '', _: []}
 
 describe('cli-data: Party', () => {
   let alice: Client
@@ -29,11 +33,16 @@ describe('cli-data: Party', () => {
     bobStateManager = new StateManager(() => bob, getReadlineInterface, {});
   })
 
-  test('Creates a party.', async () => {
+  test.only('Creates a party.', async () => {
     expect(await aliceStateManager.getParty()).toBeNull();
+    expect(await listCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(0);
 
-    await createCommand(aliceStateManager);
 
-    expect(await aliceStateManager.getParty()).toBeDefined();
+    const createResult = await createCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
+    const listResult = await listCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
+
+    expect(await aliceStateManager.getParty()).toBeTruthy();
+    expect(listResult).toHaveLength(1);
+    expect(createResult.party).toEqual(listResult[0].party)
   });
 });

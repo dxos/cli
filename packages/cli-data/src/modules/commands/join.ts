@@ -18,7 +18,7 @@ export const joinCommand = (stateManager: StateManager): CommandModule => ({
     .option('invitation', {})
     .option('invitation-url', {}),
 
-  handler: asyncHandler(async (argv: any) => {
+  handler: async (argv: any) => {
     const { partyKey, invitationUrl, invitation, json } = argv;
 
     assert(partyKey || invitation || invitationUrl, 'Invalid party.');
@@ -35,5 +35,5 @@ export const joinCommand = (stateManager: StateManager): CommandModule => ({
     if (/^[0-9a-f]{64}$/i.test(partyKey)) {
       print({ partyKey }, { json });
     }
-  })
+  }
 });

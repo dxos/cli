@@ -15,10 +15,12 @@ export const createCommand = (stateManager: StateManager): CommandModule => ({
     .option('interactive', { hidden: true, default: true })
     .option('secured', { alias: 's', type: 'boolean', default: true }),
 
-  handler: asyncHandler(async (argv: any) => {
+  handler: async (argv: any) => {
     const { json } = argv;
 
     const party = await stateManager.createParty();
-    print({ party: party.key.toHex() }, { json });
-  })
+    const data = { party: party.key.toHex() }
+    print(data, { json });
+    return data;
+  }
 });

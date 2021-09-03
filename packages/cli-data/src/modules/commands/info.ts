@@ -13,9 +13,9 @@ export const infoCommand = (stateManager: StateManager): CommandModule => ({
   describe: 'Current party info.',
   builder: yargs => yargs,
 
-  handler: asyncHandler(async (argv: any) => {
+  handler: async (argv: any) => {
     const { json } = argv;
 
     print({ party: stateManager.currentParty }, { json });
-  })
+  }
 });

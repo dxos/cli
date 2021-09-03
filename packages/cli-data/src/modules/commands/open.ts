@@ -14,7 +14,7 @@ export const openCommand = (stateManager: StateManager): CommandModule => ({
   builder: yargs => yargs
     .option('interactive', { hidden: true, default: true }),
 
-  handler: asyncHandler(async (argv: any) => {
+  handler: async (argv: any) => {
     const { json } = argv;
 
     const party = await stateManager.getParty();
@@ -24,5 +24,5 @@ export const openCommand = (stateManager: StateManager): CommandModule => ({
     await party.open();
 
     print({ party: party.key.toHex() }, { json });
-  })
+  }
 });

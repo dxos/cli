@@ -13,7 +13,7 @@ export const listCommand = (stateManager: StateManager): CommandModule => ({
   describe: 'List parties.',
   builder: yargs => yargs,
 
-  handler: asyncHandler(async (argv: any) => {
+  handler: async (argv: any) => {
     const { json } = argv;
 
     const parties = Array.from(stateManager.parties.values()).map(({ partyKey, ...rest }) => ({
@@ -23,5 +23,6 @@ export const listCommand = (stateManager: StateManager): CommandModule => ({
     }));
 
     print(parties, { json });
-  })
+    return parties
+  }
 });
