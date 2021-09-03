@@ -13,15 +13,27 @@ const getReadlineInterface = () => {
 };
 
 describe('cli-data: Party', () => {
+  let alice: Client
+  let bob: Client
+  let aliceStateManager: StateManager
+  let bobStateManager: StateManager
+
+  beforeEach(async () => {
+    [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
+      const client = new Client();
+      await client.initialize();
+      await client.halo.createProfile({ ...createKeyPair(), username });
+      return client
+    }));
+    aliceStateManager = new StateManager(() => alice, getReadlineInterface, {});
+    bobStateManager = new StateManager(() => bob, getReadlineInterface, {});
+  })
+
   test('Creates a party.', async () => {
-    const client = new Client();
-    await client.initialize();
-    await client.halo.createProfile({ ...createKeyPair(), username: 'Test' });
-    const stateManager = new StateManager(() => client, getReadlineInterface, {});
-    expect(await stateManager.getParty()).toBeNull();
+    expect(await aliceStateManager.getParty()).toBeNull();
 
-    await createCommand(stateManager);
+    await createCommand(aliceStateManager);
 
-    expect(await stateManager.getParty()).toBeDefined();
+    expect(await aliceStateManager.getParty()).toBeDefined();
   });
 });
