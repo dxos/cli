@@ -22,13 +22,10 @@ const unlock = promisify(lockFile.unlock);
 
 /**
  * Represents state of the CLI within a party, as well as list of active parties;
- * Provides interface for authentication / ivitation flow within a party.
+ * Provides interface for authentication / invitation flow within a party.
  */
 export class StateManager {
-  /**
-   * @type {Map<string, {partyKey: String, useCredentials: Boolean}>}
-   */
-  _parties = new Map();
+  _parties = new Map<PublicKeyLike, {partyKey: String, useCredentials: Boolean}>();
 
   // TODO(egorgripasov): Deprecate.
   private _currentParty: string | null = null;
@@ -84,7 +81,7 @@ export class StateManager {
     assert(partyKey);
     assert(this._parties.has(partyKey));
 
-    return !this._parties.get(partyKey).useCredentials;
+    return !this._parties.get(partyKey)?.useCredentials;
   }
 
   async setItem (item?: any, updateHandler: Function = DEFAULT_ITEM_UPDATE_HANDLER) {
@@ -171,7 +168,7 @@ export class StateManager {
    */
   async createSecretInvitation (partyKey: string) {
     assert(this._parties.has(partyKey));
-    assert(this._parties.get(partyKey).useCredentials);
+    assert(this._parties.get(partyKey)?.useCredentials);
 
     const passcode = generatePasscode();
     const secretProvider: SecretProvider = async () => Buffer.from(passcode);
@@ -192,7 +189,7 @@ export class StateManager {
    */
   async createSignatureInvitation (partyKey: string, signatureKey: string) {
     assert(this._parties.has(partyKey));
-    assert(this._parties.get(partyKey).useCredentials);
+    assert(this._parties.get(partyKey)?.useCredentials);
 
     // Provided by inviter node.
     const secretValidator: SecretValidator = async (invitation, secret) => {
