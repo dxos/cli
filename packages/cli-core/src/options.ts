@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import yargs from 'yargs';
+import { Argv } from 'yargs';
 
 export const FORWARD_OPTION = 'forward';
 
@@ -12,10 +12,11 @@ export interface CoreOptions {
   dryRun?: boolean,
   profile?: string,
   [FORWARD_OPTION]?: string,
-  mnemonic?: (string | number)[]
+  mnemonic?: (string | number)[],
+  interactive?: boolean,
 }
 
-export const coreOptions = (yargs: yargs.Argv<{}>): yargs.Argv<CoreOptions> => {
+export const coreOptions = (yargs: Argv<{}>): Argv<CoreOptions> => {
   return yargs
     .option({
       verbose: {
@@ -61,5 +62,7 @@ export const coreOptions = (yargs: yargs.Argv<{}>): yargs.Argv<CoreOptions> => {
     .option('mnemonic', {
       type: 'array',
       hidden: true
-    });
+    })
+
+    .option('interactive', { hidden: true, default: true });
 };

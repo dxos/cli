@@ -6,10 +6,11 @@ import assert from 'assert';
 import get from 'lodash.get';
 import omit from 'lodash.omit';
 import readline from 'readline';
+import { Arguments } from 'yargs';
 import unparse from 'yargs-unparser';
 import yargs from 'yargs/yargs';
 
-import { coreOptions, FORWARD_OPTION } from './options';
+import { CoreOptions, coreOptions, FORWARD_OPTION } from './options';
 import { getLoggers } from './util/log';
 
 const VERSION_COMMAND = 'version';
@@ -157,7 +158,7 @@ export class App {
   /**
    * Process the command.
    */
-  async start (argv?: any) {
+  async start (argv?: Arguments<CoreOptions>) {
     try {
       // Init modules.
       if (this._getModules) {

@@ -4,22 +4,31 @@
 
 import assert from 'assert';
 import queryString from 'query-string';
-import { CommandModule } from 'yargs';
+import { Argv, CommandModule, Arguments } from 'yargs';
 
 import { print } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
+import { PartyOptions } from '../party';
+
+export interface PartyJoinOptions extends PartyOptions {
+  invitation?: string,
+  passcode?: string,
+  invitationUrl?: string
+}
+
+const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
+  return yargs
+    .option('invitation', { type: 'string' })
+    .option('passcode', { type: 'string' })
+    .option('invitation-url', { type: 'string' });
+};
 
 export const joinCommand = (stateManager: StateManager): CommandModule => ({
   command: ['join [party-key]', 'switch [party-key]', 'use [party-key]'],
   describe: 'Join party.',
-  builder: yargs => yargs
-    .option('interactive', { hidden: true, default: true })
-    .option('invitation', {})
-    .option('passcode', {})
-    .option('invitation-url', {}),
-
-  handler: async (argv: any) => {
+  builder: yargs => partyOptions(yargs),
+  handler: async (argv: Arguments<PartyJoinOptions>) => {
     const { partyKey, invitationUrl, invitation, json, passcode } = argv;
 
     assert(partyKey || invitation || invitationUrl, 'Invalid party.');
@@ -33,7 +42,7 @@ export const joinCommand = (stateManager: StateManager): CommandModule => ({
 
     await stateManager.joinParty(partyKey, invite, passcode);
 
-    if (/^[0-9a-f]{64}$/i.test(partyKey)) {
+    if (partyKey && /^[0-9a-f]{64}$/i.test(partyKey)) {
       print({ partyKey }, { json });
     }
   }

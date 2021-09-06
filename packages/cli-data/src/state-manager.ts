@@ -114,7 +114,7 @@ export class StateManager {
   /**
    * Join Party.
    */
-  async joinParty (partyKey: string, invitation: InvitationQueryParameters, passcode?: string) {
+  async joinParty (partyKey: string | undefined, invitation: InvitationQueryParameters, passcode?: string) {
     await this._assureClient();
     assert(this._client);
     await this.setItem();

@@ -4,6 +4,8 @@
 
 import { Argv } from 'yargs';
 
+import { CoreOptions } from '@dxos/cli-core';
+
 import { StateManager } from '../state-manager';
 import { createCommand } from './commands/create';
 import { infoCommand } from './commands/info';
@@ -17,12 +19,20 @@ interface Params {
   stateManager: StateManager
 }
 
+export interface PartyOptions extends CoreOptions {
+  partyKey?: string
+}
+
+const partyOptions = (yargs: Argv<CoreOptions>): Argv<PartyOptions> => {
+  return yargs
+    .option('party-key', { type: 'string' });
+};
+
 export const PartyModule = ({ stateManager }: Params) => ({
   command: ['party'],
   describe: 'Party CLI.',
-  builder: (yargs: Argv) => yargs
-    .option('party-key', {})
-
+  handler: undefined as any,
+  builder: (yargs: Argv<CoreOptions>) => partyOptions(yargs)
     .command(joinCommand(stateManager))
     .command(infoCommand(stateManager))
     .command(openCommand(stateManager))

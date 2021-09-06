@@ -2,18 +2,19 @@
 // Copyright 2020 DXOS.org
 //
 
-import { CommandModule } from 'yargs';
+import { Arguments, CommandModule } from 'yargs';
 
 import { print } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
+import { PartyOptions } from '../party';
 
 export const membersCommand = (stateManager: StateManager): CommandModule => ({
   command: ['members'],
   describe: 'List party members.',
   builder: yargs => yargs,
 
-  handler: async (argv: any) => {
+  handler: async (argv: Arguments<PartyOptions>) => {
     const { json } = argv;
 
     const members = stateManager.party?.queryMembers().value ?? [];
