@@ -64,5 +64,5 @@ export const coreOptions = (yargs: Argv<{}>): Argv<CoreOptions> => {
       hidden: true
     })
 
-    .option('interactive', { hidden: true, default: true });
+    .option('interactive', { hidden: true, default: false });
 };

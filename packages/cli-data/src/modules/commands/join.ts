@@ -19,6 +19,7 @@ export interface PartyJoinOptions extends PartyOptions {
 
 const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
   return yargs
+    .option('interactive', { hidden: true, default: true }) // override the default.
     .option('invitation', { type: 'string' })
     .option('passcode', { type: 'string' })
     .option('invitation-url', { type: 'string' });

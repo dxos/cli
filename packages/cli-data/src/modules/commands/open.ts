@@ -12,7 +12,8 @@ import { PartyOptions } from '../party';
 export const openCommand = (stateManager: StateManager): CommandModule => ({
   command: ['open'],
   describe: 'Open a party.',
-  builder: yargs => yargs,
+  builder: yargs => yargs
+    .option('interactive', { hidden: true, default: true }), // override the default.
   handler: async (argv: Arguments<PartyOptions>) => {
     const { json } = argv;
 
