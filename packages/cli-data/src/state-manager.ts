@@ -58,6 +58,14 @@ export class StateManager {
     return this._party;
   }
 
+  async resetClient (getClient: Function) {
+    this._getClient = getClient;
+    if (this._client) {
+      await this._client.reset();
+    }
+    this._party = null;
+  }
+
   /**
    * Join Party.
    */
@@ -191,12 +199,12 @@ export class StateManager {
     });
   }
 
-  async setParty (party: Party | null) {
+  async setParty (party: Party) {
     this._party = party;
 
     if (this._statePath) {
       await fs.ensureFile(this._statePath);
-      await fs.writeJson(this._statePath, { party: party ? party.key.toHex() : undefined });
+      await fs.writeJson(this._statePath, { party: party.key.toHex() });
     }
   }
 }
