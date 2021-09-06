@@ -20,7 +20,7 @@ const partyOptions = (yargs: Argv<DeviceOptions>): Argv<DeviceInviteOptions> => 
   return yargs
 };
 
-export const inviteCommand = (stateManager: StateManager): CommandModule => ({
+export const inviteCommand = (stateManager: StateManager): CommandModule<DeviceOptions, DeviceInviteOptions> => ({
   command: ['invite'],
   describe: 'Invite another device.',
   builder: yargs => partyOptions(yargs),

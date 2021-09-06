@@ -9,7 +9,7 @@ import { asyncHandler, print } from '@dxos/cli-core';
 import { StateManager } from '../../../state-manager';
 import { DeviceOptions } from '..';
 
-export const listCommand = (stateManager: StateManager): CommandModule => ({
+export const listCommand = (stateManager: StateManager): CommandModule<DeviceOptions, DeviceOptions> => ({
   command: ['list'],
   describe: 'List devices.',
   builder: yargs => yargs,

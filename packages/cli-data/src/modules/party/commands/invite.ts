@@ -21,7 +21,7 @@ const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyInviteOptions> => {
     .option('app-url', { type: 'string' });
 };
 
-export const inviteCommand = (stateManager: StateManager): CommandModule => ({
+export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOptions, PartyInviteOptions> => ({
   command: ['invite'],
   describe: 'Invite another participant.',
   builder: yargs => partyOptions(yargs),

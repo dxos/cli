@@ -9,7 +9,7 @@ import { asyncHandler, print } from '@dxos/cli-core';
 import { StateManager } from '../../../state-manager';
 import { PartyOptions } from '../party';
 
-export const infoCommand = (stateManager: StateManager): CommandModule => ({
+export const infoCommand = (stateManager: StateManager): CommandModule<PartyOptions, PartyOptions> => ({
   command: ['info'],
   describe: 'Current party info.',
   builder: yargs => yargs,
