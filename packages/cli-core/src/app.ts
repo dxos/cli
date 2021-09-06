@@ -9,9 +9,9 @@ import readline from 'readline';
 import unparse from 'yargs-unparser';
 import yargs from 'yargs/yargs';
 
+import { coreOptions, FORWARD_OPTION } from './options';
 import { getLoggers } from './util/log';
 
-const FORWARD_OPTION = 'forward';
 const VERSION_COMMAND = 'version';
 
 const { log, logError } = getLoggers();
@@ -42,54 +42,8 @@ export class App {
 
   /**
    * Yargs parser.
-   * @type {Object}
    */
-  _parser = yargs()
-    .option({
-      verbose: {
-        description: 'Verbose output',
-        demand: false,
-        default: false,
-        type: 'boolean',
-        alias: 'v'
-      }
-    })
-
-    .option({
-      json: {
-        description: 'JSON output',
-        demand: false,
-        default: false,
-        type: 'boolean'
-      }
-    })
-
-    .option('dry-run', {
-      description: 'Dry run',
-      demand: false,
-      default: false,
-      type: 'boolean'
-    })
-
-    .option('profile', {
-      description: 'Sets the profile',
-      demand: false
-    })
-
-    // Args to pass through to underlying binary (e.g. registry, signal, etc.).
-    .option({
-      [FORWARD_OPTION]: {
-        type: 'string',
-        hidden: true
-      }
-    })
-
-    // Special case - required for extensions.
-    .option('mnemonic', {
-      type: 'array',
-      hidden: true
-    })
-
+  _parser = coreOptions(yargs())
     // http://yargs.js.org/docs/#api-help
     .help(true)
 
@@ -115,10 +69,6 @@ export class App {
 
   _modules: Array<Function> = [];
 
-  /**
-   * @constructor
-   * @param {Object} config
-   */
   constructor (config: any = {}) {
     const { config: cliConfig, state, options, version, profilePath, profileExists } = config;
     const { prompt, baseCommand, enableInteractive = false } = options;
