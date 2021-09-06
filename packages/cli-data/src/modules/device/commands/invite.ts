@@ -35,8 +35,11 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<DeviceO
     })
     const result = {
       invitation: invitation.toQueryParameters().invitation,
+      hash: invitation.toQueryParameters().hash,
+      swarmKey: invitation.toQueryParameters().swarmKey,
       passcode,
-      identityKey: invitation.identityKey?.toHex()
+      identityKey: invitation.identityKey?.toHex(),
+      
     }
     print(result, { json });
     return result;

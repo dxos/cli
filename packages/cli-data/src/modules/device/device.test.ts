@@ -8,7 +8,7 @@ import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
 import { StateManager } from '../../state-manager';
-import { infoCommand, inviteCommand } from './commands';
+import { infoCommand, inviteCommand, joinCommand } from './commands';
 
 const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');
@@ -70,10 +70,14 @@ describe('cli-data: Device', () => {
     expect(typeof invitation.identityKey).toBe('string');
     expect(typeof invitation.invitation).toBe('string');
     expect(typeof invitation.passcode).toBe('string');
+    expect(typeof invitation.hash).toBe('string');
+    expect(typeof invitation.swarmKey).toBe('string');
     PublicKey.assertValidPublicKey(PublicKey.from(invitation.identityKey));
   });
 
   test.skip('Can join a device invitation.', async () => {
+    const invitation = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any
+    await joinCommand(bobStateManager).handler({...DEFAULT_ARGS, ...invitation})
   });
 
   test.skip('Joining device invitation removes current state and sync with new state.', async () => {
