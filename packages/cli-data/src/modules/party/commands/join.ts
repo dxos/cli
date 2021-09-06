@@ -8,7 +8,7 @@ import { Argv, CommandModule, Arguments } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
 
-import { StateManager } from '../../state-manager';
+import { StateManager } from '../../../state-manager';
 import { PartyOptions } from '../party';
 
 export interface PartyJoinOptions extends PartyOptions {

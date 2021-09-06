@@ -9,7 +9,7 @@ import { Argv, CommandModule, Arguments } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { StateManager } from '../../state-manager';
+import { StateManager } from '../../../state-manager';
 import { PartyOptions } from '../party';
 
 export interface PartyInviteOptions extends PartyOptions {
