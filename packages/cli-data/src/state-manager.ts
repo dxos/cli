@@ -9,7 +9,7 @@ import path from 'path';
 import { promisify } from 'util';
 
 import { Client } from '@dxos/client';
-import { generatePasscode, SecretProvider, SecretValidator } from '@dxos/credentials';
+import { defaultSecretValidator, generatePasscode, SecretProvider, SecretValidator } from '@dxos/credentials';
 import { keyToBuffer, verify, SIGNATURE_LENGTH, PublicKeyLike, PublicKey } from '@dxos/crypto';
 import { InvitationDescriptor, InvitationQueryParameters, Party } from '@dxos/echo-db';
 
@@ -181,14 +181,13 @@ export class StateManager {
 
     const passcode = generatePasscode();
     const secretProvider: SecretProvider = async () => Buffer.from(passcode);
-    const secretValidator: SecretValidator = async (invitation, secret) => !!(secret && invitation.secret && secret.equals(invitation.secret));
 
     await this._assureClient();
     assert(this._client);
 
     const party = await this._client.echo.getParty(PublicKey.from(partyKey));
     assert(party);
-    const invitation = await party.createInvitation({ secretValidator, secretProvider });
+    const invitation = await party.createInvitation({ secretValidator: defaultSecretValidator, secretProvider });
 
     return { invitation: invitation.toQueryParameters(), passcode };
   }

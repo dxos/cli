@@ -3,4 +3,5 @@
 //
 
 export * from './info';
+export * from './invite';
 export * from './list';
