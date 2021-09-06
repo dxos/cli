@@ -191,12 +191,12 @@ export class StateManager {
     });
   }
 
-  async setParty (party: Party) {
+  async setParty (party: Party | null) {
     this._party = party;
 
     if (this._statePath) {
       await fs.ensureFile(this._statePath);
-      await fs.writeJson(this._statePath, { party: party.key.toHex() });
+      await fs.writeJson(this._statePath, { party: party ? party.key.toHex() : undefined });
     }
   }
 }

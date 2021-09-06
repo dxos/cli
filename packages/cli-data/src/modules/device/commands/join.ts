@@ -16,7 +16,8 @@ export interface DeviceJoinOptions extends DeviceOptions {
   invitation: string,
   passcode: string,
   hash: string,
-  swarmKey: string
+  swarmKey: string,
+  identityKey: string,
 }
 
 const partyOptions = (yargs: Argv<DeviceOptions>): Argv<DeviceJoinOptions> => {
@@ -25,6 +26,7 @@ const partyOptions = (yargs: Argv<DeviceOptions>): Argv<DeviceJoinOptions> => {
     .option('invitation', { type: 'string', required: true })
     .option('hash', { type: 'string', required: true })
     .option('swarmKey', { type: 'string', required: true })
+    .option('identityKey', { type: 'string', required: true })
     .option('passcode', { type: 'string', required: true });
 };
 
@@ -33,14 +35,18 @@ export const joinCommand = (stateManager: StateManager): CommandModule<DeviceOpt
   describe: 'Join device invitation.',
   builder: yargs => partyOptions(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceJoinOptions>) => {
-    const { invitation, json, passcode, hash, swarmKey } = argv;
+    const { invitation, json, passcode, hash, swarmKey, identityKey } = argv;
 
+    stateManager.setParty(null)
     const client = await stateManager.getClient();
+    await client.reset()
+    await client.initialize();
     const invitationDescriptor = InvitationDescriptor.fromQueryParameters({
       hash,
       invitation,
       swarmKey,
       type: InvitationDescriptorType.INTERACTIVE,
+      identityKey
     })
     await client.halo.join(invitationDescriptor, async () => Buffer.from(passcode))
   })
