@@ -7,14 +7,7 @@ import { Argv } from 'yargs';
 import { CoreOptions } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
-import { createCommand } from './commands/create';
-import { infoCommand } from './commands/info';
-import { inviteCommand } from './commands/invite';
-import { joinCommand } from './commands/join';
-import { listCommand } from './commands/list';
-import { membersCommand } from './commands/members';
-import { openCommand } from './commands/open';
-
+import { createCommand, infoCommand, inviteCommand, joinCommand, listCommand, membersCommand, openCommand } from './commands';
 interface Params {
   stateManager: StateManager
 }

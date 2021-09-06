@@ -8,11 +8,7 @@ import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
 import { StateManager } from '../../state-manager';
-import { createCommand } from './commands/create';
-import { inviteCommand } from './commands/invite';
-import { joinCommand } from './commands/join';
-import { listCommand } from './commands/list';
-import { membersCommand } from './commands/members';
+import { createCommand, inviteCommand, joinCommand, listCommand, membersCommand } from './commands';
 
 const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');

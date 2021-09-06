@@ -72,6 +72,12 @@ export class StateManager {
     return this._item;
   }
 
+  async getClient () {
+    await this._assureClient();
+    assert(this._client)
+    return this._client;
+  }
+
   async getParty () {
     await this._assureClient();
     return this._party;
