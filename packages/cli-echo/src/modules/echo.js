@@ -33,7 +33,7 @@ export const EchoModule = ({ stateManager }) => ({
       handler: asyncHandler(async (argv) => {
         const { json } = argv;
 
-        const items = stateManager.party.database.queryItems().value;
+        const items = (await stateManager.getParty()).database.queryItems().value;
         const result = (items || []).map(item => {
           const modelName = Object.getPrototypeOf(item.model).constructor.name;
           return {
@@ -60,7 +60,7 @@ export const EchoModule = ({ stateManager }) => ({
       handler: asyncHandler(async (argv) => {
         const { type, parent, props, json } = argv;
 
-        const item = await stateManager.party.database.createItem({
+        const item = await (await stateManager.getParty()).database.createItem({
           model: ObjectModel,
           type,
           parent,
@@ -81,7 +81,7 @@ export const EchoModule = ({ stateManager }) => ({
       handler: asyncHandler(async (argv) => {
         const { props, itemId, json } = argv;
 
-        const item = await stateManager.party.database.getItem(itemId);
+        const item = await (await stateManager.getParty()).database.getItem(itemId);
         // eslint-disable-next-line
         for (const key in props) {
           await item.model.setProperty(key, props[key]);
@@ -100,7 +100,7 @@ export const EchoModule = ({ stateManager }) => ({
       handler: asyncHandler(async (argv) => {
         const { itemId, json } = argv;
 
-        const item = await stateManager.party.database.getItem(itemId);
+        const item = await (await stateManager.getParty()).database.getItem(itemId);
         await item.model.setProperty('deleted', true);
 
         print(displayItem(item), { json });
@@ -116,7 +116,7 @@ export const EchoModule = ({ stateManager }) => ({
       handler: asyncHandler(async (argv) => {
         const { itemId, json } = argv;
 
-        const item = await stateManager.party.database.getItem(itemId);
+        const item = await (await stateManager.getParty()).database.getItem(itemId);
         await item.model.setProperty('deleted', false);
 
         print(displayItem(item), { json });

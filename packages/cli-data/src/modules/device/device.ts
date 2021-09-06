@@ -10,7 +10,7 @@ import { listCommand } from './commands/list';
 import { infoCommand } from './commands/info';
 
 interface Params {
-  stateManager: StateManager
+  stateManager: StateManager,
 }
 
 export interface DeviceOptions extends CoreOptions {

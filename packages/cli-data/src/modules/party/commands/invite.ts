@@ -28,12 +28,12 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOp
   handler: asyncHandler(async (argv: Arguments<PartyInviteOptions>) => {
     const { appUrl } = argv;
 
-    const party = stateManager.currentParty;
+    const party = await stateManager.getParty();
     assert(party, 'Invalid party.');
 
     let result: any = { partyKey: party };
-    if (!stateManager.isOpenParty(party)) {
-      const { invitation: invite, passcode } = await stateManager.createSecretInvitation(party);
+    if (!party.isOpen) {
+      const { invitation: invite, passcode } = await stateManager.createSecretInvitation(party.key.toHex());
 
       if (appUrl) {
         result.invitationUrl = path.join(

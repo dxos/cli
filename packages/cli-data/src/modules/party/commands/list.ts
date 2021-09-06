@@ -17,10 +17,11 @@ export const listCommand = (stateManager: StateManager): CommandModule<PartyOpti
   handler: asyncHandler(async (argv: Arguments<PartyOptions>) => {
     const { json } = argv;
 
-    const parties = Array.from(stateManager.parties.values()).map(({ partyKey, ...rest }) => ({
-      party: partyKey,
+    const current = await stateManager.getParty();
+    const parties = (await stateManager.getClient()).echo.queryParties().value.map(({ key, ...rest }) => ({
+      party: key.toHex(),
       ...rest,
-      current: partyKey === stateManager.currentParty
+      current: current && key.equals(current?.key)
     }));
 
     print(parties, { json });
