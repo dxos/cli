@@ -62,5 +62,5 @@ export const coreOptions = (yargs: Argv<{}>): Argv<CoreOptions> => {
     .option('mnemonic', {
       type: 'array',
       hidden: true
-    })
+    });
 };
