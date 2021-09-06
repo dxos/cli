@@ -4,7 +4,7 @@
 
 import { Arguments, CommandModule } from 'yargs';
 
-import { print } from '@dxos/cli-core';
+import { asyncHandler, print } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
 import { PartyOptions } from '../party';
@@ -14,7 +14,7 @@ export const listCommand = (stateManager: StateManager): CommandModule => ({
   describe: 'List parties.',
   builder: yargs => yargs,
 
-  handler: async (argv: Arguments<PartyOptions>) => {
+  handler: asyncHandler(async (argv: Arguments<PartyOptions>) => {
     const { json } = argv;
 
     const parties = Array.from(stateManager.parties.values()).map(({ partyKey, ...rest }) => ({
@@ -25,5 +25,5 @@ export const listCommand = (stateManager: StateManager): CommandModule => ({
 
     print(parties, { json });
     return parties;
-  }
+  })
 });

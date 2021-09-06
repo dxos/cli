@@ -6,7 +6,7 @@ import assert from 'assert';
 import queryString from 'query-string';
 import { Argv, CommandModule, Arguments } from 'yargs';
 
-import { print } from '@dxos/cli-core';
+import { asyncHandler, print } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
 import { PartyOptions } from '../party';
@@ -29,7 +29,7 @@ export const joinCommand = (stateManager: StateManager): CommandModule => ({
   command: ['join [party-key]', 'switch [party-key]', 'use [party-key]'],
   describe: 'Join party.',
   builder: yargs => partyOptions(yargs),
-  handler: async (argv: Arguments<PartyJoinOptions>) => {
+  handler: asyncHandler(async (argv: Arguments<PartyJoinOptions>) => {
     const { partyKey, invitationUrl, invitation, json, passcode } = argv;
 
     assert(partyKey || invitation || invitationUrl, 'Invalid party.');
@@ -46,5 +46,5 @@ export const joinCommand = (stateManager: StateManager): CommandModule => ({
     if (partyKey && /^[0-9a-f]{64}$/i.test(partyKey)) {
       print({ partyKey }, { json });
     }
-  }
+  })
 });

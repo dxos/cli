@@ -4,7 +4,7 @@
 
 import { Arguments, CommandModule } from 'yargs';
 
-import { print } from '@dxos/cli-core';
+import { asyncHandler, print } from '@dxos/cli-core';
 
 import { StateManager } from '../../state-manager';
 import { PartyOptions } from '../party';
@@ -14,7 +14,7 @@ export const openCommand = (stateManager: StateManager): CommandModule => ({
   describe: 'Open a party.',
   builder: yargs => yargs
     .option('interactive', { hidden: true, default: true }), // override the default.
-  handler: async (argv: Arguments<PartyOptions>) => {
+  handler: asyncHandler(async (argv: Arguments<PartyOptions>) => {
     const { json } = argv;
 
     const party = await stateManager.getParty();
@@ -24,5 +24,5 @@ export const openCommand = (stateManager: StateManager): CommandModule => ({
     await party.open();
 
     print({ party: party.key.toHex() }, { json });
-  }
+  })
 });

@@ -6,6 +6,7 @@ import path from 'path';
 import queryString from 'query-string';
 import { Argv, CommandModule, Arguments } from 'yargs';
 
+import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 import { StateManager } from '../../state-manager';
@@ -24,7 +25,7 @@ export const inviteCommand = (stateManager: StateManager): CommandModule => ({
   command: ['invite'],
   describe: 'Invite another participant.',
   builder: yargs => partyOptions(yargs),
-  handler: async (argv: Arguments<PartyInviteOptions>) => {
+  handler: asyncHandler(async (argv: Arguments<PartyInviteOptions>) => {
     const { appUrl } = argv;
 
     const party = stateManager.currentParty;
@@ -47,5 +48,5 @@ export const inviteCommand = (stateManager: StateManager): CommandModule => ({
     }
     log(JSON.stringify(result, null, 2));
     return result;
-  }
+  })
 });
