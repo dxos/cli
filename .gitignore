@@ -24,6 +24,7 @@ gen/
 .DS_Store
 
 # Webpack
+*.env
 .env*
 !.env.*
 version.json
