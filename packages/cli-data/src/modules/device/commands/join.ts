@@ -39,6 +39,7 @@ export const joinCommand = ({stateManager, config, profilePath}: Pick<CliDataSta
   builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceJoinOptions>) => {
     const { invitation, json, passcode, hash, swarmKey, identityKey } = argv;
+    assert(config, 'Missing config.')
 
     const client = await stateManager.getClient();
     const clientConfig = client.config
@@ -49,7 +50,7 @@ export const joinCommand = ({stateManager, config, profilePath}: Pick<CliDataSta
       resetStorageForProfile(config.get('cli.storage.path'), profilePath!);
     }
 
-    const newClient = new Client(config)
+    const newClient = new Client(clientConfig)
     await newClient.initialize()
 
     const invitationDescriptor = InvitationDescriptor.fromQueryParameters({

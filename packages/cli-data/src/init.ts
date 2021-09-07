@@ -3,6 +3,7 @@
 //
 
 import { Client, ClientConfig } from '@dxos/client';
+import {Config} from '@dxos/config'
 import { createKeyPair, keyToBuffer } from '@dxos/crypto';
 import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
@@ -53,7 +54,7 @@ const _createClient = async (config: any, models: any[], options: any) => {
 };
 
 let client: Client;
-const createClientGetter = (config: ClientConfig, models: any[], options: any) => async () => {
+const createClientGetter = (config: Config, models: any[], options: any) => async () => {
   if (!client) {
     client = await _createClient(config, models, options);
   }
@@ -68,6 +69,7 @@ export interface CliDataState extends CoreState {
 let stateManager: StateManager;
 export const initDataCliState = async (state: CoreState): Promise<CliDataState> => {
   const { config, getReadlineInterface, models, profilePath, profileExists } = state;
+  assert(config, 'Missing config.')
 
   if (!profilePath || !profileExists) {
     throw new Error('CLI profile does not exist.')
