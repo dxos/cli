@@ -6,7 +6,7 @@ import assert from 'assert';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { spawn, invite } from '../handlers/bot';
+import { spawn, invite, build, publish } from '../handlers/bot';
 import { install, setup, start } from '../handlers/bot-factory';
 
 /**
@@ -100,6 +100,22 @@ export const BotModule = ({ getClient, config, stateManager, /* getReadlineInter
           .option('bot-path', { type: 'string' }),
 
         handler: asyncHandler(invite({ stateManager, getClient }))
+      })
+
+      .command({
+        command: ['build'],
+        describe: 'Build bot.',
+        builder: yargs => yargs,
+
+        handler: asyncHandler(build())
+      })
+
+      .command({
+        command: ['publish'],
+        describe: 'Publish Bot to IPFS.',
+        builder: yargs => yargs,
+
+        handler: asyncHandler(publish(config))
       })
   };
 };
