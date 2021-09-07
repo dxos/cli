@@ -19,7 +19,28 @@ const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
 const BOT_FACTORY_DEBUG_NAMESPACES = ['bot-factory', 'bot-factory:*'];
 
+const PREBUILDS_DIR = 'prebuilds';
+const SODIUM_PREBUILDS = `sodium-native/${PREBUILDS_DIR}`;
+
+/**
+ * Sets up proper location for sodium-native prebuilds so bots would be able to reuse it.
+ */
+const setupPrebuilds = async (cliNodePath) => {
+  const prebuildsPath = path.join(cliNodePath, SODIUM_PREBUILDS);
+  const prebuildsBotsPath = path.join(path.dirname(process.execPath), PREBUILDS_DIR);
+
+  if (!fs.existsSync(prebuildsPath)) {
+    throw new Error('Unable to locate sodium-native prebuilds. Please make sure proper \'cli.npmClient\' is configured in your CLI profile.');
+  }
+
+  await fs.copy(prebuildsPath, prebuildsBotsPath);
+};
+
 export const setup = (config) => async ({ topic, secretKey, localDev, reset }) => {
+  const cliNodePath = await getGlobalModulesPath(await isGlobalYarn(pkg.package.name));
+
+  await setupPrebuilds(cliNodePath);
+
   const botFactoryEnvFile = path.join(process.cwd(), BOTFACTORY_ENV_FILE);
   await fs.ensureFile(botFactoryEnvFile);
 
@@ -44,7 +65,7 @@ export const setup = (config) => async ({ topic, secretKey, localDev, reset }) =
     DX_BOT_TOPIC,
     DX_BOT_SECRET_KEY,
     DX_BOT_LOCAL_DEV: localDev,
-    DX_CLI_NODE_PATH: await getGlobalModulesPath(await isGlobalYarn(pkg.package.name)),
+    DX_CLI_NODE_PATH: cliNodePath,
     DEBUG_HIDE_DATE: true
   };
 
