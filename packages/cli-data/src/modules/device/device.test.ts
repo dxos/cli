@@ -77,7 +77,7 @@ describe('cli-data: Device', () => {
 
   test('Can join a device invitation.', async () => {
     const invitation = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any
-    await joinCommand(bobStateManager).handler({...DEFAULT_ARGS, ...invitation})
+    await joinCommand({stateManager: bobStateManager}).handler({...DEFAULT_ARGS, ...invitation})
 
     expect((await infoCommand(aliceStateManager).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice')
     expect((await infoCommand(bobStateManager).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice') // Got replaced because it is now Alice's device.

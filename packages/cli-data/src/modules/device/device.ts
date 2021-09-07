@@ -16,12 +16,12 @@ const deviceOptions = (yargs: Argv<CoreOptions>): Argv<DeviceOptions> => {
   return yargs;
 };
 
-export const DeviceModule = ({ stateManager }: CliDataState) => ({
+export const DeviceModule = ({ stateManager, config, profilePath }: CliDataState) => ({
   command: ['device'],
   describe: 'Device CLI.',
   handler: undefined as any,
   builder: (yargs: Argv<CoreOptions>) => deviceOptions(yargs)
-    .command(joinCommand(stateManager))
+    .command(joinCommand({stateManager, config, profilePath}))
     .command(infoCommand(stateManager))
     // .command(openCommand(stateManager))
     .command(listCommand(stateManager))

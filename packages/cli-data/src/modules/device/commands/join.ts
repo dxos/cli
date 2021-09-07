@@ -12,6 +12,8 @@ import { StateManager } from '../../../state-manager';
 import { DeviceOptions } from '../device';
 import { InvitationDescriptor, InvitationDescriptorType } from '@dxos/echo-db';
 import { Client } from '@dxos/client';
+import { resetStorageForProfile } from '../../../config';
+import { CliDataState } from '../../../init';
 
 export interface DeviceJoinOptions extends DeviceOptions {
   invitation: string,
@@ -21,7 +23,7 @@ export interface DeviceJoinOptions extends DeviceOptions {
   identityKey: string,
 }
 
-const partyOptions = (yargs: Argv<DeviceOptions>): Argv<DeviceJoinOptions> => {
+const options = (yargs: Argv<DeviceOptions>): Argv<DeviceJoinOptions> => {
   return yargs
     .option('interactive', { hidden: true, default: true }) // override the default.
     .option('invitation', { type: 'string', required: true })
@@ -31,21 +33,24 @@ const partyOptions = (yargs: Argv<DeviceOptions>): Argv<DeviceJoinOptions> => {
     .option('passcode', { type: 'string', required: true });
 };
 
-export const joinCommand = (stateManager: StateManager): CommandModule<DeviceOptions, DeviceJoinOptions> => ({
+export const joinCommand = ({stateManager, config, profilePath}: Pick<CliDataState, 'stateManager' | 'config' | 'profilePath'>): CommandModule<DeviceOptions, DeviceJoinOptions> => ({
   command: ['join'],
   describe: 'Join device invitation.',
-  builder: yargs => partyOptions(yargs),
+  builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceJoinOptions>) => {
     const { invitation, json, passcode, hash, swarmKey, identityKey } = argv;
 
     const client = await stateManager.getClient();
-    const config = client.config
-    await client.reset()
+    const clientConfig = client.config
+    if (client.initialized) {
+      await client.destroy()
+    }
+    if (clientConfig.storage?.persistent) {
+      resetStorageForProfile(config.get('cli.storage.path'), profilePath!);
+    }
 
     const newClient = new Client(config)
     await newClient.initialize()
-
-    // await client.initialize();
 
     const invitationDescriptor = InvitationDescriptor.fromQueryParameters({
       hash,
