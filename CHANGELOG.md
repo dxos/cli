@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.8](https://www.github.com/dxos/cli/compare/v2.4.7...v2.4.8) (2021-09-07)
+
+
+### Bug Fixes
+
+* rm test env file. ([757b5f6](https://www.github.com/dxos/cli/commit/757b5f65c7ef01acd040698b65e353a5d7ba1968))
+
 ### [2.4.7](https://www.github.com/dxos/cli/compare/v2.4.6...v2.4.7) (2021-08-19)
 
 
