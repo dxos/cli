@@ -11,6 +11,7 @@ import { asyncHandler, print } from '@dxos/cli-core';
 import { StateManager } from '../../../state-manager';
 import { DeviceOptions } from '../device';
 import { InvitationDescriptor, InvitationDescriptorType } from '@dxos/echo-db';
+import { Client } from '@dxos/client';
 
 export interface DeviceJoinOptions extends DeviceOptions {
   invitation: string,
@@ -37,10 +38,15 @@ export const joinCommand = (stateManager: StateManager): CommandModule<DeviceOpt
   handler: asyncHandler(async (argv: Arguments<DeviceJoinOptions>) => {
     const { invitation, json, passcode, hash, swarmKey, identityKey } = argv;
 
-    stateManager.setParty(null)
     const client = await stateManager.getClient();
+    const config = client.config
     await client.reset()
-    await client.initialize();
+
+    const newClient = new Client(config)
+    await newClient.initialize()
+
+    // await client.initialize();
+
     const invitationDescriptor = InvitationDescriptor.fromQueryParameters({
       hash,
       invitation,
@@ -48,6 +54,8 @@ export const joinCommand = (stateManager: StateManager): CommandModule<DeviceOpt
       type: InvitationDescriptorType.INTERACTIVE,
       identityKey
     })
-    await client.halo.join(invitationDescriptor, async () => Buffer.from(passcode))
+    await newClient.halo.join(invitationDescriptor, async () => Buffer.from(passcode))
+
+    stateManager.replaceClient(newClient);
   })
 });

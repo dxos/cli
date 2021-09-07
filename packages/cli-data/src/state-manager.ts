@@ -13,8 +13,6 @@ import { defaultSecretValidator, generatePasscode, SecretProvider, SecretValidat
 import { keyToBuffer, verify, SIGNATURE_LENGTH, PublicKeyLike, PublicKey } from '@dxos/crypto';
 import { InvitationDescriptor, InvitationQueryParameters, Party } from '@dxos/echo-db';
 
-const DEFAULT_ITEM_UPDATE_HANDLER = () => {};
-
 const STATE_STORAGE_FILENAME = 'state.json';
 
 const lock = promisify(lockFile.lock);
@@ -58,11 +56,8 @@ export class StateManager {
     return this._party;
   }
 
-  async resetClient (getClient: Function) {
-    this._getClient = getClient;
-    if (this._client) {
-      await this._client.reset();
-    }
+  async replaceClient (newClient: Client) {
+    this._client = newClient;
     this._party = null;
   }
 

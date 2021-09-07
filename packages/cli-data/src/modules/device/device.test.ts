@@ -75,9 +75,13 @@ describe('cli-data: Device', () => {
     PublicKey.assertValidPublicKey(PublicKey.from(invitation.identityKey));
   });
 
-  test.skip('Can join a device invitation.', async () => {
+  test('Can join a device invitation.', async () => {
     const invitation = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any
     await joinCommand(bobStateManager).handler({...DEFAULT_ARGS, ...invitation})
+
+    expect((await infoCommand(aliceStateManager).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice')
+    expect((await infoCommand(bobStateManager).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice') // Got replaced because it is now Alice's device.
+    await bobStateManager.destroy()
   });
 
   test.skip('Joining device invitation removes current state and sync with new state.', async () => {
