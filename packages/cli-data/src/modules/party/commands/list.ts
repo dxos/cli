@@ -24,6 +24,6 @@ export const listCommand = (stateManager: StateManager): CommandModule<PartyOpti
     }));
 
     print(parties, { json });
-    return parties;
+    if (argv.return) return parties
   })
 });

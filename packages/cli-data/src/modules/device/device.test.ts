@@ -14,7 +14,7 @@ const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');
 };
 
-const DEFAULT_ARGS = { $0: '', _: [] };
+const DEFAULT_ARGS = { $0: '', _: [], return: true };
 
 jest.setTimeout(2000);
 
