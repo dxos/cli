@@ -16,14 +16,14 @@ import { defaultSecretValidator, generatePasscode } from '@dxos/credentials';
 export interface DeviceInviteOptions extends DeviceOptions {
 }
 
-const partyOptions = (yargs: Argv<DeviceOptions>): Argv<DeviceInviteOptions> => {
+const options = (yargs: Argv<DeviceOptions>): Argv<DeviceInviteOptions> => {
   return yargs
 };
 
 export const inviteCommand = (stateManager: StateManager): CommandModule<DeviceOptions, DeviceInviteOptions> => ({
   command: ['invite'],
   describe: 'Invite another device.',
-  builder: yargs => partyOptions(yargs),
+  builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceInviteOptions>) => {
     const {json} = argv;
 
@@ -42,6 +42,6 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<DeviceO
       
     }
     print(result, { json });
-    return result;
+    if (argv.return) return result;
   })
 });

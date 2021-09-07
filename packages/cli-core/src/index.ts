@@ -13,3 +13,6 @@ export * from './util/yaml';
 export * from './util/fees';
 export * from './util/npm';
 export * from './util/template';
+
+import {CoreState} from './app'
+export {CoreState};

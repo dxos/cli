@@ -7,13 +7,7 @@ import { Arguments, Argv } from 'yargs';
 import { asyncHandler, CoreOptions } from '@dxos/cli-core';
 
 import { CLI_DEFAULT_PERSISTENT, resetStorage, resetStorageForProfile } from '../config';
-
-interface Params {
-  config: any,
-  cliState: any,
-  profilePath: string
-}
-
+import { CliDataState } from '../init';
 export interface StorageOptions extends CoreOptions {
   all?: boolean
 }
@@ -26,7 +20,7 @@ const storageOptions = (yargs: Argv<CoreOptions>): Argv<StorageOptions> => {
 /**
  * Storage CLI module.
  */
-export const StorageModule = ({ config, cliState, profilePath }: Params) => ({
+export const StorageModule = ({ config, cliState, profilePath }: CliDataState) => ({
   command: ['storage'],
   describe: 'Storage management.',
 
@@ -53,7 +47,7 @@ export const StorageModule = ({ config, cliState, profilePath }: Params) => ({
           if (!persistent) {
             throw new Error('Persistent storage was not used for current profile.');
           }
-          resetStorageForProfile(config.get('cli.storage.path'), profilePath);
+          resetStorageForProfile(config.get('cli.storage.path'), profilePath!);
         }
       })
     })

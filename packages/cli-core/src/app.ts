@@ -2,6 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
+import { Config } from '@dxos/config';
 import assert from 'assert';
 import get from 'lodash.get';
 import omit from 'lodash.omit';
@@ -16,6 +17,23 @@ import { getLoggers } from './util/log';
 const VERSION_COMMAND = 'version';
 
 const { log, logError } = getLoggers();
+
+export interface CoreState {
+  config?: Config,
+  getReadlineInterface?: Function,
+  cliState: {interactive: boolean},
+  models?: any[],
+  profilePath?: string | undefined,
+  profileExists?: boolean,
+  options?: {prompt?: any, baseCommand?: any, enableInteractive?: boolean},
+  modules?: Array<Function>,
+  getModules?: Function,
+}
+
+export interface ConstructorConfig extends Omit<CoreState, 'cliState'> {
+  state?: CoreState,
+  version?: string
+}
 
 // http://patorjk.com/software/taag/#p=testall&f=Patorjk-HeX&t=DXOS
 const BANNER = '\n' +
@@ -35,7 +53,7 @@ export class App {
   _prompt: string;
   _baseCommand: string;
   _enableInteractive: boolean;
-  _state: any;
+  _state: CoreState;
   _config: any;
   _getModules: any;
   _args: any;
@@ -70,11 +88,11 @@ export class App {
 
   _modules: Array<Function> = [];
 
-  constructor (config: any = {}) {
-    const { config: cliConfig, state, options, version, profilePath, profileExists } = config;
-    const { prompt, baseCommand, enableInteractive = false } = options;
+  constructor (constructorConfig: ConstructorConfig) {
+    const { config: cliConfig, state, options, version, profilePath, profileExists } = constructorConfig;
+    const { prompt, baseCommand, enableInteractive = false } = options ?? {};
 
-    this._version = version;
+    this._version = version ?? '';
     this._prompt = prompt;
     this._baseCommand = baseCommand;
     this._enableInteractive = enableInteractive;
@@ -97,8 +115,8 @@ export class App {
     }
 
     // Register modules.
-    const { modules, getModules } = config;
-    this._modules = modules;
+    const { modules, getModules } = constructorConfig;
+    this._modules = modules ?? [];
     this._getModules = getModules;
   }
 

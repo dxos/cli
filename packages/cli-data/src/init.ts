@@ -8,6 +8,8 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
 import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
 import { StateManager } from './state-manager';
+import {CoreState} from '@dxos/cli-core'
+import assert from 'assert';
 
 const _createClient = async (config: any, models: any[], options: any) => {
   const { client = {}, services: { signal: { server }, ice }, cli } = config.values;
@@ -58,24 +60,35 @@ const createClientGetter = (config: ClientConfig, models: any[], options: any) =
   return client;
 };
 
-let stateManager: StateManager;
+export interface CliDataState extends CoreState {
+  getClient: Function,
+  stateManager: StateManager
+}
 
-export const initDataCliState = async (state: any) => {
+let stateManager: StateManager;
+export const initDataCliState = async (state: CoreState): Promise<CliDataState> => {
   const { config, getReadlineInterface, models, profilePath, profileExists } = state;
 
-  if (profilePath && profileExists) {
-    const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);
-    const persistent = config.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT);
-
-    const getClient = await createClientGetter(config, models, { persistent, storagePath, profileName });
-
-    stateManager = new StateManager(getClient, getReadlineInterface, {
-      storagePath: persistent ? storagePath : undefined
-    });
-
-    state.getClient = getClient;
-    state.stateManager = stateManager;
+  if (!profilePath || !profileExists) {
+    throw new Error('CLI profile does not exist.')
   }
+
+  const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);
+  const persistent = config.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT);
+
+  const getClient = await createClientGetter(config, models ?? [], { persistent, storagePath, profileName });
+
+  assert(getReadlineInterface, 'Missing getReadlineinterface.')
+  stateManager = new StateManager(getClient, getReadlineInterface, {
+    storagePath: persistent ? storagePath : undefined
+  });
+
+  const dataState: CliDataState = {
+    ...state,
+    getClient,
+    stateManager
+  }
+  return dataState
 };
 
 export const destroyDataCliState = async () => {

@@ -2,6 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
+import { Config } from '@dxos/config';
 import assert from 'assert';
 import fs from 'fs';
 import yaml from 'js-yaml';
@@ -74,8 +75,8 @@ const getRunnable = (extension: ExtensionInfo) => {
     const argv = process.argv.slice(2);
     const { profile, help, dryRun } = parse(argv);
     const [command] = argv;
-    const profilePath = getActiveProfilePath(profile);
-    const profileExists = profilePath && fs.existsSync(profilePath);
+    const profilePath = getActiveProfilePath(profile) ?? undefined;
+    const profileExists = profilePath ? fs.existsSync(profilePath) : false;
 
     if (!profileExists && !help && !COMMANDS_PERMIT_NO_PROFILE.includes(command)) {
       log('No active profile. Enter the following command to set the active profile:');
@@ -87,13 +88,10 @@ const getRunnable = (extension: ExtensionInfo) => {
       log(`Profile: ${profilePath}`);
     }
 
-    // These defaults are required as during 'dx profile init', there is no config to load, and so no client can be created.
-    let config = { get: () => ({}) };
-
+    
     // Load config if profile exists.
-    if (profileExists) {
-      config = await getConfig(profilePath!);
-    }
+    // These defaults are required as during 'dx profile init', there is no config to load, and so no client can be created.
+    let config: Config = profileExists ? (await getConfig(profilePath!)) : { get: () => ({}) } as any;
 
     const app = new App({ modules, getModules, config, options, version, profilePath, profileExists });
 

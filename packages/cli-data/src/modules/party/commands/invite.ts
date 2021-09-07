@@ -16,7 +16,7 @@ export interface PartyInviteOptions extends PartyOptions {
   appUrl?: string
 }
 
-const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyInviteOptions> => {
+const options = (yargs: Argv<PartyOptions>): Argv<PartyInviteOptions> => {
   return yargs
     .option('app-url', { type: 'string' });
 };
@@ -24,7 +24,7 @@ const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyInviteOptions> => {
 export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOptions, PartyInviteOptions> => ({
   command: ['invite'],
   describe: 'Invite another participant.',
-  builder: yargs => partyOptions(yargs),
+  builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<PartyInviteOptions>) => {
     const { appUrl, json } = argv;
 
