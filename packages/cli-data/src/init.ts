@@ -85,12 +85,16 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
     storagePath: persistent ? storagePath : undefined
   });
 
-  const dataState: CliDataState = {
+  // The `cli-core` expects the state to be modified.
+  //Issue: https://github.com/dxos/cli/issues/246
+  (state as CliDataState).getClient = getClient;
+  (state as CliDataState).stateManager = stateManager;
+
+  return {
     ...state,
     getClient,
     stateManager
   }
-  return dataState
 };
 
 export const destroyDataCliState = async () => {
