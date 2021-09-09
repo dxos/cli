@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.9](https://www.github.com/dxos/cli/compare/v2.4.8...v2.4.9) (2021-09-09)
+
+
+### Bug Fixes
+
+* proper setup for BF container. ([#253](https://www.github.com/dxos/cli/issues/253)) ([b308c69](https://www.github.com/dxos/cli/commit/b308c6923761c2485cdbfba2cc3483f571b94773))
+
 ### [2.4.8](https://www.github.com/dxos/cli/compare/v2.4.7...v2.4.8) (2021-09-07)
 
 
