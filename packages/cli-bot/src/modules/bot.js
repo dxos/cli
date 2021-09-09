@@ -62,7 +62,7 @@ export const BotModule = ({ getClient, config, stateManager, /* getReadlineInter
               .option('proc-name', { type: 'string' }),
 
             handler: asyncHandler(async argv => {
-              await setup(config)(argv);
+              await setup(config, { includeNodePath: true })(argv);
               await start(config)(argv);
             })
           })
