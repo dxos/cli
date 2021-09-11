@@ -28,7 +28,7 @@ export const listRecords = (params: Params) => async (argv: any) => {
   print(output.map(displayRecord), { json });
 };
 
-export const getRecords = (params: Params) => async (argv: any) => {
+export const getRecord = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const { id, json } = argv;

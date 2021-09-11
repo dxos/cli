@@ -9,7 +9,7 @@ import { DomainKey, DXN } from '@dxos/registry-api';
 
 import { Params } from './common';
 
-export const listSchemas = (params: Params) => async (argv: any) => {
+export const listTypes = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const { json } = argv;
@@ -41,7 +41,7 @@ export const querySchema = (params: Params) => async (argv: any) => {
   print(root.toJSON(), { json });
 };
 
-export const getSchema = (params: Params) => async (argv: any) => {
+export const getType = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const { json, cid } = argv;
@@ -55,7 +55,7 @@ export const getSchema = (params: Params) => async (argv: any) => {
   print(root.toJSON(), { json });
 };
 
-export const addSchema = (params: Params) => async (argv: any) => {
+export const addType = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const { path, name, domain, json } = argv;
