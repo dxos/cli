@@ -9589,7 +9589,7 @@ hypercore-protocol@^8.0.0, hypercore-protocol@^8.0.5:
     streamx "^2.1.0"
     timeout-refresh "^1.0.0"
 
-"hypercore-protocol@github:dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60":
+hypercore-protocol@dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60:
   version "8.0.7"
   resolved "https://codeload.github.com/dxos/hypercore-protocol/tar.gz/05513f9266f8bec4d29b144b72c59257c2d7bd60"
   dependencies:
@@ -11710,7 +11710,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-"jsondown@github:dxos/jsondown#main":
+jsondown@dxos/jsondown#main:
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:
@@ -16038,9 +16038,8 @@ simple-hypercore-protocol@^2.0.0:
     varint "^5.0.0"
     xsalsa20-universal "^1.0.0"
 
-simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c, "simple-hypercore-protocol@github:dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c":
+simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c:
   version "2.1.1"
-  uid bc23f0747e55954ec0bd94754910c92f88ec561c
   resolved "https://codeload.github.com/dxos/simple-hypercore-protocol/tar.gz/bc23f0747e55954ec0bd94754910c92f88ec561c"
   dependencies:
     hypercore-crypto "^2.1.0"
