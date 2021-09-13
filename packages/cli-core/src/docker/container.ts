@@ -126,6 +126,7 @@ export class DockerContainer {
           return reject(err);
         }
 
+        // eslint-disable-next-line no-control-regex
         const process = (logs: string) => logs.replace(/\u001b\[.*?m/g, '');
 
         if (!follow) {
