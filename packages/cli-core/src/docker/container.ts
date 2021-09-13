@@ -121,15 +121,17 @@ export class DockerContainer {
 
   async logs (tail = 100, follow = false) {
     return new Promise((resolve, reject) => {
-      this._container.logs({ stdout: true, stderr: true, follow, tail }, (err, logs) => {
+      this._container.logs({ stdout: true, stderr: true, follow, tail, timestamps: true }, (err, logs) => {
         if (err) {
           return reject(err);
         }
 
+        const process = (logs: string) => logs.replace(/\u001b\[.*?m/g, '');
+
         if (!follow) {
-          log(logs!.toString());
+          log(process(logs!.toString()));
         } else {
-          logs!.on('data', chunk => log(chunk.toString()));
+          logs!.on('data', chunk => log(process(chunk.toString())));
           logs!.on('end', resolve);
         }
       });
