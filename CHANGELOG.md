@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.10](https://www.github.com/dxos/cli/compare/v2.4.9...v2.4.10) (2021-09-13)
+
+
+### Bug Fixes
+
+* add time to logs. ([#256](https://www.github.com/dxos/cli/issues/256)) ([b2d04be](https://www.github.com/dxos/cli/commit/b2d04be256b534ec342e089b16ba82ca8509a4a0))
+
 ### [2.4.9](https://www.github.com/dxos/cli/compare/v2.4.8...v2.4.9) (2021-09-09)
 
 
