@@ -235,7 +235,7 @@ export const DXNSModule = (params: Params) => {
 
           .command({
             command: ['list'],
-            describe: 'Claim an auction, if the auction is closed and you are the winner.',
+            describe: 'List auctions.',
 
             handler: asyncHandler(listAuctions({ getDXNSClient }))
           })
