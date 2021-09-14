@@ -10,7 +10,7 @@ import pb from 'protobufjs';
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { RecordMetadata } from '../../../../../dot/registry-api';
+import { RecordMetadata } from '@dxos/registry-api';
 import { Params } from './common';
 
 const DEFAULT_BALANCE = '100000000000000000000';

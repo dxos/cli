@@ -7,7 +7,7 @@ import { Argv } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 
 // TODO(marcin): simplify with index.ts
-import { generateAccount } from '../handlers/account';
+import { generateAccount, listAccounts } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
 import { getBlocks } from '../handlers/block';
@@ -255,6 +255,11 @@ export const DXNSModule = (params: Params) => {
         describe: 'Account commands.',
         handler: () => {},
         builder: yargs => yargs
+          .command({
+            command: ['list'],
+            describe: 'List accounts.',
+            handler: asyncHandler(listAccounts({ getDXNSClient, config }))
+          })
           .command({
             command: ['generate'],
             describe: 'Generate new account.',
