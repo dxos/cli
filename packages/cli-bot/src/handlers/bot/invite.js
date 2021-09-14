@@ -9,6 +9,8 @@ import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 export const invite = ({ getClient, stateManager }) => async ({ topic, botId, spec, botName, json, env, ipfsCID, ipfsEndpoint, id, name, botPath }) => {
+  assert(getClient, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
+
   assert(topic, 'Invalid topic.');
 
   const botSpec = spec ? JSON.parse(spec) : {};

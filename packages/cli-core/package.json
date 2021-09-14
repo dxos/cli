@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-core",
-  "version": "2.4.8-alpha.0",
+  "version": "2.4.11-alpha.0",
   "description": "CLI Core",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
   "license": "AGPL-3.0",
@@ -31,9 +31,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/config": "~2.12.14",
-    "@dxos/crypto": "~2.12.14",
-    "@dxos/debug": "~2.12.14",
+    "@dxos/config": "~2.12.19",
+    "@dxos/crypto": "~2.12.19",
+    "@dxos/debug": "~2.12.19",
     "@types/yargs": "^16.0.1",
     "assert": "^2.0.0",
     "console.table": "^0.10.0",

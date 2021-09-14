@@ -36,7 +36,7 @@ const setupPrebuilds = async (cliNodePath) => {
   await fs.copy(prebuildsPath, prebuildsBotsPath);
 };
 
-export const setup = (config) => async ({ topic, secretKey, localDev, reset }) => {
+export const setup = (config, { includeNodePath = false } = {}) => async ({ topic, secretKey, localDev, reset }) => {
   const cliNodePath = await getGlobalModulesPath(await isGlobalYarn(pkg.package.name));
 
   await setupPrebuilds(cliNodePath);
@@ -65,8 +65,8 @@ export const setup = (config) => async ({ topic, secretKey, localDev, reset }) =
     DX_BOT_TOPIC,
     DX_BOT_SECRET_KEY,
     DX_BOT_LOCAL_DEV: localDev,
-    DX_CLI_NODE_PATH: cliNodePath,
-    DEBUG_HIDE_DATE: true
+    DEBUG_HIDE_DATE: true,
+    ...(includeNodePath ? { DX_CLI_NODE_PATH: cliNodePath } : {})
   };
 
   await fs.writeFile(botFactoryEnvFile, stringify(env));

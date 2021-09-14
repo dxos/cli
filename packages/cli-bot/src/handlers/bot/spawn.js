@@ -2,10 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
+
 import { BotFactoryClient } from '@dxos/botkit-client';
 import { print } from '@dxos/cli-core';
 
 export const spawn = ({ getClient, cliState }) => async ({ botName, topic, json, env, ipfsCID, ipfsEndpoint, id, name, botPath }) => {
+  assert(getClient, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
+
   const { interactive } = cliState;
 
   const client = await getClient();

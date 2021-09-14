@@ -1,5 +1,26 @@
 # Changelog
 
+### [2.4.11](https://www.github.com/dxos/cli/compare/v2.4.10...v2.4.11) (2021-09-14)
+
+
+### Bug Fixes
+
+* remove general dep on cli-data from cli-bot. ([59aea3a](https://www.github.com/dxos/cli/commit/59aea3a1bd331e100de8ee7d7be94bca7bd1a115))
+
+### [2.4.10](https://www.github.com/dxos/cli/compare/v2.4.9...v2.4.10) (2021-09-13)
+
+
+### Bug Fixes
+
+* add time to logs. ([#256](https://www.github.com/dxos/cli/issues/256)) ([b2d04be](https://www.github.com/dxos/cli/commit/b2d04be256b534ec342e089b16ba82ca8509a4a0))
+
+### [2.4.9](https://www.github.com/dxos/cli/compare/v2.4.8...v2.4.9) (2021-09-09)
+
+
+### Bug Fixes
+
+* proper setup for BF container. ([#253](https://www.github.com/dxos/cli/issues/253)) ([b308c69](https://www.github.com/dxos/cli/commit/b308c6923761c2485cdbfba2cc3483f571b94773))
+
 ### [2.4.8](https://www.github.com/dxos/cli/compare/v2.4.7...v2.4.8) (2021-09-07)
 
 
