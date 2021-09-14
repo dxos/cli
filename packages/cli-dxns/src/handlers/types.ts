@@ -7,13 +7,14 @@ import pb from 'protobufjs';
 import { log } from '@dxos/debug';
 import { CID, DomainKey, DXN, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-api';
 
-import { Params, printRecord, printRecords, printResource } from './common';
+import { Params, printRecord, printRecords, printResource, printResources } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
-  const types = await client.registryApi.getTypes();
+  const resources = await client.registryApi.getResources();
+  const types = resources.filter((r): r is Resource<RegistryTypeRecord> => r.record.kind === 'type');
 
-  printRecords(types, argv);
+  printResources(types, argv);
 };
 
 export const getType = (params: Params) => async (argv: any) => {
