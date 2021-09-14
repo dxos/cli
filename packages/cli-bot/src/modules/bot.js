@@ -2,8 +2,6 @@
 // Copyright 2020 DXOS.org
 //
 
-import assert from 'assert';
-
 import { asyncHandler } from '@dxos/cli-core';
 
 import { spawn, invite, build, publish } from '../handlers/bot';
@@ -13,8 +11,6 @@ import { install, setup, start } from '../handlers/bot-factory';
  * Bot CLI module.
  */
 export const BotModule = ({ getClient, config, stateManager, /* getReadlineInterface, */ cliState }) => {
-  assert(getClient, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
-
   return {
     command: ['bot'],
     describe: 'Bot CLI.',
