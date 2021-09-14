@@ -5,6 +5,7 @@
 import { ApiPromise } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
 import { KeyringPair } from '@polkadot/keyring/types';
+import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { readFileSync } from 'fs';
 import path from 'path';
 
@@ -33,17 +34,17 @@ const createClientGetter = (config: any, options: any) => async () => {
 const _createClient = async (config: any, options: any): Promise<DXNSClient | undefined> => {
   const { profilePath, profileExists } = options;
   if (profilePath && profileExists) {
-    // The keyring need to be created AFTER api is created.
+    // The keyring need to be created AFTER api is created or we need to wait for WASM init.
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
     const keyring = new Keyring({ type: 'sr25519' });
+    await cryptoWaitReady();
 
     const uri = config.get('services.dxns.uri');
     const keypair = uri ? keyring.addFromUri(uri) : undefined;
-
-    const apiServerUri = config.get('services.dxns.server');
+    // TODO(marcin): fix config substitution.
+    const apiServerUri = config.get('ws://127.0.0.1:9944');
     const registryApi = await ApiFactory.createRegistryApi(apiServerUri, keypair);
     const { auctionsApi, apiPromise } = await ApiFactory.createAuctionsApi(apiServerUri, keypair);
-    // @ts-ignore - remove after publishing and using the new version of registry API
     const transactionHandler = new ApiTransactionHandler(apiPromise, keypair);
 
     return {

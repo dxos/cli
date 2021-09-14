@@ -56,7 +56,6 @@ export const addType = (params: Params) => async (argv: any) => {
     author
   };
 
-  // @ts-ignore - remove after publishing and using the new version of registry API
   const cid = await client.registryApi.insertTypeRecord(schemaRoot, name, meta);
 
   if (name) {

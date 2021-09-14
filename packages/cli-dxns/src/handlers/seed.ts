@@ -70,7 +70,6 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     author: 'DXOS'
   };
 
-  // @ts-ignore - remove after publishing and using the new version of registry API
   const hash = await registryApi.insertTypeRecord(root, DEFAULT_SCHEMA_NAME, meta);
   await client.registryApi.registerResource(domainKey, DEFAULT_SCHEMA_NAME, hash);
 

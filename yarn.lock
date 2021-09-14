@@ -1530,10 +1530,10 @@
     multihashes "^4.0.2"
     protobufjs "^6.10.2"
 
-"@dxos/registry-api@~0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@dxos/registry-api/-/registry-api-0.3.1.tgz#037f4d8811913340a2b2c625885707e7d33716fe"
-  integrity sha512-S5zg9iQFJj2TYlY+0jIBpQON7Zpjnt1w0urmHYVfr+Nv1Xz6N/0ePoyYajg4bk6tOVULfe86oOQnsCjOSysYRQ==
+"@dxos/registry-api@~0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@dxos/registry-api/-/registry-api-0.3.2.tgz#8eb82a635439c14635bad704cee95c670a58346d"
+  integrity sha512-aFTsX2A84VRej8zWDdrl6LrasrBZnS3K/HCxChKHzbamcnJY0XXMJVBwco4+frtWQ0Oaq9HMxv2HzgtNRWYTSg==
   dependencies:
     "@dxos/codec-protobuf" "^2.12.14"
     "@dxos/util" "^2.4.0"
