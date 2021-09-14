@@ -8,33 +8,23 @@ message Any {
   bytes payload = 3;
 }
 
-message RecordAttributes {
-  string name = 1;
-  string description = 2;
-  string version = 3;
-  string author = 4;
-}
-
 //
 // Records
 //
 
 message KUBE {
-  RecordAttributes attributes = 1;
   string url = 2;
 
   Any extension = 10;
 }
 
 message Service {
-  RecordAttributes attributes = 1;
   string type = 2;
 
   Any extension = 10;
 }
 
 message App {
-  RecordAttributes attributes = 1;
   string build = 2;
   bytes hash = 3;
   string repository = 4;
@@ -46,7 +36,6 @@ message App {
 }
 
 message Bot {
-  RecordAttributes attributes = 1;
   bytes hash = 2;
   string repository = 3;
   string repository_version = 4;
@@ -57,7 +46,6 @@ message Bot {
 }
 
 message BotFactory {
-  RecordAttributes attributes = 1;
   string os = 2;
   string arch = 3;
   string topic = 4;
