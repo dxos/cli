@@ -19,8 +19,20 @@ export const displayRecord = (record: RegistryRecord) => {
   };
 
   switch (record.kind) {
-    case 'type': return { ...common, messageName: record.messageName, ...record.meta };
-    case 'data': return { ...common, typeCID: record.type, ...record.meta, size: record.dataSize, data: record.data };
+    case 'type':
+      return {
+        ...common,
+        messageName: record.messageName,
+        ...record.meta
+      };
+    case 'data':
+      return {
+        ...common,
+        typeCid: record.type.toString(),
+        ...record.meta,
+        size: record.dataSize,
+        data: record.data
+      };
   }
 };
 
