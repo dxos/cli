@@ -45,19 +45,24 @@ export const DXNSModule = (params: Params) => {
             command: ['get <cid | dxn>'],
             describe: 'Get type details by its CID or DXN.',
             builder: yargs => yargs
-              .option('cid', { describe: 'CID of the type', type: 'string' })
-              .option('dxn', { describe: 'DXN of the type', type: 'string' }),
+              .option('cid', { describe: 'CID of the type', type: 'string' }),
+            // TODO(marcin): support dxn with -dxn switch
+            // .option('dxn', { describe: 'DXN of the type', type: 'string' }),
 
             handler: asyncHandler(getType({ getDXNSClient }))
           })
 
           .command({
-            command: ['add <path>'],
+            command: ['add <messageName> <path>'],
             describe: 'Add a new type to the Registry.',
             builder: yargs => yargs
-              .option('name', { describe: 'Name of the record.', type: 'string' })
+              .option('messageName', { required: true, describe: 'The fully qualified name of the proto message (must exist in the proto file).', type: 'string' })
+              .option('path', { required: true, describe: 'Path to the proto file', type: 'string' })
               .option('domain', { describe: 'Domain key for the record.', type: 'string' })
-              .option('path', { type: 'string' }),
+              .option('resourceName', { describe: 'Name of the resource in DXN', type: 'string' })
+              .option('version', { describe: 'Version of the type', type: 'string' })
+              .option('description', { describe: 'Description of the type', type: 'string' })
+              .option('author', { describe: 'Author of the type', type: 'string' }),
 
             handler: asyncHandler(addType({ getDXNSClient }))
           })

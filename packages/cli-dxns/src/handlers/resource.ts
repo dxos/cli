@@ -3,17 +3,9 @@
 //
 
 import { print } from '@dxos/cli-core';
-import { DXN, Resource } from '@dxos/registry-api';
+import { DXN } from '@dxos/registry-api';
 
-import { Params } from './common';
-import { displayRecord } from './record';
-
-const displayResource = (resource: Resource) => {
-  return ({
-    ...displayRecord(resource.record),
-    id: resource.id.toString()
-  });
-};
+import { Params, displayResource } from './common';
 
 export const listResources = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;

@@ -3,22 +3,9 @@
 //
 
 import { print } from '@dxos/cli-core';
-import { DXN, DomainKey, RegistryRecord, CID, RecordMetadata } from '@dxos/registry-api';
+import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-api';
 
-import { Params } from './common';
-
-export const displayRecord = (record: RegistryRecord) => {
-  const common = {
-    kind: record.kind,
-    cid: record.cid.toString(),
-    ...record.meta
-  };
-
-  switch (record.kind) {
-    case 'type': return { ...common, messageName: record.messageName };
-    case 'data': return { ...common, typeCID: record.type, size: record.dataSize, data: record.data };
-  }
-};
+import { displayRecord, Params } from './common';
 
 // TODO(marcin): Add query support.
 export const listRecords = (params: Params) => async (argv: any) => {
