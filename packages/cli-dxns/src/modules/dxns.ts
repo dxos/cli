@@ -6,20 +6,22 @@ import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
+// TODO(marcin): simplify with index.ts
 import { generateAccount } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
 import { getBlocks } from '../handlers/block';
 import { listDomains, getFreeDomain } from '../handlers/domain';
-import { listRecords, getRecord, addRecord } from '../handlers/record';
-import { listResources } from '../handlers/resource';
+import { listRecords, getRecord, addDataRecord } from '../handlers/record';
+import { getResource, listResources } from '../handlers/resource';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { listTypes, getType, addType } from '../handlers/types';
+import { DXNSClient } from '../index';
 
 interface Params {
   config: any,
-  getDXNSClient: Function
+  getDXNSClient(): DXNSClient
 }
 
 export const DXNSModule = (params: Params) => {
@@ -91,7 +93,7 @@ export const DXNSModule = (params: Params) => {
               .option('name', { describe: 'Register a resource name for this record.', type: 'string' })
               .option('domain', { describe: 'Specify a domain key for the record.', type: 'string' }),
 
-            handler: asyncHandler(addRecord({ getDXNSClient }))
+            handler: asyncHandler(addDataRecord({ getDXNSClient }))
           })
       })
 
@@ -104,6 +106,12 @@ export const DXNSModule = (params: Params) => {
             command: ['list'],
             describe: 'List all known resources in the Registry.',
             handler: asyncHandler(listResources({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['get <dxn>'],
+            describe: 'Get a resource by its DXN.',
+            handler: asyncHandler(getResource({ getDXNSClient }))
           })
       })
 

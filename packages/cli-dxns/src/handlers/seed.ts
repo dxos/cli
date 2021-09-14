@@ -10,6 +10,7 @@ import pb from 'protobufjs';
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
+import { RecordMetadata } from '../../../../../dot/registry-api';
 import { Params } from './common';
 
 const DEFAULT_BALANCE = '100000000000000000000';
@@ -30,26 +31,28 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const { mnemonic, json, verbose } = argv;
 
   const client = await getDXNSClient();
-  const { api, keypair, keyring, registryApi, auctionsApi } = client;
+  const { apiRaw, keypair, keyring, registryApi, auctionsApi, transactionHandler } = client;
 
-  const account = keypair.address;
+  const account = keypair?.address;
 
   const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
   // Increase balance.
-  const { free: previousFree, reserved: previousReserved } = (await api.query.system.account(account)).data;
-  const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
-  const setBalanceTx = api.tx.balances.setBalance(account, requestedFree, previousReserved);
+  if (account) {
+    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
+    const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
+    const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
 
-  verbose && log('Increasing Admin Balance..');
-  await registryApi.sendSudoTransaction(setBalanceTx, sudoer);
+    verbose && log('Increasing Admin Balance..');
+    await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
+  }
 
   // Register Domain.
   verbose && log(`Creating auction for "${domain}" domain name..`);
   await auctionsApi.createAuction(domain, DEFAULT_BID);
 
   verbose && log('Force closing auction..');
-  await auctionsApi.sendSudoTransaction(api.tx.registry.forceCloseAuction(domain), sudoer);
+  await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
 
   verbose && log('Claiming Domain name..');
   const domainKey = await client.auctionsApi.claimAuction(domain);
@@ -59,8 +62,16 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   pb.common('google/protobuf/descriptor.proto', {});
   const root = await pb.load(SCHEMA_PATH as string);
+  const meta: RecordMetadata = {
+    created: new Date().getTime().toString(),
+    version: '1.0.0',
+    name: DEFAULT_SCHEMA_NAME,
+    description: 'Base DXOS schema',
+    author: 'DXOS'
+  };
 
-  const hash = await registryApi.addSchema(root);
+  // @ts-ignore - remove after publishing and using the new version of registry API
+  const hash = await registryApi.insertTypeRecord(root, DEFAULT_SCHEMA_NAME, meta);
   await client.registryApi.registerResource(domainKey, DEFAULT_SCHEMA_NAME, hash);
 
   print({ account, domain, schema: hash.toB58String() }, { json });

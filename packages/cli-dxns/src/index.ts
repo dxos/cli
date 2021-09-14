@@ -2,20 +2,24 @@
 // Copyright 2020 DXOS.org
 //
 
+import { ApiPromise } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
+import { KeyringPair } from '@polkadot/keyring/types';
 import { readFileSync } from 'fs';
 import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
-import { IRegistryApi, IAuctionsApi, ApiFactory } from '@dxos/registry-api';
+import { ApiFactory, IAuctionsApi, IRegistryApi, ApiTransactionHandler } from '@dxos/registry-api';
 
 import { DXNSModule } from './modules/dxns';
 
 export interface DXNSClient {
+  apiRaw: ApiPromise,
   keyring: Keyring,
-  keypair: any,
+  keypair?: KeyringPair,
   registryApi: IRegistryApi,
-  auctionsApi: IAuctionsApi
+  auctionsApi: IAuctionsApi,
+  transactionHandler: ApiTransactionHandler
 }
 
 let client: DXNSClient | undefined;
@@ -38,13 +42,17 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
 
     const apiServerUri = config.get('services.dxns.server');
     const registryApi = await ApiFactory.createRegistryApi(apiServerUri, keypair);
-    const { auctionsApi } = await ApiFactory.createAuctionsApi(apiServerUri, keypair);
+    const { auctionsApi, apiPromise } = await ApiFactory.createAuctionsApi(apiServerUri, keypair);
+    // @ts-ignore - remove after publishing and using the new version of registry API
+    const transactionHandler = new ApiTransactionHandler(apiPromise, keypair);
 
     return {
+      apiRaw: apiPromise,
       keyring,
-      keypair: keypair,
+      keypair,
       registryApi,
-      auctionsApi
+      auctionsApi,
+      transactionHandler
     };
   }
 };
@@ -53,8 +61,7 @@ const initDXNSCliState = async (state: any) => {
   const { config, profilePath, profileExists } = state;
 
   if (profilePath && profileExists) {
-    const getDXNSClient = createClientGetter(config, { profilePath, profileExists });
-    state.getDXNSClient = getDXNSClient;
+    state.getDXNSClient = createClientGetter(config, { profilePath, profileExists });
   }
 };
 
