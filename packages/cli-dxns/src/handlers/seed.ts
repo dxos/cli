@@ -20,6 +20,15 @@ const DEFAULT_SCHEMA_NAME = 'schema';
 
 const SCHEMA_PATH = path.join(__dirname, '../dxos.proto');
 
+const TYPES = {
+  kube: '.dxos.KUBE',
+  service: '.dxos.Service',
+  app: '.dxos.App',
+  bot: '.dxos.Bot',
+  botFactory: '.dxos.BotFactory',
+  file: '.dxos.File',
+}
+
 export const seedRegistry = (params: Params) => async (argv: any) => {
   const { getDXNSClient, config } = params;
 
@@ -59,8 +68,6 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   // Register DXOS Schema.
   verbose && log('Registering DXOS schema..');
-
-  pb.common('google/protobuf/descriptor.proto', {});
   const root = await pb.load(SCHEMA_PATH as string);
   const meta: RecordMetadata = {
     created: new Date().getTime().toString(),
@@ -70,8 +77,14 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     author: 'DXOS'
   };
 
-  const hash = await registryApi.insertTypeRecord(root, DEFAULT_SCHEMA_NAME, meta);
-  await client.registryApi.registerResource(domainKey, DEFAULT_SCHEMA_NAME, hash);
+  for(const [type, fqn] of Object.entries(TYPES)) {
+    verbose && log(`Registering type.${type}..`);
 
-  print({ account, domain, schema: hash.toB58String() }, { json });
+    const cid = await client.registryApi.insertTypeRecord(root, fqn, meta)
+    await client.registryApi.registerResource(domainKey, `type.${type}`, cid);
+
+    verbose && log(`${domain}:type.${type} registered at ${cid.toB58String()}`);
+  }
+
+  print({ account, domain }, { json });
 };
