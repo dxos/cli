@@ -36,11 +36,11 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^2.4.11-alpha.0",
-    "@dxos/crypto": "~2.12.14",
-    "@dxos/debug": "~2.12.14",
-    "@dxos/network-manager": "~2.12.14",
-    "@dxos/protocol-plugin-messenger": "~2.12.14",
-    "@dxos/protocol-plugin-presence": "~2.12.14",
+    "@dxos/crypto": "~2.12.19",
+    "@dxos/debug": "~2.12.19",
+    "@dxos/network-manager": "~2.12.19",
+    "@dxos/protocol-plugin-messenger": "~2.12.19",
+    "@dxos/protocol-plugin-presence": "~2.12.19",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^16.2.0"
