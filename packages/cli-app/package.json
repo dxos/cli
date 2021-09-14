@@ -75,6 +75,7 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/registry-api": "^0.3.2",
     "@types/body-parser": "^1.19.1",
     "@types/cli-progress": "^3.9.2",
     "@types/cookie-parser": "^1.4.2",

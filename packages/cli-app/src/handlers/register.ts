@@ -8,8 +8,9 @@ import clean from 'lodash-clean';
 
 import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { CID } from '@dxos/registry-api';
+import { CID, DXN, RegistryRecord, RegistryTypeRecord, Resource } from '@dxos/registry-api';
 import { Registry } from '@wirelineio/registry-client';
+import type { IRegistryApi } from '@dxos/registry-api'
 
 import { loadAppConfig, updateAppConfig } from './config';
 
@@ -85,17 +86,23 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
     // TODO(egorgripasov): Adapter for the new record format. Cleanup.
     const { name: appName, version, author, description, package: pkg, ...rest } = conf;
 
-    const client = await getDXNSClient();
-    const fqn = config.get('services.dxns.schema.fqn.app');
-    const schemaCid = CID.from(schema);
+    const client: { registryApi: IRegistryApi } = await getDXNSClient();
 
-    const data = {
-      attributes: { name: appName, version, author, description },
+    const appType = await client.registryApi.get<RegistryTypeRecord>(DXN.parse('dxos:type.app'));
+    assert(appType)
+    assert(appType.record.kind === 'type')
+
+
+    const cid = await client.registryApi.insertDataRecord({
       hash: CID.from(pkg['/']).value,
       ...rest
-    };
-
-    const cid = await client.registryApi.addRecord(data, schemaCid, fqn);
+    }, appType?.record.cid, {
+      created: new Date().toISOString(),
+      version,
+      author,
+      description,
+      name: appName
+    })
 
     const domainKey = await client.registryApi.resolveDomainName(domain);
     await client.registryApi.registerResource(domainKey, name, cid);
