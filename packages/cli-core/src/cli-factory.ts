@@ -2,12 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
-import { Config } from '@dxos/config';
 import assert from 'assert';
 import fs from 'fs';
 import yaml from 'js-yaml';
 import readPkgUp from 'read-pkg-up';
 import parse from 'yargs-parser';
+
+import { Config } from '@dxos/config';
 
 import { App } from './app';
 import { getConfig, getActiveProfilePath } from './config';
@@ -88,10 +89,9 @@ const getRunnable = (extension: ExtensionInfo) => {
       log(`Profile: ${profilePath}`);
     }
 
-    
     // Load config if profile exists.
     // These defaults are required as during 'dx profile init', there is no config to load, and so no client can be created.
-    let config: Config = profileExists ? (await getConfig(profilePath!)) : { get: () => ({}) } as any;
+    const config: Config = profileExists ? (await getConfig(profilePath!)) : { get: () => ({}) } as any;
 
     const app = new App({ modules, getModules, config, options, version, profilePath, profileExists });
 

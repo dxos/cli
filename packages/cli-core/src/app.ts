@@ -2,7 +2,6 @@
 // Copyright 2020 DXOS.org
 //
 
-import { Config } from '@dxos/config';
 import assert from 'assert';
 import get from 'lodash.get';
 import omit from 'lodash.omit';
@@ -10,6 +9,8 @@ import readline from 'readline';
 import { Arguments } from 'yargs';
 import unparse from 'yargs-unparser';
 import yargs from 'yargs/yargs';
+
+import { Config } from '@dxos/config';
 
 import { CoreOptions, coreOptions, FORWARD_OPTION } from './options';
 import { getLoggers } from './util/log';
