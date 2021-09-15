@@ -6,9 +6,8 @@ import { Argv } from 'yargs';
 
 import { CoreOptions } from '@dxos/cli-core';
 
-import { StateManager } from '../../state-manager';
-import { createCommand, infoCommand, inviteCommand, joinCommand, listCommand, membersCommand, openCommand } from './commands';
 import { CliDataState } from '../../init';
+import { createCommand, infoCommand, inviteCommand, joinCommand, listCommand, membersCommand, openCommand } from './commands';
 
 export interface PartyOptions extends CoreOptions {
   partyKey?: string

@@ -2,13 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
+import assert from 'assert';
 import { Arguments, Argv } from 'yargs';
 
 import { asyncHandler, CoreOptions } from '@dxos/cli-core';
 
 import { CLI_DEFAULT_PERSISTENT, resetStorage, resetStorageForProfile } from '../config';
 import { CliDataState } from '../init';
-import assert from 'assert';
 export interface StorageOptions extends CoreOptions {
   all?: boolean
 }
@@ -34,7 +34,7 @@ export const StorageModule = ({ config, cliState, profilePath }: CliDataState) =
       builder: yargs => storageOptions(yargs),
       handler: asyncHandler(async (argv: Arguments<StorageOptions>) => {
         const { all } = argv;
-        assert(config, 'Missing config.')
+        assert(config, 'Missing config.');
 
         const { interactive } = cliState;
         const persistent = config.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT);

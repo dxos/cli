@@ -2,15 +2,17 @@
 // Copyright 2020 DXOS.org
 //
 
-import { Client, ClientConfig } from '@dxos/client';
-import {Config} from '@dxos/config'
-import { createKeyPair, keyToBuffer } from '@dxos/crypto';
+import assert from 'assert';
 import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
+
+import { CoreState } from '@dxos/cli-core';
+import { Client } from '@dxos/client';
+import { Config } from '@dxos/config';
+import { createKeyPair, keyToBuffer } from '@dxos/crypto';
+
 import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
 import { StateManager } from './state-manager';
-import {CoreState} from '@dxos/cli-core'
-import assert from 'assert';
 
 const _createClient = async (config: any, models: any[], options: any) => {
   const { client = {}, services: { signal: { server }, ice }, cli } = config.values;
@@ -69,10 +71,10 @@ export interface CliDataState extends CoreState {
 let stateManager: StateManager;
 export const initDataCliState = async (state: CoreState): Promise<CliDataState> => {
   const { config, getReadlineInterface, models, profilePath, profileExists } = state;
-  assert(config, 'Missing config.')
+  assert(config, 'Missing config.');
 
   if (!profilePath || !profileExists) {
-    throw new Error('CLI profile does not exist.')
+    throw new Error('CLI profile does not exist.');
   }
 
   const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);
@@ -80,13 +82,13 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
 
   const getClient = await createClientGetter(config, models ?? [], { persistent, storagePath, profileName });
 
-  assert(getReadlineInterface, 'Missing getReadlineinterface.')
+  assert(getReadlineInterface, 'Missing getReadlineinterface.');
   stateManager = new StateManager(getClient, getReadlineInterface, {
     storagePath: persistent ? storagePath : undefined
   });
 
   // The `cli-core` expects the state to be modified.
-  //Issue: https://github.com/dxos/cli/issues/246
+  // Issue: https://github.com/dxos/cli/issues/246
   (state as CliDataState).getClient = getClient;
   (state as CliDataState).stateManager = stateManager;
 
@@ -94,7 +96,7 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
     ...state,
     getClient,
     stateManager
-  }
+  };
 };
 
 export const destroyDataCliState = async () => {

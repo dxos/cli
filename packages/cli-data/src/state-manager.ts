@@ -10,7 +10,7 @@ import { promisify } from 'util';
 
 import { Client } from '@dxos/client';
 import { defaultSecretValidator, generatePasscode, SecretProvider, SecretValidator } from '@dxos/credentials';
-import { keyToBuffer, verify, SIGNATURE_LENGTH, PublicKeyLike, PublicKey } from '@dxos/crypto';
+import { keyToBuffer, PublicKey, SIGNATURE_LENGTH, verify } from '@dxos/crypto';
 import { InvitationDescriptor, InvitationQueryParameters, Party } from '@dxos/echo-db';
 
 const STATE_STORAGE_FILENAME = 'state.json';
@@ -47,7 +47,7 @@ export class StateManager {
 
   async getClient () {
     await this._assureClient();
-    assert(this._client)
+    assert(this._client);
     return this._client;
   }
 
