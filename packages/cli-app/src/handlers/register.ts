@@ -9,8 +9,8 @@ import clean from 'lodash-clean';
 import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { CID, DXN, RegistryRecord, RegistryTypeRecord, Resource } from '@dxos/registry-api';
+import type { IRegistryApi } from '@dxos/registry-api';
 import { Registry } from '@wirelineio/registry-client';
-import type { IRegistryApi } from '@dxos/registry-api'
 
 import { loadAppConfig, updateAppConfig } from './config';
 
@@ -18,6 +18,8 @@ export interface RegisterParams {
   getAppRecord: Function,
   getDXNSClient: Function
 }
+
+export const APP_DXN_NAME = 'dxos:type.app';
 
 export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
   const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns, schema = config.get('services.dxns.schema.cid') } = argv;
@@ -88,10 +90,9 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
 
     const client: { registryApi: IRegistryApi } = await getDXNSClient();
 
-    const appType = await client.registryApi.get<RegistryTypeRecord>(DXN.parse('dxos:type.app'));
-    assert(appType)
-    assert(appType.record.kind === 'type')
-
+    const appType = await client.registryApi.get<RegistryTypeRecord>(DXN.parse(APP_DXN_NAME));
+    assert(appType);
+    assert(appType.record.kind === 'type');
 
     const cid = await client.registryApi.insertDataRecord({
       hash: CID.from(pkg['/']).value,
@@ -102,7 +103,7 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
       author,
       description,
       name: appName
-    })
+    });
 
     const domainKey = await client.registryApi.resolveDomainName(domain);
     await client.registryApi.registerResource(domainKey, name, cid);
