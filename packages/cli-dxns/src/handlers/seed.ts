@@ -20,6 +20,7 @@ const DEFAULT_SCHEMA_NAME = 'schema';
 
 const SCHEMA_PATH = path.join(__dirname, '../dxos.proto');
 
+// TODO(dmaretskyi): Define types as protobuf metadata instead of hardcoding them
 const TYPES = {
   kube: '.dxos.KUBE',
   service: '.dxos.Service',
