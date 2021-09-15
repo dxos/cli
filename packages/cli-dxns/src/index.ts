@@ -39,10 +39,9 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
     const keyring = new Keyring({ type: 'sr25519' });
     await cryptoWaitReady();
 
-    const uri = config.get('services.dxns.uri');
-    const keypair = uri ? keyring.addFromUri(uri) : undefined;
-    // TODO(marcin): fix config substitution.
-    const apiServerUri = config.get('ws://127.0.0.1:9944');
+    const accountUri = config.get('services.dxns.accountUri');
+    const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
+    const apiServerUri = config.get('services.dxns.server');
     const registryApi = await ApiFactory.createRegistryApi(apiServerUri, keypair);
     const { auctionsApi, apiPromise } = await ApiFactory.createAuctionsApi(apiServerUri, keypair);
     const transactionHandler = new ApiTransactionHandler(apiPromise, keypair);
