@@ -9,8 +9,8 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-
 import { RecordMetadata } from '@dxos/registry-api';
+
 import { Params } from './common';
 
 const DEFAULT_BALANCE = '100000000000000000000';
@@ -27,8 +27,8 @@ const TYPES = {
   app: '.dxos.App',
   bot: '.dxos.Bot',
   botFactory: '.dxos.BotFactory',
-  file: '.dxos.File',
-}
+  file: '.dxos.File'
+};
 
 export const seedRegistry = (params: Params) => async (argv: any) => {
   const { getDXNSClient, config } = params;
@@ -39,6 +39,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   assert(dxnsUri, 'Admin Mnemonic should be provided via configuration profile.');
 
   const { mnemonic, json, verbose } = argv;
+  assert(mnemonic, 'Sudo user mnemonic required');
 
   const client = await getDXNSClient();
   const { apiRaw, keypair, keyring, registryApi, auctionsApi, transactionHandler } = client;
@@ -78,10 +79,10 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     author: 'DXOS'
   };
 
-  for(const [type, fqn] of Object.entries(TYPES)) {
+  for (const [type, fqn] of Object.entries(TYPES)) {
     verbose && log(`Registering type.${type}..`);
 
-    const cid = await client.registryApi.insertTypeRecord(root, fqn, meta)
+    const cid = await client.registryApi.insertTypeRecord(root, fqn, meta);
     await client.registryApi.registerResource(domainKey, `type.${type}`, cid);
 
     verbose && log(`${domain}:type.${type} registered at ${cid.toB58String()}`);

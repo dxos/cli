@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "^2.4.11-alpha.0",
-    "@dxos/registry-api": "~0.1.1-alpha.2",
+    "@dxos/registry-api": "~0.3.2",
     "@dxos/debug": "~2.12.19",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@polkadot/api": "4.17.1",
@@ -75,7 +75,6 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/registry-api": "^0.3.2",
     "@types/body-parser": "^1.19.1",
     "@types/cli-progress": "^3.9.2",
     "@types/cookie-parser": "^1.4.2",

@@ -1535,18 +1535,6 @@
     random-access-memory "~3.1.2"
     random-access-web "^2.0.3"
 
-"@dxos/registry-api@~0.1.1-alpha.2":
-  version "0.1.1-alpha.2"
-  resolved "https://registry.npmjs.org/@dxos/registry-api/-/registry-api-0.1.1-alpha.2.tgz#14f550c3381eb04bf8f0e05c3d8d924261ef0505"
-  integrity sha512-RObgZPyDP9078RNOBvyhAm9pGzRVqGZA/OHRgcqELP6B5PLnipthDlgDbTXkSuJxWhrh/ZJdSKVkVUf19aTxUA==
-  dependencies:
-    "@dxos/util" "^2.4.0"
-    "@polkadot/api" "4.17.1"
-    crypto "^1.0.1"
-    fs-extra "^9.1.0"
-    multihashes "^4.0.2"
-    protobufjs "^6.10.2"
-
 "@dxos/registry-api@~0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@dxos/registry-api/-/registry-api-0.3.2.tgz#8eb82a635439c14635bad704cee95c670a58346d"
