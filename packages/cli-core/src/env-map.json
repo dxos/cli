@@ -15,7 +15,7 @@
     "path": "services.dxns.server"
   },
   "WIRE_DXNS_USER_URI": {
-    "path": "services.dxns.uri"
+    "path": "services.dxns.accountUri"
   },
   "WIRE_MACHINE_DO_TOKEN": {
     "path": "services.machine.doAccessToken"
