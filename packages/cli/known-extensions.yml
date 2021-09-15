@@ -30,7 +30,7 @@
     destroyRequired: false
   - 
     moduleName: "@dxos/cli-data"
-    describe: "Party and Device management."
+    describe: "Party management."
     command: 
       - 
         command: "party"
@@ -38,9 +38,6 @@
       - 
         command: "storage"
         describe: "Storage management."
-      - 
-        command: "device"
-        describe: "Device management."
     initRequired: true
     destroyRequired: true
   - 

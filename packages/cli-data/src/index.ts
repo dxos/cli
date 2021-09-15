@@ -16,7 +16,6 @@ import { PartyModule } from './modules/party';
 import { StorageModule } from './modules/storage';
 import { StateManager } from './state-manager';
 import { destroyDataCliState, initDataCliState } from './init';
-import { DeviceModule } from './modules/device';
 
 const CLI_BASE_COMMAND = 'dx';
 
@@ -28,7 +27,7 @@ const CLI_CONFIG = {
 
 module.exports = createCLI({
   options: CLI_CONFIG,
-  modules: [PartyModule, StorageModule, DeviceModule],
+  modules: [PartyModule, StorageModule],
   dir: __dirname,
   main: !module.parent,
   init: initDataCliState,
