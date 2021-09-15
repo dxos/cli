@@ -42,7 +42,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   assert(mnemonic, 'Sudo user mnemonic required');
 
   const client = await getDXNSClient();
-  const { apiRaw, keypair, keyring, registryApi, auctionsApi, transactionHandler } = client;
+  const { apiRaw, keypair, keyring, auctionsApi, transactionHandler } = client;
 
   const account = keypair?.address;
 

@@ -8,7 +8,7 @@ import clean from 'lodash-clean';
 
 import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { CID, DXN, RegistryRecord, RegistryTypeRecord, Resource } from '@dxos/registry-api';
+import { CID, DXN, RegistryTypeRecord } from '@dxos/registry-api';
 import type { IRegistryApi } from '@dxos/registry-api';
 import { Registry } from '@wirelineio/registry-client';
 
@@ -22,7 +22,7 @@ export interface RegisterParams {
 export const APP_DXN_NAME = 'dxos:type.app';
 
 export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
-  const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns, schema = config.get('services.dxns.schema.cid') } = argv;
+  const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns } = argv;
   const wnsConfig = config.get('services.wns');
   const { server, userKey, bondId, chainId } = wnsConfig;
 

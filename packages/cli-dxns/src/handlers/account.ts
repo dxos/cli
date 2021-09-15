@@ -5,6 +5,7 @@
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 
 import { print } from '@dxos/cli-core';
+
 import { Params } from './common';
 
 export const generateAccount = () => async (argv: any) => {
@@ -20,7 +21,7 @@ export const listAccounts = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
   const { json } = argv;
-  const account = client.keypair?.address
+  const account = client.keypair?.address;
 
   print({ account }, { json });
 };
