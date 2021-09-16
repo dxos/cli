@@ -11,7 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
-  "main": "dist/es/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "bin": {
     "wire-echo": "bin/dx-echo.js",
     "dx-echo": "bin/dx-echo.js"

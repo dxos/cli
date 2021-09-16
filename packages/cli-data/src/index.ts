@@ -19,7 +19,7 @@ const CLI_CONFIG = {
   enableInteractive: true
 };
 
-export { CliDataState }
+export { CliDataState };
 
 export default createCLI({
   options: CLI_CONFIG,
@@ -30,5 +30,3 @@ export default createCLI({
   destroy: destroyDataCliState,
   info: readFileSync(path.join(__dirname, './extension.yml')).toString()
 });
-
-
