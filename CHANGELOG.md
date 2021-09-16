@@ -1,5 +1,49 @@
 # Changelog
 
+### [2.4.13](https://www.github.com/dxos/cli/compare/v2.4.12...v2.4.13) (2021-09-16)
+
+
+### Bug Fixes
+
+* rename dxns binary. ([d122fc5](https://www.github.com/dxos/cli/commit/d122fc575c7cbf5712fe8c70a5a0227e2dc8566f))
+
+### [2.4.12](https://www.github.com/dxos/cli/compare/v2.4.11...v2.4.12) (2021-09-16)
+
+
+### Bug Fixes
+
+* get rid of previous DXNS remainings. ([3422436](https://www.github.com/dxos/cli/commit/3422436be8708ddc0c1fd35d2e895db8dc6a9269))
+* update profiles. ([f29ee6e](https://www.github.com/dxos/cli/commit/f29ee6ef731f664eeef376935c4b510853e70c24))
+* updated profiles. ([79df4a6](https://www.github.com/dxos/cli/commit/79df4a66a66e627476e950f840cb759f256f0279))
+
+### [2.4.11](https://www.github.com/dxos/cli/compare/v2.4.10...v2.4.11) (2021-09-14)
+
+
+### Bug Fixes
+
+* remove general dep on cli-data from cli-bot. ([59aea3a](https://www.github.com/dxos/cli/commit/59aea3a1bd331e100de8ee7d7be94bca7bd1a115))
+
+### [2.4.10](https://www.github.com/dxos/cli/compare/v2.4.9...v2.4.10) (2021-09-13)
+
+
+### Bug Fixes
+
+* add time to logs. ([#256](https://www.github.com/dxos/cli/issues/256)) ([b2d04be](https://www.github.com/dxos/cli/commit/b2d04be256b534ec342e089b16ba82ca8509a4a0))
+
+### [2.4.9](https://www.github.com/dxos/cli/compare/v2.4.8...v2.4.9) (2021-09-09)
+
+
+### Bug Fixes
+
+* proper setup for BF container. ([#253](https://www.github.com/dxos/cli/issues/253)) ([b308c69](https://www.github.com/dxos/cli/commit/b308c6923761c2485cdbfba2cc3483f571b94773))
+
+### [2.4.8](https://www.github.com/dxos/cli/compare/v2.4.7...v2.4.8) (2021-09-07)
+
+
+### Bug Fixes
+
+* rm test env file. ([757b5f6](https://www.github.com/dxos/cli/commit/757b5f65c7ef01acd040698b65e353a5d7ba1968))
+
 ### [2.4.7](https://www.github.com/dxos/cli/compare/v2.4.6...v2.4.7) (2021-08-19)
 
 

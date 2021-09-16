@@ -2,19 +2,19 @@
 // Copyright 2020 DXOS.org
 //
 
+import { readFileSync } from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
+import path from 'path';
 
-import { Client } from '@dxos/client';
 import { createCLI } from '@dxos/cli-core';
+import { Client, ClientConfig } from '@dxos/client';
 import { keyToBuffer, createKeyPair } from '@dxos/crypto';
 
+import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
 import { PartyModule } from './modules/party';
 import { StorageModule } from './modules/storage';
 import { StateManager } from './state-manager';
-import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
-
-import info from '../extension.yml';
 
 const CLI_BASE_COMMAND = 'dx';
 
@@ -24,7 +24,7 @@ const CLI_CONFIG = {
   enableInteractive: true
 };
 
-const _createClient = async (config, models, options) => {
+const _createClient = async (config: any, models: any[], options: any) => {
   const { client = {}, services: { signal: { server }, ice }, cli } = config.values;
   const { storagePath, persistent, profileName } = options;
 
@@ -49,12 +49,11 @@ const _createClient = async (config, models, options) => {
 
   await dataClient.initialize();
 
-  if (!dataClient.getProfile()) {
+  if (!dataClient.halo.getProfile()) {
     // TODO(dboreham): Allow seed phrase to be supplied by the user.
-    const { publicKey, secretKey } = createKeyPair();
     const username = `cli:${os.userInfo().username}:${profileName}`;
 
-    await dataClient.createProfile({ publicKey, secretKey, username });
+    await dataClient.halo.createProfile({ ...createKeyPair(), username });
   }
 
   // Register models from other extensions.
@@ -66,17 +65,17 @@ const _createClient = async (config, models, options) => {
   return dataClient;
 };
 
-let client;
-const createClientGetter = (config, models, options) => async () => {
+let client: Client;
+const createClientGetter = (config: ClientConfig, models: any[], options: any) => async () => {
   if (!client) {
     client = await _createClient(config, models, options);
   }
   return client;
 };
 
-let stateManager;
+let stateManager: StateManager;
 
-const initDataCliState = async (state) => {
+const initDataCliState = async (state: any) => {
   const { config, getReadlineInterface, models, profilePath, profileExists } = state;
 
   if (profilePath && profileExists) {
@@ -110,5 +109,5 @@ module.exports = createCLI({
   main: !module.parent,
   init: initDataCliState,
   destroy: destroyDataCliState,
-  info
+  info: readFileSync(path.join(__dirname, './extension.yml')).toString()
 });

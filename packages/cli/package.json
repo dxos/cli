@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli",
-  "version": "2.4.7",
+  "version": "2.4.13-alpha.0",
   "description": "DXOS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli#readme",
   "license": "AGPL-3.0",
@@ -37,9 +37,9 @@
   },
   "dependencies": {
     "@babel/runtime": "7.7.2",
-    "@dxos/cli-core": "^2.4.7",
-    "@dxos/debug": "~2.10.12",
-    "@dxos/random-access-multi-storage": "1.1.0-beta.7",
+    "@dxos/cli-core": "^2.4.13-alpha.0",
+    "@dxos/debug": "~2.12.20",
+    "@dxos/random-access-multi-storage": "~2.12.20",
     "assert": "^2.0.0",
     "find-root": "^1.1.0",
     "fs-extra": "^8.1.0",

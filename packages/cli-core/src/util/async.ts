@@ -12,6 +12,7 @@ export const asyncHandler = (func: Function) => {
   return (argv: any) => {
     try {
       argv._result = func(argv);
+      return argv._result;
     } catch (err) {
       argv._result = Promise.reject(err);
     }

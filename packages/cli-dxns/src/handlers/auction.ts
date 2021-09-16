@@ -45,10 +45,10 @@ export const forceCloseAuction = (params: Params) => async (argv: any) => {
   const { name, mnemonic } = argv;
 
   const client = await getDXNSClient();
-  const { api, keyring, auctionsApi } = client;
+  const { keyring, transactionHandler, apiRaw } = client;
 
   const sudoer = keyring.addFromUri(mnemonic.join(' '));
-  await auctionsApi.sendSudoTransaction(api.tx.registry.forceCloseAuction(name), sudoer);
+  await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(name), sudoer);
 };
 
 export const claimAuction = (params: Params) => async (argv: any) => {

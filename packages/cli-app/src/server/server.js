@@ -3,27 +3,27 @@
 //
 
 import assert from 'assert';
+import bodyParser from 'body-parser';
 import { boolean } from 'boolean';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
 import fs from 'fs';
-import fetch from 'node-fetch';
+import yaml from 'js-yaml';
 import get from 'lodash.get';
+import fetch from 'node-fetch';
 import os from 'os';
 import { join } from 'path';
 import urlJoin from 'url-join';
-import yaml from 'js-yaml';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
 
 import { DXN, CID } from '@dxos/registry-api';
 import { Registry } from '@wirelineio/registry-client';
 
+import { BASE_URL, DEFAULT_PORT } from '../config';
+import { WRN } from '../util/WRN';
 import { WALLET_LOGIN_PATH, LOGIN_PATH, /* OTP_QR_PATH, */ authHandler, /* authSetupHandler, */ authMiddleware, walletAuthHandler } from './auth';
 import { getRegistryApi } from './dxns';
-import { WRN } from '../util/WRN';
-import { BASE_URL, DEFAULT_PORT } from '../config';
 
 const MAX_CACHE_AGE = 120 * 1000;
 
@@ -94,7 +94,7 @@ class Resolver {
     const record = await this._registryApi.get(DXN.parse(id));
 
     if (!record) {
-      log(`Not found in DXNS: ${name}`);
+      log(`Not found in DXNS: ${id}`);
       return;
     }
 

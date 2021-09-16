@@ -97,7 +97,7 @@ export class DigitalOceanProvider implements Provider {
            - echo "//registry.npmjs.org/:_authToken=${this._npmAccessToken}" >> $HOME/.npmrc
            - npm install --global yarn
            - yarn global add @dxos/cli@${cliChannel}
-           - dx profile init --name moon --template-url https://git.io/JBQdM
+           - dx profile init --name moon --template-url https://git.io/JuhES
            - dx profile set moon
            - dx extension install @dxos/cli-kube --version ${cliChannel}
            - dx kube install ${dev ? '--dev' : ''}

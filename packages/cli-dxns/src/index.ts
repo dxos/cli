@@ -2,35 +2,26 @@
 // Copyright 2020 DXOS.org
 //
 
-import { ApiPromise, WsProvider } from '@polkadot/api';
+import { ApiPromise } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
+import { KeyringPair } from '@polkadot/keyring/types';
+import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { readFileSync } from 'fs';
 import path from 'path';
 
-import { sleep } from '@dxos/async';
 import { createCLI } from '@dxos/cli-core';
-import { RegistryApi, AuctionsApi, definitions } from '@dxos/registry-api';
+import { ApiFactory, IAuctionsApi, IRegistryApi, ApiTransactionHandler } from '@dxos/registry-api';
 
 import { DXNSModule } from './modules/dxns';
 
 export interface DXNSClient {
-  api: any,
+  apiRaw: ApiPromise,
   keyring: Keyring,
-  keypair: any,
-  registryApi: RegistryApi,
-  auctionsApi: AuctionsApi
+  keypair?: KeyringPair,
+  registryApi: IRegistryApi,
+  auctionsApi: IAuctionsApi,
+  transactionHandler: ApiTransactionHandler
 }
-
-const getApi = async (config: any) => {
-  // Initialise the provider to connect to the node.
-  const provider = new WsProvider(config.get('services.dxns.server'));
-
-  // Extract all types from definitions - fast and dirty approach, flatted on 'types'.
-  const types = Object.values(definitions).reduce((res, { types }): object => ({ ...res, ...types }), {});
-
-  // Create the API and wait until ready.
-  return await ApiPromise.create({ provider, types });
-};
 
 let client: DXNSClient | undefined;
 const createClientGetter = (config: any, options: any) => async () => {
@@ -43,28 +34,25 @@ const createClientGetter = (config: any, options: any) => async () => {
 const _createClient = async (config: any, options: any): Promise<DXNSClient | undefined> => {
   const { profilePath, profileExists } = options;
   if (profilePath && profileExists) {
-    const api = await getApi(config);
-
-    // The keyring need to be created AFTER api is created.
+    // The keyring need to be created AFTER api is created or we need to wait for WASM init.
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
     const keyring = new Keyring({ type: 'sr25519' });
+    await cryptoWaitReady();
 
-    const uri = config.get('services.dxns.uri');
-    const keypair = uri ? keyring.addFromUri(uri) : undefined;
-
-    const registryApi = new RegistryApi(api, keypair);
-    const auctionsApi = new AuctionsApi(api, keypair);
-
-    // Some operations are failing due to something not being initialized.
-    // TODO(egorgripasov): Figure out why this happens.
-    await sleep(1000);
+    const accountUri = config.get('services.dxns.accountUri');
+    const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
+    const apiServerUri = config.get('services.dxns.server');
+    const registryApi = await ApiFactory.createRegistryApi(apiServerUri, keypair);
+    const { auctionsApi, apiPromise } = await ApiFactory.createAuctionsApi(apiServerUri, keypair);
+    const transactionHandler = new ApiTransactionHandler(apiPromise, keypair);
 
     return {
-      api,
+      apiRaw: apiPromise,
       keyring,
-      keypair: keypair,
+      keypair,
       registryApi,
-      auctionsApi
+      auctionsApi,
+      transactionHandler
     };
   }
 };
@@ -73,14 +61,14 @@ const initDXNSCliState = async (state: any) => {
   const { config, profilePath, profileExists } = state;
 
   if (profilePath && profileExists) {
-    const getDXNSClient = createClientGetter(config, { profilePath, profileExists });
-    state.getDXNSClient = getDXNSClient;
+    state.getDXNSClient = createClientGetter(config, { profilePath, profileExists });
   }
 };
 
 const destroyDXNSCliState = async () => {
   if (client) {
-    await client.api.disconnect();
+    await client.registryApi.disconnect();
+    await client.auctionsApi.disconnect();
   }
 };
 
