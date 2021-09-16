@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-ipfs",
-  "version": "2.4.13-alpha.0",
+  "version": "2.4.13",
   "description": "DXOS IPFS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-ipfs#readme",
   "license": "AGPL-3.0",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@dxos/async": "~2.12.20",
-    "@dxos/cli-core": "^2.4.13-alpha.0",
+    "@dxos/cli-core": "^2.4.13",
     "@dxos/debug": "~2.12.20",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
