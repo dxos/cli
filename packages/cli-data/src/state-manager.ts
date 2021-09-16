@@ -56,6 +56,11 @@ export class StateManager {
     return this._party;
   }
 
+  replaceClient (newClient: Client) {
+    this._client = newClient;
+    this._party = null;
+  }
+
   /**
    * Join Party.
    */
