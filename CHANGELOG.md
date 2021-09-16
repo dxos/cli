@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.4.12](https://www.github.com/dxos/cli/compare/v2.4.11...v2.4.12) (2021-09-16)
+
+
+### Bug Fixes
+
+* get rid of previous DXNS remainings. ([3422436](https://www.github.com/dxos/cli/commit/3422436be8708ddc0c1fd35d2e895db8dc6a9269))
+* update profiles. ([f29ee6e](https://www.github.com/dxos/cli/commit/f29ee6ef731f664eeef376935c4b510853e70c24))
+* updated profiles. ([79df4a6](https://www.github.com/dxos/cli/commit/79df4a66a66e627476e950f840cb759f256f0279))
+
 ### [2.4.11](https://www.github.com/dxos/cli/compare/v2.4.10...v2.4.11) (2021-09-14)
 
 
