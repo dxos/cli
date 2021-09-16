@@ -44,6 +44,7 @@ export const query = (config: any, { getDXNSClient }: QueryParams) => async (arg
       apps = await registry.queryRecords(attributes);
     }
   } else {
+    // TODO(egorgripasov): Broken?
     const client = await getDXNSClient();
     const fqn = config.get('services.dxns.schema.fqn.app');
 

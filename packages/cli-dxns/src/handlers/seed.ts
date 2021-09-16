@@ -35,7 +35,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   const { domain = DEFAULT_DOMAIN } = argv;
 
-  const dxnsUri = config.get('services.dxns.uri');
+  const dxnsUri = config.get('services.dxns.accountUri');
   assert(dxnsUri, 'Admin Mnemonic should be provided via configuration profile.');
 
   const { mnemonic, json, verbose } = argv;
@@ -72,7 +72,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   verbose && log('Registering DXOS schema..');
   const root = await pb.load(SCHEMA_PATH as string);
   const meta: RecordMetadata = {
-    created: new Date().getTime().toString(),
+    created: new Date().toISOString(),
     version: '1.0.0',
     name: DEFAULT_SCHEMA_NAME,
     description: 'Base DXOS schema',
