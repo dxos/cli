@@ -2,28 +2,42 @@
 // Copyright 2020 DXOS.org
 //
 
-import { asyncHandler } from '@dxos/cli-core';
+import { Arguments, Argv } from 'yargs';
+
+import { asyncHandler, CoreOptions } from '@dxos/cli-core';
 
 import { CLI_DEFAULT_PERSISTENT, resetStorage, resetStorageForProfile } from '../config';
 
+interface Params {
+  config: any,
+  cliState: any,
+  profilePath: string
+}
+
+export interface StorageOptions extends CoreOptions {
+  all?: boolean
+}
+
+const storageOptions = (yargs: Argv<CoreOptions>): Argv<StorageOptions> => {
+  return yargs
+    .option('all', { type: 'boolean', default: false });
+};
+
 /**
  * Storage CLI module.
- * @returns {object}
  */
-export const StorageModule = ({ config, cliState, profilePath }) => ({
+export const StorageModule = ({ config, cliState, profilePath }: Params) => ({
   command: ['storage'],
   describe: 'Storage management.',
 
-  builder: yargs => yargs
+  builder: (yargs: Argv<CoreOptions>) => yargs
 
     // Import.
     .command({
       command: ['reset'],
       describe: 'Reset storage for all or current profiles.',
-      builder: yargs => yargs
-        .option('all', { type: 'boolean', default: false }),
-
-      handler: asyncHandler(async (argv) => {
+      builder: yargs => storageOptions(yargs),
+      handler: asyncHandler(async (argv: Arguments<StorageOptions>) => {
         const { all } = argv;
 
         const { interactive } = cliState;

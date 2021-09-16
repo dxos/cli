@@ -8,13 +8,21 @@ import clean from 'lodash-clean';
 
 import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { CID } from '@dxos/registry-api';
+import { CID, DXN, RegistryTypeRecord } from '@dxos/registry-api';
+import type { IRegistryApi } from '@dxos/registry-api';
 import { Registry } from '@wirelineio/registry-client';
 
 import { loadAppConfig, updateAppConfig } from './config';
 
-export const register = (config, { getAppRecord, getDXNSClient }) => async (argv) => {
-  const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns, schema = config.get('services.dxns.schema.cid') } = argv;
+export interface RegisterParams {
+  getAppRecord: Function,
+  getDXNSClient: Function
+}
+
+export const APP_DXN_NAME = 'dxos:type.app';
+
+export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
+  const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns } = argv;
   const wnsConfig = config.get('services.wns');
   const { server, userKey, bondId, chainId } = wnsConfig;
 
@@ -80,17 +88,22 @@ export const register = (config, { getAppRecord, getDXNSClient }) => async (argv
     // TODO(egorgripasov): Adapter for the new record format. Cleanup.
     const { name: appName, version, author, description, package: pkg, ...rest } = conf;
 
-    const client = await getDXNSClient();
-    const fqn = config.get('services.dxns.schema.fqn.app');
-    const schemaCid = CID.from(schema);
+    const client: { registryApi: IRegistryApi } = await getDXNSClient();
 
-    const data = {
-      attributes: { name: appName, version, author, description },
+    const appType = await client.registryApi.get<RegistryTypeRecord>(DXN.parse(APP_DXN_NAME));
+    assert(appType);
+    assert(appType.record.kind === 'type');
+
+    const cid = await client.registryApi.insertDataRecord({
       hash: CID.from(pkg['/']).value,
       ...rest
-    };
-
-    const cid = await client.registryApi.addRecord(data, schemaCid, fqn);
+    }, appType?.record.cid, {
+      created: new Date().toISOString(),
+      version,
+      author,
+      description,
+      name: appName
+    });
 
     const domainKey = await client.registryApi.resolveDomainName(domain);
     await client.registryApi.registerResource(domainKey, name, cid);

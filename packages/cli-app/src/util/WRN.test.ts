@@ -4,14 +4,14 @@
 
 import { WRN } from './WRN';
 
-test('Test valid.', () => {
+test('Valid test.', () => {
   const name = WRN.parse('wrn://dxos:app/console@alpha-1.1');
   expect(String(name)).toBe('wrn://dxos:app/console@alpha-1.1');
   expect(name.authority).toBe('dxos');
   expect(name.path).toBe('app/console@alpha-1.1');
 });
 
-test('Test invalid.', () => {
+test('Invalid test.', () => {
   const invalid = [
     undefined,
     'invalid',
@@ -23,6 +23,6 @@ test('Test invalid.', () => {
   ];
 
   invalid.forEach(str => {
-    expect(() => WRN.parse(str)).toThrow();
+    expect(() => WRN.parse(str as any)).toThrow();
   });
 });

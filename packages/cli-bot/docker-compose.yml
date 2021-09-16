@@ -1,0 +1,8 @@
+version: '3'
+services:
+  bot-factory:
+    image: 'ghcr.io/dxos/bot-factory'
+    container_name: bot-factory
+    command: 'bot-factory'
+    env_file:
+      - bot-factory.env

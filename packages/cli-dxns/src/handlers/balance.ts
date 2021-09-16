@@ -17,7 +17,7 @@ export const getBalance = (params: Params) => async (argv: any) => {
 
   assert(account, 'Account should be provided.');
 
-  const currentFree = (await client.api.query.system.account(account)).data.free;
+  const currentFree = (await client.apiRaw.query.system.account(account)).data.free;
 
   const balance = currentFree.toString();
 
@@ -28,7 +28,7 @@ export const increaseBalance = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const client = await getDXNSClient();
-  const { api, keypair, keyring, registryApi } = client;
+  const { apiRaw, keypair, keyring, transactionHandler } = client;
   const { account = keypair?.address, amount, mnemonic, json } = argv;
 
   assert(account, 'Account should be provided.');
@@ -36,12 +36,12 @@ export const increaseBalance = (params: Params) => async (argv: any) => {
 
   const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
-  const { free: previousFree, reserved: previousReserved } = (await api.query.system.account(account)).data;
+  const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
   const requestedFree = previousFree.add(new BN(amount));
-  const setBalanceTx = api.tx.balances.setBalance(account, requestedFree, previousReserved);
+  const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
 
-  const events = await registryApi.sendSudoTransaction(setBalanceTx, sudoer);
-  const event = events.map((e: any) => e.event).find(api.events.balances.BalanceSet.is);
+  const events = await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
+  const event = events.map((e: any) => e.event).find(apiRaw.events.balances.BalanceSet.is);
   assert(event, 'Balance has not been set.');
 
   const newFree = event.data[1];

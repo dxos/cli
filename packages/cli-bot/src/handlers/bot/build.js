@@ -1,35 +1,14 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
-import { spawnSync } from 'child_process';
-import get from 'lodash.get';
+import path from 'path';
 
-import { BOT_CONFIG_FILENAME } from '@dxos/botkit';
-import { readFile } from '@dxos/cli-core';
-import { log } from '@dxos/debug';
+import { BUILD_PATH, buildBot } from '@dxos/botkit';
 
-const DEFAULT_BUILD = 'yarn build';
+export const build = () => async () => {
+  const botPath = path.join(process.cwd(), '/src/main.js');
+  const buildPath = path.join(process.cwd(), BUILD_PATH, 'node', 'main.js');
 
-export const build = () => async ({ verbose, target }) => {
-  const botConfig = await readFile(BOT_CONFIG_FILENAME);
-  const build = target ? get(botConfig, `build.${target}`, DEFAULT_BUILD) : DEFAULT_BUILD;
-
-  log(`Building for ${target}...`);
-
-  const [command, ...args] = build.split(' ');
-
-  const { status } = spawnSync(command, args, {
-    env: {
-      ...process.env
-    },
-    stdio: verbose && 'inherit'
-  });
-
-  if (status) {
-    log('Build failed.');
-    process.exit(status);
-  }
-
-  log('Build Ok.');
+  await buildBot(botPath, false, buildPath);
 };
