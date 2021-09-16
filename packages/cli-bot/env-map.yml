@@ -19,10 +19,6 @@ DX_IPFS_SERVER:
   path: services.ipfs.server
 DX_DXNS_SERVER:
   path: services.dxns.server
-DX_DXNS_SCHEMA_CID:
-  path: services.dxns.schema.cid
-DX_DXNS_SCHEMA_FQN_BOT:
-  path: services.dxns.schema.fqn.bot
 DX_IPFS_GATEWAY:
   path: services.ipfs.gateway
 DX_BOT_RESET:

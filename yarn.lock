@@ -1183,7 +1183,7 @@
     level-js "^5.0.2"
     memdown "^5.1.0"
 
-"@dxos/codec-protobuf@2.12.20":
+"@dxos/codec-protobuf@2.12.20", "@dxos/codec-protobuf@^2.12.14":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.12.20.tgz#9d56a303ce0a0f12aecbe31a660564f2878ad52f"
   integrity sha512-0Sw16GOIjg3V5hqxMevGequP/f/XWqeNhhAOUhGLyCsVvGOzwqjOBFT0ITcGlAdo9HhRsE0JYtoN+BpaYCbc5w==
@@ -1526,14 +1526,16 @@
     random-access-memory "~3.1.2"
     random-access-web "^2.0.3"
 
-"@dxos/registry-api@~0.1.1-alpha.2":
-  version "0.1.1-alpha.2"
-  resolved "https://registry.npmjs.org/@dxos/registry-api/-/registry-api-0.1.1-alpha.2.tgz#14f550c3381eb04bf8f0e05c3d8d924261ef0505"
-  integrity sha512-RObgZPyDP9078RNOBvyhAm9pGzRVqGZA/OHRgcqELP6B5PLnipthDlgDbTXkSuJxWhrh/ZJdSKVkVUf19aTxUA==
+"@dxos/registry-api@~0.3.2":
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@dxos/registry-api/-/registry-api-0.3.2.tgz#8eb82a635439c14635bad704cee95c670a58346d"
+  integrity sha512-aFTsX2A84VRej8zWDdrl6LrasrBZnS3K/HCxChKHzbamcnJY0XXMJVBwco4+frtWQ0Oaq9HMxv2HzgtNRWYTSg==
   dependencies:
+    "@dxos/codec-protobuf" "^2.12.14"
     "@dxos/util" "^2.4.0"
     "@polkadot/api" "4.17.1"
     crypto "^1.0.1"
+    faker "^5.5.3"
     fs-extra "^9.1.0"
     multihashes "^4.0.2"
     protobufjs "^6.10.2"
@@ -8250,6 +8252,11 @@ extsprintf@^1.2.0:
   resolved "https://registry.npmjs.org/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
+faker@^5.5.3:
+  version "5.5.3"
+  resolved "https://registry.npmjs.org/faker/-/faker-5.5.3.tgz#c57974ee484431b25205c2c8dc09fda861e51e0e"
+  integrity sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==
+
 fast-bitfield@^1.2.2:
   version "1.2.2"
   resolved "https://registry.npmjs.org/fast-bitfield/-/fast-bitfield-1.2.2.tgz#7f08cdb46a6384b887a64127b56aa4d59bc8fa25"
@@ -9600,7 +9607,7 @@ hypercore-default-storage@^1.1.1:
   optionalDependencies:
     fsctl "^1.0.0"
 
-hypercore-protocol@^8.0.0, hypercore-protocol@^8.0.5, "hypercore-protocol@github:dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60":
+hypercore-protocol@^8.0.0, hypercore-protocol@^8.0.5, hypercore-protocol@dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60:
   version "8.0.7"
   resolved "https://codeload.github.com/dxos/hypercore-protocol/tar.gz/05513f9266f8bec4d29b144b72c59257c2d7bd60"
   dependencies:
@@ -11721,7 +11728,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-"jsondown@github:dxos/jsondown#main":
+jsondown@dxos/jsondown#main:
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:
@@ -16036,7 +16043,7 @@ simple-handshake@^3.0.0:
     nanoassert "^2.0.0"
     noise-protocol "^3.0.0"
 
-simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c, "simple-hypercore-protocol@github:dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c":
+simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c:
   version "2.1.1"
   resolved "https://codeload.github.com/dxos/simple-hypercore-protocol/tar.gz/bc23f0747e55954ec0bd94754910c92f88ec561c"
   dependencies:
