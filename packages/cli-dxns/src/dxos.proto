@@ -2,27 +2,10 @@ syntax = "proto3";
 
 package dxos;
 
-import "google/protobuf/descriptor.proto";
-
-message HashOptions {
-  string type = 1;
-}
-
-extend google.protobuf.FieldOptions {
-  HashOptions hash_options = 50000;
-}
-
 message Any {
-  bytes schema = 1 [(hash_options).type = "DXNS_CID"];
+  bytes schema = 1;
   string mesage_fqn = 2;
   bytes payload = 3;
-}
-
-message RecordAttributes {
-  string name = 1;
-  string description = 2;
-  string version = 3;
-  string author = 4;
 }
 
 //
@@ -30,23 +13,20 @@ message RecordAttributes {
 //
 
 message KUBE {
-  RecordAttributes attributes = 1;
   string url = 2;
 
   Any extension = 10;
 }
 
 message Service {
-  RecordAttributes attributes = 1;
   string type = 2;
 
   Any extension = 10;
 }
 
 message App {
-  RecordAttributes attributes = 1;
   string build = 2;
-  bytes hash = 3 [(hash_options).type = "IPFS_CID"];
+  bytes hash = 3;
   string repository = 4;
   string repository_version = 5;
   string license = 6;
@@ -56,8 +36,7 @@ message App {
 }
 
 message Bot {
-  RecordAttributes attributes = 1;
-  bytes hash = 2 [(hash_options).type = "IPFS_CID"];
+  bytes hash = 2;
   string repository = 3;
   string repository_version = 4;
   string license = 5;
@@ -67,7 +46,6 @@ message Bot {
 }
 
 message BotFactory {
-  RecordAttributes attributes = 1;
   string os = 2;
   string arch = 3;
   string topic = 4;
@@ -78,7 +56,7 @@ message BotFactory {
 message File {
   string content_type = 1;
   string file_name = 2;
-  bytes hash = 3 [(hash_options).type = "IPFS_CID"];
+  bytes hash = 3;
 
   Any extension = 10;
 }

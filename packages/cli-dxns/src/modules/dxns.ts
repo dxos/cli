@@ -6,20 +6,22 @@ import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { generateAccount } from '../handlers/account';
+// TODO(marcin): simplify with index.ts
+import { generateAccount, listAccounts } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
 import { getBlocks } from '../handlers/block';
 import { listDomains, getFreeDomain } from '../handlers/domain';
-import { listRecords, getRecords, addRecord } from '../handlers/record';
-import { listResources } from '../handlers/resource';
-import { listSchemas, querySchema, getSchema, addSchema } from '../handlers/schema';
+import { listRecords, getRecord, addDataRecord } from '../handlers/record';
+import { getResource, listResources } from '../handlers/resource';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
+import { listTypes, getType, addType } from '../handlers/types';
+import { DXNSClient } from '../index';
 
 interface Params {
   config: any,
-  getDXNSClient: Function
+  getDXNSClient(): DXNSClient
 }
 
 export const DXNSModule = (params: Params) => {
@@ -29,69 +31,66 @@ export const DXNSModule = (params: Params) => {
     describe: 'DXNS operations.',
     builder: (yargs: Argv) => yargs
       .command({
-        command: ['schema'],
-        describe: 'Schema commands.',
+        command: ['type'],
+        describe: 'Registry types commands.',
         handler: () => {},
         builder: yargs => yargs
           .command({
             command: ['list'],
-            describe: 'List schemas.',
-            handler: asyncHandler(listSchemas({ getDXNSClient }))
+            describe: 'List all known types in the Registry.',
+            handler: asyncHandler(listTypes({ getDXNSClient }))
           })
 
           .command({
-            command: ['query <dxn>'],
-            describe: 'Query schema by dxn.',
+            command: ['get <cid | dxn>'],
+            describe: 'Get type details by its CID or DXN.',
             builder: yargs => yargs
-              .option('dxn', { type: 'string' }),
+              .option('cid', { describe: 'CID of the type', type: 'string' }),
+            // TODO(marcin): support dxn with -dxn switch
+            // .option('dxn', { describe: 'DXN of the type', type: 'string' }),
 
-            handler: asyncHandler(querySchema({ getDXNSClient }))
+            handler: asyncHandler(getType({ getDXNSClient }))
           })
 
           .command({
-            command: ['get <cid>'],
-            describe: 'Get schema by cid.',
+            command: ['add <messageName> <path>'],
+            describe: 'Add a new type to the Registry.',
             builder: yargs => yargs
-              .option('cid', { type: 'string' }),
-
-            handler: asyncHandler(getSchema({ getDXNSClient }))
-          })
-
-          .command({
-            command: ['add <path>'],
-            describe: 'Add new schema.',
-            builder: yargs => yargs
-              .option('name', { describe: 'Name of the record.', type: 'string' })
+              .option('messageName', { required: true, describe: 'The fully qualified name of the proto message (must exist in the proto file).', type: 'string' })
+              .option('path', { required: true, describe: 'Path to the proto file', type: 'string' })
               .option('domain', { describe: 'Domain key for the record.', type: 'string' })
-              .option('path', { type: 'string' }),
+              .option('resourceName', { describe: 'Name of the resource in DXN', type: 'string' })
+              .option('version', { describe: 'Version of the type', type: 'string' })
+              .option('description', { describe: 'Description of the type', type: 'string' })
+              .option('author', { describe: 'Author of the type', type: 'string' }),
 
-            handler: asyncHandler(addSchema({ getDXNSClient }))
+            handler: asyncHandler(addType({ getDXNSClient }))
           })
       })
 
       .command({
         command: ['record'],
-        describe: 'Record commands.',
+        describe: 'Registry records commands.',
         handler: () => {},
         builder: yargs => yargs
           .command({
             command: ['list'],
-            describe: 'List records.',
+            describe: 'List all registered records.',
             handler: asyncHandler(listRecords({ getDXNSClient }))
           })
 
           .command({
-            command: ['get <id>'],
-            describe: 'Get record.',
+            command: ['get <cid>'],
+            describe: 'Get a record by its CID.',
             builder: yargs => yargs
-              .option('id', { type: 'string' }),
+              .option('cid', { type: 'string' }),
 
-            handler: asyncHandler(getRecords({ getDXNSClient }))
+            handler: asyncHandler(getRecord({ getDXNSClient }))
           })
 
           .command({
             command: ['add'],
-            describe: 'Add records',
+            describe: 'Add a new record to the Registry.',
             builder: yargs => yargs
               .option('data', { required: true, describe: 'Data encoded in json.', type: 'string' })
               .option('schema', { required: true, describe: 'Schema cid', type: 'string' })
@@ -99,19 +98,25 @@ export const DXNSModule = (params: Params) => {
               .option('name', { describe: 'Register a resource name for this record.', type: 'string' })
               .option('domain', { describe: 'Specify a domain key for the record.', type: 'string' }),
 
-            handler: asyncHandler(addRecord({ getDXNSClient }))
+            handler: asyncHandler(addDataRecord({ getDXNSClient }))
           })
       })
 
       .command({
         command: ['resource'],
-        describe: 'Resource commands.',
+        describe: 'Registry resources commands.',
         handler: () => {},
         builder: yargs => yargs
           .command({
             command: ['list'],
-            describe: 'List resources.',
+            describe: 'List all known resources in the Registry.',
             handler: asyncHandler(listResources({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['get <dxn>'],
+            describe: 'Get a resource by its DXN.',
+            handler: asyncHandler(getResource({ getDXNSClient }))
           })
       })
 
@@ -230,7 +235,7 @@ export const DXNSModule = (params: Params) => {
 
           .command({
             command: ['list'],
-            describe: 'Claim an auction, if the auction is closed and you are the winner.',
+            describe: 'List auctions.',
 
             handler: asyncHandler(listAuctions({ getDXNSClient }))
           })
@@ -250,6 +255,11 @@ export const DXNSModule = (params: Params) => {
         describe: 'Account commands.',
         handler: () => {},
         builder: yargs => yargs
+          .command({
+            command: ['list'],
+            describe: 'List accounts.',
+            handler: asyncHandler(listAccounts({ getDXNSClient, config }))
+          })
           .command({
             command: ['generate'],
             describe: 'Generate new account.',

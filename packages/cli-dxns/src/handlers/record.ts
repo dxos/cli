@@ -3,20 +3,11 @@
 //
 
 import { print } from '@dxos/cli-core';
-import { DXN, DomainKey, RegistryRecord, CID } from '@dxos/registry-api';
+import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-api';
 
-import { Params } from './common';
+import { displayRecord, Params } from './common';
 
-export const displayRecord = (record: RegistryRecord) => {
-  return ({
-    cid: record.cid.toString(),
-    schema: record.schema.toString(),
-    messageFqn: record.messageFqn,
-    size: record.size,
-    data: record.data
-  });
-};
-
+// TODO(marcin): Add query support.
 export const listRecords = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
@@ -28,21 +19,22 @@ export const listRecords = (params: Params) => async (argv: any) => {
   print(output.map(displayRecord), { json });
 };
 
-export const getRecords = (params: Params) => async (argv: any) => {
+export const getRecord = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
-
-  const { id, json } = argv;
+  const { cid, json } = argv;
+  const parsedCID = CID.from(cid);
 
   const client = await getDXNSClient();
-  const record = await client.registryApi.get(DXN.parse(id as string));
+  const record = await client.registryApi.getRecord(parsedCID);
 
   record && print(displayRecord(record), { json });
 };
 
-export const addRecord = (params: Params) => async (argv: any) => {
+export const addDataRecord = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
-  const { json, name, domain } = argv;
+  const { domain, name, version, description, author, json, typeCid } = argv;
+
   if (!!name !== !!domain) {
     throw new Error('Must specify both name and domain or neither.');
   }
@@ -50,11 +42,17 @@ export const addRecord = (params: Params) => async (argv: any) => {
   const client = await getDXNSClient();
 
   const data = JSON.parse(argv.data as string);
-  const fqn = argv.fqn as string;
   const resourceName = name as string | undefined;
+  const meta: RecordMetadata = {
+    created: new Date().getTime().toString(),
+    version,
+    name,
+    description,
+    author
+  };
+  const schemaCid = CID.from(typeCid as string);
 
-  const schemaCid = CID.from(argv.schema as string);
-  const cid = await client.registryApi.addRecord(data, schemaCid, fqn);
+  const cid = await client.registryApi.insertDataRecord(data, schemaCid, meta);
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
     await client.registryApi.registerResource(domainKey, resourceName, cid);

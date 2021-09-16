@@ -13,7 +13,7 @@ export const getBlocks = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
 
-  await client.api.rpc.chain.subscribeNewHeads((header: any) => {
+  await client.apiRaw.rpc.chain.subscribeNewHeads((header: any) => {
     print({ block: header.number }, { json });
   });
 };

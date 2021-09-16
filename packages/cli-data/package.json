@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-data",
-  "version": "2.4.11-alpha.0",
+  "version": "2.4.12-alpha.0",
   "description": "DXOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
   "license": "AGPL-3.0",
@@ -36,7 +36,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@dxos/cli-core": "^2.4.11-alpha.0",
+    "@dxos/cli-core": "^2.4.12-alpha.0",
     "@dxos/client": "~2.12.20",
     "@dxos/credentials": "~2.12.20",
     "@dxos/crypto": "~2.12.20",

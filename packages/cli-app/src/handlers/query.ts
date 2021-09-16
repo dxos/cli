@@ -44,13 +44,15 @@ export const query = (config: any, { getDXNSClient }: QueryParams) => async (arg
       apps = await registry.queryRecords(attributes);
     }
   } else {
-    const client = await getDXNSClient();
-    const fqn = config.get('services.dxns.schema.fqn.app');
+    assert(getDXNSClient);
+    // TODO(egorgripasov): Revive.
+    // const client = await getDXNSClient();
+    // const fqn = config.get('services.dxns.schema.fqn.app');
 
-    const allRecords = await client.registryApi.getRecords();
+    // const allRecords = await client.registryApi.getRecords();
 
-    // TODO(egorgripasov): Don't do it on client side.
-    apps = allRecords.filter(({ messageFqn }: any) => messageFqn === fqn).map(displayApps);
+    // // TODO(egorgripasov): Don't do it on client side.
+    // apps = allRecords.filter(({ messageFqn }: any) => messageFqn === fqn).map(displayApps);
   }
 
   if (apps && apps.length) {
