@@ -2,38 +2,37 @@
 // Copyright 2020 DXOS.org
 //
 
-// import assert from 'assert';
-// import path from 'path';
+import { Argv, Arguments } from 'yargs';
 
-import { asyncHandler, print } from '@dxos/cli-core';
-// import { log } from '@dxos/debug';
-
+import { asyncHandler, CoreOptions, print } from '@dxos/cli-core';
+import type { CliDataState } from '@dxos/cli-data';
+import type { Item } from '@dxos/echo-db';
 import { ObjectModel } from '@dxos/object-model';
-// import { humanize } from '@dxos/crypto';
 
 const DEFAULT_ITEM_TYPE = 'wrn://dxos.org/item/general';
 
-const displayItem = ({ id, type, parent, model }) => ({
+const displayItem = ({ id, type, parent, model }: any) => ({
   id,
   type,
   parent,
   props: JSON.stringify(model.toObject())
 });
 
-export const EchoModule = ({ stateManager }) => ({
+export const EchoModule = ({ stateManager }: CliDataState) => ({
   command: ['echo'],
   describe: 'ECHO database.',
-  builder: yargs => yargs
+  builder: (yargs: Argv<CoreOptions>) => yargs
 
     .command({
       command: ['list'],
       describe: 'List echo items.',
       builder: yargs => yargs,
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: Arguments<CoreOptions>) => {
         const { json } = argv;
 
-        const items = (await stateManager.getParty()).database.queryItems().value;
+        const party = await stateManager.getParty();
+        const items: Item<any>[] = party?.database.select(items => items.items).getValue() ?? [];
         const result = (items || []).map(item => {
           const modelName = Object.getPrototypeOf(item.model).constructor.name;
           return {
@@ -52,15 +51,16 @@ export const EchoModule = ({ stateManager }) => ({
     .command({
       command: ['create'],
       describe: 'Create echo items.',
-      builder: yargs => yargs
+      builder: (yargs: any) => yargs
         .option('type', { default: DEFAULT_ITEM_TYPE })
         .option('parent')
         .option('props', { type: 'json' }),
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { type, parent, props, json } = argv;
 
-        const item = await (await stateManager.getParty()).database.createItem({
+        const party = await stateManager.getParty();
+        const item = await party?.database.createItem({
           model: ObjectModel,
           type,
           parent,
@@ -74,17 +74,18 @@ export const EchoModule = ({ stateManager }) => ({
     .command({
       command: ['update'],
       describe: 'Update echo items.',
-      builder: yargs => yargs
+      builder: (yargs: any) => yargs
         .option('itemId')
         .option('props', { type: 'json' }),
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { props, itemId, json } = argv;
 
-        const item = await (await stateManager.getParty()).database.getItem(itemId);
+        const party = await stateManager.getParty();
+        const item = await party?.database.getItem(itemId);
         // eslint-disable-next-line
         for (const key in props) {
-          await item.model.setProperty(key, props[key]);
+          await item?.model.setProperty(key, props[key]);
         }
 
         print(displayItem(item), { json });
@@ -94,14 +95,15 @@ export const EchoModule = ({ stateManager }) => ({
     .command({
       command: ['delete [itemId]'],
       describe: 'Delete echo items.',
-      builder: yargs => yargs
+      builder: (yargs: any) => yargs
         .option('itemId'),
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { itemId, json } = argv;
 
-        const item = await (await stateManager.getParty()).database.getItem(itemId);
-        await item.model.setProperty('deleted', true);
+        const party = await stateManager.getParty();
+        const item = await party?.database.getItem(itemId);
+        await item?.model.setProperty('deleted', true);
 
         print(displayItem(item), { json });
       })
@@ -110,14 +112,15 @@ export const EchoModule = ({ stateManager }) => ({
     .command({
       command: ['restore [itemId]'],
       describe: 'Restore echo items.',
-      builder: yargs => yargs
+      builder: (yargs: any) => yargs
         .option('itemId'),
 
-      handler: asyncHandler(async (argv) => {
+      handler: asyncHandler(async (argv: any) => {
         const { itemId, json } = argv;
 
-        const item = await (await stateManager.getParty()).database.getItem(itemId);
-        await item.model.setProperty('deleted', false);
+        const party = await stateManager.getParty();
+        const item = await party?.database.getItem(itemId);
+        await item?.model.setProperty('deleted', false);
 
         print(displayItem(item), { json });
       })

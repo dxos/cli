@@ -7,7 +7,7 @@ import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
 
-import { destroyDataCliState, initDataCliState } from './init';
+import { destroyDataCliState, initDataCliState, CliDataState } from './init';
 import { PartyModule } from './modules/party';
 import { StorageModule } from './modules/storage';
 
@@ -19,7 +19,9 @@ const CLI_CONFIG = {
   enableInteractive: true
 };
 
-module.exports = createCLI({
+export { CliDataState }
+
+export default createCLI({
   options: CLI_CONFIG,
   modules: [PartyModule, StorageModule],
   dir: __dirname,
@@ -28,3 +30,5 @@ module.exports = createCLI({
   destroy: destroyDataCliState,
   info: readFileSync(path.join(__dirname, './extension.yml')).toString()
 });
+
+

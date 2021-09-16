@@ -996,7 +996,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.2", "@babel/runtime@^7.14.6", "@babel/runtime@^7.15.3", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.2", "@babel/runtime@^7.14.6", "@babel/runtime@^7.15.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
   version "7.15.4"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.15.4.tgz#fd17d16bfdf878e6dd02d19753a39fa8a8d9c84a"
   integrity sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw==
@@ -1047,6 +1047,19 @@
   dependencies:
     exec-sh "^0.3.2"
     minimist "^1.2.0"
+
+"@dxos/async@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/async/-/async-2.10.17.tgz#86e4cb656ca1425e9961cd4986936ccce9fa1376"
+  integrity sha512-7YfH2L6+nVrW/NbeWnBbkHZPkLSpW3tB0nBWTYEGWyf5BhoT26xFe2PF1L5vzEMiVJ9WtuDhcpMrWcTKtvmunQ==
+  dependencies:
+    "@dxos/debug" "2.10.17"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    lodash.merge "^4.6.2"
 
 "@dxos/async@2.12.20", "@dxos/async@~2.12.20":
   version "2.12.20"
@@ -1111,6 +1124,17 @@
     tar "^6.0.5"
     tree-kill "^1.2.2"
 
+"@dxos/broadcast@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/broadcast/-/broadcast-2.10.17.tgz#8675a14d3d9fda84bc5184d28fb68f398ce141a6"
+  integrity sha512-pROuvYiemTyk/EPtYEM3tD3fIPFRKU3kNAxmQkKsZ4oZ3WJze3C27k5qHmd44yT5bmxtzBfSYyAn31oNSlYb+Q==
+  dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    debug "^4.1.1"
+    tiny-lru "^7.0.6"
+
 "@dxos/broadcast@2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/broadcast/-/broadcast-2.12.20.tgz#fb5607b9e6d5adb4b532926b1887b791a049b411"
@@ -1122,7 +1146,7 @@
     debug "^4.1.1"
     tiny-lru "^7.0.6"
 
-"@dxos/cli-core@^2.0.29-alpha.0":
+"@dxos/cli-core@^2.0.29-alpha.0", "@dxos/cli-core@^2.4.7":
   version "2.4.7"
   resolved "https://registry.npmjs.org/@dxos/cli-core/-/cli-core-2.4.7.tgz#ff6c0ae5e9a8dff949500993e37a8905fa49e1e3"
   integrity sha512-/3oHW3SNTxZ3rn+UEgT8L83o8Frj71flBi8j8+/l45SVA4caBLl1AevDHT7Vtvhz6e8R4Hpz7Oz7ae7a97O4zg==
@@ -1158,6 +1182,28 @@
     yargs-parser "^19.0.4"
     yargs-unparser "^1.6.4"
 
+"@dxos/cli-data@^2.4.7":
+  version "2.4.7"
+  resolved "https://registry.npmjs.org/@dxos/cli-data/-/cli-data-2.4.7.tgz#50c273b7d5a7ce3e0c72a10676df89fcba2332f7"
+  integrity sha512-02pdeElzrwYmKG1CJnF0ebay2Ut+1ITbIWQJeKbFGyRY6cJ6X1MmdxzGT7W89r8BGp1wXJzxKY3gRzzmEw0E1Q==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@dxos/cli-core" "^2.4.7"
+    "@dxos/client" "~2.10.12"
+    "@dxos/credentials" "~2.10.12"
+    "@dxos/crypto" "~2.10.12"
+    "@dxos/debug" "~2.10.12"
+    "@dxos/echo-db" "~2.10.12"
+    "@dxos/random-access-multi-storage" "1.1.0-beta.7"
+    assert "^2.0.0"
+    fs-extra "^8.1.0"
+    js-yaml "^3.13.1"
+    lockfile "^1.0.4"
+    lodash.defaultsdeep "^4.6.1"
+    query-string "^6.12.1"
+    random-access-memory "^3.1.1"
+    yargs "^16.2.0"
+
 "@dxos/client@2.12.20", "@dxos/client@~2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/client/-/client-2.12.20.tgz#4d6f4ed06ca8d0299af8c5855812c57ca01b4918"
@@ -1182,6 +1228,64 @@
     jsondown dxos/jsondown#main
     level-js "^5.0.2"
     memdown "^5.1.0"
+
+"@dxos/client@~2.10.12":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/client/-/client-2.10.17.tgz#8a39b7bf64bfb0bddbc7687103d7e366e06af705"
+  integrity sha512-22pscjdCTHZRQuIPT0Af882EpugKkqO16eHLXzsZ5ubBgj0o/icICPXKabdSIaiiUEZFnXzi1QX7toWog3iDRQ==
+  dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/credentials" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/debug" "2.10.17"
+    "@dxos/echo-db" "2.10.17"
+    "@dxos/echo-protocol" "2.10.17"
+    "@dxos/feed-store" "2.10.17"
+    "@dxos/metrics" "~1.0.0-beta.9"
+    "@dxos/model-factory" "2.10.17"
+    "@dxos/network-manager" "2.10.17"
+    "@dxos/object-model" "2.10.17"
+    "@dxos/protocol" "2.10.17"
+    "@dxos/protocol-plugin-replicator" "2.10.17"
+    "@dxos/registry-client" "~1.1.1"
+    "@dxos/util" "2.10.17"
+    "@geut/discovery-swarm-webrtc" "^4.0.2"
+    "@wirelineio/registry-client" "~1.1.0-beta.3"
+    abstract-leveldown "~7.0.0"
+    assert "^2.0.0"
+    buffer-json-encoding "^1.0.2"
+    canonicalize "^1.0.1"
+    debug "^4.1.1"
+    del "^5.1.0"
+    end-of-stream "^1.4.1"
+    hypertrie "^3.8.0"
+    jsondown dxos/jsondown#main
+    level-js "^5.0.2"
+    lodash.debounce "^4.0.8"
+    lodash.defaults "^4.2.0"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.pickby "^4.6.0"
+    lodash.set "^4.3.2"
+    lodash.unset "^4.5.2"
+    memdown "^5.1.0"
+    multi-read-stream "^2.0.0"
+    p-limit "^3.1.0"
+    pify "~5.0.0"
+    pump "^3.0.0"
+    pumpify "^2.0.1"
+    queue-microtask "^1.1.2"
+    through2 "^3.0.1"
+    wrtc "^0.4.6"
+
+"@dxos/codec-protobuf@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.10.17.tgz#c2f75b22673844f090273fa49849e295acfdd1db"
+  integrity sha512-wcmivR7XMGSxl3cG0u1+QBAqyQN1VGfahxvyYI0Pr5mdm5XrEI84T785L3cEscTVXTuXwlmhFuGmmQ03ucQiow==
+  dependencies:
+    assert "^2.0.0"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
 
 "@dxos/codec-protobuf@2.12.20", "@dxos/codec-protobuf@^2.12.14":
   version "2.12.20"
@@ -1221,6 +1325,47 @@
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
 
+"@dxos/credentials@2.10.17", "@dxos/credentials@~2.10.12":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/credentials/-/credentials-2.10.17.tgz#8fd910dfea5e3172766fcc687d2e688588365f2c"
+  integrity sha512-VEzJ48SbdAvAd5GVeuKgy8kmvcXuHCSMEsVwtPU03tnAbTz+jgUP+Le/LgA/ffFUMA0tVpT+B0ATTgoCm2v3jw==
+  dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/debug" "2.10.17"
+    "@dxos/feed-store" "2.10.17"
+    "@dxos/protocol" "2.10.17"
+    "@dxos/util" "2.10.17"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/pify" "^3.0.2"
+    "@types/pump" "^1.1.0"
+    bip39 "^3.0.2"
+    buffer-json-encoding "^1.0.2"
+    crypto-js "^3.1.9-1"
+    debug "^4.1.1"
+    encoding-down "^6.3.0"
+    end-of-stream "^1.4.1"
+    hypertrie "^3.8.0"
+    json-stable-stringify "^1.0.1"
+    leveldown "^5.4.1"
+    levelup "^4.3.2"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.isobject "^3.0.2"
+    lodash.isplainobject "^4.0.6"
+    lodash.mapvalues "^4.6.0"
+    lodash.matches "^4.6.0"
+    memdown "^5.1.0"
+    moment "^2.24.0"
+    performance-now "^2.1.0"
+    pump "^3.0.0"
+    queue-microtask "^1.1.2"
+    random-access-memory "~3.1.2"
+    stream-to-array "^2.3.0"
+    uuid "^3.3.2"
+
 "@dxos/credentials@2.12.20", "@dxos/credentials@~2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/credentials/-/credentials-2.12.20.tgz#317139b422787a1654743002626f4651a04c3397"
@@ -1251,6 +1396,15 @@
     pump "^3.0.0"
     stream-to-array "^2.3.0"
 
+"@dxos/crypto@2.10.17", "@dxos/crypto@~2.10.12":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.10.17.tgz#d13946034b6a7a9eabfdfe0d8377d0a99e34d143"
+  integrity sha512-ipAJLKQkaNl6qW1PXcQlGCh3fjQ408Su4Jm9yfeL7BbowB00LhEXcHPo/7h9zMmaHAvmVxvek9qdL0s9qGtyIg==
+  dependencies:
+    crypto-js "^3.1.9-1"
+    humanhash "^1.0.4"
+    hypercore-crypto "^1.0.0"
+
 "@dxos/crypto@2.12.14":
   version "2.12.14"
   resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.12.14.tgz#caa64eeb7eb6d21c8c14997cf7af27aa3640c36b"
@@ -1270,14 +1424,13 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
-"@dxos/crypto@~2.10.12":
+"@dxos/debug@2.10.17", "@dxos/debug@~2.10.12":
   version "2.10.17"
-  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.10.17.tgz#d13946034b6a7a9eabfdfe0d8377d0a99e34d143"
-  integrity sha512-ipAJLKQkaNl6qW1PXcQlGCh3fjQ408Su4Jm9yfeL7BbowB00LhEXcHPo/7h9zMmaHAvmVxvek9qdL0s9qGtyIg==
+  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.10.17.tgz#f27280314ab04a90f6345d852fddebadb5036a40"
+  integrity sha512-gIy+KNwtW1qYBsaFxii7TK2Yug+ol87SC3xV981Kch9IBVIne91NPUxO/oZniXtlAvqW6D4Ch6/9HlPRlyeigg==
   dependencies:
-    crypto-js "^3.1.9-1"
-    humanhash "^1.0.4"
-    hypercore-crypto "^1.0.0"
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
 
 "@dxos/debug@2.12.14":
   version "2.12.14"
@@ -1295,15 +1448,41 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/debug@~2.10.12":
+"@dxos/echo-db@2.10.17", "@dxos/echo-db@~2.10.12":
   version "2.10.17"
-  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.10.17.tgz#f27280314ab04a90f6345d852fddebadb5036a40"
-  integrity sha512-gIy+KNwtW1qYBsaFxii7TK2Yug+ol87SC3xV981Kch9IBVIne91NPUxO/oZniXtlAvqW6D4Ch6/9HlPRlyeigg==
+  resolved "https://registry.npmjs.org/@dxos/echo-db/-/echo-db-2.10.17.tgz#e9b7bf8914431144eae3703e0c5dd53d65a7b81d"
+  integrity sha512-t6I756nQlYIiCjSKKjLWq503XiNlIn8OmiwNJOOjXSHNUZE1PXahLCegON4GM2A3Xnftw6n9K4L443Lj33MFcg==
   dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/credentials" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/debug" "2.10.17"
+    "@dxos/echo-protocol" "2.10.17"
+    "@dxos/feed-store" "2.10.17"
+    "@dxos/model-factory" "2.10.17"
+    "@dxos/network-manager" "2.10.17"
+    "@dxos/object-model" "2.10.17"
+    "@dxos/protocol" "2.10.17"
+    "@dxos/protocol-plugin-presence" "2.10.17"
+    "@dxos/protocol-plugin-replicator" "2.10.17"
+    "@dxos/random-access-multi-storage" "2.10.17"
+    "@dxos/util" "2.10.17"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/json-stable-stringify" "^1.0.32"
+    "@types/lodash" "^4.14.159"
     "@types/node" "^14.0.9"
     debug "^4.1.1"
+    hypercore "^9.10.0"
+    js-data-structs "^1.1.2"
+    json-stable-stringify "^1.0.1"
+    lodash.merge "^4.6.2"
+    pify "~5.0.0"
+    protobufjs "^6.9.0"
+    random-access-memory "~3.1.2"
 
-"@dxos/echo-db@2.12.20", "@dxos/echo-db@~2.12.20":
+"@dxos/echo-db@2.12.20", "@dxos/echo-db@^2.12.20", "@dxos/echo-db@~2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/echo-db/-/echo-db-2.12.20.tgz#7730bccf68004a043ac286cbd43e822851d755dc"
   integrity sha512-CyfUy8d1oBzpxgESpD6jSz97vr1/wmTurYbG+IGrAxjkCRuQjJlF9U/PXzakoT/9PAEGon0IJ6SgGkEfRoJkOg==
@@ -1332,6 +1511,31 @@
     hypertrie "5.1.2"
     json-stable-stringify "^1.0.1"
     pify "~5.0.0"
+
+"@dxos/echo-protocol@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/echo-protocol/-/echo-protocol-2.10.17.tgz#1de77a758b87dcdcbb4d5c03176eae908f7a5ed2"
+  integrity sha512-1mEZcYFrCk5Pu6f6MSP//if5MLJFVy1bhvsABFUFlnyGJ10BwYBbO3GX1pMpZne+8FyNeeL42JPP7NIUMypiRw==
+  dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/credentials" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/feed-store" "2.10.17"
+    "@dxos/util" "2.10.17"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/readable-stream" "^2.3.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^9.10.0"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    readable-stream "^3.6.0"
 
 "@dxos/echo-protocol@2.12.20":
   version "2.12.20"
@@ -1380,6 +1584,30 @@
     eslint-plugin-promise "^5.1.0"
     eslint-plugin-standard "^5.0.0"
 
+"@dxos/feed-store@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/feed-store/-/feed-store-2.10.17.tgz#caf825466f7ca228c3d5297c70c3f5c83223a34f"
+  integrity sha512-stIB1TxCDw2t8IZJJaC2BDvxYVT5OqSEEmA4M1n2cljsC0D/xkUc6UDXpCmHXkFmh94IDq+LXpc40IFIZN84Jg==
+  dependencies:
+    buffer-json-encoding "^1.0.2"
+    debug "^4.1.1"
+    end-of-stream "^1.4.1"
+    from2 "^2.3.0"
+    hypercore "^9.10.0"
+    hypercore-crypto "^1.0.0"
+    hypertrie "^3.8.0"
+    multi-read-stream "^2.0.0"
+    mutexify "^1.2.0"
+    nanoresource-promise "^2.0.0"
+    p-event "^4.2.0"
+    p-timeout "^3.2.0"
+    pify "~5.0.0"
+    pump "^3.0.0"
+    random-access-file "^2.1.0"
+    sodium-universal "~3.0.4"
+    source-map-support "^0.5.12"
+    through2 "^3.0.1"
+
 "@dxos/feed-store@2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/feed-store/-/feed-store-2.12.20.tgz#0355f145f1a2e3bcd231a4df636fd9d917270594"
@@ -1396,6 +1624,43 @@
     pump "^3.0.0"
     through2 "^3.0.1"
 
+"@dxos/metrics@~1.0.0-beta.9":
+  version "1.0.0-beta.9"
+  resolved "https://registry.npmjs.org/@dxos/metrics/-/metrics-1.0.0-beta.9.tgz#1ed14a0c2b9890a71ba4f1091b80d9cac9c6d080"
+  integrity sha512-ZVLAYJHPKgjJFh3pn52MC90MhkUGnbADFtFT5bQwondI5c5Dv9TVelfL5PoJ/WN5jPNRzxxXCa/tMdwjI2b5xw==
+  dependencies:
+    "@babel/runtime" "^7.8.7"
+    debug "^4.1.1"
+    lodash.filter "^4.6.0"
+    lodash.get "^4.4.2"
+    lodash.matches "^4.6.0"
+    lodash.set "^4.3.2"
+    lodash.unset "^4.5.2"
+
+"@dxos/model-factory@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/model-factory/-/model-factory-2.10.17.tgz#b19a5d17a6e281924a679d5d54fea5fe347a3c56"
+  integrity sha512-QJnaERQ0iorvmjug+tgxbffyyfQntwsofpF10inm30jZjZnU7Xmu4UNEuViLwZ1HibKJPIjhWulIKlgQlnvyXQ==
+  dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/debug" "2.10.17"
+    "@dxos/echo-protocol" "2.10.17"
+    "@dxos/feed-store" "2.10.17"
+    "@dxos/util" "2.10.17"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^9.10.0"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+
 "@dxos/model-factory@2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/model-factory/-/model-factory-2.12.20.tgz#0e71d2eccd5849784cf6277c42783dd54a7e02f5"
@@ -1409,6 +1674,29 @@
     "@types/debug" "^4.1.1"
     "@types/node" "^14.0.9"
     debug "^4.1.1"
+
+"@dxos/network-manager@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/network-manager/-/network-manager-2.10.17.tgz#d532fbf3977f6c687743465de2785df3c8b24b0e"
+  integrity sha512-j583oPcfsPTdReAAw5jk7Ua+r3peK5r4E4E82IF1mzz49685euFBFG6oBICc0o56kiCotHNBNlPaSx1IfzJuMg==
+  dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/debug" "2.10.17"
+    "@dxos/metrics" "~1.0.0-beta.9"
+    "@dxos/protocol" "2.10.17"
+    "@dxos/protocol-plugin-presence" "2.10.17"
+    "@dxos/util" "2.10.17"
+    "@types/simple-peer" "^9.6.1"
+    "@types/ws" "^7.4.0"
+    assert "^2.0.0"
+    debug "^4.1.1"
+    isomorphic-ws "^4.0.1"
+    nanomessage-rpc "^3.0.0"
+    simple-peer "^9.9.3"
+    wrtc "^0.4.6"
+    ws "^7.4.4"
+    xor-distance "^2.0.0"
 
 "@dxos/network-manager@2.12.20", "@dxos/network-manager@~2.12.20":
   version "2.12.20"
@@ -1431,6 +1719,31 @@
     wrtc "^0.4.7"
     ws "^7.4.4"
     xor-distance "^2.0.0"
+
+"@dxos/object-model@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/object-model/-/object-model-2.10.17.tgz#3ee98fa329d780ad3e8ced288e7d14e6d887ce17"
+  integrity sha512-AxduB8qi7kgQVhvKfKm9Hng6VdlPXG9VjhnQs5wKwqOEADcHXS+pGGuc50S5qtJ+73RP9TkVyuAbHKHEJ2G2lQ==
+  dependencies:
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/echo-protocol" "2.10.17"
+    "@dxos/feed-store" "2.10.17"
+    "@dxos/model-factory" "2.10.17"
+    "@dxos/util" "2.10.17"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^9.10.0"
+    js-data-structs "^1.1.2"
+    lodash "4.17.21"
+    lodash.merge "^4.6.2"
+    minisearch "^3.0.2"
+    protobufjs "^6.9.0"
 
 "@dxos/object-model@2.12.20", "@dxos/object-model@~2.12.20":
   version "2.12.20"
@@ -1469,6 +1782,24 @@
     "@dxos/crypto" "2.12.20"
     "@dxos/protocol" "2.12.20"
 
+"@dxos/protocol-plugin-presence@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/protocol-plugin-presence/-/protocol-plugin-presence-2.10.17.tgz#95f3872b14463370d20b3735e23d162fc1d0ea28"
+  integrity sha512-CUCyrGHBiInBiQiLI5k+AvVkqhuct8KghRKfxlcvGzc/MgsvRR7l9aI1yhnL50BRkSmWQQDFRL80OtSAek1baQ==
+  dependencies:
+    "@dxos/broadcast" "2.10.17"
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/protocol" "2.10.17"
+    "@types/debug" "^4.1.1"
+    "@types/node" "^14.0.9"
+    buffer-json-encoding "^1.0.2"
+    debug "^4.1.1"
+    hypercore-protocol dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60
+    ngraph.graph "^19.0.1"
+    p-limit "^3.1.0"
+    queue-microtask "^1.1.2"
+
 "@dxos/protocol-plugin-presence@2.12.20", "@dxos/protocol-plugin-presence@~2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/protocol-plugin-presence/-/protocol-plugin-presence-2.12.20.tgz#90c7ba24590b010835dd020b4f96404695070a32"
@@ -1486,6 +1817,17 @@
     p-limit "^3.1.0"
     queue-microtask "^1.1.2"
 
+"@dxos/protocol-plugin-replicator@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/protocol-plugin-replicator/-/protocol-plugin-replicator-2.10.17.tgz#afae55635fdbfd149295b4f42936c6c2df6c170e"
+  integrity sha512-/qVp7hJF0Gkm/Yi1VbHSKj0ANR+/IW7eD6JKgcWdQqvuH+y8bs0LCtJOuJ/gkDvaP/Jn7gn8vEo52b6ax+Xu0w==
+  dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/protocol" "2.10.17"
+    buffer-json-encoding "^1.0.2"
+    debug "^4.1.1"
+
 "@dxos/protocol-plugin-replicator@2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/protocol-plugin-replicator/-/protocol-plugin-replicator-2.12.20.tgz#5db08419c4eaf2a6bc49ec520708f4a33bd8bb1d"
@@ -1496,6 +1838,25 @@
     "@dxos/protocol" "2.12.20"
     buffer-json-encoding "^1.0.2"
     debug "^4.1.1"
+
+"@dxos/protocol@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/protocol/-/protocol-2.10.17.tgz#99160369f8a328b1dfb79565364f3b756d518644"
+  integrity sha512-Fz2KI6vsXZG+f3qvk8qPbDdsKHvg9yBUWFjZiK0bm9Duu5EnpoXQ2hSbxZJeMsAmFnuOpqSCn9VOAF+S8M7Ckg==
+  dependencies:
+    "@dxos/async" "2.10.17"
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    assert "^2.0.0"
+    buffer-json-encoding "^1.0.2"
+    debug "^4.1.1"
+    end-of-stream "^1.4.1"
+    humanhash "^1.0.4"
+    hypercore-protocol dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60
+    nanoerror "^1.2.1"
+    nanomessage "^5.4.0"
+    nanoresource-promise "^2.0.0"
+    signal-promise "^1.0.3"
 
 "@dxos/protocol@2.12.20":
   version "2.12.20"
@@ -1513,6 +1874,40 @@
     nanoerror "^1.2.1"
     nanomessage "^5.4.0"
     signal-promise "^1.0.3"
+
+"@dxos/random-access-chrome-file@^2.0.0-beta.0":
+  version "2.0.0-beta.3"
+  resolved "https://registry.npmjs.org/@dxos/random-access-chrome-file/-/random-access-chrome-file-2.0.0-beta.3.tgz#4fbfcfb3048452e1e39febfe509bcb5a7222948f"
+  integrity sha512-ItHpFY2hNBYpGboY/L/4nsSkREW5Hcdr1KPrQx5zqpe8FFTjpC9HmKGPiLlsTBr1fkcYLc+FOsG05QnojmYRlQ==
+  dependencies:
+    mutexify "^1.3.0"
+    random-access-storage "^1.3.0"
+
+"@dxos/random-access-multi-storage@1.1.0-beta.7":
+  version "1.1.0-beta.7"
+  resolved "https://registry.npmjs.org/@dxos/random-access-multi-storage/-/random-access-multi-storage-1.1.0-beta.7.tgz#9940269c6e554b3b3ea9e73264f1cfa4378b332b"
+  integrity sha512-m5vFPG4z5UjwmXjyZyhqnxsnS6HwZ6daCXCj79hfxthVRV70cKhw9hsnKiyeeUxgf7MF9ogfIbHD/I66OLpAYQ==
+  dependencies:
+    "@dxos/random-access-chrome-file" "^2.0.0-beta.0"
+    del "^5.1.0"
+    pify "^4.0.1"
+    random-access-file "^2.1.3"
+    random-access-idb "^1.2.1"
+    random-access-memory "^3.1.1"
+    random-access-web "^2.0.3"
+
+"@dxos/random-access-multi-storage@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/random-access-multi-storage/-/random-access-multi-storage-2.10.17.tgz#9ffc34cd432290a9060637cea45f1e1c5626017e"
+  integrity sha512-8aTHe12o77ctfO+DzkfXBpIAdwI+KzGaciqU0R5T/8464hZeD63nOzKlzMK/fbpChlrClGhrVaLmWIqurslDCA==
+  dependencies:
+    "@dxos/random-access-chrome-file" "^2.0.0-beta.0"
+    del "^5.1.0"
+    pify "~5.0.0"
+    random-access-file "^2.1.0"
+    random-access-idb "^1.2.1"
+    random-access-memory "~3.1.2"
+    random-access-web "^2.0.3"
 
 "@dxos/random-access-multi-storage@2.12.20", "@dxos/random-access-multi-storage@~2.12.20":
   version "2.12.20"
@@ -1540,7 +1935,7 @@
     multihashes "^4.0.2"
     protobufjs "^6.10.2"
 
-"@dxos/registry-client@~1.1.2":
+"@dxos/registry-client@~1.1.1", "@dxos/registry-client@~1.1.2":
   version "1.1.2"
   resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-1.1.2.tgz#b4e3b8871d79b81ffb3ec1b87a02417507efa3c7"
   integrity sha512-v3Y5SMZKamrvajmmc5s8uD5t65i7ZOI49J+Q/ll6h+7OJjFJ1HKr0WGIXaLJG6yrJQ+scJMBRelhbOXVJiiPwQ==
@@ -1607,6 +2002,26 @@
     tiny-lru "^7.0.6"
     varint "^5.0.0"
     yargs "~16.2.0"
+
+"@dxos/util@2.10.17":
+  version "2.10.17"
+  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.10.17.tgz#cf9b97179ff495dd0f76ef9dcabbe80e6736d065"
+  integrity sha512-CaWG/gOUk8AZLLcJn//Mklc4w/f632ESKDnE7dx2tuSwFHu5Oeq2AwdpaCz0+k3bgQ2cnxj1NnzyhKwYkjWvgA==
+  dependencies:
+    "@dxos/codec-protobuf" "2.10.17"
+    "@dxos/crypto" "2.10.17"
+    "@dxos/debug" "2.10.17"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^9.10.0"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
 
 "@dxos/util@2.12.20":
   version "2.12.20"
@@ -1714,6 +2129,20 @@
     tar "^4.4.10"
     unique-filename "^1.1.1"
     which "^1.3.1"
+
+"@geut/discovery-swarm-webrtc@^4.0.2":
+  version "4.3.1"
+  resolved "https://registry.npmjs.org/@geut/discovery-swarm-webrtc/-/discovery-swarm-webrtc-4.3.1.tgz#e2f9ad4ad76a5c9e1185e9c14cc4eee1f006d0e6"
+  integrity sha512-PVm8d6SRZRjNXI2J4kbRuaOBwABq1FW6wD5ivWxKnwycAJTD2bk0EAylFfZMd7cZL6xgaICCLUpnFJhlOagOww==
+  dependencies:
+    debug "^4.1.1"
+    end-of-stream "^1.4.4"
+    minimist "^1.2.0"
+    mostly-minimal-spanning-tree "^1.0.2"
+    nanocustomassert "^1.0.0"
+    nanoerror "^1.1.0"
+    pump "^3.0.0"
+    socket-signal-websocket "^9.1.0"
 
 "@graphql-tools/schema@^6.0.16":
   version "6.2.4"
@@ -4032,7 +4461,7 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
-"@types/simple-peer@9.11.3":
+"@types/simple-peer@9.11.3", "@types/simple-peer@^9.6.1":
   version "9.11.3"
   resolved "https://registry.npmjs.org/@types/simple-peer/-/simple-peer-9.11.3.tgz#ca92b3d0015e4d813fb621eac83cbdaaeb230d75"
   integrity sha512-GHrZSrLBqaa/puFQdLnhepOvPiqlDnHXbTbTMx4JdIzhnSJ9tg7iu795aPnMPV9QpQ5h7CR5XqfqORY1P2qehw==
@@ -4064,12 +4493,26 @@
   resolved "https://registry.npmjs.org/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
+"@types/stream-buffers@^3.0.2":
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/@types/stream-buffers/-/stream-buffers-3.0.4.tgz#bf128182da7bc62722ca0ddf5458a9c65f76e648"
+  integrity sha512-qU/K1tb2yUdhXkLIATzsIPwbtX6BpZk0l3dPW6xqWyhfzzM1ECaQ/8faEnu3CNraLiQ9LHyQQPBGp7N9Fbs25w==
+  dependencies:
+    "@types/node" "*"
+
 "@types/tar@^4.0.4":
   version "4.0.5"
   resolved "https://registry.npmjs.org/@types/tar/-/tar-4.0.5.tgz#5f953f183e36a15c6ce3f336568f6051b7b183f3"
   integrity sha512-cgwPhNEabHaZcYIy5xeMtux2EmYBitfqEceBUi2t5+ETy4dW6kswt6WX4+HqLeiiKOo42EXbGiDmVJ2x+vi37Q==
   dependencies:
     "@types/minipass" "*"
+    "@types/node" "*"
+
+"@types/through2@^2.0.36":
+  version "2.0.36"
+  resolved "https://registry.npmjs.org/@types/through2/-/through2-2.0.36.tgz#35fda0db635827d44c0e08e2c94653e647574a00"
+  integrity sha512-vuifQksQHJXhV9McpVsXKuhnf3lsoX70PnhcqIAbs9dqLH2NgrGz0DzZPDY3+Yh6eaRqcE1gnCQ6QhBn1/PT5A==
+  dependencies:
     "@types/node" "*"
 
 "@types/url-join@^4.0.1":
@@ -4766,7 +5209,7 @@ array-includes@^3.0.3, array-includes@^3.1.1, array-includes@^3.1.2, array-inclu
     get-intrinsic "^1.1.1"
     is-string "^1.0.5"
 
-array-lru@^1.1.1:
+array-lru@^1.1.0, array-lru@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/array-lru/-/array-lru-1.1.1.tgz#0c7e1b4e022ae166ff1e8448c595f3181fcd3337"
   integrity sha1-DH4bTgIq4Wb/HoRIxZXzGB/NMzc=
@@ -5503,7 +5946,7 @@ btoa-lite@^1.0.0:
   resolved "https://registry.npmjs.org/btoa-lite/-/btoa-lite-1.0.0.tgz#337766da15801210fdd956c22e9c6891ab9d0337"
   integrity sha1-M3dm2hWAEhD92VbCLpxokaudAzc=
 
-buffer-alloc-unsafe@^1.1.0:
+buffer-alloc-unsafe@^1.0.0, buffer-alloc-unsafe@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/buffer-alloc-unsafe/-/buffer-alloc-unsafe-1.1.0.tgz#bd7dc26ae2972d0eda253be061dba992349c19f0"
   integrity sha512-TEM2iMIEQdJ2yjPJoSIsldnleVaAk1oW3DBVUykyOLsEsFmEc9kn+SFFPz+gl54KQNxlDnAwCXosOS9Okx2xAg==
@@ -5589,7 +6032,7 @@ builtins@^1.0.3:
   resolved "https://registry.npmjs.org/builtins/-/builtins-1.0.3.tgz#cb94faeb61c8696451db36534e1422f94f0aee88"
   integrity sha1-y5T662HIaWRR2zZTThQi+U8K7og=
 
-bulk-write-stream@^1.1.4:
+bulk-write-stream@^1.1.3, bulk-write-stream@^1.1.4:
   version "1.1.4"
   resolved "https://registry.npmjs.org/bulk-write-stream/-/bulk-write-stream-1.1.4.tgz#04b4bdaad61f5a813d8323547383020efffa7d7e"
   integrity sha512-GtKwd/4etuk1hNeprXoESBO1RSeRYJMXKf+O0qHmWdUomLT8ysNEfX/4bZFXr3BK6eukpHiEnhY2uMtEHDM2ng==
@@ -5813,6 +6256,11 @@ canonical-json@^0.0.4:
   version "0.0.4"
   resolved "https://registry.npmjs.org/canonical-json/-/canonical-json-0.0.4.tgz#6579c072c3db5c477ec41dc978fbf2b8f41074a3"
   integrity sha1-ZXnAcsPbXEd+xB3JePvyuPQQdKM=
+
+canonicalize@^1.0.1:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/canonicalize/-/canonicalize-1.0.5.tgz#b43b390ce981d397908bb847c3a8d9614323a47b"
+  integrity sha512-mAjKJPIyP0xqqv6IAkvso07StOmz6cmGtNDg3pXCSzXVZOqka7StIkAhJl/zHOi4M2CgpYfD6aeRWbnrmtvBEA==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -6954,6 +7402,16 @@ del@^5.0.0, del@^5.1.0:
     rimraf "^3.0.0"
     slash "^3.0.0"
 
+delay@^4.3.0:
+  version "4.4.1"
+  resolved "https://registry.npmjs.org/delay/-/delay-4.4.1.tgz#6e02d02946a1b6ab98b39262ced965acba2ac4d1"
+  integrity sha512-aL3AhqtfhOlT/3ai6sWXeqwnw63ATNpnUiN4HL7x9q+My5QtHlO3OIkasmug9LKzpheLdmUKGRKnYXYAS7FQkQ==
+
+delay@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/delay/-/delay-5.0.0.tgz#137045ef1b96e5071060dd5be60bf9334436bd1d"
+  integrity sha512-ReEBKkIfe4ya47wlPYf/gu5ib6yUG0/Aez0JQZQz94kiWtRQvZIQbTiehsnwHvLSWJnQdhVeqYue7Id1dKr0qw==
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -7219,6 +7677,16 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     end-of-stream "^1.0.0"
     inherits "^2.0.1"
     readable-stream "^2.0.0"
+    stream-shift "^1.0.0"
+
+duplexify@^4.1.1:
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/duplexify/-/duplexify-4.1.2.tgz#18b4f8d28289132fa0b9573c898d9f903f81c7b0"
+  integrity sha512-fz3OjcNCHmRP12MJoZMPglx8m4rrFP8rovnk4vT8Fs+aonZoCwGg10dSsQsfP/E62eZcPTMSMP6686fu9Qlqtw==
+  dependencies:
+    end-of-stream "^1.4.1"
+    inherits "^2.0.3"
+    readable-stream "^3.1.1"
     stream-shift "^1.0.0"
 
 easy-table@1.1.0:
@@ -8335,6 +8803,14 @@ fclone@1.0.11, fclone@~1.0.11:
   version "1.0.11"
   resolved "https://registry.npmjs.org/fclone/-/fclone-1.0.11.tgz#10e85da38bfea7fc599341c296ee1d77266ee640"
   integrity sha1-EOhdo4v+p/xZk0HClu4ddyZu5kA=
+
+fd-lock@^1.0.2:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/fd-lock/-/fd-lock-1.2.0.tgz#a3d9cf2fdf37fc7dbe51a1f8fe600ba30892b94a"
+  integrity sha512-Lk/pKH2DldLpG4Yh/sOOY84k5VqNzxHPffGwf1+yYI+/qMXzTPp9KJMX+Wh6n4xqGSA1Mu7JPmaDArfJGw2O/A==
+  dependencies:
+    napi-macros "^2.0.0"
+    node-gyp-build "^4.2.2"
 
 fd-slicer@~1.1.0:
   version "1.1.0"
@@ -9607,6 +10083,20 @@ hypercore-default-storage@^1.1.1:
   optionalDependencies:
     fsctl "^1.0.0"
 
+hypercore-protocol@^6.5.0:
+  version "6.12.0"
+  resolved "https://registry.npmjs.org/hypercore-protocol/-/hypercore-protocol-6.12.0.tgz#0fafa7c047a7e4c35b2d77639e2489f60d7b1a0d"
+  integrity sha512-T3oy9/7QFejqJX2RGcCUU1944e5/eKbLlSz9JPTNN1QbYFJgat/r7eTyOO8SMSLUimUmQx6YBMKhgYbdKzp7Bw==
+  dependencies:
+    buffer-alloc-unsafe "^1.0.0"
+    buffer-from "^1.0.0"
+    inherits "^2.0.3"
+    protocol-buffers-encodings "^1.1.0"
+    readable-stream "^2.2.6"
+    sodium-universal "^2.0.0"
+    sorted-indexof "^1.0.0"
+    varint "^5.0.0"
+
 hypercore-protocol@^8.0.0, hypercore-protocol@^8.0.5, hypercore-protocol@dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60:
   version "8.0.7"
   resolved "https://codeload.github.com/dxos/hypercore-protocol/tar.gz/05513f9266f8bec4d29b144b72c59257c2d7bd60"
@@ -9627,6 +10117,38 @@ hypercore-streams@^1.0.1:
   integrity sha512-OcN2zq9DEoArC84q9VCSrf9Hx1QUkR6ineCOwyOwhE4v/8aUTOx87mAk1nyjMOf76DQmF+tl2vnS2FssLx5N+Q==
   dependencies:
     streamx "^2.6.0"
+
+hypercore@^7.0.0:
+  version "7.7.1"
+  resolved "https://registry.npmjs.org/hypercore/-/hypercore-7.7.1.tgz#2a6b3fd84496b562fde07e5d39bfbab096a37fbc"
+  integrity sha512-boEiPCK848pNGACW1j111tJApu530e/UPpwbHytJZlrVf3YdgUIP1KL3aSi5xJFLUnuO8GLGl4lIsSeH8TaQQA==
+  dependencies:
+    array-lru "^1.1.0"
+    atomic-batcher "^1.0.2"
+    bitfield-rle "^2.2.1"
+    bulk-write-stream "^1.1.3"
+    codecs "^2.0.0"
+    fast-bitfield "^1.2.2"
+    flat-tree "^1.6.0"
+    from2 "^2.3.0"
+    hypercore-crypto "^1.0.0"
+    hypercore-protocol "^6.5.0"
+    inherits "^2.0.3"
+    inspect-custom-symbol "^1.1.0"
+    last-one-wins "^1.0.4"
+    memory-pager "^1.0.2"
+    merkle-tree-stream "^3.0.3"
+    nanoguard "^1.2.0"
+    pretty-hash "^1.0.1"
+    random-access-file "^2.1.0"
+    sodium-universal "^2.0.0"
+    sparse-bitfield "^3.0.0"
+    thunky "^1.0.1"
+    uint64be "^2.0.1"
+    unordered-array-remove "^1.0.2"
+    unordered-set "^2.0.0"
+  optionalDependencies:
+    fd-lock "^1.0.2"
 
 hypercore@^9.10.0, hypercore@^9.4.1:
   version "9.11.0"
@@ -9692,6 +10214,25 @@ hypertrie@5.1.2:
     nanoiterator "^1.2.0"
     protocol-buffers-encodings "^1.1.0"
     siphash24-universal "^1.0.0"
+    thunky "^1.0.2"
+    unordered-set "^2.0.1"
+    varint "^5.0.0"
+
+hypertrie@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.npmjs.org/hypertrie/-/hypertrie-3.8.0.tgz#8227c7cae5c4a15401f0d088d8e53486d963143c"
+  integrity sha512-mAZpE3FwrwHQvg5IUx0P2rsOUM8cCFhNv7pdrXL0O3sX8dpjmyX6mxedM26HfifyM40BJdrDer4ZQltfIf+3JA==
+  dependencies:
+    bulk-write-stream "^1.1.4"
+    codecs "^2.0.0"
+    hypercore "^7.0.0"
+    inherits "^2.0.3"
+    inspect-custom-symbol "^1.1.0"
+    is-options "^1.0.1"
+    mutexify "^1.2.0"
+    nanoiterator "^1.2.0"
+    protocol-buffers-encodings "^1.1.0"
+    sodium-universal "^2.0.0"
     thunky "^1.0.2"
     unordered-set "^2.0.1"
     varint "^5.0.0"
@@ -11535,6 +12076,11 @@ jpeg-js@^0.4.2:
   resolved "https://registry.npmjs.org/jpeg-js/-/jpeg-js-0.4.3.tgz#6158e09f1983ad773813704be80680550eff977b"
   integrity sha512-ru1HWKek8octvUHFHvE5ZzQ1yAsJmIvRdGWvSoKV52XKyuyYA437QWDttXT8eZXDSbuMpHlLzPDZUPd6idIz+Q==
 
+js-data-structs@^1.1.2:
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/js-data-structs/-/js-data-structs-1.1.3.tgz#9f7c1ad60bac5f6302081d7a5c5b6c547406b773"
+  integrity sha512-DUt0LPC98VMdIokd1WB6NJw8FYacMSX+TVEifWi36tFJxb0cvLaUT6+8kfq+MR661JY8Rg0qR8c7naic8HCMSg==
+
 js-git@^0.7.8:
   version "0.7.8"
   resolved "https://registry.npmjs.org/js-git/-/js-git-0.7.8.tgz#52fa655ab61877d6f1079efc6534b554f31e5444"
@@ -12228,6 +12774,11 @@ lodash.defaultsdeep@^4.6.1:
   resolved "https://registry.npmjs.org/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz#512e9bd721d272d94e3d3a63653fa17516741ca6"
   integrity sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA==
 
+lodash.filter@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.npmjs.org/lodash.filter/-/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
+  integrity sha1-ZosdSYFgOuHMWm+nYBQ+SAtMSs4=
+
 lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.npmjs.org/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
@@ -12248,6 +12799,21 @@ lodash.ismatch@^4.4.0:
   resolved "https://registry.npmjs.org/lodash.ismatch/-/lodash.ismatch-4.4.0.tgz#756cb5150ca3ba6f11085a78849645f188f85f37"
   integrity sha1-dWy1FQyjum8RCFp4hJZF8Yj4Xzc=
 
+lodash.isobject@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/lodash.isobject/-/lodash.isobject-3.0.2.tgz#3c8fb8d5b5bf4bf90ae06e14f2a530a4ed935e1d"
+  integrity sha1-PI+41bW/S/kK4G4U8qUwpO2TXh0=
+
+lodash.isplainobject@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  integrity sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
+
+lodash.mapvalues@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.npmjs.org/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
+  integrity sha1-G6+lAF3p3W9PJmaMMMo3IwzJaJw=
+
 lodash.matches@^4.6.0:
   version "4.6.0"
   resolved "https://registry.npmjs.org/lodash.matches/-/lodash.matches-4.6.0.tgz#ae1affba8047f02368905fe585376bd2c10aaf5e"
@@ -12267,6 +12833,11 @@ lodash.pick@^4.4.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
   integrity sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM=
+
+lodash.pickby@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.npmjs.org/lodash.pickby/-/lodash.pickby-4.6.0.tgz#7dea21d8c18d7703a27c704c15d3b84a67e33aff"
+  integrity sha1-feoh2MGNdwOifHBMFdO4SmfjOv8=
 
 lodash.set@^4.3.2:
   version "4.3.2"
@@ -12307,6 +12878,11 @@ lodash.uniqby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.npmjs.org/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
   integrity sha1-2ZwHpmnp5tJOE2Lf4mbGdhavEwI=
+
+lodash.unset@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.npmjs.org/lodash.unset/-/lodash.unset-4.5.2.tgz#370d1d3e85b72a7e1b0cdf2d272121306f23e4ed"
+  integrity sha1-Nw0dPoW3Kn4bDN8tJyEhMG8j5O0=
 
 lodash@4.17.21, lodash@4.x, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.2.1, lodash@^4.7.0:
   version "4.17.21"
@@ -12662,6 +13238,14 @@ merge2@^1.2.3, merge2@^1.3.0:
   resolved "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
+merkle-tree-stream@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/merkle-tree-stream/-/merkle-tree-stream-3.0.3.tgz#f8a064760d37e7978ad5f9f6d3c119a494f57081"
+  integrity sha1-+KBkdg0355eK1fn208EZpJT1cIE=
+  dependencies:
+    flat-tree "^1.3.0"
+    readable-stream "^2.0.5"
+
 merkle-tree-stream@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/merkle-tree-stream/-/merkle-tree-stream-4.0.0.tgz#4a9cee766ca21db50d487b67222612ae94366d09"
@@ -12982,6 +13566,18 @@ monotonic-timestamp@^0.0.9:
   resolved "https://registry.npmjs.org/monotonic-timestamp/-/monotonic-timestamp-0.0.9.tgz#5ba5adc7aac85e1d7ce77be847161ed246b39603"
   integrity sha1-W6Wtx6rIXh1853voRxYe0kazlgM=
 
+mostly-minimal-spanning-tree@^1.0.2:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/mostly-minimal-spanning-tree/-/mostly-minimal-spanning-tree-1.1.0.tgz#49852e0c0dc78efb1cbd0430d8d5436b169e1a7a"
+  integrity sha512-nw3rZTtFjf+rFtDS2LHCpXKTcS70HiKt7g5piWwDNIz9ImIXwmiyGpyEflvUcU72oY747EbJfRfRSnVN9hGMGQ==
+  dependencies:
+    delay "^4.3.0"
+    end-of-stream-promise "^1.0.0"
+    p-queue "^6.3.0"
+    promise-defer "^1.0.0"
+    randomize-array "^1.2.0"
+    xor-distance "^2.0.0"
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -13018,6 +13614,13 @@ ms@^2.0.0, ms@^2.1.1:
   version "2.1.3"
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
+
+multi-read-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/multi-read-stream/-/multi-read-stream-2.0.0.tgz#d9ee8614743089411a4d9ac7d21d38aa68c36e40"
+  integrity sha1-2e6GFHQwiUEaTZrH0h04qmjDbkA=
+  dependencies:
+    readable-stream "^2.0.1"
 
 multiaddr-to-uri@^5.1.0:
   version "5.1.0"
@@ -13220,7 +13823,7 @@ mute-stream@0.0.8, mute-stream@~0.0.4:
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-mutexify@^1.2.0:
+mutexify@^1.2.0, mutexify@^1.3.0:
   version "1.3.1"
   resolved "https://registry.npmjs.org/mutexify/-/mutexify-1.3.1.tgz#634fa5092d8c72639fffa0f663f2716fcba7061b"
   integrity sha512-nU7mOEuaXiQIB/EgTIjYZJ7g8KqMm2D8l4qp+DqA4jxWOb/tnb1KEoqp+tlbdQIDIAiC1i7j7X/3yHDFXLxr9g==
@@ -13491,6 +14094,11 @@ node-gyp-build@^4.1.0, node-gyp-build@^4.2.0, node-gyp-build@^4.2.3:
   version "4.2.3"
   resolved "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.2.3.tgz#ce6277f853835f718829efb47db20f3e4d9c4739"
   integrity sha512-MN6ZpzmfNCRM+3t57PTJHgHyw/h4OWnZ6mR8P5j/uZtqQr46RRuDE/P+g3n0YR/AiYXeWixZZzaip77gdICfRg==
+
+node-gyp-build@^4.2.2:
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.3.0.tgz#9f256b03e5826150be39c764bf51e993946d71a3"
+  integrity sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q==
 
 node-gyp-build@~4.1.0:
   version "4.1.1"
@@ -14728,6 +15336,11 @@ progress@^2.0.0, progress@^2.0.3:
   resolved "https://registry.npmjs.org/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
+promise-defer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/promise-defer/-/promise-defer-1.0.0.tgz#25a8093f19bab40c62a8e464c97d04fe4cdc0a24"
+  integrity sha1-JagJPxm6tAxiqORkyX0E/kzcCiQ=
+
 promise-fs@2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/promise-fs/-/promise-fs-2.1.1.tgz#0b725a592c165ff16157d1f13640ba390637e557"
@@ -14938,6 +15551,15 @@ pumpify@^1.3.3:
     inherits "^2.0.3"
     pump "^2.0.0"
 
+pumpify@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/pumpify/-/pumpify-2.0.1.tgz#abfc7b5a621307c728b551decbbefb51f0e4aa1e"
+  integrity sha512-m7KOje7jZxrmutanlkS1daj1dS6z6BgslzOXmcSEpIlCxM3VJH7lG5QLeck/6hgF6F4crFf01UtQmNsJfweTAw==
+  dependencies:
+    duplexify "^4.1.1"
+    inherits "^2.0.3"
+    pump "^3.0.0"
+
 punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
@@ -15034,7 +15656,7 @@ random-access-chrome-file@^1.1.2:
   dependencies:
     random-access-storage "^1.3.0"
 
-random-access-file@^2.1.0, random-access-file@^2.1.5:
+random-access-file@^2.1.0, random-access-file@^2.1.3, random-access-file@^2.1.5:
   version "2.2.0"
   resolved "https://registry.npmjs.org/random-access-file/-/random-access-file-2.2.0.tgz#b49b999efefb374afb7587f219071fec5ce66546"
   integrity sha512-B744003Mj7v3EcuPl9hCiB2Ot4aZjgtU2mV6yFY1THiWU/XfGf1uSadR+SlQdJcwHgAWeG7Lbos0aUqjtj8FQg==
@@ -15103,6 +15725,11 @@ randombytes@^2.0.1, randombytes@^2.1.0:
   integrity sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==
   dependencies:
     safe-buffer "^5.1.0"
+
+randomize-array@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/randomize-array/-/randomize-array-1.2.0.tgz#36255233deebdc1125fb7ea8468027f9e8a58b36"
+  integrity sha512-3utyf30rF+wc1ZPgl+lTn8WMMGyMNN0uQkyuWo3N/vVT3J2Olt1ymCk3J8+zl4dsvYnplLFd+CLnYlCLT1W0iw==
 
 range-parser@~1.2.1:
   version "1.2.1"
@@ -15261,7 +15888,7 @@ read@1, read@^1.0.4, read@~1.0.1:
   dependencies:
     mute-stream "~0.0.4"
 
-"readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.2, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.3.0, readable-stream@^2.3.3, readable-stream@^2.3.5, readable-stream@^2.3.6, readable-stream@~2.3.6:
+"readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.2.6, readable-stream@^2.3.0, readable-stream@^2.3.3, readable-stream@^2.3.5, readable-stream@^2.3.6, readable-stream@~2.3.6:
   version "2.3.7"
   resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.7.tgz#1eca1cf711aef814c04f62252a36a62f6cb23b57"
   integrity sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==
@@ -15330,6 +15957,11 @@ receptacle@^1.3.2:
   integrity sha512-HrsFvqZZheusncQRiEE7GatOAETrARKV/lnfYicIm8lbvp/JQOdADOfhjBd2DajvoszEyxSM6RlAAIZgEoeu/A==
   dependencies:
     ms "^2.1.1"
+
+reconnecting-websocket@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/reconnecting-websocket/-/reconnecting-websocket-4.4.0.tgz#3b0e5b96ef119e78a03135865b8bb0af1b948783"
+  integrity sha512-D2E33ceRPga0NvTDhJmphEgJ7FUYF0v4lr1ki0csq06OdlxKfugGzN0dSkxM/NfqCxYELK4KcaTOUOjTV6Dcng==
 
 record-cache@^1.1.0:
   version "1.1.1"
@@ -16062,7 +16694,7 @@ simple-message-channels@^1.2.1:
   dependencies:
     varint "^5.0.0"
 
-simple-peer@9.11.0, simple-peer@^9.6.2:
+simple-peer@9.11.0, simple-peer@^9.6.2, simple-peer@^9.9.3:
   version "9.11.0"
   resolved "https://registry.npmjs.org/simple-peer/-/simple-peer-9.11.0.tgz#e8d27609c7a610c3ddd75767da868e8daab67571"
   integrity sha512-qvdNu/dGMHBm2uQ7oLhQBMhYlrOZC1ywXNCH/i8I4etxR1vrjCnU6ZSQBptndB1gcakjo2+w4OHo7Sjza1SHxg==
@@ -16178,7 +16810,21 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-socket-signal@^9.0.0:
+socket-signal-websocket@^9.1.0:
+  version "9.2.4"
+  resolved "https://registry.npmjs.org/socket-signal-websocket/-/socket-signal-websocket-9.2.4.tgz#6cba3270a395281ea3454e2f4ec94737f70baec5"
+  integrity sha512-OtBtzKRtGZX2+FN5EGsbckYSM+sVwSqBM1zDQ2Szg2lLwPccol1kONpqc+BveWTiis+j8HBjFBc3BQWO0XQePg==
+  dependencies:
+    delay "^5.0.0"
+    isomorphic-ws "^4.0.1"
+    minimist "^1.2.5"
+    nanocustomassert "^1.0.0"
+    reconnecting-websocket "^4.4.0"
+    simple-websocket "^9.0.0"
+    socket-signal "^9.2.0"
+    ws "^8.2.1"
+
+socket-signal@^9.0.0, socket-signal@^9.2.0:
   version "9.2.1"
   resolved "https://registry.npmjs.org/socket-signal/-/socket-signal-9.2.1.tgz#0c07fe6342de34bf7c7d6c44d5385be8faa5f5fe"
   integrity sha512-Q38YElCX6Z1PvaYgqFFA2V45nWiDEYrjVQrs3+5zDNQTY/Kb+JUKRSTnUocHylIZyED6nXqO5/WSBHkFKcvSJw==
@@ -16313,6 +16959,11 @@ sort-keys@^2.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
+sorted-indexof@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/sorted-indexof/-/sorted-indexof-1.0.0.tgz#17c742ff7cf187e2f59a15df9b81f17a62ce0899"
+  integrity sha1-F8dC/3zxh+L1mhXfm4HxemLOCJk=
+
 source-map-resolve@^0.5.0:
   version "0.5.3"
   resolved "https://registry.npmjs.org/source-map-resolve/-/source-map-resolve-0.5.3.tgz#190866bece7553e1f8f267a2ee82c606b5509a1a"
@@ -16328,6 +16979,14 @@ source-map-support@0.5.19, source-map-support@^0.5.16, source-map-support@^0.5.1
   version "0.5.19"
   resolved "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
   integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
+  dependencies:
+    buffer-from "^1.0.0"
+    source-map "^0.6.0"
+
+source-map-support@^0.5.12:
+  version "0.5.20"
+  resolved "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.20.tgz#12166089f8f5e5e8c56926b377633392dd2cb6c9"
+  integrity sha512-n1lZZ8Ve4ksRqizaBQgxXDgKwttHDhyfQjA6YZZn8+AroHbsIz+JjwxQDxbp+7y5OYCI8t1Yk7etjD9CRd2hIw==
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
@@ -17030,7 +17689,7 @@ through@2, "through@>=2.2.7 <3", through@^2.3.4, through@^2.3.6, through@^2.3.8:
   resolved "https://registry.npmjs.org/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
-thunky@^1.0.2:
+thunky@^1.0.1, thunky@^1.0.2:
   version "1.1.0"
   resolved "https://registry.npmjs.org/thunky/-/thunky-1.1.0.tgz#5abaf714a9405db0504732bbccd2cedd9ef9537d"
   integrity sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==
@@ -18106,7 +18765,7 @@ write@1.0.3:
   dependencies:
     mkdirp "^0.5.1"
 
-wrtc@^0.4.7:
+wrtc@^0.4.6, wrtc@^0.4.7:
   version "0.4.7"
   resolved "https://registry.npmjs.org/wrtc/-/wrtc-0.4.7.tgz#c61530cd662713e50bffe64b7a78673ce070426c"
   integrity sha512-P6Hn7VT4lfSH49HxLHcHhDq+aFf/jd9dPY7lDHeFhZ22N3858EKuwm2jmnlPzpsRGEPaoF6XwkcxY5SYnt4f/g==
@@ -18119,6 +18778,11 @@ wrtc@^0.4.7:
   version "7.5.4"
   resolved "https://registry.npmjs.org/ws/-/ws-7.5.4.tgz#56bfa20b167427e138a7795de68d134fe92e21f9"
   integrity sha512-zP9z6GXm6zC27YtspwH99T3qTG7bBFv2VIkeHstMLrLlDJuzA7tQ5ls3OJ1hOGGCzTQPniNJoHXIAOS0Jljohg==
+
+ws@^8.2.1:
+  version "8.2.2"
+  resolved "https://registry.npmjs.org/ws/-/ws-8.2.2.tgz#ca684330c6dd6076a737250ed81ac1606cb0a63e"
+  integrity sha512-Q6B6H2oc8QY3llc3cB8kVmQ6pnJWVQbP7Q5algTcIxx7YEpc0oU4NBVHlztA7Ekzfhw2r0rPducMUiCGWKQRzw==
 
 ws@~7.2.0:
   version "7.2.5"
