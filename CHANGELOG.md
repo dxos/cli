@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.13](https://www.github.com/dxos/cli/compare/v2.4.12...v2.4.13) (2021-09-16)
+
+
+### Bug Fixes
+
+* rename dxns binary. ([d122fc5](https://www.github.com/dxos/cli/commit/d122fc575c7cbf5712fe8c70a5a0227e2dc8566f))
+
 ### [2.4.12](https://www.github.com/dxos/cli/compare/v2.4.11...v2.4.12) (2021-09-16)
 
 
