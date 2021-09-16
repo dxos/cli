@@ -18,11 +18,11 @@ export const displayApps = (record: any) => {
   });
 };
 
-// interface QueryParams {
-//   getDXNSClient: Function
-// }
+interface QueryParams {
+  getDXNSClient: Function
+}
 
-export const query = (config: any /*, { getDXNSClient }: QueryParams */) => async (argv: any) => {
+export const query = (config: any, { getDXNSClient }: QueryParams) => async (argv: any) => {
   const { id, name, namespace, dxns } = argv;
 
   let apps = [];
@@ -44,6 +44,7 @@ export const query = (config: any /*, { getDXNSClient }: QueryParams */) => asyn
       apps = await registry.queryRecords(attributes);
     }
   } else {
+    assert(getDXNSClient);
     // TODO(egorgripasov): Revive.
     // const client = await getDXNSClient();
     // const fqn = config.get('services.dxns.schema.fqn.app');
