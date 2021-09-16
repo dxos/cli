@@ -27,7 +27,7 @@
     "cli": "ts-node ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests --force-exit"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "jest": {
     "preset": "ts-jest/presets/default",
@@ -57,9 +57,10 @@
     "@dxos/signal": "^2.12.20",
     "@types/lockfile": "^1.0.2",
     "eslint": "^7.13.0",
-    "jest": "^25.1.0",
+    "jest": "^27.2.0",
     "prettier": "^1.14.2",
     "semistandard": "14.2.0",
+    "ts-jest": "^27.0.5",
     "ts-node": "^9.1.1",
     "typescript": "^4.0.5",
     "uuid": "^3.3.3"

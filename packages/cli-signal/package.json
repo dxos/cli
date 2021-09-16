@@ -52,7 +52,7 @@
     "babel-loader": "^8.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-inline-import": "^3.0.0",
-    "jest": "^25.1.0",
+    "jest": "^27.2.0",
     "semistandard": "14.2.0"
   },
   "semistandard": {

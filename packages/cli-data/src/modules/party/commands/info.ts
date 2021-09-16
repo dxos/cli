@@ -14,10 +14,8 @@ export const infoCommand = (stateManager: StateManager): CommandModule<PartyOpti
   describe: 'Current party info.',
   builder: yargs => yargs,
   handler: asyncHandler(async (argv: Arguments<PartyOptions>) => {
-    const { json } = argv;
-
     const party = await stateManager.getParty();
 
-    print({ party: party?.key.toHex() }, { json });
+    return print({ party: party?.key.toHex() }, argv);
   })
 });

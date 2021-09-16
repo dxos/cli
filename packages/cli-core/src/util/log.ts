@@ -17,6 +17,9 @@ type PrintOptions = {
  * @param {PrintOptions} options
  */
 export const print = (data: any, options: PrintOptions = {}) => {
+  if (process.env.NODE_ENV === 'test') {
+    return data; // No human readable output needed. Return data for test asserts.
+  }
   const { json = false } = options;
 
   if (data !== Object(data)) {

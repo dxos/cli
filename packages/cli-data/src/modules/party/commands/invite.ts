@@ -30,7 +30,7 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOp
     const party = await stateManager.getParty();
     assert(party, 'Invalid party.');
 
-    let result: any = { partyKey: party.key.toHex() };
+    const result: any = { partyKey: party.key.toHex() };
     const { invitation: invite, passcode } = await stateManager.createSecretInvitation(party.key.toHex());
 
     if (appUrl) {
@@ -42,10 +42,6 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOp
       result.invitation = Buffer.from(JSON.stringify(invite)).toString('base64');
     }
 
-    result = { ...result, passcode };
-    print(result, { json });
-    if (argv.return) {
-      return result;
-    }
+    return print({ ...result, passcode }, { json });
   })
 });

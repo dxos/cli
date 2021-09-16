@@ -15,12 +15,9 @@ export const membersCommand = (stateManager: StateManager): CommandModule<PartyO
   builder: yargs => yargs,
 
   handler: asyncHandler(async (argv: Arguments<PartyOptions>) => {
-    const { json } = argv;
-
     const members = (await stateManager.getParty())?.queryMembers().value ?? [];
 
     const data = Array.from(members).filter(Boolean);
-    print(data, { json });
-    return data;
+    return print(data, argv);
   })
 });
