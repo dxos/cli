@@ -52,12 +52,14 @@ export const DXNSModule = (params: Params) => {
             handler: asyncHandler(getType({ getDXNSClient }))
           })
 
+          // TODO(marcin): When registering with domain and resourceName -> output prints dxn of domainkey:resourceName.
           .command({
             command: ['add <messageName> <path>'],
             describe: 'Add a new type to the Registry.',
             builder: yargs => yargs
               .option('messageName', { required: true, describe: 'The fully qualified name of the proto message (must exist in the proto file).', type: 'string' })
               .option('path', { required: true, describe: 'Path to the proto file', type: 'string' })
+              // TODO(marcin): Why not a domain name?
               .option('domain', { describe: 'Domain key for the record.', type: 'string' })
               .option('resourceName', { describe: 'Name of the resource in DXN', type: 'string' })
               .option('version', { describe: 'Version of the type', type: 'string' })
@@ -88,13 +90,13 @@ export const DXNSModule = (params: Params) => {
             handler: asyncHandler(getRecord({ getDXNSClient }))
           })
 
+          // TODO(marcin): Update params list - broken.
           .command({
             command: ['add'],
             describe: 'Add a new record to the Registry.',
             builder: yargs => yargs
               .option('data', { required: true, describe: 'Data encoded in json.', type: 'string' })
-              .option('schema', { required: true, describe: 'Schema cid', type: 'string' })
-              .option('fqn', { required: true, describe: 'Message fully-qualified name inside the referenced schema.', type: 'string' })
+              .option('typeCid', { required: true, describe: 'Schema cid', type: 'string' })
               .option('name', { describe: 'Register a resource name for this record.', type: 'string' })
               .option('domain', { describe: 'Specify a domain key for the record.', type: 'string' }),
 

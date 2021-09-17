@@ -23,6 +23,7 @@ export const displayRecord = (record: RegistryRecord) => {
       return {
         ...common,
         messageName: record.messageName,
+        // TODO(marcin): Add something to better reference the proto file.
         ...record.meta
       };
     case 'data':
@@ -31,7 +32,7 @@ export const displayRecord = (record: RegistryRecord) => {
         typeCid: record.type.toString(),
         ...record.meta,
         size: record.dataSize,
-        data: record.data
+        data: JSON.stringify(record.data, null, 2)
       };
   }
 };
