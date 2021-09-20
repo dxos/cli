@@ -11,6 +11,7 @@ import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
 import { StateManager } from '../../state-manager';
+import { decodeInvitation } from '../../utils';
 import { createCommand as createPartyCommand, listCommand as listPartyCommand } from '../party/commands';
 import { infoCommand, inviteCommand, joinCommand } from './commands';
 
@@ -72,12 +73,15 @@ describe('cli-data: Device', () => {
   test('Creates a device invitation.', async () => {
     const invitation = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
     expect(typeof invitation).toBe('object');
-    expect(typeof invitation.identityKey).toBe('string');
-    expect(typeof invitation.invitation).toBe('string');
     expect(typeof invitation.passcode).toBe('string');
-    expect(typeof invitation.hash).toBe('string');
-    expect(typeof invitation.swarmKey).toBe('string');
-    PublicKey.assertValidPublicKey(PublicKey.from(invitation.identityKey));
+    expect(typeof invitation.code).toBe('string');
+
+    const decoded = decodeInvitation(invitation.code);
+    expect(typeof decoded.identityKey).toBe('string');
+    expect(typeof decoded.invitation).toBe('string');
+    expect(typeof decoded.hash).toBe('string');
+    expect(typeof decoded.swarmKey).toBe('string');
+    PublicKey.assertValidPublicKey(PublicKey.from(decoded.identityKey));
   });
 
   test('Can join a device invitation.', async () => {

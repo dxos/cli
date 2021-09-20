@@ -9,6 +9,7 @@ import { Argv, CommandModule, Arguments } from 'yargs';
 import { asyncHandler, print } from '@dxos/cli-core';
 
 import { StateManager } from '../../../state-manager';
+import { decodeInvitation } from '../../../utils';
 import { PartyOptions } from '../party';
 
 export interface PartyJoinOptions extends PartyOptions {
@@ -36,7 +37,7 @@ export const joinCommand = (stateManager: StateManager): CommandModule<PartyOpti
 
     let invite = null;
     if (invitation) {
-      invite = JSON.parse(Buffer.from(invitation, 'base64').toString('utf8'));
+      invite = decodeInvitation(invitation);
     } else if (invitationUrl) {
       invite = queryString.parse(invitationUrl.split('?')[1].replace(/\\/g, ''), { decode: true });
     }
