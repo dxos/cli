@@ -7,18 +7,14 @@ import { createKeyPair, PublicKey } from '@dxos/crypto';
 import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
-import { StateManager } from '../state-manager';
-import { createCommand } from './commands/create';
-import { inviteCommand } from './commands/invite';
-import { joinCommand } from './commands/join';
-import { listCommand } from './commands/list';
-import { membersCommand } from './commands/members';
+import { StateManager } from '../../state-manager';
+import { createCommand, inviteCommand, joinCommand, listCommand, membersCommand } from './commands';
 
 const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');
 };
 
-const DEFAULT_ARGS = { $0: '', _: [] };
+const DEFAULT_ARGS = { $0: '', _: [], return: true };
 
 jest.setTimeout(2000);
 

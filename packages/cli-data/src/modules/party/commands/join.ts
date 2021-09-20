@@ -8,7 +8,7 @@ import { Argv, CommandModule, Arguments } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
 
-import { StateManager } from '../../state-manager';
+import { StateManager } from '../../../state-manager';
 import { PartyOptions } from '../party';
 
 export interface PartyJoinOptions extends PartyOptions {
@@ -17,7 +17,7 @@ export interface PartyJoinOptions extends PartyOptions {
   invitationUrl?: string
 }
 
-const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
+const options = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
   return yargs
     .option('interactive', { hidden: true, default: true }) // override the default.
     .option('invitation', { type: 'string' })
@@ -25,10 +25,10 @@ const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
     .option('invitation-url', { type: 'string' });
 };
 
-export const joinCommand = (stateManager: StateManager): CommandModule => ({
+export const joinCommand = (stateManager: StateManager): CommandModule<PartyOptions, PartyJoinOptions> => ({
   command: ['join [party-key]', 'switch [party-key]', 'use [party-key]'],
   describe: 'Join party.',
-  builder: yargs => partyOptions(yargs),
+  builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<PartyJoinOptions>) => {
     const { partyKey, invitationUrl, invitation, json, passcode } = argv;
 

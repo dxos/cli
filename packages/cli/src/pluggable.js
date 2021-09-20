@@ -119,6 +119,12 @@ export class Pluggable {
     return this._modulePath;
   }
 
+  get module () {
+    const module = require(this.modulePath);
+    const moduleCli = module.default ?? module; // Difference between `module.exports` and `export default`.
+    return moduleCli;
+  }
+
   /**
    * Checks if workspace is defined.
    */
@@ -190,7 +196,7 @@ export class Pluggable {
    * @param {Object} state
    */
   async init (state) {
-    return require(this.modulePath).init(state);
+    return this.module.init(state);
   }
 
   /**
@@ -198,7 +204,7 @@ export class Pluggable {
    * @param {Object} state
    */
   async destroy (state) {
-    return require(this.modulePath).destroy(state);
+    return this.module.destroy(state);
   }
 
   /**
@@ -214,7 +220,7 @@ export class Pluggable {
         await this.installModule(null, { spinner });
         await addInstalled(moduleName, this.getInfo());
 
-        const { init, destroy } = require(this.modulePath);
+        const { init, destroy } = this.module;
         if (init || destroy) {
           console.log(`${moduleName} was successfully installed. Please run your command again.`);
           return;
@@ -225,17 +231,17 @@ export class Pluggable {
       }
     }
 
-    return require(this.modulePath).runAsExtension(state, argv);
+    return this.module.runAsExtension(state, argv);
   }
 
   getInfo () {
     this._cleanCache();
-    return require(this.modulePath).info;
+    return this.module.info;
   }
 
   getDockerCompose () {
     this._cleanCache();
-    return require(this.modulePath).dockerCompose;
+    return this.module.dockerCompose;
   }
 
   _cleanCache () {

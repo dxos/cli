@@ -1303,7 +1303,7 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/echo-db@2.12.20", "@dxos/echo-db@~2.12.20":
+"@dxos/echo-db@2.12.20", "@dxos/echo-db@^2.12.20", "@dxos/echo-db@~2.12.20":
   version "2.12.20"
   resolved "https://registry.npmjs.org/@dxos/echo-db/-/echo-db-2.12.20.tgz#7730bccf68004a043ac286cbd43e822851d755dc"
   integrity sha512-CyfUy8d1oBzpxgESpD6jSz97vr1/wmTurYbG+IGrAxjkCRuQjJlF9U/PXzakoT/9PAEGon0IJ6SgGkEfRoJkOg==
