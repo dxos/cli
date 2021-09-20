@@ -26,12 +26,12 @@ describe('cli-data: Party', () => {
   let bobStateManager: StateManager;
 
   beforeAll(async () => {
-    signalBroker = await createTestBroker();
+    signalBroker = await createTestBroker(4001);
   });
 
   beforeEach(async () => {
     [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
-      const client = new Client();
+      const client = new Client({swarm: {signal: 'ws://localhost:4001'}});
       await client.initialize();
       await client.halo.createProfile({ ...createKeyPair(), username });
       return client;
