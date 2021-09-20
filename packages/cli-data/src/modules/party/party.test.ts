@@ -26,7 +26,7 @@ describe('cli-data: Party', () => {
   let bobStateManager: StateManager;
 
   beforeAll(async () => {
-    signalBroker = await createTestBroker(4001);
+    signalBroker = await createTestBroker();
   });
 
   beforeEach(async () => {

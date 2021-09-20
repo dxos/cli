@@ -31,7 +31,7 @@ describe('cli-data: Device', () => {
   let bobStateManager: StateManager;
 
   beforeAll(async () => {
-    signalBroker = await createTestBroker(4002);
+    signalBroker = await createTestBroker();
   });
 
   beforeEach(async () => {
