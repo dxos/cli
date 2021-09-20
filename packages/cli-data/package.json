@@ -53,7 +53,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/async": "~2.12.20",
+    "@dxos/async": "~2.12.22",
     "@dxos/eslint-plugin": "~1.0.10",
     "@dxos/signal": "^2.12.22",
     "@types/lockfile": "^1.0.2",
