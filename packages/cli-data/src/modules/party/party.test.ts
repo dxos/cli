@@ -41,8 +41,8 @@ describe('cli-data: Party', () => {
   });
 
   afterEach(async () => {
-    await alice.destroy();
-    await bob.destroy();
+    await aliceStateManager?.destroy();
+    await bobStateManager?.destroy();
   });
 
   afterAll(async () => {

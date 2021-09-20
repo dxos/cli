@@ -149,6 +149,7 @@ export class StateManager {
       await unlock(this._lockPath);
       this._lockAquired = false;
     }
+    await this._client?.destroy();
   }
 
   async _assureClient () {

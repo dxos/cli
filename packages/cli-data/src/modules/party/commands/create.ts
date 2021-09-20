@@ -15,11 +15,8 @@ export const createCommand = (stateManager: StateManager): CommandModule<PartyOp
   builder: yargs => yargs
     .option('interactive', { hidden: true, default: true }), // override the default.
   handler: asyncHandler(async (argv: Arguments<PartyOptions>) => {
-    const { json } = argv;
-
     const party = await stateManager.createParty();
     const data = { party: party.key.toHex() };
-    print(data, { json });
-    return data;
+    return print(data, argv);
   })
 });

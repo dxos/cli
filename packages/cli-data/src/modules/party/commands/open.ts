@@ -15,14 +15,12 @@ export const openCommand = (stateManager: StateManager): CommandModule<PartyOpti
   builder: yargs => yargs
     .option('interactive', { hidden: true, default: true }), // override the default.
   handler: asyncHandler(async (argv: Arguments<PartyOptions>) => {
-    const { json } = argv;
-
     const party = await stateManager.getParty();
     if (!party) {
       throw new Error('You don\'t have any available parties yet, create new one or use invitation to join existing party.');
     }
     await party.open();
 
-    print({ party: party.key.toHex() }, { json });
+    return print({ party: party.key.toHex() }, argv);
   })
 });

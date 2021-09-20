@@ -44,7 +44,7 @@ export const joinCommand = (stateManager: StateManager): CommandModule<PartyOpti
     await stateManager.joinParty(partyKey, invite, passcode);
 
     if (partyKey && /^[0-9a-f]{64}$/i.test(partyKey)) {
-      print({ partyKey }, { json });
+      return print({ partyKey }, { json });
     }
   })
 });
