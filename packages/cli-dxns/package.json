@@ -36,10 +36,10 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.12.20",
+    "@dxos/async": "~2.12.22",
     "@dxos/cli-core": "^2.4.13-alpha.0",
-    "@dxos/crypto": "~2.12.20",
-    "@dxos/debug": "~2.12.20",
+    "@dxos/crypto": "~2.12.22",
+    "@dxos/debug": "~2.12.22",
     "@dxos/registry-api": "~0.3.2",
     "@polkadot/api": "4.17.1",
     "@polkadot/keyring": "6.11.1",
