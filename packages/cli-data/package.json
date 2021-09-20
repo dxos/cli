@@ -27,7 +27,7 @@
     "cli": "ts-node ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests --forceExit"
   },
   "jest": {
     "preset": "ts-jest/presets/default",

@@ -7,27 +7,21 @@ import { Arguments, Argv, CommandModule } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 import { Client } from '@dxos/client';
-import { InvitationDescriptor, InvitationDescriptorType } from '@dxos/echo-db';
 
 import { resetStorageForProfile } from '../../../config';
 import { CliDataState } from '../../../init';
+import { decodeInvitation } from '../../../utils';
 import { DeviceOptions } from '../device';
 
 export interface DeviceJoinOptions extends DeviceOptions {
-  invitation: string,
-  passcode: string,
-  hash: string,
-  swarmKey: string,
-  identityKey: string,
+  code: string,
+  passcode: string
 }
 
 const options = (yargs: Argv<DeviceOptions>): Argv<DeviceJoinOptions> => {
   return yargs
     .option('interactive', { hidden: true, default: true }) // override the default.
-    .option('invitation', { type: 'string', required: true })
-    .option('hash', { type: 'string', required: true })
-    .option('swarmKey', { type: 'string', required: true })
-    .option('identityKey', { type: 'string', required: true })
+    .option('code', { type: 'string', required: true })
     .option('passcode', { type: 'string', required: true });
 };
 
@@ -36,7 +30,7 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
   describe: 'Join device invitation.',
   builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceJoinOptions>) => {
-    const { invitation, passcode, hash, swarmKey, identityKey } = argv;
+    const { code, passcode } = argv;
 
     const client = await stateManager.getClient();
     const clientConfig = client.config;
@@ -51,13 +45,7 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
     const newClient = new Client(clientConfig);
     await newClient.initialize();
 
-    const invitationDescriptor = InvitationDescriptor.fromQueryParameters({
-      hash,
-      invitation,
-      swarmKey,
-      type: InvitationDescriptorType.INTERACTIVE,
-      identityKey
-    });
+    const invitationDescriptor = decodeInvitation(code);
     await newClient.halo.join(invitationDescriptor, async () => Buffer.from(passcode));
 
     stateManager.replaceClient(newClient);

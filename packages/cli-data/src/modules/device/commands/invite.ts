@@ -5,24 +5,22 @@ import { Arguments, Argv, CommandModule } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
 import { defaultSecretValidator, generatePasscode } from '@dxos/credentials';
+import { InvitationDescriptorType } from '@dxos/echo-db';
 
 import { StateManager } from '../../../state-manager';
+import { encodeInvitation } from '../../../utils';
 import { DeviceOptions } from '../device';
 
-export interface DeviceInviteOptions extends DeviceOptions {
-  stringify?: boolean,
-}
-
-const options = (yargs: Argv<DeviceOptions>): Argv<DeviceInviteOptions> => {
+const options = (yargs: Argv<DeviceOptions>): Argv<DeviceOptions> => {
   return yargs
-    .option('stringify', {type: 'boolean'});
+    .option('interactive', { hidden: true, default: true }); // override the default.
 };
 
-export const inviteCommand = (stateManager: StateManager): CommandModule<DeviceOptions, DeviceInviteOptions> => ({
+export const inviteCommand = (stateManager: StateManager): CommandModule<DeviceOptions, DeviceOptions> => ({
   command: ['invite'],
   describe: 'Invite another device.',
   builder: yargs => options(yargs),
-  handler: asyncHandler(async (argv: Arguments<DeviceInviteOptions>) => {
+  handler: asyncHandler(async (argv: Arguments<DeviceOptions>) => {
     const passcode = generatePasscode();
     const client = await stateManager.getClient();
     const invitation = await client.halo.createInvitation({
@@ -33,10 +31,10 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<DeviceO
       invitation: invitation.toQueryParameters().invitation,
       hash: invitation.toQueryParameters().hash,
       swarmKey: invitation.toQueryParameters().swarmKey,
-      passcode,
-      identityKey: invitation.identityKey?.toHex()
-
+      identityKey: invitation.identityKey?.toHex(),
+      type: InvitationDescriptorType.INTERACTIVE
     };
-    return print(argv.stringify ? JSON.stringify(result) : result, argv);
+    const code = encodeInvitation(result);
+    return print({ code, passcode }, argv);
   })
 });
