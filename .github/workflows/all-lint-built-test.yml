@@ -30,3 +30,22 @@ jobs:
         yarn test
       env:
         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+  e2e-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: https://registry.npmjs.org/
+    - name: E2E test
+      run: yarn test
+      working-directory: ./packages/e2e
+     
