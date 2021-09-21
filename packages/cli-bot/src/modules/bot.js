@@ -4,13 +4,13 @@
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { spawn, invite, build, publish } from '../handlers/bot';
+import { spawn, invite, build, publish, register } from '../handlers/bot';
 import { install, setup, start } from '../handlers/bot-factory';
 
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ getClient, config, stateManager, /* getReadlineInterface, */ cliState }) => {
+export const BotModule = ({ getClient, config, stateManager, /* getReadlineInterface, */ cliState, getDXNSClient }) => {
   return {
     command: ['bot'],
     describe: 'Bot CLI.',
@@ -112,6 +112,18 @@ export const BotModule = ({ getClient, config, stateManager, /* getReadlineInter
         builder: yargs => yargs,
 
         handler: asyncHandler(publish(config))
+      })
+
+      .command({
+        command: ['register'],
+        describe: 'Register bot in DXNS.',
+        builder: yargs => yargs
+          .version(false)
+          .option('name', { type: 'array' })
+          .option('version', { type: 'string' })
+          .option('domain', { type: 'string' }),
+
+        handler: asyncHandler(register({ getDXNSClient }))
       })
   };
 };
