@@ -36,13 +36,16 @@ describe('cli-data: Device', () => {
 
   beforeEach(async () => {
     [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
-      const client = new Client({swarm: {signal: 'ws://localhost:4002'}});
+      const client = new Client({ swarm: { signal: 'ws://localhost:4002' } });
       await client.initialize();
-      await client.halo.createProfile({ ...createKeyPair(), username });
+      if (username === 'Alice') {
+        // Bob will be joining Alice's device invitation.
+        await client.halo.createProfile({ ...createKeyPair(), username });
+      }
       return client;
     }));
-    aliceStateManager = new StateManager(() => alice, getReadlineInterface, {});
-    bobStateManager = new StateManager(() => bob, getReadlineInterface, {});
+    aliceStateManager = new StateManager({ getClient: async () => alice, getReadlineInterface });
+    bobStateManager = new StateManager({ getClient: async () => bob, getReadlineInterface });
   });
 
   afterEach(async () => {
@@ -55,19 +58,16 @@ describe('cli-data: Device', () => {
     await signalBroker.stop();
   });
 
-  test('Has a brand new, unique identity at first.', async () => {
+  test('Alice has identity and Bob has not.', async () => {
     const aliceInfo = await infoCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
     const bobInfo = await infoCommand(bobStateManager).handler(DEFAULT_ARGS) as any;
     expect(aliceInfo.displayName).toEqual('Alice');
-    expect(bobInfo.displayName).toEqual('Bob');
+    expect(bobInfo.displayName).toBeUndefined();
+    expect(bobInfo.identityKey).toBeUndefined();
+    expect(bobInfo.deviceKey).toBeUndefined();
 
     PublicKey.assertValidPublicKey(PublicKey.from(aliceInfo.identityKey));
     PublicKey.assertValidPublicKey(PublicKey.from(aliceInfo.deviceKey));
-    PublicKey.assertValidPublicKey(PublicKey.from(bobInfo.identityKey));
-    PublicKey.assertValidPublicKey(PublicKey.from(bobInfo.deviceKey));
-
-    expect(aliceInfo.identityKey).not.toEqual(bobInfo.identityKey);
-    expect(aliceInfo.deviceKey).not.toEqual(bobInfo.deviceKey);
   });
 
   test('Creates a device invitation.', async () => {
@@ -95,7 +95,6 @@ describe('cli-data: Device', () => {
   test('Joining device invitation removes current state and syncs with new state.', async () => {
     await createPartyCommand(aliceStateManager).handler(DEFAULT_ARGS);
     expect(await listPartyCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
-    expect(await listPartyCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(0); // Bob initially has no parties.
 
     const invitation = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
     await joinCommand({ stateManager: bobStateManager }).handler({ ...DEFAULT_ARGS, ...invitation }); // Bob joins device invitation.

@@ -53,7 +53,7 @@ export class StateManager {
     this._lockAquired = false;
   }
 
-  public get client() {
+  public get client () {
     return this._client;
   }
 
@@ -61,26 +61,21 @@ export class StateManager {
     if (this._client) {
       return this._client;
     }
-    return await this.initializeClient({initProfile: true});
+    return await this.initializeClient({ initProfile: true });
   }
 
-  async initializeClient(opts: GetClientOpts) {
+  async initializeClient (opts: GetClientOpts) {
     if (this._client) {
-      throw new Error('Client already initialized.')
+      throw new Error('Client already initialized.');
     }
-    this._client = await this._getClient(opts)
+    this._client = await this._getClient(opts);
     assert(this._client);
-    return this._client
+    return this._client;
   }
 
   async getParty () {
     await this._assureClient();
     return this._party;
-  }
-
-  replaceClient (newClient: Client) {
-    this._client = newClient;
-    this._party = null;
   }
 
   /**

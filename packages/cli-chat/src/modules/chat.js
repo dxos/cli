@@ -167,7 +167,7 @@ class Messenger extends EventEmitter {
 /**
  * Peer CLI module.
  */
-export const ChatModule = ({ getClient }) => ({
+export const ChatModule = ({ stateManager }) => ({
   command: ['$0', 'chat'],
   describe: 'Peer-to-peer messaging.',
   builder: yargs => yargs
@@ -192,7 +192,7 @@ export const ChatModule = ({ getClient }) => ({
         const peerId = keyPair().publicKey;
         const messenger = new Messenger(peerId, topic);
 
-        const client = await getClient();
+        const client = await stateManager.getClient();
 
         await client.networkManager.joinProtocolSwarm({
           topic: PublicKey.from(keyToBuffer(topic)),

@@ -3,17 +3,12 @@
 //
 
 import assert from 'assert';
-import defaultsDeep from 'lodash.defaultsdeep';
-import os from 'os';
 
 import { CoreState } from '@dxos/cli-core';
-import { Client } from '@dxos/client';
-import { Config } from '@dxos/config';
-import { createKeyPair, keyToBuffer } from '@dxos/crypto';
 
 import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
-import { StateManager } from './state-manager';
 import { createClient } from './create-client';
+import { StateManager } from './state-manager';
 
 export interface CliDataState extends CoreState {
   stateManager: StateManager
@@ -34,7 +29,7 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
   assert(getReadlineInterface, 'Missing getReadlineinterface.');
   stateManager = new StateManager({
     getClient: (opts) => createClient(config, models ?? [], { persistent, storagePath, profileName, initProfile: opts?.initProfile ?? true }),
-    getReadlineInterface, 
+    getReadlineInterface,
     storagePath: persistent ? storagePath : undefined
   });
 

@@ -10,7 +10,7 @@ import { install, setup, start } from '../handlers/bot-factory';
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ getClient, config, stateManager, /* getReadlineInterface, */ cliState }) => {
+export const BotModule = ({ config, stateManager, /* getReadlineInterface, */ cliState }) => {
   return {
     command: ['bot'],
     describe: 'Bot CLI.',
@@ -77,7 +77,7 @@ export const BotModule = ({ getClient, config, stateManager, /* getReadlineInter
           .option('bot-name', { type: 'string' })
           .option('bot-path', { type: 'string' }),
 
-        handler: asyncHandler(spawn({ cliState, getClient }))
+        handler: asyncHandler(spawn({ cliState, stateManager }))
       })
 
       .command({
@@ -95,7 +95,7 @@ export const BotModule = ({ getClient, config, stateManager, /* getReadlineInter
           .option('bot-name', { type: 'string' })
           .option('bot-path', { type: 'string' }),
 
-        handler: asyncHandler(invite({ stateManager, getClient }))
+        handler: asyncHandler(invite({ stateManager }))
       })
 
       .command({

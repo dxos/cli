@@ -31,13 +31,13 @@ describe('cli-data: Party', () => {
 
   beforeEach(async () => {
     [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
-      const client = new Client({swarm: {signal: 'ws://localhost:4001'}});
+      const client = new Client({ swarm: { signal: 'ws://localhost:4001' } });
       await client.initialize();
       await client.halo.createProfile({ ...createKeyPair(), username });
       return client;
     }));
-    aliceStateManager = new StateManager(() => alice, getReadlineInterface, {});
-    bobStateManager = new StateManager(() => bob, getReadlineInterface, {});
+    aliceStateManager = new StateManager({ getClient: async () => alice, getReadlineInterface });
+    bobStateManager = new StateManager({ getClient: async () => bob, getReadlineInterface });
   });
 
   afterEach(async () => {

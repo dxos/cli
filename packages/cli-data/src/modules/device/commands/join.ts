@@ -6,13 +6,12 @@ import assert from 'assert';
 import { Arguments, Argv, CommandModule } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
-import { Client } from '@dxos/client';
+import { InvitationDescriptor } from '@dxos/echo-db';
 
-import { resetStorageForProfile } from '../../../config';
+import { CLI_DEFAULT_PERSISTENT, resetStorageForProfile } from '../../../config';
 import { CliDataState } from '../../../init';
 import { decodeInvitation } from '../../../utils';
 import { DeviceOptions } from '../device';
-import { InvitationDescriptor } from '@dxos/echo-db';
 
 export interface DeviceJoinOptions extends DeviceOptions {
   code: string,
@@ -32,23 +31,20 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
   builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceJoinOptions>) => {
     const { code, passcode } = argv;
-
-    const client = await stateManager.getClient();
-    const clientConfig = client.config;
-    if (client.initialized) {
-      await client.destroy();
+    if (stateManager.client) {
+      throw new Error('Profile already initialized. Reset storage first. (`> storage reset`)');
     }
-    if (clientConfig.storage?.persistent) {
+
+    if (config?.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT)) {
       assert(config, 'Missing config.');
-      resetStorageForProfile(config.get('cli.storage.path'), profilePath!);
+      assert(profilePath, 'Missing profile path.');
+      resetStorageForProfile(config.get('cli.storage.path'), profilePath);
     }
 
-    const newClient = new Client(clientConfig);
-    await newClient.initialize();
+    await stateManager.initializeClient({ initProfile: false });
+    const client = await stateManager.getClient();
 
     const invitationDescriptor = InvitationDescriptor.fromQueryParameters(decodeInvitation(code));
-    await newClient.halo.join(invitationDescriptor, async () => Buffer.from(passcode));
-
-    stateManager.replaceClient(newClient);
+    await client.halo.join(invitationDescriptor, async () => Buffer.from(passcode));
   })
 });
