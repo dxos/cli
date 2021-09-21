@@ -67,7 +67,7 @@ export class Command {
     await this._execute();
   }
 
-  async json(): Promise<any> {
+  async json<T = any>(): Promise<T> {
     await this._execute();
 
     return JSON.parse(this._stdout.toString())

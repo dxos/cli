@@ -1,9 +1,7 @@
 import { cmd } from "./cli"
-import { randomBytes } from 'crypto'
 import { promises as fs } from "fs"
 import { join } from 'path'
-
-const randomId = () => randomBytes(8).toString('hex')
+import expect from 'expect'
 
 const PROFILE_NAME = `e2e-test`
 
@@ -14,7 +12,7 @@ describe('CLI', () => {
   })
 
   describe('profile', () => {
-    it.only('init', async () => {
+    it('init', async () => {
       try {
         await fs.rm(join(process.env.HOME!, '.wire/profile', `${PROFILE_NAME}.yml`))
       } catch {}
@@ -22,7 +20,7 @@ describe('CLI', () => {
       await cmd(`profile init --name ${PROFILE_NAME} --template-url https://git.io/JBQdM`).debug().run()
     })
 
-    it.only('select profile', async () => {
+    it('select profile', async () => {
       await cmd(`profile set ${PROFILE_NAME}`).run()
     })
 
@@ -32,6 +30,15 @@ describe('CLI', () => {
   })
 
   describe('data', () => {
-    it('foo')
+    it('party create', async () => {
+      const { party } = await cmd(`party create --json`).json<{ party: string }>()
+      expect(typeof party).toBe('string')
+    })
+
+    it('party list', async () => {
+      const parties = await cmd(`party list --json`).json()
+      expect(Array.isArray(parties)).toBe(true)
+      expect(parties.length).toBeGreaterThanOrEqual(1)
+    })
   })
 })
