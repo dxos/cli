@@ -1,0 +1,34 @@
+{
+  "name": "@dxos/cli-e2e-test",
+  "version": "0.1.0",
+  "description": "E2E test script for CLI packages",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "yarn run build -w",
+    "lint": "eslint './src/**/*.{ts,js}'",
+    "clean": "rm -rf ./dist",
+    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "test": "mocha 'src/**/*.test.ts'"
+  },
+  "mocha": {
+    "require": [
+      "ts-node/register"
+    ],
+    "timeout": 0,
+    "bail": true
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@dxos/eslint-plugin": "~1.0.10",
+    "@types/mocha": "^9.0.0",
+    "eslint": "^7.13.0",
+    "mocha": "^9.1.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.0.5"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
+  }
+}
