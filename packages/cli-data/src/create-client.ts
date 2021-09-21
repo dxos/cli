@@ -45,8 +45,7 @@ export const createClient = async (
   }
 
   // Register models from other extensions.
-  // eslint-disable-next-line
-  for await (const model of models) {
+  for (const model of models) {
     dataClient.registerModel(model);
   }
 
