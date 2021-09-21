@@ -63,13 +63,16 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
     log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
   }
 
+  if (!noop) {
+    await updateAppConfig(conf);
+  }
+
   // TODO(egorgripasov): Deprecate.
   if (!dxns) {
     const fee = getGasAndFees(argv, wnsConfig);
 
     let appId;
     if (!noop) {
-      await updateAppConfig(conf);
       const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
       appId = result.data;
       log(`Record ID: ${appId}`);

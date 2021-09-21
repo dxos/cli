@@ -4,6 +4,7 @@
 
 import fs from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
+import mapvalues from 'lodash.mapvalues';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
@@ -23,16 +24,16 @@ export const updateAppConfig = async (config: any) => {
 };
 
 export const loadAppConfig = async () => {
-  const packageProperties = pick(fs.existsSync(PACKAGE_JSON_FILENAME)
+  const packageProperties = mapvalues(pick(fs.existsSync(PACKAGE_JSON_FILENAME)
     ? await readFile(PACKAGE_JSON_FILENAME)
-    : {}, DEFAULT_PACKAGE_JSON_ATTRIBUTES);
+    : {}, DEFAULT_PACKAGE_JSON_ATTRIBUTES), (value: any) => value?.url ? value.url : value);
   const appConfig = omit(fs.existsSync(APP_CONFIG_FILENAME)
     ? await readFile(APP_CONFIG_FILENAME)
     : {}, IGNORED_APP_CONFIG_ATTRIBUTES);
 
   return {
     build: DEFAULT_BUILD,
-    ...packageProperties,
-    ...appConfig
+    ...appConfig,
+    ...packageProperties
   };
 };
