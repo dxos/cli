@@ -98,7 +98,7 @@ class Resolver {
       return;
     }
 
-    const ipfsCid = CID.from(Buffer.from(get(record, 'data.hash'), 'base64'));
+    const ipfsCid = CID.from(Buffer.from(get(record, 'record.data.hash'), 'base64'));
     const cid = ipfsCid.toString();
 
     this._cache.set(id, { cid, expiration: Date.now() + MAX_CACHE_AGE });
