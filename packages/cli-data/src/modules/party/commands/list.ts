@@ -18,7 +18,7 @@ export const listCommand = (stateManager: StateManager): CommandModule<PartyOpti
     const current = await stateManager.getParty();
     const parties = (await stateManager.getClient()).echo.queryParties().value.map(({ key }) => ({
       party: key.toHex(),
-      current: current && key.equals(current?.key)
+      current: current && key.equals(current?.key) || false
     }));
 
     return print(parties, argv);
