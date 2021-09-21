@@ -1,36 +1,28 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 import assert from 'assert';
 import { spawnSync } from 'child_process';
 import clean from 'lodash-clean';
 
-import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { Registry } from '@wirelineio/registry-client';
+import { CID, DXN } from '@dxos/registry-api';
 
 import { getBotConfig, updateBotConfig } from '../../config';
 
-export const register = (config, { getBotRecord }) => async (argv) => {
-  const { verbose, version, namespace, 'dry-run': noop, txKey } = argv;
-  const wnsConfig = config.get('services.wns');
-  const { server, userKey, bondId, chainId } = wnsConfig;
+export const BOT_DXN_NAME = 'dxos:type.bot';
 
-  assert(server, 'Invalid WNS endpoint.');
-  assert(userKey, 'Invalid WNS userKey.');
-  assert(bondId, 'Invalid WNS Bond ID.');
-  assert(chainId, 'Invalid WNS Chain ID.');
-
-  const { names = [], build, ...botConfig } = await getBotConfig();
-  const { name = names } = argv;
-
-  assert(Array.isArray(name), 'Invalid Bot Record Name.');
+export const register = ({ getDXNSClient }) => async (argv) => {
+  const { verbose, version, 'dry-run': noop, name, domain } = argv;
 
   const conf = {
-    ...botConfig,
+    ...await getBotConfig(),
     ...clean({ version })
   };
+
+  assert(name, 'Invalid DXNS record name.');
+  assert(domain, 'Invalid DXNS record domain.');
 
   assert(conf.name, 'Invalid Bot Name.');
   assert(conf.version, 'Invalid Bot Version.');
@@ -46,29 +38,37 @@ export const register = (config, { getBotRecord }) => async (argv) => {
   ], { shell: true });
   conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
 
-  const record = getBotRecord(conf, namespace);
-
-  const registry = new Registry(server, chainId);
-  log(`Registering ${record.name} v${record.version}...`);
+  log(`Registering ${conf.name}@${conf.version}...`);
 
   if (verbose || noop) {
-    log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
+    log(JSON.stringify({ record: conf }, undefined, 2));
   }
 
-  const fee = getGasAndFees(argv, wnsConfig);
-
-  let botId;
   if (!noop) {
     await updateBotConfig(conf);
-    const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
-    botId = result.data;
-    log(`Record ID: ${botId}`);
+
+    const { name: botName, version, author, description, package: pkg, ...rest } = conf;
+
+    const { registryApi } = await getDXNSClient();
+
+    const botType = await registryApi.get(DXN.parse(BOT_DXN_NAME));
+    assert(botType);
+    assert(botType.record.kind === 'type');
+
+    const cid = await registryApi.insertDataRecord({
+      hash: CID.from(pkg['/']).value,
+      ...rest
+    }, botType.record.cid, {
+      created: new Date().toISOString(),
+      version,
+      author,
+      description,
+      name: botName
+    });
+
+    const domainKey = await registryApi.resolveDomainName(domain);
+    await registryApi.registerResource(domainKey, name, cid);
   }
-  // eslint-disable-next-line
-  for await (const wrn of name) {
-    log(`Assigning name ${wrn}...`);
-    if (!noop) {
-      await registry.setName(wrn, botId, userKey, fee);
-    }
-  }
+
+  log(`Registered ${conf.name}@${conf.version}.`);
 };

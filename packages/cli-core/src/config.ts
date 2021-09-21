@@ -24,7 +24,7 @@ export const DEFAULT_PROFILE_SYMLINK = 'default';
 
 export const PACKAGE_JSON_FILENAME = 'package.json';
 export const DEFAULT_PACKAGE_JSON_ATTRIBUTES = [
-  'name', 'version', 'author', 'license', 'description', 'keywords', 'homepage', 'repository', 'bugs'
+  'version', 'author', 'license', 'description', 'keywords', 'homepage', 'repository', 'bugs'
 ];
 
 export const ENVS = Object.keys(envmap);
