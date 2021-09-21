@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.14](https://www.github.com/dxos/cli/compare/v2.4.13...v2.4.14) (2021-09-21)
+
+
+### Bug Fixes
+
+* fix app & bot registration. ([#268](https://www.github.com/dxos/cli/issues/268)) ([f4685b4](https://www.github.com/dxos/cli/commit/f4685b43c708d9ba25fdcb5d40fb7eb73b2f7954))
+
 ### [2.4.13](https://www.github.com/dxos/cli/compare/v2.4.12...v2.4.13) (2021-09-16)
 
 
