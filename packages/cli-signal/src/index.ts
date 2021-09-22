@@ -5,9 +5,9 @@
 import { createCLI } from '@dxos/cli-core';
 
 import { SignalModule } from './modules/signal';
+import { readFileSync } from 'fs';
+import path from 'path';
 
-import info from '../extension.yml';
-import compose from '../docker-compose.yml';
 
 module.exports = createCLI({
   modules: [SignalModule],

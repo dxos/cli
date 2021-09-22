@@ -5,9 +5,8 @@
 import { createCLI } from '@dxos/cli-core';
 
 import { BotModule } from './modules/bot';
-
-import info from '../extension.yml';
-import compose from '../docker-compose.yml';
+import { readFileSync } from 'fs';
+import path from 'path';
 
 module.exports = createCLI({
   modules: [BotModule],

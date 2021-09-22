@@ -6,7 +6,8 @@ import { createCLI } from '@dxos/cli-core';
 
 import { HaloModule } from './modules/halo';
 
-import info from '../extension.yml';
+import { readFileSync } from 'fs';
+import path from 'path';
 
 module.exports = createCLI({
   modules: [HaloModule],

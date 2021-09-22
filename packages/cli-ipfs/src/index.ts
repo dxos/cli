@@ -5,8 +5,9 @@
 import { createCLI } from '@dxos/cli-core';
 
 import { IPFSModule } from './modules/ipfs';
+import { readFileSync } from 'fs';
+import path from 'path';
 
-import info from '../extension.yml';
 
 module.exports = createCLI({
   modules: [IPFSModule],

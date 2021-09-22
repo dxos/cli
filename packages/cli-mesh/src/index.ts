@@ -5,8 +5,10 @@
 import { createCLI } from '@dxos/cli-core';
 
 import { MeshModule } from './modules/mesh';
+import { readFileSync } from 'fs';
+import path from 'path';
 
-import info from '../extension.yml';
+
 
 module.exports = createCLI({
   modules: [MeshModule],
