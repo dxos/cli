@@ -10,6 +10,11 @@ import { cmd } from './cli';
 
 const PROFILE_NAME = 'e2e-test';
 
+/**
+ * NOTE: Test order is important in this file. **Tests depend on each other.**
+ * The test-framework is configured to stop after first failure.
+ */
+
 describe('CLI', () => {
   it('--help', async () => {
     await cmd('--help').run();
@@ -45,4 +50,12 @@ describe('CLI', () => {
       expect(parties.length).toBeGreaterThanOrEqual(1);
     });
   });
+
+  describe('services', () => {
+    it.only('dxns', async () => {
+      await cmd('service install --from @dxos/cli-dxns --service dxns').run();
+
+      await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp').debug().run();
+    })
+  })
 });
