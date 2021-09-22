@@ -3,6 +3,7 @@
 //
 
 import { spawn } from 'child_process';
+
 import { Runnable, stopService, asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
@@ -87,7 +88,7 @@ export const AppModule = ({ config }) => {
           };
 
           // forward params to the binary
-          consoleRunnable.run(args, options);
+          void consoleRunnable.run(args, options);
         })
       })
 

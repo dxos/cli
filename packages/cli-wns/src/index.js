@@ -4,11 +4,10 @@
 
 import { createCLI } from '@dxos/cli-core';
 
+import info from '../extension.yml';
 import { FaucetModule } from './modules/faucet';
 import { KeysModule } from './modules/keys';
 import { RegistryModule } from './modules/registry';
-
-import info from '../extension.yml';
 
 module.exports = createCLI({
   modules: [KeysModule, RegistryModule, FaucetModule],

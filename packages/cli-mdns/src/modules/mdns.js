@@ -3,6 +3,7 @@
 //
 
 import { spawn } from 'child_process';
+
 import { Runnable, stopService, asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
@@ -86,7 +87,7 @@ export const MDNSModule = ({ config }) => {
           };
 
           // forward params to the binary
-          mdnsRunnable.run(args, options);
+          void mdnsRunnable.run(args, options);
         })
       })
 

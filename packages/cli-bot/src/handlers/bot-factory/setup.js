@@ -3,17 +3,17 @@
 //
 
 import { parse, stringify } from 'envfile';
-import { load } from 'js-yaml';
 import fs from 'fs-extra';
+import { load } from 'js-yaml';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
 
 import { isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
-import { createKeyPair, keyToString } from '@dxos/crypto';
 import { mapToKeyValues } from '@dxos/config';
+import { createKeyPair, keyToString } from '@dxos/crypto';
 
-import { BOTFACTORY_ENV_FILE } from '../../config';
 import envmap from '../../../env-map.yml';
+import { BOTFACTORY_ENV_FILE } from '../../config';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 

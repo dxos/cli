@@ -2,12 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-import { createCLI } from '@dxos/cli-core';
-
-import { SignalModule } from './modules/signal';
 import { readFileSync } from 'fs';
 import path from 'path';
 
+import { createCLI } from '@dxos/cli-core';
+
+import { SignalModule } from './modules/signal';
 
 module.exports = createCLI({
   modules: [SignalModule],

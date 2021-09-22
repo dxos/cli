@@ -9,7 +9,6 @@ import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { readFileSync } from 'fs';
 import path from 'path';
 
-
 import { createCLI } from '@dxos/cli-core';
 import { ApiFactory, IAuctionsApi, IRegistryApi, ApiTransactionHandler } from '@dxos/registry-api';
 

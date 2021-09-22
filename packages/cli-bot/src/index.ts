@@ -2,11 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
+import { readFileSync } from 'fs';
+import path from 'path';
+
 import { createCLI } from '@dxos/cli-core';
 
 import { BotModule } from './modules/bot';
-import { readFileSync } from 'fs';
-import path from 'path';
 
 module.exports = createCLI({
   modules: [BotModule],

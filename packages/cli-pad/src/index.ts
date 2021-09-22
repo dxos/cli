@@ -2,13 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-import { createCLI } from '@dxos/cli-core';
-
-import { AppModule } from './modules/app';
-
 import { readFileSync } from 'fs';
 import path from 'path';
 
+import { createCLI } from '@dxos/cli-core';
+
+import { AppModule } from './modules/app';
 
 module.exports = createCLI({
   modules: [AppModule],

@@ -7,6 +7,7 @@ import assert from 'assert';
 import { getGasAndFees } from '@dxos/cli-core';
 import { log, logError } from '@dxos/debug';
 import { Registry } from '@wirelineio/registry-client';
+
 import { FILE_TYPE } from '../config';
 
 export const register = (config) => async (argv) => {

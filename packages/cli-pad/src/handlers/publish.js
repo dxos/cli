@@ -4,12 +4,12 @@
 
 import assert from 'assert';
 import IpfsHttpClient, { globSource } from 'ipfs-http-client';
+import set from 'lodash.set';
 import path from 'path';
 import semverInc from 'semver/functions/inc';
-import set from 'lodash.set';
 
-import { log } from '@dxos/debug';
 import { readFile, writeFile } from '@dxos/cli-core';
+import { log } from '@dxos/debug';
 
 import { PAD_CONFIG_FILENAME } from '../config';
 

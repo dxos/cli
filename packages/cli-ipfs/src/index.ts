@@ -2,12 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-import { createCLI } from '@dxos/cli-core';
-
-import { IPFSModule } from './modules/ipfs';
 import { readFileSync } from 'fs';
 import path from 'path';
 
+import { createCLI } from '@dxos/cli-core';
+
+import { IPFSModule } from './modules/ipfs';
 
 module.exports = createCLI({
   modules: [IPFSModule],

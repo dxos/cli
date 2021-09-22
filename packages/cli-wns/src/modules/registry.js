@@ -3,17 +3,17 @@
 //
 
 import assert from 'assert';
+import { spawn, spawnSync } from 'child_process';
+import fs from 'fs';
+import { ensureFileSync, removeSync } from 'fs-extra';
+import inquirer from 'inquirer';
+import clean from 'lodash-clean';
+import get from 'lodash.get';
+import yaml from 'node-yaml';
+import os from 'os';
 import path from 'path';
 import kill from 'tree-kill';
-import { spawn, spawnSync } from 'child_process';
-import clean from 'lodash-clean';
-import yaml from 'node-yaml';
-import inquirer from 'inquirer';
 import url from 'url';
-import { ensureFileSync, removeSync } from 'fs-extra';
-import fs from 'fs';
-import os from 'os';
-import get from 'lodash.get';
 
 import {
   Runnable,
@@ -22,7 +22,6 @@ import {
   getActiveProfilePath,
   getGasAndFees
 } from '@dxos/cli-core';
-
 import { log } from '@dxos/debug';
 import { Registry, Account } from '@wirelineio/registry-client';
 

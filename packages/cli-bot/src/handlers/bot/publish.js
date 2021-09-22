@@ -3,8 +3,8 @@
 //
 
 import assert from 'assert';
-import path from 'path';
 import set from 'lodash.set';
+import path from 'path';
 import semverInc from 'semver/functions/inc';
 
 import { BUILD_PATH, publishBot } from '@dxos/botkit';

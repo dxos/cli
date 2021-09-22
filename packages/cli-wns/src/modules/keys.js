@@ -3,7 +3,6 @@
 //
 
 import { asyncHandler, print } from '@dxos/cli-core';
-
 import { Account } from '@wirelineio/registry-client';
 
 export const KeysModule = () => ({

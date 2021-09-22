@@ -2,12 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-import { createCLI } from '@dxos/cli-core';
-
-import { MDNSModule } from './modules/mdns';
 import { readFileSync } from 'fs';
 import path from 'path';
 
+import { createCLI } from '@dxos/cli-core';
+
+import { MDNSModule } from './modules/mdns';
 
 module.exports = createCLI({
   modules: [MDNSModule],

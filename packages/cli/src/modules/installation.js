@@ -6,8 +6,8 @@ import assert from 'assert';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
 
-import { log } from '@dxos/debug';
 import { asyncHandler } from '@dxos/cli-core';
+import { log } from '@dxos/debug';
 
 import { addInstalled, removeInstalled, listInstalled } from '../extensions';
 import { Pluggable } from '../pluggable';
