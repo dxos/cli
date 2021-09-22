@@ -37,7 +37,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-        no-lockfile: [true, false]
+        lockfile: [lockfile, no-lockfile]
 
     steps:
     - uses: actions/checkout@v2
@@ -47,7 +47,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         registry-url: https://registry.npmjs.org/
     - name: Delete lockfile
-      if: ${{ matrix.no-lockfile }}
+      if: ${{ matrix.lockfile == "no-lockfile" }}
       run: rm yarn.lock
     - name: Install dependencies
       run: yarn
