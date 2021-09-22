@@ -24,7 +24,7 @@
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "cli": "ts-node ./src/main.ts",
+    "cli": "ts-node ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests --forceExit",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
