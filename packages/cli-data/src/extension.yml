@@ -1,7 +1,7 @@
 name: dxos/cli-data
 version: 0.0.1
 displayName: cli-data
-description: Party management.
+description: Party and Device management.
 initRequired: true
 destroyRequired: true
 command: 
@@ -11,3 +11,6 @@ command:
   - 
     command: "storage"
     describe: "Storage management."
+  - 
+    command: "device"
+    describe: "Device management."

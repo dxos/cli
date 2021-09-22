@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-chat",
-  "version": "2.4.13-beta.0",
+  "version": "2.4.15-alpha.0",
   "description": "DXOS Chat CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-chat#readme",
   "license": "AGPL-3.0",
@@ -35,12 +35,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.4.13-beta.0",
-    "@dxos/crypto": "~2.12.20",
-    "@dxos/debug": "~2.12.20",
-    "@dxos/network-manager": "~2.12.20",
-    "@dxos/protocol-plugin-messenger": "~2.12.20",
-    "@dxos/protocol-plugin-presence": "~2.12.20",
+    "@dxos/cli-core": "^2.4.15-alpha.0",
+    "@dxos/crypto": "~2.12.22",
+    "@dxos/debug": "~2.12.22",
+    "@dxos/network-manager": "~2.12.22",
+    "@dxos/protocol-plugin-messenger": "~2.12.22",
+    "@dxos/protocol-plugin-presence": "~2.12.22",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^16.2.0"
@@ -62,7 +62,7 @@
     "eslint-loader": "^2.0.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^2.6.2",
-    "jest": "^25.1.0",
+    "jest": "^27.2.0",
     "prettier": "^1.14.2",
     "semistandard": "14.2.0",
     "uuid": "^3.3.3"

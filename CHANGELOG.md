@@ -1,5 +1,19 @@
 # Changelog
 
+### [2.4.15](https://www.github.com/dxos/cli/compare/v2.4.14...v2.4.15) (2021-09-22)
+
+
+### Bug Fixes
+
+* optionally replace args while start service. ([8e263cd](https://www.github.com/dxos/cli/commit/8e263cdb1a78c728cfbf74bfb936f549d7bb6387))
+
+### [2.4.14](https://www.github.com/dxos/cli/compare/v2.4.13...v2.4.14) (2021-09-21)
+
+
+### Bug Fixes
+
+* fix app & bot registration. ([#268](https://www.github.com/dxos/cli/issues/268)) ([f4685b4](https://www.github.com/dxos/cli/commit/f4685b43c708d9ba25fdcb5d40fb7eb73b2f7954))
+
 ### [2.4.13](https://www.github.com/dxos/cli/compare/v2.4.12...v2.4.13) (2021-09-16)
 
 

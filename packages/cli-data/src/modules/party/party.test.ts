@@ -7,18 +7,14 @@ import { createKeyPair, PublicKey } from '@dxos/crypto';
 import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
-import { StateManager } from '../state-manager';
-import { createCommand } from './commands/create';
-import { inviteCommand } from './commands/invite';
-import { joinCommand } from './commands/join';
-import { listCommand } from './commands/list';
-import { membersCommand } from './commands/members';
+import { StateManager } from '../../state-manager';
+import { createCommand, inviteCommand, joinCommand, listCommand, membersCommand } from './commands';
 
 const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');
 };
 
-const DEFAULT_ARGS = { $0: '', _: [] };
+const DEFAULT_ARGS = { $0: '', _: [], return: true };
 
 jest.setTimeout(2000);
 
@@ -30,23 +26,23 @@ describe('cli-data: Party', () => {
   let bobStateManager: StateManager;
 
   beforeAll(async () => {
-    signalBroker = await createTestBroker();
+    signalBroker = await createTestBroker(4001);
   });
 
   beforeEach(async () => {
     [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
-      const client = new Client();
+      const client = new Client({ swarm: { signal: 'ws://localhost:4001' } });
       await client.initialize();
       await client.halo.createProfile({ ...createKeyPair(), username });
       return client;
     }));
-    aliceStateManager = new StateManager(() => alice, getReadlineInterface, {});
-    bobStateManager = new StateManager(() => bob, getReadlineInterface, {});
+    aliceStateManager = new StateManager({ getClient: async () => alice, getReadlineInterface });
+    bobStateManager = new StateManager({ getClient: async () => bob, getReadlineInterface });
   });
 
   afterEach(async () => {
-    await alice.destroy();
-    await bob.destroy();
+    await aliceStateManager?.destroy();
+    await bobStateManager?.destroy();
   });
 
   afterAll(async () => {

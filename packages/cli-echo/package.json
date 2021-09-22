@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-echo",
-  "version": "2.4.13-beta.0",
+  "version": "2.4.15-alpha.0",
   "description": "DXOS ECHO CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-echo#readme",
   "license": "AGPL-3.0",
@@ -11,7 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
-  "main": "dist/es/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "bin": {
     "wire-echo": "bin/dx-echo.js",
     "dx-echo": "bin/dx-echo.js"
@@ -21,11 +22,10 @@
     "dist/es"
   ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
+    "build": "tsc && cp -R src/*.yml dist/src",
     "clean": "rm -rf ./dist",
-    "cli": "BABEL_CACHE_PATH=./dist/babel-cache.json babel-node ./src/index.js",
-    "lint": "semistandard",
-    "lint:fix": "semistandard --fix",
+    "cli": "ts-node ./src/index.ts",
+    "lint": "eslint './src/**/*.{ts,js}'",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
@@ -34,48 +34,25 @@
     "verbose": false
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.4.13-beta.0",
-    "@dxos/crypto": "~2.12.20",
-    "@dxos/debug": "~2.12.20",
-    "@dxos/object-model": "~2.12.20",
+    "@dxos/cli-core": "^2.4.15-alpha.0",
+    "@dxos/crypto": "~2.12.22",
+    "@dxos/debug": "~2.12.22",
+    "@dxos/object-model": "~2.12.22",
     "assert": "^2.0.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/node": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^25.1.0",
-    "babel-loader": "^8.0.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-inline-import": "^3.0.0",
+    "@dxos/cli-data": "^2.4.15-alpha.0",
+    "@dxos/echo-db": "^2.12.22",
+    "@dxos/eslint-plugin": "~1.0.10",
     "eslint": "^7.13.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^2.6.2",
-    "jest": "^25.1.0",
-    "prettier": "^1.14.2",
-    "semistandard": "14.2.0",
+    "jest": "^27.2.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.0.5",
     "uuid": "^3.3.3"
   },
-  "semistandard": {
-    "parser": "babel-eslint",
-    "env": [
-      "jest",
-      "node",
-      "browser"
-    ],
-    "ignore": [
-      "/node_modules/",
-      "**/node_modules/",
-      "**/dist/"
-    ]
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
   },
   "peerDependencies": {
     "@dxos/cli": "^2.0.0"

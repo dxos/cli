@@ -24,7 +24,7 @@ export const DEFAULT_PROFILE_SYMLINK = 'default';
 
 export const PACKAGE_JSON_FILENAME = 'package.json';
 export const DEFAULT_PACKAGE_JSON_ATTRIBUTES = [
-  'name', 'version', 'author', 'license', 'description', 'keywords', 'homepage', 'repository', 'bugs'
+  'version', 'author', 'license', 'description', 'keywords', 'homepage', 'repository', 'bugs'
 ];
 
 export const ENVS = Object.keys(envmap);
@@ -44,8 +44,6 @@ export const getProfileName = (profilePath: string) => {
 /**
  * Set given profile as the default.
  * Creates symlink from `~/.wire/profile/default` -> `~/.wire/profile/<profile>.yml`.
- * @param {string} profile
- * @param {boolean} overwrite
  */
 export const setProfileAsDefault = async (profile: string, overwrite = true) => {
   assert(profile, 'Invalid profile name.');
@@ -79,8 +77,6 @@ export const getActiveProfilePath = (profile?: string) => {
 
 /**
  * Init profile from template.
- * @param {string} profile
- * @param {string} templateUrl
  */
 export const initProfileFromTemplate = async (profile: string, templateUrl: string) => {
   assert(profile);
@@ -102,8 +98,6 @@ export const initProfileFromTemplate = async (profile: string, templateUrl: stri
 
 /**
  * Get config from default or specified .yml file.
- * @param {string} configFilePath
- * @param {object} argvConf
  */
 export const getConfig = (configFilePath: string, argvConf = {}) => {
   assert(configFilePath);
