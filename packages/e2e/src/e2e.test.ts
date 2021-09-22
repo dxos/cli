@@ -52,10 +52,14 @@ describe('CLI', () => {
   });
 
   describe('services', () => {
-    it.only('dxns', async () => {
+    it('dxns', async () => {
       await cmd('service install --from @dxos/cli-dxns --service dxns').run();
 
-      await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp').debug().run();
+      try {
+        await cmd('service stop dxns').run();
+      } catch {}
+
+      await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp').run();
     })
   })
 });
