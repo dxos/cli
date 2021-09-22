@@ -26,7 +26,7 @@ describe('CLI', () => {
         await fs.rm(join(process.env.HOME!, '.wire/profile', `${PROFILE_NAME}.yml`));
       } catch {}
 
-      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://git.io/JBQdM`).debug().run();
+      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/main/packages/cli/profiles/local.yml`).debug().run();
     });
 
     it('select profile', async () => {
@@ -59,7 +59,13 @@ describe('CLI', () => {
         await cmd('service stop dxns').run();
       } catch {}
 
-      await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp').run();
+      await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
     });
   });
+
+  describe('dxns', () => {
+    it('seed', async () => {
+      await cmd('dxns seed --mnemonic //Alice --verbose').run()
+    })
+  })
 });
