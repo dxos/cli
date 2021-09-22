@@ -20,7 +20,7 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
   assert(config, 'Missing config.');
 
   if (!profilePath || !profileExists) {
-    throw new Error('CLI profile does not exist.');
+    return state as CliDataState; // Do not initialize cli-data if we don't have profile.
   }
 
   const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);

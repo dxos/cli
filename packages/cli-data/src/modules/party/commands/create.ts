@@ -12,8 +12,7 @@ import { PartyOptions } from '../party';
 export const createCommand = (stateManager: StateManager): CommandModule<PartyOptions, PartyOptions> => ({
   command: ['create'],
   describe: 'Create party.',
-  builder: yargs => yargs
-    .option('interactive', { hidden: true, default: true }), // override the default.
+  builder: yargs => yargs,
   handler: asyncHandler(async (argv: Arguments<PartyOptions>) => {
     const party = await stateManager.createParty();
     const data = { party: party.key.toHex() };
