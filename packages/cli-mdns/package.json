@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-mdns",
-  "version": "2.4.14-alpha.0",
+  "version": "2.4.15-alpha.0",
   "description": "DXOS MDNS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-mdns#readme",
   "license": "AGPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@dxos/cli-core": "^2.4.14-alpha.0",
+    "@dxos/cli-core": "^2.4.15-alpha.0",
     "@dxos/debug": "~2.12.22",
     "assert": "^2.0.0"
   },
