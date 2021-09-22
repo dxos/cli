@@ -52,6 +52,6 @@ jobs:
     - name: Build packages
       run: yarn build
     - name: E2E test
-      run: yarn test
+      run: yarn test:e2e
       working-directory: ./packages/e2e
      
