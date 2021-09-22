@@ -67,5 +67,38 @@ describe('CLI', () => {
     it('seed', async () => {
       await cmd('dxns seed --mnemonic //Alice --verbose').run()
     })
+
+    it('list resources', async () => {
+      const resources = await cmd('dxns resource list --json').json()
+
+      expect(resources.some((r: any) => r.dxn === 'dxos:type.app')).toBe(true)
+    })
+
+    describe('auctions', () => {
+      it('create', async () => {
+        await cmd('dxns auction create test-domain 10000000').run()
+      })
+
+      it('list', async () => {
+        const auctions = await cmd('dxns auction list --json').json()
+
+        const testAuction = auctions.find((a: any) => a.name === 'test-domain')
+        expect(testAuction.closed).toBe(false)
+      })
+
+      it('force-close', async () => {
+        await cmd('dxns auction force-close test-domain --mnemonic //Alice').run()
+      })
+
+      it('claim', async () => {
+        await cmd('dxns auction claim test-domain').run()
+      })
+    })
+
+    it('list domains', async () => {
+      const domains = await cmd('dxns domain list --json').json()
+
+      expect(domains.some((d: any) => d.name === 'test-domain')).toBe(true)
+    })
   })
 });
