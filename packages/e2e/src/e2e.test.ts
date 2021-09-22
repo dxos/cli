@@ -11,19 +11,19 @@ import { cmd } from './cli';
 const PROFILE_NAME = 'e2e-test';
 
 describe('CLI', () => {
-  it('init profile', async () => {
-    try {
-      await fs.rm(join(process.env.HOME!, '.wire/profile', `${PROFILE_NAME}.yml`));
-    } catch {}
-
-    await cmd(`profile init --name ${PROFILE_NAME} --template-url https://git.io/JBQdM`).debug().run();
-  });
-
   it('--help', async () => {
     await cmd('--help').run();
   });
 
   describe('profile', () => {
+    it('init profile', async () => {
+      try {
+        await fs.rm(join(process.env.HOME!, '.wire/profile', `${PROFILE_NAME}.yml`));
+      } catch {}
+  
+      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://git.io/JBQdM`).debug().run();
+    });
+
     it('select profile', async () => {
       await cmd(`profile set ${PROFILE_NAME}`).run();
     });
