@@ -15,9 +15,11 @@
     "dx": "bin/dx.js",
     "wire": "bin/dx.js"
   },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
     "bin/",
-    "dist/es"
+    "dist/"
   ],
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
