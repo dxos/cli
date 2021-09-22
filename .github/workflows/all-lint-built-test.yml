@@ -47,7 +47,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         registry-url: https://registry.npmjs.org/
     - name: Delete lockfile
-      if: ${{ matrix.lockfile == "no-lockfile" }}
+      if: ${{ matrix.lockfile == 'no-lockfile' }}
       run: rm yarn.lock
     - name: Install dependencies
       run: yarn
