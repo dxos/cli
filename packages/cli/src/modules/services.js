@@ -159,16 +159,17 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('host-net', { type: 'boolean', description: 'Use host network', default: false })
         .option('storage-path', { type: 'string', description: 'Path to ECHO and HALO storage.', default: path.join(os.homedir(), STORAGE_ROOT) })
         .option('binds', { type: 'array', description: 'Additional volume binds.' })
-        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' })
+        .option('replace-args', { type: 'boolean', description: 'Replace default arguments with provided.', default: false }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile, storagePath, binds: additionalBinds = [], dev } = argv;
+        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile, storagePath, binds: additionalBinds = [], dev, replaceArgs } = argv;
 
         const service = getServiceInfo(moduleName, serviceName);
         const dockerImage = new DockerImage({ service, dev });
 
         const forwardArgs = forward ? JSON.parse(forward).args : [];
-        const command = service.command.split(' ').concat(forwardArgs);
+        const command = replaceArgs ? forwardArgs : service.command.split(' ').concat(forwardArgs);
 
         const { name = service.container_name } = argv;
 
