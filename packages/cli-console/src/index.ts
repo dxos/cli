@@ -6,7 +6,8 @@ import { createCLI } from '@dxos/cli-core';
 
 import { AppModule } from './modules/console';
 
-import info from '../extension.yml';
+import { readFileSync } from 'fs';
+import path from 'path';
 
 module.exports = createCLI({
   modules: [AppModule],
