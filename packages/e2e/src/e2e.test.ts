@@ -20,7 +20,7 @@ describe('CLI', () => {
       try {
         await fs.rm(join(process.env.HOME!, '.wire/profile', `${PROFILE_NAME}.yml`));
       } catch {}
-  
+
       await cmd(`profile init --name ${PROFILE_NAME} --template-url https://git.io/JBQdM`).debug().run();
     });
 
