@@ -4,13 +4,13 @@
 
 import { createCLI } from '@dxos/cli-core';
 
-import { IPFSModule } from './modules/ipfs';
+import { HaloModule } from './modules/halo';
 
 import info from '../extension.yml';
 
 module.exports = createCLI({
-  modules: [IPFSModule],
+  modules: [HaloModule],
   dir: __dirname,
   main: !module.parent,
-  info
+  info: readFileSync(path.join(__dirname, '../extension.yml')).toString()
 });

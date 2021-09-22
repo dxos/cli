@@ -4,13 +4,13 @@
 
 import { createCLI } from '@dxos/cli-core';
 
-import { HaloModule } from './modules/halo';
+import { MDNSModule } from './modules/mdns';
 
 import info from '../extension.yml';
 
 module.exports = createCLI({
-  modules: [HaloModule],
+  modules: [MDNSModule],
   dir: __dirname,
   main: !module.parent,
-  info
+  info: readFileSync(path.join(__dirname, '../extension.yml')).toString()
 });

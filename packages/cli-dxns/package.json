@@ -22,7 +22,7 @@
     "dist/"
   ],
   "scripts": {
-    "build": "tsc && cp -R ./*.yml dist",
+    "build": "tsc && cp -R ./*.yml dist && cp -R .src/*.proto dist/src/",
     "clean": "rm -rf ./dist",
     "cli": "ts-node ./src/main.ts",
     "lint": "eslint './src/**/*.{ts,js}'",

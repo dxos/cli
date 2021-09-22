@@ -14,10 +14,10 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "files": [
-    "bin/"
+    "dist/"
   ],
   "scripts": {
-    "build": "tsc && cp -R ./*.yml dist",
+    "build": "tsc",
     "clean": "rm -rf ./dist",
     "cli": "ts-node ./src/main.ts",
     "lint": "eslint './src/**/*.{ts,js}'",

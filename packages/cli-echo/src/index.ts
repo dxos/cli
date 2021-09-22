@@ -13,5 +13,5 @@ module.exports = createCLI({
   modules: [EchoModule],
   dir: __dirname,
   main: !module.parent,
-  info: readFileSync(path.join(__dirname, './extension.yml')).toString()
+  info: readFileSync(path.join(__dirname, '../extension.yml')).toString()
 });

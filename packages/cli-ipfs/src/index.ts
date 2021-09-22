@@ -4,13 +4,13 @@
 
 import { createCLI } from '@dxos/cli-core';
 
-import { ChatModule } from './modules/chat';
+import { IPFSModule } from './modules/ipfs';
 
 import info from '../extension.yml';
 
 module.exports = createCLI({
-  modules: [ChatModule],
+  modules: [IPFSModule],
   dir: __dirname,
   main: !module.parent,
-  info
+  info: readFileSync(path.join(__dirname, '../extension.yml')).toString()
 });

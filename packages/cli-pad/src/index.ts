@@ -4,13 +4,13 @@
 
 import { createCLI } from '@dxos/cli-core';
 
-import { MeshModule } from './modules/mesh';
+import { AppModule } from './modules/app';
 
 import info from '../extension.yml';
 
 module.exports = createCLI({
-  modules: [MeshModule],
+  modules: [AppModule],
   dir: __dirname,
   main: !module.parent,
-  info
+  info: readFileSync(path.join(__dirname, '../extension.yml')).toString()
 });
