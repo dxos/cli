@@ -14,15 +14,15 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "files": [
-    "dist"
+    "bin/"
   ],
   "scripts": {
-    "build": "tsc",
-    "build:watch": "yarn run build -w",
-    "lint": "eslint './src/**/*.{ts,js}'",
+    "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "cli": "ts-node ./src/main.ts",
+    "lint": "eslint './src/**/*.{ts,js}'",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "jest": {
     "preset": "ts-jest/presets/default",

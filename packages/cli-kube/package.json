@@ -23,12 +23,12 @@
     "scripts/"
   ],
   "scripts": {
-    "build": "tsc && cp -R src/*.yml dist/src",
+    "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "cli": "ts-node ./src/index.ts",
+    "cli": "ts-node ./src/main.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "jest": {
     "preset": "ts-jest/presets/default",

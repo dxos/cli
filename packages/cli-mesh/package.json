@@ -11,23 +11,23 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
-  "main": "dist/es/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "bin/",
+    "dist/"
+  ],
   "bin": {
     "wire-mesh": "bin/dx-mesh.js",
     "dx-mesh": "bin/dx-mesh.js"
   },
-  "files": [
-    "bin/",
-    "dist/es"
-  ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
+    "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "cli": "BABEL_CACHE_PATH=./dist/babel-cache.json babel-node ./src/index.js",
-    "lint": "semistandard",
-    "lint:fix": "semistandard --fix",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "cli": "ts-node ./src/main.ts",
+    "lint": "eslint './src/**/*.{ts,js}'",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "jest": {
     "cacheDirectory": "/tmp/jest",

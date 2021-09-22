@@ -24,11 +24,12 @@
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "dev": "ts-node ./src/main.ts",
-    "dx": "ts-node ./src/main.ts",
-    "prebuild": "./scripts/get-extensions.sh &> /dev/null",
+    "cli": "ts-node ./src/main.ts",
+    "dev": "npm run cli",
+    "dx": "npm run cli",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "prebuild": "./scripts/get-extensions.sh &> /dev/null"
   },
   "jest": {
     "cacheDirectory": "/tmp/jest",
