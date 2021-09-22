@@ -60,6 +60,6 @@ describe('CLI', () => {
       } catch {}
 
       await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp').run();
-    })
-  })
+    });
+  });
 });
