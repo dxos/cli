@@ -8,8 +8,7 @@ import path from 'path';
 import { createCLI } from '@dxos/cli-core';
 
 import { destroyDataCliState, initDataCliState, CliDataState } from './init';
-import { PartyModule } from './modules/party';
-import { StorageModule } from './modules/storage';
+import { PartyModule, StorageModule, DeviceModule } from './modules';
 
 const CLI_BASE_COMMAND = 'dx';
 
@@ -23,7 +22,7 @@ export { CliDataState };
 
 export default createCLI({
   options: CLI_CONFIG,
-  modules: [PartyModule, StorageModule],
+  modules: [PartyModule, StorageModule, DeviceModule],
   dir: __dirname,
   main: !module.parent,
   init: initDataCliState,

@@ -8,17 +8,17 @@ import { BotFactoryClient } from '@dxos/botkit-client';
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-export const invite = ({ getClient, stateManager }) => async ({ topic, botId, spec, botName, json, env, ipfsCID, ipfsEndpoint, id, name, botPath }) => {
-  assert(getClient, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
+export const invite = ({ stateManager }) => async ({ topic, botId, spec, botName, json, env, ipfsCID, ipfsEndpoint, id, name, botPath }) => {
+  assert(stateManager, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
 
   assert(topic, 'Invalid topic.');
 
   const botSpec = spec ? JSON.parse(spec) : {};
 
-  const party = stateManager.currentParty;
+  const client = await stateManager.getClient();
+  const party = await stateManager.getParty();
   assert(party, 'Invalid party.');
 
-  const client = await getClient();
   const botFactoryClient = new BotFactoryClient(client.echo.networkManager, topic);
 
   let invitation;

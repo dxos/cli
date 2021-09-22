@@ -18,6 +18,16 @@ const STATE_STORAGE_FILENAME = 'state.json';
 const lock = promisify(lockFile.lock);
 const unlock = promisify(lockFile.unlock);
 
+export interface GetClientOpts {
+  initProfile?: boolean,
+}
+
+export interface StateManagerConstructorOpts {
+  storagePath?: string,
+  getReadlineInterface: Function,
+  getClient: (opts?: GetClientOpts) => Promise<Client>
+}
+
 /**
  * Represents state of the CLI within a party, as well as list of active parties;
  * Provides interface for authentication / invitation flow within a party.
@@ -25,17 +35,15 @@ const unlock = promisify(lockFile.unlock);
 export class StateManager {
   private _party: Party | null = null;
   private _lockPath: string | undefined
-  private _getReadlineInterface: Function;
-  private _getClient: Function;
+  private _getReadlineInterface: StateManagerConstructorOpts['getReadlineInterface'];
+  private _getClient: StateManagerConstructorOpts['getClient'];
   private _statePath: string | undefined;
   private _lockAquired: boolean;
   private _client: Client | undefined;
 
-  constructor (getClient: Function, getReadlineInterface: Function, options: {storagePath?: string}) {
-    assert(getClient);
+  constructor (options: StateManagerConstructorOpts) {
+    const { storagePath, getReadlineInterface, getClient } = options;
     assert(getReadlineInterface);
-
-    const { storagePath } = options;
 
     this._getClient = getClient;
     this._getReadlineInterface = getReadlineInterface;
@@ -45,8 +53,22 @@ export class StateManager {
     this._lockAquired = false;
   }
 
-  async getClient () {
-    await this._assureClient();
+  public get client () {
+    return this._client;
+  }
+
+  async getClient (): Promise<Client> {
+    if (this._client) {
+      return this._client;
+    }
+    return await this.initializeClient({ initProfile: true });
+  }
+
+  async initializeClient (opts: GetClientOpts) {
+    if (this._client) {
+      throw new Error('Client already initialized.');
+    }
+    this._client = await this._getClient(opts);
     assert(this._client);
     return this._client;
   }

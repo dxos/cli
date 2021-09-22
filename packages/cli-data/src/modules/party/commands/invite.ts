@@ -9,6 +9,7 @@ import { Arguments, Argv, CommandModule } from 'yargs';
 import { asyncHandler, print } from '@dxos/cli-core';
 
 import { StateManager } from '../../../state-manager';
+import { encodeInvitation } from '../../../utils';
 import { PartyOptions } from '../party';
 
 export interface PartyInviteOptions extends PartyOptions {
@@ -39,7 +40,7 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOp
         `#/auth?${queryString.stringify(invite)}`
       );
     } else {
-      result.invitation = Buffer.from(JSON.stringify(invite)).toString('base64');
+      result.invitation = encodeInvitation(invite);
     }
 
     return print({ ...result, passcode }, { json });
