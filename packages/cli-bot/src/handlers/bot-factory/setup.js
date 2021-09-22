@@ -3,6 +3,7 @@
 //
 
 import { parse, stringify } from 'envfile';
+import { readFileSync } from 'fs';
 import fs from 'fs-extra';
 import { load } from 'js-yaml';
 import path from 'path';
@@ -12,8 +13,9 @@ import { isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
 import { mapToKeyValues } from '@dxos/config';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
-import envmap from '../../../env-map.yml';
 import { BOTFACTORY_ENV_FILE } from '../../config';
+
+const envmap = readFileSync(path.join(__dirname, '../../../env-map.yml')).toString();
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
