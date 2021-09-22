@@ -70,11 +70,11 @@ export interface CliDataState extends CoreState {
 
 let stateManager: StateManager;
 export const initDataCliState = async (state: CoreState): Promise<CliDataState> => {
-  const { config, getReadlineInterface, models, profilePath, profileExists } = state;
+  const { config, getReadlineInterface, models, profilePath } = state;
   assert(config, 'Missing config.');
 
-  if (!profilePath || !profileExists) {
-    throw new Error('CLI profile does not exist.');
+  if (!profilePath) {
+    throw new Error('CLI profile path not specified.');
   }
 
   const { storagePath, profileName } = getProfileAndStorage(config.get('cli.storage.path'), profilePath);
