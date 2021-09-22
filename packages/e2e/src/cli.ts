@@ -28,7 +28,7 @@ export class Command {
 
   private async _execute (): Promise<ChildProcessWithoutNullStreams> {
     if (this._debug) {
-      console.log(`Running "${this._command}":\n\n`);
+      console.log(`[E2E] Running "dx ${this._command}":\n\n`);
     }
 
     const cp = spawn(`${EXECUTABLE_PATH} ${this._command}`, { shell: true, stdio: 'pipe' });
@@ -56,13 +56,13 @@ export class Command {
     });
 
     if (this._debug) {
-      console.log(`\n\nCommand exited with exit-code: ${cp.exitCode}, signal: ${cp.signalCode}.\n`);
+      console.log(`\n\n[E2E] Command exited with exit-code: ${cp.exitCode}, signal: ${cp.signalCode}.\n`);
     }
 
     if (cp.exitCode !== 0) {
-      throw new Error(`command "${this._command}" exited with code ${cp.exitCode}`);
+      throw new Error(`[E2E] Command "dx ${this._command}" exited with code ${cp.exitCode}`);
     } else if (cp.exitCode === null) {
-      throw new Error(`command "${this._command}" exited with signal ${cp.signalCode}`);
+      throw new Error(`[E2E] Command "dx ${this._command}" exited with signal ${cp.signalCode}`);
     }
 
     return cp;

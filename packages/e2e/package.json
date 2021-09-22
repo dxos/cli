@@ -5,11 +5,8 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "build:watch": "yarn run build -w",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "clean": "rm -rf ./dist",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "mocha 'src/**/*.test.ts'"
+    "test:e2e": "mocha 'src/**/*.test.ts'"
   },
   "mocha": {
     "require": [
