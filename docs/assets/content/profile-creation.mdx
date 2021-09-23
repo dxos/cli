@@ -14,7 +14,7 @@ To create a profile from a template, pass a profile name and template URL.
 Example:
 
 ```bash
-$ dx profile init --name moon --template-url https://git.io/JuhES
+dx profile init --name moon --template-url https://git.io/JuhES
 ```
 
 Profiles are stored in the `~/.dx/profile` folder. To further customize a profile, edit the profile configuration file.
@@ -30,19 +30,19 @@ Note: The first profile created automatically becomes the system default.
 View the name of the active profile:
 
 ```bash
-$ dx profile
+dx profile
 ```
 
 View the configuration values for the active profile:
 
 ```bash
-$ dx profile config
+dx profile config
 ```
 
 View the configuration values for a given profile:
 
 ```bash
-$ dx profile config <NAME>
+dx profile config <NAME>
 ```
 
 Multiple templates can be created and shared with others to use different configuration values. Some [sample templates](https://github.com/dxos/cli/tree/main/packages/cli/profiles) are included in the repo.
