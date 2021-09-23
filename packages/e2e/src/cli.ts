@@ -7,7 +7,7 @@ import { join } from 'path';
 
 const EXECUTABLE_PATH = join(__dirname, '../../cli/bin/dx.js');
 
-const GLOBAL_DEBUG = process.env.CI !== undefined;
+const GLOBAL_DEBUG = process.env.CI !== undefined || process.env.E2E_DEBUG;
 
 export function cmd (command: string): Command {
   return new Command(command);

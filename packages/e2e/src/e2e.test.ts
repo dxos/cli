@@ -26,7 +26,7 @@ describe('CLI', () => {
         await fs.rm(join(process.env.HOME!, '.wire/profile', `${PROFILE_NAME}.yml`));
       } catch {}
 
-      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://git.io/JBQdM`).debug().run();
+      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/main/packages/cli/profiles/e2e.yml`).run();
     });
 
     it('select profile', async () => {
@@ -59,7 +59,46 @@ describe('CLI', () => {
         await cmd('service stop dxns').run();
       } catch {}
 
-      await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp').run();
+      await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
+    });
+  });
+
+  describe('dxns', () => {
+    it('seed', async () => {
+      await cmd('dxns seed --mnemonic //Alice --verbose').run();
+    });
+
+    it('list resources', async () => {
+      const resources = await cmd('dxns resource list --json').json();
+
+      expect(resources.some((r: any) => r.dxn === 'dxos:type.app')).toBe(true);
+    });
+
+    describe('auctions', () => {
+      it('create', async () => {
+        await cmd('dxns auction create test-domain 10000000').run();
+      });
+
+      it('list', async () => {
+        const auctions = await cmd('dxns auction list --json').json();
+
+        const testAuction = auctions.find((a: any) => a.name === 'test-domain');
+        expect(testAuction.closed).toBe(false);
+      });
+
+      it('force-close', async () => {
+        await cmd('dxns auction force-close test-domain --mnemonic //Alice').run();
+      });
+
+      it('claim', async () => {
+        await cmd('dxns auction claim test-domain').run();
+      });
+
+      it('check that domain is claimed', async () => {
+        const domains = await cmd('dxns domain list --json').json();
+
+        expect(domains.some((d: any) => d.name === 'test-domain')).toBe(true);
+      });
     });
   });
 });
