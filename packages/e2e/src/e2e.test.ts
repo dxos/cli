@@ -93,12 +93,12 @@ describe('CLI', () => {
       it('claim', async () => {
         await cmd('dxns auction claim test-domain').run();
       });
-    });
 
-    it('list domains', async () => {
-      const domains = await cmd('dxns domain list --json').json();
-
-      expect(domains.some((d: any) => d.name === 'test-domain')).toBe(true);
+      it('check that domain is claimed', async () => {
+        const domains = await cmd('dxns domain list --json').json();
+  
+        expect(domains.some((d: any) => d.name === 'test-domain')).toBe(true);
+      });
     });
   });
 });
