@@ -96,7 +96,7 @@ describe('CLI', () => {
 
       it('check that domain is claimed', async () => {
         const domains = await cmd('dxns domain list --json').json();
-  
+
         expect(domains.some((d: any) => d.name === 'test-domain')).toBe(true);
       });
     });
