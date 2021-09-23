@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli",
-  "version": "2.4.13",
+  "version": "2.4.15-alpha.0",
   "description": "DXOS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli#readme",
   "license": "AGPL-3.0",
@@ -37,9 +37,9 @@
   },
   "dependencies": {
     "@babel/runtime": "7.7.2",
-    "@dxos/cli-core": "^2.4.13",
-    "@dxos/debug": "~2.12.20",
-    "@dxos/random-access-multi-storage": "~2.12.20",
+    "@dxos/cli-core": "^2.4.15-alpha.0",
+    "@dxos/debug": "~2.12.22",
+    "@dxos/random-access-multi-storage": "~2.12.22",
     "assert": "^2.0.0",
     "find-root": "^1.1.0",
     "fs-extra": "^8.1.0",
@@ -71,7 +71,7 @@
     "babel-loader": "^8.0.0",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-inline-import": "^3.0.0",
-    "jest": "^25.1.0",
+    "jest": "^27.2.0",
     "json2yaml": "^1.1.0",
     "semistandard": "14.2.0",
     "yaml2json": "^1.0.2"

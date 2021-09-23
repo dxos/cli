@@ -8,7 +8,8 @@ import { Argv, CommandModule, Arguments } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
 
-import { StateManager } from '../../state-manager';
+import { StateManager } from '../../../state-manager';
+import { decodeInvitation } from '../../../utils';
 import { PartyOptions } from '../party';
 
 export interface PartyJoinOptions extends PartyOptions {
@@ -17,7 +18,7 @@ export interface PartyJoinOptions extends PartyOptions {
   invitationUrl?: string
 }
 
-const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
+const options = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
   return yargs
     .option('interactive', { hidden: true, default: true }) // override the default.
     .option('invitation', { type: 'string' })
@@ -25,10 +26,10 @@ const partyOptions = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
     .option('invitation-url', { type: 'string' });
 };
 
-export const joinCommand = (stateManager: StateManager): CommandModule => ({
+export const joinCommand = (stateManager: StateManager): CommandModule<PartyOptions, PartyJoinOptions> => ({
   command: ['join [party-key]', 'switch [party-key]', 'use [party-key]'],
   describe: 'Join party.',
-  builder: yargs => partyOptions(yargs),
+  builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<PartyJoinOptions>) => {
     const { partyKey, invitationUrl, invitation, json, passcode } = argv;
 
@@ -36,7 +37,7 @@ export const joinCommand = (stateManager: StateManager): CommandModule => ({
 
     let invite = null;
     if (invitation) {
-      invite = JSON.parse(Buffer.from(invitation, 'base64').toString('utf8'));
+      invite = decodeInvitation(invitation);
     } else if (invitationUrl) {
       invite = queryString.parse(invitationUrl.split('?')[1].replace(/\\/g, ''), { decode: true });
     }
@@ -44,7 +45,7 @@ export const joinCommand = (stateManager: StateManager): CommandModule => ({
     await stateManager.joinParty(partyKey, invite, passcode);
 
     if (partyKey && /^[0-9a-f]{64}$/i.test(partyKey)) {
-      print({ partyKey }, { json });
+      return print({ partyKey }, { json });
     }
   })
 });
