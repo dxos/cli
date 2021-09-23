@@ -14,8 +14,8 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "bin": {
-    "wire-halo": "bin/dx-dxns.js",
-    "dx-halo": "bin/dx-dxns.js"
+    "wire-dxns": "bin/dx-dxns.js",
+    "dx-dxns": "bin/dx-dxns.js"
   },
   "files": [
     "bin/",
