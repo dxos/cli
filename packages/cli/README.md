@@ -1,5 +1,24 @@
 # DXOS CLI
 
+## Development
+
+### Dependencies
+
+- yarn
+- jq
+
+### Setup
+
+```bash
+# CLI is a yarn monorepo
+
+# Install dependencies
+yarn
+
+# Build all packages
+yarn build
+```
+
 ## Installation
 
 Install CLI globally:
