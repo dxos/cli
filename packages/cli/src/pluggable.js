@@ -3,6 +3,7 @@
 //
 
 /* eslint import/no-dynamic-require: 0 */
+/* eslint @typescript-eslint/no-var-requires: 0 */
 /* eslint global-require: 0 */
 
 import { exec } from 'child_process';
@@ -137,7 +138,9 @@ export class Pluggable {
    */
   isInstalled () {
     const { moduleName } = this;
-    if (this._isInWorkspace) return true;
+    if (this._isInWorkspace) {
+      return true;
+    }
     try {
       const pkgPath = require.resolve(`${moduleName}/package.json`);
       const pkg = require(pkgPath);

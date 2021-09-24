@@ -3,13 +3,12 @@
 //
 
 import assert from 'assert';
-
+import { spawn } from 'child_process';
 import clean from 'lodash-clean';
 
-import { spawn } from 'child_process';
 import { Runnable, sanitizeEnv, stopService, asyncHandler } from '@dxos/cli-core';
-import { Registry } from '@wirelineio/registry-client';
 import { log } from '@dxos/debug';
+import { Registry } from '@wirelineio/registry-client';
 
 const SIGNAL_PROCESS_NAME = 'signal';
 const DEFAULT_LOG_FILE = '/var/log/signal.log';
@@ -137,7 +136,7 @@ export const SignalModule = ({ config }) => {
           };
 
           // forward params to the binary
-          signalRunnable.run(args, options);
+          void signalRunnable.run(args, options);
         })
       })
 

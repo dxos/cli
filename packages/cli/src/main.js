@@ -2,22 +2,23 @@
 // Copyright 2020 DXOS.org
 //
 
+import { readFileSync } from 'fs';
 import yaml from 'js-yaml';
-import readPkgUp from 'read-pkg-up';
 import uniqBy from 'lodash.uniqby';
+import path from 'path';
+import readPkgUp from 'read-pkg-up';
 
 import { getLoggers, createCLI } from '@dxos/cli-core';
 
-import KNOWN_EXTENSIONS from '../known-extensions.yml';
-
-import { PluggableModule } from './modules/pluggable';
+import { listInstalled } from './extensions';
 import { CertModule } from './modules/cert';
+import { ExtensionModule } from './modules/extension';
+import { UpgradeModule, UninstallModule } from './modules/installation';
+import { PluggableModule } from './modules/pluggable';
 import { ProfileModule } from './modules/profile';
 import { ServicesModule } from './modules/services';
-import { UpgradeModule, UninstallModule } from './modules/installation';
-import { ExtensionModule } from './modules/extension';
 
-import { listInstalled } from './extensions';
+const KNOWN_EXTENSIONS = readFileSync(path.join(__dirname, '../known-extensions.yml')).toString();
 
 const { logError } = getLoggers();
 

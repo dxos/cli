@@ -78,6 +78,6 @@ module.exports = createCLI({
   main: !module.parent,
   init: initDXNSCliState,
   destroy: destroyDXNSCliState,
-  info: readFileSync(path.join(__dirname, './extension.yml')).toString(),
-  compose: readFileSync(path.join(__dirname, './docker-compose.yml')).toString()
+  info: readFileSync(path.join(__dirname, '../extension.yml')).toString(),
+  compose: readFileSync(path.join(__dirname, '../docker-compose.yml')).toString()
 });

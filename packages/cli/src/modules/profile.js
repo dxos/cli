@@ -57,7 +57,7 @@ export const ProfileModule = () => ({
           return;
         }
 
-        setProfileAsDefault(name);
+        await setProfileAsDefault(name);
       })
     })
 

@@ -13,7 +13,7 @@ import { waitForCondition } from '@dxos/async';
 
 import { KUBE_TAG, KubeDeployOptions, KubeDomainCreateOptions, Provider } from './common';
 
-const SSH_KEYS = readFileSync(path.join(__dirname, '../ssh-keys.yml')).toString();
+const SSH_KEYS = readFileSync(path.join(__dirname, '../../ssh-keys.yml')).toString();
 const { keys: defaultSSHKeys } = yaml.load(SSH_KEYS);
 
 const DEFAULT_REGION = 'nyc3';

@@ -4,9 +4,9 @@
 
 import { spawnSync } from 'child_process';
 import semverInc from 'semver/functions/inc';
-import { log } from '@dxos/debug';
 
 import { readFile } from '@dxos/cli-core';
+import { log } from '@dxos/debug';
 
 import { PAD_CONFIG_FILENAME } from '../config';
 

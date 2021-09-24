@@ -30,7 +30,7 @@
     ]
   },
   "lint-staged": {
-    "*.js": "semistandard"
+    "*.js": "eslint"
   },
   "pre-commit": [
     "lint:staged",
@@ -40,23 +40,12 @@
     "lerna": "^3.19.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "@dxos/eslint-plugin": "~1.0.10",
     "lint-staged": "^9.5.0",
     "lockfile-lint": "^4.3.7",
-    "pre-commit": "^1.2.2",
-    "semistandard": "14.2.0"
+    "pre-commit": "^1.2.2"
   },
-  "semistandard": {
-    "parser": "babel-eslint",
-    "env": [
-      "jest",
-      "node",
-      "browser"
-    ],
-    "ignore": [
-      "/node_modules/",
-      "**/node_modules/",
-      "**/dist/"
-    ]
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
   }
 }

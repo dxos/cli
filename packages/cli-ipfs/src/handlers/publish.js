@@ -3,13 +3,13 @@
 //
 
 import assert from 'assert';
-import mime from 'mime-types';
+import cliProgress from 'cli-progress';
 import fs from 'fs';
+import folderSize from 'get-folder-size';
 import IpfsHttpClient, { globSource } from 'ipfs-http-client';
+import mime from 'mime-types';
 import path from 'path';
 import pify from 'pify';
-import folderSize from 'get-folder-size';
-import cliProgress from 'cli-progress';
 
 import { logError } from '@dxos/debug';
 
@@ -43,7 +43,8 @@ export const publish = config => async ({ timeout, target, quiet }) => {
     total = stat.size;
   }
 
-  const bar = quiet ? { update: () => {}, start: () => {}, stop: () => {} }
+  const bar = quiet
+    ? { update: () => {}, start: () => {}, stop: () => {} }
     : new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
   bar.start(total, 0);
 

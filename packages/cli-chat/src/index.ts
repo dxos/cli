@@ -7,11 +7,11 @@ import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
 
-import { KubeModule } from './modules/kube';
+import { ChatModule } from './modules/chat';
 
 module.exports = createCLI({
-  modules: [KubeModule],
+  modules: [ChatModule],
   dir: __dirname,
   main: !module.parent,
-  info: readFileSync(path.join(__dirname, './extension.yml')).toString()
+  info: readFileSync(path.join(__dirname, '../extension.yml')).toString()
 });

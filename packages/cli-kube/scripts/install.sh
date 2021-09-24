@@ -6,7 +6,7 @@
 
 export SCRIPT_DIR; SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-SERVICES_FILE_PATH='../dist/src/services.yml'
+SERVICES_FILE_PATH='../dist/services.yml'
 
 DEV=${1:-"0"}
 [[ "$DEV" == "1" ]] && CLI_VER="alpha" || CLI_VER="latest"

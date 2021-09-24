@@ -14,20 +14,20 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "bin": {
-    "wire-halo": "bin/dx-dxns.js",
-    "dx-halo": "bin/dx-dxns.js"
+    "wire-dxns": "bin/dx-dxns.js",
+    "dx-dxns": "bin/dx-dxns.js"
   },
   "files": [
     "bin/",
     "dist/"
   ],
   "scripts": {
-    "build": "tsc && cp -R src/*.yml src/*.proto dist/src",
+    "build": "tsc && cp -R ./*.yml dist && cp -R ./src/*.proto dist/src/",
     "clean": "rm -rf ./dist",
     "cli": "ts-node ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "jest": {
     "preset": "ts-jest/presets/default",

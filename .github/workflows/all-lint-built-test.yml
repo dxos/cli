@@ -32,7 +32,7 @@ jobs:
         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
   e2e-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     strategy:
       matrix:

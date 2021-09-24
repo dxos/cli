@@ -11,30 +11,29 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
-  "main": "dist/es/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "bin/",
+    "dist/"
+  ],
   "bin": {
     "wire-pad": "bin/dx-pad.js",
     "dx-pad": "bin/dx-pad.js"
   },
-  "files": [
-    "bin/",
-    "dist/es"
-  ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
+    "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "cli": "BABEL_CACHE_PATH=./dist/babel-cache.json babel-node ./src/index.js",
-    "lint": "semistandard",
-    "lint:fix": "semistandard --fix",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests --runInBand --no-cache"
+    "cli": "ts-node ./src/index.ts",
+    "lint": "eslint './src/**/*.{ts,js}'",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "jest": {
     "cacheDirectory": "/tmp/jest",
     "verbose": false
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
     "@dxos/cli-core": "^2.4.15-alpha.0",
     "@dxos/debug": "~2.12.22",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
@@ -49,38 +48,14 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/node": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^25.1.0",
-    "babel-loader": "^8.0.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-inline-import": "^3.0.0",
+    "@dxos/eslint-plugin": "~1.0.10",
     "eslint": "^7.13.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^2.6.2",
     "jest": "^27.2.0",
-    "prettier": "^1.14.2",
-    "semistandard": "14.2.0"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.0.5"
   },
-  "semistandard": {
-    "parser": "babel-eslint",
-    "env": [
-      "jest",
-      "node",
-      "browser"
-    ],
-    "ignore": [
-      "/node_modules/",
-      "**/node_modules/",
-      "**/dist/"
-    ]
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
   },
   "peerDependencies": {
     "@dxos/cli": "^2.0.0"

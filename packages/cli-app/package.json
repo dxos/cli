@@ -24,13 +24,13 @@
     "dx-app-server": "bin/dx-app-server.js"
   },
   "scripts": {
-    "build": "tsc && cp -R ./*.yml dist/",
+    "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
     "cli": "ts-node ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "server": "npm run build && npm run cli app serve start",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests --runInBand --no-cache"
+    "server": "npm run build && npm run cli app serve start"
   },
   "jest": {
     "preset": "ts-jest/presets/default",

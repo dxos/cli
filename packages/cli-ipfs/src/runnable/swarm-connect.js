@@ -3,9 +3,9 @@
 //
 
 import assert from 'assert';
-import get from 'lodash.get';
 import { boolean } from 'boolean';
 import { spawnSync } from 'child_process';
+import get from 'lodash.get';
 
 import { sleep } from '@dxos/async';
 import { Registry } from '@wirelineio/registry-client';
@@ -92,4 +92,4 @@ const [registryEndpoint, chainId, interval, allowIPv6] = process.argv.slice(2);
 assert(registryEndpoint, 'Invalid WNS endpoint.');
 assert(chainId, 'Invalid WNS Chain ID.');
 
-new SwarmConnector({ registryEndpoint, chainId, interval, allowIPv6 }).start();
+void new SwarmConnector({ registryEndpoint, chainId, interval, allowIPv6 }).start();

@@ -3,13 +3,14 @@
 //
 
 import assert from 'assert';
-import path from 'path';
-import get from 'lodash.get';
-import fs from 'fs';
 import { spawnSync } from 'child_process';
+import fs from 'fs';
+import get from 'lodash.get';
+import path from 'path';
 
 import { Runnable, stopService, asyncHandler, print } from '@dxos/cli-core';
 import { Registry } from '@wirelineio/registry-client';
+
 import { download, publish, query, register } from '../handlers';
 
 const IPFS_EXEC = 'ipfs';

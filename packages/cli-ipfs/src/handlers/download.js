@@ -5,11 +5,11 @@
 import assert from 'assert';
 import eos from 'end-of-stream-promise';
 import fs from 'fs';
-import path from 'path';
 import IpfsHttpClient from 'ipfs-http-client';
+import toStream from 'it-to-stream';
+import path from 'path';
 
 import { Registry } from '@wirelineio/registry-client';
-const toStream = require('it-to-stream');
 
 export const download = config => async ({ timeout, name, id, outdir = '.' }) => {
   assert(name || id, '--name or --id required');

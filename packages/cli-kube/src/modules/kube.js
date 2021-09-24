@@ -11,8 +11,8 @@ import { RUNNING_STATE, asyncHandler, DockerContainer, DockerImage, Runnable, pr
 
 import { DigitalOceanProvider } from '../providers';
 
-const KubeServices = readFileSync(path.join(__dirname, '../services.yml')).toString();
-const compose = readFileSync(path.join(__dirname, '../docker-compose.yml')).toString();
+const KubeServices = readFileSync(path.join(__dirname, '../../services.yml')).toString();
+const compose = readFileSync(path.join(__dirname, '../../docker-compose.yml')).toString();
 
 const KUBE_PROFILE_ROOT = '.wire/kube';
 const KUBE_PROFILE_PATH = path.join(os.homedir(), KUBE_PROFILE_ROOT);
