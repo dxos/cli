@@ -50,7 +50,7 @@ export const addType = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
   const schemaRoot = await pb.load(path as string);
   const meta: RecordMetadata = {
-    created: new Date().toISOString(),
+    created: new Date(),
     version,
     name: resourceName,
     description,

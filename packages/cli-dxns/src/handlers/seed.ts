@@ -72,7 +72,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   verbose && log('Registering DXOS schema..');
   const root = await pb.load(SCHEMA_PATH as string);
   const meta: RecordMetadata = {
-    created: new Date().toISOString(),
+    created: new Date(),
     version: '1.0.0',
     name: DEFAULT_SCHEMA_NAME,
     description: 'Base DXOS schema',
