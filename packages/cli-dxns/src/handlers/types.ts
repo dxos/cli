@@ -4,7 +4,7 @@
 
 import pb from 'protobufjs';
 
-import { CID, DomainKey, DXN, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-api';
+import { CID, DomainKey, DXN, SuppliedRecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-api';
 
 import { Params, printRecord, printResource, printResources } from './common';
 
@@ -49,8 +49,7 @@ export const addType = (params: Params) => async (argv: any) => {
 
   const client = await params.getDXNSClient();
   const schemaRoot = await pb.load(path as string);
-  const meta: RecordMetadata = {
-    created: new Date(),
+  const meta: SuppliedRecordMetadata = {
     version,
     name: resourceName,
     description,

@@ -9,7 +9,7 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { RecordMetadata } from '@dxos/registry-api';
+import { SuppliedRecordMetadata } from '@dxos/registry-api';
 
 import { Params } from './common';
 
@@ -71,8 +71,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   // Register DXOS Schema.
   verbose && log('Registering DXOS schema..');
   const root = await pb.load(SCHEMA_PATH as string);
-  const meta: RecordMetadata = {
-    created: new Date(),
+  const meta: SuppliedRecordMetadata = {
     version: '1.0.0',
     name: DEFAULT_SCHEMA_NAME,
     description: 'Base DXOS schema',

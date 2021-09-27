@@ -3,7 +3,7 @@
 //
 
 import { print } from '@dxos/cli-core';
-import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-api';
+import { DXN, DomainKey, CID, SuppliedRecordMetadata } from '@dxos/registry-api';
 
 import { displayRecord, Params } from './common';
 
@@ -43,8 +43,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
 
   const data = JSON.parse(argv.data as string);
   const resourceName = name as string | undefined;
-  const meta: RecordMetadata = {
-    created: new Date(),
+  const meta: SuppliedRecordMetadata = {
     version,
     name,
     description,
