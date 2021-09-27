@@ -8,7 +8,7 @@ import path from 'path';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { assemble, del, deploy, get, install, list, start, stop, upgrade } from '../handlers';
+import { assemble, del, deploy, get, install, list, register, start, stop, upgrade } from '../handlers';
 
 const KubeServices = readFileSync(path.join(__dirname, '../../services.yml')).toString();
 const compose = readFileSync(path.join(__dirname, '../../docker-compose.yml')).toString();
@@ -24,7 +24,7 @@ const getAuth = (config, imageInfo) => ({
   serveraddress: `https://${imageInfo.image.split('/')[0]}`
 });
 
-export const KubeModule = ({ config }) => ({
+export const KubeModule = ({ config, getDXNSClient }) => ({
   command: ['kube'],
   describe: 'KUBE management.',
   builder: yargs => yargs
@@ -125,5 +125,16 @@ export const KubeModule = ({ config }) => ({
         .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
       handler: asyncHandler(assemble())
+    })
+
+    .command({
+      command: ['register'],
+      describe: 'Register KUBE.',
+      builder: yargs => yargs
+        .option('name', { type: 'string' })
+        .option('domain', { type: 'string' })
+        .option('url', { type: 'string' }),
+
+      handler: asyncHandler(register({ getDXNSClient }))
     })
 });
