@@ -227,14 +227,14 @@ $ dx upgrade --npm-client yarn --force
 
 | Extension |
 | :------------ |
-| [App CLI](https://github.com/dxos/cli/blob/master/packages/cli-app/README.md) |
-| [Bot CLI](https://github.com/dxos/cli/blob/master/packages/cli-bot/README.md) |
-| [Chat CLI](https://github.com/dxos/cli/blob/master/packages/cli-chat/README.md) |
-| [Dashboard CLI](https://github.com/dxos/cli/blob/master/packages/cli-dashboard/README.md) |
-| [Data CLI](https://github.com/dxos/cli/blob/master/packages/cli-data/README.md) |
-| [IPFS CLI](https://github.com/dxos/cli/blob/master/packages/cli-ipfs/README.md) |
-| [Machine CLI](https://github.com/dxos/cli/blob/master/packages/cli-machine/README.md) |
-| [MDNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-mdns/README.md) |
-| [Pad CLI](https://github.com/dxos/cli/blob/master/packages/cli-pad/README.md) |
-| [Signal CLI](https://github.com/dxos/cli/blob/master/packages/cli-signal/README.md) |
-| [WNS CLI](https://github.com/dxos/cli/blob/master/packages/cli-wns/README.md) |
+| [App CLI](../cli-app/README.md) |
+| [Bot CLI](../cli-bot/README.md) |
+| [Chat CLI](../cli-chat/README.md) |
+| [Dashboard CLI](../cli-dashboard/README.md) |
+| [Data CLI](../cli-data/README.md) |
+| [IPFS CLI](../cli-ipfs/README.md) |
+| [Machine CLI](../cli-machine/README.md) |
+| [MDNS CLI](../cli-mdns/README.md) |
+| [Pad CLI](../cli-pad/README.md) |
+| [Signal CLI](../cli-signal/README.md) |
+| [WNS CLI](../cli-wns/README.md) |
