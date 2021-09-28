@@ -71,7 +71,7 @@ To use the CLI, a profile needs to be created and activated.
 $ dx profile init --name moon --template-url https://git.io/JuhES
 ```
 
-More details about CLI profiles and CLI extensions can be found [here](./packages/cli/README.md).
+Read more about [CLI profiles](./packages/cli/README.md#profiles) and [CLI extensions](./packages/cli/README.md#extensions).
 
 ## Development
 
