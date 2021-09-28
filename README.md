@@ -2,4 +2,4 @@
 
 The DXOS CLI is an extensible set of command line tools.
 
-See the main [DXOS CLI](https://github.com/dxos/cli/blob/master/packages/cli/README.md) package docs for usage.
+See the main [DXOS CLI](./packages/cli/README.md) package docs for usage.
