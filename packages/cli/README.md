@@ -127,12 +127,6 @@ $ dx cert import --url https://kube.local/kube.pem
 
 Corresponding certificate would be downloaded to `~/.wire/certs` and considered by CLI as "trusted".
 
-### Environment Variables
-
-While the usage of ENV variables is minimized, CLI still uses WNS related variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](env-map.yml)
-
-ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
-
 ## Development
 
 ### Dependencies
@@ -152,6 +146,11 @@ yarn
 yarn build
 ```
 
+### Environment Variables
+
+While the usage of ENV variables is minimized, CLI still uses WNS related variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](env-map.yml)
+
+ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
 
 ## Troubleshooting
 
