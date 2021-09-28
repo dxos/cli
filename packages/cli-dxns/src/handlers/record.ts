@@ -44,7 +44,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   const data = JSON.parse(argv.data as string);
   const resourceName = name as string | undefined;
   const meta: RecordMetadata = {
-    created: new Date().getTime().toString(),
+    created: new Date(),
     version,
     name,
     description,

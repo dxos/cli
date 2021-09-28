@@ -8,7 +8,7 @@ import clean from 'lodash-clean';
 
 import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { CID, DXN, RegistryTypeRecord } from '@dxos/registry-api';
+import { CID, DXN, RecordKind, RegistryTypeRecord } from '@dxos/registry-api';
 import type { IRegistryApi } from '@dxos/registry-api';
 import { Registry } from '@wirelineio/registry-client';
 
@@ -93,15 +93,15 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
 
     const client: { registryApi: IRegistryApi } = await getDXNSClient();
 
-    const appType = await client.registryApi.get<RegistryTypeRecord>(DXN.parse(APP_DXN_NAME));
+    const appType = await client.registryApi.getResource<RegistryTypeRecord>(DXN.parse(APP_DXN_NAME));
     assert(appType);
-    assert(appType.record.kind === 'type');
+    assert(appType.record.kind === RecordKind.Type);
 
     const cid = await client.registryApi.insertDataRecord({
       hash: CID.from(pkg['/']).value,
       ...rest
     }, appType?.record.cid, {
-      created: new Date().toISOString(),
+      created: new Date(),
       version,
       author,
       description,
