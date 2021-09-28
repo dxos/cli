@@ -1,38 +1,6 @@
 # DXOS CLI
 
-## Development
-
-### Dependencies
-
-- yarn
-- jq
-
-### Setup
-
-```bash
-# CLI is a yarn monorepo
-
-# Install dependencies
-yarn
-
-# Build all packages
-yarn build
-```
-
-## Installation
-
-Install CLI globally:
-
-```bash
-$ yarn global add @dxos/cli@beta
-```
-
-or
-
-```
-$ npm install --global @dxos/cli@beta
-```
-*Note: You will need to be logged into your npm account in the terminal for this to work*
+## Usage
 
 ### Profiles
 
@@ -127,23 +95,23 @@ $ dx extension uninstall @dxos/cli-ipfs
 Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it? (Yes/No): y
 ✔ Uninstalling @dxos/cli-ipfs
 ```
-## Commands
 
-All the CLI modules support `help` flag that provides desired command clarification, e.g.
+#### Available Extensions
 
-```bash
-$ dx help
-```
+| Extension |
+| :------------ |
+| [App CLI](../cli-app/README.md) |
+| [Bot CLI](../cli-bot/README.md) |
+| [Chat CLI](../cli-chat/README.md) |
+| [Dashboard CLI](../cli-dashboard/README.md) |
+| [Data CLI](../cli-data/README.md) |
+| [IPFS CLI](../cli-ipfs/README.md) |
+| [Machine CLI](../cli-machine/README.md) |
+| [MDNS CLI](../cli-mdns/README.md) |
+| [Pad CLI](../cli-pad/README.md) |
+| [Signal CLI](../cli-signal/README.md) |
+| [WNS CLI](../cli-wns/README.md) |
 
-```bash
-$ dx app help
-```
-
-```bash
-$ dx app register help
-```
-
-## Setup
 
 ### Certification
 
@@ -163,30 +131,25 @@ While the usage of ENV variables is minimized, CLI still uses WNS related variab
 
 ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
 
-## Upgrade
+## Development
 
-An older version of the CLI could be upgraded via `dx upgrade` command.
+### Dependencies
 
+- yarn
+- jq
+
+### Setup
+
+```bash
+# CLI is a yarn monorepo
+
+# Install dependencies
+yarn
+
+# Build all packages
+yarn build
 ```
-$ dx version
-v1.0.1-beta.15
 
-$ dx upgrade --force
-Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
-✔ Uninstalling @dxos/cli-data
-✔ Uninstalling @dxos/cli-signal
-✔ Uninstalling @dxos/cli-bot
-✔ Uninstalling @dxos/cli-app
-✔ Uninstalling @dxos/cli
-✔ Installing @dxos/cli
-✔ Installing @dxos/cli-app
-✔ Installing @dxos/cli-bot
-✔ Installing @dxos/cli-signal
-✔ Installing @dxos/cli-data
-
-$ dx version
-v1.0.1-beta.16
-```
 
 ## Troubleshooting
 
@@ -222,19 +185,3 @@ $ dx upgrade --npm-client yarn --force
 ```
 
 `--version` attribute could be supplied in order to upgrade/downgrade to a specific version.
-
-## Extensions
-
-| Extension |
-| :------------ |
-| [App CLI](../cli-app/README.md) |
-| [Bot CLI](../cli-bot/README.md) |
-| [Chat CLI](../cli-chat/README.md) |
-| [Dashboard CLI](../cli-dashboard/README.md) |
-| [Data CLI](../cli-data/README.md) |
-| [IPFS CLI](../cli-ipfs/README.md) |
-| [Machine CLI](../cli-machine/README.md) |
-| [MDNS CLI](../cli-mdns/README.md) |
-| [Pad CLI](../cli-pad/README.md) |
-| [Signal CLI](../cli-signal/README.md) |
-| [WNS CLI](../cli-wns/README.md) |
