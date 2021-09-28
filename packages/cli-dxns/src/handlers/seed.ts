@@ -32,7 +32,7 @@ const TYPES = {
   'type.service.ipfs': '.dxos.type.IPFS',
   'type.service.bot-factory': '.dxos.type.BotFactory',
   'type.service.signal': '.dxos.type.Signal',
-  'type.service.app-server': '.dxos.type.AppServer',
+  'type.service.app-server': '.dxos.type.AppServer'
 };
 
 export const seedRegistry = (params: Params) => async (argv: any) => {
@@ -49,7 +49,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const account = keypair?.address;
 
   let domainKey: DomainKey;
-  if(!dataOnly) {
+  if (!dataOnly) {
     const { mnemonic } = argv;
     assert(mnemonic, 'Sudo user mnemonic required');
     const sudoer = keyring.addFromUri(mnemonic.join(' '));
