@@ -24,7 +24,7 @@
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "cli": "ts-node ./src/main.ts",
+    "cli": "ts-node --files ./src/main.ts",
     "dev": "npm run cli",
     "dx": "npm run cli",
     "lint": "eslint './src/**/*.{ts,js}'",

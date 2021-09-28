@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf ./dist",
-    "cli": "ts-node ./src/index.ts",
+    "cli": "ts-node --files ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
