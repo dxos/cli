@@ -9,7 +9,7 @@ See the main [DXOS CLI](./packages/cli/README.md) package docs for usage.
 
 ## Prerequisites
 
-- jq
+- [jq](https://stedolan.github.io/jq/)
 
 ## Installation
 

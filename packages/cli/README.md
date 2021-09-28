@@ -135,8 +135,8 @@ ENV variables are also used to pass configuration between CLI and spawned proces
 
 ### Dependencies
 
-- yarn
-- jq
+- [yarn](https://yarnpkg.com/)
+- [jq](https://stedolan.github.io/jq/)
 
 ### Setup
 
