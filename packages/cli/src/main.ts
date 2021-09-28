@@ -8,7 +8,7 @@ import uniqBy from 'lodash.uniqby';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
 
-import { getLoggers, createCLI } from '@dxos/cli-core';
+import { getLoggers, createCLI, CoreState } from '@dxos/cli-core';
 
 import { listInstalled } from './extensions';
 import { CertModule } from './modules/cert';
@@ -34,15 +34,15 @@ const WIRE_CONFIG = {
   enableInteractive: true
 };
 
-const extensions = [];
-const destroyers = [];
+const extensions: any[] = [];
+const destroyers: any[] = [];
 
-const init = async (state) => {
+const init = async (state: CoreState) => {
   const installedExtensions = await listInstalled();
   const pluggableModules = uniqBy(knownExtensions.concat(installedExtensions), 'moduleName');
 
   for await (const extension of pluggableModules) {
-    const version = extension.version || pkg.package.version;
+    const version = extension.version || pkg?.package.version;
     const pluggableModule = new PluggableModule({ ...extension, version }, state);
     if (extension.initRequired) {
       await pluggableModule.init();
@@ -82,7 +82,7 @@ module.exports = createCLI({
   info: {}
 });
 
-const handleError = err => {
+const handleError = (err: any) => {
   logError(err);
   process.exit(1);
 };
