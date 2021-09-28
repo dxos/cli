@@ -1,4 +1,4 @@
-[![build](https://github.com/dxos/cli/actions/workflows/all-lint-built-test.yaml/badge.svg)](https://github.com/dxos/cli/actions/workflows/all-lint-built-test.yml)
+[![build](https://github.com/dxos/cli/actions/workflows/all-lint-built-test.yml/badge.svg)](https://github.com/dxos/cli/actions/workflows/all-lint-built-test.yml)
 
 # DXOS CLI
 
