@@ -4,12 +4,12 @@
 
 import assert from 'assert';
 import BN from 'bn.js';
-import path from 'path';
+import { join, dirname } from 'path';
 import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { RecordMetadata } from '@dxos/registry-api';
+import { DomainKey, RecordMetadata } from '@dxos/registry-api';
 
 import { Params } from './common';
 
@@ -18,74 +18,83 @@ const DEFAULT_DOMAIN = 'dxos';
 const DEFAULT_BID = 10000000;
 const DEFAULT_SCHEMA_NAME = 'schema';
 
-const SCHEMA_PATH = path.join(__dirname, '../dxos.proto');
+// TODO(marik-d): Find a better way to do this, export proto resolution logic from codec-protobuf.
+const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-api/package.json')), 'src/defs/dxns/type.proto');
 
-// TODO(dmaretskyi): Define types as protobuf metadata instead of hardcoding them
+// Mapping from resource name to protobuf name for types that will be registered on-chain.
 const TYPES = {
-  kube: '.dxos.KUBE',
-  service: '.dxos.Service',
-  app: '.dxos.App',
-  bot: '.dxos.Bot',
-  botFactory: '.dxos.BotFactory',
-  file: '.dxos.File'
+  'type.app': '.dxos.type.App',
+  'type.bot': '.dxos.type.Bot',
+  'type.file': '.dxos.type.File',
+  'type.kube': '.dxos.type.KUBE',
+  'type.service': '.dxos.type.Service',
+  'type.botFactory': '.dxos.type.BotFactory',
+  'type.service.ipfs': '.dxos.type.IPFS',
+  'type.service.bot-factory': '.dxos.type.BotFactory',
+  'type.service.signal': '.dxos.type.Signal',
+  'type.service.app-server': '.dxos.type.AppServer',
 };
 
 export const seedRegistry = (params: Params) => async (argv: any) => {
   const { getDXNSClient, config } = params;
 
-  const { domain = DEFAULT_DOMAIN } = argv;
+  const { domain = DEFAULT_DOMAIN, dataOnly = false, json, verbose } = argv;
 
   const dxnsUri = config.get('services.dxns.accountUri');
   assert(dxnsUri, 'Admin Mnemonic should be provided via configuration profile.');
-
-  const { mnemonic, json, verbose } = argv;
-  assert(mnemonic, 'Sudo user mnemonic required');
 
   const client = await getDXNSClient();
   const { apiRaw, keypair, keyring, auctionsApi, transactionHandler } = client;
 
   const account = keypair?.address;
 
-  const sudoer = keyring.addFromUri(mnemonic.join(' '));
+  let domainKey: DomainKey;
+  if(!dataOnly) {
+    const { mnemonic } = argv;
+    assert(mnemonic, 'Sudo user mnemonic required');
+    const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
-  // Increase balance.
-  if (account) {
-    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
-    const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
-    const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
+    // Increase balance.
+    if (account) {
+      const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
+      const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
+      const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
 
-    verbose && log('Increasing Admin Balance..');
-    await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
+      verbose && log('Increasing Admin Balance..');
+      await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
+    }
+
+    // Register Domain.
+    verbose && log(`Creating auction for "${domain}" domain name..`);
+    await auctionsApi.createAuction(domain, DEFAULT_BID);
+
+    verbose && log('Force closing auction..');
+    await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
+
+    verbose && log('Claiming Domain name..');
+    domainKey = await client.auctionsApi.claimAuction(domain);
+  } else {
+    domainKey = await client.registryApi.resolveDomainName(domain);
   }
 
-  // Register Domain.
-  verbose && log(`Creating auction for "${domain}" domain name..`);
-  await auctionsApi.createAuction(domain, DEFAULT_BID);
-
-  verbose && log('Force closing auction..');
-  await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
-
-  verbose && log('Claiming Domain name..');
-  const domainKey = await client.auctionsApi.claimAuction(domain);
-
   // Register DXOS Schema.
-  verbose && log('Registering DXOS schema..');
+  verbose && log('Registering DXOS schema types..');
   const root = await pb.load(SCHEMA_PATH as string);
   const meta: RecordMetadata = {
     created: new Date(),
-    version: '1.0.0',
+    version: '0.1.0',
     name: DEFAULT_SCHEMA_NAME,
     description: 'Base DXOS schema',
     author: 'DXOS'
   };
 
-  for (const [type, fqn] of Object.entries(TYPES)) {
-    verbose && log(`Registering type.${type}..`);
+  for (const [typeName, fqn] of Object.entries(TYPES)) {
+    verbose && log(`Registering ${typeName}..`);
 
     const cid = await client.registryApi.insertTypeRecord(root, fqn, meta);
-    await client.registryApi.registerResource(domainKey, `type.${type}`, cid);
+    await client.registryApi.registerResource(domainKey, typeName, cid);
 
-    verbose && log(`${domain}:type.${type} registered at ${cid.toB58String()}`);
+    verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
 
   print({ account, domain }, { json });

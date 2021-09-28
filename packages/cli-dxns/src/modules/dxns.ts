@@ -245,7 +245,8 @@ export const DXNSModule = (params: Params) => {
         command: ['seed'],
         describe: 'Seed DXNS.',
         builder: yargs => yargs
-          .option('domain', { type: 'string' }),
+          .option('domain', { type: 'string' })
+          .option('dataOnly', { type: 'boolean', description: 'Skip domain registration. Register data types only.' }),
 
         handler: asyncHandler(seedRegistry({ getDXNSClient, config }))
       })
