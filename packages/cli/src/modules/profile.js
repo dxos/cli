@@ -14,7 +14,8 @@ import {
   getConfig,
   getProfilePath,
   getProfileName,
-  printMissingProfile
+  printMissingProfile,
+  printProfileNotFound
 } from '@dxos/cli-core';
 
 /**
@@ -54,7 +55,7 @@ export const ProfileModule = () => ({
 
         const profilePath = getProfilePath(name);
         if (!fs.existsSync(profilePath)) {
-          print(`Profile not found: ${profilePath}`);
+          printProfileNotFound(profilePath)
           return;
         }
 
@@ -71,7 +72,7 @@ export const ProfileModule = () => ({
 
         const profilePath = (profile ? getProfilePath(profile) : getActiveProfilePath());
         if (!fs.existsSync(profilePath)) {
-          print(`Profile not found: ${profilePath}`);
+          printProfileNotFound(profilePath)
           return;
         }
 
@@ -87,7 +88,7 @@ export const ProfileModule = () => ({
     }
 
     if (!fs.existsSync(profilePath)) {
-      print(`Profile not found: ${profilePath}`);
+      printProfileNotFound(profilePath)
       return;
     }
 
