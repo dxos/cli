@@ -105,11 +105,15 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 | [App CLI](../cli-app/README.md) |
 | [Bot CLI](../cli-bot/README.md) |
 | [Chat CLI](../cli-chat/README.md) |
-| [Dashboard CLI](../cli-dashboard/README.md) |
+| [Console CLI](../cli-console/README.md) |
 | [Data CLI](../cli-data/README.md) |
+| [DXNS CLI](../cli-dxns/README.md) |
+| [ECHO CLI](../cli-echo/README.md) |
+| [HALO CLI](../cli-halo/README.md) |
 | [IPFS CLI](../cli-ipfs/README.md) |
-| [Machine CLI](../cli-machine/README.md) |
+| [KUBE CLI](../cli-kube/README.md) |
 | [MDNS CLI](../cli-mdns/README.md) |
+| [Mesh CLI](../cli-mesh/README.md) |
 | [Pad CLI](../cli-pad/README.md) |
 | [Signal CLI](../cli-signal/README.md) |
 | [WNS CLI](../cli-wns/README.md) |
@@ -146,9 +150,29 @@ yarn
 yarn build
 ```
 
+### Running commands locally
+
+During local development there is a need for testing of a newly created / modified commands. For that purpose, any cli command could be called from the repo root via `yarn dx`, e.g.:
+
+```
+yarn dx dxns resource list --json
+```
+
+If the command ought to be called from the specific path (e.g. during app deployent), an alias for the local dx binary coud be created by adding such to the shell profile:
+
+```
+alias dx-local='node ~/path/to/cli/packages/cli/bin/dx.js'
+```
+
+Then, all commands could be called via `dx-local` in any directory, like:
+
+```
+dx-local dxns resource list --json
+```
+
 ### Environment Variables
 
-While the usage of ENV variables is minimized, CLI still uses WNS related variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](env-map.yml)
+While the usage of ENV variables is minimized, in some edge cases CLI still uses ENV variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](../cli-core/src/env-map.json)
 
 ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
 
