@@ -1,5 +1,7 @@
 # DXOS CLI
 
+General information about DXOS CLI can be found [here](../../README.md)
+
 ## Usage
 
 ### Profiles
