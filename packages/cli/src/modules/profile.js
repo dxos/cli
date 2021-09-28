@@ -13,7 +13,8 @@ import {
   initProfileFromTemplate,
   getConfig,
   getProfilePath,
-  getProfileName
+  getProfileName,
+  printMissingProfile
 } from '@dxos/cli-core';
 
 /**
@@ -81,8 +82,7 @@ export const ProfileModule = () => ({
   handler: asyncHandler(async () => {
     const profilePath = getActiveProfilePath();
     if (!profilePath) {
-      print('No active profile. Enter the following command to set the active profile:');
-      print('dx profile set <NAME>');
+      printMissingProfile();
       return;
     }
 
