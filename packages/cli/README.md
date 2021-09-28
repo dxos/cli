@@ -195,7 +195,7 @@ $ dx version
 If those outputs are different, make sure to remove old versions of `wire`.
 Remove old CLI and extensions, installed globally.
 
-Starting v1.0.0-beta.30, `dx uninstall` and `dx upgrade` commands are available.
+For that purpose `dx uninstall` and `dx upgrade` commands are available.
 
 To remove CLI and all extensions:
 
