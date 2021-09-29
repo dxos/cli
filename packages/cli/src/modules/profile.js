@@ -55,7 +55,7 @@ export const ProfileModule = () => ({
 
         const profilePath = getProfilePath(name);
         if (!fs.existsSync(profilePath)) {
-          printProfileNotFound(profilePath)
+          printProfileNotFound(profilePath);
           return;
         }
 
@@ -72,7 +72,7 @@ export const ProfileModule = () => ({
 
         const profilePath = (profile ? getProfilePath(profile) : getActiveProfilePath());
         if (!fs.existsSync(profilePath)) {
-          printProfileNotFound(profilePath)
+          printProfileNotFound(profilePath);
           return;
         }
 
@@ -88,7 +88,7 @@ export const ProfileModule = () => ({
     }
 
     if (!fs.existsSync(profilePath)) {
-      printProfileNotFound(profilePath)
+      printProfileNotFound(profilePath);
       return;
     }
 
