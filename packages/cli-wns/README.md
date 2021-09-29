@@ -26,7 +26,7 @@ There is no way to recover the account and associated funds if this mnemonic is 
   "address": "cosmos1jeh4d8ym99t235p22n6j4lyyf9wk56jgzjq9dk",
   "bondId": "0b73fdcbbf7033c51c405cbcb4498ddcf1a9c6b6d17873e22db34f39e3f3ca3c"
 }
-Mnemonic saved to ~/.wire/profile/devnet.secrets.yml
+Mnemonic saved to ~/.dx/profile/devnet.secrets.yml
 ```
 
 The profile configuration file is automatically updated with the WNS account private key and bond.

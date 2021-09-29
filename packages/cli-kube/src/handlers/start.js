@@ -7,7 +7,7 @@ import path from 'path';
 
 import { RUNNING_STATE, DockerContainer, DockerImage } from '@dxos/cli-core';
 
-const KUBE_PROFILE_ROOT = '.wire/kube';
+const KUBE_PROFILE_ROOT = '.dx/kube';
 const KUBE_PROFILE_PATH = path.join(os.homedir(), KUBE_PROFILE_ROOT);
 
 const capitalize = (str) => {
@@ -30,8 +30,8 @@ export const start = ({ kubeCompose }) => async (argv) => {
 
   const binds = [
     '/var/run/docker.sock:/var/run/docker.sock:rw',
-    `${KUBE_PROFILE_PATH}/config:/root/.wire/kube:rw`,
-    `${KUBE_PROFILE_PATH}/storage:/root/.wire/storage:rw`
+    `${KUBE_PROFILE_PATH}/config:/root/.dx/kube:rw`,
+    `${KUBE_PROFILE_PATH}/storage:/root/.dx/storage:rw`
   ];
 
   // TODO(egorgripasov): Rm hardcoded WIRE.

@@ -25,7 +25,7 @@ import {
 import { Pluggable } from '../pluggable';
 
 const DEFAULT_LOG_LINES = 100;
-const DEFAULT_CONFIG_PATH = '/root/.wire/profile/local.yml';
+const DEFAULT_CONFIG_PATH = '/root/.dx/profile/local.yml';
 const DEFAULT_STORAGE_PATH = path.join('/root', STORAGE_ROOT);
 
 const SERVICE_DAEMON = 'daemon';

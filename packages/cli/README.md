@@ -48,7 +48,7 @@ Example:
 $ dx profile init --name moon --template-url https://git.io/JuhES
 ```
 
-Profiles are stored in the `~/.wire/profile` folder. To further customize a profile, edit the profile configuration file.
+Profiles are stored in the `~/.dx/profile` folder. To further customize a profile, edit the profile configuration file.
 
 To activate/use a profile, do one of the following (highest to lowest precedence):
 
@@ -80,7 +80,7 @@ View the profile used for a command (using the `--dry-run` flag):
 
 ```bash
 $ dx wns status --dry-run
-Profile: /Users/ashwinp/.wire/profile/devnet.yml
+Profile: /Users/ashwinp/.dx/profile/devnet.yml
 ```
 
 Multiple templates can be created and shared with others to use different configuration values. Some [sample templates](./profiles/README.md) are included in the repo.
@@ -155,7 +155,7 @@ $ dx cert import --url https://kube.local/kube.pem
 
 <!--TODO(egor): Host cert on .well-known endpoint.-->
 
-Corresponding certificate would be downloaded to `~/.wire/certs` and considered by CLI as "trusted".
+Corresponding certificate would be downloaded to `~/.dx/certs` and considered by CLI as "trusted".
 
 ### Environment Variables
 
