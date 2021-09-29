@@ -885,10 +885,10 @@
     random-access-memory "~3.1.2"
     random-access-web "^2.0.3"
 
-"@dxos/registry-api@~0.3.2":
-  version "0.3.2"
-  resolved "https://registry.npmjs.org/@dxos/registry-api/-/registry-api-0.3.2.tgz#8eb82a635439c14635bad704cee95c670a58346d"
-  integrity sha512-aFTsX2A84VRej8zWDdrl6LrasrBZnS3K/HCxChKHzbamcnJY0XXMJVBwco4+frtWQ0Oaq9HMxv2HzgtNRWYTSg==
+"@dxos/registry-api@^0.4.1", "@dxos/registry-api@~0.4.1":
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/@dxos/registry-api/-/registry-api-0.4.1.tgz#bcbb1cc6987ddbe314358a823919eb8547367fd5"
+  integrity sha512-8m7xA7Kr4P9rFfJ7dMSPTaky4Bg6SEWaa110kcixeuSYK5+D1Bp5olwgwq4u/AaJ/uYhmM/YA1T/EUMd1gIuNw==
   dependencies:
     "@dxos/codec-protobuf" "^2.12.14"
     "@dxos/util" "^2.4.0"

@@ -25,7 +25,7 @@ export const getResource = (params: Params) => async (argv: any) => {
   const parsedDxn = DXN.parse(dxn);
 
   const client = await getDXNSClient();
-  const resource = await client.registryApi.get(parsedDxn);
+  const resource = await client.registryApi.getResource(parsedDxn);
 
   print(resource ? displayResource(resource) : undefined, { json });
 };

@@ -69,7 +69,7 @@ export const listAuctions = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const auctions = await client.auctionsApi.listAuction();
+  const auctions = await client.auctionsApi.listAuctions();
 
   print(auctions, { json });
 };

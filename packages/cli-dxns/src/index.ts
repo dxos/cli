@@ -5,12 +5,11 @@
 import { ApiPromise } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
 import { KeyringPair } from '@polkadot/keyring/types';
-import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { readFileSync } from 'fs';
 import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
-import { ApiFactory, IAuctionsApi, IRegistryApi, ApiTransactionHandler } from '@dxos/registry-api';
+import { createApiPromise, IAuctionsApi, IRegistryApi, ApiTransactionHandler, createKeyring, RegistryApi, AuctionsApi } from '@dxos/registry-api';
 
 import { DXNSModule } from './modules/dxns';
 
@@ -36,14 +35,15 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
   if (profilePath && profileExists) {
     // The keyring need to be created AFTER api is created or we need to wait for WASM init.
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
-    const keyring = new Keyring({ type: 'sr25519' });
-    await cryptoWaitReady();
-
+    const keyring = await createKeyring();
     const accountUri = config.get('services.dxns.accountUri');
     const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
+
     const apiServerUri = config.get('services.dxns.server');
-    const registryApi = await ApiFactory.createRegistryApi(apiServerUri, keypair);
-    const { auctionsApi, apiPromise } = await ApiFactory.createAuctionsApi(apiServerUri, keypair);
+    const apiPromise = await createApiPromise(apiServerUri);
+
+    const registryApi = new RegistryApi(apiPromise, keypair);
+    const auctionsApi = new AuctionsApi(apiPromise, keypair);
     const transactionHandler = new ApiTransactionHandler(apiPromise, keypair);
 
     return {
@@ -67,8 +67,7 @@ const initDXNSCliState = async (state: any) => {
 
 const destroyDXNSCliState = async () => {
   if (client) {
-    await client.registryApi.disconnect();
-    await client.auctionsApi.disconnect();
+    await client.apiRaw.disconnect();
   }
 };
 
