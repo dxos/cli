@@ -35,7 +35,7 @@ const WNS_LOCAL_TCP_ENDPOINT = 'tcp://localhost:26657';
 const WNS_LITE_EXEC = 'wnsd-lite';
 const WNS_LITE_PROCESS_NAME = 'wns-lite';
 const WNS_LITE_DEFAULT_LOG_FILE = '/var/log/wns-lite.log';
-const WNS_LITE_SERVER_CONFIG_DIR = '~/.wire/wnsd-lite';
+const WNS_LITE_SERVER_CONFIG_DIR = '~/.dx/wnsd-lite';
 
 const WNS_CLI_EXEC = 'wnscli';
 

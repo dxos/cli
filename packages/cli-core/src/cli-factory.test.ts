@@ -10,10 +10,10 @@ import { Argv } from 'yargs';
 import { createCLI } from './cli-factory';
 import { asyncHandler } from './util/async';
 
-const WIRE_CLI_BASE_COMMAND = 'wire';
+const CLI_BASE_COMMAND = 'dx';
 
-const WIRE_CONFIG = {
-  prompt: WIRE_CLI_BASE_COMMAND,
+const CLI_CONFIG = {
+  prompt: CLI_BASE_COMMAND,
   baseCommand: '',
   enableInteractive: true
 };
@@ -123,7 +123,7 @@ const exitSpy = jest.spyOn(process, 'exit').mockImplementation();
 
 beforeEach(() => {
   cli = createCLI({
-    options: WIRE_CONFIG,
+    options: CLI_CONFIG,
     modules: [TestModule],
     dir: __dirname,
     main: false,

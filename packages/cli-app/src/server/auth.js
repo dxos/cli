@@ -15,7 +15,7 @@ debug.enable('dxos:*');
 
 const COOKIE_MAX_AGE = 60;
 
-const whitelistFile = '~/.wire/keyhole-whitelist.yml';
+const whitelistFile = '~/.dx/keyhole-whitelist.yml';
 
 export const LOGIN_PATH = '/app/auth';
 export const OTP_QR_PATH = '/app/auth-setup';

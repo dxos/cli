@@ -14,10 +14,9 @@ import { createId } from '@dxos/crypto';
 
 import envmap from './env-map.json';
 
-// TODO(burdon): Change to ~/.dxos
-export const PROFILE_ROOT = '.wire/profile';
+export const PROFILE_ROOT = '.dx/profile';
 
-export const STORAGE_ROOT = '.wire/storage';
+export const STORAGE_ROOT = '.dx/storage';
 
 // Default profile, ALWAYS a symlink.
 export const DEFAULT_PROFILE_SYMLINK = 'default';
@@ -43,7 +42,7 @@ export const getProfileName = (profilePath: string) => {
 
 /**
  * Set given profile as the default.
- * Creates symlink from `~/.wire/profile/default` -> `~/.wire/profile/<profile>.yml`.
+ * Creates symlink from `~/.dx/profile/default` -> `~/.dx/profile/<profile>.yml`.
  */
 export const setProfileAsDefault = async (profile: string, overwrite = true) => {
   assert(profile, 'Invalid profile name.');
