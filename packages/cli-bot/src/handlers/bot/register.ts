@@ -7,13 +7,14 @@ import { spawnSync } from 'child_process';
 import clean from 'lodash-clean';
 
 import { log } from '@dxos/debug';
-import { CID, DXN } from '@dxos/registry-api';
+import { CID, DXN, RecordKind } from '@dxos/registry-api';
+import type { IRegistryApi } from '@dxos/registry-api';
 
 import { getBotConfig, updateBotConfig } from '../../config';
 
 export const BOT_DXN_NAME = 'dxos:type.bot';
 
-export const register = ({ getDXNSClient }) => async (argv) => {
+export const register = ({ getDXNSClient }: { getDXNSClient: Function }) => async (argv: any) => {
   const { verbose, version, 'dry-run': noop, name, domain } = argv;
 
   const conf = {
@@ -49,17 +50,17 @@ export const register = ({ getDXNSClient }) => async (argv) => {
 
     const { name: botName, version, author, description, package: pkg, ...rest } = conf;
 
-    const { registryApi } = await getDXNSClient();
+    const { registryApi }: { registryApi: IRegistryApi } = await getDXNSClient();
 
-    const botType = await registryApi.get(DXN.parse(BOT_DXN_NAME));
+    const botType = await registryApi.getResource(DXN.parse(BOT_DXN_NAME));
     assert(botType);
-    assert(botType.record.kind === 'type');
+    assert(botType.record.kind === RecordKind.Type);
 
     const cid = await registryApi.insertDataRecord({
       hash: CID.from(pkg['/']).value,
       ...rest
     }, botType.record.cid, {
-      created: new Date().toISOString(),
+      created: new Date(),
       version,
       author,
       description,

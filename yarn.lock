@@ -885,7 +885,7 @@
     random-access-memory "~3.1.2"
     random-access-web "^2.0.3"
 
-"@dxos/registry-api@~0.4.1":
+"@dxos/registry-api@^0.4.1", "@dxos/registry-api@~0.4.1":
   version "0.4.1"
   resolved "https://registry.npmjs.org/@dxos/registry-api/-/registry-api-0.4.1.tgz#bcbb1cc6987ddbe314358a823919eb8547367fd5"
   integrity sha512-8m7xA7Kr4P9rFfJ7dMSPTaky4Bg6SEWaa110kcixeuSYK5+D1Bp5olwgwq4u/AaJ/uYhmM/YA1T/EUMd1gIuNw==
