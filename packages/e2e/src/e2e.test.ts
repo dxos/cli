@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect */
 //
 // Copyright 2021 DXOS.org
 //
@@ -72,6 +73,44 @@ describe('CLI', () => {
       const resources = await cmd('dxns resource list --json').json();
 
       expect(resources.some((r: any) => r.dxn === 'dxos:type.app')).toBe(true);
+    });
+
+    it('get resource', async () => {
+      const resource = await cmd('dxns resource get dxos:type.app --json').json();
+
+      expect(resource.dxn).toEqual('dxos:type.app');
+      expect(resource.description).toEqual('Base DXOS schema');
+    });
+
+    it('list records', async () => {
+      const records = await cmd('dxns record list --json').json();
+
+      expect(records.some((r: any) => r.messageName === '.dxos.type.App')).toBe(true);
+    });
+
+    it('get record', async () => {
+      const record = await cmd('dxns record get dxos:type.app --json').json();
+
+      expect(record.messageName).toBe('.dxos.type.App');
+      expect(record.cid).toBeDefined();
+
+      const record2 = await cmd('dxns record get ' + record.cid + ' --json').json();
+      expect(record).toMatchObject(record2);
+    });
+
+    it('list types', async () => {
+      const types = await cmd('dxns type list --json').json();
+
+      expect(types.some((t: any) => t.dxn === 'dxos:type.botFactory')).toBe(true);
+    });
+
+    it('get type', async () => {
+      const t = await cmd('dxns type get dxos:type.kube --json').json();
+
+      expect(t.cid).toBeDefined();
+
+      const t2 = await cmd('dxns type get ' + t.cid + ' --json').json();
+      expect(t).toMatchObject(t2);
     });
 
     describe('auctions', () => {
