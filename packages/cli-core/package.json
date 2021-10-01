@@ -31,9 +31,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/config": "~2.12.22",
-    "@dxos/crypto": "~2.12.22",
-    "@dxos/debug": "~2.12.22",
+    "@dxos/config": "~2.13.0",
+    "@dxos/crypto": "~2.13.0",
+    "@dxos/debug": "~2.13.0",
     "@types/yargs": "^16.0.1",
     "assert": "^2.0.0",
     "console.table": "^0.10.0",
