@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "^2.4.15-alpha.0",
-    "@dxos/debug": "~2.13.0",
+    "@dxos/debug": "~2.14.0",
     "@dxos/registry-api": "~0.4.1",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@polkadot/api": "4.17.1",

@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "^2.4.15-alpha.0",
-    "@dxos/debug": "~2.13.0",
+    "@dxos/debug": "~2.14.0",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
     "ipfs-http-client": "48.1.1",
