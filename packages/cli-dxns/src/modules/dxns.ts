@@ -78,8 +78,6 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['get <cid | dxn>'],
             describe: 'Get a record by its CID or DXN.',
-            builder: yargs => yargs
-              .option('json', { describe: 'Print output in JSON format.', type: 'boolean' }),
 
             handler: asyncHandler(getRecord({ getDXNSClient }))
           })
