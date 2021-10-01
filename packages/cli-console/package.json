@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-console",
-  "version": "2.4.15-alpha.0",
+  "version": "2.5.0-alpha.0",
   "description": "DXOS Console CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-console#readme",
   "license": "AGPL-3.0",
@@ -34,7 +34,7 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/cli-core": "^2.4.15-alpha.0",
+    "@dxos/cli-core": "^2.5.0-alpha.0",
     "@dxos/debug": "~2.14.0",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
