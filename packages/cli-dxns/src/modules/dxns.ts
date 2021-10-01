@@ -44,9 +44,6 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['get <cid | dxn>'],
             describe: 'Get type details by its CID or DXN.',
-            builder: yargs => yargs
-              .option('cid', { describe: 'CID of the type', type: 'string' })
-              .option('dxn', { describe: 'DXN of the type', type: 'string' }),
 
             handler: asyncHandler(getType({ getDXNSClient }))
           })
@@ -82,8 +79,6 @@ export const DXNSModule = (params: Params) => {
             command: ['get <cid | dxn>'],
             describe: 'Get a record by its CID or DXN.',
             builder: yargs => yargs
-              .option('cid', { describe: 'CID of the record', type: 'string' })
-              .option('dxn', { describe: 'DXN of the record', type: 'string' })
               .option('json', { describe: 'Print output in JSON format.', type: 'boolean' }),
 
             handler: asyncHandler(getRecord({ getDXNSClient }))
