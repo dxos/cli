@@ -42,7 +42,7 @@ export const DXNSModule = (params: Params) => {
           })
 
           .command({
-            command: ['get'],
+            command: ['get <cid | dxn>'],
             describe: 'Get type details by its CID or DXN.',
             builder: yargs => yargs
               .option('cid', { describe: 'CID of the type', type: 'string' })
@@ -79,7 +79,7 @@ export const DXNSModule = (params: Params) => {
           })
 
           .command({
-            command: ['get'],
+            command: ['get <cid | dxn>'],
             describe: 'Get a record by its CID or DXN.',
             builder: yargs => yargs
               .option('cid', { describe: 'CID of the record', type: 'string' })
