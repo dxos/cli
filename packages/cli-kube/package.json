@@ -42,7 +42,7 @@
     "@dxos/crypto": "~2.14.0",
     "@dxos/debug": "~2.14.0",
     "@dxos/object-model": "~2.14.0",
-    "@dxos/registry-api": "~0.4.1",
+    "@dxos/registry-api": "~2.14.0",
     "assert": "^2.0.0",
     "do-wrapper": "4.1.2",
     "got": "^10.7.0",
