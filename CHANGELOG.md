@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://www.github.com/dxos/cli/compare/v2.4.15...v2.5.0) (2021-10-01)
+
+
+### Features
+
+* .wire -> .dx ([#285](https://www.github.com/dxos/cli/issues/285)) ([f9ee0bc](https://www.github.com/dxos/cli/commit/f9ee0bcc9d89ffbae7802fed865a1594b3223c4e))
+
 ### [2.4.15](https://www.github.com/dxos/cli/compare/v2.4.14...v2.4.15) (2021-09-22)
 
 
