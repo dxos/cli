@@ -44,10 +44,6 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['get <cid | dxn>'],
             describe: 'Get type details by its CID or DXN.',
-            builder: yargs => yargs
-              .option('cid', { describe: 'CID of the type', type: 'string' }),
-            // TODO(marcin): support dxn with -dxn switch
-            // .option('dxn', { describe: 'DXN of the type', type: 'string' }),
 
             handler: asyncHandler(getType({ getDXNSClient }))
           })
@@ -80,10 +76,8 @@ export const DXNSModule = (params: Params) => {
           })
 
           .command({
-            command: ['get <cid>'],
-            describe: 'Get a record by its CID.',
-            builder: yargs => yargs
-              .option('cid', { type: 'string' }),
+            command: ['get <cid | dxn>'],
+            describe: 'Get a record by its CID or DXN.',
 
             handler: asyncHandler(getRecord({ getDXNSClient }))
           })

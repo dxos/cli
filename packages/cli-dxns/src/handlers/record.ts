@@ -5,6 +5,7 @@
 import { print } from '@dxos/cli-core';
 import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-api';
 
+import { resolveDXNorCID } from '../utils';
 import { displayRecord, Params } from './common';
 
 // TODO(marcin): Add query support.
@@ -20,12 +21,12 @@ export const listRecords = (params: Params) => async (argv: any) => {
 };
 
 export const getRecord = (params: Params) => async (argv: any) => {
-  const { getDXNSClient } = params;
-  const { cid, json } = argv;
-  const parsedCID = CID.from(cid);
+  const json = !!argv.json;
 
-  const client = await getDXNSClient();
-  const record = await client.registryApi.getRecord(parsedCID);
+  const client = await params.getDXNSClient();
+  const cid = await resolveDXNorCID(client, argv);
+
+  const record = await client.registryApi.getRecord(cid);
 
   record && print(displayRecord(record), { json });
 };

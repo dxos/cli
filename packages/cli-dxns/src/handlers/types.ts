@@ -4,8 +4,9 @@
 
 import pb from 'protobufjs';
 
-import { CID, DomainKey, DXN, RecordKind, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-api';
+import { DomainKey, DXN, RecordKind, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-api';
 
+import { resolveDXNorCID } from '../utils';
 import { Params, printRecord, printResource, printResources } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
@@ -17,20 +18,8 @@ export const listTypes = (params: Params) => async (argv: any) => {
 };
 
 export const getType = (params: Params) => async (argv: any) => {
-  // TODO(marcin): Add support for DXN.
-  const dxn = undefined as unknown as DXN;// argv.dxn ? DXN.parse(argv.dxn as string) : undefined;
-  let cid = argv.cid ? CID.from(argv.cid as string) : undefined;
-
-  if (!dxn && !cid) {
-    throw new Error('Either DXN or CID must be provided');
-  }
-
   const client = await params.getDXNSClient();
-  cid = cid ?? await client.registryApi.resolveRecordCid(dxn!);
-
-  if (!cid) {
-    throw new Error('CID not provided nor resolved through the provided DXN.');
-  }
+  const cid = await resolveDXNorCID(client, argv);
 
   const typeRecord = await client.registryApi.getTypeRecord(cid);
   if (!typeRecord) {
