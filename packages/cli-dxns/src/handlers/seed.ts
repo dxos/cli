@@ -19,7 +19,7 @@ const DEFAULT_BID = 10000000;
 const DEFAULT_SCHEMA_NAME = 'schema';
 
 // TODO(marik-d): Find a better way to do this, export proto resolution logic from codec-protobuf.
-const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-api/package.json')), 'src/defs/dxns/type.proto');
+const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-api/package.json')), 'src/proto/dxns/type.proto');
 
 // Mapping from resource name to protobuf name for types that will be registered on-chain.
 const TYPES = {
