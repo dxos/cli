@@ -17,12 +17,11 @@ export const listTypes = (params: Params) => async (argv: any) => {
 };
 
 export const getType = (params: Params) => async (argv: any) => {
-  // TODO(marcin): Add support for DXN.
-  const dxn = undefined as unknown as DXN;// argv.dxn ? DXN.parse(argv.dxn as string) : undefined;
+  const dxn = argv.dxn ? DXN.parse(argv.dxn as string) : undefined;
   let cid = argv.cid ? CID.from(argv.cid as string) : undefined;
 
-  if (!dxn && !cid) {
-    throw new Error('Either DXN or CID must be provided');
+  if ((!dxn && !cid) || (!!dxn && !!cid)) {
+    throw new Error('Either DXN or CID must be provided.');
   }
 
   const client = await params.getDXNSClient();
