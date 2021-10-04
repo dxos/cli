@@ -30,7 +30,7 @@ export const getType = (params: Params) => async (argv: any) => {
 };
 
 export const addType = (params: Params) => async (argv: any) => {
-  const { path, domain, messageName, resourceName, version, description, author } = argv;
+  const { path, domain, messageName, resourceName, version, description } = argv;
 
   if (!!resourceName !== !!domain) {
     throw new Error('You must specify both name and domain or neither.');
@@ -41,9 +41,7 @@ export const addType = (params: Params) => async (argv: any) => {
   const meta: RecordMetadata = {
     created: new Date(),
     version,
-    name: resourceName,
-    description,
-    author
+    description
   };
 
   const cid = await client.registryClient.insertTypeRecord(schemaRoot, messageName, meta);
