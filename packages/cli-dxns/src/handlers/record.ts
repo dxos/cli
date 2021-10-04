@@ -34,7 +34,7 @@ export const getRecord = (params: Params) => async (argv: any) => {
 export const addDataRecord = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
-  const { domain, name, version, description, author, json, typeCid } = argv;
+  const { domain, name, version, description, json, typeCid } = argv;
 
   if (!!name !== !!domain) {
     throw new Error('Must specify both name and domain or neither.');
@@ -47,9 +47,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   const meta: RecordMetadata = {
     created: new Date(),
     version,
-    name,
     description,
-    author
   };
   const schemaCid = CID.from(typeCid as string);
 

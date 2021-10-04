@@ -57,8 +57,7 @@ export const DXNSModule = (params: Params) => {
               .option('domain', { describe: 'Domain key for the record.', type: 'string' })
               .option('resourceName', { describe: 'Name of the resource in DXN', type: 'string' })
               .option('version', { describe: 'Version of the type', type: 'string' })
-              .option('description', { describe: 'Description of the type', type: 'string' })
-              .option('author', { describe: 'Author of the type', type: 'string' }),
+              .option('description', { describe: 'Description of the type', type: 'string' }),
 
             handler: asyncHandler(addType({ getDXNSClient }))
           })
