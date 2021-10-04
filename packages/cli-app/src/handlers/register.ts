@@ -89,7 +89,7 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
     assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(name), 'Name could contain only letters, numbers, dashes or dots.');
 
     // TODO(egorgripasov): Adapter for the new record format. Cleanup.
-    const { name: appName, version, author, description, package: pkg, ...rest } = conf;
+    const { version, description, package: pkg, ...rest } = conf;
 
     const client: { registryClient: IRegistryClient } = await getDXNSClient();
 
@@ -101,11 +101,8 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
       hash: CID.from(pkg['/']).value,
       ...rest
     }, appType?.record.cid, {
-      created: new Date(),
       version,
-      author,
       description,
-      name: appName
     });
 
     const domainKey = await client.registryClient.resolveDomainName(domain);
