@@ -16,7 +16,6 @@ import { Params } from './common';
 const DEFAULT_BALANCE = '100000000000000000000';
 const DEFAULT_DOMAIN = 'dxos';
 const DEFAULT_BID = 10000000;
-const DEFAULT_SCHEMA_NAME = 'schema';
 
 // TODO(marik-d): Find a better way to do this, export proto resolution logic from codec-protobuf.
 const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns/type.proto');
@@ -83,9 +82,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const meta: RecordMetadata = {
     created: new Date(),
     version: '0.1.0',
-    name: DEFAULT_SCHEMA_NAME,
     description: 'Base DXOS schema',
-    author: 'DXOS'
   };
 
   for (const [typeName, fqn] of Object.entries(TYPES)) {
