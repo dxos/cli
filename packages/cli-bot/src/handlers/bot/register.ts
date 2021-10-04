@@ -7,8 +7,8 @@ import { spawnSync } from 'child_process';
 import clean from 'lodash-clean';
 
 import { log } from '@dxos/debug';
-import { CID, DXN, RecordKind } from '@dxos/registry-api';
-import type { IRegistryApi } from '@dxos/registry-api';
+import { CID, DXN, RecordKind } from '@dxos/registry-client';
+import type { IRegistryClient } from '@dxos/registry-client';
 
 import { getBotConfig, updateBotConfig } from '../../config';
 
@@ -50,13 +50,13 @@ export const register = ({ getDXNSClient }: { getDXNSClient: Function }) => asyn
 
     const { name: botName, version, author, description, package: pkg, ...rest } = conf;
 
-    const { registryApi }: { registryApi: IRegistryApi } = await getDXNSClient();
+    const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
 
-    const botType = await registryApi.getResource(DXN.parse(BOT_DXN_NAME));
+    const botType = await registryClient.getResource(DXN.parse(BOT_DXN_NAME));
     assert(botType);
     assert(botType.record.kind === RecordKind.Type);
 
-    const cid = await registryApi.insertDataRecord({
+    const cid = await registryClient.insertDataRecord({
       hash: CID.from(pkg['/']).value,
       ...rest
     }, botType.record.cid, {
@@ -67,8 +67,8 @@ export const register = ({ getDXNSClient }: { getDXNSClient: Function }) => asyn
       name: botName
     });
 
-    const domainKey = await registryApi.resolveDomainName(domain);
-    await registryApi.registerResource(domainKey, name, cid);
+    const domainKey = await registryClient.resolveDomainName(domain);
+    await registryClient.registerResource(domainKey, name, cid);
   }
 
   log(`Registered ${conf.name}@${conf.version}.`);

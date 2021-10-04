@@ -3,7 +3,7 @@
 //
 
 import { print } from '@dxos/cli-core';
-import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-api';
+import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-client';
 
 import { resolveDXNorCID } from '../utils';
 import { displayRecord, Params } from './common';
@@ -15,7 +15,7 @@ export const listRecords = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const output = await client.registryApi.getRecords();
+  const output = await client.registryClient.getRecords();
 
   print(output.map(displayRecord), { json });
 };
@@ -26,7 +26,7 @@ export const getRecord = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
   const cid = await resolveDXNorCID(client, argv);
 
-  const record = await client.registryApi.getRecord(cid);
+  const record = await client.registryClient.getRecord(cid);
 
   record && print(displayRecord(record), { json });
 };
@@ -53,10 +53,10 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   };
   const schemaCid = CID.from(typeCid as string);
 
-  const cid = await client.registryApi.insertDataRecord(data, schemaCid, meta);
+  const cid = await client.registryClient.insertDataRecord(data, schemaCid, meta);
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
-    await client.registryApi.registerResource(domainKey, resourceName, cid);
+    await client.registryClient.registerResource(domainKey, resourceName, cid);
     return print({
       id: DXN.fromDomainKey(domainKey, resourceName).toString(),
       cid: cid.toB58String(),

@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@dxos/cli-core": "^2.5.0-alpha.0",
-    "@dxos/crypto": "~2.14.0",
-    "@dxos/debug": "~2.14.0",
+    "@dxos/crypto": "~2.14.1",
+    "@dxos/debug": "~2.14.1",
     "@wirelineio/registry-client": "^1.1.0-beta.3",
     "assert": "^2.0.0",
     "fs-extra": "9.0.0",

@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { DXN, CID } from '@dxos/registry-api';
+import { DXN, CID } from '@dxos/registry-client';
 
 import { DXNSClient } from '../index';
 
@@ -13,7 +13,7 @@ export const resolveDXNorCID = async (client: DXNSClient, argv: any): Promise<CI
   } catch (e: any) {}
   let cid: CID | undefined;
   if (dxn) {
-    cid = await client.registryApi.resolveRecordCid(dxn);
+    cid = await client.registryClient.resolveRecordCid(dxn);
   } else {
     cid = CID.from(argv.cid as string);
   }

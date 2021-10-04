@@ -17,13 +17,13 @@ import os from 'os';
 import { join } from 'path';
 import urlJoin from 'url-join';
 
-import { DXN, CID } from '@dxos/registry-api';
+import { DXN, CID } from '@dxos/registry-client';
 import { Registry } from '@wirelineio/registry-client';
 
 import { BASE_URL, DEFAULT_PORT } from '../config';
 import { WRN } from '../util/WRN';
 import { WALLET_LOGIN_PATH, LOGIN_PATH, /* OTP_QR_PATH, */ authHandler, /* authSetupHandler, */ authMiddleware, walletAuthHandler } from './auth';
-import { getRegistryApi } from './dxns';
+import { getRegistryClient } from './dxns';
 
 const MAX_CACHE_AGE = 120 * 1000;
 
@@ -55,11 +55,11 @@ const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
 class Resolver {
   _cache = new Map();
 
-  constructor (registry, registryApi) {
+  constructor (registry, registryClient) {
     assert(registry);
 
     this._registry = registry;
-    this._registryApi = registryApi;
+    this._registryClient = registryClient;
   }
 
   // TODO(egorgripasov): Deprecate.
@@ -91,7 +91,7 @@ class Resolver {
       return cached.cid;
     }
 
-    const record = await this._registryApi.get(DXN.parse(id));
+    const record = await this._registryClient.get(DXN.parse(id));
 
     if (!record) {
       log(`Not found in DXNS: ${id}`);
@@ -121,13 +121,13 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   const registry = new Registry(registryEndpoint, chainId);
 
   // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
-  let registryApi;
+  let registryClient;
   if (dxnsEndpoint) {
     try {
-      registryApi = await getRegistryApi(dxnsEndpoint);
+      registryClient = await getRegistryClient(dxnsEndpoint);
     } catch (err) {}
   }
-  const resolver = new Resolver(registry, registryApi);
+  const resolver = new Resolver(registry, registryClient);
 
   // IPFS gateway handler.
   const ipfsProxy = ipfsRouter(ipfsGateway);
@@ -161,7 +161,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
     let cid;
 
     // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
-    if (registryApi) {
+    if (registryClient) {
       try {
         const [id, ...filePath] = route.split('/');
 

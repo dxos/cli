@@ -9,7 +9,7 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { DomainKey, RecordMetadata } from '@dxos/registry-api';
+import { DomainKey, RecordMetadata } from '@dxos/registry-client';
 
 import { Params } from './common';
 
@@ -19,7 +19,7 @@ const DEFAULT_BID = 10000000;
 const DEFAULT_SCHEMA_NAME = 'schema';
 
 // TODO(marik-d): Find a better way to do this, export proto resolution logic from codec-protobuf.
-const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-api/package.json')), 'src/proto/dxns/type.proto');
+const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns/type.proto');
 
 // Mapping from resource name to protobuf name for types that will be registered on-chain.
 const TYPES = {
@@ -44,7 +44,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   assert(dxnsUri, 'Admin Mnemonic should be provided via configuration profile.');
 
   const client = await getDXNSClient();
-  const { apiRaw, keypair, keyring, auctionsApi, transactionHandler } = client;
+  const { apiRaw, keypair, keyring, auctionsClient, transactionHandler } = client;
 
   const account = keypair?.address;
 
@@ -66,15 +66,15 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
     // Register Domain.
     verbose && log(`Creating auction for "${domain}" domain name..`);
-    await auctionsApi.createAuction(domain, DEFAULT_BID);
+    await auctionsClient.createAuction(domain, DEFAULT_BID);
 
     verbose && log('Force closing auction..');
     await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
 
     verbose && log('Claiming Domain name..');
-    domainKey = await client.auctionsApi.claimAuction(domain);
+    domainKey = await client.auctionsClient.claimAuction(domain);
   } else {
-    domainKey = await client.registryApi.resolveDomainName(domain);
+    domainKey = await client.registryClient.resolveDomainName(domain);
   }
 
   // Register DXOS Schema.
@@ -91,8 +91,8 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   for (const [typeName, fqn] of Object.entries(TYPES)) {
     verbose && log(`Registering ${typeName}..`);
 
-    const cid = await client.registryApi.insertTypeRecord(root, fqn, meta);
-    await client.registryApi.registerResource(domainKey, typeName, cid);
+    const cid = await client.registryClient.insertTypeRecord(root, fqn, meta);
+    await client.registryClient.registerResource(domainKey, typeName, cid);
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
