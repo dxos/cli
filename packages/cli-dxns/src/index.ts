@@ -9,7 +9,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
-import { createApiPromise, IAuctionsClient, IRegistryClient, ApiTransactionHandler, createKeyring, RegistryClient, AuctionsApi } from '@dxos/registry-client';
+import { createApiPromise, IAuctionsClient, IRegistryClient, ApiTransactionHandler, createKeyring, RegistryClient, AuctionsClient } from '@dxos/registry-client';
 
 import { DXNSModule } from './modules/dxns';
 
@@ -43,7 +43,7 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
     const apiPromise = await createApiPromise(apiServerUri);
 
     const registryClient = new RegistryClient(apiPromise, keypair);
-    const auctionsClient = new AuctionsApi(apiPromise, keypair);
+    const auctionsClient = new AuctionsClient(apiPromise, keypair);
     const transactionHandler = new ApiTransactionHandler(apiPromise, keypair);
 
     return {
