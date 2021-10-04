@@ -102,7 +102,7 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
       ...rest
     }, appType?.record.cid, {
       version,
-      description,
+      description
     });
 
     const domainKey = await client.registryClient.resolveDomainName(domain);
