@@ -82,7 +82,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const meta: RecordMetadata = {
     created: new Date(),
     version: '0.1.0',
-    description: 'Base DXOS schema',
+    description: 'Base DXOS schema'
   };
 
   for (const [typeName, fqn] of Object.entries(TYPES)) {

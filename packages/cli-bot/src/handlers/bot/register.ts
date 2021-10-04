@@ -48,7 +48,7 @@ export const register = ({ getDXNSClient }: { getDXNSClient: Function }) => asyn
   if (!noop) {
     await updateBotConfig(conf);
 
-    const { name: botName, version, description, package: pkg, ...rest } = conf;
+    const { version, description, package: pkg, ...rest } = conf;
 
     const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
 
@@ -61,7 +61,7 @@ export const register = ({ getDXNSClient }: { getDXNSClient: Function }) => asyn
       ...rest
     }, botType.record.cid, {
       version,
-      description,
+      description
     });
 
     const domainKey = await registryClient.resolveDomainName(domain);

@@ -47,7 +47,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   const meta: RecordMetadata = {
     created: new Date(),
     version,
-    description,
+    description
   };
   const schemaCid = CID.from(typeCid as string);
 
