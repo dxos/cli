@@ -224,6 +224,7 @@ export class Runnable {
 
       await pm.dump();
     } catch (err) {
+      console.log(err);
       throw err;
     } finally {
       await pm.disconnect();
