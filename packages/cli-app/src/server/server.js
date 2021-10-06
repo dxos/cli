@@ -56,14 +56,16 @@ class Resolver {
   _cache = new Map();
 
   constructor (registry, registryClient) {
-    assert(registry);
-
     this._registry = registry;
     this._registryClient = registryClient;
   }
 
   // TODO(egorgripasov): Deprecate.
   async lookupCID (name) {
+    if (!this._registry) {
+      return;
+    }
+
     const cached = this._cache.get(name);
     if (cached && Date.now() < cached.expiration) {
       log(`Cached ${name} => ${cached.cid}`);
@@ -91,14 +93,15 @@ class Resolver {
       return cached.cid;
     }
 
-    const record = await this._registryClient.get(DXN.parse(id));
+    const recordCid = await this._registryClient.resolveRecordCid(DXN.parse(id));
+    const record = await this._registryClient.getRecord(recordCid);
 
     if (!record) {
       log(`Not found in DXNS: ${id}`);
       return;
     }
 
-    const ipfsCid = CID.from(Buffer.from(get(record, 'record.data.hash'), 'base64'));
+    const ipfsCid = CID.from(Buffer.from(get(record, 'data.hash'), 'base64'));
     const cid = ipfsCid.toString();
 
     this._cache.set(id, { cid, expiration: Date.now() + MAX_CACHE_AGE });
@@ -117,8 +120,9 @@ class Resolver {
  * @param {Number} config.port
  * @param {String} config.ipfsGateway
  */
-export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, auth, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint }) => {
-  const registry = new Registry(registryEndpoint, chainId);
+export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, auth, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint, dxns }) => {
+  const dxnsOnly = boolean(dxns);
+  const registry = dxnsOnly ? null : new Registry(registryEndpoint, chainId);
 
   // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
   let registryClient;
