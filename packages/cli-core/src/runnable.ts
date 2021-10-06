@@ -223,6 +223,8 @@ export class Runnable {
       });
 
       await pm.dump();
+    } catch (err) {
+      throw err;
     } finally {
       await pm.disconnect();
     }
