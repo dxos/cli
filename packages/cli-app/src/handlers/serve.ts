@@ -14,7 +14,7 @@ const DEFAULT_LOG_FILE = '/var/log/app-server.log';
 const serverRunnable = new Runnable(APP_SERVER_BINARY, []);
 
 export const start = (config: any) => async ({
-  namespace, port, daemon, procName = APP_SERVER_PROCESS_NAME, logFile = DEFAULT_LOG_FILE, auth
+  namespace, port, daemon, procName = APP_SERVER_PROCESS_NAME, logFile = DEFAULT_LOG_FILE, auth, dxns
 }: any) => {
   const endpoint = config.get('services.wns.server');
   const chainId = config.get('services.wns.chainId');
@@ -36,7 +36,7 @@ export const start = (config: any) => async ({
 
   // TODO(burdon): Document array.
   // eslint-disable-next-line
-  serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || '', loginApp, auth, keyPhrase, dxnsEndpoint], options);
+  serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || '', loginApp, auth, keyPhrase, dxnsEndpoint, dxns], options);
 };
 
 export const stop = (/* config */) => async ({

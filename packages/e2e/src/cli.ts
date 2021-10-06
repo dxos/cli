@@ -8,9 +8,10 @@ import { join } from 'path';
 const EXECUTABLE_PATH = join(__dirname, '../../cli/bin/dx.js');
 
 const GLOBAL_DEBUG = process.env.CI !== undefined || process.env.E2E_DEBUG;
+const DEBUG = 'dxos:cli';
 
-export function cmd (command: string): Command {
-  return new Command(command);
+export function cmd (command: string, cwd?: string): Command {
+  return new Command(command, cwd);
 }
 
 export class Command {
@@ -19,7 +20,7 @@ export class Command {
   private _stdout = Buffer.alloc(0)
   private _stderr = Buffer.alloc(0)
 
-  constructor (private readonly _command: string) {}
+  constructor (private readonly _command: string, private readonly _cwd?: string) {}
 
   debug (): this {
     this._debug = true;
@@ -33,7 +34,12 @@ export class Command {
 
     const cp = spawn(`${EXECUTABLE_PATH} ${this._command}`, {
       shell: true,
-      stdio: 'pipe'
+      stdio: 'pipe',
+      cwd: this._cwd || process.cwd(),
+      env: {
+        ...process.env,
+        DEBUG
+      }
     });
 
     cp.stdout.on('data', chunk => {

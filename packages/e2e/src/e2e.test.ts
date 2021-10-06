@@ -5,11 +5,17 @@
 
 import expect from 'expect';
 import { promises as fs } from 'fs';
+import got from 'got';
 import { join } from 'path';
 
+import { IPFS } from '../mocks/ipfs';
 import { cmd } from './cli';
 
 const PROFILE_NAME = 'e2e-test';
+
+const APP_SERVER_PORT = 5999;
+const APP_DOMAIN = 'dxos';
+const APP_NAME = 'app.test';
 
 /**
  * NOTE: Test order is important in this file. **Tests depend on each other.**
@@ -17,6 +23,16 @@ const PROFILE_NAME = 'e2e-test';
  */
 
 describe('CLI', () => {
+  const ipfs: IPFS = new IPFS();
+
+  before(async () => {
+    await ipfs.start();
+  });
+
+  after(async () => {
+    await ipfs.stop();
+  });
+
   it('--help', async () => {
     await cmd('--help').run();
   });
@@ -138,6 +154,29 @@ describe('CLI', () => {
 
         expect(domains.some((d: any) => d.name === 'test-domain')).toBe(true);
       });
+    });
+  });
+
+  describe('app', () => {
+    it('start app server', async () => {
+      try {
+        await cmd('app serve stop').run();
+      } catch {}
+
+      await cmd('app serve start --dxns --daemon --auth false --log-file /tmp/app-server.log').run();
+    });
+
+    it('register app', async () => {
+      await cmd(`app register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
+    });
+
+    it('serve app', async () => {
+      const response = await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}/`);
+      expect(response.statusCode).toBe(200);
+    });
+
+    it('stop app server', async () => {
+      await cmd('app serve stop').run();
     });
   });
 });
