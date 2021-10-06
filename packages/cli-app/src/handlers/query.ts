@@ -49,7 +49,7 @@ export const query = (config: any, { getDXNSClient }: QueryParams) => async (arg
     // const client = await getDXNSClient();
     // const fqn = config.get('services.dxns.schema.fqn.app');
 
-    // const allRecords = await client.registryApi.getRecords();
+    // const allRecords = await client.registryClient.getRecords();
 
     // // TODO(egorgripasov): Don't do it on client side.
     // apps = allRecords.filter(({ messageFqn }: any) => messageFqn === fqn).map(displayApps);

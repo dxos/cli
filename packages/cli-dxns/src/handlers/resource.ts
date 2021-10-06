@@ -3,7 +3,7 @@
 //
 
 import { print } from '@dxos/cli-core';
-import { DXN } from '@dxos/registry-api';
+import { DXN } from '@dxos/registry-client';
 
 import { Params, displayResource } from './common';
 
@@ -13,7 +13,7 @@ export const listResources = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const resources = await client.registryApi.getResources();
+  const resources = await client.registryClient.getResources();
 
   print(resources.map(displayResource), { json });
 };
@@ -25,7 +25,7 @@ export const getResource = (params: Params) => async (argv: any) => {
   const parsedDxn = DXN.parse(dxn);
 
   const client = await getDXNSClient();
-  const resource = await client.registryApi.getResource(parsedDxn);
+  const resource = await client.registryClient.getResource(parsedDxn);
 
   print(resource ? displayResource(resource) : undefined, { json });
 };

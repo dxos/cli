@@ -4,14 +4,14 @@
 
 import pb from 'protobufjs';
 
-import { DomainKey, DXN, RecordKind, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-api';
+import { DomainKey, DXN, RecordKind, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-client';
 
 import { resolveDXNorCID } from '../utils';
 import { Params, printRecord, printResource, printResources } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
-  const resources = await client.registryApi.getResources();
+  const resources = await client.registryClient.getResources();
   const types = resources.filter((r): r is Resource<RegistryTypeRecord> => r.record.kind === RecordKind.Type);
 
   printResources(types, argv);
@@ -21,7 +21,7 @@ export const getType = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
   const cid = await resolveDXNorCID(client, argv);
 
-  const typeRecord = await client.registryApi.getTypeRecord(cid);
+  const typeRecord = await client.registryClient.getTypeRecord(cid);
   if (!typeRecord) {
     throw new Error(`No type registered under CID ${cid}.`);
   }
@@ -30,7 +30,7 @@ export const getType = (params: Params) => async (argv: any) => {
 };
 
 export const addType = (params: Params) => async (argv: any) => {
-  const { path, domain, messageName, resourceName, version, description, author } = argv;
+  const { path, domain, messageName, resourceName, version, description } = argv;
 
   if (!!resourceName !== !!domain) {
     throw new Error('You must specify both name and domain or neither.');
@@ -41,12 +41,10 @@ export const addType = (params: Params) => async (argv: any) => {
   const meta: RecordMetadata = {
     created: new Date(),
     version,
-    name: resourceName,
-    description,
-    author
+    description
   };
 
-  const cid = await client.registryApi.insertTypeRecord(schemaRoot, messageName, meta);
+  const cid = await client.registryClient.insertTypeRecord(schemaRoot, messageName, meta);
   const typeRecord: RegistryTypeRecord = {
     kind: RecordKind.Type,
     cid,
@@ -57,7 +55,7 @@ export const addType = (params: Params) => async (argv: any) => {
 
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
-    await client.registryApi.registerResource(domainKey, resourceName as string, cid);
+    await client.registryClient.registerResource(domainKey, resourceName as string, cid);
     const resource: Resource = {
       id: DXN.fromDomainKey(domainKey, resourceName as string),
       record: typeRecord

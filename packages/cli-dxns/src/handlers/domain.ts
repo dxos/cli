@@ -12,7 +12,7 @@ export const listDomains = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const domains = await client.registryApi.getDomains();
+  const domains = await client.registryClient.getDomains();
 
   print(domains.map(domain => ({
     key: domain.key.toHex(),
@@ -27,7 +27,7 @@ export const getFreeDomain = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const domain = await client.registryApi.registerDomain();
+  const domain = await client.registryClient.registerDomain();
 
   print({ key: domain.toHex() }, { json });
 };
