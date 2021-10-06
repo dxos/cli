@@ -163,7 +163,7 @@ describe('CLI', () => {
         await cmd('app serve stop').run();
       } catch {}
 
-      await cmd('app serve start --dxns --daemon --auth false').run();
+      await cmd('app serve start --dxns --auth false').run();
     });
 
     it('register app', async () => {
