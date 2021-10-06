@@ -8,6 +8,7 @@ import { join } from 'path';
 const EXECUTABLE_PATH = join(__dirname, '../../cli/bin/dx.js');
 
 const GLOBAL_DEBUG = process.env.CI !== undefined || process.env.E2E_DEBUG;
+const DEBUG = 'dxos:cli';
 
 export function cmd (command: string, cwd?: string): Command {
   return new Command(command, cwd);
@@ -34,7 +35,11 @@ export class Command {
     const cp = spawn(`${EXECUTABLE_PATH} ${this._command}`, {
       shell: true,
       stdio: 'pipe',
-      cwd: this._cwd || process.cwd()
+      cwd: this._cwd || process.cwd(),
+      env: {
+        ...process.env,
+        DEBUG
+      }
     });
 
     cp.stdout.on('data', chunk => {
