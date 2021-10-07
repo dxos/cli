@@ -8,6 +8,7 @@ import { promises as fs } from 'fs';
 import got from 'got';
 import { join } from 'path';
 
+import { HTTPServer } from '../mocks/http-server';
 import { IPFS } from '../mocks/ipfs';
 import { cmd } from './cli';
 
@@ -16,6 +17,7 @@ const PROFILE_NAME = 'e2e-test';
 const APP_SERVER_PORT = 5999;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
+const KUBE_NAME = 'kube.test';
 
 /**
  * NOTE: Test order is important in this file. **Tests depend on each other.**
@@ -24,13 +26,30 @@ const APP_NAME = 'app.test';
 
 describe('CLI', () => {
   const ipfs: IPFS = new IPFS();
+  const port = Math.round(Math.random() * 10000 + 5000);
+  const httpServer = new HTTPServer(port, [
+    {
+      path: '/kube/services',
+      handler: () => [{
+        name: 'app-server',
+        exec: 'ghcr.io/dxos/app-server:dev',
+        status: 'online',
+        ports: '',
+        cpu: 0,
+        memory: 288432128,
+        type: 'container'
+      }]
+    }
+  ]);
 
   before(async () => {
     await ipfs.start();
+    await httpServer.start();
   });
 
   after(async () => {
     await ipfs.stop();
+    await httpServer.stop();
   });
 
   it('--help', async () => {
@@ -177,6 +196,12 @@ describe('CLI', () => {
 
     it('stop app server', async () => {
       await cmd('app serve stop').run();
+    });
+  });
+
+  describe('kube', () => {
+    it('register kube', async () => {
+      await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url localhost:${port}`).run();
     });
   });
 });
