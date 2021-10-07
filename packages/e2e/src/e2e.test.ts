@@ -27,18 +27,19 @@ const KUBE_NAME = 'kube.test';
 describe('CLI', () => {
   const ipfs: IPFS = new IPFS();
   const port = Math.round(Math.random() * 10000 + 5000);
+  const kubeServices = [{
+    name: 'app-server',
+    exec: 'ghcr.io/dxos/app-server:dev',
+    status: 'online',
+    ports: '',
+    cpu: 0,
+    memory: 288432128,
+    type: 'container'
+  }];
   const httpServer = new HTTPServer(port, [
     {
       path: '/kube/services',
-      handler: () => [{
-        name: 'app-server',
-        exec: 'ghcr.io/dxos/app-server:dev',
-        status: 'online',
-        ports: '',
-        cpu: 0,
-        memory: 288432128,
-        type: 'container'
-      }]
+      handler: () => kubeServices
     }
   ]);
 
@@ -204,7 +205,7 @@ describe('CLI', () => {
       const recordsBefore = await cmd('dxns record list --json').json();
       await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url localhost:${port}`).run();
       const recordsAfter = await cmd('dxns record list --json').json();
-      expect(recordsAfter.length).toBe(recordsBefore.length + 2);
+      expect(recordsAfter.length).toBe(recordsBefore.length + 1 + kubeServices.length);
     });
   });
 });
