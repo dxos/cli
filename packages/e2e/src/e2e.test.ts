@@ -201,7 +201,10 @@ describe('CLI', () => {
 
   describe('kube', () => {
     it('register kube', async () => {
+      const recordsBefore = await cmd('dxns record list --json').json();
       await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url localhost:${port}`).run();
+      const recordsAfter = await cmd('dxns record list --json').json();
+      expect(recordsAfter.length).toBe(recordsBefore.length + 2);
     });
   });
 });
