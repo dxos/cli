@@ -26,7 +26,7 @@ const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: s
 };
 
 const registerServices = async (registryClient: IRegistryClient, kubeCID: CID, url: string) => {
-  const reponse = await got(`https://${url}/kube/services`);
+  const reponse = await got(`http://${url}/kube/services`);
   const services = JSON.parse(reponse.body);
   await Promise.all(services.map(async (service: any) => {
     const serviceTypeCid = await getServiceTypeCID(registryClient, service.name);
