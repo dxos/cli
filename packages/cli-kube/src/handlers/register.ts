@@ -5,10 +5,17 @@
 import assert from 'assert';
 import got from 'got';
 
-import { CID, DXN, IRegistryClient, RecordKind } from '@dxos/registry-client';
+import { CID, DomainKey, DXN, IRegistryClient, RecordKind } from '@dxos/registry-client';
 
 export const KUBE_DXN_NAME = 'dxos:type.kube';
 export const SERVICE_TYPE_DXN = 'dxos:type.service';
+
+interface RegisterServiceOptions {
+  registryClient: IRegistryClient,
+  kubeCID: CID,
+  domainKey: DomainKey,
+  url: string
+}
 
 const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: string) => {
   // Checking for specific type, like dxos:type.service.app-server
@@ -22,25 +29,29 @@ const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: s
   // Can't resolve specific type, return default
   const defaultCID = await registryClient.resolveRecordCid(DXN.parse(SERVICE_TYPE_DXN));
   assert(defaultCID);
+  console.log('Default type');
   return defaultCID;
 };
 
-const registerServices = async (registryClient: IRegistryClient, kubeCID: CID, url: string) => {
-  const reponse = await got(`http://${url}/kube/services`);
+const registerServices = async (options: RegisterServiceOptions) => {
+  const reponse = await got(`${options.url}/kube/services`);
   const services = JSON.parse(reponse.body);
-  await Promise.all(services.map(async (service: any) => {
-    const serviceTypeCid = await getServiceTypeCID(registryClient, service.name);
+  for (const service of services) {
+    const serviceTypeCid = await getServiceTypeCID(options.registryClient, service.name);
 
     const serviceData = {
       type: service.name,
-      kube: kubeCID.value,
+      kube: options.kubeCID.value,
       extension: {
         '@type': serviceTypeCid.value
       }
     };
 
-    await registryClient.insertDataRecord(serviceData, serviceTypeCid);
-  }));
+    const cid = await options.registryClient.insertDataRecord({ serviceData }, serviceTypeCid, {});
+
+    const name = 'service' + cid.toB58String();
+    await options.registryClient.registerResource(options.domainKey, name, cid);
+  }
 };
 
 export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }: any) => {
@@ -57,5 +68,10 @@ export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }
 
   const domainKey = await registryClient.resolveDomainName(domain);
   await registryClient.registerResource(domainKey, name, cid);
-  await registerServices(registryClient, cid, url);
+  await registerServices({
+    registryClient,
+    domainKey,
+    kubeCID: cid,
+    url
+  });
 };

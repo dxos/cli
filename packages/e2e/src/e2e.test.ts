@@ -90,11 +90,11 @@ describe('CLI', () => {
 
   describe('services', () => {
     it('dxns', async () => {
-      await cmd('service install --from @dxos/cli-dxns --service dxns').run();
-
       try {
         await cmd('service stop dxns').run();
       } catch {}
+
+      await cmd('service install --from @dxos/cli-dxns --service dxns --force').run();
 
       await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
     });
@@ -203,7 +203,7 @@ describe('CLI', () => {
   describe('kube', () => {
     it('register kube', async () => {
       const recordsBefore = await cmd('dxns record list --json').json();
-      await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url localhost:${port}`).run();
+      await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
       const recordsAfter = await cmd('dxns record list --json').json();
       expect(recordsAfter.length).toBe(recordsBefore.length + 1 + kubeServices.length);
     });
