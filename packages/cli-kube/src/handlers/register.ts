@@ -9,6 +9,7 @@ import { CID, DomainKey, DXN, IRegistryClient, RecordKind } from '@dxos/registry
 
 export const KUBE_DXN_NAME = 'dxos:type.kube';
 export const SERVICE_TYPE_DXN = 'dxos:type.service';
+export const WELL_KNOWN = '/kube/services';
 
 interface RegisterServiceOptions {
   registryClient: IRegistryClient,
@@ -28,14 +29,18 @@ const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: s
   }
   // Can't resolve specific type, return default
   const defaultCID = await registryClient.resolveRecordCid(DXN.parse(SERVICE_TYPE_DXN));
-  assert(defaultCID);
-  console.log('Default type');
+  assert(defaultCID, 'Couldn\'t find default service type');
   return defaultCID;
 };
 
 const registerServices = async (options: RegisterServiceOptions) => {
-  const reponse = await got(`${options.url}/kube/services`);
-  const services = JSON.parse(reponse.body);
+  let services: any[] = [];
+  try {
+    const reponse = await got(`${options.url}${WELL_KNOWN}`);
+    services = JSON.parse(reponse.body);
+  } catch (e: unknown) {
+    throw new Error('Kube service endpoint is not available');
+  }
   for (const service of services) {
     const serviceTypeCid = await getServiceTypeCID(options.registryClient, service.name);
 
@@ -49,7 +54,7 @@ const registerServices = async (options: RegisterServiceOptions) => {
 
     const cid = await options.registryClient.insertDataRecord({ serviceData }, serviceTypeCid, {});
 
-    const name = 'service' + cid.toB58String();
+    const name = `${options.url}.services.${service.name}`;
     await options.registryClient.registerResource(options.domainKey, name, cid);
   }
 };
