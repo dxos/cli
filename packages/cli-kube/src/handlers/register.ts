@@ -54,7 +54,7 @@ const registerServices = async (options: RegisterServiceOptions) => {
 
     const cid = await options.registryClient.insertDataRecord({ serviceData }, serviceTypeCid, {});
 
-    const name = `${options.url}.services.${service.name}`;
+    const name = `${options.url.replace(':', '-')}.services.${service.name}`;
     await options.registryClient.registerResource(options.domainKey, name, cid);
   }
 };
