@@ -8,7 +8,7 @@ import { spawnSync } from 'child_process';
 import get from 'lodash.get';
 
 import { sleep } from '@dxos/async';
-import { Registry } from '@wirelineio/registry-client';
+import { createApiPromise, IRegistryClient, RegistryClient } from '@dxos/registry-client';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;
@@ -17,7 +17,7 @@ const SERVICE_TYPE = 'ipfs';
 const SERVICE_EXEC = 'ipfs';
 const SVC_NAME = 'ipfs-swarm-connect';
 
-const connect = (address) => {
+const connect = (address: string) => {
   const result = spawnSync(SERVICE_EXEC, ['swarm', 'connect', address]);
   const out = String(result.stdout).trim();
   const err = String(result.stderr).trim();
@@ -30,14 +30,24 @@ const connect = (address) => {
   return result.status;
 };
 
+interface SwarmConnectorOptions {
+  registryEndpoint: string,
+  interval?: number,
+  allowIPv6?: boolean
+}
+
 export class SwarmConnector {
-  constructor (options) {
-    const { registryEndpoint, chainId, interval = 0, allowIPv6 = false } = options;
+  private readonly _allowIPv6: boolean;
+  private readonly _interval: number;
+  private readonly _registryEndpoint: string;
+  private _registry: IRegistryClient | undefined;
+
+  constructor (options: SwarmConnectorOptions) {
+    const { registryEndpoint, interval = 0, allowIPv6 = false } = options;
 
     this._allowIPv6 = boolean(allowIPv6);
     this._interval = Number(interval);
-
-    this._registry = new Registry(registryEndpoint, chainId);
+    this._registryEndpoint = registryEndpoint;
   }
 
   async start () {
@@ -45,6 +55,10 @@ export class SwarmConnector {
     await sleep(TIMEOUT);
 
     await this.connect();
+
+    const apiPromise = await createApiPromise(this._registryEndpoint);
+
+    this._registry = new RegistryClient(apiPromise);
 
     if (this._interval > 0) {
       return new Promise(() => {
@@ -54,11 +68,14 @@ export class SwarmConnector {
   }
 
   async connect () {
+    if (!this._registry) {
+      throw new Error('SwarmConnector is not started');
+    }
     const attributes = { type: RECORD_TYPE, service: SERVICE_TYPE };
-    const records = await this._registry.queryRecords(attributes);
+    const records = await this._registry?.getRecords();
 
     const active = records
-      .filter(({ attributes: { active } }) => active !== false)
+      .filter(({ attributes: { active } }: any) => active !== false)
       .sort(() => Math.random() - 0.5);
 
     let servicesTried = 0;
@@ -87,9 +104,8 @@ export class SwarmConnector {
   }
 }
 
-const [registryEndpoint, chainId, interval, allowIPv6] = process.argv.slice(2);
+const [registryEndpoint, interval, allowIPv6] = process.argv.slice(2);
 
-assert(registryEndpoint, 'Invalid WNS endpoint.');
-assert(chainId, 'Invalid WNS Chain ID.');
+assert(registryEndpoint, 'Invalid DXNS endpoint.');
 
-void new SwarmConnector({ registryEndpoint, chainId, interval, allowIPv6 }).start();
+void new SwarmConnector({ registryEndpoint, interval, allowIPv6 }).start();
