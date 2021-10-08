@@ -131,9 +131,9 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       command: ['register'],
       describe: 'Register KUBE.',
       builder: yargs => yargs
-        .option('name', { type: 'string' })
-        .option('domain', { type: 'string' })
-        .option('url', { type: 'string' }),
+        .option('name', { required: true, type: 'string' })
+        .option('domain', { required: true, type: 'string' })
+        .option('url', { required: true, type: 'string' }),
 
       handler: asyncHandler(register({ getDXNSClient }))
     })

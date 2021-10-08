@@ -8,6 +8,7 @@ import { promises as fs } from 'fs';
 import got from 'got';
 import { join } from 'path';
 
+import { HTTPServer } from '../mocks/http-server';
 import { IPFS } from '../mocks/ipfs';
 import { cmd } from './cli';
 
@@ -16,6 +17,7 @@ const PROFILE_NAME = 'e2e-test';
 const APP_SERVER_PORT = 5999;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
+const KUBE_NAME = 'kube.test';
 
 /**
  * NOTE: Test order is important in this file. **Tests depend on each other.**
@@ -24,13 +26,31 @@ const APP_NAME = 'app.test';
 
 describe('CLI', () => {
   const ipfs: IPFS = new IPFS();
+  const port = Math.round(Math.random() * 10000 + 5000);
+  const kubeServices = [{
+    name: 'app-server',
+    exec: 'ghcr.io/dxos/app-server:dev',
+    status: 'online',
+    ports: '',
+    cpu: 0,
+    memory: 288432128,
+    type: 'container'
+  }];
+  const httpServer = new HTTPServer(port, [
+    {
+      path: '/kube/services',
+      handler: () => kubeServices
+    }
+  ]);
 
   before(async () => {
     await ipfs.start();
+    await httpServer.start();
   });
 
   after(async () => {
     await ipfs.stop();
+    await httpServer.stop();
   });
 
   it('--help', async () => {
@@ -70,11 +90,11 @@ describe('CLI', () => {
 
   describe('services', () => {
     it('dxns', async () => {
-      await cmd('service install --from @dxos/cli-dxns --service dxns').run();
-
       try {
         await cmd('service stop dxns').run();
       } catch {}
+
+      await cmd('service install --from @dxos/cli-dxns --service dxns --force').run();
 
       await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
     });
@@ -177,6 +197,15 @@ describe('CLI', () => {
 
     it('stop app server', async () => {
       await cmd('app serve stop').run();
+    });
+  });
+
+  describe('kube', () => {
+    it('register kube', async () => {
+      const recordsBefore = await cmd('dxns record list --json').json();
+      await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
+      const recordsAfter = await cmd('dxns record list --json').json();
+      expect(recordsAfter.length).toBe(recordsBefore.length + 1 + kubeServices.length);
     });
   });
 });
