@@ -94,7 +94,7 @@ export class SwarmConnector {
     for (const service of active) {
       servicesTried++;
 
-      const addresses = service.data.addresses as string[];
+      const addresses = service.data.extension.addresses as string[];
       // eslint-disable-next-line
       for (const address of addresses ?? []) {
         if (/ip4/.test(address) || /dns4/.test(address) || this._allowIPv6) {
