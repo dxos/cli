@@ -64,9 +64,9 @@ export const IPFSModule = ({ config }) => ({
             logFile: IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE,
             background: true
           };
-          const { server, chainId } = config.get('services.wns');
+          const { server } = config.get('services.dxns');
           await swarmConnectRunable.run(
-            [server, chainId, connectInterval * 1000, connectIpv6],
+            [server, connectInterval * 1000, connectIpv6],
             swarmConnectorOptions
           );
         }

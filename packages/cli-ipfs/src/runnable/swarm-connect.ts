@@ -2,12 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import assert from 'assert';
 import { boolean } from 'boolean';
 import { spawnSync } from 'child_process';
 
 import { sleep } from '@dxos/async';
-import { createApiPromise, DXN, IRegistryClient, RegistryClient } from '@dxos/registry-client';
+import { DXN, IRegistryClient, RegistryClient, definitions } from '@dxos/registry-client';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;
@@ -52,11 +53,13 @@ export class SwarmConnector {
     // Wait for IPFS initialization.
     await sleep(TIMEOUT);
 
+    const provider = new WsProvider(this._registryEndpoint);
+    const types = Object.values(definitions).reduce((res, { types }) => ({ ...res, ...types }), {});
+    const api = await ApiPromise.create({ provider, types });
+
+    this._registry = new RegistryClient(api);
+
     await this.connect();
-
-    const apiPromise = await createApiPromise(this._registryEndpoint);
-
-    this._registry = new RegistryClient(apiPromise);
 
     if (this._interval > 0) {
       return new Promise(() => {
@@ -67,7 +70,7 @@ export class SwarmConnector {
 
   async getIPFSTypeCID () {
     if (!this._registry) {
-      throw new Error('SwarmConnector is not started');
+      throw new Error('Registry client is not initialized.');
     }
     const type = await this._registry.getResource(DXN.parse(IPFS_SERVICE_DXN));
     if (!type) {
@@ -78,13 +81,12 @@ export class SwarmConnector {
 
   async connect () {
     if (!this._registry) {
-      throw new Error('SwarmConnector is not started');
+      throw new Error('Registry client is not initialized.');
     }
     const ipfsServiceCID = await this.getIPFSTypeCID();
     const records = await this._registry.getDataRecords({ type: ipfsServiceCID });
 
-    const active = records // assuming all are active?
-      .sort(() => Math.random() - 0.5);
+    const active = records.sort(() => Math.random() - 0.5); // assuming all are active?
 
     let servicesTried = 0;
     let connections = 0;
