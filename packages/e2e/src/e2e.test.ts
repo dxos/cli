@@ -89,7 +89,7 @@ describe('CLI', () => {
   });
 
   describe('services', () => {
-    it('dxns', async () => {
+    it.skip('dxns', async () => {
       try {
         await cmd('service stop dxns').run();
       } catch {}

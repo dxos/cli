@@ -5,17 +5,15 @@
 import assert from 'assert';
 import { boolean } from 'boolean';
 import { spawnSync } from 'child_process';
-import get from 'lodash.get';
 
 import { sleep } from '@dxos/async';
-import { createApiPromise, IRegistryClient, RegistryClient } from '@dxos/registry-client';
+import { createApiPromise, DXN, IRegistryClient, RegistryClient } from '@dxos/registry-client';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;
-const RECORD_TYPE = 'wrn:service';
-const SERVICE_TYPE = 'ipfs';
 const SERVICE_EXEC = 'ipfs';
 const SVC_NAME = 'ipfs-swarm-connect';
+const IPFS_SERVICE_DXN = 'dxos:type.service.ipfs';
 
 const connect = (address: string) => {
   const result = spawnSync(SERVICE_EXEC, ['swarm', 'connect', address]);
@@ -67,15 +65,25 @@ export class SwarmConnector {
     }
   }
 
+  async getIPFSTypeCID () {
+    if (!this._registry) {
+      throw new Error('SwarmConnector is not started');
+    }
+    const type = await this._registry.getResource(DXN.parse(IPFS_SERVICE_DXN));
+    if (!type) {
+      throw new Error('Can\'t find ipfs service type record');
+    }
+    return type.record.cid;
+  }
+
   async connect () {
     if (!this._registry) {
       throw new Error('SwarmConnector is not started');
     }
-    const attributes = { type: RECORD_TYPE, service: SERVICE_TYPE };
-    const records = await this._registry?.getRecords();
+    const ipfsServiceCID = await this.getIPFSTypeCID();
+    const records = await this._registry.getDataRecords({ type: ipfsServiceCID });
 
-    const active = records
-      .filter(({ attributes: { active } }: any) => active !== false)
+    const active = records // assuming all are active?
       .sort(() => Math.random() - 0.5);
 
     let servicesTried = 0;
@@ -84,11 +92,11 @@ export class SwarmConnector {
     for (const service of active) {
       servicesTried++;
 
-      const addresses = get(service, 'attributes.ipfs.addresses', []);
+      const addresses = service.data.addresses as string[];
       // eslint-disable-next-line
-      for (const address of addresses) {
+      for (const address of addresses ?? []) {
         if (/ip4/.test(address) || /dns4/.test(address) || this._allowIPv6) {
-          console.log(SVC_NAME, `connecting to ${get(service, 'names[0]', service.id)} @ ${address}`);
+          console.log(SVC_NAME, `connecting to @ ${address}`);
           if (connect(address) === 0) {
             connections++;
             break;
@@ -108,4 +116,4 @@ const [registryEndpoint, interval, allowIPv6] = process.argv.slice(2);
 
 assert(registryEndpoint, 'Invalid DXNS endpoint.');
 
-void new SwarmConnector({ registryEndpoint, interval, allowIPv6 }).start();
+void new SwarmConnector({ registryEndpoint, interval: Number(interval), allowIPv6: boolean(allowIPv6) }).start();
