@@ -9,7 +9,7 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { CID, createCID, DomainKey, RecordMetadata } from '@dxos/registry-client';
+import { DomainKey, RecordMetadata } from '@dxos/registry-client';
 
 import { Params } from './common';
 
@@ -85,30 +85,11 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     description: 'Base DXOS schema'
   };
 
-  const typeNameToCID: Record<string, CID> = {};
-
   for (const [typeName, fqn] of Object.entries(TYPES)) {
     verbose && log(`Registering ${typeName}..`);
 
     const cid = await client.registryClient.insertTypeRecord(root, fqn, meta);
     await client.registryClient.registerResource(domainKey, typeName, cid);
-    typeNameToCID[typeName] = cid;
-
-    if (typeName === 'type.service.ipfs') {
-      // Some fake data for ipfs service
-      const serviceData = {
-        type: 'ipfs',
-        kube: createCID().value,
-        extension: {
-          '@type': typeNameToCID['type.service.ipfs'],
-          protocol: 'ipfs/0.1.0',
-          addresses: [
-            '/ip4/123.123.123.123/tcp/5566'
-          ]
-        }
-      };
-      await client.registryClient.insertDataRecord(serviceData, typeNameToCID['type.service.ipfs']);
-    }
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
