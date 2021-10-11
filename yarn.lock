@@ -551,15 +551,6 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/codec-protobuf@2.15.1":
-  version "2.15.1"
-  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.15.1.tgz#eac1a95eaef9df23d30d5ab27440b58db3d15dab"
-  integrity sha512-Lkn9wQviqupOn7Rq29otJT2Rz1v2Wrd7sIQrMha5GGUXiSZIC01L2AT2Lsa6DE6VYgpJURX8/jBQ1xlEvOd9cw==
-  dependencies:
-    assert "^2.0.0"
-    lodash.merge "^4.6.2"
-    protobufjs "^6.9.0"
-
 "@dxos/config@2.14.1", "@dxos/config@~2.14.1":
   version "2.14.1"
   resolved "https://registry.npmjs.org/@dxos/config/-/config-2.14.1.tgz#a7c3754a7b9af6f9c6e76418a1a102d56b01df04"
@@ -639,16 +630,6 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
-"@dxos/crypto@2.15.1":
-  version "2.15.1"
-  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.15.1.tgz#4651cd0ebcf50bcaaf3f95b56f05e685d929ac41"
-  integrity sha512-zqICUyAu9N9FzGvb2OgNtofXXGFcfz/1SgW+/NPs5taM6/IZmIaZ43deeNuYn72Vtz+7nZkImClLwbblPdTXMg==
-  dependencies:
-    bip39 "^3.0.2"
-    crypto-js "^3.1.9-1"
-    humanhash "^1.0.4"
-    hypercore-crypto "^2.3.0"
-
 "@dxos/crypto@~2.10.12":
   version "2.10.17"
   resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.10.17.tgz#d13946034b6a7a9eabfdfe0d8377d0a99e34d143"
@@ -670,14 +651,6 @@
   version "2.14.5"
   resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.14.5.tgz#4cf2f841761c72aab05c7afa51a76793cd871e81"
   integrity sha512-tBcKpaEEgkFK9ec3xlnNosTbieCO24yzLeweFbZt+GKtRLdhowLKCAl1qggRk1pam+SfWi9SXejaRLpF/7cGew==
-  dependencies:
-    "@types/node" "^14.0.9"
-    debug "^4.1.1"
-
-"@dxos/debug@2.15.1":
-  version "2.15.1"
-  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.15.1.tgz#0754c0e0aea8b63af676f337b48be65078ad5f78"
-  integrity sha512-TM/qXSby/LUqo2EEf00N/jU1VG23XFZAXZVViESv1FAKL272yfPTRBuPqcEvz+SnuiYvao7F9sAvBUIZskRx6Q==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -949,27 +922,6 @@
     multihashes "^4.0.2"
     protobufjs "^6.9.0"
 
-"@dxos/registry-client@~2.15.1":
-  version "2.15.1"
-  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.15.1.tgz#b76a562e0fd8b3a5a7ae13506a6753e743feecc8"
-  integrity sha512-MzUh0mkTmyV82mHeo18zw4W5tFFqPQ8I7tMyK9jFoOOdYJnKS1IihdAIpQYyirZP2H9JScDKkXQMao0ZcpgIRw==
-  dependencies:
-    "@dxos/codec-protobuf" "2.15.1"
-    "@dxos/util" "2.15.1"
-    "@polkadot/api" "4.17.1"
-    "@polkadot/keyring" "6.11.1"
-    "@polkadot/metadata" "4.17.1"
-    "@polkadot/rpc-core" "4.17.1"
-    "@polkadot/types" "4.17.1"
-    "@polkadot/util" "6.11.1"
-    "@polkadot/util-crypto" "6.11.1"
-    bn.js "4.12.0"
-    crypto "^1.0.1"
-    faker "^5.1.0"
-    fs-extra "^8.1.0"
-    multihashes "^4.0.2"
-    protobufjs "^6.9.0"
-
 "@dxos/signal@~2.14.1":
   version "2.14.1"
   resolved "https://registry.npmjs.org/@dxos/signal/-/signal-2.14.1.tgz#241a64e7e6f0647b3214e583ba63bf442770a81e"
@@ -1027,15 +979,6 @@
   dependencies:
     "@dxos/crypto" "2.14.5"
     "@dxos/debug" "2.14.5"
-    "@types/node" "^14.0.9"
-
-"@dxos/util@2.15.1":
-  version "2.15.1"
-  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.15.1.tgz#e85495394038d35faef800e98c244770bd2b8f53"
-  integrity sha512-0Mop+qTlENkuCBKwbE4dZArowsCrvu+jyVyFMzH4YMg7D9/vRnEeeQVf01acN1BobavWtnKDfeWTDxIF29J5KQ==
-  dependencies:
-    "@dxos/crypto" "2.15.1"
-    "@dxos/debug" "2.15.1"
     "@types/node" "^14.0.9"
 
 "@eslint/eslintrc@^0.4.3":
