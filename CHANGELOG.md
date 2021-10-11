@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.5.1](https://www.github.com/dxos/cli/compare/v2.5.0...v2.5.1) (2021-10-11)
+
+
+### Bug Fixes
+
+* new cli build ([9fa51fc](https://www.github.com/dxos/cli/commit/9fa51fc5e6fbed49f49d163b89f4c65ed0d8b942))
+
 ## [2.5.0](https://www.github.com/dxos/cli/compare/v2.4.15...v2.5.0) (2021-10-01)
 
 
