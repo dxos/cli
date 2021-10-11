@@ -12,6 +12,7 @@ import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuctio
 import { getBalance, increaseBalance } from '../handlers/balance';
 import { getBlocks } from '../handlers/block';
 import { listDomains, getFreeDomain } from '../handlers/domain';
+import { addDummyData } from '../handlers/dummy-data';
 import { listRecords, getRecord, addDataRecord } from '../handlers/record';
 import { getResource, listResources } from '../handlers/resource';
 import { seedRegistry } from '../handlers/seed';
@@ -266,6 +267,13 @@ export const DXNSModule = (params: Params) => {
         describe: 'Get current DXNS block number.',
 
         handler: asyncHandler(getBlocks({ getDXNSClient }))
+      })
+
+      .command({
+        command: ['dummy'],
+        describe: 'Adds all dummy data necessary for testing puproses.',
+
+        handler: asyncHandler(addDummyData({ getDXNSClient }))
       })
   };
 };
