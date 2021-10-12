@@ -93,7 +93,7 @@ class Resolver {
       return cached.cid;
     }
 
-    const recordCid = await this._registryClient.resolveRecordCid(DXN.parse(id));
+    const recordCid = (await this._registryClient.getResource(DXN.parse(id)))?.tags.latest;
     const record = await this._registryClient.getRecord(recordCid);
 
     if (!record) {

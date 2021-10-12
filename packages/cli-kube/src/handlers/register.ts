@@ -20,7 +20,7 @@ interface RegisterServiceOptions {
 
 const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: string) => {
   // Checking for specific type, like dxos:type.service.app-server
-  const cid = await registryClient.resolveRecordCid(DXN.parse(SERVICE_TYPE_DXN + '.' + serviceName));
+  const cid = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN + '.' + serviceName)))?.tags.latest;
   if (cid) {
     const record = await registryClient.getTypeRecord(cid);
     if (record) {
@@ -28,7 +28,7 @@ const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: s
     }
   }
   // Can't resolve specific type, return default
-  const defaultCID = await registryClient.resolveRecordCid(DXN.parse(SERVICE_TYPE_DXN));
+  const defaultCID = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN)))?.tags.latest;
   assert(defaultCID, 'Couldn\'t find default service type');
   return defaultCID;
 };
