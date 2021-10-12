@@ -55,14 +55,15 @@ const registerServices = async (options: RegisterServiceOptions) => {
     const cid = await options.registryClient.insertDataRecord({ serviceData }, serviceTypeCid, {});
 
     const name = `${options.url}.services.${service.name}`;
-    await options.registryClient.registerResource(options.domainKey, name, cid);
+    const dxn = DXN.fromDomainKey(options.domainKey, name);
+    await options.registryClient.updateResource(dxn, cid);
   }
 };
 
 export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }: any) => {
   const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
 
-  const kubeType = await registryClient.getResource(DXN.parse(KUBE_DXN_NAME));
+  const kubeType = await registryClient.getResourceRecord(DXN.parse(KUBE_DXN_NAME), 'latest');
   assert(kubeType);
   assert(kubeType.record.kind === RecordKind.Type);
 
@@ -72,7 +73,8 @@ export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }
   });
 
   const domainKey = await registryClient.resolveDomainName(domain);
-  await registryClient.registerResource(domainKey, name, cid);
+  const dxn = DXN.fromDomainKey(domainKey, name);
+  await registryClient.updateResource(dxn, cid);
   await registerServices({
     registryClient,
     domainKey,
