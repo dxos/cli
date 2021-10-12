@@ -115,7 +115,6 @@ describe('CLI', () => {
       const resource = await cmd('dxns resource get dxos:type.app --json').json();
 
       expect(resource.dxn).toEqual('dxos:type.app');
-      expect(resource.description).toEqual('Base DXOS schema');
     });
 
     it('list records', async () => {

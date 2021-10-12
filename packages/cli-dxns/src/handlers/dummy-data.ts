@@ -17,8 +17,8 @@ export const addDummyData = (params: Params) => async () => {
 
   print('Adding IPFS record...');
 
-  const ipfsType = await client.registryClient.getResource(DXN.parse(IPFS_SERVICE_DXN));
-  const serviceType = await client.registryClient.getResource(DXN.parse(SERVICE_DXN));
+  const ipfsType = await client.registryClient.getResourceRecord(DXN.parse(IPFS_SERVICE_DXN), 'latest');
+  const serviceType = await client.registryClient.getResourceRecord(DXN.parse(SERVICE_DXN), 'latest');
 
   if (!serviceType) {
     throw new Error('Service type not found');
