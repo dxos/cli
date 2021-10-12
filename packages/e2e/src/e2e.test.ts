@@ -94,7 +94,7 @@ describe('CLI', () => {
         await cmd('service stop dxns').run();
       } catch {}
 
-      await cmd('service install --from @dxos/cli-dxns --service dxns --force').run();
+      await cmd('service install --from @dxos/cli-dxns --service dxns --force --dev').run();
 
       await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
     });
