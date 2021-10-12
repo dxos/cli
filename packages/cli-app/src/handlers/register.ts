@@ -8,7 +8,7 @@ import clean from 'lodash-clean';
 
 import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { CID, DXN, RecordKind, RegistryTypeRecord } from '@dxos/registry-client';
+import { CID, DXN, RecordKind } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 import { Registry } from '@wirelineio/registry-client';
 
@@ -88,12 +88,11 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
   } else {
     assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(name), 'Name could contain only letters, numbers, dashes or dots.');
 
-    // TODO(egorgripasov): Adapter for the new record format. Cleanup.
-    const { version, description, package: pkg, ...rest } = conf;
+    const { description, package: pkg, ...rest } = conf;
 
     const client: { registryClient: IRegistryClient } = await getDXNSClient();
 
-    const appType = await client.registryClient.getResource<RegistryTypeRecord>(DXN.parse(APP_DXN_NAME));
+    const appType = await client.registryClient.getResourceRecord(DXN.parse(APP_DXN_NAME), 'latest');
     assert(appType);
     assert(appType.record.kind === RecordKind.Type);
 
@@ -101,12 +100,12 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
       hash: CID.from(pkg['/']).value,
       ...rest
     }, appType?.record.cid, {
-      version,
       description
     });
 
     const domainKey = await client.registryClient.resolveDomainName(domain);
-    await client.registryClient.registerResource(domainKey, name, cid);
+    const dxn = DXN.fromDomainKey(domainKey, name);
+    await client.registryClient.updateResource(dxn, cid);
   }
 
   log(`Registered ${conf.name}@${conf.version}.`);
