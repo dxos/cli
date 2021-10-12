@@ -78,8 +78,7 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
       log(`Record ID: ${appId}`);
     }
 
-    // eslint-disable-next-line
-    for await (const wrn of name) {
+    for (const wrn of name) {
       log(`Assigning name ${wrn}...`);
       if (!noop) {
         await registry.setName(wrn, appId, userKey, fee);
@@ -104,8 +103,12 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
     });
 
     const domainKey = await client.registryClient.resolveDomainName(domain);
-    const dxn = DXN.fromDomainKey(domainKey, name);
-    await client.registryClient.updateResource(dxn, cid);
+    for (const dxn of name) {
+      log(`Assigning name ${dxn}...`);
+      if (!noop) {
+        await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid);
+      }
+    }
   }
 
   log(`Registered ${conf.name}@${conf.version}.`);
