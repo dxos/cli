@@ -39,7 +39,9 @@ export const displayRecord = (record: RegistryRecord) => {
 export const displayResource = (resource: Resource) => {
   return ({
     dxn: resource.id.toString(),
-    ...displayRecord(resource.record)
+    tags: Object.keys(resource.tags),
+    versions: Object.keys(resource.versions),
+    type: resource.type
   });
 };
 

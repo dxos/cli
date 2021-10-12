@@ -9,7 +9,7 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { DomainKey, RecordMetadata } from '@dxos/registry-client';
+import { DomainKey, DXN, RecordMetadata } from '@dxos/registry-client';
 
 import { Params } from './common';
 
@@ -81,7 +81,6 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const root = await pb.load(SCHEMA_PATH as string);
   const meta: RecordMetadata = {
     created: new Date(),
-    version: '0.1.0',
     description: 'Base DXOS schema'
   };
 
@@ -89,7 +88,8 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     verbose && log(`Registering ${typeName}..`);
 
     const cid = await client.registryClient.insertTypeRecord(root, fqn, meta);
-    await client.registryClient.registerResource(domainKey, typeName, cid);
+    const dxn = DXN.fromDomainKey(domainKey, typeName);
+    await client.registryClient.updateResource(dxn, cid);
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }

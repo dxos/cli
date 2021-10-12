@@ -13,7 +13,7 @@ export const listResources = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const resources = await client.registryClient.getResources();
+  const resources = await client.registryClient.queryResources();
 
   print(resources.map(displayResource), { json });
 };

@@ -7,14 +7,13 @@ import pb from 'protobufjs';
 import { DomainKey, DXN, RecordKind, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-client';
 
 import { resolveDXNorCID } from '../utils';
-import { Params, printRecord, printResource, printResources } from './common';
+import { Params, printRecord, printRecords, printResource } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
-  const resources = await client.registryClient.getResources();
-  const types = resources.filter((r): r is Resource<RegistryTypeRecord> => r.record.kind === RecordKind.Type);
+  const types = await client.registryClient.getTypeRecords();
 
-  printResources(types, argv);
+  printRecords(types, argv);
 };
 
 export const getType = (params: Params) => async (argv: any) => {
@@ -30,7 +29,7 @@ export const getType = (params: Params) => async (argv: any) => {
 };
 
 export const addType = (params: Params) => async (argv: any) => {
-  const { path, domain, messageName, resourceName, version, description } = argv;
+  const { path, domain, messageName, resourceName, description } = argv;
 
   if (!!resourceName !== !!domain) {
     throw new Error('You must specify both name and domain or neither.');
@@ -40,7 +39,6 @@ export const addType = (params: Params) => async (argv: any) => {
   const schemaRoot = await pb.load(path as string);
   const meta: RecordMetadata = {
     created: new Date(),
-    version,
     description
   };
 
@@ -55,13 +53,13 @@ export const addType = (params: Params) => async (argv: any) => {
 
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
-    await client.registryClient.registerResource(domainKey, resourceName as string, cid);
-    const resource: Resource = {
-      id: DXN.fromDomainKey(domainKey, resourceName as string),
-      record: typeRecord
+    const dxn = DXN.fromDomainKey(domainKey, resourceName as string);
+    await client.registryClient.updateResource(dxn, cid);
+    const resource = {
+      id: DXN.fromDomainKey(domainKey, resourceName as string)
     };
 
-    printResource(resource, argv);
+    printResource(resource as Resource, argv);
   } else {
     printRecord(typeRecord, argv);
   }
