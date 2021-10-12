@@ -8,6 +8,7 @@ import { createCID, DXN } from '@dxos/registry-client';
 import { Params } from './common';
 
 const IPFS_SERVICE_DXN = 'dxos:type.service.ipfs';
+const SERVICE_DXN = 'dxos:type.service';
 
 export const addDummyData = (params: Params) => async () => {
   const { getDXNSClient } = params;
@@ -17,24 +18,31 @@ export const addDummyData = (params: Params) => async () => {
   print('Adding IPFS record...');
 
   const ipfsType = await client.registryClient.getResource(DXN.parse(IPFS_SERVICE_DXN));
+  const serviceType = await client.registryClient.getResource(DXN.parse(SERVICE_DXN));
+
+  if (!serviceType) {
+    throw new Error('Service type not found');
+  }
 
   if (!ipfsType) {
     throw new Error('IPFS type not found');
   }
 
-  const cid = ipfsType.record.cid;
+  const ipfsCID = ipfsType.record.cid;
+  const serviceCID = serviceType.record.cid;
+
   const serviceData = {
     type: 'ipfs',
     kube: createCID().value,
     extension: {
-      '@type': cid,
+      '@type': ipfsCID,
       protocol: 'ipfs/0.1.0',
       addresses: [
         '/ip4/123.123.123.123/tcp/5566'
       ]
     }
   };
-  await client.registryClient.insertDataRecord(serviceData, cid);
+  await client.registryClient.insertDataRecord(serviceData, serviceCID);
 
   print('IPFS record added.');
 };

@@ -15,6 +15,7 @@ const TIMEOUT = 10000;
 const SERVICE_EXEC = 'ipfs';
 const SVC_NAME = 'ipfs-swarm-connect';
 const IPFS_SERVICE_DXN = 'dxos:type.service.ipfs';
+const SERVICE_DXN = 'dxos:type.service';
 
 const connect = (address: string) => {
   const result = spawnSync(SERVICE_EXEC, ['swarm', 'connect', address]);
@@ -68,11 +69,11 @@ export class SwarmConnector {
     }
   }
 
-  async getIPFSTypeCID () {
+  async getServiceTypeCID (dxn: string) {
     if (!this._registry) {
       throw new Error('Registry client is not initialized.');
     }
-    const type = await this._registry.getResource(DXN.parse(IPFS_SERVICE_DXN));
+    const type = await this._registry.getResource(DXN.parse(dxn));
     if (!type) {
       throw new Error('Can\'t find ipfs service type record');
     }
@@ -83,8 +84,10 @@ export class SwarmConnector {
     if (!this._registry) {
       throw new Error('Registry client is not initialized.');
     }
-    const ipfsServiceCID = await this.getIPFSTypeCID();
-    const records = await this._registry.getDataRecords({ type: ipfsServiceCID });
+    const ipfsServiceCID = await this.getServiceTypeCID(IPFS_SERVICE_DXN);
+    const serviceCID = await this.getServiceTypeCID(SERVICE_DXN);
+    const services = await this._registry.getDataRecords({ type: serviceCID });
+    const records = services.filter(service => ipfsServiceCID.equals(service.data.extension['@type']));
 
     const active = records.sort(() => Math.random() - 0.5); // assuming all are active?
 
