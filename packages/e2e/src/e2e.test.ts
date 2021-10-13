@@ -103,6 +103,7 @@ describe('CLI', () => {
   describe('dxns', () => {
     it('seed', async () => {
       await cmd('dxns seed --mnemonic //Alice --verbose').run();
+      await cmd('dxns dummy').run();
     });
 
     it('list resources', async () => {
@@ -189,6 +190,11 @@ describe('CLI', () => {
       await cmd(`app register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
     });
 
+    it('query app', async () => {
+      const apps = await cmd('app query --dxns --json').json();
+      expect(apps.length).toBe(1);
+    });
+
     it('serve app', async () => {
       const response = await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}/`);
       expect(response.statusCode).toBe(200);
@@ -196,6 +202,13 @@ describe('CLI', () => {
 
     it('stop app server', async () => {
       await cmd('app serve stop').run();
+    });
+  });
+
+  describe('bot', () => {
+    it('query bots', async () => {
+      const bots = await cmd('bot query --json').json();
+      expect(bots.length).toBe(1);
     });
   });
 
