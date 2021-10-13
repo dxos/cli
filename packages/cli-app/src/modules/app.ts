@@ -9,6 +9,7 @@ import { log } from '@dxos/debug';
 
 import { APP_TYPE, DEFAULT_PORT } from '../config';
 import { build, publish, register, query, serve } from '../handlers';
+import { GetDXNSClient } from '../types';
 
 const getAppRecord = (config: any, namespace: string) => {
   const record = {
@@ -26,7 +27,7 @@ const getAppRecord = (config: any, namespace: string) => {
 
 interface Params {
   config: any,
-  getDXNSClient: Function
+  getDXNSClient: GetDXNSClient
 }
 
 /**
