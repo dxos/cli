@@ -136,7 +136,7 @@ describe('CLI', () => {
     it('list types', async () => {
       const types = await cmd('dxns type list --json').json();
 
-      expect(types.some((t: any) => t.messageName === '.dxos.service.type.BotFactory')).toBe(true);
+      expect(types.some((t: any) => t.messageName === '.dxos.type.BotFactory')).toBe(true);
     });
 
     it('get type', async () => {
