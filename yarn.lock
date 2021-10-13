@@ -405,6 +405,13 @@
   dependencies:
     "@dxos/debug" "2.15.3"
 
+"@dxos/async@~2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmjs.org/@dxos/async/-/async-2.15.4.tgz#067bae2ab59a8279f39e6ad87c3a44c1e631e10e"
+  integrity sha512-Fc1Pj65jRrkN9QD7OscUyyCSWdBpkpAVUI3YyU/SQbpTK0HvJvOUcQYsKhaLJVhDkBzv6T0espmgEac2G8Ta1g==
+  dependencies:
+    "@dxos/debug" "2.15.4"
+
 "@dxos/botkit-client@~2.15.3":
   version "2.15.3"
   resolved "https://registry.npmjs.org/@dxos/botkit-client/-/botkit-client-2.15.3.tgz#dbe5e9457deee5d7967d224c9b968253d2659c08"
@@ -542,6 +549,15 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
+"@dxos/codec-protobuf@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.15.4.tgz#6ca1489bdfa83344ae31f4c41fe8348e6ac6f24d"
+  integrity sha512-1nIcfIhRNr+kf0CgbyNRzoS7HwTL022STnSYoxTXV80L8kEkhg3Sozbs83tSOtp87CrmGIO2fp64i1kGqWYFJQ==
+  dependencies:
+    assert "^2.0.0"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+
 "@dxos/config@2.15.3", "@dxos/config@~2.15.3":
   version "2.15.3"
   resolved "https://registry.npmjs.org/@dxos/config/-/config-2.15.3.tgz#a496dcb5b31b4bc98d25357a3db226c18067f2c0"
@@ -611,6 +627,16 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
+"@dxos/crypto@2.15.4", "@dxos/crypto@~2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.15.4.tgz#6115b4e5d11530c059d3398592d888b027f8faf3"
+  integrity sha512-drufQk9IBFs7dFvjWhAaSZtSXbRBzpwwTdldUCuvLmnZXGKNEMhWXok1tBHXgLX417iK1cy8RViAi7spd+HqDg==
+  dependencies:
+    bip39 "^3.0.2"
+    crypto-js "^3.1.9-1"
+    humanhash "^1.0.4"
+    hypercore-crypto "^2.3.0"
+
 "@dxos/crypto@~2.10.12":
   version "2.10.17"
   resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.10.17.tgz#d13946034b6a7a9eabfdfe0d8377d0a99e34d143"
@@ -624,6 +650,14 @@
   version "2.15.3"
   resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.15.3.tgz#355d50de9e29186dd676ee3108496a93a5d57674"
   integrity sha512-Lwgxt5hUCEdNFsnLhten9PEjr2PaPJ3NoMVEppsNurE7GHk3HkCf91mBU28uer4SvlA5SsXefL2C88nI8z1SDA==
+  dependencies:
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
+
+"@dxos/debug@2.15.4", "@dxos/debug@~2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.15.4.tgz#42378b0da68bee67d3bd943d56430084980e4aee"
+  integrity sha512-q9NhAJyBUg8KUr8SB0iZcru2pC1r7oKwUrbgF45wJazxhErFSAsEVn47gfJUmMPYghxoQWA42+CtxlnOQrh0zw==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -881,6 +915,27 @@
     multihashes "^4.0.2"
     protobufjs "^6.9.0"
 
+"@dxos/registry-client@~2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.15.4.tgz#43174c72cfde7249af31fa4e73b3a8b40c9f4770"
+  integrity sha512-su8/kli9jTTtRDX5s8Rlyf1xusqk012f8winPvN+K0lqHdWd8AxbuLQMaGEKkrjUwneRjT0Z9xlvrEgGKQtydA==
+  dependencies:
+    "@dxos/codec-protobuf" "2.15.4"
+    "@dxos/util" "2.15.4"
+    "@polkadot/api" "4.17.1"
+    "@polkadot/keyring" "6.11.1"
+    "@polkadot/metadata" "4.17.1"
+    "@polkadot/rpc-core" "4.17.1"
+    "@polkadot/types" "4.17.1"
+    "@polkadot/util" "6.11.1"
+    "@polkadot/util-crypto" "6.11.1"
+    bn.js "4.12.0"
+    crypto "^1.0.1"
+    faker "^5.1.0"
+    fs-extra "^8.1.0"
+    multihashes "^4.0.2"
+    protobufjs "^6.9.0"
+
 "@dxos/signal@~2.15.3":
   version "2.15.3"
   resolved "https://registry.npmjs.org/@dxos/signal/-/signal-2.15.3.tgz#72f9cf77ff821bedd2e3309aad2d3bc407ccbb62"
@@ -929,6 +984,15 @@
   dependencies:
     "@dxos/crypto" "2.15.3"
     "@dxos/debug" "2.15.3"
+    "@types/node" "^14.0.9"
+
+"@dxos/util@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.15.4.tgz#adc10d7748646132aeb99bd5b9908fa530d36d9c"
+  integrity sha512-UXlV5KpOClTuNSSw6qnDNo1Sn8TZr/+PkRNyhtRoA+BXaST4jD24B/523N6Lk0l8nRU8RhnnqfcRtAPRHgJrhw==
+  dependencies:
+    "@dxos/crypto" "2.15.4"
+    "@dxos/debug" "2.15.4"
     "@types/node" "^14.0.9"
 
 "@eslint/eslintrc@^0.4.3":
@@ -8184,7 +8248,7 @@ hypercore-default-storage@^1.1.1:
   optionalDependencies:
     fsctl "^1.0.0"
 
-hypercore-protocol@^8.0.5, "hypercore-protocol@github:dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60":
+hypercore-protocol@^8.0.5, hypercore-protocol@dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60:
   version "8.0.7"
   resolved "https://codeload.github.com/dxos/hypercore-protocol/tar.gz/05513f9266f8bec4d29b144b72c59257c2d7bd60"
   dependencies:
@@ -9926,7 +9990,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-"jsondown@github:dxos/jsondown#main":
+jsondown@dxos/jsondown#main:
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:
@@ -13908,7 +13972,7 @@ simple-handshake@^3.0.0:
     nanoassert "^2.0.0"
     noise-protocol "^3.0.0"
 
-simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c, "simple-hypercore-protocol@github:dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c":
+simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c:
   version "2.1.1"
   resolved "https://codeload.github.com/dxos/simple-hypercore-protocol/tar.gz/bc23f0747e55954ec0bd94754910c92f88ec561c"
   dependencies:

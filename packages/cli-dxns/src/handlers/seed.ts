@@ -27,7 +27,6 @@ const TYPES = {
   'type.file': '.dxos.type.File',
   'type.kube': '.dxos.type.KUBE',
   'type.service': '.dxos.type.Service',
-  'type.botFactory': '.dxos.type.BotFactory',
   'type.service.ipfs': '.dxos.type.IPFS',
   'type.service.bot-factory': '.dxos.type.BotFactory',
   'type.service.signal': '.dxos.type.Signal',
