@@ -20,7 +20,7 @@ interface RegisterServiceOptions {
 
 const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: string) => {
   // Checking for specific type, like dxos:type.service.app-server
-  const cid = await registryClient.resolveRecordCid(DXN.parse(SERVICE_TYPE_DXN + '.' + serviceName));
+  const cid = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN + '.' + serviceName)))?.tags.latest;
   if (cid) {
     const record = await registryClient.getTypeRecord(cid);
     if (record) {
@@ -28,7 +28,7 @@ const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: s
     }
   }
   // Can't resolve specific type, return default
-  const defaultCID = await registryClient.resolveRecordCid(DXN.parse(SERVICE_TYPE_DXN));
+  const defaultCID = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN)))?.tags.latest;
   assert(defaultCID, 'Couldn\'t find default service type');
   return defaultCID;
 };
@@ -55,14 +55,15 @@ const registerServices = async (options: RegisterServiceOptions) => {
     const cid = await options.registryClient.insertDataRecord({ serviceData }, serviceTypeCid, {});
 
     const name = `${options.url.replace(/[^a-zA-Z0-9-]/g, '')}.services.${service.name}`;
-    await options.registryClient.registerResource(options.domainKey, name, cid);
+    const dxn = DXN.fromDomainKey(options.domainKey, name);
+    await options.registryClient.updateResource(dxn, cid);
   }
 };
 
 export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }: any) => {
   const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
 
-  const kubeType = await registryClient.getResource(DXN.parse(KUBE_DXN_NAME));
+  const kubeType = await registryClient.getResourceRecord(DXN.parse(KUBE_DXN_NAME), 'latest');
   assert(kubeType);
   assert(kubeType.record.kind === RecordKind.Type);
 
@@ -72,7 +73,8 @@ export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }
   });
 
   const domainKey = await registryClient.resolveDomainName(domain);
-  await registryClient.registerResource(domainKey, name, cid);
+  const dxn = DXN.fromDomainKey(domainKey, name);
+  await registryClient.updateResource(dxn, cid);
   await registerServices({
     registryClient,
     domainKey,

@@ -34,10 +34,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.14.1",
+    "@dxos/async": "~2.15.3",
     "@dxos/cli-core": "^2.5.1-alpha.0",
-    "@dxos/debug": "~2.14.1",
-    "@dxos/registry-client": "~2.14.5",
+    "@dxos/debug": "~2.15.3",
     "@wirelineio/registry-client": "^1.1.0-beta.0",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",

@@ -94,9 +94,9 @@ describe('CLI', () => {
         await cmd('service stop dxns').run();
       } catch {}
 
-      await cmd('service install --from @dxos/cli-dxns --service dxns --force').run();
+      await cmd('service install --from @dxos/cli-dxns --service dxns --force --dev').run();
 
-      await cmd('service start --from @dxos/cli-dxns --service dxns --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
+      await cmd('service start --from @dxos/cli-dxns --service dxns --dev --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
     });
   });
 
@@ -115,7 +115,6 @@ describe('CLI', () => {
       const resource = await cmd('dxns resource get dxos:type.app --json').json();
 
       expect(resource.dxn).toEqual('dxos:type.app');
-      expect(resource.description).toEqual('Base DXOS schema');
     });
 
     it('list records', async () => {
@@ -137,7 +136,7 @@ describe('CLI', () => {
     it('list types', async () => {
       const types = await cmd('dxns type list --json').json();
 
-      expect(types.some((t: any) => t.dxn === 'dxos:type.botFactory')).toBe(true);
+      expect(types.some((t: any) => t.messageName === '.dxos.type.BotFactory')).toBe(true);
     });
 
     it('get type', async () => {

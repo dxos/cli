@@ -13,7 +13,7 @@ export const resolveDXNorCID = async (client: DXNSClient, argv: any): Promise<CI
   } catch (e: any) {}
   let cid: CID | undefined;
   if (dxn) {
-    cid = await client.registryClient.resolveRecordCid(dxn);
+    cid = (await client.registryClient.getResource(dxn))?.tags.latest;
   } else {
     cid = CID.from(argv.cid as string);
   }

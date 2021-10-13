@@ -23,13 +23,15 @@ export const displayRecord = (record: RegistryRecord) => {
       return {
         ...common,
         messageName: record.messageName,
-        ...record.meta
+        ...record.meta,
+        created: record.meta.created?.toISOString()
       };
     case RecordKind.Data:
       return {
         ...common,
         typeCid: record.type.toString(),
         ...record.meta,
+        created: record.meta.created?.toISOString(),
         size: record.dataSize,
         data: record.data
       };
@@ -39,7 +41,9 @@ export const displayRecord = (record: RegistryRecord) => {
 export const displayResource = (resource: Resource) => {
   return ({
     dxn: resource.id.toString(),
-    ...displayRecord(resource.record)
+    tags: Object.keys(resource.tags),
+    versions: Object.keys(resource.versions),
+    type: resource.type
   });
 };
 
