@@ -27,7 +27,7 @@ interface QueryParams {
 }
 
 export const query = (config: any, { getDXNSClient }: QueryParams) => async (argv: any) => {
-  const { id, name, namespace, dxns } = argv;
+  const { id, name, namespace, dxns, json } = argv;
 
   let apps = [];
   // TODO(egorgripasov): Deprecate.
@@ -54,7 +54,7 @@ export const query = (config: any, { getDXNSClient }: QueryParams) => async (arg
     const appType = await registry.getResourceRecord(DXN.parse(APP_TYPE_DXN), 'latest');
 
     if (!appType) {
-      throw new Error('App type not found');
+      throw new Error('App type not found.');
     }
 
     const records = await registry.getRecords({ type: appType.record.cid });
@@ -63,6 +63,6 @@ export const query = (config: any, { getDXNSClient }: QueryParams) => async (arg
   }
 
   if (apps && apps.length) {
-    print(apps, { json: true });
+    print(apps, { json });
   }
 };
