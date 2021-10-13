@@ -6,7 +6,7 @@ import assert from 'assert';
 import clean from 'lodash-clean';
 
 import { print } from '@dxos/cli-core';
-import { DXN, RegistryRecord } from '@dxos/registry-client';
+import { CID, DXN, RegistryDataRecord } from '@dxos/registry-client';
 import { Registry } from '@wirelineio/registry-client';
 
 import { APP_TYPE } from '../config';
@@ -14,11 +14,12 @@ import { GetDXNSClient } from '../types';
 
 const APP_TYPE_DXN = 'dxos:type.app';
 
-export const displayApps = (record: RegistryRecord) => {
+export const displayApps = (record: RegistryDataRecord) => {
   return ({
     cid: record.cid.toString(),
     created: record.meta.created,
-    description: record.meta.description
+    description: record.meta.description,
+    hash: CID.from(Buffer.from(record.data.hash, 'base64')).toString()
   });
 };
 
@@ -57,7 +58,8 @@ export const query = (config: any, { getDXNSClient }: QueryParams) => async (arg
       throw new Error('App type not found.');
     }
 
-    const records = await registry.getRecords({ type: appType.record.cid });
+    const records = await registry.getDataRecords({ type: appType.record.cid });
+    console.log({ records });
 
     apps = records.map(displayApps);
   }

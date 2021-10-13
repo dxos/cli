@@ -3,16 +3,17 @@
 //
 
 import { print } from '@dxos/cli-core';
-import { DXN, IReadOnlyRegistryClient, RegistryRecord } from '@dxos/registry-client';
+import { CID, DXN, IReadOnlyRegistryClient, RegistryDataRecord } from '@dxos/registry-client';
 import { MaybePromise } from '@dxos/util';
 
 const BOT_TYPE_DXN = 'dxos:type.bot';
 
-export const displayBots = (record: RegistryRecord) => {
+export const displayBots = (record: RegistryDataRecord) => {
   return ({
     cid: record.cid.toString(),
     created: record.meta.created,
-    description: record.meta.description
+    description: record.meta.description,
+    hash: CID.from(Buffer.from(record.data.hash, 'base64')).toString()
   });
 };
 
@@ -30,7 +31,7 @@ export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
     throw new Error('Bot type not found.');
   }
 
-  const records = await registry.getRecords({ type: botType.record.cid });
+  const records = await registry.getDataRecords({ type: botType.record.cid });
 
   const bots = records.map(displayBots);
 
