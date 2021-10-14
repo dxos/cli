@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.6.1](https://www.github.com/dxos/cli/compare/v2.6.0...v2.6.1) (2021-10-14)
+
+
+### Bug Fixes
+
+* add enterprise cli profile ([#302](https://www.github.com/dxos/cli/issues/302)) ([81eb1f5](https://www.github.com/dxos/cli/commit/81eb1f5a8510488439f191cfcc673272b26ff2f0))
+
 ## [2.6.0](https://www.github.com/dxos/cli/compare/v2.5.1...v2.6.0) (2021-10-14)
 
 
