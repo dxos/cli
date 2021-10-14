@@ -91,8 +91,9 @@ class Resolver {
       return cached.cid;
     }
 
-    const recordCid = (await this._registryClient.getResource(DXN.parse(id)))?.tags.latest;
-    const record = recordCid ? await this._registryClient.getRecord(recordCid) : undefined;
+    const [dxn, versionOrTag] = id.split('@', 2)
+    const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn), versionOrTag)
+    const record = resourceRecord?.record
 
     if (!record) {
       log(`Not found in DXNS: ${id}`);
@@ -167,8 +168,8 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   const appFileHandler: RequestHandler = async (req, res) => {
     const route = req.params[0];
 
-    let file;
-    let cid;
+    let file: string | undefined;
+    let cid: string | undefined;
 
     // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
     if (registryClient) {

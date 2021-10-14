@@ -200,6 +200,23 @@ describe('CLI', () => {
       expect(response.statusCode).toBe(200);
     });
 
+    it('Registers versioned and tagged app', async () => {
+      await cmd(`app register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME} --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
+    })
+
+    it('Serves the app without any version', async () => {
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}/`)).statusCode).toBe(200);
+    });
+
+    it('Serves the app by a version', async () => {
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}@2.0.1/`)).statusCode).toBe(200);
+    });
+
+    it('Serves the app by tags', async () => {
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}@latest/`)).statusCode).toBe(200);
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}@beta/`)).statusCode).toBe(200);
+    });
+
     it('stop app server', async () => {
       await cmd('app serve stop').run();
     });
