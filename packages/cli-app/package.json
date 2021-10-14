@@ -41,6 +41,7 @@
     "@dxos/cli-core": "^2.5.1-alpha.0",
     "@dxos/debug": "~2.15.3",
     "@dxos/registry-client": "~2.15.3",
+    "@dxos/util": "^2.15.4",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@polkadot/api": "4.17.1",
     "@wirelineio/registry-client": "^1.1.0-beta.0",

@@ -986,7 +986,7 @@
     "@dxos/debug" "2.15.3"
     "@types/node" "^14.0.9"
 
-"@dxos/util@2.15.4":
+"@dxos/util@2.15.4", "@dxos/util@^2.15.4":
   version "2.15.4"
   resolved "https://registry.npmjs.org/@dxos/util/-/util-2.15.4.tgz#adc10d7748646132aeb99bd5b9908fa530d36d9c"
   integrity sha512-UXlV5KpOClTuNSSw6qnDNo1Sn8TZr/+PkRNyhtRoA+BXaST4jD24B/523N6Lk0l8nRU8RhnnqfcRtAPRHgJrhw==
