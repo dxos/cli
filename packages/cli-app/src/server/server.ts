@@ -91,9 +91,9 @@ class Resolver {
       return cached.cid;
     }
 
-    const [dxn, versionOrTag] = id.split('@', 2)
-    const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn), versionOrTag)
-    const record = resourceRecord?.record
+    const [dxn, versionOrTag] = id.split('@', 2);
+    const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn), versionOrTag);
+    const record = resourceRecord?.record;
 
     if (!record) {
       log(`Not found in DXNS: ${id}`);
@@ -176,7 +176,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
       try {
         const [id, ...filePath] = route.split('/');
 
-        cid = await resolver.lookupCIDinDXNS(id);
+        cid = id.includes(':') ? await resolver.lookupCIDinDXNS(id) : id;
 
         if (cid && !filePath.length) {
           return res.redirect(`${req.originalUrl}/`);

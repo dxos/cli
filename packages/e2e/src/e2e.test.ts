@@ -217,6 +217,10 @@ describe('CLI', () => {
       expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}@beta/`)).statusCode).toBe(200);
     });
 
+    it('Serves directly by CID', async () => {
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/QmNwD4gbVDC4VN33ffBJP7UHejCasgiHg9tUfm8uthyYZS/`)).statusCode).toBe(200);
+    });
+
     it('stop app server', async () => {
       await cmd('app serve stop').run();
     });
