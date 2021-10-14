@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.6.2](https://www.github.com/dxos/cli/compare/v2.6.1...v2.6.2) (2021-10-14)
+
+
+### Bug Fixes
+
+* update profiles. ([e6ef9c9](https://www.github.com/dxos/cli/commit/e6ef9c9fee8d0f411397debc939111f70465c02c))
+
 ### [2.6.1](https://www.github.com/dxos/cli/compare/v2.6.0...v2.6.1) (2021-10-14)
 
 
