@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.6.3](https://www.github.com/dxos/cli/compare/v2.6.2...v2.6.3) (2021-10-14)
+
+
+### Bug Fixes
+
+* temp put back wns env vars. ([c9681d9](https://www.github.com/dxos/cli/commit/c9681d9d1bba99de2b53eb09222d84d0b6f24192))
+
 ### [2.6.2](https://www.github.com/dxos/cli/compare/v2.6.1...v2.6.2) (2021-10-14)
 
 
