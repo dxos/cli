@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.0](https://www.github.com/dxos/cli/compare/v2.5.1...v2.6.0) (2021-10-14)
+
+
+### Features
+
+* Upgrade with newest `registry-client` ([#297](https://www.github.com/dxos/cli/issues/297)) ([232d555](https://www.github.com/dxos/cli/commit/232d55529a6d26eb1b07edd17c19abae218712b0))
+
 ### [2.5.1](https://www.github.com/dxos/cli/compare/v2.5.0...v2.5.1) (2021-10-11)
 
 
