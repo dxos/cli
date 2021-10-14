@@ -59,7 +59,6 @@ export const query = (config: any, { getDXNSClient }: QueryParams) => async (arg
     }
 
     const records = await registry.getDataRecords({ type: appType.record.cid });
-    console.log({ records });
 
     apps = records.map(displayApps);
   }
