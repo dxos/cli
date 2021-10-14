@@ -218,7 +218,8 @@ describe('CLI', () => {
     });
 
     it('Serves directly by CID', async () => {
-      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/QmNwD4gbVDC4VN33ffBJP7UHejCasgiHg9tUfm8uthyYZS/`)).statusCode).toBe(200);
+      // Known CID from the mock app.
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/QmRgT4Bnebr8tHpVCAE62uFX5rHJMHDG42b95HrU5aMTBg/`)).statusCode).toBe(200);
     });
 
     it('stop app server', async () => {
