@@ -92,7 +92,7 @@ class Resolver {
     }
 
     const [dxn, versionOrTag] = id.split('@', 2);
-    const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn), versionOrTag);
+    const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn), versionOrTag ?? 'latest');
     const record = resourceRecord?.record;
 
     if (!record) {

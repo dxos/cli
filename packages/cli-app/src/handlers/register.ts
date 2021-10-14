@@ -104,7 +104,7 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
     });
 
     const domainKey = await client.registryClient.resolveDomainName(domain);
-    const opts: UpdateResourceOptions | undefined = (conf.version !== undefined || conf.tag !== undefined) ? { version: conf.version, tags: conf.tag ?? [] } : undefined;
+    const opts: UpdateResourceOptions = { version: conf.version, tags: conf.tag ?? ['latest'] };
     for (const dxn of name) {
       log(`Assigning name ${dxn}...`);
       if (!noop) {
