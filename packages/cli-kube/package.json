@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-kube",
-  "version": "2.6.1-alpha.0",
+  "version": "2.6.2-alpha.0",
   "description": "DXOS KUBE CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-kube#readme",
   "license": "AGPL-3.0",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@dxos/async": "~2.15.3",
-    "@dxos/cli-core": "^2.6.1-alpha.0",
+    "@dxos/cli-core": "^2.6.2-alpha.0",
     "@dxos/crypto": "~2.15.3",
     "@dxos/debug": "~2.15.3",
     "@dxos/object-model": "~2.15.3",
