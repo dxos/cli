@@ -68,6 +68,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           .option('name', { type: 'array' })
           .option('domain', { type: 'string' })
           .option('version', { type: 'string' })
+          .option('tag', { type: 'array' })
           .option('namespace', { type: 'string' })
           .option('gas', { type: 'string' })
           .option('fees', { type: 'string' })
@@ -90,6 +91,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           .option('domain', { type: 'string' })
           .option('namespace', { type: 'string' }) // TODO(burdon): Why not required in register above?
           .option('version', { type: 'string' })
+          .option('tag', { type: 'array' })
           .option('gas', { type: 'string' })
           .option('fees', { type: 'string' })
           .option('schema', { type: 'string' })
