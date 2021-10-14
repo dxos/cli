@@ -8,7 +8,7 @@ import { boolean } from 'boolean';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import debug from 'debug';
-import express from 'express';
+import express, { Request, RequestHandler, Response } from 'express';
 import fs from 'fs';
 import yaml from 'js-yaml';
 import get from 'lodash.get';
@@ -17,7 +17,7 @@ import os from 'os';
 import { join } from 'path';
 import urlJoin from 'url-join';
 
-import { DXN, CID } from '@dxos/registry-client';
+import { DXN, CID, RegistryClient } from '@dxos/registry-client';
 import { Registry } from '@wirelineio/registry-client';
 
 import { BASE_URL, DEFAULT_PORT } from '../config';
@@ -42,7 +42,7 @@ export const createPath = (file = '') => {
  * Fetch IPFS file and stream body.
  * @param ipfsGateway
  */
-const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
+const ipfsRouter = (ipfsGateway: string) => (cid: string) => async (req: Request, res: Response, resourcePath: string) => {
   const url = urlJoin(ipfsGateway, cid, resourcePath);
   log('Fetching: ' + url);
   const response = await fetch(url);
@@ -55,13 +55,10 @@ const ipfsRouter = (ipfsGateway) => (cid) => async (req, res, resourcePath) => {
 class Resolver {
   _cache = new Map();
 
-  constructor (registry, registryClient) {
-    this._registry = registry;
-    this._registryClient = registryClient;
-  }
+  constructor (private _registry: any, private _registryClient: RegistryClient | undefined) {}
 
   // TODO(egorgripasov): Deprecate.
-  async lookupCID (name) {
+  async lookupCID (name: string) {
     if (!this._registry) {
       return;
     }
@@ -86,7 +83,8 @@ class Resolver {
     return cid;
   }
 
-  async lookupCIDinDXNS (id) {
+  async lookupCIDinDXNS (id: string) {
+    assert(this._registryClient, 'Missing Registry Client.');
     const cached = this._cache.get(id);
     if (cached && Date.now() < cached.expiration) {
       log(`Cached from DXNS ${id} => ${cached.cid}`);
@@ -94,7 +92,7 @@ class Resolver {
     }
 
     const recordCid = (await this._registryClient.getResource(DXN.parse(id)))?.tags.latest;
-    const record = await this._registryClient.getRecord(recordCid);
+    const record = recordCid ? await this._registryClient.getRecord(recordCid) : undefined;
 
     if (!record) {
       log(`Not found in DXNS: ${id}`);
@@ -110,22 +108,30 @@ class Resolver {
   }
 }
 
+export interface ServeConfig {
+  registryEndpoint: string,
+  port?: number,
+  ipfsGateway: string,
+  chainId: string,
+  configFile: string,
+  loginApp: any,
+  auth: any,
+  keyPhrase?: string,
+  dxnsEndpoint?: string,
+  dxns?: boolean
+}
+
 /**
  * Test:
  * yarn server
  * curl -I localhost:5999/app/wrn:dxos:application
- *
- * @param {Object} config
- * @param {String} config.registryEndpoint endpoint
- * @param {Number} config.port
- * @param {String} config.ipfsGateway
  */
-export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, auth, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint, dxns }) => {
+export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, auth, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint, dxns }: ServeConfig) => {
   const dxnsOnly = boolean(dxns);
   const registry = dxnsOnly ? null : new Registry(registryEndpoint, chainId);
 
   // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
-  let registryClient;
+  let registryClient: RegistryClient | undefined;
   if (dxnsEndpoint) {
     try {
       registryClient = await getRegistryClient(dxnsEndpoint);
@@ -139,7 +145,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   //
   // Config file handler.
   //
-  const configHandler = async (req, res) => {
+  const configHandler: RequestHandler = async (req, res) => {
     try {
       const path = createPath(configFile);
       if (!fs.existsSync(path)) {
@@ -147,7 +153,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
         return res.json({});
       }
 
-      res.json(yaml.load(fs.readFileSync(path)));
+      res.json(yaml.load(String(fs.readFileSync(path))));
     } catch (err) {
       log(err);
       res.status(500);
@@ -158,7 +164,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
   // Router handler.
   // Example: dxos:application/console@alpha:service_worker.js
   //
-  const appFileHandler = async (req, res) => {
+  const appFileHandler: RequestHandler = async (req, res) => {
     const route = req.params[0];
 
     let file;
@@ -211,7 +217,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
       return res.status(404).send();
     }
 
-    return ipfsProxy(cid)(req, res, file);
+    return ipfsProxy(cid)(req, res, file ?? '');
   };
 
   // Start configuring express app.
@@ -219,7 +225,7 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
 
   // Middleware.
   app.use(cors());
-  app.use(cookieParser(keyPhrase, { signed: true }));
+  app.use(cookieParser(keyPhrase, { signed: true } as any));
   app.use(bodyParser.json());
 
   // Serve config file.
