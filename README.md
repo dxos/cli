@@ -68,7 +68,7 @@ $ dx app register help
 To use the CLI, a profile needs to be created and activated.
 
 ```bash
-$ dx profile init --name moon --template-url https://git.io/JuhES
+$ dx profile init --name enterprise --template-url https://git.io/JKnvT
 ```
 
 Read more about [CLI profiles](./packages/cli/README.md#profiles) and [CLI extensions](./packages/cli/README.md#extensions).
