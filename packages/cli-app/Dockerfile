@@ -14,4 +14,4 @@ RUN dx profile init --name local --template-url https://git.io/Jfrn0
 
 EXPOSE 5999
 
-CMD ["dx", "app", "serve"]
+CMD ["dx", "app", "serve", "--dxns"]
