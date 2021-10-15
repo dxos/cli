@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-kit",
-  "version": "2.6.5",
+  "version": "2.6.6",
   "description": "DXOS CLI Monorepo",
   "private": true,
   "scripts": {
