@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-chat",
-  "version": "2.6.4-alpha.0",
+  "version": "2.6.5-alpha.0",
   "description": "DXOS Chat CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-chat#readme",
   "license": "AGPL-3.0",
@@ -34,7 +34,7 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/cli-core": "^2.6.4-alpha.0",
+    "@dxos/cli-core": "^2.6.5-alpha.0",
     "@dxos/crypto": "~2.15.3",
     "@dxos/debug": "~2.15.3",
     "@dxos/network-manager": "~2.15.3",
