@@ -183,7 +183,7 @@ describe('CLI', () => {
         await cmd('app serve stop').run();
       } catch {}
 
-      await cmd('app serve start --dxns --daemon --auth false --log-file /tmp/app-server.log').run();
+      await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').run();
     });
 
     it('register app', async () => {
