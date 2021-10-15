@@ -9,7 +9,7 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { DomainKey, DXN, RecordMetadata } from '@dxos/registry-client';
+import { DomainKey, DXN, IRegistryClient, RecordMetadata } from '@dxos/registry-client';
 
 import { Params } from './common';
 
@@ -31,6 +31,39 @@ const TYPES = {
   'type.service.bot-factory': '.dxos.type.BotFactory',
   'type.service.signal': '.dxos.type.Signal',
   'type.service.app-server': '.dxos.type.AppServer'
+};
+
+const IPFS_SERVICE_DXN = 'dxos:type.service.ipfs';
+const SERVICE_DXN = 'dxos:type.service';
+
+const bootstrapIPFS = async (registry: IRegistryClient) => {
+  const ipfsType = await registry.getResourceRecord(DXN.parse(IPFS_SERVICE_DXN), 'latest');
+  const serviceType = await registry.getResourceRecord(DXN.parse(SERVICE_DXN), 'latest');
+
+  if (!serviceType) {
+    throw new Error('Service type not found');
+  }
+
+  if (!ipfsType) {
+    throw new Error('IPFS type not found');
+  }
+
+  const ipfsCID = ipfsType.record.cid;
+  const serviceCID = serviceType.record.cid;
+
+  const serviceData = {
+    type: 'ipfs',
+    extension: {
+      '@type': ipfsCID,
+      description: 'ipfs.kube.moon.dxos.network',
+      protocol: 'ipfs/0.1.0',
+      addresses: [
+        '/ip4/64.225.4.116/tcp/4001/p2p/12D3KooWLMBB3WkGkDGk75zYSsWUtc3FkjtFb8ZXzSDRpoyjz6Mw',
+        '/ip4/64.225.4.116/udp/4001/quic/p2p/12D3KooWLMBB3WkGkDGk75zYSsWUtc3FkjtFb8ZXzSDRpoyjz6Mw'
+      ]
+    }
+  };
+  await registry.insertDataRecord(serviceData, serviceCID);
 };
 
 export const seedRegistry = (params: Params) => async (argv: any) => {
@@ -92,6 +125,10 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
+
+  verbose && log('Adding IPFS record...');
+  await bootstrapIPFS(client.registryClient);
+  verbose && log('IPFS record added.');
 
   print({ account, domain }, { json });
 };
