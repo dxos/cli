@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.6.4](https://www.github.com/dxos/cli/compare/v2.6.3...v2.6.4) (2021-10-15)
+
+
+### Bug Fixes
+
+* ignore WNS in app-server ([b0a21f0](https://www.github.com/dxos/cli/commit/b0a21f0985192511e0a8004757b05d7ca868c9f5))
+
 ### [2.6.3](https://www.github.com/dxos/cli/compare/v2.6.2...v2.6.3) (2021-10-14)
 
 
