@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.6.5](https://www.github.com/dxos/cli/compare/v2.6.4...v2.6.5) (2021-10-15)
+
+
+### Bug Fixes
+
+* rm wns from app-server ([317ae11](https://www.github.com/dxos/cli/commit/317ae119b262e0aa3d084890dbe12ff41a42c2be))
+
 ### [2.6.4](https://www.github.com/dxos/cli/compare/v2.6.3...v2.6.4) (2021-10-15)
 
 
