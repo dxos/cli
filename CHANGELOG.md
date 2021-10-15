@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.6.7](https://www.github.com/dxos/cli/compare/v2.6.6...v2.6.7) (2021-10-15)
+
+
+### Bug Fixes
+
+* OTP seed phrase. ([5d927ad](https://www.github.com/dxos/cli/commit/5d927ad27bcbc355b0f893c319bbdff3bddf4e88))
+
 ### [2.6.6](https://www.github.com/dxos/cli/compare/v2.6.5...v2.6.6) (2021-10-15)
 
 
