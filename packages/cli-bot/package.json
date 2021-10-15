@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-bot",
-  "version": "2.6.5-alpha.0",
+  "version": "2.6.6-alpha.0",
   "description": "DXOS Bot CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-bot#readme",
   "license": "AGPL-3.0",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@dxos/botkit": "~2.15.3",
     "@dxos/botkit-client": "~2.15.3",
-    "@dxos/cli-core": "^2.6.5-alpha.0",
+    "@dxos/cli-core": "^2.6.6-alpha.0",
     "@dxos/config": "~2.15.3",
     "@dxos/crypto": "~2.15.3",
     "@dxos/debug": "~2.15.3",
