@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-app",
-  "version": "2.6.3-alpha.0",
+  "version": "2.6.4-alpha.0",
   "description": "DXOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
   "license": "AGPL-3.0",
@@ -38,7 +38,7 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/cli-core": "^2.6.3-alpha.0",
+    "@dxos/cli-core": "^2.6.4-alpha.0",
     "@dxos/debug": "~2.15.3",
     "@dxos/registry-client": "~2.15.3",
     "@dxos/util": "^2.15.4",
