@@ -8,7 +8,7 @@ import clean from 'lodash-clean';
 
 import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { CID, DXN, RecordKind } from '@dxos/registry-client';
+import { CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 import { Registry } from '@wirelineio/registry-client';
 
@@ -22,7 +22,7 @@ export interface RegisterParams {
 export const APP_DXN_NAME = 'dxos:type.app';
 
 export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
-  const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns } = argv;
+  const { verbose, version, tag, namespace, 'dry-run': noop, txKey, name, domain, dxns } = argv;
   const wnsConfig = config.get('services.wns');
   const { server, userKey, bondId, chainId } = wnsConfig;
 
@@ -36,7 +36,8 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
 
   const conf = {
     ...await loadAppConfig(),
-    ...clean({ version })
+    ...clean({ version }),
+    ...clean({ tag })
   };
 
   assert(name, 'Invalid WRN.');
@@ -54,7 +55,7 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
   ], { shell: true });
   conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
 
-  log(`Registering ${conf.name}@${conf.version}...`);
+  log(`Registering ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : ''));
 
   const record = getAppRecord(conf, namespace);
   const registry = new Registry(server, chainId);
@@ -103,13 +104,14 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
     });
 
     const domainKey = await client.registryClient.resolveDomainName(domain);
+    const opts: UpdateResourceOptions = { version: conf.version, tags: conf.tag ?? ['latest'] };
     for (const dxn of name) {
       log(`Assigning name ${dxn}...`);
       if (!noop) {
-        await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid);
+        await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid, opts);
       }
     }
   }
 
-  log(`Registered ${conf.name}@${conf.version}.`);
+  log(`Registered ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : ''));
 };
