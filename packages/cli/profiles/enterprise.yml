@@ -46,15 +46,15 @@ services:
     server: 'https://ipfs-enterprise.kube.dxos.network/dxos/ipfs/api'
     gateway: 'https://ipfs-enterprise.kube.dxos.network/dxos/ipfs/gateway/'
   signal:
-    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
-    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
+    server: 'wss://enterprise.kube.dxos.network/dxos/signal'
+    api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
   ice:
-    - urls: 'stun:apollo1.kube.moon.dxos.network:3478'
-    - urls: 'turn:apollo1.kube.moon.dxos.network:3478'
+    - urls: 'stun:enterprise.kube.dxos.network:3478'
+    - urls: 'turn:enterprise.kube.dxos.network:3478'
       username: 'dxos'
       credential: 'dxos'
-    - urls: 'stun:apollo2.kube.moon.dxos.network:3478'
-    - urls: 'turn:apollo2.kube.moon.dxos.network:3478'
+    - urls: 'stun:discovery.kube.dxos.network:3478'
+    - urls: 'turn:discovery.kube.dxos.network:3478'
       username: 'dxos'
       credential: 'dxos'
   faucet:
@@ -63,6 +63,6 @@ services:
     publicUrl: '/console'
   app:
     prefix: '/app'
-    server: 'https://apollo1.kube.moon.dxos.network'
+    server: 'https://enterprise.kube.dxos.network'
 system:
   certEndpoint: ''
