@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.6.8](https://www.github.com/dxos/cli/compare/v2.6.7...v2.6.8) (2021-10-18)
+
+
+### Bug Fixes
+
+* deploy updated enterprise profile. ([069f0fd](https://www.github.com/dxos/cli/commit/069f0fd1963ab8ed1a394aa5f5c7fc9e04507d3f))
+* update enterprise profile. ([b879b2c](https://www.github.com/dxos/cli/commit/b879b2cf5889c31e7190a877a526bd69168d7fc7))
+
 ### [2.6.7](https://www.github.com/dxos/cli/compare/v2.6.6...v2.6.7) (2021-10-15)
 
 
