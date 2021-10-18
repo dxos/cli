@@ -127,7 +127,7 @@ In order for CLI to support custom certificate authorities, one would need to im
 $ dx cert import --url https://kube.local/kube.pem
 ```
 
-<!--TODO(egor): Host cert on .well-known endpoint.-->
+<!--TODO(egor): Host cert on .well-known endpoint?-->
 
 Corresponding certificate would be downloaded to `~/.dx/certs` and considered by CLI as "trusted".
 
