@@ -1,5 +1,26 @@
 # Changelog
 
+### [2.6.7](https://www.github.com/dxos/cli/compare/v2.6.6...v2.6.7) (2021-10-15)
+
+
+### Bug Fixes
+
+* OTP seed phrase. ([5d927ad](https://www.github.com/dxos/cli/commit/5d927ad27bcbc355b0f893c319bbdff3bddf4e88))
+
+### [2.6.6](https://www.github.com/dxos/cli/compare/v2.6.5...v2.6.6) (2021-10-15)
+
+
+### Bug Fixes
+
+* trigger build ([2098e3b](https://www.github.com/dxos/cli/commit/2098e3b93a9cab186cfc3343b03129e217f75ad2))
+
+### [2.6.5](https://www.github.com/dxos/cli/compare/v2.6.4...v2.6.5) (2021-10-15)
+
+
+### Bug Fixes
+
+* rm wns from app-server ([317ae11](https://www.github.com/dxos/cli/commit/317ae119b262e0aa3d084890dbe12ff41a42c2be))
+
 ### [2.6.4](https://www.github.com/dxos/cli/compare/v2.6.3...v2.6.4) (2021-10-15)
 
 

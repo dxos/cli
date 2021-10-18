@@ -18,10 +18,8 @@ import { join } from 'path';
 import urlJoin from 'url-join';
 
 import { DXN, CID, RegistryClient, RegistryRecord } from '@dxos/registry-client';
-import { Registry } from '@wirelineio/registry-client';
 
 import { BASE_URL, DEFAULT_PORT } from '../config';
-import { WRN } from '../util/WRN';
 import { WALLET_LOGIN_PATH, LOGIN_PATH, /* OTP_QR_PATH, */ authHandler, /* authSetupHandler, */ authMiddleware, walletAuthHandler } from './auth';
 import { getRegistryClient } from './dxns';
 
@@ -55,33 +53,7 @@ const ipfsRouter = (ipfsGateway: string) => (cid: string) => async (req: Request
 class Resolver {
   _cache = new Map();
 
-  constructor (private _registry: any, private _registryClient: RegistryClient | undefined) {}
-
-  // TODO(egorgripasov): Deprecate.
-  async lookupCID (name: string) {
-    if (!this._registry) {
-      return;
-    }
-
-    const cached = this._cache.get(name);
-    if (cached && Date.now() < cached.expiration) {
-      log(`Cached ${name} => ${cached.cid}`);
-      return cached.cid;
-    }
-
-    const { records } = await this._registry.resolveNames([name]);
-
-    if (!records.length || !records[0]) {
-      log(`Not found: ${name}`);
-      return;
-    }
-
-    assert(records.length === 1);
-    const cid = get(records, '[0].attributes.package["/"]');
-    this._cache.set(name, { cid, expiration: Date.now() + MAX_CACHE_AGE });
-    log(`Found ${name} => ${cid}`);
-    return cid;
-  }
+  constructor (private _registryClient: RegistryClient | undefined) {}
 
   async lookupCIDinDXNS (id: string) {
     assert(this._registryClient, 'Missing Registry Client.');
@@ -123,27 +95,15 @@ export interface ServeConfig {
   loginApp: any,
   auth: any,
   keyPhrase?: string,
-  dxnsEndpoint?: string,
-  dxns?: boolean
+  dxnsEndpoint: string
 }
 
-/**
- * Test:
- * yarn server
- * curl -I localhost:5999/app/wrn:dxos:application
- */
-export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, auth, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint, dxns }: ServeConfig) => {
-  const dxnsOnly = boolean(dxns);
-  const registry = dxnsOnly ? null : new Registry(registryEndpoint, chainId);
-
-  // TODO(egorgripasov): Interim implementation for compatibility - Cleanup.
+export const serve = async ({ port = DEFAULT_PORT, ipfsGateway, configFile, loginApp, auth, keyPhrase = DEFAULT_KEYPHRASE, dxnsEndpoint }: ServeConfig) => {
   let registryClient: RegistryClient | undefined;
-  if (dxnsEndpoint) {
-    try {
-      registryClient = await getRegistryClient(dxnsEndpoint);
-    } catch (err) {}
-  }
-  const resolver = new Resolver(registry, registryClient);
+  try {
+    registryClient = await getRegistryClient(dxnsEndpoint);
+  } catch (err) {}
+  const resolver = new Resolver(registryClient);
 
   // IPFS gateway handler.
   const ipfsProxy = ipfsRouter(ipfsGateway);
@@ -189,34 +149,6 @@ export const serve = async ({ registryEndpoint, chainId, port = DEFAULT_PORT, ip
 
         file = `/${(filePath).join('/')}`;
       } catch (err) {}
-    }
-
-    // TODO(egorgripasov): Deprecate.
-    if (!cid) {
-      let resource;
-      // TODO(egorgripasov): Deprecated (backwards comptatible).
-      if (/^wrn(:|%)/i.test(route)) {
-        const [name, ...filePath] = route.split('/');
-        if (!filePath.length) {
-          return res.redirect(`${req.originalUrl}/`);
-        }
-
-        file = `/${filePath.join('/')}`;
-        const [authority, ...rest] = decodeURIComponent(name).slice(4).replace(/^\/*/, '').split(':');
-        resource = new WRN(authority, rest.join('/'));
-      } else {
-        const [authority, path, filePath] = route.split(':');
-        if (!filePath) {
-          return res.redirect(`${req.originalUrl.replace(/\/$/, '')}:/`);
-        }
-
-        file = filePath;
-        resource = new WRN(authority, path);
-      }
-
-      // TODO(burdon): Hack to adapt current names.
-      const name = WRN.legacy(resource); // String(resource);
-      cid = await resolver.lookupCID(name);
     }
 
     if (!cid) {

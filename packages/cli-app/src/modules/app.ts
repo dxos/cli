@@ -137,9 +137,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
               .option('proc-name', { type: 'string' })
               .option('daemon', {})
               .option('port', { type: 'number', default: DEFAULT_PORT })
-              .option('auth', { type: 'boolean', default: true })
-              // TODO(egorgripasov): Remove.
-              .option('dxns', { type: 'boolean', default: false }),
+              .option('auth', { type: 'boolean', default: true }),
 
             handler: asyncHandler(serve.start(config))
           })
