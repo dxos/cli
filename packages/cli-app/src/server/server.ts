@@ -17,7 +17,7 @@ import os from 'os';
 import { join } from 'path';
 import urlJoin from 'url-join';
 
-import { DXN, CID, RegistryClient } from '@dxos/registry-client';
+import { DXN, CID, RegistryClient, RegistryRecord } from '@dxos/registry-client';
 
 import { BASE_URL, DEFAULT_PORT } from '../config';
 import { WALLET_LOGIN_PATH, LOGIN_PATH, /* OTP_QR_PATH, */ authHandler, /* authSetupHandler, */ authMiddleware, walletAuthHandler } from './auth';
@@ -63,9 +63,14 @@ class Resolver {
       return cached.cid;
     }
 
-    const [dxn, versionOrTag] = id.split('@', 2);
-    const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn), versionOrTag ?? 'latest');
-    const record = resourceRecord?.record;
+    let record: RegistryRecord | undefined;
+    if (id.includes(':')) {
+      const [dxn, versionOrTag] = id.split('@', 2);
+      const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn), versionOrTag ?? 'latest');
+      record = resourceRecord?.record;
+    } else {
+      record = await this._registryClient.getRecord(CID.from(id));
+    }
 
     if (!record) {
       log(`Not found in DXNS: ${id}`);
@@ -136,7 +141,7 @@ export const serve = async ({ port = DEFAULT_PORT, ipfsGateway, configFile, logi
       try {
         const [id, ...filePath] = route.split('/');
 
-        cid = id.includes(':') ? await resolver.lookupCIDinDXNS(id) : id;
+        cid = await resolver.lookupCIDinDXNS(id);
 
         if (cid && !filePath.length) {
           return res.redirect(`${req.originalUrl}/`);
