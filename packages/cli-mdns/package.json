@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "^2.6.4-alpha.0",
-    "@dxos/debug": "~2.15.4",
+    "@dxos/debug": "~2.15.6",
     "assert": "^2.0.0"
   },
   "devDependencies": {
