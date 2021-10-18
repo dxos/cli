@@ -218,8 +218,10 @@ describe('CLI', () => {
     });
 
     it('Serves directly by CID', async () => {
-      // Known CID from the mock app.
-      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/QmNj19qocNRAWp58e8L7K2cnBxwEsfiWDNCCZzLUT2oGvm/`)).statusCode).toBe(200);
+      const records = await cmd(`dxns record list --json`).json()
+      const cid = records.find((r: any) => r.description === 'Mock application').cid
+
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${cid}/`)).statusCode).toBe(200);
     });
 
     it('stop app server', async () => {
