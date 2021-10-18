@@ -43,8 +43,8 @@ services:
     dnsDomain: 'kube.dxos.network'
     npmAccessToken: ''
   ipfs:
-    server: 'https://ipfs.kube.moon.dxos.network/dxos/ipfs/api'
-    gateway: 'https://ipfs.kube.moon.dxos.network/dxos/ipfs/gateway/'
+    server: 'https://ipfs-enterprise.kube.dxos.network/dxos/ipfs/api'
+    gateway: 'https://ipfs-enterprise.kube.dxos.network/dxos/ipfs/gateway/'
   signal:
     server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
     api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
