@@ -31,7 +31,7 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/config": "~2.15.3",
+    "@dxos/config": "~2.15.4",
     "@dxos/crypto": "~2.15.4",
     "@dxos/debug": "~2.15.4",
     "@types/yargs": "^16.0.1",

@@ -41,7 +41,7 @@
     "@dxos/cli-core": "^2.6.4-alpha.0",
     "@dxos/crypto": "~2.15.4",
     "@dxos/debug": "~2.15.4",
-    "@dxos/object-model": "~2.15.3",
+    "@dxos/object-model": "~2.15.4",
     "@dxos/registry-client": "~2.15.4",
     "assert": "^2.0.0",
     "do-wrapper": "^4.1.2",

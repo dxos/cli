@@ -34,10 +34,10 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/botkit": "~2.15.3",
-    "@dxos/botkit-client": "~2.15.3",
+    "@dxos/botkit": "~2.15.4",
+    "@dxos/botkit-client": "~2.15.4",
     "@dxos/cli-core": "^2.6.4-alpha.0",
-    "@dxos/config": "~2.15.3",
+    "@dxos/config": "~2.15.4",
     "@dxos/crypto": "~2.15.4",
     "@dxos/debug": "~2.15.4",
     "@dxos/registry-client": "~2.15.4",
