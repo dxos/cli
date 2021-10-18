@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.6.9](https://www.github.com/dxos/cli/compare/v2.6.8...v2.6.9) (2021-10-18)
+
+
+### Bug Fixes
+
+* trigger build ([bdd3754](https://www.github.com/dxos/cli/commit/bdd37540f99bcfc73b362d20744d961ae37294ea))
+
 ### [2.6.8](https://www.github.com/dxos/cli/compare/v2.6.7...v2.6.8) (2021-10-18)
 
 
