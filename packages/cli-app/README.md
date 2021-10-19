@@ -10,10 +10,8 @@ To deploy apps we need a number of steps:
 
 All this operations can be resumed with one command:
 
-> You could use optional `--name` argument in order to assign specific name to the record.
-
 ```
-$ dx app deploy --name "wrn://dxos/application/example"
+$ dx app deploy --domain "test" --name "app.example"
 ```
 
 ### Build app.
@@ -62,10 +60,8 @@ package:
 
 - register app:
 
-> You could use optional `--name` argument in order to assign specific name to the record.
-
 ```bash
-$ dx app register --name "wrn://dxos/application/example"
+$ dx app register --domain "test" --name "app.example"
 ```
 
 ### Query

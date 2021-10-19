@@ -111,19 +111,4 @@
         describe: "Signal server as container."
     initRequired: false
     destroyRequired: false
-  - 
-    moduleName: "@dxos/cli-wns"
-    describe: "Registry extension."
-    command: 
-      - 
-        command: "wns"
-        describe: "Registry operations."
-      - 
-        command: "faucet"
-        describe: "Faucet management."
-      - 
-        command: "keys"
-        describe: "Keys management."
-    initRequired: false
-    destroyRequired: false
 

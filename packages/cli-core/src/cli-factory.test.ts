@@ -36,7 +36,7 @@ jest.spyOn(console, 'log').mockImplementation(() => {});
 const mockMethod = jest.fn();
 const interactiveMockMethod = jest.fn();
 
-process.env.WIRE_PROFILE = 'test';
+process.env.DX_PROFILE = 'test';
 
 class MockRl extends EventEmitter {
   prompt: any;

@@ -22,8 +22,8 @@ Profiles are stored in the `~/.dx/profile` folder. To further customize a profil
 
 To activate/use a profile, do one of the following (highest to lowest precedence):
 
-1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile enterprise wns status`
-2. export `WIRE_PROFILE` in the shell, with the name of the profile, e.g. `export WIRE_PROFILE=enterprise`
+1. Pass it as an argument to a command (`--profile <NAME>`), e.g. `dx --profile enterprise extension list`
+2. export `DX_PROFILE` in the shell, with the name of the profile, e.g. `export DX_PROFILE=enterprise`
 3. Set it as the default for the system, e.g. `dx profile set enterprise`
 
 Note: The first profile created automatically becomes the system default.
@@ -49,7 +49,7 @@ $ dx profile config <NAME>
 View the profile used for a command (using the `--dry-run` flag):
 
 ```bash
-$ dx wns status --dry-run
+$ dx extension list --dry-run
 Profile: /Users/ashwinp/.dx/profile/devnet.yml
 ```
 
@@ -59,10 +59,8 @@ Multiple templates can be created and shared with others to use different config
 
 In order to install CLI extensions, one could leverage automatic installation mechanism (for DXOS extensions only):
 
-<!--TODO(burdon): Rename registry.-->
-
 ```bash
-$ dx wns
+$ dx dxns
 ```
 
 ```bash
@@ -116,7 +114,6 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 | [Mesh CLI](../cli-mesh/README.md) |
 | [Pad CLI](../cli-pad/README.md) |
 | [Signal CLI](../cli-signal/README.md) |
-| [WNS CLI](../cli-wns/README.md) |
 
 
 ### Certification
