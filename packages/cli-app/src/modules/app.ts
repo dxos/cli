@@ -7,14 +7,13 @@ import { Argv } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { APP_TYPE, DEFAULT_PORT } from '../config';
+import { DEFAULT_PORT } from '../config';
 import { build, publish, register, query, serve } from '../handlers';
 import { GetDXNSClient } from '../types';
 
 const getAppRecord = (config: any, namespace: string) => {
   const record = {
-    ...config,
-    type: APP_TYPE
+    ...config
   };
 
   // TODO(burdon): Tags are obsolete?
@@ -76,7 +75,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
-        handler: asyncHandler(register(config, { getAppRecord, getDXNSClient }))
+        handler: asyncHandler(register({ getAppRecord, getDXNSClient }))
       })
 
       // Deploy app.
@@ -103,7 +102,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           log('Preparing to deploy...'); // TODO(burdon): Standardize logging (stages, verbose).
           await build(config, { getAppRecord })(argv);
           await publish(config)(argv);
-          await register(config, { getAppRecord, getDXNSClient })(argv);
+          await register({ getAppRecord, getDXNSClient })(argv);
         })
       })
 
@@ -118,7 +117,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
-        handler: asyncHandler(query(config, { getDXNSClient }))
+        handler: asyncHandler(query({ getDXNSClient }))
       })
 
       // Serve apps.

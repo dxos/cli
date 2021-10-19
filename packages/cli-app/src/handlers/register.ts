@@ -6,11 +6,9 @@ import assert from 'assert';
 import { spawnSync } from 'child_process';
 import clean from 'lodash-clean';
 
-import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
-import { Registry } from '@wirelineio/registry-client';
 
 import { loadAppConfig, updateAppConfig } from './config';
 
@@ -21,18 +19,8 @@ export interface RegisterParams {
 
 export const APP_DXN_NAME = 'dxos:type.app';
 
-export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
-  const { verbose, version, tag, namespace, 'dry-run': noop, txKey, name, domain, dxns } = argv;
-  const wnsConfig = config.get('services.wns');
-  const { server, userKey, bondId, chainId } = wnsConfig;
-
-  // TODO(egorgripasov): Deprecate.
-  if (!dxns) {
-    assert(server, 'Invalid WNS endpoint.');
-    assert(userKey, 'Invalid WNS userKey.');
-    assert(bondId, 'Invalid WNS bond ID.');
-    assert(chainId, 'Invalid WNS chain ID.');
-  }
+export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
+  const { verbose, version, tag, namespace, 'dry-run': noop, name, domain } = argv;
 
   const conf = {
     ...await loadAppConfig(),
@@ -40,7 +28,9 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
     ...clean({ tag })
   };
 
-  assert(name, 'Invalid WRN.');
+  assert(name, 'Invalid name.');
+  assert(domain, 'Invalid domain');
+
   assert(conf.name, 'Invalid app name.');
   assert(conf.version, 'Invalid app version.');
 
@@ -58,58 +48,41 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
   log(`Registering ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : ''));
 
   const record = getAppRecord(conf, namespace);
-  const registry = new Registry(server, chainId);
 
   if (verbose || noop) {
-    log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
+    log(JSON.stringify({ record }, undefined, 2));
   }
 
   if (!noop) {
     await updateAppConfig(conf);
   }
 
-  // TODO(egorgripasov): Deprecate.
-  if (!dxns) {
-    const fee = getGasAndFees(argv, wnsConfig);
+  assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(name), 'Name could contain only letters, numbers, dashes or dots.');
 
-    let appId;
-    if (!noop) {
-      const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
-      appId = result.data;
-      log(`Record ID: ${appId}`);
-    }
+  const { description, package: pkg, ...rest } = conf;
 
-    for (const wrn of name) {
-      log(`Assigning name ${wrn}...`);
-      if (!noop) {
-        await registry.setName(wrn, appId, userKey, fee);
-      }
-    }
-  } else {
-    assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(name), 'Name could contain only letters, numbers, dashes or dots.');
+  const client: { registryClient: IRegistryClient } = await getDXNSClient();
 
-    const { description, package: pkg, ...rest } = conf;
+  const appType = await client.registryClient.getResourceRecord(DXN.parse(APP_DXN_NAME), 'latest');
+  assert(appType);
+  assert(appType.record.kind === RecordKind.Type);
 
-    const client: { registryClient: IRegistryClient } = await getDXNSClient();
-
-    const appType = await client.registryClient.getResourceRecord(DXN.parse(APP_DXN_NAME), 'latest');
-    assert(appType);
-    assert(appType.record.kind === RecordKind.Type);
-
-    const cid = await client.registryClient.insertDataRecord({
+  let cid;
+  if (!noop) {
+    cid = await client.registryClient.insertDataRecord({
       hash: CID.from(pkg['/']).value,
       ...rest
     }, appType?.record.cid, {
       description
     });
+  }
 
-    const domainKey = await client.registryClient.resolveDomainName(domain);
-    const opts: UpdateResourceOptions = { version: conf.version, tags: conf.tag ?? ['latest'] };
-    for (const dxn of name) {
-      log(`Assigning name ${dxn}...`);
-      if (!noop) {
-        await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid, opts);
-      }
+  const domainKey = await client.registryClient.resolveDomainName(domain);
+  const opts: UpdateResourceOptions = { version: conf.version, tags: conf.tag ?? ['latest'] };
+  for (const dxn of name) {
+    log(`Assigning name ${dxn}...`);
+    if (!noop) {
+      await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid, opts);
     }
   }
 

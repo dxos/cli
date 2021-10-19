@@ -25,14 +25,6 @@ cli:
 
 # DXOS services.
 services:
-  wns:
-    server: 'https://wns.kube.moon.dxos.network/api'
-    webui: 'https://wns.kube.moon.dxos.network/console'
-    userKey:
-    bondId:
-    chainId: 'moon'
-    gas: '200000'
-    fees: '200000uwire'
   dxns:
     server: 'wss://dxns1.kube.dxos.network/dxns/ws'
     accountUri:

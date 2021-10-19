@@ -59,14 +59,14 @@ export const setProfileAsDefault = async (profile: string, overwrite = true) => 
 
 /**
  * Get active profile path.
- * Precedence: param (from argv), WIRE_PROFILE ENV, default symlink.
+ * Precedence: param (from argv), DX_PROFILE ENV, default symlink.
  * @param {string} profile
  */
 export const getActiveProfilePath = (profile?: string) => {
   const defaultProfilePath = getDefaultProfilePath();
   const defaultProfileExists = fs.existsSync(defaultProfilePath);
 
-  profile = profile || process.env.WIRE_PROFILE;
+  profile = profile || process.env.WIRE_PROFILE || process.env.DX_PROFILE;
   if (!profile && !defaultProfileExists) {
     return null;
   }

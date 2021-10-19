@@ -2,16 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-import assert from 'assert';
 import { spawnSync } from 'child_process';
-import fs from 'fs';
-import get from 'lodash.get';
 import path from 'path';
 
 import { Runnable, stopService, asyncHandler, print } from '@dxos/cli-core';
-import { Registry } from '@wirelineio/registry-client';
 
-import { download, publish, query, register } from '../handlers';
+// import { download , publish, query, register } from '../handlers';
 
 const IPFS_EXEC = 'ipfs';
 const IPFS_PROCESS_NAME = 'ipfs';
@@ -22,8 +18,8 @@ const IPFS_SWARM_CONNECTOR_PROCESS_NAME = 'ipfs-swarm-connect';
 const IPFS_SWARM_CONNECTOR_PATH = path.join(__dirname, '../runnable/swarm-connect.js');
 const IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE = '/var/log/ipfs-swarm-connect.log';
 
-const RECORD_TYPE = 'wrn:service';
-const SERVICE_TYPE = 'ipfs';
+// const RECORD_TYPE = 'wrn:service';
+// const SERVICE_TYPE = 'ipfs';
 
 const ipfsRunnable = new Runnable(IPFS_EXEC);
 const swarmConnectRunable = new Runnable(IPFS_SWARM_CONNECTOR_EXEC, [IPFS_SWARM_CONNECTOR_PATH]);
@@ -110,138 +106,138 @@ export const IPFSModule = ({ config }) => ({
       })
     })
 
-    .command({
-      command: ['find [thing] [name]'],
-      describe: 'Find file in IPFS swarm.',
-      builder: yargs => yargs
-        .option('platform', { type: 'string' }),
+  // .command({
+  //   command: ['find [thing] [name]'],
+  //   describe: 'Find file in IPFS swarm.',
+  //   builder: yargs => yargs
+  //     .option('platform', { type: 'string' }),
 
-      handler: asyncHandler(async argv => {
-        const { server, chainId } = config.get('services.wns');
-        assert(server, 'Invalid WNS endpoint.');
-        assert(chainId, 'Invalid WNS Chain ID.');
+  //   handler: asyncHandler(async argv => {
+  //     const { server, chainId } = config.get('services.wns');
+  //     assert(server, 'Invalid WNS endpoint.');
+  //     assert(chainId, 'Invalid WNS Chain ID.');
 
-        const registry = new Registry(server, chainId);
+  //     const registry = new Registry(server, chainId);
 
-        const { json, name, platform } = argv;
-        let { thing } = argv;
+  //     const { json, name, platform } = argv;
+  //     let { thing } = argv;
 
-        if (!thing) {
-          thing = fs.readFileSync(0, 'utf-8');
-        }
+  //     if (!thing) {
+  //       thing = fs.readFileSync(0, 'utf-8');
+  //     }
 
-        let hash;
-        if (/Qm[1-9A-HJ-NP-Za-km-z]{44}/.test(thing)) {
-          hash = thing;
-        }
+  //     let hash;
+  //     if (/Qm[1-9A-HJ-NP-Za-km-z]{44}/.test(thing)) {
+  //       hash = thing;
+  //     }
 
-        if (!hash) {
-          assert(name, 'Invalid Name.');
+  //     if (!hash) {
+  //       assert(name, 'Invalid Name.');
 
-          switch (thing) {
-            case 'app':
-            case 'file': {
-              const { records } = await registry.resolveNames([name]);
-              assert(records[0], 'Item not found in WNS.');
-              hash = get(records, '[0].attributes.package["/"]');
-              break;
-            }
-            case 'bot': {
-              assert(platform, 'Invalid platform.');
-              const { records: bots } = await registry.resolveNames([name]);
-              assert(bots[0], 'Bot not found in WNS.');
-              hash = get(bots, `[0].attributes.package.${platform.replace('-', '.')}["/"]`);
-              break;
-            }
-            default: {
-              throw new Error(`Invalid type "${thing}".`);
-            }
-          }
-        }
+  //       switch (thing) {
+  //         case 'app':
+  //         case 'file': {
+  //           const { records } = await registry.resolveNames([name]);
+  //           assert(records[0], 'Item not found in WNS.');
+  //           hash = get(records, '[0].attributes.package["/"]');
+  //           break;
+  //         }
+  //         case 'bot': {
+  //           assert(platform, 'Invalid platform.');
+  //           const { records: bots } = await registry.resolveNames([name]);
+  //           assert(bots[0], 'Bot not found in WNS.');
+  //           hash = get(bots, `[0].attributes.package.${platform.replace('-', '.')}["/"]`);
+  //           break;
+  //         }
+  //         default: {
+  //           throw new Error(`Invalid type "${thing}".`);
+  //         }
+  //       }
+  //     }
 
-        assert(hash, 'Invalid Hash.');
+  //     assert(hash, 'Invalid Hash.');
 
-        const attributes = { type: RECORD_TYPE, service: SERVICE_TYPE };
-        const services = await registry.queryRecords(attributes);
+  //     const attributes = { type: RECORD_TYPE, service: SERVICE_TYPE };
+  //     const services = await registry.queryRecords(attributes);
 
-        const addresses = services.reduce((prev, service) => {
-          const addrs = get(service, 'attributes.ipfs.addresses', []);
-          return [...prev, ...addrs];
-        }, []);
+  //     const addresses = services.reduce((prev, service) => {
+  //       const addrs = get(service, 'attributes.ipfs.addresses', []);
+  //       return [...prev, ...addrs];
+  //     }, []);
 
-        // Find in IPFS.
-        const data = spawnSync(IPFS_EXEC, ['--timeout', '10s', 'dht', 'findprovs', hash.trim()]);
-        const found = String(data.stdout).split('\n');
+  //     // Find in IPFS.
+  //     const data = spawnSync(IPFS_EXEC, ['--timeout', '10s', 'dht', 'findprovs', hash.trim()]);
+  //     const found = String(data.stdout).split('\n');
 
-        const result = found.filter(Boolean).map(hash => {
-          const address = addresses.find(addr => addr.includes(hash));
-          if (address) {
-            return { node: address, registered: true };
-          }
-          return { node: hash, registered: false };
-        });
+  //     const result = found.filter(Boolean).map(hash => {
+  //       const address = addresses.find(addr => addr.includes(hash));
+  //       if (address) {
+  //         return { node: address, registered: true };
+  //       }
+  //       return { node: hash, registered: false };
+  //     });
 
-        const wnsRegisteredCount = result.filter(({ registered }) => registered).length;
+  //     const wnsRegisteredCount = result.filter(({ registered }) => registered).length;
 
-        const info = {
-          ...(thing !== hash ? { name, type: thing } : {}),
-          hash,
-          'wns-registered-nodes-found': wnsRegisteredCount,
-          'non-wns-registered-nodes-found': result.length - wnsRegisteredCount
-        };
+  //     const info = {
+  //       ...(thing !== hash ? { name, type: thing } : {}),
+  //       hash,
+  //       'wns-registered-nodes-found': wnsRegisteredCount,
+  //       'non-wns-registered-nodes-found': result.length - wnsRegisteredCount
+  //     };
 
-        if (json) {
-          print({ ...info, result }, { json });
-        } else {
-          print(info, { json });
-          print(result, { json });
-        }
-      })
-    })
+  //     if (json) {
+  //       print({ ...info, result }, { json });
+  //     } else {
+  //       print(info, { json });
+  //       print(result, { json });
+  //     }
+  //   })
+  // })
 
-    // Download a file.
-    .command({
-      command: ['download [outdir]'],
-      describe: 'Download File from IPFS.',
-      builder: yargs => yargs
-        .positional('outdir', { type: 'string', default: '.' })
-        .option('quiet', { type: 'boolean', default: false })
-        .option('name', { type: 'string', required: false })
-        .option('id', { type: 'string', required: false })
-        .option('timeout', { type: 'string', default: '20m' }),
-      handler: asyncHandler(download(config))
-    })
+  // Download a file.
+  // .command({
+  //   command: ['download [outdir]'],
+  //   describe: 'Download File from IPFS.',
+  //   builder: yargs => yargs
+  //     .positional('outdir', { type: 'string', default: '.' })
+  //     .option('quiet', { type: 'boolean', default: false })
+  //     .option('name', { type: 'string', required: false })
+  //     .option('id', { type: 'string', required: false })
+  //     .option('timeout', { type: 'string', default: '20m' }),
+  //   handler: asyncHandler(download(config))
+  // })
 
-    // Upload files.
-    .command({
-      command: ['upload <target>'],
-      describe: 'Upload a file to WNS.',
-      builder: yargs => yargs
-        .positional('target', { type: 'string', required: true })
-        .strict()
-        .version(false)
-        .option('quiet', { type: 'boolean', default: false })
-        .alias('q', 'quiet')
-        .option('name', { type: 'array' })
-        .option('gas', { type: 'string' })
-        .option('fees', { type: 'string' })
-        .option('timeout', { type: 'string', default: '20m' }),
-      handler: asyncHandler(async argv => {
-        const result = await publish(config)(argv);
-        await register(config)({ ...argv, ...result });
-      })
-    })
+  // // Upload files.
+  // .command({
+  //   command: ['upload <target>'],
+  //   describe: 'Upload a file to WNS.',
+  //   builder: yargs => yargs
+  //     .positional('target', { type: 'string', required: true })
+  //     .strict()
+  //     .version(false)
+  //     .option('quiet', { type: 'boolean', default: false })
+  //     .alias('q', 'quiet')
+  //     .option('name', { type: 'array' })
+  //     .option('gas', { type: 'string' })
+  //     .option('fees', { type: 'string' })
+  //     .option('timeout', { type: 'string', default: '20m' }),
+  //   handler: asyncHandler(async argv => {
+  //     const result = await publish(config)(argv);
+  //     await register(config)({ ...argv, ...result });
+  //   })
+  // })
 
-    // Query files.
-    .command({
-      command: ['query'],
-      describe: 'Query files.',
-      builder: yargs => yargs
-        .option('id')
-        .option('name')
-        .option('namespace'),
+  // // Query files.
+  // .command({
+  //   command: ['query'],
+  //   describe: 'Query files.',
+  //   builder: yargs => yargs
+  //     .option('id')
+  //     .option('name')
+  //     .option('namespace'),
 
-      handler: asyncHandler(query(config))
-    })
+  //   handler: asyncHandler(query(config))
+  // })
 
 });

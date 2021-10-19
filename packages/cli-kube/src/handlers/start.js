@@ -37,7 +37,7 @@ export const start = ({ kubeCompose }) => async (argv) => {
   // TODO(egorgripasov): Rm hardcoded WIRE.
   const env = [
     `DX_APP_SERVER_KEYPHRASE=${keyPhrase}`,
-    `WIRE_SERVICES=${services}`,
+    `DX_SERVICES=${services}`,
     `HOST_OS=${capitalize(process.platform)}`,
     `KUBE_PROFILE_PATH=${KUBE_PROFILE_PATH}`,
     `KUBE_FQDN=${fqdn}`,

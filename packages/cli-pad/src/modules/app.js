@@ -6,7 +6,7 @@ import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 import { PAD_TYPE } from '../config';
-import { build, publish, register, query } from '../handlers';
+import { build, publish /*, register, query */ } from '../handlers';
 
 /**
  * @param {object} config
@@ -52,20 +52,20 @@ export const AppModule = ({ config }) => {
         handler: asyncHandler(publish(config))
       })
 
-    // Register pad.
-      .command({
-        command: ['register'],
-        describe: 'Register Pad.',
-        builder: yargs => yargs
-          .version(false)
-          .option('name', { type: 'string' })
-          .option('version', { type: 'string' })
-          .option('id', { type: 'string' })
-          .option('namespace', { type: 'string' })
-          .option('gas', { type: 'string' })
-          .option('fees', { type: 'string' }),
-        handler: asyncHandler(register(config, { getPadRecord }))
-      })
+    // // Register pad.
+    //   .command({
+    //     command: ['register'],
+    //     describe: 'Register Pad.',
+    //     builder: yargs => yargs
+    //       .version(false)
+    //       .option('name', { type: 'string' })
+    //       .option('version', { type: 'string' })
+    //       .option('id', { type: 'string' })
+    //       .option('namespace', { type: 'string' })
+    //       .option('gas', { type: 'string' })
+    //       .option('fees', { type: 'string' }),
+    //     handler: asyncHandler(register(config, { getPadRecord }))
+    //   })
 
     // Deploy pad.
       .command({
@@ -85,21 +85,21 @@ export const AppModule = ({ config }) => {
           log('Preparing to deploy...');
           await build(config, { getPadRecord })(argv);
           await publish(config)(argv);
-          await register(config, { getPadRecord })(argv);
+          // await register(config, { getPadRecord })(argv);
           log('Done');
         })
       })
 
-    // Query pads.
-      .command({
-        command: ['query'],
-        describe: 'Query pads.',
-        builder: yargs => yargs
-          .option('id')
-          .option('name')
-          .option('namespace'),
+    // // Query pads.
+    //   .command({
+    //     command: ['query'],
+    //     describe: 'Query pads.',
+    //     builder: yargs => yargs
+    //       .option('id')
+    //       .option('name')
+    //       .option('namespace'),
 
-        handler: asyncHandler(query(config))
-      })
+    //     handler: asyncHandler(query(config))
+    //   })
   });
 };
