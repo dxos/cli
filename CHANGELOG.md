@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.0](https://www.github.com/dxos/cli/compare/v2.6.9...v2.7.0) (2021-10-19)
+
+
+### Features
+
+* rm WNS ([#314](https://www.github.com/dxos/cli/issues/314)) ([09c89cb](https://www.github.com/dxos/cli/commit/09c89cb5d8a3e08d31006ac84b8a80c1f6073e19))
+
 ### [2.6.9](https://www.github.com/dxos/cli/compare/v2.6.8...v2.6.9) (2021-10-18)
 
 
