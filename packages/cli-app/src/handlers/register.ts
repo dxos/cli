@@ -81,7 +81,7 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
   const opts: UpdateResourceOptions = { version: conf.version, tags: conf.tag ?? ['latest'] };
   for (const dxn of name) {
     log(`Assigning name ${dxn}...`);
-    if (!noop) {
+    if (!noop && cid) {
       await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid, opts);
     }
   }
