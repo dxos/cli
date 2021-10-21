@@ -20,7 +20,7 @@ export interface RegisterParams {
 export const APP_DXN_NAME = 'dxos:type.app';
 
 export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
-  const { verbose, version, tag, namespace, 'dry-run': noop, name, domain } = argv;
+  const { verbose, version, tag, namespace, 'dry-run': noop, name, domain, skipExisting } = argv;
 
   const conf = {
     ...await loadAppConfig(),
@@ -28,7 +28,7 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
     ...clean({ tag })
   };
   if (conf.version === 'false') {
-    conf.version = undefined;
+    conf.version = null;
   }
 
   assert(name, 'Invalid name.');
@@ -84,9 +84,17 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
   for (const dxn of name) {
     log(`Assigning name ${dxn}...`);
     if (!noop && cid) {
-      await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid, opts);
+      try {
+        await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid, opts);
+      } catch (err) {
+        if (skipExisting && String(err).includes('VersionAlreadyExists')) {
+          log('Skipping existing version.');
+        } else {
+          throw err;
+        }
+      }
     }
   }
 
-  log(`Registered ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.version}.` : ''));
+  log(`Registered ${conf.name}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.version}.` : ''));
 };
