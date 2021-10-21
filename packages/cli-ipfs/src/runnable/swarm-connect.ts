@@ -87,6 +87,7 @@ export class SwarmConnector {
     const ipfsServiceCID = await this.getServiceTypeCID(IPFS_SERVICE_DXN);
     const serviceCID = await this.getServiceTypeCID(SERVICE_DXN);
     const services = await this._registry.getDataRecords({ type: serviceCID });
+
     const records = services.filter(service => ipfsServiceCID.equals(service.data.extension['@type']));
 
     const active = records.sort(() => Math.random() - 0.5); // assuming all are active?

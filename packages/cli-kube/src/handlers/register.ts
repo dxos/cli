@@ -12,6 +12,7 @@ export const SERVICE_TYPE_DXN = 'dxos:type.service';
 export const WELL_KNOWN = '/kube/services';
 
 interface RegisterServiceOptions {
+  kubeName: string,
   registryClient: IRegistryClient,
   kubeCID: CID,
   domainKey: DomainKey,
@@ -27,10 +28,7 @@ const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: s
       return cid;
     }
   }
-  // Can't resolve specific type, return default
-  const defaultCID = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN)))?.tags.latest;
-  assert(defaultCID, 'Couldn\'t find default service type');
-  return defaultCID;
+  return null;
 };
 
 const registerServices = async (options: RegisterServiceOptions) => {
@@ -42,19 +40,22 @@ const registerServices = async (options: RegisterServiceOptions) => {
     throw new Error('Kube service endpoint is not available');
   }
   for (const service of services) {
-    const serviceTypeCid = await getServiceTypeCID(options.registryClient, service.name);
+    const generalServiceTypeCid = (await options.registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN)))!.tags!.latest!;
+
+    const serviceTypeCid = await getServiceTypeCID(options.registryClient, service.name) || generalServiceTypeCid;
 
     const serviceData = {
       type: service.name,
       kube: options.kubeCID.value,
       extension: {
-        '@type': serviceTypeCid.value
+        '@type': serviceTypeCid,
+        ...(service.info || {})
       }
     };
 
-    const cid = await options.registryClient.insertDataRecord({ serviceData }, serviceTypeCid, {});
+    const cid = await options.registryClient.insertDataRecord(serviceData, generalServiceTypeCid, {});
 
-    const name = `${options.url.replace(/[^a-zA-Z0-9-]/g, '')}.services.${service.name}`;
+    const name = `${options.kubeName}.service.${service.name}`;
     const dxn = DXN.fromDomainKey(options.domainKey, name);
     await options.registryClient.updateResource(dxn, cid);
   }
@@ -76,6 +77,7 @@ export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }
   const dxn = DXN.fromDomainKey(domainKey, name);
   await registryClient.updateResource(dxn, cid);
   await registerServices({
+    kubeName: name,
     registryClient,
     domainKey,
     kubeCID: cid,
