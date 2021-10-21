@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.8.1](https://www.github.com/dxos/cli/compare/v2.8.0...v2.8.1) (2021-10-21)
+
+
+### Bug Fixes
+
+* Allow to skip existing version ([a2f1f90](https://www.github.com/dxos/cli/commit/a2f1f90d9941a4656b5fdd1b064ae4a7f19a31fd))
+
 ## [2.8.0](https://www.github.com/dxos/cli/compare/v2.7.1...v2.8.0) (2021-10-21)
 
 
