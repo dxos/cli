@@ -24,7 +24,7 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
 
   const conf = {
     ...await loadAppConfig(),
-    ...clean({ version }),
+    ...clean({ version: version === 'false' ? undefined : version }),
     ...clean({ tag })
   };
 
@@ -32,7 +32,6 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
   assert(domain, 'Invalid domain');
 
   assert(conf.name, 'Invalid app name.');
-  assert(conf.version, 'Invalid app version.');
 
   const { status, stdout } = spawnSync('git', [
     'describe',
@@ -45,7 +44,7 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
   ], { shell: true });
   conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
 
-  log(`Registering ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : ''));
+  log(`Registering ${conf.name}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.version}.` : ''));
 
   const record = getAppRecord(conf, namespace);
 
@@ -86,5 +85,5 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
     }
   }
 
-  log(`Registered ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : ''));
+  log(`Registered ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.version}.` : ''));
 };
