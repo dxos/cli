@@ -44,7 +44,7 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
   ], { shell: true });
   conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
 
-  log(`Registering ${conf.name}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.tag.join(', ')}.` : ''));
+  log(`Registering ${conf.name}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.version}.` : ''));
 
   const record = getAppRecord(conf, namespace);
 
@@ -85,5 +85,5 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
     }
   }
 
-  log(`Registered ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.tag.join(', ')}.` : ''));
+  log(`Registered ${conf.name}@${conf.version}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.version}.` : ''));
 };
