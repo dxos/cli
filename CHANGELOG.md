@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.0](https://www.github.com/dxos/cli/compare/v2.7.1...v2.8.0) (2021-10-21)
+
+
+### Features
+
+* Allow no version ([c005239](https://www.github.com/dxos/cli/commit/c00523936a802b2b3b18099e58b12177c4b8e567))
+
 ### [2.7.1](https://www.github.com/dxos/cli/compare/v2.7.0...v2.7.1) (2021-10-21)
 
 
