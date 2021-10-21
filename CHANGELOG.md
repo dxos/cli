@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.7.1](https://www.github.com/dxos/cli/compare/v2.7.0...v2.7.1) (2021-10-21)
+
+
+### Bug Fixes
+
+* Correct unversioned deployments ([d286724](https://www.github.com/dxos/cli/commit/d2867241e880a282edb7491dcf77742e3c249ab0))
+* Correct unversioned deployments ([3cf7529](https://www.github.com/dxos/cli/commit/3cf7529dfb0ae05bf378c2a7edfed57d6a5ca99e))
+
 ## [2.7.0](https://www.github.com/dxos/cli/compare/v2.6.9...v2.7.0) (2021-10-19)
 
 
