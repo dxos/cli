@@ -24,9 +24,12 @@ export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => asy
 
   const conf = {
     ...await loadAppConfig(),
-    ...clean({ version: version === 'false' ? undefined : version }),
+    ...clean({ version }),
     ...clean({ tag })
   };
+  if (conf.version === 'false') {
+    conf.version = undefined;
+  }
 
   assert(name, 'Invalid name.');
   assert(domain, 'Invalid domain');
