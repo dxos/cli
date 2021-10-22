@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.8.2](https://www.github.com/dxos/cli/compare/v2.8.1...v2.8.2) (2021-10-21)
+
+
+### Bug Fixes
+
+* fix service publish. ([98f44f3](https://www.github.com/dxos/cli/commit/98f44f319aa63d575088af70c5713c1f46618652))
+
 ### [2.8.1](https://www.github.com/dxos/cli/compare/v2.8.0...v2.8.1) (2021-10-21)
 
 
