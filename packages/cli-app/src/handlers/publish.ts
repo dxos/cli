@@ -58,5 +58,5 @@ export const publish = (config: any) => async ({ timeout, path: distPath = DEFAU
   set(conf, 'package["/"]', cid);
   await updateAppConfig(conf);
 
-  log(`Published ${conf.name}@${conf.version} with cid ${cid}`);
+  log(`Published ${conf.name} with cid ${cid}`);
 };
