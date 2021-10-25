@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.8.3](https://www.github.com/dxos/cli/compare/v2.8.2...v2.8.3) (2021-10-25)
+
+
+### Bug Fixes
+
+* expose OTP qr. ([92ebe94](https://www.github.com/dxos/cli/commit/92ebe940d48c5e8a51b779db9d977c5a0a558b75))
+* Removed version label which might not be correct ([eb076a6](https://www.github.com/dxos/cli/commit/eb076a6a50afc90ebd29f375c83a9db41e9dd595))
+
 ### [2.8.2](https://www.github.com/dxos/cli/compare/v2.8.1...v2.8.2) (2021-10-21)
 
 
