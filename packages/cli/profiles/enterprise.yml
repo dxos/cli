@@ -25,6 +25,10 @@ cli:
 
 # DXOS services.
 services:
+  kube:
+    endpoints:
+      logs: '/kube/logs'
+      services: '/kube/services'
   dxns:
     server: 'wss://dxns1.kube.dxos.network/dxns/ws'
     accountUri:
