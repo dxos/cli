@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-ipfs",
-  "version": "2.8.2-alpha.0",
+  "version": "2.8.3-alpha.0",
   "description": "DXOS IPFS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-ipfs#readme",
   "license": "AGPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@dxos/async": "~2.15.6",
-    "@dxos/cli-core": "^2.8.2-alpha.0",
+    "@dxos/cli-core": "^2.8.3-alpha.0",
     "@dxos/debug": "~2.15.6",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
