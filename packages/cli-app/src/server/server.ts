@@ -20,7 +20,7 @@ import urlJoin from 'url-join';
 import { DXN, CID, RegistryClient, RegistryRecord } from '@dxos/registry-client';
 
 import { BASE_URL, DEFAULT_PORT } from '../config';
-import { WALLET_LOGIN_PATH, LOGIN_PATH, /* OTP_QR_PATH, */ authHandler, /* authSetupHandler, */ authMiddleware, walletAuthHandler } from './auth';
+import { WALLET_LOGIN_PATH, LOGIN_PATH, OTP_QR_PATH, authHandler, authSetupHandler, authMiddleware, walletAuthHandler } from './auth';
 import { getRegistryClient } from './dxns';
 
 const MAX_CACHE_AGE = 120 * 1000;
@@ -171,7 +171,7 @@ export const serve = async ({ port = DEFAULT_PORT, ipfsGateway, configFile, logi
 
   // Authentication.
   app.use(LOGIN_PATH, authHandler(keyPhrase));
-  // app.use(OTP_QR_PATH, authSetupHandler(keyPhrase));
+  app.use(OTP_QR_PATH, authMiddleware(loginApp, boolean(auth)), authSetupHandler(keyPhrase));
   app.use(WALLET_LOGIN_PATH, walletAuthHandler);
 
   // Proxy app files.

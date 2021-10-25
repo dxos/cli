@@ -67,6 +67,6 @@ export const authHandler = (keyPhrase) => async (req, res) => {
 };
 
 export const authSetupHandler = (keyPhrase) => async (req, res) => {
-  const imageUrl = await generateQRCode(keyPhrase);
-  res.send(`<html><img src="${imageUrl}" width="400" height="400" /></html>`);
+  const imageSrc = await generateQRCode(keyPhrase);
+  res.json({ imageSrc });
 };
