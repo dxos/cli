@@ -9,8 +9,9 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { DomainKey, DXN, IRegistryClient, RecordMetadata } from '@dxos/registry-client';
+import { DomainKey, DXN, IRegistryClient, TypeRecordMetadata } from '@dxos/registry-client';
 
+import { uploadToIPFS } from '../utils';
 import { Params } from './common';
 
 const DEFAULT_BALANCE = '100000000000000000000';
@@ -19,6 +20,7 @@ const DEFAULT_BID = 10000000;
 
 // TODO(marik-d): Find a better way to do this, export proto resolution logic from codec-protobuf.
 const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns/type.proto');
+const DXNS_PROTO_DIR_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns');
 
 // Mapping from resource name to protobuf name for types that will be registered on-chain.
 const TYPES = {
@@ -108,12 +110,23 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     domainKey = await client.registryClient.resolveDomainName(domain);
   }
 
+  // Bootstrap IPFS
+  verbose && log('Adding IPFS record...');
+  await bootstrapIPFS(client.registryClient);
+  verbose && log('IPFS record added.');
+
+  // Uplaoding types to IPFS
+  verbose && log('Uplaoding types to IPFS...');
+  const sourceIpfsCid = uploadToIPFS(DXNS_PROTO_DIR_PATH, { recursive: true });
+  verbose && log('Uploaded types to IPFS.');
+
   // Register DXOS Schema.
   verbose && log('Registering DXOS schema types..');
   const root = await pb.load(SCHEMA_PATH as string);
-  const meta: RecordMetadata = {
+  const meta: TypeRecordMetadata = {
     created: new Date(),
-    description: 'Base DXOS schema'
+    description: 'Base DXOS schema',
+    sourceIpfsCid
   };
 
   for (const [typeName, fqn] of Object.entries(TYPES)) {
@@ -125,10 +138,6 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
-
-  verbose && log('Adding IPFS record...');
-  await bootstrapIPFS(client.registryClient);
-  verbose && log('IPFS record added.');
 
   print({ account, domain }, { json });
 };
