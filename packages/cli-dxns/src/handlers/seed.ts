@@ -110,12 +110,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     domainKey = await client.registryClient.resolveDomainName(domain);
   }
 
-  // Bootstrap IPFS
-  verbose && log('Adding IPFS record...');
-  await bootstrapIPFS(client.registryClient);
-  verbose && log('IPFS record added.');
-
-  // Uplaoding types to IPFS
+  // Uploading types to IPFS
   verbose && log('Uplaoding types to IPFS...');
   const sourceIpfsCid = uploadToIPFS(DXNS_PROTO_DIR_PATH);
   verbose && log('Uploaded types to IPFS.');
@@ -137,6 +132,11 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
+
+  // Bootstrap IPFS
+  verbose && log('Adding IPFS record...');
+  await bootstrapIPFS(client.registryClient);
+  verbose && log('IPFS record added.');
 
   print({ account, domain }, { json });
 };

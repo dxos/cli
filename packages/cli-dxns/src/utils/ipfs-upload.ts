@@ -11,7 +11,7 @@ export const uploadToIPFS = (path: string): string => {
   if (!fs.existsSync(path)) {
     throw new Error('Incorrect path to definitons. File or directory does not exist');
   }
-  if (!fs.lstatSync(path).isDirectory()) {
+  if (fs.lstatSync(path).isDirectory()) {
     options.splice(1, 0, '-r');
   }
   const p = spawnSync('ipfs', options, {
