@@ -111,7 +111,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   }
 
   // Uploading types to IPFS
-  verbose && log('Uplaoding types to IPFS...');
+  verbose && log('Uploading types to IPFS...');
   const sourceIpfsCid = uploadToIPFS(DXNS_PROTO_DIR_PATH);
   verbose && log('Uploaded types to IPFS.');
 
