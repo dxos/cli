@@ -4,7 +4,7 @@
 
 import pb from 'protobufjs';
 
-import { CID, DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
+import { DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
 
 import { resolveDXNorCID, uploadToIPFS } from '../utils';
 import { Params, printRecord, printRecords, printResource } from './common';
@@ -46,7 +46,6 @@ export const addType = (params: Params) => async (argv: any) => {
   }
   const schemaRoot = await pb.load(path as string);
   const meta: TypeRecordMetadata = {
-    created: new Date(),
     description
   };
 

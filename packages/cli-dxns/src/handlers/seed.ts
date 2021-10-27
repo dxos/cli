@@ -124,7 +124,6 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   verbose && log('Registering DXOS schema types..');
   const root = await pb.load(SCHEMA_PATH as string);
   const meta: TypeRecordMetadata = {
-    created: new Date(),
     description: 'Base DXOS schema',
     sourceIpfsCid
   };
