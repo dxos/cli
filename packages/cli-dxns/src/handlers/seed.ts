@@ -11,7 +11,7 @@ import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { DomainKey, DXN, IRegistryClient, TypeRecordMetadata } from '@dxos/registry-client';
 
-import { uploadToIPFS } from '../utils';
+import { registerTypedefFile } from '../utils';
 import { Params } from './common';
 
 const DEFAULT_BALANCE = '100000000000000000000';
@@ -117,7 +117,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   // Uplaoding types to IPFS
   verbose && log('Uplaoding types to IPFS...');
-  const sourceIpfsCid = uploadToIPFS(DXNS_PROTO_DIR_PATH, { recursive: true });
+  const sourceIpfsCid = await registerTypedefFile(client.registryClient, DXNS_PROTO_DIR_PATH);
   verbose && log('Uploaded types to IPFS.');
 
   // Register DXOS Schema.
