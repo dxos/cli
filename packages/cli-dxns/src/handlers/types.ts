@@ -6,7 +6,7 @@ import pb from 'protobufjs';
 
 import { CID, DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
 
-import { resolveDXNorCID, registerTypedefFile } from '../utils';
+import { resolveDXNorCID, uploadToIPFS } from '../utils';
 import { Params, printRecord, printRecords, printResource } from './common';
 
 export const FILE_DXN_NAME = 'dxos:type.file';
@@ -39,10 +39,10 @@ export const addType = (params: Params) => async (argv: any) => {
     throw new Error('You must specify both name and domain or neither.');
   }
 
-  let sourceIpfsCid: CID | undefined;
+  let sourceIpfsCid: string | undefined;
 
   if (definitions) {
-    sourceIpfsCid = await registerTypedefFile(client.registryClient, definitions);
+    sourceIpfsCid = uploadToIPFS(definitions);
   }
   const schemaRoot = await pb.load(path as string);
   const meta: TypeRecordMetadata = {

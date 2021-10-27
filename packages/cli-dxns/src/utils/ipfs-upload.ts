@@ -4,12 +4,14 @@
 
 import assert from 'assert';
 import { spawnSync } from 'child_process';
+import fs from 'fs';
 
-import { CID } from '@dxos/registry-client';
-
-export const uploadToIPFS = (path: string, { recursive } = { recursive: false }): CID => {
+export const uploadToIPFS = (path: string): string => {
   const options = ['add', path];
-  if (recursive) {
+  if (!fs.existsSync(path)) {
+    throw new Error('Incorrect path to definitons. File or directory does not exist');
+  }
+  if (!fs.lstatSync(path).isDirectory()) {
     options.splice(1, 0, '-r');
   }
   const p = spawnSync('ipfs', options, {
@@ -21,5 +23,5 @@ export const uploadToIPFS = (path: string, { recursive } = { recursive: false })
   const lastAdded = p.output.reverse().find(line => line?.split(' ')[0] === 'added');
   assert(lastAdded, 'Couldn\'t upload types to IPFS');
   const hash = lastAdded.split(' ')[1];
-  return CID.from(hash);
+  return hash;
 };
