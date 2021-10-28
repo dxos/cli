@@ -24,7 +24,6 @@ export const uploadToIPFS = async (config: any, path: string): Promise<string> =
   } else {
     const content = fs.readFileSync(path);
     const addResult = await ipfsClient.add({ content }, { wrapWithDirectory: true });
-    console.log({ hash: addResult.cid.toString() });
     return addResult.cid.toString();
   }
 };
