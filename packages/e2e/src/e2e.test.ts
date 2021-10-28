@@ -14,7 +14,7 @@ import { cmd } from './cli';
 
 const PROFILE_NAME = 'e2e-test';
 
-const APP_SERVER_PORT = 5999;
+const APP_SERVER_PORT = 5001;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
 const KUBE_NAME = 'kube.test';
@@ -25,7 +25,7 @@ const KUBE_NAME = 'kube.test';
  */
 
 describe('CLI', () => {
-  const ipfs: IPFS = new IPFS(5001);
+  const ipfs: IPFS = new IPFS(APP_SERVER_PORT);
   const port = Math.round(Math.random() * 10000 + 5000);
   const kubeServices = [{
     name: 'app-server',
