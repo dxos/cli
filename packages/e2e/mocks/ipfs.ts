@@ -12,7 +12,7 @@ export class IPFS {
 
   constructor (private _port: number) {
     this._app.use((req: Request, res: Response) => {
-      res.sendStatus(200).end();
+      res.send({ path: 'path', cid: 'QmQQNYZHhiYipX2SLXmvAx49nSr9kyrjHZ6m58MfvbHKvT' }).sendStatus(200).end();
     });
   }
 
