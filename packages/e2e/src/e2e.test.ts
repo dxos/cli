@@ -25,7 +25,7 @@ const KUBE_NAME = 'kube.test';
  */
 
 describe('CLI', () => {
-  const ipfs: IPFS = new IPFS();
+  const ipfs: IPFS = new IPFS(5001);
   const port = Math.round(Math.random() * 10000 + 5000);
   const kubeServices = [{
     name: 'app-server',
