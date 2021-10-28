@@ -3,25 +3,28 @@
 //
 
 import assert from 'assert';
-import { spawnSync } from 'child_process';
 import fs from 'fs';
+import { create, globSource } from 'ipfs-http-client';
+import { dirname, basename } from 'path';
 
-export const uploadToIPFS = (path: string): string => {
-  const options = ['add', path];
+export const uploadToIPFS = async (config: any, path: string): Promise<string> => {
+  const ipfsClient = create({ url: config.service.ipfs.server });
   if (!fs.existsSync(path)) {
     throw new Error('Incorrect path to definitons. File or directory does not exist');
   }
   if (fs.lstatSync(path).isDirectory()) {
-    options.splice(1, 0, '-r');
+    const base = basename(path);
+    const addedFiles = [];
+    for await (const file of ipfsClient.addAll(globSource(dirname(path), `${base}/**/*`))) {
+      addedFiles.push(file);
+    }
+    const topLevelDir = addedFiles.find(file => file.path === base);
+    assert(topLevelDir, 'Top level ipfs dirdctory not found');
+    return topLevelDir.cid.toString();
+  } else {
+    const content = fs.readFileSync(path);
+    const addResult = await ipfsClient.add({ content }, { wrapWithDirectory: true });
+    console.log({ hash: addResult.cid.toString() });
+    return addResult.cid.toString();
   }
-  const p = spawnSync('ipfs', options, {
-    cwd: process.cwd(),
-    env: process.env,
-    stdio: 'pipe',
-    encoding: 'utf-8'
-  });
-  const lastAdded = p.output.reverse().find(line => line?.split(' ')[0] === 'added');
-  assert(lastAdded, 'Couldn\'t upload types to IPFS');
-  const hash = lastAdded.split(' ')[1];
-  return hash;
 };

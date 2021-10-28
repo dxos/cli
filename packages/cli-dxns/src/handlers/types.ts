@@ -9,8 +9,6 @@ import { DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMet
 import { resolveDXNorCID, uploadToIPFS } from '../utils';
 import { Params, printRecord, printRecords, printResource } from './common';
 
-export const FILE_DXN_NAME = 'dxos:type.file';
-
 export const listTypes = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
   const types = await client.registryClient.getTypeRecords();
@@ -34,6 +32,7 @@ export const addType = (params: Params) => async (argv: any) => {
   const { path, domain, messageName, resourceName, description, definitions } = argv;
 
   const client = await params.getDXNSClient();
+  const config = params.config;
 
   if (!!resourceName !== !!domain) {
     throw new Error('You must specify both name and domain or neither.');
@@ -42,7 +41,7 @@ export const addType = (params: Params) => async (argv: any) => {
   let sourceIpfsCid: string | undefined;
 
   if (definitions) {
-    sourceIpfsCid = uploadToIPFS(definitions);
+    sourceIpfsCid = await uploadToIPFS(config, definitions);
   }
   const schemaRoot = await pb.load(path as string);
   const meta: TypeRecordMetadata = {
