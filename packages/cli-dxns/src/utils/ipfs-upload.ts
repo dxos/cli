@@ -8,7 +8,6 @@ import { create, globSource } from 'ipfs-http-client';
 import { dirname, basename } from 'path';
 
 export const uploadToIPFS = async (config: any, path: string): Promise<string> => {
-  console.log({ config });
   const ipfsClient = create({ url: config._config.services.ipfs.server });
   if (!fs.existsSync(path)) {
     throw new Error('Incorrect path to definitons. File or directory does not exist');
