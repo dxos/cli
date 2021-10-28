@@ -4,26 +4,26 @@
 
 import assert from 'assert';
 import fs from 'fs';
-import { create, globSource } from 'ipfs-http-client';
-import { dirname, basename } from 'path';
+import IpfsHttpClient from 'ipfs-http-client';
+const { globSource } = IpfsHttpClient as any;
 
 export const uploadToIPFS = async (config: any, path: string): Promise<string> => {
-  const ipfsClient = create({ url: config.get('services.ipfs.server') });
+  const ipfsServer = config.get('services.ipfs.server');
+  assert(ipfsServer, 'Invalid IPFS Server.');
+  const ipfsClient = IpfsHttpClient({
+    url: ipfsServer,
+    timeout: '1m'
+  });
   if (!fs.existsSync(path)) {
     throw new Error('Incorrect path to definitons. File or directory does not exist');
   }
   if (fs.lstatSync(path).isDirectory()) {
-    const base = basename(path);
-    const addedFiles = [];
-    for await (const file of ipfsClient.addAll(globSource(dirname(path), `${base}/**/*`))) {
-      addedFiles.push(file);
-    }
-    const topLevelDir = addedFiles.find(file => file.path === base);
-    assert(topLevelDir, 'Top level ipfs directory not found');
-    return topLevelDir.cid.toString();
+    const source = globSource(path, { recursive: true });
+    const addResult = await ipfsClient.add(source);
+    return addResult.cid.toString();
   } else {
     const content = fs.readFileSync(path);
-    const addResult = await ipfsClient.add({ content }, { wrapWithDirectory: true });
+    const addResult = await ipfsClient.add(content);
     return addResult.cid.toString();
   }
 };
