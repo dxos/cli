@@ -19,7 +19,7 @@ export const uploadToIPFS = async (config: any, path: string): Promise<string> =
       addedFiles.push(file);
     }
     const topLevelDir = addedFiles.find(file => file.path === base);
-    assert(topLevelDir, 'Top level ipfs dirdctory not found');
+    assert(topLevelDir, 'Top level ipfs directory not found');
     return topLevelDir.cid.toString();
   } else {
     const content = fs.readFileSync(path);
