@@ -37,12 +37,12 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.16.3",
+    "@dxos/async": "2.16.3",
     "@dxos/cli-core": "^2.8.3-alpha.0",
-    "@dxos/crypto": "~2.16.3",
-    "@dxos/debug": "~2.16.3",
-    "@dxos/object-model": "~2.16.3",
-    "@dxos/registry-client": "~2.16.3",
+    "@dxos/crypto": "2.16.3",
+    "@dxos/debug": "2.16.3",
+    "@dxos/object-model": "2.16.3",
+    "@dxos/registry-client": "2.16.3",
     "assert": "^2.0.0",
     "do-wrapper": "^4.1.2",
     "got": "^11.8.2",
