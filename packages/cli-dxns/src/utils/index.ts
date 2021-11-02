@@ -3,3 +3,4 @@
 //
 
 export * from './resolve-dxn-cid';
+export * from './ipfs-upload';

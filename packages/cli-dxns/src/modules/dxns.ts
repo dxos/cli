@@ -60,7 +60,7 @@ export const DXNSModule = (params: Params) => {
               .option('version', { describe: 'Version of the type', type: 'string' })
               .option('description', { describe: 'Description of the type', type: 'string' }),
 
-            handler: asyncHandler(addType({ getDXNSClient }))
+            handler: asyncHandler(addType({ getDXNSClient, config }))
           })
       })
 

@@ -9,28 +9,35 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { DomainKey, DXN, IRegistryClient, RecordMetadata } from '@dxos/registry-client';
+import { DomainKey, DXN, IRegistryClient, TypeRecordMetadata } from '@dxos/registry-client';
 
+import { uploadToIPFS } from '../utils';
 import { Params } from './common';
 
 const DEFAULT_BALANCE = '100000000000000000000';
 const DEFAULT_DOMAIN = 'dxos';
 const DEFAULT_BID = 10000000;
 
+interface TypeDescription {
+  fqn: string,
+  description: string
+}
+
 // TODO(marik-d): Find a better way to do this, export proto resolution logic from codec-protobuf.
 const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns/type.proto');
+const DXNS_PROTO_DIR_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns');
 
 // Mapping from resource name to protobuf name for types that will be registered on-chain.
-const TYPES = {
-  'type.app': '.dxos.type.App',
-  'type.bot': '.dxos.type.Bot',
-  'type.file': '.dxos.type.File',
-  'type.kube': '.dxos.type.KUBE',
-  'type.service': '.dxos.type.Service',
-  'type.service.ipfs': '.dxos.type.IPFS',
-  'type.service.bot-factory': '.dxos.type.BotFactory',
-  'type.service.signal': '.dxos.type.Signal',
-  'type.service.app-server': '.dxos.type.AppServer'
+const TYPES: Record<string, TypeDescription> = {
+  'type.app': { fqn: '.dxos.type.App', description: 'Base DXOS App schema' },
+  'type.bot': { fqn: '.dxos.type.Bot', description: 'Base DXOS Bot schema' },
+  'type.file': { fqn: '.dxos.type.File', description: 'Base DXOS File schema' },
+  'type.kube': { fqn: '.dxos.type.KUBE', description: 'Base DXOS Kube schema' },
+  'type.service': { fqn: '.dxos.type.Service', description: 'Base DXOS Service schema' },
+  'type.service.ipfs': { fqn: '.dxos.type.IPFS', description: 'Base DXOS IPFS Service schema' },
+  'type.service.bot-factory': { fqn: '.dxos.type.BotFactory', description: 'Base DXOS Bot Factory Service schema' },
+  'type.service.signal': { fqn: '.dxos.type.Signal', description: 'Base DXOS Signal Service schema' },
+  'type.service.app-server': { fqn: '.dxos.type.AppServer', description: 'Base DXOS App Server Service schema' }
 };
 
 const IPFS_SERVICE_DXN = 'dxos:type.service.ipfs';
@@ -108,24 +115,27 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     domainKey = await client.registryClient.resolveDomainName(domain);
   }
 
+  // Uploading types to IPFS
+  verbose && log('Uploading types to IPFS...');
+  const sourceIpfsCid = await uploadToIPFS(config, DXNS_PROTO_DIR_PATH);
+  verbose && log('Uploaded types to IPFS.');
+
   // Register DXOS Schema.
   verbose && log('Registering DXOS schema types..');
   const root = await pb.load(SCHEMA_PATH as string);
-  const meta: RecordMetadata = {
-    created: new Date(),
-    description: 'Base DXOS schema'
-  };
+  const meta: TypeRecordMetadata = { sourceIpfsCid };
 
-  for (const [typeName, fqn] of Object.entries(TYPES)) {
+  for (const [typeName, { fqn, description }] of Object.entries(TYPES)) {
     verbose && log(`Registering ${typeName}..`);
 
-    const cid = await client.registryClient.insertTypeRecord(root, fqn, meta);
+    const cid = await client.registryClient.insertTypeRecord(root, fqn, { ...meta, description });
     const dxn = DXN.fromDomainKey(domainKey, typeName);
     await client.registryClient.updateResource(dxn, cid);
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
 
+  // Bootstrap IPFS
   verbose && log('Adding IPFS record...');
   await bootstrapIPFS(client.registryClient);
   verbose && log('IPFS record added.');

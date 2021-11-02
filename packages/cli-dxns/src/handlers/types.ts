@@ -4,9 +4,9 @@
 
 import pb from 'protobufjs';
 
-import { DomainKey, DXN, RecordKind, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-client';
+import { DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
 
-import { resolveDXNorCID } from '../utils';
+import { resolveDXNorCID, uploadToIPFS } from '../utils';
 import { Params, printRecord, printRecords, printResource } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
@@ -31,15 +31,19 @@ export const getType = (params: Params) => async (argv: any) => {
 export const addType = (params: Params) => async (argv: any) => {
   const { path, domain, messageName, resourceName, description } = argv;
 
+  const client = await params.getDXNSClient();
+  const config = params.config;
+
   if (!!resourceName !== !!domain) {
     throw new Error('You must specify both name and domain or neither.');
   }
 
-  const client = await params.getDXNSClient();
   const schemaRoot = await pb.load(path as string);
-  const meta: RecordMetadata = {
-    created: new Date(),
-    description
+
+  const sourceIpfsCid = await uploadToIPFS(config, path);
+  const meta: TypeRecordMetadata = {
+    description,
+    sourceIpfsCid
   };
 
   const cid = await client.registryClient.insertTypeRecord(schemaRoot, messageName, meta);

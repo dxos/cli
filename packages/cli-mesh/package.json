@@ -34,9 +34,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.15.6",
+    "@dxos/async": "2.16.3",
     "@dxos/cli-core": "^2.6.4-alpha.0",
-    "@dxos/network-manager": "~2.15.6",
+    "@dxos/network-manager": "2.16.3",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "do-wrapper": "^4.1.2",
