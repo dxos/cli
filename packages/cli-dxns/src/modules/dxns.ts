@@ -58,10 +58,9 @@ export const DXNSModule = (params: Params) => {
               .option('domain', { describe: 'Domain key for the record.', type: 'string' })
               .option('resourceName', { describe: 'Name of the resource in DXN', type: 'string' })
               .option('version', { describe: 'Version of the type', type: 'string' })
-              .option('description', { describe: 'Description of the type', type: 'string' })
-              .option('definitions', { describe: 'Pasth to a protobuf definitions of types. Can be a file or a directory', type: 'string' }),
+              .option('description', { describe: 'Description of the type', type: 'string' }),
 
-            handler: asyncHandler(addType({ getDXNSClient }))
+            handler: asyncHandler(addType({ getDXNSClient, config }))
           })
       })
 

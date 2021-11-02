@@ -29,7 +29,7 @@ export const getType = (params: Params) => async (argv: any) => {
 };
 
 export const addType = (params: Params) => async (argv: any) => {
-  const { path, domain, messageName, resourceName, description, definitions } = argv;
+  const { path, domain, messageName, resourceName, description } = argv;
 
   const client = await params.getDXNSClient();
   const config = params.config;
@@ -38,19 +38,13 @@ export const addType = (params: Params) => async (argv: any) => {
     throw new Error('You must specify both name and domain or neither.');
   }
 
-  let sourceIpfsCid: string | undefined;
-
-  if (definitions) {
-    sourceIpfsCid = await uploadToIPFS(config, definitions);
-  }
   const schemaRoot = await pb.load(path as string);
-  const meta: TypeRecordMetadata = {
-    description
-  };
 
-  if (sourceIpfsCid) {
-    meta.sourceIpfsCid = sourceIpfsCid;
-  }
+  const sourceIpfsCid = await uploadToIPFS(config, path);
+  const meta: TypeRecordMetadata = {
+    description,
+    sourceIpfsCid
+  };
 
   const cid = await client.registryClient.insertTypeRecord(schemaRoot, messageName, meta);
   const typeRecord: RegistryTypeRecord = {
