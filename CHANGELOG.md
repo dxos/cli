@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.8.4](https://www.github.com/dxos/cli/compare/v2.8.3...v2.8.4) (2021-11-02)
+
+
+### Bug Fixes
+
+* command for OTP. ([#324](https://www.github.com/dxos/cli/issues/324)) ([d0fbfa2](https://www.github.com/dxos/cli/commit/d0fbfa20ecd9fdc62fd90b2293dbc10d749c2ff1))
+* rm wns conf from cli-signal. ([451909c](https://www.github.com/dxos/cli/commit/451909c555633395c2e44a427decd51f95129737))
+
 ### [2.8.3](https://www.github.com/dxos/cli/compare/v2.8.2...v2.8.3) (2021-10-25)
 
 
