@@ -8,7 +8,7 @@ import path from 'path';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { assemble, del, deploy, get, install, list, register, start, stop, upgrade } from '../handlers';
+import { assemble, del, deploy, get, install, list, register, setupOTP, start, stop, upgrade } from '../handlers';
 
 const KubeServices = readFileSync(path.join(__dirname, '../../services.yml')).toString();
 const compose = readFileSync(path.join(__dirname, '../../docker-compose.yml')).toString();
@@ -136,5 +136,14 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
         .option('url', { required: true, type: 'string' }),
 
       handler: asyncHandler(register({ getDXNSClient }))
+    })
+
+    .command({
+      command: ['otp'],
+      describe: 'Setup KUBE OTP.',
+      builder: yargs => yargs
+        .option('key-phrase', { type: 'string' }),
+
+      handler: asyncHandler(setupOTP())
     })
 });

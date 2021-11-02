@@ -6,6 +6,7 @@ import { keyEncoder } from '@otplib/plugin-thirty-two';
 import crypto from 'crypto';
 import { authenticator } from 'otplib';
 import qrcode from 'qrcode';
+import qrcodeTerminal from 'qrcode-terminal';
 import { promisify } from 'util';
 
 const toDataURL = promisify(qrcode.toDataURL);
@@ -25,4 +26,14 @@ export const generateQRCode = async (keyPhrase: string) => {
   const otp = authenticator.keyuri(USER, SERVICE, getSecret(keyPhrase));
   const imagePath = await toDataURL(otp);
   return imagePath;
+};
+
+export const generatePrintableQRCode = async (keyPhrase: string) => {
+  const otp = authenticator.keyuri(USER, SERVICE, getSecret(keyPhrase));
+
+  return new Promise(resolve => {
+    qrcodeTerminal.generate(otp, { small: true }, (code: string) => {
+      resolve(code);
+    });
+  });
 };
