@@ -34,7 +34,7 @@ export const getRecord = (params: Params) => async (argv: any) => {
 export const addDataRecord = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
-  const { domain, name, description, json, schema } = argv;
+  const { domain, name, description, json, typeCid } = argv;
 
   if (!!name !== !!domain) {
     throw new Error('Must specify both name and domain or neither.');
@@ -48,7 +48,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
     created: new Date(),
     description
   };
-  const schemaCid = CID.from(schema as string);
+  const schemaCid = CID.from(typeCid as string);
 
   const cid = await client.registryClient.insertDataRecord(data, schemaCid, meta);
   if (resourceName) {
