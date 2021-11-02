@@ -393,14 +393,14 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
-"@dxos/async@2.16.3", "@dxos/async@~2.16.3":
+"@dxos/async@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/async/-/async-2.16.3.tgz#3559c7f97e9f857d8ec9d9c5e39304f0b468323e"
   integrity sha512-gxVRZ7jkDJUWZJf1+Y/Gv6El00kmBN4ChKmhUnhPeXIItqS5goqN+yytQqfy5CgNIURgVS4JQfPXubibvt+RYA==
   dependencies:
     "@dxos/debug" "2.16.3"
 
-"@dxos/botkit-client@~2.16.3":
+"@dxos/botkit-client@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/botkit-client/-/botkit-client-2.16.3.tgz#543eaee1f7eab70561a317863094013f10f47fdc"
   integrity sha512-uI0wxaKnlb+Kn1RFiCPCQaa2srLcoN1GTNrbUNgAO5yZSl7M7EeETqqzEo36RxlQzhK62BB/OEgaagQ9yRFrlQ==
@@ -414,7 +414,7 @@
     debug "^4.1.1"
     hypercore-crypto "^2.3.0"
 
-"@dxos/botkit@~2.16.3":
+"@dxos/botkit@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/botkit/-/botkit-2.16.3.tgz#fa6a450d5490e519da6da6864a1e4e9fa2c9fe45"
   integrity sha512-s29kgyV6CQgGE8E/byNuRwUYO/yQk1TXhy54PaIL1AdF5K3EJ5ewCLaJg+tiytfniSm1cAmpJFfdMuqAt9myGg==
@@ -504,7 +504,7 @@
     yargs-parser "^19.0.4"
     yargs-unparser "^1.6.4"
 
-"@dxos/client@2.16.3", "@dxos/client@~2.16.3":
+"@dxos/client@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/client/-/client-2.16.3.tgz#ee080d0d501d1a99538e3bbda287096fc6fb92e3"
   integrity sha512-aZtjcBp+af063kEGIIzv4FP86WMm+yUkyIhVhyRUTvmLK+SnrtaUTMeLmUjOpOOrHYfPA8Kwzx0oAp1/ORnMKg==
@@ -538,7 +538,7 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/config@2.16.3", "@dxos/config@~2.16.3":
+"@dxos/config@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/config/-/config-2.16.3.tgz#c0209108c53ba561562da98ceee4b4a448a1260f"
   integrity sha512-CkXhISX2fM/ktlfXYBpQ+876g5sp1QyJDmbyUT4ymNQbhDAbPt1iKYBppUcRjM89LQXU5ID5TUwttHyxOnhMiQ==
@@ -568,7 +568,7 @@
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
 
-"@dxos/credentials@2.16.3", "@dxos/credentials@~2.16.3":
+"@dxos/credentials@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/credentials/-/credentials-2.16.3.tgz#d608dc121fc3631e365fddc3cfd8b7eea7c05536"
   integrity sha512-ZJpjRQZLe1j3TBWk9SryJ7/0QWPYJrLgFhK7HTSIAZco2OxU+4fEVGjmJjum/hf81Frnz47Pj3X5lpFL6fGcWA==
@@ -608,7 +608,7 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
-"@dxos/crypto@2.16.3", "@dxos/crypto@~2.16.3":
+"@dxos/crypto@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.16.3.tgz#d6f51c08b43b616cb91c2bcf3140f66ddb9eb470"
   integrity sha512-xWiQ/t8aAnae4PzA3QdTMtRXE2xS+iPxkV0p9WYgsSAmeQnIuGEuZgEo0li1d8j8jdpbQcwnJXbj5dxV9f6q/A==
@@ -626,7 +626,7 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/debug@2.16.3", "@dxos/debug@~2.16.3":
+"@dxos/debug@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.16.3.tgz#45450972acbd87a6d41a27669eac1d8be8d0de74"
   integrity sha512-5PC3zc5SWmPw5sN8L+nkg3x6+b8Be9kylzKUyN03WT39mvDKHc6VYIpIdXmjdWDYEjEthUDERhXJUkK1PvzS9A==
@@ -634,7 +634,7 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/echo-db@2.16.3", "@dxos/echo-db@~2.16.3":
+"@dxos/echo-db@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/echo-db/-/echo-db-2.16.3.tgz#43657540a6ff3b262e24b25808dcf14262e3254a"
   integrity sha512-ariPmeQpVBRPf8LAIu6eYEx2R+cF/ann10Yw2yiKbCQTqUvjnJaCSJE2giQkLalP0A2PvbEWZ4uUv8pSDqlnHg==
@@ -743,7 +743,7 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/network-manager@2.16.3", "@dxos/network-manager@~2.16.3":
+"@dxos/network-manager@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/network-manager/-/network-manager-2.16.3.tgz#86caae1eec7578e9d6a85886d0800c75dc2c4690"
   integrity sha512-1aq6/RtW0JnXDW37hPlgPaAM8JtUOPg3dFdKYZV9RA1SvuVK7CfXDRLMkGqLQpngG29WBkH90TAP7MbVJVDDFg==
@@ -766,7 +766,7 @@
     ws "^7.4.4"
     xor-distance "^2.0.0"
 
-"@dxos/object-model@2.16.3", "@dxos/object-model@~2.16.3":
+"@dxos/object-model@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/object-model/-/object-model-2.16.3.tgz#50a83a21ce4d8c6a3981e276cb5276cc5005e310"
   integrity sha512-MzMsoJuQ9Ihgg9neyFAfsuEtWUd5hULvzferdxMSlPWc3xolnOqoPzEzHFnit97PR8eulHxuT0g+if2yfqYh6Q==
@@ -861,7 +861,7 @@
     random-access-memory "~3.1.2"
     random-access-web "^2.0.3"
 
-"@dxos/registry-client@2.16.3", "@dxos/registry-client@~2.16.3":
+"@dxos/registry-client@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.16.3.tgz#32f02ae65d93a15819707c2d77e092cfec5d7e88"
   integrity sha512-lyDxf9LSuFdQ0o5rFUG2rp2wxgHrgiuz93zARIy/E0XPDhPUfSIJ2604jMpJW4efq+VUfCx7U0t1W7a2EK+pWw==
@@ -883,7 +883,7 @@
     multihashes "^4.0.2"
     protobufjs "^6.9.0"
 
-"@dxos/signal@~2.16.3":
+"@dxos/signal@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/signal/-/signal-2.16.3.tgz#2e3af932a8030022b1bc07008a0fca1e92307729"
   integrity sha512-+hcpxn5GNtimYEnnXcQ3tG8EMLL7VG9e2gdJ3BPPqpap6yoOrFXtxD5rtptn7CbK9yHlKZlwtUb8CG3D9Aa4qA==
@@ -13822,7 +13822,7 @@ simple-handshake@^3.0.0:
     nanoassert "^2.0.0"
     noise-protocol "^3.0.0"
 
-simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c:
+simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c, "simple-hypercore-protocol@github:dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c":
   version "2.1.1"
   resolved "https://codeload.github.com/dxos/simple-hypercore-protocol/tar.gz/bc23f0747e55954ec0bd94754910c92f88ec561c"
   dependencies:
