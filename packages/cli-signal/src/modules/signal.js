@@ -2,7 +2,6 @@
 // Copyright 2020 DXOS.org
 //
 
-import assert from 'assert';
 import { spawn } from 'child_process';
 
 import { Runnable, sanitizeEnv, stopService, asyncHandler } from '@dxos/cli-core';
@@ -82,10 +81,10 @@ export const SignalModule = ({ config }) => {
           ...argv
         }) => {
           if (wnsBootstrap && !argv.help) {
-            const { server, chainId } = config.get('services.wns');
+            // const { server, chainId } = config.get('services.wns');
 
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            // assert(server, 'Invalid WNS endpoint.');
+            // assert(chainId, 'Invalid WNS Chain ID.');
 
             // const registry = new Registry(server, chainId);
             // const attributes = clean({ type: RECORD_TYPE, service: SERVICE_TYPE });
