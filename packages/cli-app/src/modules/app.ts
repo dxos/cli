@@ -152,15 +152,6 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
 
             handler: asyncHandler(serve.stop())
           })
-
-          .command({
-            command: ['otp'],
-            describe: 'Setup KUBE OTP.',
-            builder: yargs => yargs
-              .option('key-phrase', { type: 'string' }),
-
-            handler: asyncHandler(serve.otp())
-          })
       })
   });
 };

@@ -4,4 +4,3 @@
 
 declare module 'semver/functions/inc';
 declare module 'lodash-clean';
-declare module 'qrcode-terminal';

@@ -6,8 +6,9 @@ import debug from 'debug';
 import fs from 'fs';
 import yaml from 'js-yaml';
 
+import { generateQRCode, verifyToken } from '@dxos/cli-core';
+
 import { BASE_URL } from '../config';
-import { generateQRCode, verifyToken } from '../util/OTP';
 import { createPath } from './server';
 
 const log = debug('dxos:cli-app:server:auth');

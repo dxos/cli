@@ -5,9 +5,6 @@
 import assert from 'assert';
 
 import { stopService, Runnable } from '@dxos/cli-core';
-import { log } from '@dxos/debug';
-
-import { generatePrintableQRCode } from '../util/OTP';
 
 const APP_SERVER_PROCESS_NAME = 'app-server';
 const APP_SERVER_BINARY = 'wire-app-server';
@@ -45,15 +42,6 @@ export const stop = (/* config */) => async ({
   await stopService(procName);
 };
 
-export const otp = () => async ({
-  keyPhrase
-}: { keyPhrase: string }) => {
-  assert(keyPhrase, 'Invalid keyphrase.');
-
-  const qr = await generatePrintableQRCode(keyPhrase);
-  log(qr);
-};
-
 export default {
-  start, stop, otp
+  start, stop
 };
