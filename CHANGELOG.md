@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.8.5](https://www.github.com/dxos/cli/compare/v2.8.4...v2.8.5) (2021-11-05)
+
+
+### Bug Fixes
+
+* bypass auth for invitations. ([#326](https://www.github.com/dxos/cli/issues/326)) ([b80ed79](https://www.github.com/dxos/cli/commit/b80ed79817a75d7aeb83e247fd34a950e53ce58b))
+
 ### [2.8.4](https://www.github.com/dxos/cli/compare/v2.8.3...v2.8.4) (2021-11-02)
 
 
