@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.8.6](https://www.github.com/dxos/cli/compare/v2.8.5...v2.8.6) (2021-11-09)
+
+
+### Bug Fixes
+
+* allow to develop external cli modules. ([#329](https://www.github.com/dxos/cli/issues/329)) ([813dac2](https://www.github.com/dxos/cli/commit/813dac2f06922a3d23d5dd6e1788c565483fbd73))
+
 ### [2.8.5](https://www.github.com/dxos/cli/compare/v2.8.4...v2.8.5) (2021-11-05)
 
 
