@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.8.7](https://www.github.com/dxos/cli/compare/v2.8.6...v2.8.7) (2021-11-09)
+
+
+### Bug Fixes
+
+* add deps ([8f46ba4](https://www.github.com/dxos/cli/commit/8f46ba4dc9ae068ee0790ff6cec445e1031387a4))
+* export StateManager from cli-data ([b4bdf1a](https://www.github.com/dxos/cli/commit/b4bdf1a1467d05a4ef6e230a836b91a626ae8b96))
+
 ### [2.8.6](https://www.github.com/dxos/cli/compare/v2.8.5...v2.8.6) (2021-11-09)
 
 
