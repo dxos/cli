@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import yaml from 'js-yaml';
 import uniqBy from 'lodash.uniqby';
 import path from 'path';
@@ -28,6 +28,8 @@ const pkg = readPkgUp.sync({ cwd: __dirname });
 
 const CLI_BASE_COMMAND = 'dx';
 
+const EXTENSION_INFO_FILE = 'extension.yml';
+
 const CLI_CONFIG = {
   prompt: CLI_BASE_COMMAND,
   baseCommand: '',
@@ -39,6 +41,24 @@ const destroyers: any[] = [];
 
 const init = async (state: CoreState) => {
   const installedExtensions = await listInstalled();
+
+  // If developing new extension - read info from cwd.
+  const localExtensionFile = path.join(process.cwd(), EXTENSION_INFO_FILE);
+  if (existsSync(localExtensionFile)) {
+    const devExtension = (readFileSync(localExtensionFile)).toString();
+    const devExtensionInfo = yaml.load(devExtension);
+
+    const { name, description, command, initRequired, destroyRequired } = devExtensionInfo;
+
+    knownExtensions.push({
+      moduleName: `@${name}`,
+      describe: description,
+      command,
+      initRequired,
+      destroyRequired
+    });
+  }
+
   const pluggableModules = uniqBy(knownExtensions.concat(installedExtensions), 'moduleName');
 
   for await (const extension of pluggableModules) {

@@ -115,6 +115,9 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 | [Pad CLI](../cli-pad/README.md) |
 | [Signal CLI](../cli-signal/README.md) |
 
+#### Developing CLI extensions
+
+In order to create a new CLI extension, existing CLI extension could be used as a boilerplate. While developing a new extension out of CLI Monorepo, make sure you add `@dxos/cli` as devDependency (and `@dxos/cli-data` as well if you are planning on using DXOS SDK Client).
 
 ### Certification
 
