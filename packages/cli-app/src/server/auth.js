@@ -18,7 +18,7 @@ const COOKIE_MAX_AGE = 60;
 
 const whitelistFile = '~/.dx/keyhole-whitelist.yml';
 
-const bypassAuthParamRegexp = /\?invitation=1/;
+const bypassAuthParamRegexp = /\?code=[0-9]{6}/;
 
 const setCookie = (res) => {
   res.cookie('auth', true, {
