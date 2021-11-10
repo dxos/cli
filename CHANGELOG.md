@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.8.8](https://www.github.com/dxos/cli/compare/v2.8.7...v2.8.8) (2021-11-10)
+
+
+### Bug Fixes
+
+* change OTP bypass param. ([3d9a69c](https://www.github.com/dxos/cli/commit/3d9a69cc479efec957d6d1b54ebfe55bfc1ac942))
+
 ### [2.8.7](https://www.github.com/dxos/cli/compare/v2.8.6...v2.8.7) (2021-11-09)
 
 
