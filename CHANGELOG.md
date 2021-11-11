@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.8.9](https://www.github.com/dxos/cli/compare/v2.8.8...v2.8.9) (2021-11-11)
+
+
+### Bug Fixes
+
+* add item subscription back to StateManager. ([cb81629](https://www.github.com/dxos/cli/commit/cb8162994a08b6efcef7dfb10d26c1fec6400779))
+
 ### [2.8.8](https://www.github.com/dxos/cli/compare/v2.8.7...v2.8.8) (2021-11-10)
 
 
