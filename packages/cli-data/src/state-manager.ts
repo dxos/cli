@@ -11,9 +11,14 @@ import { promisify } from 'util';
 import { Client } from '@dxos/client';
 import { defaultSecretValidator, generatePasscode, SecretProvider, SecretValidator } from '@dxos/credentials';
 import { keyToBuffer, PublicKey, SIGNATURE_LENGTH, verify } from '@dxos/crypto';
-import { InvitationDescriptor, InvitationQueryParameters, Party } from '@dxos/echo-db';
+import { log } from '@dxos/debug';
+import { InvitationDescriptor, InvitationQueryParameters, Party, Item } from '@dxos/echo-db';
 
 const STATE_STORAGE_FILENAME = 'state.json';
+
+const DEFAULT_ITEM_UPDATE_HANDLER = (item?: Item<any>): boolean | void => {
+  log(item?.toString());
+};
 
 const lock = promisify(lockFile.lock);
 const unlock = promisify(lockFile.unlock);
@@ -40,6 +45,8 @@ export class StateManager {
   private _statePath: string | undefined;
   private _lockAquired: boolean;
   private _client: Client | undefined;
+  private _item: Item<any> | undefined;
+  private _itemUnsubscribe: Function | undefined;
 
   constructor (options: StateManagerConstructorOpts) {
     const { storagePath, getReadlineInterface, getClient } = options;
@@ -55,6 +62,10 @@ export class StateManager {
 
   public get client () {
     return this._client;
+  }
+
+  public get item () {
+    return this._item;
   }
 
   async getClient (): Promise<Client> {
@@ -218,6 +229,33 @@ export class StateManager {
     if (this._statePath) {
       await fs.ensureFile(this._statePath);
       await fs.writeJson(this._statePath, { party: party.key.toHex() });
+    }
+  }
+
+  async setItem (item: Item<any>, updateHandler = DEFAULT_ITEM_UPDATE_HANDLER) {
+    await this._assureClient();
+
+    if (this._itemUnsubscribe) {
+      this._itemUnsubscribe();
+      this._itemUnsubscribe = undefined;
+    }
+
+    if (this._item) {
+      // Destroy item?
+      this._item = undefined;
+    }
+
+    if (item) {
+      const onUpdate = async () => {
+        const rl = this._getReadlineInterface();
+        const needPrompt = await updateHandler(item);
+        if (needPrompt) {
+          rl.prompt();
+        }
+      };
+
+      this._item = item;
+      this._itemUnsubscribe = this._item!.subscribe(onUpdate);
     }
   }
 }
