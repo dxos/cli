@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.0](https://www.github.com/dxos/cli/compare/v2.8.10...v2.9.0) (2021-11-12)
+
+
+### Features
+
+* add delete resource command ([aea31a8](https://www.github.com/dxos/cli/commit/aea31a82a42a39462969630754e91e409a06928b))
+
 ### [2.8.10](https://www.github.com/dxos/cli/compare/v2.8.9...v2.8.10) (2021-11-12)
 
 
