@@ -529,6 +529,16 @@
     lodash.defaultsdeep "^4.6.1"
     memdown "^5.1.0"
 
+"@dxos/codec-protobuf@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-2.16.17.tgz#1a45ba9100b8cb1c5833ae5c37b3cebae1fc714c"
+  integrity sha512-89lp9d2v9CkRfOCe+D2O9hYYFCode2RrT42EhArZqmnja7T6I93kw10tKGo//ZS7ocy4neWNk5X3obdxKtflpg==
+  dependencies:
+    assert "^2.0.0"
+    debug "^4.1.1"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+
 "@dxos/codec-protobuf@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.16.3.tgz#fddf60ff5303169d164a1395628d62bccfc6eeae"
@@ -608,6 +618,16 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
+"@dxos/crypto@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/crypto/-/crypto-2.16.17.tgz#fd641a624aba6dff412eff800c7240b686638111"
+  integrity sha512-HJtK7vFNVphoQzyqf+tdY4PAP6s14wbeilShhnjeJ9YA0DnlpBD+hj/ATyDjSsLJHY1MIPY8ktqJZpbqAFrIeA==
+  dependencies:
+    bip39 "^3.0.2"
+    crypto-js "^3.1.9-1"
+    humanhash "^1.0.4"
+    hypercore-crypto "^2.3.0"
+
 "@dxos/crypto@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.16.3.tgz#d6f51c08b43b616cb91c2bcf3140f66ddb9eb470"
@@ -622,6 +642,14 @@
   version "2.15.9"
   resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.15.9.tgz#089ddf83eae6f935eee35d5a157615a9fdd1d179"
   integrity sha512-b+bR1tTAAzFutjstAUt2+W8Izg3NWg+zCDmebNtb25GcprT8dxAP0OFs6eJ3ABe+1rRIdLaYBzP47UfoCl421A==
+  dependencies:
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
+
+"@dxos/debug@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.16.17.tgz#0c08932f65b75de740e5cea797cfeec4cf15eda1"
+  integrity sha512-YA92XkUX5lf0Tw0LEduQVdcT1w4z/3mRzOa4qWrc7c22JEdZaPfBL5Gyz6muKMbWqfbavB3o//OXlcGzJjAPTQ==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -861,6 +889,28 @@
     random-access-memory "~3.1.2"
     random-access-web "^2.0.3"
 
+"@dxos/registry-client@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/registry-client/-/registry-client-2.16.17.tgz#8313ed28069679c98686f17ce8ea46f304ec684d"
+  integrity sha512-IrN5HeW6rAXRWBZTEaaJN/KlpfxeSl6W2+HvF1b8NCtR1wocccy0YXc5HhTA2GekgINicqqRthd7l1fD/pJRcQ==
+  dependencies:
+    "@dxos/codec-protobuf" "2.16.17"
+    "@dxos/debug" "2.16.17"
+    "@dxos/util" "2.16.17"
+    "@polkadot/api" "4.17.1"
+    "@polkadot/keyring" "6.11.1"
+    "@polkadot/metadata" "4.17.1"
+    "@polkadot/rpc-core" "4.17.1"
+    "@polkadot/types" "4.17.1"
+    "@polkadot/util" "6.11.1"
+    "@polkadot/util-crypto" "6.11.1"
+    bn.js "4.12.0"
+    crypto "^1.0.1"
+    faker "^5.1.0"
+    fs-extra "^8.1.0"
+    multihashes "^4.0.2"
+    protobufjs "^6.9.0"
+
 "@dxos/registry-client@2.16.3":
   version "2.16.3"
   resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.16.3.tgz#32f02ae65d93a15819707c2d77e092cfec5d7e88"
@@ -923,6 +973,15 @@
     tiny-lru "^7.0.6"
     varint "^5.0.0"
     yargs "~16.2.0"
+
+"@dxos/util@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.16.17.tgz#36e06127e6c52a33d13657953d3af59a04cee388"
+  integrity sha512-q1Rpmpg0kcWWJP+WfyvOsWuwN1PbRy/bXZI+acx9t/JC8w2T2vPFHclVW007p//fWBHYmtqJNpPe2Yf2pz2s7Q==
+  dependencies:
+    "@dxos/crypto" "2.16.17"
+    "@dxos/debug" "2.16.17"
+    "@types/node" "^14.0.9"
 
 "@dxos/util@2.16.3":
   version "2.16.3"

@@ -14,7 +14,7 @@ import { getBlocks } from '../handlers/block';
 import { listDomains, getFreeDomain } from '../handlers/domain';
 import { addDummyData } from '../handlers/dummy-data';
 import { listRecords, getRecord, addDataRecord } from '../handlers/record';
-import { getResource, listResources } from '../handlers/resource';
+import { deleteResource, getResource, listResources } from '../handlers/resource';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { listTypes, getType, addType } from '../handlers/types';
@@ -111,6 +111,12 @@ export const DXNSModule = (params: Params) => {
             command: ['get <dxn>'],
             describe: 'Get a resource by its DXN.',
             handler: asyncHandler(getResource({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['delete <dxn>'],
+            describe: 'Delete a resource by its DXN.',
+            handler: asyncHandler(deleteResource({ getDXNSClient }))
           })
       })
 

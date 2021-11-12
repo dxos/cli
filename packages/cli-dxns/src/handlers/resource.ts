@@ -29,3 +29,13 @@ export const getResource = (params: Params) => async (argv: any) => {
 
   print(resource ? displayResource(resource) : undefined, { json });
 };
+
+export const deleteResource = (params: Params) => async (argv: any) => {
+  const { getDXNSClient } = params;
+
+  const { dxn } = argv;
+  const parsedDxn = DXN.parse(dxn);
+
+  const client = await getDXNSClient();
+  await client.registryClient.deleteResource(parsedDxn);
+};
