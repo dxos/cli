@@ -40,7 +40,7 @@
     "@dxos/cli-core": "^2.8.9-alpha.0",
     "@dxos/crypto": "2.16.3",
     "@dxos/debug": "2.16.3",
-    "@dxos/registry-client": "2.16.3",
+    "@dxos/registry-client": "2.16.17",
     "@polkadot/api": "4.17.1",
     "@polkadot/keyring": "6.11.1",
     "@polkadot/util-crypto": "^6.11.1",
