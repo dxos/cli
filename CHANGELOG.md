@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.8.10](https://www.github.com/dxos/cli/compare/v2.8.9...v2.8.10) (2021-11-12)
+
+
+### Bug Fixes
+
+* update invitations to use base62 ([0fb766a](https://www.github.com/dxos/cli/commit/0fb766afa0bb6614a19a675b2697f90a2e24e95f))
+
 ### [2.8.9](https://www.github.com/dxos/cli/compare/v2.8.8...v2.8.9) (2021-11-11)
 
 
