@@ -26,7 +26,7 @@ const options = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
 };
 
 export const joinCommand = (stateManager: StateManager): CommandModule<PartyOptions, PartyJoinOptions> => ({
-  command: ['join [party-key]', 'switch [party-key]', 'use [party-key]', 'open [party-key]'],
+  command: ['join [party-key]', 'switch [party-key]', 'use [party-key]'],
   describe: 'Join party.',
   builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<PartyJoinOptions>) => {

@@ -5,8 +5,8 @@
 import os from 'os';
 
 import { Client } from '@dxos/client';
-import { createKeyPair } from '@dxos/crypto';
 import { Config } from '@dxos/config';
+import { createKeyPair } from '@dxos/crypto';
 
 export const createClient = async (
   config: any,
@@ -22,7 +22,7 @@ export const createClient = async (
         path: persistent ? storagePath : undefined
       }
     }
-  })
+  });
 
   const dataClient = new Client(clientConf);
 
