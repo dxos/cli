@@ -72,7 +72,7 @@ describe('CLI', () => {
 
     // TODO(egorgripasov): Cleanup & unify profile vs config schema. Currently fails due to the warnings.
     // it('config', async () => {
-      // await cmd('profile config').json();
+    // await cmd('profile config').json();
     // });
   });
 
