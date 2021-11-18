@@ -10,7 +10,6 @@ import os from 'os';
 import path from 'path';
 
 import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
-import { createId } from '@dxos/crypto';
 
 import envmap from './env-map.json';
 
@@ -116,8 +115,7 @@ export const getConfig = (configFilePath: string, argvConf = {}) => {
   const config = new Config(
     argvConf,
     mapFromKeyValues(envmap, process.env),
-    customConfig,
-    { cli: { peerId: createId() } }
+    customConfig
   );
 
   return config;
