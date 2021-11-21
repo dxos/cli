@@ -40,7 +40,7 @@
     "lerna": "^3.19.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/eslint-plugin": "~1.0.19",
     "lint-staged": "^9.5.0",
     "lockfile-lint": "^4.3.7",
     "pre-commit": "^1.2.2"
