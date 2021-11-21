@@ -39,8 +39,6 @@ services:
     - urls: 'turn:night.2e1a47.xyz:3478'
       username: 'dxos'
       credential: 'dxos'
-  faucet:
-    server: 'https://node1.dxos.network/faucet/api'
   kube:
     publicUrl: '/console'
   app:
