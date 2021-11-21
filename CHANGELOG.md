@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.9.1](https://www.github.com/dxos/cli/compare/v2.9.0...v2.9.1) (2021-11-21)
+
+
+### Bug Fixes
+
+* update protocols & config ([#339](https://www.github.com/dxos/cli/issues/339)) ([e583aa9](https://www.github.com/dxos/cli/commit/e583aa9cc52143ccc93a6a82a2719121185eddc9))
+
 ## [2.9.0](https://www.github.com/dxos/cli/compare/v2.8.10...v2.9.0) (2021-11-12)
 
 
