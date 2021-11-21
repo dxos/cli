@@ -53,8 +53,6 @@ services:
     - urls: 'turn:discovery.kube.dxos.network:3478'
       username: 'dxos'
       credential: 'dxos'
-  faucet:
-    server: 'https://faucet.kube.moon.dxos.network/api'
   kube:
     publicUrl: '/console'
   app:
