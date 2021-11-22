@@ -40,7 +40,7 @@ export const authMiddleware = (loginApp, enabled) => async (req, res, next) => {
     next();
   } else if (!req.signedCookies.auth && !req.originalUrl.startsWith(`${BASE_URL}/${loginApp}`)) {
     log('Not authenticated.');
-    return res.redirect(`${BASE_URL}/${loginApp}#${encodeURIComponent(req.originalUrl)}`);
+    return res.redirect(`${BASE_URL}/${loginApp}#${req.originalUrl}`);
   } else {
     next();
   }

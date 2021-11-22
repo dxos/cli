@@ -144,7 +144,8 @@ export const serve = async ({ port = DEFAULT_PORT, ipfsGateway, configFile, logi
         cid = await resolver.lookupCIDinDXNS(id);
 
         if (cid && !filePath.length) {
-          return res.redirect(`${req.originalUrl}/`);
+          const newUrl = req.originalUrl.includes('?') ? req.originalUrl.replace('?', '/?') : `${req.originalUrl}/`;
+          return res.redirect(newUrl);
         }
 
         file = `/${(filePath).join('/')}`;
