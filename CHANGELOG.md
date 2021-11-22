@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.9.2](https://www.github.com/dxos/cli/compare/v2.9.1...v2.9.2) (2021-11-22)
+
+
+### Bug Fixes
+
+* fix redirect in app server & rm url encode. ([#345](https://www.github.com/dxos/cli/issues/345)) ([026dbee](https://www.github.com/dxos/cli/commit/026dbeeaccda98f60f7f176228ad3009c42fe1e3))
+
 ### [2.9.1](https://www.github.com/dxos/cli/compare/v2.9.0...v2.9.1) (2021-11-21)
 
 
