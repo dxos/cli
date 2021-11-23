@@ -65,36 +65,51 @@ export const ServicesModule = ({ config, profilePath }) => ({
   command: ['service'],
   describe: 'DXOS service management.',
 
-  handler: asyncHandler(async argv => {
-    const { json } = argv;
-    const { services } = await listServices();
-
-    const containers = await DockerContainer.list();
-
-    const containerService = await Promise.all(containers.map(async container => ({
-      name: container.name,
-      exec: container.image,
-      status: container.state === RUNNING_STATE ? 'online' : container.state,
-      ports: container.ports
-        .filter(port => port.PublicPort)
-        .map(port => port.PublicPort)
-        .filter((value, index, arr) => arr.indexOf(value) === index)
-        .join(','),
-      ...(await container.stats()),
-      type: SERVICE_CONTAINER
-    })));
-
-    const result = services
-      .map(service => ({ ...service, type: SERVICE_DAEMON }))
-      .concat(containerService)
-      .sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
-
-    print(result, { json });
-  }),
-
   builder: yargs => yargs
+    .command({
+      command: ['list', '$0'],
+      describe: 'List services.',
+      builder: yargs => yargs
+        .option('usage', { describe: 'Include usage info', type: 'boolean', default: false }),
+
+      handler: asyncHandler(async argv => {
+        const { json, usage } = argv;
+
+        const listContainers = async () => {
+          const containers = await DockerContainer.list();
+
+          const containerService = await Promise.all(containers.map(async container => ({
+            name: container.name,
+            exec: container.image,
+            status: container.state === RUNNING_STATE ? 'online' : container.state,
+            ports: container.ports
+              .filter(port => port.PublicPort)
+              .map(port => port.PublicPort)
+              .filter((value, index, arr) => arr.indexOf(value) === index)
+              .join(','),
+            ...(usage && (await container.stats())),
+            type: SERVICE_CONTAINER
+          })));
+
+          return containerService;
+        };
+
+        const [{ services }, containerService] = await Promise.all([
+          await listServices(),
+          await listContainers()
+        ]);
+
+        const result = services
+          .map(service => ({ ...service, type: SERVICE_DAEMON }))
+          .concat(containerService)
+          .sort((a, b) => {
+            return a.name.localeCompare(b.name);
+          });
+
+        print(result, { json });
+      })
+    })
+
     .command({
       command: ['install'],
       describe: 'Install service from container.',
