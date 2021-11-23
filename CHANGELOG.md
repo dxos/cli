@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.9.4](https://www.github.com/dxos/cli/compare/v2.9.3...v2.9.4) (2021-11-23)
+
+
+### Bug Fixes
+
+* default values for usage. ([a0934dd](https://www.github.com/dxos/cli/commit/a0934ddd5efa0b4bf12e1f01e6acb4223d8f462d))
+
 ### [2.9.3](https://www.github.com/dxos/cli/compare/v2.9.2...v2.9.3) (2021-11-23)
 
 
