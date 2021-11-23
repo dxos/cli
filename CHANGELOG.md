@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.9.3](https://www.github.com/dxos/cli/compare/v2.9.2...v2.9.3) (2021-11-23)
+
+
+### Bug Fixes
+
+* speed up listing services. ([d7e7e84](https://www.github.com/dxos/cli/commit/d7e7e84c2795b32e1a9f091a1802348bda2dc12a))
+
 ### [2.9.2](https://www.github.com/dxos/cli/compare/v2.9.1...v2.9.2) (2021-11-22)
 
 
