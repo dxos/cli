@@ -87,7 +87,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
               .map(port => port.PublicPort)
               .filter((value, index, arr) => arr.indexOf(value) === index)
               .join(','),
-            ...(usage && (await container.stats())),
+            ...(usage ? (await container.stats()) : { cpu: 0, memory: 0 }),
             type: SERVICE_CONTAINER
           })));
 
