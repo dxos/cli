@@ -97,6 +97,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           .option('fees', { type: 'string' })
           .option('schema', { type: 'string' })
           .option('timeout', { type: 'string', default: '10m' })
+          .option('path', { type: 'string' })
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
