@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.9.5](https://www.github.com/dxos/cli/compare/v2.9.4...v2.9.5) (2021-11-29)
+
+
+### Bug Fixes
+
+* add path arg to app deploy command. ([d258d43](https://www.github.com/dxos/cli/commit/d258d43b34b5771074c8ec913c29f3b99b930bfe))
+
 ### [2.9.4](https://www.github.com/dxos/cli/compare/v2.9.3...v2.9.4) (2021-11-23)
 
 
