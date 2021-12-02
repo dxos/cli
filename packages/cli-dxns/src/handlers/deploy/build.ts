@@ -6,35 +6,29 @@ import { spawnSync } from 'child_process';
 
 import { log } from '@dxos/debug';
 
-//import { loadAppConfig } from '../config';
+import { loadConfig } from '../../utils/config';
 
-// export interface BuildParams {
-//   getAppRecord: Function
-// }
+export const build = () => async ({ verbose }: any) => {
+  const config = await loadConfig();
 
-// export const build = (config: any, { getAppRecord }: BuildParams) => async ({ verbose }: any) => {
-//   const conf: any = await loadAppConfig();
+  verbose && log(`Building ${config.values.module?.name}...`);
 
-//   const record = getAppRecord(conf);
-//   record.version = semverInc(conf.version, 'patch'); // TODO(burdon): Pass into getAppRecord.
+  const [command, ...args] = config.values.build!.command!.split(' ');
 
-//   log(`Building ${record.name}...`);
-//   const [command, ...args] = conf.build.split(' ');
+  // Build with configuration.
+  const { status } = spawnSync(command, args, {
+    env: {
+      ...process.env,
+      CONFIG_DYNAMIC: 'true'
+    },
+    stdio: verbose && 'inherit'
+  });
 
-//   // build with configuration
-//   const { status } = spawnSync(command, args, {
-//     env: {
-//       ...process.env,
-//       CONFIG_DYNAMIC: 'true'
-//     },
-//     stdio: verbose && 'inherit'
-//   });
+  if (status) {
+    verbose && log('Build failed.');
+    process.exit(status);
+  }
 
-//   if (status) {
-//     log('Build failed.');
-//     process.exit(status);
-//   }
-
-//   // TODO(burdon): Standardize OK messages for commands (only if versbose).
-//   log('Build Ok.');
-// };
+  // TODO(burdon): Standardize OK messages for commands (only if versbose).
+  verbose && log('Build Ok.');
+};
