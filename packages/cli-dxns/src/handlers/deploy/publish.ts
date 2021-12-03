@@ -10,8 +10,8 @@ import pify from 'pify';
 
 import { log } from '@dxos/debug';
 
-import { uploadToIPFS } from '../../utils/ipfs-upload';
 import { loadConfig } from '../../utils/config';
+import { uploadToIPFS } from '../../utils/ipfs-upload';
 
 const getFolderSize = pify(folderSize);
 
@@ -36,7 +36,7 @@ export const publish = (config: any) => async ({ verbose, timeout, path: distPat
 
   const cid = await uploadToIPFS(config, publishFolder, {
     timeout: timeout || '10m',
-    progress: (bytes: any) => bar.update(bytes) 
+    progress: (bytes: any) => bar.update(bytes)
   });
 
   bar.update(total);

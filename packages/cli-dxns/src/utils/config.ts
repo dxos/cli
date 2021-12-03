@@ -3,12 +3,11 @@
 //
 
 import fs from 'fs';
-// import defaultsDeep from 'lodash.defaultsdeep';
 import mapvalues from 'lodash.mapvalues';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
-import { DEFAULT_PACKAGE_JSON_ATTRIBUTES, PACKAGE_JSON_FILENAME, readFile, writeFile } from '@dxos/cli-core';
+import { DEFAULT_PACKAGE_JSON_ATTRIBUTES, PACKAGE_JSON_FILENAME, readFile } from '@dxos/cli-core';
 import { Config, ConfigV1Object } from '@dxos/config';
 
 export const CONFIG_FILENAME = 'dx.yml';
@@ -16,14 +15,6 @@ export const CONFIG_FILENAME = 'dx.yml';
 const DEFAULT_BUILD_COMMAND = 'npm run build';
 
 const IGNORED_CONFIG_ATTRIBUTES = ['version'];
-
-// TODO(egorgripasov): Do we ever need to update config?
-// export const updateConfig = async (config: any) => {
-//   let appConfig = fs.existsSync(CONFIG_FILENAME) ? await readFile(CONFIG_FILENAME) : {};
-//   dxConfig = defaultsDeep({}, config, appConfig);
-
-//   await writeFile(dxConfig, CONFIG_FILENAME);
-// };
 
 export const loadConfig = async (): Promise<Config<ConfigV1Object>> => {
   const packageProperties = mapvalues(pick(fs.existsSync(PACKAGE_JSON_FILENAME)
@@ -39,5 +30,5 @@ export const loadConfig = async (): Promise<Config<ConfigV1Object>> => {
     },
     ...dxConfig,
     ...packageProperties
-  })
+  });
 };

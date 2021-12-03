@@ -11,6 +11,7 @@ import { generateAccount, listAccounts } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
 import { getBlocks } from '../handlers/block';
+import { build, publish, register } from '../handlers/deploy';
 import { listDomains, getFreeDomain } from '../handlers/domain';
 import { addDummyData } from '../handlers/dummy-data';
 import { listRecords, getRecord, addDataRecord } from '../handlers/record';
@@ -280,6 +281,30 @@ export const DXNSModule = (params: Params) => {
         describe: 'Adds all dummy data necessary for testing puproses.',
 
         handler: asyncHandler(addDummyData({ getDXNSClient }))
+      })
+
+      .command({
+        command: ['deploy'],
+        describe: 'Deploy and Register any DXOS entity.',
+
+        builder: (yargs: Argv) => yargs
+          .strict(false)
+          .version(false)
+          .option('name', { type: 'array' })
+          .option('domain', { type: 'string' })
+          .option('version', { type: 'string' })
+          .option('skipExisting', { type: 'boolean' })
+          .option('tag', { type: 'array' })
+          .option('timeout', { type: 'string', default: '10m' })
+          .option('path', { type: 'string' })
+          .option('type', { type: 'string' })
+          .option('hash-path', { type: 'string' }),
+
+        handler: asyncHandler(async (argv: any) => {
+          await build()(argv);
+          const cid = await publish(config)(argv);
+          await register({ cid, getDXNSClient })(argv);
+        })
       })
   };
 };

@@ -10,7 +10,7 @@ const { globSource } = IpfsHttpClient as any;
 interface UploadOptions {
   timeout: string | number
   progress?: Function
-};
+}
 
 export const uploadToIPFS = async (config: any, path: string, options?: UploadOptions): Promise<string> => {
   const { timeout, progress } = options || {};
