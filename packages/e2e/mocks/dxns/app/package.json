@@ -6,6 +6,6 @@
   "license": "GPL-3.0",
   "repository": "https://github.com/dxos/frame-app",
   "scripts": {
-    "build": "echo test"
+    "build": "mkdir -p out && echo test > out/index.html"
   }
 }
