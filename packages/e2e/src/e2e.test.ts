@@ -106,7 +106,7 @@ describe('CLI', () => {
     });
 
     it('deploy', async () => {
-      await cmd('dxns deploy --name app.test --domain dxos --type app --verbose', join(__dirname, '../mocks/dxns/app')).run();
+      await cmd('dxns deploy --name app.dxnstest --domain dxos --type app --verbose', join(__dirname, '../mocks/dxns/app')).run();
     });
 
     it('list resources', async () => {
