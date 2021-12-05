@@ -105,6 +105,10 @@ describe('CLI', () => {
       await cmd('dxns dummy').run();
     });
 
+    it('deploy', async () => {
+      await cmd('dxns deploy --name app.dxnstest --domain dxos --type app --verbose', join(__dirname, '../mocks/dxns/app')).run();
+    });
+
     it('list resources', async () => {
       const resources = await cmd('dxns resource list --json').json();
 
@@ -191,7 +195,7 @@ describe('CLI', () => {
 
     it('query app', async () => {
       const apps = await cmd('app query --dxns --json').json();
-      expect(apps.length).toBe(1);
+      expect(apps.length).toBe(2);
     });
 
     it('serve app', async () => {
