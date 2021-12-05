@@ -16,8 +16,6 @@ const serverRunnable = new Runnable(APP_SERVER_BINARY, []);
 export const start = (config: any) => async ({
   namespace, port, daemon, procName = APP_SERVER_PROCESS_NAME, logFile = DEFAULT_LOG_FILE, auth
 }: any) => {
-  const endpoint = config.get('services.wns.server');
-  const chainId = config.get('services.wns.chainId');
   const ipfsGateway = config.get('services.ipfs.gateway');
   const configFile = config.get('cli.app.serve.config');
   const loginApp = config.get('cli.app.serve.loginApp');
@@ -25,7 +23,6 @@ export const start = (config: any) => async ({
 
   const dxnsEndpoint = config.get('services.dxns.server');
 
-  assert(endpoint, 'Invalid WNS Endpoint.');
   assert(ipfsGateway, 'Invalid IPFS Gateway.');
 
   const options = {
@@ -36,7 +33,7 @@ export const start = (config: any) => async ({
 
   // TODO(burdon): Document array.
   // eslint-disable-next-line
-  serverRunnable.run([port, ipfsGateway, endpoint, chainId, configFile, namespace || '', loginApp, auth, keyPhrase, dxnsEndpoint], options);
+  serverRunnable.run([port, ipfsGateway, configFile, namespace || '', loginApp, auth, keyPhrase, dxnsEndpoint], options);
 };
 
 export const stop = (/* config */) => async ({

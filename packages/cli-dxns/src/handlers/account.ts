@@ -4,6 +4,7 @@
 
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 
+import { sleep } from '@dxos/async';
 import { print } from '@dxos/cli-core';
 
 import { Params } from './common';
@@ -24,4 +25,6 @@ export const listAccounts = (params: Params) => async (argv: any) => {
   const account = client.keypair?.address;
 
   print({ account }, { json });
+
+  await sleep(2000);
 };

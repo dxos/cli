@@ -13,7 +13,7 @@ import { waitForCondition } from '@dxos/async';
 
 import { KUBE_TAG, KubeDeployOptions, KubeDomainCreateOptions, Provider } from './common';
 
-const SSH_KEYS = readFileSync(path.join(__dirname, '../ssh-keys.yml')).toString();
+const SSH_KEYS = readFileSync(path.join(__dirname, '../../ssh-keys.yml')).toString();
 const { keys: defaultSSHKeys } = yaml.load(SSH_KEYS);
 
 const DEFAULT_REGION = 'nyc3';
@@ -97,8 +97,8 @@ export class DigitalOceanProvider implements Provider {
            - echo "//registry.npmjs.org/:_authToken=${this._npmAccessToken}" >> $HOME/.npmrc
            - npm install --global yarn
            - yarn global add @dxos/cli@${cliChannel}
-           - dx profile init --name moon --template-url https://git.io/JuhES
-           - dx profile set moon
+           - dx profile init --name enterprise --template-url https://git.io/JKpLV
+           - dx profile set enterprise
            - dx extension install @dxos/cli-kube --version ${cliChannel}
            - dx kube install ${dev ? '--dev' : ''}
            - dx kube assemble ${dev ? '--dev' : ''}

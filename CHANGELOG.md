@@ -1,5 +1,234 @@
 # Changelog
 
+## [2.10.0](https://www.github.com/dxos/cli/compare/v2.9.5...v2.10.0) (2021-12-05)
+
+
+### Features
+
+* dx dxns deploy ([#351](https://www.github.com/dxos/cli/issues/351)) ([0cb4629](https://www.github.com/dxos/cli/commit/0cb4629f69a51d838a0a01b4ade602f4abf9ad66))
+
+### [2.9.5](https://www.github.com/dxos/cli/compare/v2.9.4...v2.9.5) (2021-11-29)
+
+
+### Bug Fixes
+
+* add path arg to app deploy command. ([d258d43](https://www.github.com/dxos/cli/commit/d258d43b34b5771074c8ec913c29f3b99b930bfe))
+
+### [2.9.4](https://www.github.com/dxos/cli/compare/v2.9.3...v2.9.4) (2021-11-23)
+
+
+### Bug Fixes
+
+* default values for usage. ([a0934dd](https://www.github.com/dxos/cli/commit/a0934ddd5efa0b4bf12e1f01e6acb4223d8f462d))
+
+### [2.9.3](https://www.github.com/dxos/cli/compare/v2.9.2...v2.9.3) (2021-11-23)
+
+
+### Bug Fixes
+
+* speed up listing services. ([d7e7e84](https://www.github.com/dxos/cli/commit/d7e7e84c2795b32e1a9f091a1802348bda2dc12a))
+
+### [2.9.2](https://www.github.com/dxos/cli/compare/v2.9.1...v2.9.2) (2021-11-22)
+
+
+### Bug Fixes
+
+* fix redirect in app server & rm url encode. ([#345](https://www.github.com/dxos/cli/issues/345)) ([026dbee](https://www.github.com/dxos/cli/commit/026dbeeaccda98f60f7f176228ad3009c42fe1e3))
+
+### [2.9.1](https://www.github.com/dxos/cli/compare/v2.9.0...v2.9.1) (2021-11-21)
+
+
+### Bug Fixes
+
+* update protocols & config ([#339](https://www.github.com/dxos/cli/issues/339)) ([e583aa9](https://www.github.com/dxos/cli/commit/e583aa9cc52143ccc93a6a82a2719121185eddc9))
+
+## [2.9.0](https://www.github.com/dxos/cli/compare/v2.8.10...v2.9.0) (2021-11-12)
+
+
+### Features
+
+* add delete resource command ([aea31a8](https://www.github.com/dxos/cli/commit/aea31a82a42a39462969630754e91e409a06928b))
+
+### [2.8.10](https://www.github.com/dxos/cli/compare/v2.8.9...v2.8.10) (2021-11-12)
+
+
+### Bug Fixes
+
+* update invitations to use base62 ([0fb766a](https://www.github.com/dxos/cli/commit/0fb766afa0bb6614a19a675b2697f90a2e24e95f))
+
+### [2.8.9](https://www.github.com/dxos/cli/compare/v2.8.8...v2.8.9) (2021-11-11)
+
+
+### Bug Fixes
+
+* add item subscription back to StateManager. ([cb81629](https://www.github.com/dxos/cli/commit/cb8162994a08b6efcef7dfb10d26c1fec6400779))
+
+### [2.8.8](https://www.github.com/dxos/cli/compare/v2.8.7...v2.8.8) (2021-11-10)
+
+
+### Bug Fixes
+
+* change OTP bypass param. ([3d9a69c](https://www.github.com/dxos/cli/commit/3d9a69cc479efec957d6d1b54ebfe55bfc1ac942))
+
+### [2.8.7](https://www.github.com/dxos/cli/compare/v2.8.6...v2.8.7) (2021-11-09)
+
+
+### Bug Fixes
+
+* add deps ([8f46ba4](https://www.github.com/dxos/cli/commit/8f46ba4dc9ae068ee0790ff6cec445e1031387a4))
+* export StateManager from cli-data ([b4bdf1a](https://www.github.com/dxos/cli/commit/b4bdf1a1467d05a4ef6e230a836b91a626ae8b96))
+
+### [2.8.6](https://www.github.com/dxos/cli/compare/v2.8.5...v2.8.6) (2021-11-09)
+
+
+### Bug Fixes
+
+* allow to develop external cli modules. ([#329](https://www.github.com/dxos/cli/issues/329)) ([813dac2](https://www.github.com/dxos/cli/commit/813dac2f06922a3d23d5dd6e1788c565483fbd73))
+
+### [2.8.5](https://www.github.com/dxos/cli/compare/v2.8.4...v2.8.5) (2021-11-05)
+
+
+### Bug Fixes
+
+* bypass auth for invitations. ([#326](https://www.github.com/dxos/cli/issues/326)) ([b80ed79](https://www.github.com/dxos/cli/commit/b80ed79817a75d7aeb83e247fd34a950e53ce58b))
+
+### [2.8.4](https://www.github.com/dxos/cli/compare/v2.8.3...v2.8.4) (2021-11-02)
+
+
+### Bug Fixes
+
+* command for OTP. ([#324](https://www.github.com/dxos/cli/issues/324)) ([d0fbfa2](https://www.github.com/dxos/cli/commit/d0fbfa20ecd9fdc62fd90b2293dbc10d749c2ff1))
+* rm wns conf from cli-signal. ([451909c](https://www.github.com/dxos/cli/commit/451909c555633395c2e44a427decd51f95129737))
+
+### [2.8.3](https://www.github.com/dxos/cli/compare/v2.8.2...v2.8.3) (2021-10-25)
+
+
+### Bug Fixes
+
+* expose OTP qr. ([92ebe94](https://www.github.com/dxos/cli/commit/92ebe940d48c5e8a51b779db9d977c5a0a558b75))
+* Removed version label which might not be correct ([eb076a6](https://www.github.com/dxos/cli/commit/eb076a6a50afc90ebd29f375c83a9db41e9dd595))
+
+### [2.8.2](https://www.github.com/dxos/cli/compare/v2.8.1...v2.8.2) (2021-10-21)
+
+
+### Bug Fixes
+
+* fix service publish. ([98f44f3](https://www.github.com/dxos/cli/commit/98f44f319aa63d575088af70c5713c1f46618652))
+
+### [2.8.1](https://www.github.com/dxos/cli/compare/v2.8.0...v2.8.1) (2021-10-21)
+
+
+### Bug Fixes
+
+* Allow to skip existing version ([a2f1f90](https://www.github.com/dxos/cli/commit/a2f1f90d9941a4656b5fdd1b064ae4a7f19a31fd))
+
+## [2.8.0](https://www.github.com/dxos/cli/compare/v2.7.1...v2.8.0) (2021-10-21)
+
+
+### Features
+
+* Allow no version ([c005239](https://www.github.com/dxos/cli/commit/c00523936a802b2b3b18099e58b12177c4b8e567))
+
+### [2.7.1](https://www.github.com/dxos/cli/compare/v2.7.0...v2.7.1) (2021-10-21)
+
+
+### Bug Fixes
+
+* Correct unversioned deployments ([d286724](https://www.github.com/dxos/cli/commit/d2867241e880a282edb7491dcf77742e3c249ab0))
+* Correct unversioned deployments ([3cf7529](https://www.github.com/dxos/cli/commit/3cf7529dfb0ae05bf378c2a7edfed57d6a5ca99e))
+
+## [2.7.0](https://www.github.com/dxos/cli/compare/v2.6.9...v2.7.0) (2021-10-19)
+
+
+### Features
+
+* rm WNS ([#314](https://www.github.com/dxos/cli/issues/314)) ([09c89cb](https://www.github.com/dxos/cli/commit/09c89cb5d8a3e08d31006ac84b8a80c1f6073e19))
+
+### [2.6.9](https://www.github.com/dxos/cli/compare/v2.6.8...v2.6.9) (2021-10-18)
+
+
+### Bug Fixes
+
+* trigger build ([bdd3754](https://www.github.com/dxos/cli/commit/bdd37540f99bcfc73b362d20744d961ae37294ea))
+
+### [2.6.8](https://www.github.com/dxos/cli/compare/v2.6.7...v2.6.8) (2021-10-18)
+
+
+### Bug Fixes
+
+* deploy updated enterprise profile. ([069f0fd](https://www.github.com/dxos/cli/commit/069f0fd1963ab8ed1a394aa5f5c7fc9e04507d3f))
+* update enterprise profile. ([b879b2c](https://www.github.com/dxos/cli/commit/b879b2cf5889c31e7190a877a526bd69168d7fc7))
+
+### [2.6.7](https://www.github.com/dxos/cli/compare/v2.6.6...v2.6.7) (2021-10-15)
+
+
+### Bug Fixes
+
+* OTP seed phrase. ([5d927ad](https://www.github.com/dxos/cli/commit/5d927ad27bcbc355b0f893c319bbdff3bddf4e88))
+
+### [2.6.6](https://www.github.com/dxos/cli/compare/v2.6.5...v2.6.6) (2021-10-15)
+
+
+### Bug Fixes
+
+* trigger build ([2098e3b](https://www.github.com/dxos/cli/commit/2098e3b93a9cab186cfc3343b03129e217f75ad2))
+
+### [2.6.5](https://www.github.com/dxos/cli/compare/v2.6.4...v2.6.5) (2021-10-15)
+
+
+### Bug Fixes
+
+* rm wns from app-server ([317ae11](https://www.github.com/dxos/cli/commit/317ae119b262e0aa3d084890dbe12ff41a42c2be))
+
+### [2.6.4](https://www.github.com/dxos/cli/compare/v2.6.3...v2.6.4) (2021-10-15)
+
+
+### Bug Fixes
+
+* ignore WNS in app-server ([b0a21f0](https://www.github.com/dxos/cli/commit/b0a21f0985192511e0a8004757b05d7ca868c9f5))
+
+### [2.6.3](https://www.github.com/dxos/cli/compare/v2.6.2...v2.6.3) (2021-10-14)
+
+
+### Bug Fixes
+
+* temp put back wns env vars. ([c9681d9](https://www.github.com/dxos/cli/commit/c9681d9d1bba99de2b53eb09222d84d0b6f24192))
+
+### [2.6.2](https://www.github.com/dxos/cli/compare/v2.6.1...v2.6.2) (2021-10-14)
+
+
+### Bug Fixes
+
+* update profiles. ([e6ef9c9](https://www.github.com/dxos/cli/commit/e6ef9c9fee8d0f411397debc939111f70465c02c))
+
+### [2.6.1](https://www.github.com/dxos/cli/compare/v2.6.0...v2.6.1) (2021-10-14)
+
+
+### Bug Fixes
+
+* add enterprise cli profile ([#302](https://www.github.com/dxos/cli/issues/302)) ([81eb1f5](https://www.github.com/dxos/cli/commit/81eb1f5a8510488439f191cfcc673272b26ff2f0))
+
+## [2.6.0](https://www.github.com/dxos/cli/compare/v2.5.1...v2.6.0) (2021-10-14)
+
+
+### Features
+
+* Upgrade with newest `registry-client` ([#297](https://www.github.com/dxos/cli/issues/297)) ([232d555](https://www.github.com/dxos/cli/commit/232d55529a6d26eb1b07edd17c19abae218712b0))
+
+### [2.5.1](https://www.github.com/dxos/cli/compare/v2.5.0...v2.5.1) (2021-10-11)
+
+
+### Bug Fixes
+
+* new cli build ([9fa51fc](https://www.github.com/dxos/cli/commit/9fa51fc5e6fbed49f49d163b89f4c65ed0d8b942))
+
+## [2.5.0](https://www.github.com/dxos/cli/compare/v2.4.15...v2.5.0) (2021-10-01)
+
+
+### Features
+
+* .wire -> .dx ([#285](https://www.github.com/dxos/cli/issues/285)) ([f9ee0bc](https://www.github.com/dxos/cli/commit/f9ee0bcc9d89ffbae7802fed865a1594b3223c4e))
+
 ### [2.4.15](https://www.github.com/dxos/cli/compare/v2.4.14...v2.4.15) (2021-09-22)
 
 

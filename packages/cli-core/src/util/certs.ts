@@ -9,7 +9,7 @@ import os from 'os';
 import path from 'path';
 import url from 'url';
 
-export const CERTS_PATH = '~/.wire/certs';
+export const CERTS_PATH = '~/.dx/certs';
 
 const certPath = CERTS_PATH.replace('~', os.homedir());
 

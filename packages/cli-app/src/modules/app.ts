@@ -7,13 +7,13 @@ import { Argv } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { APP_TYPE, DEFAULT_PORT } from '../config';
+import { DEFAULT_PORT } from '../config';
 import { build, publish, register, query, serve } from '../handlers';
+import { GetDXNSClient } from '../types';
 
 const getAppRecord = (config: any, namespace: string) => {
   const record = {
-    ...config,
-    type: APP_TYPE
+    ...config
   };
 
   // TODO(burdon): Tags are obsolete?
@@ -26,7 +26,7 @@ const getAppRecord = (config: any, namespace: string) => {
 
 interface Params {
   config: any,
-  getDXNSClient: Function
+  getDXNSClient: GetDXNSClient
 }
 
 /**
@@ -67,6 +67,8 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           .option('name', { type: 'array' })
           .option('domain', { type: 'string' })
           .option('version', { type: 'string' })
+          .option('skipExisting', { type: 'boolean' })
+          .option('tag', { type: 'array' })
           .option('namespace', { type: 'string' })
           .option('gas', { type: 'string' })
           .option('fees', { type: 'string' })
@@ -74,7 +76,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
-        handler: asyncHandler(register(config, { getAppRecord, getDXNSClient }))
+        handler: asyncHandler(register({ getAppRecord, getDXNSClient }))
       })
 
       // Deploy app.
@@ -89,10 +91,13 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           .option('domain', { type: 'string' })
           .option('namespace', { type: 'string' }) // TODO(burdon): Why not required in register above?
           .option('version', { type: 'string' })
+          .option('skipExisting', { type: 'boolean' })
+          .option('tag', { type: 'array' })
           .option('gas', { type: 'string' })
           .option('fees', { type: 'string' })
           .option('schema', { type: 'string' })
           .option('timeout', { type: 'string', default: '10m' })
+          .option('path', { type: 'string' })
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
@@ -100,7 +105,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           log('Preparing to deploy...'); // TODO(burdon): Standardize logging (stages, verbose).
           await build(config, { getAppRecord })(argv);
           await publish(config)(argv);
-          await register(config, { getAppRecord, getDXNSClient })(argv);
+          await register({ getAppRecord, getDXNSClient })(argv);
         })
       })
 
@@ -115,7 +120,7 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
-        handler: asyncHandler(query(config, { getDXNSClient }))
+        handler: asyncHandler(query({ getDXNSClient }))
       })
 
       // Serve apps.

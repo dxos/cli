@@ -6,7 +6,7 @@ name: beta - Publish to NPM
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -31,5 +31,4 @@ jobs:
           yarn lerna publish from-package --force-publish -y --dist-tag="beta"
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          WIRE_PROFILE: ci
-          WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
+          DX_PROFILE: ci

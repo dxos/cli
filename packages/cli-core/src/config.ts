@@ -10,14 +10,12 @@ import os from 'os';
 import path from 'path';
 
 import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
-import { createId } from '@dxos/crypto';
 
 import envmap from './env-map.json';
 
-// TODO(burdon): Change to ~/.dxos
-export const PROFILE_ROOT = '.wire/profile';
+export const PROFILE_ROOT = '.dx/profile';
 
-export const STORAGE_ROOT = '.wire/storage';
+export const STORAGE_ROOT = '.dx/storage';
 
 // Default profile, ALWAYS a symlink.
 export const DEFAULT_PROFILE_SYMLINK = 'default';
@@ -43,7 +41,7 @@ export const getProfileName = (profilePath: string) => {
 
 /**
  * Set given profile as the default.
- * Creates symlink from `~/.wire/profile/default` -> `~/.wire/profile/<profile>.yml`.
+ * Creates symlink from `~/.dx/profile/default` -> `~/.dx/profile/<profile>.yml`.
  */
 export const setProfileAsDefault = async (profile: string, overwrite = true) => {
   assert(profile, 'Invalid profile name.');
@@ -60,14 +58,14 @@ export const setProfileAsDefault = async (profile: string, overwrite = true) => 
 
 /**
  * Get active profile path.
- * Precedence: param (from argv), WIRE_PROFILE ENV, default symlink.
+ * Precedence: param (from argv), DX_PROFILE ENV, default symlink.
  * @param {string} profile
  */
 export const getActiveProfilePath = (profile?: string) => {
   const defaultProfilePath = getDefaultProfilePath();
   const defaultProfileExists = fs.existsSync(defaultProfilePath);
 
-  profile = profile || process.env.WIRE_PROFILE;
+  profile = profile || process.env.WIRE_PROFILE || process.env.DX_PROFILE;
   if (!profile && !defaultProfileExists) {
     return null;
   }
@@ -117,8 +115,7 @@ export const getConfig = (configFilePath: string, argvConf = {}) => {
   const config = new Config(
     argvConf,
     mapFromKeyValues(envmap, process.env),
-    customConfig,
-    { cli: { peerId: createId() } }
+    customConfig
   );
 
   return config;

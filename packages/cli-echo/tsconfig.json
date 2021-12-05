@@ -9,7 +9,6 @@
   },
   "include": [
     "src",
-    "src/**/*.json",
-    "./extension.yml"
+    "src/**/*.json"
   ]
 }

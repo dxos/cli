@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-e2e-test",
-  "version": "2.4.15-beta.0",
+  "version": "2.10.0-alpha.0",
   "description": "E2E test script for CLI packages",
   "private": true,
   "scripts": {
@@ -16,11 +16,13 @@
     "bail": true
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/eslint-plugin": "~1.0.19",
     "@types/expect": "^24.3.0",
     "@types/mocha": "^9.0.0",
     "eslint": "^7.13.0",
     "expect": "^27.2.1",
+    "express": "^4.17.1",
+    "got": "^11.8.2",
     "mocha": "^9.1.1",
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5"

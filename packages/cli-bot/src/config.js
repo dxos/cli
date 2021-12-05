@@ -2,11 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
+import fs from 'fs-extra';
 import defaultsDeep from 'lodash.defaultsdeep';
 import mapvalues from 'lodash.mapvalues';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
-import fs from 'fs-extra';
 
 import { BOT_CONFIG_FILENAME } from '@dxos/botkit';
 import { DEFAULT_PACKAGE_JSON_ATTRIBUTES, PACKAGE_JSON_FILENAME, readFile, writeFile } from '@dxos/cli-core';

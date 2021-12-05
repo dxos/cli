@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-data",
-  "version": "2.4.15-beta.0",
+  "version": "2.10.0-alpha.0",
   "description": "DXOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
   "license": "AGPL-3.0",
@@ -22,12 +22,12 @@
     "dx-data": "bin/dx-data.js"
   },
   "scripts": {
-    "build": "tsc && cp -R src/*.yml dist/src",
+    "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "cli": "ts-node ./src/index.ts",
+    "cli": "ts-node --files ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests --forceExit"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests --forceExit",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "jest": {
     "preset": "ts-jest/presets/default",
@@ -36,15 +36,17 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@dxos/cli-core": "^2.4.15-beta.0",
-    "@dxos/client": "~2.12.22",
-    "@dxos/credentials": "~2.12.22",
-    "@dxos/crypto": "~2.12.22",
-    "@dxos/debug": "~2.12.22",
-    "@dxos/echo-db": "~2.12.22",
-    "@dxos/random-access-multi-storage": "~2.12.22",
+    "@dxos/cli-core": "^2.10.0-alpha.0",
+    "@dxos/client": "2.18.3",
+    "@dxos/config": "2.18.3",
+    "@dxos/credentials": "2.18.3",
+    "@dxos/crypto": "2.18.3",
+    "@dxos/debug": "2.18.3",
+    "@dxos/echo-db": "2.18.3",
+    "@dxos/random-access-multi-storage": "~2.18.3",
     "assert": "^2.0.0",
-    "fs-extra": "^8.1.0",
+    "base-x": "^3.0.9",
+    "fs-extra": "9.0.0",
     "js-yaml": "^3.13.1",
     "lockfile": "^1.0.4",
     "lodash.defaultsdeep": "^4.6.1",
@@ -53,16 +55,14 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/async": "~2.12.22",
-    "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/signal": "^2.12.22",
+    "@dxos/async": "2.18.3",
+    "@dxos/eslint-plugin": "~1.0.19",
+    "@dxos/signal": "2.18.3",
     "@types/lockfile": "^1.0.2",
     "eslint": "^7.13.0",
     "jest": "^27.2.0",
-    "prettier": "^1.14.2",
-    "semistandard": "14.2.0",
     "ts-jest": "^27.0.0",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
     "uuid": "^3.3.3",
     "wait-for-expect": "^3.0.2"

@@ -6,11 +6,9 @@ import assert from 'assert';
 import { spawnSync } from 'child_process';
 import clean from 'lodash-clean';
 
-import { getGasAndFees } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { CID, DXN, RegistryTypeRecord } from '@dxos/registry-api';
-import type { IRegistryApi } from '@dxos/registry-api';
-import { Registry } from '@wirelineio/registry-client';
+import { CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
+import type { IRegistryClient } from '@dxos/registry-client';
 
 import { loadAppConfig, updateAppConfig } from './config';
 
@@ -21,27 +19,22 @@ export interface RegisterParams {
 
 export const APP_DXN_NAME = 'dxos:type.app';
 
-export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
-  const { verbose, version, namespace, 'dry-run': noop, txKey, name, domain, dxns } = argv;
-  const wnsConfig = config.get('services.wns');
-  const { server, userKey, bondId, chainId } = wnsConfig;
-
-  // TODO(egorgripasov): Deprecate.
-  if (!dxns) {
-    assert(server, 'Invalid WNS endpoint.');
-    assert(userKey, 'Invalid WNS userKey.');
-    assert(bondId, 'Invalid WNS bond ID.');
-    assert(chainId, 'Invalid WNS chain ID.');
-  }
+export const register = ({ getAppRecord, getDXNSClient }: RegisterParams) => async (argv: any) => {
+  const { verbose, version, tag, namespace, 'dry-run': noop, name, domain, skipExisting } = argv;
 
   const conf = {
     ...await loadAppConfig(),
-    ...clean({ version })
+    ...clean({ version }),
+    ...clean({ tag })
   };
+  if (conf.version === 'false') {
+    conf.version = null;
+  }
 
-  assert(name, 'Invalid WRN.');
+  assert(name, 'Invalid name.');
+  assert(domain, 'Invalid domain');
+
   assert(conf.name, 'Invalid app name.');
-  assert(conf.version, 'Invalid app version.');
 
   const { status, stdout } = spawnSync('git', [
     'describe',
@@ -54,63 +47,54 @@ export const register = (config: any, { getAppRecord, getDXNSClient }: RegisterP
   ], { shell: true });
   conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
 
-  log(`Registering ${conf.name}@${conf.version}...`);
+  log(`Registering ${conf.name}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.version}.` : ''));
 
   const record = getAppRecord(conf, namespace);
-  const registry = new Registry(server, chainId);
 
   if (verbose || noop) {
-    log(JSON.stringify({ registry: server, namespace, record }, undefined, 2));
+    log(JSON.stringify({ record }, undefined, 2));
   }
 
   if (!noop) {
     await updateAppConfig(conf);
   }
 
-  // TODO(egorgripasov): Deprecate.
-  if (!dxns) {
-    const fee = getGasAndFees(argv, wnsConfig);
+  assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(name), 'Name could contain only letters, numbers, dashes or dots.');
 
-    let appId;
-    if (!noop) {
-      const result = await registry.setRecord(userKey, record, txKey, bondId, fee);
-      appId = result.data;
-      log(`Record ID: ${appId}`);
-    }
+  const { description, package: pkg, ...rest } = conf;
 
-    // eslint-disable-next-line
-    for await (const wrn of name) {
-      log(`Assigning name ${wrn}...`);
-      if (!noop) {
-        await registry.setName(wrn, appId, userKey, fee);
-      }
-    }
-  } else {
-    assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(name), 'Name could contain only letters, numbers, dashes or dots.');
+  const client: { registryClient: IRegistryClient } = await getDXNSClient();
 
-    // TODO(egorgripasov): Adapter for the new record format. Cleanup.
-    const { name: appName, version, author, description, package: pkg, ...rest } = conf;
+  const appType = await client.registryClient.getResourceRecord(DXN.parse(APP_DXN_NAME), 'latest');
+  assert(appType);
+  assert(appType.record.kind === RecordKind.Type);
 
-    const client: { registryApi: IRegistryApi } = await getDXNSClient();
-
-    const appType = await client.registryApi.get<RegistryTypeRecord>(DXN.parse(APP_DXN_NAME));
-    assert(appType);
-    assert(appType.record.kind === 'type');
-
-    const cid = await client.registryApi.insertDataRecord({
+  let cid;
+  if (!noop) {
+    cid = await client.registryClient.insertDataRecord({
       hash: CID.from(pkg['/']).value,
       ...rest
     }, appType?.record.cid, {
-      created: new Date().toISOString(),
-      version,
-      author,
-      description,
-      name: appName
+      description
     });
-
-    const domainKey = await client.registryApi.resolveDomainName(domain);
-    await client.registryApi.registerResource(domainKey, name, cid);
   }
 
-  log(`Registered ${conf.name}@${conf.version}.`);
+  const domainKey = await client.registryClient.resolveDomainName(domain);
+  const opts: UpdateResourceOptions = { version: conf.version, tags: conf.tag ?? ['latest'] };
+  for (const dxn of name) {
+    log(`Assigning name ${dxn}...`);
+    if (!noop && cid) {
+      try {
+        await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), cid, opts);
+      } catch (err) {
+        if (skipExisting && String(err).includes('VersionAlreadyExists')) {
+          log('Skipping existing version.');
+        } else {
+          throw err;
+        }
+      }
+    }
+  }
+
+  log(`Registered ${conf.name}.` + (conf.tag ? ` Tagged ${conf.tag.join(', ')}.` : '') + (conf.version ? ` Version ${conf.version}.` : ''));
 };

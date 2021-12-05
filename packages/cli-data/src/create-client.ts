@@ -2,38 +2,29 @@
 // Copyright 2020 DXOS.org
 //
 
-import defaultsDeep from 'lodash.defaultsdeep';
 import os from 'os';
 
 import { Client } from '@dxos/client';
-import { createKeyPair, keyToBuffer } from '@dxos/crypto';
+import { Config } from '@dxos/config';
+import { createKeyPair } from '@dxos/crypto';
 
 export const createClient = async (
   config: any,
   models: any[],
   options: {storagePath: string, persistent: boolean, profileName: string, initProfile: boolean}
 ) => {
-  const { client = {}, services: { signal: { server }, ice }, cli } = config.values;
   const { storagePath, persistent, profileName, initProfile } = options;
 
-  const clientConf = {
-    swarm: {
-      signal: server,
-      ice
-    },
-    session: {
-      peerId: keyToBuffer(cli.peerId)
-    }
-  };
-  config = defaultsDeep({}, clientConf, client);
-
-  const dataClient = new Client({
-    swarm: config.swarm,
-    storage: {
-      persistent,
-      path: persistent ? storagePath : undefined
+  const clientConf = new Config(config.values, {
+    system: {
+      storage: {
+        persistent,
+        path: persistent ? storagePath : undefined
+      }
     }
   });
+
+  const dataClient = new Client(clientConf);
 
   await dataClient.initialize();
 

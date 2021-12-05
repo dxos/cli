@@ -3,7 +3,7 @@
 //
 
 import { print as cliPrint } from '@dxos/cli-core';
-import { RegistryRecord, Resource } from '@dxos/registry-api';
+import { RecordKind, RegistryRecord, Resource } from '@dxos/registry-client';
 
 import { DXNSClient } from '../index';
 
@@ -19,17 +19,19 @@ export const displayRecord = (record: RegistryRecord) => {
   };
 
   switch (record.kind) {
-    case 'type':
+    case RecordKind.Type:
       return {
         ...common,
         messageName: record.messageName,
-        ...record.meta
+        ...record.meta,
+        created: record.meta.created?.toISOString()
       };
-    case 'data':
+    case RecordKind.Data:
       return {
         ...common,
         typeCid: record.type.toString(),
         ...record.meta,
+        created: record.meta.created?.toISOString(),
         size: record.dataSize,
         data: record.data
       };
@@ -39,7 +41,9 @@ export const displayRecord = (record: RegistryRecord) => {
 export const displayResource = (resource: Resource) => {
   return ({
     dxn: resource.id.toString(),
-    ...displayRecord(resource.record)
+    tags: Object.keys(resource.tags),
+    versions: Object.keys(resource.versions),
+    type: resource.type
   });
 };
 

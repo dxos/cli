@@ -3,8 +3,9 @@
 //
 
 import { print } from '@dxos/cli-core';
-import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-api';
+import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-client';
 
+import { resolveDXNorCID } from '../utils';
 import { displayRecord, Params } from './common';
 
 // TODO(marcin): Add query support.
@@ -14,18 +15,18 @@ export const listRecords = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const output = await client.registryApi.getRecords();
+  const output = await client.registryClient.getRecords();
 
   print(output.map(displayRecord), { json });
 };
 
 export const getRecord = (params: Params) => async (argv: any) => {
-  const { getDXNSClient } = params;
-  const { cid, json } = argv;
-  const parsedCID = CID.from(cid);
+  const json = !!argv.json;
 
-  const client = await getDXNSClient();
-  const record = await client.registryApi.getRecord(parsedCID);
+  const client = await params.getDXNSClient();
+  const cid = await resolveDXNorCID(client, argv);
+
+  const record = await client.registryClient.getRecord(cid);
 
   record && print(displayRecord(record), { json });
 };
@@ -33,7 +34,7 @@ export const getRecord = (params: Params) => async (argv: any) => {
 export const addDataRecord = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
-  const { domain, name, version, description, author, json, typeCid } = argv;
+  const { domain, name, description, json, schema } = argv;
 
   if (!!name !== !!domain) {
     throw new Error('Must specify both name and domain or neither.');
@@ -44,18 +45,16 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   const data = JSON.parse(argv.data as string);
   const resourceName = name as string | undefined;
   const meta: RecordMetadata = {
-    created: new Date().getTime().toString(),
-    version,
-    name,
-    description,
-    author
+    created: new Date(),
+    description
   };
-  const schemaCid = CID.from(typeCid as string);
+  const schemaCid = CID.from(schema as string);
 
-  const cid = await client.registryApi.insertDataRecord(data, schemaCid, meta);
+  const cid = await client.registryClient.insertDataRecord(data, schemaCid, meta);
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
-    await client.registryApi.registerResource(domainKey, resourceName, cid);
+    const dxn = DXN.fromDomainKey(domainKey, resourceName);
+    await client.registryClient.updateResource(dxn, cid);
     return print({
       id: DXN.fromDomainKey(domainKey, resourceName).toString(),
       cid: cid.toB58String(),

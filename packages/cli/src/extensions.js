@@ -7,7 +7,7 @@ import path from 'path';
 
 import { readFile, writeFile } from '@dxos/cli-core';
 
-export const EXTENSIONS_CONFIG = '.wire/extensions.yml';
+export const EXTENSIONS_CONFIG = '.dx/extensions.yml';
 
 const filePath = path.join(os.homedir(), EXTENSIONS_CONFIG);
 

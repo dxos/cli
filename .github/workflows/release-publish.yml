@@ -6,7 +6,7 @@ name: release - Publish to NPM
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -29,11 +29,9 @@ jobs:
           git tag -f "v$VERSION"
           git push --tags -f
           yarn lerna publish from-package --force-publish -y
-          yarn dx profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          WIRE_PROFILE: ci
-          WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
+          DX_PROFILE: ci
       - name: Build and Publish Docker Images
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

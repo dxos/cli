@@ -1,8 +1,19 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
+
+import base from 'base-x';
 
 import { InvitationQueryParameters } from '@dxos/echo-db';
 
-export const encodeInvitation = (invite: InvitationQueryParameters) => Buffer.from(JSON.stringify(invite)).toString('base64');
-export const decodeInvitation = (code: string) => JSON.parse(Buffer.from(code, 'base64').toString('utf8'));
+const base62 = base('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+export const encodeInvitation = (invite: InvitationQueryParameters) => {
+  const buffer = Buffer.from(JSON.stringify(invite));
+  return base62.encode(buffer);
+};
+
+export const decodeInvitation = (code: string) => {
+  const json = base62.decode(code).toString();
+  return JSON.parse(json);
+};

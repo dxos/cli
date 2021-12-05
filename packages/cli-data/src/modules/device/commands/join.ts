@@ -35,16 +35,16 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
       throw new Error('Profile already initialized. Reset storage first. (`> storage reset`)');
     }
 
-    if (config?.get('cli.storage.persistent', CLI_DEFAULT_PERSISTENT)) {
+    if (config?.get('system.storage.persistent', CLI_DEFAULT_PERSISTENT)) {
       assert(config, 'Missing config.');
       assert(profilePath, 'Missing profile path.');
-      resetStorageForProfile(config.get('cli.storage.path'), profilePath);
+      resetStorageForProfile(config.get('system.storage.path'), profilePath);
     }
 
     await stateManager.initializeClient({ initProfile: false });
     const client = await stateManager.getClient();
 
     const invitationDescriptor = InvitationDescriptor.fromQueryParameters(decodeInvitation(code));
-    await client.halo.join(invitationDescriptor, async () => Buffer.from(passcode));
+    await client.echo.halo.join(invitationDescriptor, async () => Buffer.from(passcode));
   })
 });

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
-const [port, ipfsGateway, registryEndpoint, chainId, configFile, namespace, loginApp, auth, keyPhrase, dxnsEndpoint] = process.argv.slice(2);
+/* eslint-disable */
 
-require('../dist/src/server/server').serve({ port, ipfsGateway, registryEndpoint, chainId, configFile, namespace, loginApp, auth, keyPhrase, dxnsEndpoint });
+const [port, ipfsGateway, configFile, namespace, loginApp, auth, keyPhrase, dxnsEndpoint] = process.argv.slice(2);
+
+require('../dist/src/server/server').serve({ port, ipfsGateway, configFile, namespace, loginApp, auth, keyPhrase, dxnsEndpoint });
