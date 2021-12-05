@@ -195,7 +195,7 @@ describe('CLI', () => {
 
     it('query app', async () => {
       const apps = await cmd('app query --dxns --json').json();
-      expect(apps.length).toBe(1);
+      expect(apps.length).toBe(2);
     });
 
     it('serve app', async () => {
