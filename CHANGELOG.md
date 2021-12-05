@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.0](https://www.github.com/dxos/cli/compare/v2.9.5...v2.10.0) (2021-12-05)
+
+
+### Features
+
+* dx dxns deploy ([#351](https://www.github.com/dxos/cli/issues/351)) ([0cb4629](https://www.github.com/dxos/cli/commit/0cb4629f69a51d838a0a01b4ade602f4abf9ad66))
+
 ### [2.9.5](https://www.github.com/dxos/cli/compare/v2.9.4...v2.9.5) (2021-11-29)
 
 
