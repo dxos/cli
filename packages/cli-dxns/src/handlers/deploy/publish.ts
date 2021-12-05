@@ -15,7 +15,7 @@ import { uploadToIPFS } from '../../utils/ipfs-upload';
 
 const getFolderSize = pify(folderSize);
 
-const DEFAULT_DIST_PATH = 'dist';
+const DEFAULT_DIST_PATH = 'out';
 
 interface PublishParams {
   verbose?: boolean,

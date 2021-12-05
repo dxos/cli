@@ -24,11 +24,17 @@ export const loadConfig = async (): Promise<Config<ConfigV1Object>> => {
     ? await readFile(CONFIG_FILENAME)
     : {}, IGNORED_CONFIG_ATTRIBUTES);
 
-  return new Config<ConfigV1Object>({
-    build: {
-      command: DEFAULT_BUILD_COMMAND
+  return new Config<ConfigV1Object>(
+    {
+      build: {
+        command: DEFAULT_BUILD_COMMAND
+      }
     },
-    ...dxConfig,
-    ...packageProperties
-  });
+    dxConfig,
+    {
+      module: {
+        ...packageProperties
+      }
+    }
+  );
 };
