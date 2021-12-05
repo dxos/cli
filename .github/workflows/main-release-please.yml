@@ -6,7 +6,7 @@ name: main - release-please
 jobs:
   release-please:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: dxos/release-please-action@v0.0.100
         id: release
@@ -42,8 +42,7 @@ jobs:
           yarn lerna publish from-package --force-publish -y --dist-tag="alpha"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          WIRE_PROFILE: ci
-          WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
+          DX_PROFILE: ci
         if: ${{ steps.release.outputs.release_created }}
       - name: Build and Publish Docker Images
         env:

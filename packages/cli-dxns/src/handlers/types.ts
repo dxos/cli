@@ -4,35 +4,23 @@
 
 import pb from 'protobufjs';
 
-import { CID, DomainKey, DXN, RecordMetadata, RegistryTypeRecord, Resource } from '@dxos/registry-api';
+import { DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
 
-import { Params, printRecord, printResource, printResources } from './common';
+import { resolveDXNorCID, uploadToIPFS } from '../utils';
+import { Params, printRecord, printRecords, printResource } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
-  const resources = await client.registryApi.getResources();
-  const types = resources.filter((r): r is Resource<RegistryTypeRecord> => r.record.kind === 'type');
+  const types = await client.registryClient.getTypeRecords();
 
-  printResources(types, argv);
+  printRecords(types, argv);
 };
 
 export const getType = (params: Params) => async (argv: any) => {
-  // TODO(marcin): Add support for DXN.
-  const dxn = undefined as unknown as DXN;// argv.dxn ? DXN.parse(argv.dxn as string) : undefined;
-  let cid = argv.cid ? CID.from(argv.cid as string) : undefined;
-
-  if (!dxn && !cid) {
-    throw new Error('Either DXN or CID must be provided');
-  }
-
   const client = await params.getDXNSClient();
-  cid = cid ?? await client.registryApi.resolve(dxn!);
+  const cid = await resolveDXNorCID(client, argv);
 
-  if (!cid) {
-    throw new Error('CID not provided nor resolved through the provided DXN.');
-  }
-
-  const typeRecord = await client.registryApi.getTypeRecord(cid);
+  const typeRecord = await client.registryClient.getTypeRecord(cid);
   if (!typeRecord) {
     throw new Error(`No type registered under CID ${cid}.`);
   }
@@ -41,25 +29,26 @@ export const getType = (params: Params) => async (argv: any) => {
 };
 
 export const addType = (params: Params) => async (argv: any) => {
-  const { path, domain, messageName, resourceName, version, description, author } = argv;
+  const { path, domain, messageName, resourceName, description } = argv;
+
+  const client = await params.getDXNSClient();
+  const config = params.config;
 
   if (!!resourceName !== !!domain) {
     throw new Error('You must specify both name and domain or neither.');
   }
 
-  const client = await params.getDXNSClient();
   const schemaRoot = await pb.load(path as string);
-  const meta: RecordMetadata = {
-    created: new Date().toISOString(),
-    version,
-    name: resourceName,
+
+  const sourceIpfsCid = await uploadToIPFS(config, path);
+  const meta: TypeRecordMetadata = {
     description,
-    author
+    sourceIpfsCid
   };
 
-  const cid = await client.registryApi.insertTypeRecord(schemaRoot, messageName, meta);
+  const cid = await client.registryClient.insertTypeRecord(schemaRoot, messageName, meta);
   const typeRecord: RegistryTypeRecord = {
-    kind: 'type',
+    kind: RecordKind.Type,
     cid,
     protobufDefs: schemaRoot,
     messageName: messageName,
@@ -68,13 +57,13 @@ export const addType = (params: Params) => async (argv: any) => {
 
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
-    await client.registryApi.registerResource(domainKey, resourceName as string, cid);
-    const resource: Resource = {
-      id: DXN.fromDomainKey(domainKey, resourceName as string),
-      record: typeRecord
+    const dxn = DXN.fromDomainKey(domainKey, resourceName as string);
+    await client.registryClient.updateResource(dxn, cid);
+    const resource = {
+      id: DXN.fromDomainKey(domainKey, resourceName as string)
     };
 
-    printResource(resource, argv);
+    printResource(resource as Resource, argv);
   } else {
     printRecord(typeRecord, argv);
   }

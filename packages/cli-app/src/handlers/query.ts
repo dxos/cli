@@ -3,59 +3,45 @@
 //
 
 import assert from 'assert';
-import clean from 'lodash-clean';
 
 import { print } from '@dxos/cli-core';
-import { Registry } from '@wirelineio/registry-client';
+import { CID, DXN, RegistryDataRecord } from '@dxos/registry-client';
 
-import { APP_TYPE } from '../config';
+import { GetDXNSClient } from '../types';
 
-export const displayApps = (record: any) => {
+const APP_TYPE_DXN = 'dxos:type.app';
+
+export const displayApps = (record: RegistryDataRecord) => {
   return ({
     cid: record.cid.toString(),
-    size: record.size,
-    data: record.data
+    created: record.meta.created,
+    description: record.meta.description,
+    hash: CID.from(Buffer.from(record.data.hash, 'base64')).toString()
   });
 };
 
 interface QueryParams {
-  getDXNSClient: Function
+  getDXNSClient: GetDXNSClient;
 }
 
-export const query = (config: any, { getDXNSClient }: QueryParams) => async (argv: any) => {
-  const { id, name, namespace, dxns } = argv;
+export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
+  const { json } = argv;
 
   let apps = [];
-  // TODO(egorgripasov): Deprecate.
-  if (!dxns) {
-    const { server, chainId } = config.get('services.wns');
-    assert(server, 'Invalid WNS endpoint.');
-    assert(chainId, 'Invalid WNS Chain ID.');
+  assert(getDXNSClient);
+  const client = await getDXNSClient();
+  const registry = client.registryClient;
+  const appType = await registry.getResourceRecord(DXN.parse(APP_TYPE_DXN), 'latest');
 
-    const registry = new Registry(server, chainId);
-
-    if (id) {
-      apps = await registry.getRecordsByIds([id]);
-      apps = apps
-        .filter((b: any) => !name || (name && b.attributes.name === name))
-        .filter((b: any) => !namespace || (namespace && b.attributes.tag === namespace));
-    } else {
-      const attributes = clean({ type: APP_TYPE, name, tag: namespace });
-      apps = await registry.queryRecords(attributes);
-    }
-  } else {
-    assert(getDXNSClient);
-    // TODO(egorgripasov): Revive.
-    // const client = await getDXNSClient();
-    // const fqn = config.get('services.dxns.schema.fqn.app');
-
-    // const allRecords = await client.registryApi.getRecords();
-
-    // // TODO(egorgripasov): Don't do it on client side.
-    // apps = allRecords.filter(({ messageFqn }: any) => messageFqn === fqn).map(displayApps);
+  if (!appType) {
+    throw new Error('App type not found.');
   }
 
+  const records = await registry.getDataRecords({ type: appType.record.cid });
+
+  apps = records.map(displayApps);
+
   if (apps && apps.length) {
-    print(apps, { json: true });
+    print(apps, { json });
   }
 };

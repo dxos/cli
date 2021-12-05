@@ -16,7 +16,7 @@ export const createAuction = (params: Params) => async (argv: any) => {
   assert(startAmount >= 0, 'Amount must be positive integer number.');
 
   const client = await getDXNSClient();
-  await client.auctionsApi.createAuction(name, startAmount);
+  await client.auctionsClient.createAuction(name, startAmount);
 };
 
 export const bidAuction = (params: Params) => async (argv: any) => {
@@ -27,7 +27,7 @@ export const bidAuction = (params: Params) => async (argv: any) => {
   assert(amount >= 0, 'Amount must be positive integer number.');
 
   const client = await getDXNSClient();
-  await client.auctionsApi.bidAuction(name, amount);
+  await client.auctionsClient.bidAuction(name, amount);
 };
 
 export const closeAuction = (params: Params) => async (argv: any) => {
@@ -36,7 +36,7 @@ export const closeAuction = (params: Params) => async (argv: any) => {
   const { name } = argv;
 
   const client = await getDXNSClient();
-  await client.auctionsApi.closeAuction(name);
+  await client.auctionsClient.closeAuction(name);
 };
 
 export const forceCloseAuction = (params: Params) => async (argv: any) => {
@@ -58,7 +58,7 @@ export const claimAuction = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
 
-  const domainKey = await client.auctionsApi.claimAuction(name);
+  const domainKey = await client.auctionsClient.claimAuction(name);
 
   print({ domainKey: domainKey.toHex() }, { json });
 };
@@ -69,7 +69,7 @@ export const listAuctions = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const auctions = await client.auctionsApi.listAuction();
+  const auctions = await client.auctionsClient.listAuctions();
 
   print(auctions, { json });
 };

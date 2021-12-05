@@ -9,8 +9,8 @@ import { compare, valid } from 'semver';
 import { asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { Pluggable } from '../pluggable';
 import { addInstalled, removeInstalled, listInstalled } from '../extensions';
+import { Pluggable } from '../pluggable';
 
 /**
  * Extension CLI module.

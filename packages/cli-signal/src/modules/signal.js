@@ -2,21 +2,18 @@
 // Copyright 2020 DXOS.org
 //
 
-import assert from 'assert';
-
-import clean from 'lodash-clean';
-
 import { spawn } from 'child_process';
+
 import { Runnable, sanitizeEnv, stopService, asyncHandler } from '@dxos/cli-core';
-import { Registry } from '@wirelineio/registry-client';
 import { log } from '@dxos/debug';
+// import { Registry } from '@wirelineio/registry-client';
 
 const SIGNAL_PROCESS_NAME = 'signal';
 const DEFAULT_LOG_FILE = '/var/log/signal.log';
 
 const LIMIT = 5;
-const RECORD_TYPE = 'wrn:service';
-const SERVICE_TYPE = 'signal';
+// const RECORD_TYPE = 'wrn:service';
+// const SERVICE_TYPE = 'signal';
 
 /**
  * Signal CLI module.
@@ -84,14 +81,14 @@ export const SignalModule = ({ config }) => {
           ...argv
         }) => {
           if (wnsBootstrap && !argv.help) {
-            const { server, chainId } = config.get('services.wns');
+            // const { server, chainId } = config.get('services.wns');
 
-            assert(server, 'Invalid WNS endpoint.');
-            assert(chainId, 'Invalid WNS Chain ID.');
+            // assert(server, 'Invalid WNS endpoint.');
+            // assert(chainId, 'Invalid WNS Chain ID.');
 
-            const registry = new Registry(server, chainId);
-            const attributes = clean({ type: RECORD_TYPE, service: SERVICE_TYPE });
-            const registeredServers = await registry.queryRecords(attributes);
+            // const registry = new Registry(server, chainId);
+            // const attributes = clean({ type: RECORD_TYPE, service: SERVICE_TYPE });
+            const registeredServers = []; // await registry.queryRecords(attributes);
 
             const bootstrap = registeredServers
               .filter(({ attributes: { signal: { active, bootstrap } } }) => active !== false && bootstrap)
@@ -137,7 +134,7 @@ export const SignalModule = ({ config }) => {
           };
 
           // forward params to the binary
-          signalRunnable.run(args, options);
+          void signalRunnable.run(args, options);
         })
       })
 

@@ -4,12 +4,12 @@
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 
-import { RegistryApi, definitions } from '@dxos/registry-api';
+import { RegistryClient, definitions } from '@dxos/registry-client';
 
-export const getRegistryApi = async (dxnsServer: string) => {
+export const getRegistryClient = async (dxnsServer: string) => {
   const provider = new WsProvider(dxnsServer);
   const types = Object.values(definitions).reduce((res, { types }) => ({ ...res, ...types }), {});
   const api = await ApiPromise.create({ provider, types });
 
-  return new RegistryApi(api, undefined);
+  return new RegistryClient(api, undefined);
 };

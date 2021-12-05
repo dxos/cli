@@ -3,17 +3,16 @@
 //
 
 import assert from 'assert';
-import { keyPair } from 'hypercore-crypto';
 import { EventEmitter } from 'events';
+import { keyPair } from 'hypercore-crypto';
 import readline from 'readline';
-
-import { Messenger as MessengerPlugin } from '@dxos/protocol-plugin-messenger';
-import { Presence } from '@dxos/protocol-plugin-presence';
 
 import { asyncHandler } from '@dxos/cli-core';
 import { humanize, keyToBuffer, keyToString, PublicKey } from '@dxos/crypto';
-import { protocolFactory, MMSTTopology } from '@dxos/network-manager';
 import { log } from '@dxos/debug';
+import { protocolFactory, MMSTTopology } from '@dxos/network-manager';
+import { Messenger as MessengerPlugin } from '@dxos/protocol-plugin-messenger';
+import { Presence } from '@dxos/protocol-plugin-presence';
 
 const DEFAULT_TOPIC = '0000000000000000000000000000000000000000000000000000000000000000';
 
@@ -121,7 +120,7 @@ class Messenger extends EventEmitter {
    */
   async broadcastMessage (message) {
     assert(message);
-    this._messenger.broadcastMessage(MESSAGE_TYPE, Buffer.from(message)); // TODO(burdon): Hex?
+    await this._messenger.broadcastMessage(MESSAGE_TYPE, Buffer.from(message)); // TODO(burdon): Hex?
   }
 
   /**

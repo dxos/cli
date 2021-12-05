@@ -11,9 +11,11 @@ import { generateAccount, listAccounts } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
 import { getBlocks } from '../handlers/block';
+import { build, publish, register } from '../handlers/deploy';
 import { listDomains, getFreeDomain } from '../handlers/domain';
+import { addDummyData } from '../handlers/dummy-data';
 import { listRecords, getRecord, addDataRecord } from '../handlers/record';
-import { getResource, listResources } from '../handlers/resource';
+import { deleteResource, getResource, listResources } from '../handlers/resource';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { listTypes, getType, addType } from '../handlers/types';
@@ -44,10 +46,6 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['get <cid | dxn>'],
             describe: 'Get type details by its CID or DXN.',
-            builder: yargs => yargs
-              .option('cid', { describe: 'CID of the type', type: 'string' }),
-            // TODO(marcin): support dxn with -dxn switch
-            // .option('dxn', { describe: 'DXN of the type', type: 'string' }),
 
             handler: asyncHandler(getType({ getDXNSClient }))
           })
@@ -61,10 +59,9 @@ export const DXNSModule = (params: Params) => {
               .option('domain', { describe: 'Domain key for the record.', type: 'string' })
               .option('resourceName', { describe: 'Name of the resource in DXN', type: 'string' })
               .option('version', { describe: 'Version of the type', type: 'string' })
-              .option('description', { describe: 'Description of the type', type: 'string' })
-              .option('author', { describe: 'Author of the type', type: 'string' }),
+              .option('description', { describe: 'Description of the type', type: 'string' }),
 
-            handler: asyncHandler(addType({ getDXNSClient }))
+            handler: asyncHandler(addType({ getDXNSClient, config }))
           })
       })
 
@@ -80,10 +77,8 @@ export const DXNSModule = (params: Params) => {
           })
 
           .command({
-            command: ['get <cid>'],
-            describe: 'Get a record by its CID.',
-            builder: yargs => yargs
-              .option('cid', { type: 'string' }),
+            command: ['get <cid | dxn>'],
+            describe: 'Get a record by its CID or DXN.',
 
             handler: asyncHandler(getRecord({ getDXNSClient }))
           })
@@ -117,6 +112,12 @@ export const DXNSModule = (params: Params) => {
             command: ['get <dxn>'],
             describe: 'Get a resource by its DXN.',
             handler: asyncHandler(getResource({ getDXNSClient }))
+          })
+
+          .command({
+            command: ['delete <dxn>'],
+            describe: 'Delete a resource by its DXN.',
+            handler: asyncHandler(deleteResource({ getDXNSClient }))
           })
       })
 
@@ -245,7 +246,8 @@ export const DXNSModule = (params: Params) => {
         command: ['seed'],
         describe: 'Seed DXNS.',
         builder: yargs => yargs
-          .option('domain', { type: 'string' }),
+          .option('domain', { type: 'string' })
+          .option('dataOnly', { type: 'boolean', description: 'Skip domain registration. Register data types only.' }),
 
         handler: asyncHandler(seedRegistry({ getDXNSClient, config }))
       })
@@ -272,6 +274,37 @@ export const DXNSModule = (params: Params) => {
         describe: 'Get current DXNS block number.',
 
         handler: asyncHandler(getBlocks({ getDXNSClient }))
+      })
+
+      .command({
+        command: ['dummy'],
+        describe: 'Adds all dummy data necessary for testing puproses.',
+
+        handler: asyncHandler(addDummyData({ getDXNSClient }))
+      })
+
+      .command({
+        command: ['deploy'],
+        describe: 'Deploy and Register any DXOS entity.',
+
+        builder: (yargs: Argv) => yargs
+          .strict(false)
+          .version(false)
+          .option('name', { type: 'array' })
+          .option('domain', { type: 'string' })
+          .option('version', { type: 'string' })
+          .option('skipExisting', { type: 'boolean' })
+          .option('tag', { type: 'array' })
+          .option('timeout', { type: 'string', default: '10m' })
+          .option('path', { type: 'string' })
+          .option('type', { type: 'string' })
+          .option('hash-path', { type: 'string' }),
+
+        handler: asyncHandler(async (argv: any) => {
+          await build()(argv);
+          const cid = await publish(config)(argv);
+          await register({ cid, getDXNSClient })(argv);
+        })
       })
   };
 };

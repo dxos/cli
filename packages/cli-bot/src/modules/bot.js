@@ -4,7 +4,7 @@
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { spawn, invite, build, publish, register } from '../handlers/bot';
+import { spawn, invite, build, publish, register, query } from '../handlers/bot';
 import { install, setup, start } from '../handlers/bot-factory';
 
 /**
@@ -124,6 +124,14 @@ export const BotModule = ({ config, stateManager, /* getReadlineInterface, */ cl
           .option('domain', { type: 'string' }),
 
         handler: asyncHandler(register({ getDXNSClient }))
+      })
+
+      .command({
+        command: ['query'],
+        describe: 'Query bots',
+        builder: yargs => yargs,
+
+        handler: asyncHandler(query({ getDXNSClient }))
       })
   };
 };

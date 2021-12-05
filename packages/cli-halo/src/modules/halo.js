@@ -3,7 +3,6 @@
 //
 
 import { asyncHandler } from '@dxos/cli-core';
-
 import { log } from '@dxos/debug';
 
 export const HaloModule = () => ({

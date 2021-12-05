@@ -7,10 +7,11 @@ import { join } from 'path';
 
 const EXECUTABLE_PATH = join(__dirname, '../../cli/bin/dx.js');
 
-const GLOBAL_DEBUG = process.env.CI !== undefined;
+const GLOBAL_DEBUG = process.env.CI !== undefined || process.env.E2E_DEBUG;
+const DEBUG = 'dxos:cli';
 
-export function cmd (command: string): Command {
-  return new Command(command);
+export function cmd (command: string, cwd?: string): Command {
+  return new Command(command, cwd);
 }
 
 export class Command {
@@ -19,7 +20,7 @@ export class Command {
   private _stdout = Buffer.alloc(0)
   private _stderr = Buffer.alloc(0)
 
-  constructor (private readonly _command: string) {}
+  constructor (private readonly _command: string, private readonly _cwd?: string) {}
 
   debug (): this {
     this._debug = true;
@@ -31,7 +32,15 @@ export class Command {
       console.log(`[E2E] Running "dx ${this._command}":\n\n`);
     }
 
-    const cp = spawn(`${EXECUTABLE_PATH} ${this._command}`, { shell: true, stdio: 'pipe' });
+    const cp = spawn(`${EXECUTABLE_PATH} ${this._command}`, {
+      shell: true,
+      stdio: 'pipe',
+      cwd: this._cwd || process.cwd(),
+      env: {
+        ...process.env,
+        DEBUG
+      }
+    });
 
     cp.stdout.on('data', chunk => {
       this._stdout = Buffer.concat([this._stdout, chunk]);
@@ -60,9 +69,9 @@ export class Command {
     }
 
     if (cp.exitCode !== 0) {
-      throw new Error(`[E2E] Command "dx ${this._command}" exited with code ${cp.exitCode}`);
+      throw new Error(`Command "dx ${this._command}" exited with code ${cp.exitCode}`);
     } else if (cp.exitCode === null) {
-      throw new Error(`[E2E] Command "dx ${this._command}" exited with signal ${cp.signalCode}`);
+      throw new Error(`Command "dx ${this._command}" exited with signal ${cp.signalCode}`);
     }
 
     return cp;

@@ -14,6 +14,7 @@ import { App } from './app';
 import { getConfig, getActiveProfilePath } from './config';
 import { loadCerts } from './util/certs';
 import { getLoggers } from './util/log';
+import { printMissingProfile } from './util/messages';
 
 export const EXTENSION_CONFIG_FILENAME = 'extension.yml';
 
@@ -80,8 +81,7 @@ const getRunnable = (extension: ExtensionInfo) => {
     const profileExists = profilePath ? fs.existsSync(profilePath) : false;
 
     if (!profileExists && !help && !COMMANDS_PERMIT_NO_PROFILE.includes(command)) {
-      log('No active profile. Enter the following command to set the active profile:');
-      log('dx profile set <NAME>');
+      printMissingProfile();
       process.exit(1);
     }
 

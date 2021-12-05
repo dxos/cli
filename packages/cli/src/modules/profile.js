@@ -13,7 +13,9 @@ import {
   initProfileFromTemplate,
   getConfig,
   getProfilePath,
-  getProfileName
+  getProfileName,
+  printMissingProfile,
+  printProfileNotFound
 } from '@dxos/cli-core';
 
 /**
@@ -53,11 +55,11 @@ export const ProfileModule = () => ({
 
         const profilePath = getProfilePath(name);
         if (!fs.existsSync(profilePath)) {
-          print(`Profile not found: ${profilePath}`);
+          printProfileNotFound(profilePath);
           return;
         }
 
-        setProfileAsDefault(name);
+        await setProfileAsDefault(name);
       })
     })
 
@@ -70,7 +72,7 @@ export const ProfileModule = () => ({
 
         const profilePath = (profile ? getProfilePath(profile) : getActiveProfilePath());
         if (!fs.existsSync(profilePath)) {
-          print(`Profile not found: ${profilePath}`);
+          printProfileNotFound(profilePath);
           return;
         }
 
@@ -81,13 +83,12 @@ export const ProfileModule = () => ({
   handler: asyncHandler(async () => {
     const profilePath = getActiveProfilePath();
     if (!profilePath) {
-      print('No active profile. Enter the following command to set the active profile:');
-      print('dx profile set <NAME>');
+      printMissingProfile();
       return;
     }
 
     if (!fs.existsSync(profilePath)) {
-      print(`Profile not found: ${profilePath}`);
+      printProfileNotFound(profilePath);
       return;
     }
 

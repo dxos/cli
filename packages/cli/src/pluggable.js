@@ -3,6 +3,7 @@
 //
 
 /* eslint import/no-dynamic-require: 0 */
+/* eslint @typescript-eslint/no-var-requires: 0 */
 /* eslint global-require: 0 */
 
 import { exec } from 'child_process';
@@ -86,6 +87,7 @@ export class Pluggable {
     this._version = version;
     this._workspaceRoot = getWorkspaceRoot(__dirname);
     this._isInWorkspace = this._workspaceRoot && fs.existsSync(path.resolve(this._workspaceRoot, 'node_modules', this._moduleName));
+    this._isInCWD = fs.existsSync(path.join(process.cwd(), 'package.json')) && require(path.join(process.cwd(), 'package.json'))?.name === this._moduleName;
     this._installed = this.isInstalled();
   }
 
@@ -111,8 +113,7 @@ export class Pluggable {
 
   get modulePath () {
     if (!this._modulePath) {
-      const { moduleName } = this;
-      const pkgPath = require.resolve(`${moduleName}/package.json`);
+      const pkgPath = require.resolve(this._isInCWD ? path.join(process.cwd(), 'package.json') : `${this.moduleName}/package.json`);
       const pkg = require(pkgPath);
       this._modulePath = path.resolve(path.dirname(pkgPath), pkg.main);
     }
@@ -137,7 +138,9 @@ export class Pluggable {
    */
   isInstalled () {
     const { moduleName } = this;
-    if (this._isInWorkspace) return true;
+    if (this._isInWorkspace || this._isInCWD) {
+      return true;
+    }
     try {
       const pkgPath = require.resolve(`${moduleName}/package.json`);
       const pkg = require(pkgPath);

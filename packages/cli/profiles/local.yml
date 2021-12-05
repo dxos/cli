@@ -5,8 +5,8 @@
 cli:
   app:
     serve:
-      config: '~/.wire/remote.yml'
-      loginApp: 'dxos:application/keyhole'
+      config: '~/.dx/remote.yml'
+      loginApp: 'dxos:dxos:app.keyhole'
       keyPhrase: 'GoxWtucubK'
   console:
     package: '@dxos/kube-server'
@@ -25,14 +25,6 @@ cli:
 
 # DXOS services.
 services:
-  wns:
-    server: 'http://127.0.0.1:9473/api'
-    webui: 'http://127.0.0.1:9473/console'
-    userKey:
-    bondId:
-    chainId: moon
-    gas: '200000'
-    fees: '200000uwire'
   dxns:
     server: 'ws://127.0.0.1:9944'
     accountUri:
@@ -51,8 +43,6 @@ services:
     - urls: 'turn:apollo2.kube.moon.dxos.network:3478'
       username: 'dxos'
       credential: 'dxos'
-  faucet:
-    server: 'https://node1.dxos.network/faucet/api'
   kube:
     publicUrl: '/console'
   app:

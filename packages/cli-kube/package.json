@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-kube",
-  "version": "2.4.15",
+  "version": "2.10.0-alpha.0",
   "description": "DXOS KUBE CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-kube#readme",
   "license": "AGPL-3.0",
@@ -23,12 +23,12 @@
     "scripts/"
   ],
   "scripts": {
-    "build": "tsc && cp -R src/*.yml dist/src",
+    "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
-    "cli": "ts-node ./src/index.ts",
+    "cli": "ts-node --files ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "jest": {
     "preset": "ts-jest/presets/default",
@@ -37,25 +37,26 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.12.22",
-    "@dxos/cli-core": "^2.4.15",
-    "@dxos/crypto": "~2.12.22",
-    "@dxos/debug": "~2.12.22",
-    "@dxos/object-model": "~2.12.22",
+    "@dxos/async": "2.18.3",
+    "@dxos/cli-core": "^2.10.0-alpha.0",
+    "@dxos/crypto": "2.18.3",
+    "@dxos/debug": "2.18.3",
+    "@dxos/object-model": "2.18.3",
+    "@dxos/registry-client": "2.18.3",
     "assert": "^2.0.0",
-    "do-wrapper": "4.1.2",
-    "got": "^10.7.0",
+    "do-wrapper": "^4.1.2",
+    "got": "^11.8.2",
     "js-yaml": "^3.13.1",
     "yamljs": "^0.3.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/eslint-plugin": "~1.0.19",
     "@types/jest": "^26.0.7",
     "eslint": "^7.13.0",
     "jest": "^27.2.0",
     "ts-jest": "^27.0.0",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
     "uuid": "^3.3.3"
   },

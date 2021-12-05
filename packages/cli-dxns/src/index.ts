@@ -5,12 +5,11 @@
 import { ApiPromise } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
 import { KeyringPair } from '@polkadot/keyring/types';
-import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { readFileSync } from 'fs';
 import path from 'path';
 
 import { createCLI } from '@dxos/cli-core';
-import { ApiFactory, IAuctionsApi, IRegistryApi, ApiTransactionHandler } from '@dxos/registry-api';
+import { createApiPromise, IAuctionsClient, IRegistryClient, ApiTransactionHandler, createKeyring, RegistryClient, AuctionsClient } from '@dxos/registry-client';
 
 import { DXNSModule } from './modules/dxns';
 
@@ -18,8 +17,8 @@ export interface DXNSClient {
   apiRaw: ApiPromise,
   keyring: Keyring,
   keypair?: KeyringPair,
-  registryApi: IRegistryApi,
-  auctionsApi: IAuctionsApi,
+  registryClient: IRegistryClient,
+  auctionsClient: IAuctionsClient,
   transactionHandler: ApiTransactionHandler
 }
 
@@ -36,22 +35,23 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
   if (profilePath && profileExists) {
     // The keyring need to be created AFTER api is created or we need to wait for WASM init.
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
-    const keyring = new Keyring({ type: 'sr25519' });
-    await cryptoWaitReady();
-
+    const keyring = await createKeyring();
     const accountUri = config.get('services.dxns.accountUri');
     const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
+
     const apiServerUri = config.get('services.dxns.server');
-    const registryApi = await ApiFactory.createRegistryApi(apiServerUri, keypair);
-    const { auctionsApi, apiPromise } = await ApiFactory.createAuctionsApi(apiServerUri, keypair);
+    const apiPromise = await createApiPromise(apiServerUri);
+
+    const registryClient = new RegistryClient(apiPromise, keypair);
+    const auctionsClient = new AuctionsClient(apiPromise, keypair);
     const transactionHandler = new ApiTransactionHandler(apiPromise, keypair);
 
     return {
       apiRaw: apiPromise,
       keyring,
       keypair,
-      registryApi,
-      auctionsApi,
+      registryClient,
+      auctionsClient,
       transactionHandler
     };
   }
@@ -67,8 +67,7 @@ const initDXNSCliState = async (state: any) => {
 
 const destroyDXNSCliState = async () => {
   if (client) {
-    await client.registryApi.disconnect();
-    await client.auctionsApi.disconnect();
+    await client.apiRaw.disconnect();
   }
 };
 
@@ -78,6 +77,6 @@ module.exports = createCLI({
   main: !module.parent,
   init: initDXNSCliState,
   destroy: destroyDXNSCliState,
-  info: readFileSync(path.join(__dirname, './extension.yml')).toString(),
-  compose: readFileSync(path.join(__dirname, './docker-compose.yml')).toString()
+  info: readFileSync(path.join(__dirname, '../extension.yml')).toString(),
+  compose: readFileSync(path.join(__dirname, '../docker-compose.yml')).toString()
 });
