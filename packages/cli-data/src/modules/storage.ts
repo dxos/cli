@@ -37,7 +37,7 @@ export const StorageModule = ({ config, cliState, profilePath }: CliDataState) =
         assert(config, 'Missing config.');
 
         const { interactive } = cliState;
-        const persistent = config.get('system.storage.persistent', CLI_DEFAULT_PERSISTENT);
+        const persistent = config.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT);
 
         if (interactive) {
           throw new Error('Unable to reset storage inside interactive mode.');
@@ -49,7 +49,7 @@ export const StorageModule = ({ config, cliState, profilePath }: CliDataState) =
           if (!persistent) {
             throw new Error('Persistent storage was not used for current profile.');
           }
-          resetStorageForProfile(config.get('system.storage.path'), profilePath!);
+          resetStorageForProfile(config.get('runtime.client.storage.path'), profilePath!);
         }
       })
     })

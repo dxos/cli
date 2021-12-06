@@ -30,7 +30,7 @@ export const publish = (config: any) => async ({ timeout, path: distPath = DEFAU
 
   log(`Publishing ${conf.name}...`);
 
-  const ipfsServer = config.get('services.ipfs.server');
+  const ipfsServer = config.get('runtime.services.ipfs.server');
   assert(ipfsServer, 'Invalid IPFS Server.');
 
   const ipfs = IpfsHttpClient({

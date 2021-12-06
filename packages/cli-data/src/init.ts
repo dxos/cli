@@ -23,8 +23,8 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
     return state as CliDataState; // Do not initialize cli-data if we don't have profile.
   }
 
-  const { storagePath, profileName } = getProfileAndStorage(config.get('system.storage.path'), profilePath);
-  const persistent = config.get('system.storage.persistent', CLI_DEFAULT_PERSISTENT)!;
+  const { storagePath, profileName } = getProfileAndStorage(config.get('runtime.client.storage.path'), profilePath);
+  const persistent = config.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT)!;
 
   assert(getReadlineInterface, 'Missing getReadlineinterface.');
   stateManager = new StateManager({

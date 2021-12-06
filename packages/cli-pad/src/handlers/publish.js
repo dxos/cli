@@ -19,7 +19,7 @@ export const publish = config => async ({ timeout, path: distPath = DEFAULT_DIST
   const appConfig = await readFile(PAD_CONFIG_FILENAME);
   log(`Publishing ${appConfig.name}...`);
 
-  const ipfsServer = config.get('services.ipfs.server');
+  const ipfsServer = config.get('runtime.services.ipfs.server');
   assert(ipfsServer, 'Invalid IPFS Server.');
 
   const ipfs = IpfsHttpClient({

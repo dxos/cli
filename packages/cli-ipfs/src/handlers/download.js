@@ -14,8 +14,8 @@
 // export const download = config => async ({ timeout, name, id, outdir = '.' }) => {
 //   assert(name || id, '--name or --id required');
 
-//   const ipfsServer = config.get('services.ipfs.server');
-//   const { server, chainId } = config.get('services.wns');
+//   const ipfsServer = config.get('runtime.services.ipfs.server');
+//   const { server, chainId } = config.get('runtime.services.wns');
 
 //   assert(server, 'Invalid WNS endpoint.');
 //   assert(chainId, 'Invalid WNS Chain ID.');

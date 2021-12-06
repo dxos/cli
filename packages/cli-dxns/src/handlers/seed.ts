@@ -78,7 +78,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   const { domain = DEFAULT_DOMAIN, dataOnly = false, json, verbose } = argv;
 
-  const dxnsUri = config.get('services.dxns.accountUri');
+  const dxnsUri = config.get('runtime.services.dxns.accountUri');
   assert(dxnsUri, 'Admin Mnemonic should be provided via configuration profile.');
 
   const client = await getDXNSClient();

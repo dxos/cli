@@ -14,8 +14,8 @@ const DEFAULT_LOG_FILE = '/var/log/console.log';
  * App CLI module.
  */
 export const AppModule = ({ config }) => {
-  const bin = config.get('cli.console.bin');
-  const defaultConfigFile = config.get('cli.console.config');
+  const bin = config.get('runtime.cli.console.bin');
+  const defaultConfigFile = config.get('runtime.cli.console.config');
 
   const consoleRunnable = new Runnable(bin, []);
 
@@ -29,12 +29,12 @@ export const AppModule = ({ config }) => {
         command: ['install', 'upgrade'],
         describe: 'Download & Install Console packages',
         builder: yargs => yargs.version(false)
-          .option('npmClient', { default: config.get('cli.npmClient') })
+          .option('npmClient', { default: config.get('runtime.cli.npmClient') })
           .option('dry-run', { type: 'boolean', default: false })
-          .option('channel', { default: config.get('cli.console.channel') })
+          .option('channel', { default: config.get('runtime.cli.console.channel') })
           .option('version'),
         handler: asyncHandler(async ({ npmClient, channel, version, 'dry-run': noop }) => {
-          const npmPkg = config.get('cli.console.package');
+          const npmPkg = config.get('runtime.cli.console.package');
           const packageVersion = `${npmPkg}@${version || channel}`;
           const args = npmClient === 'npm' ? ['install', '-g'] : ['global', 'add'];
           args.push(packageVersion);

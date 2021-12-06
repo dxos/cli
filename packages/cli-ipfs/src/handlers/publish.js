@@ -19,7 +19,7 @@
 //   assert(target, 'target path is required');
 //   !quiet && logError(`Uploading ${target}...`);
 
-//   const ipfsServer = config.get('services.ipfs.server');
+//   const ipfsServer = config.get('runtime.services.ipfs.server');
 //   assert(ipfsServer, 'Invalid IPFS Server.');
 
 //   const ipfs = IpfsHttpClient({

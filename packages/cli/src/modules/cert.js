@@ -19,7 +19,7 @@ export const CertModule = ({ config }) => ({
       command: ['import'],
       describe: 'Import certificate.',
       builder: yargs => yargs
-        .option('url', { default: config.get('system.certEndpoint') }),
+        .option('url', { default: config.get('runtime.services.kube.endpoints.cert') }),
 
       handler: asyncHandler(async argv => {
         const { url } = argv;

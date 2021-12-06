@@ -15,7 +15,8 @@ export const createClient = async (
 ) => {
   const { storagePath, persistent, profileName, initProfile } = options;
 
-  const clientConf = new Config(config.values, {
+  // TODO(egorgripasov): Cleanup (config.values.runtime -> config.values) - Adapter to config v0.
+  const clientConf = new Config(config.values.runtime, {
     system: {
       storage: {
         persistent,

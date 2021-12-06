@@ -16,12 +16,12 @@ const serverRunnable = new Runnable(APP_SERVER_BINARY, []);
 export const start = (config: any) => async ({
   namespace, port, daemon, procName = APP_SERVER_PROCESS_NAME, logFile = DEFAULT_LOG_FILE, auth
 }: any) => {
-  const ipfsGateway = config.get('services.ipfs.gateway');
-  const configFile = config.get('cli.app.serve.config');
-  const loginApp = config.get('cli.app.serve.loginApp');
-  const keyPhrase = config.get('cli.app.serve.keyPhrase');
+  const ipfsGateway = config.get('runtime.services.ipfs.gateway');
+  const configFile = config.get('runtime.cli.app.serve.config');
+  const loginApp = config.get('runtime.cli.app.serve.loginApp');
+  const keyPhrase = config.get('runtime.cli.app.serve.keyPhrase');
 
-  const dxnsEndpoint = config.get('services.dxns.server');
+  const dxnsEndpoint = config.get('runtime.services.dxns.server');
 
   assert(ipfsGateway, 'Invalid IPFS Gateway.');
 

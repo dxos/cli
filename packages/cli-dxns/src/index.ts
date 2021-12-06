@@ -36,10 +36,10 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
     // The keyring need to be created AFTER api is created or we need to wait for WASM init.
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
     const keyring = await createKeyring();
-    const accountUri = config.get('services.dxns.accountUri');
+    const accountUri = config.get('runtime.services.dxns.accountUri');
     const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
 
-    const apiServerUri = config.get('services.dxns.server');
+    const apiServerUri = config.get('runtime.services.dxns.server');
     const apiPromise = await createApiPromise(apiServerUri);
 
     const registryClient = new RegistryClient(apiPromise, keypair);

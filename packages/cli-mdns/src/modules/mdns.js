@@ -14,7 +14,7 @@ const DEFAULT_LOG_FILE = '/var/log/mdns.log';
  * MDNS CLI module.
  */
 export const MDNSModule = ({ config }) => {
-  const bin = config.get('cli.mdns.bin');
+  const bin = config.get('runtime.cli.mdns.bin');
 
   const mdnsRunnable = new Runnable(bin, []);
 
@@ -28,12 +28,12 @@ export const MDNSModule = ({ config }) => {
         command: ['install', 'upgrade'],
         describe: 'Download & Install MDNS.',
         builder: yargs => yargs.version(false)
-          .option('npmClient', { default: config.get('cli.npmClient') })
+          .option('npmClient', { default: config.get('runtime.cli.npmClient') })
           .option('dry-run', { type: 'boolean', default: false })
-          .option('channel', { default: config.get('cli.mdns.channel') })
+          .option('channel', { default: config.get('runtime.cli.mdns.channel') })
           .option('version'),
         handler: asyncHandler(async ({ npmClient, channel, version, 'dry-run': noop }) => {
-          const npmPkg = config.get('cli.mdns.package');
+          const npmPkg = config.get('runtime.cli.mdns.package');
           const packageVersion = `${npmPkg}@${version || channel}`;
           const args = npmClient === 'npm' ? ['install', '-g'] : ['global', 'add'];
           args.push(packageVersion);

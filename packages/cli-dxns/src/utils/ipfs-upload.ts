@@ -15,7 +15,7 @@ interface UploadOptions {
 export const uploadToIPFS = async (config: any, path: string, options?: UploadOptions): Promise<string> => {
   const { timeout, progress } = options || {};
 
-  const ipfsServer = config.get('services.ipfs.server');
+  const ipfsServer = config.get('runtime.services.ipfs.server');
   assert(ipfsServer, 'Invalid IPFS Server.');
 
   const ipfsClient = IpfsHttpClient({

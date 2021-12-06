@@ -12,7 +12,7 @@ import { BUILD_PATH, publishBot } from '@dxos/botkit';
 import { getBotConfig, updateBotConfig } from '../../config';
 
 export const publish = config => async () => {
-  let ipfsEndpoint = config.get('services.ipfs.gateway');
+  let ipfsEndpoint = config.get('runtime.services.ipfs.gateway');
   assert(ipfsEndpoint, 'Invalid IPFS Gateway.');
 
   if (!ipfsEndpoint.endsWith('/')) {

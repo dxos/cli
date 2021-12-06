@@ -35,10 +35,10 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
       throw new Error('Profile already initialized. Reset storage first. (`> storage reset`)');
     }
 
-    if (config?.get('system.storage.persistent', CLI_DEFAULT_PERSISTENT)) {
+    if (config?.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT)) {
       assert(config, 'Missing config.');
       assert(profilePath, 'Missing profile path.');
-      resetStorageForProfile(config.get('system.storage.path'), profilePath);
+      resetStorageForProfile(config.get('runtime.client.storage.path'), profilePath);
     }
 
     await stateManager.initializeClient({ initProfile: false });

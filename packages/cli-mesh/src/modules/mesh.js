@@ -12,8 +12,8 @@ import { NetworkManager, MMSTTopology, StarTopology } from '@dxos/network-manage
 import { netProtocolProvider } from './net-protocol-plugin';
 
 const createNetworkManager = async (config, swarm, target) => {
-  const signal = [config.get('services.signal').server];
-  const ice = config.get('services.ice');
+  const signal = [config.get('runtime.services.signal').server];
+  const ice = config.get('runtime.services.ice');
 
   const networkManager = new NetworkManager({ signal, ice });
   await networkManager.start();

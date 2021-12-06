@@ -28,13 +28,13 @@ export class DigitalOceanProvider implements Provider {
 
   constructor (config: any) {
     this._config = config;
-    this._npmAccessToken = this._config.get('services.machine.npmAccessToken');
-    this._dnsDomain = this._config.get('services.machine.dnsDomain');
+    this._npmAccessToken = this._config.get('runtime.services.machine.npmAccessToken');
+    this._dnsDomain = this._config.get('runtime.services.machine.dnsDomain');
 
     assert(this._npmAccessToken);
     assert(this._dnsDomain);
 
-    const doAccessToken = config.get('services.machine.doAccessToken');
+    const doAccessToken = config.get('runtime.services.machine.doAccessToken');
     this._session = new DigitalOcean(doAccessToken, 100);
   }
 
