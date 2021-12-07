@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.0](https://www.github.com/dxos/cli/compare/v2.10.0...v2.11.0) (2021-12-07)
+
+
+### Features
+
+* config v1. ([#353](https://www.github.com/dxos/cli/issues/353)) ([a5d43e5](https://www.github.com/dxos/cli/commit/a5d43e57582579675043c74afd3adc12448f2988))
+
 ## [2.10.0](https://www.github.com/dxos/cli/compare/v2.9.5...v2.10.0) (2021-12-05)
 
 
