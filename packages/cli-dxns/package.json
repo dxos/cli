@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-dxns",
-  "version": "2.10.0-alpha.0",
+  "version": "2.11.0-alpha.0",
   "description": "DXOS DXNS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-halo#readme",
   "license": "AGPL-3.0",
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@dxos/async": "2.18.3",
-    "@dxos/cli-core": "^2.10.0-alpha.0",
+    "@dxos/cli-core": "^2.11.0-alpha.0",
     "@dxos/config": "2.18.3",
     "@dxos/crypto": "2.18.3",
     "@dxos/debug": "2.18.3",
