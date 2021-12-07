@@ -65,7 +65,7 @@ export const getActiveProfilePath = (profile?: string) => {
   const defaultProfilePath = getDefaultProfilePath();
   const defaultProfileExists = fs.existsSync(defaultProfilePath);
 
-  profile = profile || process.env.WIRE_PROFILE || process.env.DX_PROFILE;
+  profile = (profile || process.env.DX_PROFILE) || process.env.WIRE_PROFILE;
   if (!profile && !defaultProfileExists) {
     return null;
   }

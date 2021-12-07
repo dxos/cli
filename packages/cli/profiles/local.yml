@@ -1,53 +1,57 @@
 #
-# Default config
+# Copyright 2021 DXOS.org
 #
 
-cli:
-  app:
-    serve:
-      config: '~/.dx/remote.yml'
-      loginApp: 'dxos:dxos:app.keyhole'
-      keyPhrase: 'GoxWtucubK'
-  console:
-    package: '@dxos/kube-server'
-    channel: 'alpha'
-    bin: 'kube-server'
-  mdns:
-    package: '@dxos/mdns'
-    channel: 'beta'
-    bin: 'dxos-mdns'
-  signal:
-    package: '@dxos/signal'
-    channel: 'alpha'
-    bin: 'dxos-signal'
-  npmClient: 'yarn' # npm|yarn
-  channel: 'alpha'
+version: 1
 
-# DXOS services.
-services:
-  dxns:
-    server: 'ws://127.0.0.1:9944'
-    accountUri:
-  ipfs:
-    server: 'http://127.0.0.1:5001'
-    gateway: 'http://127.0.0.1:8888/ipfs/'
-  signal:
-    server: 'ws://127.0.0.1:4000'
-    api: 'http://127.0.0.1:4000'
-  ice:
-    - urls: 'stun:apollo1.kube.moon.dxos.network:3478'
-    - urls: 'turn:apollo1.kube.moon.dxos.network:3478'
-      username: 'dxos'
-      credential: 'dxos'
-    - urls: 'stun:apollo2.kube.moon.dxos.network:3478'
-    - urls: 'turn:apollo2.kube.moon.dxos.network:3478'
-      username: 'dxos'
-      credential: 'dxos'
-  kube:
-    publicUrl: '/console'
-  app:
-    prefix: '/app'
-    server: 'http://127.0.0.1:5999'
-    
-system:
-  certEndpoint: ''
+runtime:
+  # DXOS services.
+  services:
+    dxns:
+      server: 'ws://127.0.0.1:9944'
+      accountUri:
+    ipfs:
+      server: 'http://127.0.0.1:5001'
+      gateway: 'http://127.0.0.1:8888/ipfs/'
+    signal:
+      server: 'ws://127.0.0.1:4000'
+      api: 'http://127.0.0.1:4000'
+    ice:
+      - urls: 'stun:apollo1.kube.moon.dxos.network:3478'
+      - urls: 'turn:apollo1.kube.moon.dxos.network:3478'
+        username: 'dxos'
+        credential: 'dxos'
+      - urls: 'stun:apollo2.kube.moon.dxos.network:3478'
+      - urls: 'turn:apollo2.kube.moon.dxos.network:3478'
+        username: 'dxos'
+        credential: 'dxos'
+    kube:
+      endpoints:
+        logs: '/kube/logs'
+        services: '/kube/services'
+        cert: ''
+      publicUrl: '/console'
+    app:
+      prefix: '/app'
+      server: 'http://127.0.0.1:5999'
+
+  cli:
+    app:
+      serve:
+        config: '~/.dx/remote.yml'
+        loginApp: 'dxos:dxos:app.keyhole'
+        keyPhrase: 'GoxWtucubK'
+    console:
+      package: '@dxos/kube-server'
+      channel: 'alpha'
+      bin: 'kube-server'
+    mdns:
+      package: '@dxos/mdns'
+      channel: 'beta'
+      bin: 'dxos-mdns'
+    signal:
+      package: '@dxos/signal'
+      channel: 'alpha'
+      bin: 'dxos-signal'
+    npmClient: 'yarn' # npm|yarn
+    channel: 'alpha'
