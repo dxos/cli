@@ -47,8 +47,8 @@ const getServiceInfo = (moduleName, serviceName) => {
 };
 
 const getAuth = (config, imageInfo) => ({
-  username: config.get('services.machine.githubUsername'),
-  password: config.get('services.machine.githubAccessToken'),
+  username: config.get('runtime.services.machine.githubUsername'),
+  password: config.get('runtime.services.machine.githubAccessToken'),
   serveraddress: `https://${imageInfo.image.split('/')[0]}`
 });
 

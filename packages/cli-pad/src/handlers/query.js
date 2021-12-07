@@ -13,7 +13,7 @@
 // export const query = config => async argv => {
 //   const { id, name, namespace } = argv;
 
-//   const { server, chainId } = config.get('services.wns');
+//   const { server, chainId } = config.get('runtime.services.wns');
 
 //   assert(server, 'Invalid WNS endpoint.');
 //   assert(chainId, 'Invalid WNS Chain ID.');

@@ -19,7 +19,7 @@ const LIMIT = 5;
  * Signal CLI module.
  */
 export const SignalModule = ({ config }) => {
-  const bin = config.get('cli.signal.bin');
+  const bin = config.get('runtime.cli.signal.bin');
 
   const signalRunnable = new Runnable(bin, []);
 
@@ -32,12 +32,12 @@ export const SignalModule = ({ config }) => {
         command: ['install', 'upgrade'],
         describe: 'Download & Install @dxos/signal binary.',
         builder: yargs => yargs.version(false)
-          .option('npmClient', { default: config.get('cli.npmClient') })
+          .option('npmClient', { default: config.get('runtime.cli.npmClient') })
           .option('dry-run', { type: 'boolean', default: false })
-          .option('channel', { default: config.get('cli.signal.channel') })
+          .option('channel', { default: config.get('runtime.cli.signal.channel') })
           .option('version'),
         handler: asyncHandler(async ({ npmClient, channel, version, 'dry-run': noop }) => {
-          const npmPkg = config.get('cli.signal.package');
+          const npmPkg = config.get('runtime.cli.signal.package');
           const packageVersion = `${npmPkg}@${version || channel}`;
           const args = npmClient === 'npm' ? ['install', '-g'] : ['global', 'add'];
           args.push(packageVersion);
@@ -81,7 +81,7 @@ export const SignalModule = ({ config }) => {
           ...argv
         }) => {
           if (wnsBootstrap && !argv.help) {
-            // const { server, chainId } = config.get('services.wns');
+            // const { server, chainId } = config.get('runtime.services.wns');
 
             // assert(server, 'Invalid WNS endpoint.');
             // assert(chainId, 'Invalid WNS Chain ID.');

@@ -1,62 +1,62 @@
 #
-# Default config
+# Copyright 2021 DXOS.org
 #
 
-cli:
-  app:
-    serve:
-      config: '~/.dx/remote.yml'
-      loginApp: 'dxos:app.keyhole'
-      keyPhrase: 'GoxWtucubK'
-  console:
-    package: '@dxos/kube-server'
-    channel: 'alpha'
-    bin: 'kube-server'
-  mdns:
-    package: '@dxos/mdns'
-    channel: 'beta'
-    bin: 'dxos-mdns'
-  signal:
-    package: '@dxos/signal'
-    channel: 'alpha'
-    bin: 'dxos-signal'
-  npmClient: 'yarn' # npm|yarn
-  channel: 'alpha'
+version: 1
 
-# DXOS services.
-services:
-  kube:
-    endpoints:
-      logs: '/kube/logs'
-      services: '/kube/services'
-  dxns:
-    server: 'wss://dxns1.kube.dxos.network/dxns/ws'
-    accountUri:
-  machine:
-    doAccessToken: ''
-    githubAccessToken: ''
-    githubUsername: ''
-    dnsDomain: 'kube.dxos.network'
-    npmAccessToken: ''
-  ipfs:
-    server: 'https://ipfs-enterprise.kube.dxos.network/dxos/ipfs/api'
-    gateway: 'https://ipfs-enterprise.kube.dxos.network/dxos/ipfs/gateway/'
-  signal:
-    server: 'wss://enterprise.kube.dxos.network/dxos/signal'
-    api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
-  ice:
-    - urls: 'stun:enterprise.kube.dxos.network:3478'
-    - urls: 'turn:enterprise.kube.dxos.network:3478'
-      username: 'dxos'
-      credential: 'dxos'
-    - urls: 'stun:discovery.kube.dxos.network:3478'
-    - urls: 'turn:discovery.kube.dxos.network:3478'
-      username: 'dxos'
-      credential: 'dxos'
-  kube:
-    publicUrl: '/console'
-  app:
-    prefix: '/app'
-    server: 'https://enterprise.kube.dxos.network'
-system:
-  certEndpoint: ''
+runtime:
+  services:
+    kube:
+      endpoints:
+        logs: '/kube/logs'
+        services: '/kube/services'
+        cert: ''
+      publicUrl: '/console'
+    dxns:
+      server: 'wss://dxns1.kube.dxos.network/dxns/ws'
+      accountUri:
+    machine:
+      doAccessToken: ''
+      githubAccessToken: ''
+      githubUsername: ''
+      dnsDomain: 'kube.dxos.network'
+      npmAccessToken: ''
+    ipfs:
+      server: 'https://ipfs-enterprise.kube.dxos.network/dxos/ipfs/api'
+      gateway: 'https://ipfs-enterprise.kube.dxos.network/dxos/ipfs/gateway/'
+    signal:
+      server: 'wss://enterprise.kube.dxos.network/dxos/signal'
+      api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
+    ice:
+      - urls: 'stun:enterprise.kube.dxos.network:3478'
+      - urls: 'turn:enterprise.kube.dxos.network:3478'
+        username: 'dxos'
+        credential: 'dxos'
+      - urls: 'stun:discovery.kube.dxos.network:3478'
+      - urls: 'turn:discovery.kube.dxos.network:3478'
+        username: 'dxos'
+        credential: 'dxos'
+    app:
+      prefix: '/app'
+      server: 'https://enterprise.kube.dxos.network'
+
+  cli:
+    app:
+      serve:
+        config: '~/.dx/remote.yml'
+        loginApp: 'dxos:app.keyhole'
+        keyPhrase: 'GoxWtucubK'
+    console:
+      package: '@dxos/kube-server'
+      channel: 'alpha'
+      bin: 'kube-server'
+    mdns:
+      package: '@dxos/mdns'
+      channel: 'beta'
+      bin: 'dxos-mdns'
+    signal:
+      package: '@dxos/signal'
+      channel: 'alpha'
+      bin: 'dxos-signal'
+    npmClient: 'yarn' # npm|yarn
+    channel: 'alpha'

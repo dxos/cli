@@ -28,13 +28,13 @@ export class DigitalOceanProvider implements Provider {
 
   constructor (config: any) {
     this._config = config;
-    this._npmAccessToken = this._config.get('services.machine.npmAccessToken');
-    this._dnsDomain = this._config.get('services.machine.dnsDomain');
+    this._npmAccessToken = this._config.get('runtime.services.machine.npmAccessToken');
+    this._dnsDomain = this._config.get('runtime.services.machine.dnsDomain');
 
     assert(this._npmAccessToken);
     assert(this._dnsDomain);
 
-    const doAccessToken = config.get('services.machine.doAccessToken');
+    const doAccessToken = config.get('runtime.services.machine.doAccessToken');
     this._session = new DigitalOcean(doAccessToken, 100);
   }
 
@@ -97,7 +97,7 @@ export class DigitalOceanProvider implements Provider {
            - echo "//registry.npmjs.org/:_authToken=${this._npmAccessToken}" >> $HOME/.npmrc
            - npm install --global yarn
            - yarn global add @dxos/cli@${cliChannel}
-           - dx profile init --name enterprise --template-url https://git.io/JKpLV
+           - dx profile init --name enterprise --template-url https://git.io/JDeiz
            - dx profile set enterprise
            - dx extension install @dxos/cli-kube --version ${cliChannel}
            - dx kube install ${dev ? '--dev' : ''}

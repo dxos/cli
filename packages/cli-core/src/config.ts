@@ -9,7 +9,7 @@ import yaml from 'js-yaml';
 import os from 'os';
 import path from 'path';
 
-import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
+import { Config, ConfigV1Object, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
 
 import envmap from './env-map.json';
 
@@ -65,7 +65,7 @@ export const getActiveProfilePath = (profile?: string) => {
   const defaultProfilePath = getDefaultProfilePath();
   const defaultProfileExists = fs.existsSync(defaultProfilePath);
 
-  profile = profile || process.env.WIRE_PROFILE || process.env.DX_PROFILE;
+  profile = (profile || process.env.DX_PROFILE) || process.env.WIRE_PROFILE;
   if (!profile && !defaultProfileExists) {
     return null;
   }
@@ -110,9 +110,17 @@ export const getConfig = (configFilePath: string, argvConf = {}) => {
     throw new Error(`${configFilePath} does not exist.`);
   }
 
-  const customConfig = yaml.load(fs.readFileSync(configFilePath).toString());
+  const profileConfig = yaml.load(fs.readFileSync(configFilePath).toString());
 
-  const config = new Config(
+  // TODO(egorgripasov): Cleanup - Adapter to config v1.
+  const customConfig = (!profileConfig.version) ? {
+    version: 1,
+    runtime: {
+      ...profileConfig
+    }
+  } : profileConfig;
+
+  const config = new Config<ConfigV1Object>(
     argvConf,
     mapFromKeyValues(envmap, process.env),
     customConfig

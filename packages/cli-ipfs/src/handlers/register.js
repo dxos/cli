@@ -12,7 +12,7 @@
 
 // export const register = (config) => async (argv) => {
 //   const { txKey, name, cid, contentType, fileName, quiet = false } = argv;
-//   const wnsConfig = config.get('services.wns');
+//   const wnsConfig = config.get('runtime.services.wns');
 //   const { server, userKey, bondId, chainId } = wnsConfig;
 
 //   assert(server, 'Invalid WNS endpoint.');

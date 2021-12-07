@@ -60,7 +60,7 @@ export const UpgradeModule = ({ config }) => ({
   builder: yargs => yargs
     .version(false)
     .option('npm-client')
-    .option('channel', { default: config.get('cli.channel') })
+    .option('channel', { default: config.get('runtime.cli.channel') })
     .option('force', { type: 'boolean', default: false })
     .option('version'),
 

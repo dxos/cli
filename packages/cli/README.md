@@ -15,7 +15,7 @@ To create a profile from a template, pass a profile name and template URL.
 Example:
 
 ```bash
-$ dx profile init --name enterprise --template-url https://git.io/JKpLV
+$ dx profile init --name enterprise --template-url https://git.io/JDeiz
 ```
 
 Profiles are stored in the `~/.dx/profile` folder. To further customize a profile, edit the profile configuration file.

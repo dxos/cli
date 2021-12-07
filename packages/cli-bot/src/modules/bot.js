@@ -24,9 +24,9 @@ export const BotModule = ({ config, stateManager, /* getReadlineInterface, */ cl
             command: ['install', 'upgrade'],
             describe: 'Download & Install @dxos/botkit binary.',
             builder: yargs => yargs.version(false)
-              .option('npmClient', { default: config.get('cli.npmClient') })
+              .option('npmClient', { default: config.get('runtime.cli.npmClient') })
               .option('dry-run', { type: 'boolean', default: false })
-              .option('channel', { default: config.get('cli.botFactory.channel') })
+              .option('channel', { default: config.get('runtime.cli.botFactory.channel') })
               .option('version'),
 
             handler: asyncHandler(install(config))

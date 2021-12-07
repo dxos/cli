@@ -14,7 +14,7 @@
 
 // export const register = (config, { getPadRecord }) => async (argv) => {
 //   const { verbose, version, namespace, 'dry-run': noop, txKey } = argv;
-//   const wnsConfig = config.get('services.wns');
+//   const wnsConfig = config.get('runtime.services.wns');
 //   const { server, userKey, bondId, chainId } = wnsConfig;
 
 //   assert(server, 'Invalid WNS endpoint.');

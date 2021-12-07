@@ -60,7 +60,7 @@ export const IPFSModule = ({ config }) => ({
             logFile: IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE,
             background: true
           };
-          const { server } = config.get('services.dxns');
+          const { server } = config.get('runtime.services.dxns');
           await swarmConnectRunable.run(
             [server, connectInterval * 1000, connectIpv6],
             swarmConnectorOptions
@@ -113,7 +113,7 @@ export const IPFSModule = ({ config }) => ({
   //     .option('platform', { type: 'string' }),
 
   //   handler: asyncHandler(async argv => {
-  //     const { server, chainId } = config.get('services.wns');
+  //     const { server, chainId } = config.get('runtime.services.wns');
   //     assert(server, 'Invalid WNS endpoint.');
   //     assert(chainId, 'Invalid WNS Chain ID.');
 

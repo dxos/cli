@@ -29,7 +29,7 @@ export const start = (config) => async ({ singleInstance, logFile = DEFAULT_LOG_
     logFile
   };
 
-  const bin = config.get('cli.botFactory.bin');
+  const bin = config.get('runtime.cli.botFactory.bin');
   const botFactoryRunnable = new Runnable(bin, []);
 
   await botFactoryRunnable.run([], options);
