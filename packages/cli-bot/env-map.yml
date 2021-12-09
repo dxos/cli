@@ -7,35 +7,27 @@ DX_SIGNAL_ENDPOINT:
 DX_ICE_ENDPOINTS:
   path: runtime.services.ice
   type: json
-DX_WNS_ENDPOINT:
-  path: runtime.services.wns.server
-DX_WNS_USER_KEY:
-  path: runtime.services.wns.userKey
-DX_WNS_BOND_ID:
-  path: runtime.services.wns.bondId
-DX_WNS_CHAIN_ID:
-  path: runtime.services.wns.chainId
-DX_IPFS_SERVER:
-  path: runtime.services.ipfs.server
 DX_DXNS_SERVER:
   path: runtime.services.dxns.server
+DX_IPFS_SERVER:
+  path: runtime.services.ipfs.server
 DX_IPFS_GATEWAY:
   path: runtime.services.ipfs.gateway
-DX_BOT_RESET:
-  path: runtime.bot.reset
-  type: boolean
-DX_BOT_SPEC:
-  path: runtime.bot.botSpec
-  type: json
-DX_BOT_INVITATION:
-  path: runtime.bot.invitation
-  type: json
-DX_BOT_PEER_ID:
-  path: runtime.bot.peerId
+# DX_BOT_RESET:
+#   path: runtime.bot.reset
+#   type: boolean
+# DX_BOT_SPEC:
+#   path: runtime.bot.botSpec
+#   type: json
+# DX_BOT_INVITATION:
+#   path: runtime.bot.invitation
+#   type: json
+# DX_BOT_PEER_ID:
+#   path: runtime.bot.peerId
 DX_BOT_TOPIC:
   path: runtime.bot.topic
 DX_BOT_SECRET_KEY:
   path: runtime.bot.secretKey
-DX_BOT_LOCAL_DEV:
-  path: runtime.bot.localDev
-  type: boolean
+# DX_BOT_LOCAL_DEV:
+#   path: runtime.bot.localDev
+#   type: boolean

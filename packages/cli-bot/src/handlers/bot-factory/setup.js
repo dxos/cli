@@ -38,7 +38,7 @@ const setupPrebuilds = async (cliNodePath) => {
   await fs.copy(prebuildsPath, prebuildsBotsPath);
 };
 
-export const setup = (config, { includeNodePath = false } = {}) => async ({ topic, secretKey, localDev, reset }) => {
+export const setup = (config, { includeNodePath = false } = {}) => async ({ topic, secretKey /*, localDev, reset */ }) => {
   const cliNodePath = await getGlobalModulesPath(await isGlobalYarn(pkg.package.name));
 
   await setupPrebuilds(cliNodePath);
@@ -63,11 +63,10 @@ export const setup = (config, { includeNodePath = false } = {}) => async ({ topi
     ).join(','),
     NODE_OPTIONS: '',
     ...mapToKeyValues(load(envmap), config.values),
-    DX_BOT_RESET: reset,
     DX_BOT_TOPIC,
-    DX_BOT_SECRET_KEY,
-    DX_BOT_LOCAL_DEV: localDev,
-    DEBUG_HIDE_DATE: true,
+    // DX_BOT_SECRET_KEY,
+    // DX_BOT_LOCAL_DEV: localDev,
+    // DEBUG_HIDE_DATE: true,
     ...(includeNodePath ? { DX_CLI_NODE_PATH: cliNodePath } : {})
   };
 

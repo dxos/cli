@@ -34,8 +34,6 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/botkit": "2.16.8",
-    "@dxos/botkit-client": "2.16.8",
     "@dxos/cli-core": "^2.11.0-alpha.0",
     "@dxos/config": "2.18.3",
     "@dxos/crypto": "2.18.3",
