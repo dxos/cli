@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.11.1](https://www.github.com/dxos/cli/compare/v2.11.0...v2.11.1) (2021-12-09)
+
+
+### Bug Fixes
+
+* setup botfactory v2 ([#355](https://www.github.com/dxos/cli/issues/355)) ([7908873](https://www.github.com/dxos/cli/commit/7908873e36573b339077f2e57105417eeb5d14c8))
+
 ## [2.11.0](https://www.github.com/dxos/cli/compare/v2.10.0...v2.11.0) (2021-12-07)
 
 
