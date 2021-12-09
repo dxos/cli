@@ -232,12 +232,12 @@ describe('CLI', () => {
     });
   });
 
-  describe('bot', () => {
-    it('query bots', async () => {
-      const bots = await cmd('bot query --json').json();
-      expect(bots.length).toBe(1);
-    });
-  });
+  // describe('bot', () => {
+  //   it('query bots', async () => {
+  //     const bots = await cmd('bot query --json').json();
+  //     expect(bots.length).toBe(1);
+  //   });
+  // });
 
   describe('kube', () => {
     it('register kube', async () => {
