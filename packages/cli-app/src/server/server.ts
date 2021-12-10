@@ -44,7 +44,7 @@ const ipfsRouter = (ipfsGateway: string) => (cid: string) => async (req: Request
   const url = urlJoin(ipfsGateway, cid, resourcePath);
   log('Fetching: ' + url);
   const response = await fetch(url);
-  response.body?.pipe(res);
+  response.body.pipe(res);
 };
 
 /**
