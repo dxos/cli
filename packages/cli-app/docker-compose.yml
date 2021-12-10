@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app-server:
+    image: 'ghcr.io/dxos/app-server'
+    container_name: app-server
+    ports:
+      - 5999: '5999'
+    command: 'dx app serve'

@@ -1,0 +1,94 @@
+{
+  "name": "@dxos/cli-core",
+  "version": "2.11.1-alpha.0",
+  "description": "CLI Core",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dxos/cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dxos/cli.git"
+  },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf ./dist",
+    "cli": "ts-node --files ./src/index.ts",
+    "lint": "eslint './src/**/*.{ts,js}'",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
+  },
+  "jest": {
+    "preset": "ts-jest/presets/default",
+    "cacheDirectory": "/tmp/jest",
+    "testEnvironment": "node",
+    "verbose": false
+  },
+  "dependencies": {
+    "@dxos/config": "2.18.3",
+    "@dxos/crypto": "2.18.3",
+    "@dxos/debug": "2.18.3",
+    "@types/yargs": "^16.0.1",
+    "assert": "^2.0.0",
+    "console.table": "^0.10.0",
+    "dockerode": "^3.2.1",
+    "download": "^7.1.0",
+    "find-root": "^1.1.0",
+    "fs-extra": "9.0.0",
+    "js-yaml": "^3.13.1",
+    "lodash.defaults": "^4.2.0",
+    "lodash.defaultsdeep": "^4.6.1",
+    "lodash.get": "^4.4.2",
+    "lodash.isarray": "^4.0.0",
+    "lodash.omit": "^4.5.0",
+    "lodash.set": "^4.3.2",
+    "mkdirp": "^0.5.1",
+    "ndjson-parse": "^1.0.4",
+    "node-cmake": "2.3.2",
+    "node-pre-gyp": "^0.13.0",
+    "node-yaml": "^4.0.1",
+    "object-hash": "^2.1.1",
+    "ora": "^3.4.0",
+    "otplib": "^12.0.1",
+    "pify": "^5.0.0",
+    "pm2": "^4.2.3",
+    "qrcode": "^1.4.4",
+    "qrcode-terminal": "^0.12.0",
+    "read-pkg-up": "^6.0.0",
+    "syswide-cas": "^5.3.0",
+    "tree-kill": "^1.2.1",
+    "yargs": "^16.2.0",
+    "yargs-parser": "^19.0.4",
+    "yargs-unparser": "^1.6.4"
+  },
+  "devDependencies": {
+    "@dxos/eslint-plugin": "~1.0.19",
+    "@types/dockerode": "^3.2.3",
+    "@types/download": "^6.2.4",
+    "@types/fs-extra": "^9.0.4",
+    "@types/jest": "^26.0.7",
+    "@types/js-yaml": "^3.12.5",
+    "@types/lodash.get": "^4.4.6",
+    "@types/lodash.omit": "^4.5.6",
+    "@types/lodash.set": "^4.3.6",
+    "@types/object-hash": "^2.1.0",
+    "eslint": "^7.13.0",
+    "jest": "^27.2.0",
+    "ts-jest": "^27.0.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.0.5"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "c147f853bc07376a163cee05c3c44198387c5655"
+}

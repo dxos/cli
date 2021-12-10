@@ -1,0 +1,17 @@
+version: 1
+
+module:
+  name: dxos:app.test
+  type: dxos:type.app
+
+  record:
+    app: # Same as dxos.type.App (from DXNS)
+      contentType:
+        - 'dxos:type.chess.board'
+
+build:
+  command: npm run build
+
+runtime:
+  props:
+    title: "Test App"
