@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-core",
-  "version": "2.11.1",
+  "version": "2.11.2-alpha.0",
   "description": "CLI Core",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
   "license": "AGPL-3.0",
