@@ -457,5 +457,136 @@
     //   "projectFolder": "tools/my-toolchain",
     //   "reviewCategory": "tools"
     // }
+
+    //
+    // Core functionality
+    //
+
+    {
+      "packageName": "@dxos/cli",
+      "projectFolder": "packages/cli",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-core",
+      "projectFolder": "packages/cli-core",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    //
+    // Extensions
+    //
+
+    {
+      "packageName": "@dxos/cli-app",
+      "projectFolder": "packages/cli-app",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-bot",
+      "projectFolder": "packages/cli-bot",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-chat",
+      "projectFolder": "packages/cli-chat",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-console",
+      "projectFolder": "packages/cli-console",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-data",
+      "projectFolder": "packages/cli-data",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-dxns",
+      "projectFolder": "packages/cli-dxns",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-echo",
+      "projectFolder": "packages/cli-echo",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-halo",
+      "projectFolder": "packages/cli-halo",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-ipfs",
+      "projectFolder": "packages/cli-ipfs",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-kube",
+      "projectFolder": "packages/cli-kube",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-mdns",
+      "projectFolder": "packages/cli-mdns",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-mesh",
+      "projectFolder": "packages/cli-mesh",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-pad",
+      "projectFolder": "packages/cli-pad",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    {
+      "packageName": "@dxos/cli-signal",
+      "projectFolder": "packages/cli-signal",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
+
+    //
+    // E2E
+    //
+
+    {
+      "packageName": "@dxos/cli-e2e-test",
+      "projectFolder": "packages/e2e",
+      "shouldPublish": true,
+      "versionPolicyName": "lockStepPolicy"
+    },
   ]
 }
