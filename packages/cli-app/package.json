@@ -38,7 +38,7 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/cli-core": "^2.11.1",
+    "@dxos/cli-core": "workspace:*",
     "@dxos/debug": "2.18.3",
     "@dxos/registry-client": "2.18.3",
     "@dxos/util": "^2.15.6",
@@ -73,7 +73,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.19",
+    "@dxos/eslint-plugin": "~1.0.20",
     "@types/body-parser": "^1.19.1",
     "@types/cli-progress": "^3.9.2",
     "@types/cookie-parser": "^1.4.2",

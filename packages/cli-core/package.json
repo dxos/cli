@@ -68,7 +68,7 @@
     "yargs-unparser": "^1.6.4"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.19",
+    "@dxos/eslint-plugin": "~1.0.20",
     "@types/dockerode": "^3.2.3",
     "@types/download": "^6.2.4",
     "@types/fs-extra": "^9.0.4",
