@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.11.2](https://www.github.com/dxos/cli/compare/v2.11.1...v2.11.2) (2021-12-10)
+
+
+### Bug Fixes
+
+* Revert Rushification ([#358](https://www.github.com/dxos/cli/issues/358)) ([dffac35](https://www.github.com/dxos/cli/commit/dffac353dfe54f0d96980824189618fb9f913db3))
+
 ### [2.11.1](https://www.github.com/dxos/cli/compare/v2.11.0...v2.11.1) (2021-12-09)
 
 
