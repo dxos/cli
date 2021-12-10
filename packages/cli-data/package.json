@@ -65,7 +65,11 @@
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
     "uuid": "^3.3.3",
-    "wait-for-expect": "^3.0.2"
+    "wait-for-expect": "^3.0.2",
+    "@types/node": "~16.11.12",
+    "@types/yargs": "^16.0.1",
+    "@types/jest": "^26.0.7",
+    "@types/fs-extra": "^9.0.4"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

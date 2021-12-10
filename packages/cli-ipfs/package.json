@@ -48,7 +48,8 @@
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
     "mime-types": "^2.1.27",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "@polkadot/api": "4.17.1"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.20",
@@ -56,7 +57,10 @@
     "jest": "^27.2.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "@types/node": "~16.11.12",
+    "@types/yargs": "^16.0.1",
+    "@types/jest": "^26.0.7"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
