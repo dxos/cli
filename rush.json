@@ -584,9 +584,7 @@
 
     {
       "packageName": "@dxos/cli-e2e-test",
-      "projectFolder": "packages/e2e",
-      "shouldPublish": true,
-      "versionPolicyName": "lockStepPolicy"
-    },
+      "projectFolder": "packages/e2e"
+    }
   ]
 }
