@@ -23,6 +23,7 @@ jobs:
         \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
 
         npm install -g @microsoft/rush pnpm
+        sudo ./common/scripts/install-dependencies.sh
 
         # Install dependencies
         echo "::group::Install"
