@@ -1,51 +1,9 @@
 {
-  "name": "@dxos/cli-kit",
-  "version": "2.11.1",
-  "description": "DXOS CLI Monorepo",
-  "private": true,
-  "scripts": {
-    "build": "lerna run build",
-    "clean": "lerna run clean",
-    "lint": "lerna run lint",
-    "lint:fix": "lerna run lint -- --fix",
-    "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn npm codeload.github.com --validate-https",
-    "lint:staged": "lint-staged",
-    "sort-package-json": "lerna exec npx sort-package-json",
-    "test": "lerna run test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dxos/cli.git"
-  },
-  "keywords": [],
-  "author": "DXOS.org",
   "license": "AGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/dxos/cli/issues"
-  },
-  "homepage": "https://github.com/dxos/cli#readme",
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
-  "lint-staged": {
-    "*.js": "eslint"
-  },
-  "pre-commit": [
-    "lint:staged",
-    "lint:lockfile"
+  "workspaces": [
+    "packages/*/*"
   ],
-  "dependencies": {
-    "lerna": "^3.19.0"
-  },
-  "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.19",
-    "lint-staged": "^9.5.0",
-    "lockfile-lint": "^4.3.7",
-    "pre-commit": "^1.2.2"
-  },
-  "eslintConfig": {
-    "extends": "plugin:@dxos/recomended"
+  "scripts": {
+    "preinstall": "echo 'This project is using Rush Stack. More details in the readme.' && false"
   }
 }
