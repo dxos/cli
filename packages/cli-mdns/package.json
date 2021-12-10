@@ -48,7 +48,7 @@
     "@types/node": "~16.11.12",
     "@types/yargs": "^16.0.1",
     "@types/jest": "^26.0.7",
-    "expect": "^27.2.1"
+    "@types/node-fetch": "~3.0.3"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

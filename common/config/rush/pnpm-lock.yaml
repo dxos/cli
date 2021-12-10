@@ -820,6 +820,7 @@ importers:
       '@dxos/eslint-plugin': 1.0.20_eslint@7.32.0+typescript@4.5.3
       '@types/jest': 26.0.24
       '@types/node': 16.11.12
+      '@types/node-fetch': 3.0.3
       '@types/yargs': 16.0.4
       eslint: 7.32.0
       expect: 27.4.2
@@ -833,6 +834,7 @@ importers:
       '@dxos/eslint-plugin': ~1.0.20
       '@types/jest': ^26.0.7
       '@types/node': ~16.11.12
+      '@types/node-fetch': ~3.0.3
       '@types/yargs': ^16.0.1
       assert: ^2.0.0
       eslint: ^7.13.0
