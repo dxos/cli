@@ -1,6 +1,0 @@
-name: dxos/cli-app
-version: 0.0.1
-displayName: cli-app
-description: App proxy extension.
-command:
-  - app
