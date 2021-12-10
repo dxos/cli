@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-mesh",
-  "version": "2.11.1-alpha.0",
+  "version": "2.11.1",
   "description": "DXOS Network CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-mesh#readme",
   "license": "AGPL-3.0",
