@@ -68,7 +68,8 @@
     "json2yaml": "^1.1.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
-    "yaml2json": "^1.0.2"
+    "yaml2json": "^1.0.2",
+    "@types/node": "~16.11.12"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
