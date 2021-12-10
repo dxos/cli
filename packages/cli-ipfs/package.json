@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-ipfs",
-  "version": "2.11.1",
+  "version": "2.11.1-alpha.0",
   "description": "DXOS IPFS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-ipfs#readme",
   "license": "AGPL-3.0",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@dxos/async": "2.18.3",
-    "@dxos/cli-core": "workspace:*",
+    "@dxos/cli-core": "^2.11.1-alpha.0",
     "@dxos/debug": "2.18.3",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
@@ -48,20 +48,15 @@
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
     "mime-types": "^2.1.27",
-    "yargs": "^16.2.0",
-    "@polkadot/api": "4.17.1",
-    "@dxos/registry-client": "2.18.3"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.19",
     "eslint": "^7.13.0",
-    "jest": "^27.4.4",
+    "jest": "^27.2.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
-    "uuid": "^3.3.3",
-    "@types/node": "~16.11.12",
-    "@types/yargs": "^16.0.1",
-    "@types/jest": "~27.0.3"
+    "uuid": "^3.3.3"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

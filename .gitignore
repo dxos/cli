@@ -31,5 +31,3 @@ version.json
 
 # Tooling logs
 *.log*
-
-temp/
