@@ -2,6 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
+import waitForExpect from 'wait-for-expect';
+
 import { Client } from '@dxos/client';
 import { createKeyPair, PublicKey } from '@dxos/crypto';
 import { Awaited } from '@dxos/echo-db';
@@ -79,7 +81,9 @@ describe('cli-data: Party', () => {
     const inviteResult = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
     await joinCommand(bobStateManager).handler({ ...DEFAULT_ARGS, invitation: inviteResult.invitation, passcode: inviteResult.passcode });
 
-    expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
-    expect(await membersCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(2);
+    await waitForExpect(async () => {
+      expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
+      expect(await membersCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(2);
+    }, 3000, 1000);
   });
 });

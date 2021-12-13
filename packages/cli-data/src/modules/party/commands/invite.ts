@@ -32,7 +32,7 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOp
     assert(party, 'Invalid party.');
 
     const result: any = { partyKey: party.key.toHex() };
-    const { invitation: invite, passcode } = await stateManager.createSecretInvitation(party.key.toHex());
+    const { invitation: invite, passcode } = await stateManager.createInvitation(party);
 
     if (appUrl) {
       result.invitationUrl = path.join(

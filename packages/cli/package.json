@@ -41,8 +41,8 @@
   },
   "dependencies": {
     "@dxos/cli-core": "^2.11.2-alpha.0",
-    "@dxos/debug": "2.18.3",
-    "@dxos/random-access-multi-storage": "~2.18.3",
+    "@dxos/debug": "2.19.2",
+    "@dxos/random-access-multi-storage": "~2.19.2",
     "assert": "^2.0.0",
     "find-root": "^1.1.0",
     "fs-extra": "9.0.0",

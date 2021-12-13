@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "^2.11.2-alpha.0",
-    "@dxos/debug": "2.18.3",
+    "@dxos/debug": "2.19.2",
     "lodash-clean": "^2.2.1",
     "yargs": "^16.2.0"
   },
