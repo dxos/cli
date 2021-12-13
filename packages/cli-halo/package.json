@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "@dxos/cli-core": "^2.11.2-alpha.0",
-    "@dxos/crypto": "2.18.3",
-    "@dxos/debug": "2.18.3",
-    "@dxos/object-model": "2.18.3",
+    "@dxos/crypto": "2.19.2",
+    "@dxos/debug": "2.19.2",
+    "@dxos/object-model": "2.19.2",
     "assert": "^2.0.0",
     "yargs": "^16.2.0"
   },

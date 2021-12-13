@@ -14,23 +14,21 @@ import { decodeInvitation } from '../../../utils';
 import { DeviceOptions } from '../device';
 
 export interface DeviceJoinOptions extends DeviceOptions {
-  code: string,
-  passcode: string
+  code: string
 }
 
 const options = (yargs: Argv<DeviceOptions>): Argv<DeviceJoinOptions> => {
   return yargs
     .option('interactive', { hidden: true, default: true }) // override the default.
-    .option('code', { type: 'string', required: true })
-    .option('passcode', { type: 'string', required: true });
+    .option('code', { type: 'string', required: true });
 };
 
-export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataState, 'stateManager' | 'config' | 'profilePath'>): CommandModule<DeviceOptions, DeviceJoinOptions> => ({
+export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataState, 'stateManager' | 'config' | 'profilePath' | 'getReadlineInterface'>, secretProvider: Function): CommandModule<DeviceOptions, DeviceJoinOptions> => ({
   command: ['join'],
   describe: 'Join device invitation.',
   builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceJoinOptions>) => {
-    const { code, passcode } = argv;
+    const { code } = argv;
     if (stateManager.client) {
       throw new Error('Profile already initialized. Reset storage first. (`> storage reset`)');
     }
@@ -45,6 +43,10 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
     const client = await stateManager.getClient();
 
     const invitationDescriptor = InvitationDescriptor.fromQueryParameters(decodeInvitation(code));
-    await client.echo.halo.join(invitationDescriptor, async () => Buffer.from(passcode));
+
+    const finishInvitation = await client.joinHaloInvitation(invitationDescriptor);
+    const secret = await secretProvider();
+
+    await finishInvitation(secret.toString());
   })
 });
