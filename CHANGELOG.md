@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.11.3](https://www.github.com/dxos/cli/compare/v2.11.2...v2.11.3) (2021-12-13)
+
+
+### Bug Fixes
+
+* use latest protocols. ([#361](https://www.github.com/dxos/cli/issues/361)) ([fd143a1](https://www.github.com/dxos/cli/commit/fd143a10cda796b1465d0cef5bed42a0b69671e0))
+
 ### [2.11.2](https://www.github.com/dxos/cli/compare/v2.11.1...v2.11.2) (2021-12-10)
 
 
