@@ -11,7 +11,6 @@ import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
 import { StateManager } from '../../state-manager';
-import { decodeInvitation } from '../../utils';
 import { createCommand as createPartyCommand, listCommand as listPartyCommand } from '../party/commands';
 import { infoCommand, inviteCommand, joinCommand } from './commands';
 
@@ -25,7 +24,7 @@ class PinHelper {
   _pin: string | undefined
 
   setPin (value: string) {
-    this._pin = value
+    this._pin = value;
   }
 
   async getPin () {
@@ -87,9 +86,8 @@ describe('cli-data: Device', () => {
     const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
-      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper) ).handler({ ...DEFAULT_ARGS, code });
-    }
-
+      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code });
+    };
     await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 
     await waitForExpect(async () => {
@@ -105,9 +103,8 @@ describe('cli-data: Device', () => {
     const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
-      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper) ).handler({ ...DEFAULT_ARGS, code });
-    }
-
+      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code });
+    };
     await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 
     await waitForExpect(async () => {

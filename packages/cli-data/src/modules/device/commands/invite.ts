@@ -4,8 +4,8 @@
 
 import { Arguments, Argv, CommandModule } from 'yargs';
 
-import { log } from '@dxos/debug';
 import { asyncHandler, print } from '@dxos/cli-core';
+import { log } from '@dxos/debug';
 
 import { StateManager } from '../../../state-manager';
 import { DeviceOptions } from '../device';
@@ -23,7 +23,9 @@ export const inviteCommand = (stateManager: StateManager, onPinGenerated: (pin: 
     const client = await stateManager.getClient();
 
     let onFinish;
-    const invitationIsFinished = new Promise(resolve => onFinish = resolve);
+    const invitationIsFinished = new Promise(resolve => {
+      onFinish = resolve;
+    });
 
     const invitation = await client.createHaloInvitation({
       onFinish,

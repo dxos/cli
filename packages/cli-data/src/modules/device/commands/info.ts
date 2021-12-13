@@ -17,7 +17,7 @@ export const infoCommand = (stateManager: StateManager): CommandModule<DeviceOpt
     const client = await stateManager.getClient();
 
     const data = {
-      displayName: client.halo.profile?.username,
+      displayName: client.halo.profile?.username
       // identityKey: client.echo.halo.identity.identityKey?.publicKey.toHex(),
       // deviceKey: client.echo.halo.identity.deviceKey?.publicKey.toHex()
     };

@@ -4,8 +4,8 @@
 
 import { Argv } from 'yargs';
 
-import { log } from '@dxos/debug';
 import { CoreOptions } from '@dxos/cli-core';
+import { log } from '@dxos/debug';
 
 import { CliDataState } from '../../init';
 import { infoCommand, inviteCommand, joinCommand } from './commands';
@@ -23,7 +23,7 @@ export const DeviceModule = ({ stateManager, config, profilePath, getReadlineInt
       rl.question('Passcode: ', (pin: string) => {
         resolve(pin);
       });
-    })
+    });
   };
 
   const onPinGenerated = (pin: string) => {
@@ -38,5 +38,5 @@ export const DeviceModule = ({ stateManager, config, profilePath, getReadlineInt
       .command(joinCommand({ stateManager, config, profilePath }, secretProvider))
       .command(infoCommand(stateManager))
       .command(inviteCommand(stateManager, onPinGenerated))
-    };
-}
+  };
+};

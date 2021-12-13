@@ -4,7 +4,6 @@
 
 import waitForExpect from 'wait-for-expect';
 
-import { sleep } from '@dxos/async';
 import { Client } from '@dxos/client';
 import { createKeyPair, PublicKey } from '@dxos/crypto';
 import { Awaited } from '@dxos/echo-db';
@@ -83,10 +82,8 @@ describe('cli-data: Party', () => {
     await joinCommand(bobStateManager).handler({ ...DEFAULT_ARGS, invitation: inviteResult.invitation, passcode: inviteResult.passcode });
 
     await waitForExpect(async () => {
-
       expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
       expect(await membersCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(2);
-
     }, 3000, 1000);
   });
 });
