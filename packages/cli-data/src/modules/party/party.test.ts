@@ -88,7 +88,5 @@ describe('cli-data: Party', () => {
       expect(await membersCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(2);
 
     }, 3000, 1000);
-
-
   });
 });

@@ -4,7 +4,7 @@
 
 import waitForExpect from 'wait-for-expect';
 
-import { sleep } from '@dxos/async';
+import { sleep, waitForCondition } from '@dxos/async';
 import { Client } from '@dxos/client';
 import { createKeyPair /*, PublicKey */ } from '@dxos/crypto';
 import { Awaited } from '@dxos/echo-db';
@@ -20,6 +20,19 @@ const getReadlineInterface = () => {
 };
 
 const DEFAULT_ARGS = { $0: '', _: [], return: true };
+
+class PinHelper {
+  _pin: string | undefined
+
+  setPin (value: string) {
+    this._pin = value
+  }
+
+  async getPin () {
+    await waitForCondition(() => !!this._pin);
+    return this._pin;
+  }
+}
 
 jest.setTimeout(2000);
 
@@ -71,21 +84,13 @@ describe('cli-data: Device', () => {
   });
 
   test('Can join a device invitation.', async () => {
-    let invitationPin: string;
-    const onPinGenerated = (pin: string) => invitationPin = pin;
-
-    const secretProvider = async () => {
-      await waitForExpect(() => {
-        expect(invitationPin).toBeDefined();
-      });
-      return invitationPin;
-    }
+    const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
-      await joinCommand({ stateManager: bobStateManager }, secretProvider).handler({ ...DEFAULT_ARGS, code });
+      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper) ).handler({ ...DEFAULT_ARGS, code });
     }
 
-    await inviteCommand(aliceStateManager, onPinGenerated, onInvitationGenerated).handler(DEFAULT_ARGS) as any;
+    await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 
     await waitForExpect(async () => {
       expect((await infoCommand(aliceStateManager).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice');
@@ -97,11 +102,16 @@ describe('cli-data: Device', () => {
     await createPartyCommand(aliceStateManager).handler(DEFAULT_ARGS);
     expect(await listPartyCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
 
-    // const invitation = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
-    // await joinCommand({ stateManager: bobStateManager }).handler({ ...DEFAULT_ARGS, ...invitation }); // Bob joins device invitation.
+    const pinHelper = new PinHelper();
 
-    // await waitForExpect(async () => {
-    //   expect(await listPartyCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1); // The parties get synced up.
-    // }, 3000, 1000);
+    const onInvitationGenerated = async (code: string) => {
+      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper) ).handler({ ...DEFAULT_ARGS, code });
+    }
+
+    await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
+
+    await waitForExpect(async () => {
+      expect(await listPartyCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1); // The parties get synced up.
+    }, 3000, 1000);
   });
 });
