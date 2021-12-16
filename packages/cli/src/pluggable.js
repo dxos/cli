@@ -13,6 +13,7 @@ import isArray from 'lodash.isarray';
 import ora from 'ora';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
+import stripJsonComments from 'strip-json-comments';
 
 import { prepareExec, isGlobalYarn } from '@dxos/cli-core';
 
@@ -85,8 +86,13 @@ export class Pluggable {
   constructor ({ moduleName, version }) {
     this._moduleName = moduleName;
     this._version = version;
+
     this._workspaceRoot = getWorkspaceRoot(__dirname);
-    this._isInWorkspace = this._workspaceRoot && fs.existsSync(path.resolve(this._workspaceRoot, 'node_modules', this._moduleName));
+    this._workspacePackages = this._workspaceRoot && JSON.parse(stripJsonComments(fs.readFileSync(path.join(this._workspaceRoot, 'rush.json')).toString())).projects;
+    this._workspaceInfo = this._workspacePackages && this._workspacePackages.find(module => module.packageName === this._moduleName);
+
+    this._isInWorkspace = this._workspaceInfo && fs.existsSync(path.resolve(this._workspaceInfo.projectFolder));
+    console.log('>>>>>>>', moduleName, this._isInWorkspace);
     this._isInCWD = fs.existsSync(path.join(process.cwd(), 'package.json')) && require(path.join(process.cwd(), 'package.json'))?.name === this._moduleName;
     this._installed = this.isInstalled();
   }
@@ -113,7 +119,15 @@ export class Pluggable {
 
   get modulePath () {
     if (!this._modulePath) {
-      const pkgPath = require.resolve(this._isInCWD ? path.join(process.cwd(), 'package.json') : `${this.moduleName}/package.json`);
+      let pkgPath;
+      if (this._isInCWD) {
+        pkgPath = path.join(process.cwd(), 'package.json');
+      } else if (this._isInWorkspace) {
+        pkgPath = path.join(this._workspaceRoot, this._workspaceInfo.projectFolder, 'package.json');
+      } else {
+        pkgPath = `${this.moduleName}/package.json`;
+      }
+
       const pkg = require(pkgPath);
       this._modulePath = path.resolve(path.dirname(pkgPath), pkg.main);
     }

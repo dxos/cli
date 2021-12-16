@@ -34,7 +34,7 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/cli-core": "^2.11.2-alpha.0",
+    "@dxos/cli-core": "workspace:*",
     "@dxos/debug": "2.18.3",
     "assert": "^2.0.0",
     "chance": "^1.1.3",
