@@ -152,10 +152,10 @@ yarn build
 
 ### Running commands locally
 
-During local development there is a need for testing of a newly created / modified commands. For that purpose, any cli command could be called from the repo root via `yarn dx`, e.g.:
+During local development there is a need for testing of a newly created / modified commands. For that purpose, any cli command could be called from the repo root via `pnpm run dx`, e.g.:
 
 ```
-yarn dx dxns resource list --json
+pnpm run dx dxns resource list --json
 ```
 
 If the command ought to be called from the specific path (e.g. during app deployent), an alias for the local dx binary coud be created by adding such to the shell profile:
