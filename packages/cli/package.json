@@ -26,7 +26,7 @@
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/main.ts",
     "dev": "npm run cli",
-    "dx": "npm run cli",
+    "dx": "./bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "prebuild": "./scripts/get-extensions.sh &> /dev/null",

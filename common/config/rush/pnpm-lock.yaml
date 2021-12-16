@@ -88,7 +88,7 @@ importers:
       fs-extra: 9.0.0
       get-folder-size: 2.0.1
       hypercore-crypto: 1.0.0
-      ipfs-http-client: 48.1.1_node-fetch@3.1.0
+      ipfs-http-client: 48.1.1_node-fetch@2.6.6
       ipfs-utils: 5.0.1
       js-yaml: 3.14.1
       lodash-clean: 2.2.2
@@ -99,8 +99,9 @@ importers:
       lodash.omit: 4.5.0
       lodash.pick: 4.4.0
       lodash.set: 4.3.2
-      node-fetch: 3.1.0
+      node-fetch: 2.6.6
       node-yaml: 4.0.1_js-yaml@3.14.1
+      pify: 5.0.0
       semver: 7.3.5
       url-join: 4.0.1
       yargs: 16.2.0
@@ -184,8 +185,9 @@ importers:
       lodash.omit: ^4.5.0
       lodash.pick: ^4.4.0
       lodash.set: ^4.3.2
-      node-fetch: ^3.1.0
+      node-fetch: ^2.6.1
       node-yaml: ^4.0.1
+      pify: ^5.0.0
       semver: ^7.1.1
       ts-jest: ^27.0.0
       ts-node: ^10.2.1
@@ -215,7 +217,7 @@ importers:
       lodash.omit: 4.5.0
       lodash.pick: 4.4.0
       lodash.set: 4.3.2
-      node-fetch: 3.1.0
+      node-fetch: 2.6.6
       node-yaml: 4.0.1_js-yaml@3.14.1
       read-pkg-up: 6.0.0
       semver: 7.3.5
@@ -257,7 +259,7 @@ importers:
       lodash.omit: ^4.5.0
       lodash.pick: ^4.4.0
       lodash.set: ^4.3.2
-      node-fetch: ^3.1.0
+      node-fetch: ^2.6.1
       node-yaml: ^4.0.1
       read-pkg-up: ^6.0.0
       semver: ^7.1.1
@@ -314,11 +316,11 @@ importers:
       download: 7.1.0
       fs-extra: 9.0.0
       hypercore-crypto: 1.0.0
-      ipfs-http-client: 48.1.1_node-fetch@3.1.0
+      ipfs-http-client: 48.1.1_node-fetch@2.6.6
       js-yaml: 3.14.1
       lodash-clean: 2.2.2
       lodash.isequal: 4.5.0
-      node-fetch: 3.1.0
+      node-fetch: 2.6.6
       node-yaml: 4.0.1_js-yaml@3.14.1
       semver: 7.3.5
       tar: 6.1.11
@@ -351,7 +353,7 @@ importers:
       js-yaml: ^3.13.1
       lodash-clean: ^2.2.1
       lodash.isequal: ^4.5.0
-      node-fetch: ^3.1.0
+      node-fetch: ^2.6.1
       node-yaml: ^4.0.1
       semver: ^7.1.1
       tar: ^6.0.1
@@ -554,14 +556,14 @@ importers:
       bn.js: 4.12.0
       cli-progress: 3.9.1
       get-folder-size: 2.0.1
-      ipfs-http-client: 48.1.1_node-fetch@3.1.0
+      ipfs-http-client: 48.1.1_node-fetch@2.6.6
       lodash-clean: 2.2.2
       lodash.get: 4.4.2
       lodash.mapvalues: 4.6.0
       lodash.omit: 4.5.0
       lodash.pick: 4.4.0
       lodash.set: 4.3.2
-      node-fetch: 3.1.0
+      node-fetch: 2.6.6
       pify: 5.0.0
       protobufjs: 6.11.2
       yargs: 16.2.0
@@ -621,7 +623,7 @@ importers:
       lodash.omit: ^4.5.0
       lodash.pick: ^4.4.0
       lodash.set: ^4.3.2
-      node-fetch: ^3.1.0
+      node-fetch: ^2.6.1
       pify: ^5.0.0
       protobufjs: ^6.10.2
       ts-jest: ^27.0.0
@@ -5798,12 +5800,6 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==
-  /data-uri-to-buffer/4.0.0:
-    dev: false
-    engines:
-      node: '>= 12'
-    resolution:
-      integrity: sha512-Vr3mLBA8qWmcuschSLAOogKgQ/Jwxulv3RNE4FXnYWRGujzrRWQI4m12fQqRkwX06C0KanhLr4hK+GydchZsaA==
   /data-urls/2.0.0:
     dependencies:
       abab: 2.0.5
@@ -6117,10 +6113,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-miDiVSI6KSNbi4SVifzO/reD8rMnxgrlnkrlkugOLQpWQTe2qMdHsZp5DmfKjxNE+/T3VAAYLQUZMv9SMr6+AA==
-  /dns-over-http-resolver/1.2.3_node-fetch@3.1.0:
+  /dns-over-http-resolver/1.2.3_node-fetch@2.6.6:
     dependencies:
       debug: 4.3.3
-      native-fetch: 3.0.0_node-fetch@3.1.0
+      native-fetch: 3.0.0_node-fetch@2.6.6
       receptacle: 1.3.2
     dev: false
     peerDependencies:
@@ -7095,14 +7091,6 @@ packages:
       pend: 1.2.0
     resolution:
       integrity: sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
-  /fetch-blob/3.1.3:
-    dependencies:
-      web-streams-polyfill: 3.2.0
-    dev: false
-    engines:
-      node: ^12.20 || >= 14.13
-    resolution:
-      integrity: sha512-ax1Y5I9w+9+JiM+wdHkhBoxew+zG4AJ2SvAD1v1szpddUIiPERVGBxrMcB2ZqW0Y3PP8bOWYv2zqQq1Jp2kqUQ==
   /figures/3.2.0:
     dependencies:
       escape-string-regexp: 1.0.5
@@ -7294,14 +7282,6 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
-  /formdata-polyfill/4.0.10:
-    dependencies:
-      fetch-blob: 3.1.3
-    dev: false
-    engines:
-      node: '>=12.20.0'
-    resolution:
-      integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==
   /forwarded/0.2.0:
     engines:
       node: '>= 0.6'
@@ -8311,7 +8291,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V+OHCkqf/263jHU0Fc9Rx/uDuwlz3PHxl3qu6a5ka/mNi6gucbFuI53jWsevCrOOY9giWMLB29RINGmCV5dFeQ==
-  /ipfs-core-utils/0.5.4_node-fetch@3.1.0:
+  /ipfs-core-utils/0.5.4_node-fetch@2.6.6:
     dependencies:
       any-signal: 2.1.2
       blob-to-it: 1.0.4
@@ -8322,8 +8302,8 @@ packages:
       it-all: 1.0.6
       it-map: 1.0.6
       it-peekable: 1.0.3
-      multiaddr: 8.1.2_node-fetch@3.1.0
-      multiaddr-to-uri: 6.0.0_node-fetch@3.1.0
+      multiaddr: 8.1.2_node-fetch@2.6.6
+      multiaddr-to-uri: 6.0.0_node-fetch@2.6.6
       parse-duration: 0.4.4
       timeout-abort-controller: 1.1.1
       uint8arrays: 1.1.0
@@ -8365,14 +8345,14 @@ packages:
       npm: '>=3.0.0'
     resolution:
       integrity: sha512-DZVm6EvB3zCxuvEwW5blDKigKtvAWWzPSIQEIUeWr04qzVThEe5eYK+Siu1qxrpthnBK1fYxS3okK2WI4kmluA==
-  /ipfs-http-client/48.1.1_node-fetch@3.1.0:
+  /ipfs-http-client/48.1.1_node-fetch@2.6.6:
     dependencies:
       any-signal: 2.1.2
       bignumber.js: 9.0.2
       cids: 1.1.9
       debug: 4.3.3
       form-data: 3.0.1
-      ipfs-core-utils: 0.5.4_node-fetch@3.1.0
+      ipfs-core-utils: 0.5.4_node-fetch@2.6.6
       ipfs-utils: 5.0.1
       ipld-block: 0.11.1
       ipld-dag-cbor: 0.17.1
@@ -8383,7 +8363,7 @@ packages:
       it-tar: 1.2.2
       it-to-stream: 0.1.2
       merge-options: 2.0.0
-      multiaddr: 8.1.2_node-fetch@3.1.0
+      multiaddr: 8.1.2_node-fetch@2.6.6
       multibase: 3.1.2
       multicodec: 2.1.3
       multihashes: 3.1.2
@@ -10355,9 +10335,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-OjpkVHOXEmIKMO8WChzzQ7aZQcSQX8squxmvtDbRpy7/QNmJ3Z7jv6qyD74C28QtaeNie8O8ngW2AkeiMmKP7A==
-  /multiaddr-to-uri/6.0.0_node-fetch@3.1.0:
+  /multiaddr-to-uri/6.0.0_node-fetch@2.6.6:
     dependencies:
-      multiaddr: 8.1.2_node-fetch@3.1.0
+      multiaddr: 8.1.2_node-fetch@2.6.6
     dev: false
     peerDependencies:
       node-fetch: '*'
@@ -10376,11 +10356,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-r13IzW8+Sv9zab9Gt8RPMIN2WkptIPq99EpAzg4IbJ/zTELhiEwXWr9bAmEatSCI4j/LSA6ESJzvz95JZ+ZYXQ==
-  /multiaddr/8.1.2_node-fetch@3.1.0:
+  /multiaddr/8.1.2_node-fetch@2.6.6:
     dependencies:
       cids: 1.1.9
       class-is: 1.1.0
-      dns-over-http-resolver: 1.2.3_node-fetch@3.1.0
+      dns-over-http-resolver: 1.2.3_node-fetch@2.6.6
       err-code: 2.0.3
       is-ip: 3.1.0
       multibase: 3.1.2
@@ -10660,9 +10640,9 @@ packages:
       node-fetch: '*'
     resolution:
       integrity: sha512-G3Z7vx0IFb/FQ4JxvtqGABsOTIqRWvgQz6e+erkB+JJD6LrszQtMozEHI4EkmgZQvnGHrpLVzUWk7t4sJCIkVw==
-  /native-fetch/3.0.0_node-fetch@3.1.0:
+  /native-fetch/3.0.0_node-fetch@2.6.6:
     dependencies:
-      node-fetch: 3.1.0
+      node-fetch: 2.6.6
     dev: false
     peerDependencies:
       node-fetch: '*'
@@ -10750,16 +10730,6 @@ packages:
       node: 4.x || >=6.0.0
     resolution:
       integrity: sha512-Z8/6vRlTUChSdIgMa51jxQ4lrw/Jy5SOW10ObaA47/RElsAN2c5Pn8bTgFGWn/ibwzXTE8qwr1Yzx28vsecXEA==
-  /node-fetch/3.1.0:
-    dependencies:
-      data-uri-to-buffer: 4.0.0
-      fetch-blob: 3.1.3
-      formdata-polyfill: 4.0.10
-    dev: false
-    engines:
-      node: ^12.20.0 || ^14.13.1 || >=16.0.0
-    resolution:
-      integrity: sha512-QU0WbIfMUjd5+MUzQOYhenAazakV7Irh1SGkWCsRzBwvm4fAhzEUaHMJ6QLP7gWT6WO9/oH2zhKMMGMuIrDyKw==
   /node-gyp-build/4.1.1:
     hasBin: true
     resolution:
@@ -13684,12 +13654,6 @@ packages:
       '@zxing/text-encoding': 0.9.0
     resolution:
       integrity: sha512-HYLeVCdJ0+lBYV2FvNZmv3HJ2Nt0QYXqZojk3d9FJOLkwnuhzM9tmamh8d7HPM8QqjKH8DeHkFTx+CFlWpZZDA==
-  /web-streams-polyfill/3.2.0:
-    dev: false
-    engines:
-      node: '>= 8'
-    resolution:
-      integrity: sha512-EqPmREeOzttaLRm5HS7io98goBgZ7IVz79aDvqjD0kYXLtFZTc0T/U6wHTPKyIjb+MdN7DFIIX6hgdBEpWmfPA==
   /webidl-conversions/3.0.1:
     resolution:
       integrity: sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=

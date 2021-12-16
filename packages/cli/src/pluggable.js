@@ -91,9 +91,9 @@ export class Pluggable {
     this._workspacePackages = this._workspaceRoot && JSON.parse(stripJsonComments(fs.readFileSync(path.join(this._workspaceRoot, 'rush.json')).toString())).projects;
     this._workspaceInfo = this._workspacePackages && this._workspacePackages.find(module => module.packageName === this._moduleName);
 
-    this._isInWorkspace = this._workspaceInfo && fs.existsSync(path.resolve(this._workspaceInfo.projectFolder));
-    console.log('>>>>>>>', moduleName, this._isInWorkspace);
+    this._isInWorkspace = this._workspaceInfo && fs.existsSync(path.join(this._workspaceRoot, this._workspaceInfo.projectFolder));
     this._isInCWD = fs.existsSync(path.join(process.cwd(), 'package.json')) && require(path.join(process.cwd(), 'package.json'))?.name === this._moduleName;
+
     this._installed = this.isInstalled();
   }
 

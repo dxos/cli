@@ -58,7 +58,6 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
 };
 
 const initDXNSCliState = async (state: any) => {
-  console.log('>>>INIT DXNS>>>');
   const { config, profilePath, profileExists } = state;
 
   if (profilePath && profileExists) {
