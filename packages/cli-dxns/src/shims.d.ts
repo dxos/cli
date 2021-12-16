@@ -3,3 +3,4 @@
 //
 
 declare module 'lodash-clean';
+declare module 'node-fetch';

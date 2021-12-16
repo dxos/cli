@@ -25,6 +25,7 @@
     "build": "tsc && cp -R ./*.yml dist",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
+    "dx": "../cli/bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
@@ -37,7 +38,7 @@
   },
   "dependencies": {
     "@dxos/async": "2.18.3",
-    "@dxos/cli-core": "^2.11.2-alpha.0",
+    "@dxos/cli-core": "workspace:*",
     "@dxos/config": "2.18.3",
     "@dxos/crypto": "2.18.3",
     "@dxos/debug": "2.18.3",
@@ -56,7 +57,8 @@
     "lodash.omit": "^4.5.0",
     "lodash.pick": "^4.4.0",
     "lodash.set": "^4.3.2",
-    "node-fetch": "^3.1.0",
+    "node-fetch": "^2.6.1",
+    "pify": "^5.0.0",
     "protobufjs": "^6.10.2",
     "yargs": "^16.2.0"
   },

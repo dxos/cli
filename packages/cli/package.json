@@ -26,7 +26,7 @@
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/main.ts",
     "dev": "npm run cli",
-    "dx": "npm run cli",
+    "dx": "./bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "prebuild": "./scripts/get-extensions.sh &> /dev/null",
@@ -40,7 +40,7 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/cli-core": "^2.11.2-alpha.0",
+    "@dxos/cli-core": "workspace:*",
     "@dxos/debug": "2.18.3",
     "@dxos/random-access-multi-storage": "~2.18.3",
     "assert": "^2.0.0",
@@ -60,6 +60,7 @@
     "ora": "^3.4.0",
     "read-pkg-up": "^6.0.0",
     "semver": "^7.1.1",
+    "strip-json-comments": "3.1.1",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
