@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@dxos/async": "2.19.2",
-    "@dxos/eslint-plugin": "~1.0.19",
+    "@dxos/eslint-plugin": "~1.0.20",
     "@dxos/signal": "2.19.2",
     "@types/lockfile": "^1.0.2",
     "eslint": "^7.13.0",

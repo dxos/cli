@@ -61,7 +61,7 @@
     "uuid": "^3.3.3",
     "@types/node": "~16.11.12",
     "@types/yargs": "^16.0.1",
-    "@types/jest": "^26.0.7"
+    "@types/jest": "~27.0.3"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

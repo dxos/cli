@@ -51,7 +51,7 @@
     "mime-types": "^2.1.27",
     "yargs": "^16.2.0",
     "@polkadot/api": "4.17.1",
-    "@dxos/registry-client": "2.18.3"
+    "@dxos/registry-client": "2.19.2"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.20",
