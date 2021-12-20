@@ -70,9 +70,9 @@ $ dx app
 In order to install arbitrary extension, `dx extension install` command could be used:
 
 ```
-$ dx extension install @dxos/cli-ipfs --version beta
+$ dx extension install @dxos/cli-ipfs --version dev
 
-✔ Installing @dxos/cli-ipfs@beta
+✔ Installing @dxos/cli-ipfs@dev
 ```
 
 View installed extensions:
