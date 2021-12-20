@@ -15,13 +15,13 @@ If you are unfamiliar with DXOS, see our [website](https://dxos.org) for more in
 Install CLI globally:
 
 ```bash
-$ yarn global add @dxos/cli@beta
+$ yarn global add @dxos/cli@dev
 ```
 
 or
 
 ```
-$ npm install --global @dxos/cli@beta
+$ npm install --global @dxos/cli@dev
 ```
 
 ### Upgrade
