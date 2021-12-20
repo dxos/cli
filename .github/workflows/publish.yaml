@@ -32,13 +32,13 @@ jobs:
         # Build with tests
         node common/scripts/github-actions-folding.js node common/scripts/install-run-rush.js build --verbose
         node common/scripts/github-actions-folding.js node common/scripts/install-run-rush.js test --verbose
-    - name: Publish latest to NPM
-      run:  |
-        \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}
-        npm install -g @microsoft/rush pnpm
+    # - name: Publish latest to NPM
+    #   run:  |
+    #     \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}
+    #     npm install -g @microsoft/rush pnpm
 
-        # Publish under "latest" tag
-        node common/scripts/install-run-rush.js publish --publish --include-all --tag latest
+    #     # Publish under "latest" tag
+    #     node common/scripts/install-run-rush.js publish --publish --include-all --tag latest
     - name: Publish dev to NPM
       run:  |
         \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}
