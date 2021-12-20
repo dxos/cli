@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-halo",
-  "version": "2.11.3-alpha.0",
+  "version": "2.11.3",
   "description": "DXOS HALO CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-halo#readme",
   "license": "AGPL-3.0",
