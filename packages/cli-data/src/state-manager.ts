@@ -8,11 +8,11 @@ import lockFile from 'lockfile';
 import path from 'path';
 import { promisify } from 'util';
 
-import { Client } from '@dxos/client';
-import { defaultSecretValidator, generatePasscode, SecretProvider, SecretValidator } from '@dxos/credentials';
-import { keyToBuffer, PublicKey, SIGNATURE_LENGTH, verify } from '@dxos/crypto';
+import { Client, PartyProxy } from '@dxos/client';
+import { generatePasscode, SecretProvider } from '@dxos/credentials';
+import { PublicKey } from '@dxos/crypto';
 import { log } from '@dxos/debug';
-import { InvitationDescriptor, InvitationQueryParameters, Party, Item } from '@dxos/echo-db';
+import { InvitationDescriptor, InvitationQueryParameters, Item } from '@dxos/echo-db';
 
 const STATE_STORAGE_FILENAME = 'state.json';
 
@@ -38,7 +38,7 @@ export interface StateManagerConstructorOpts {
  * Provides interface for authentication / invitation flow within a party.
  */
 export class StateManager {
-  private _party: Party | null = null;
+  private _party: PartyProxy | null = null;
   private _lockPath: string | undefined
   private _getReadlineInterface: StateManagerConstructorOpts['getReadlineInterface'];
   private _getClient: StateManagerConstructorOpts['getClient'];
@@ -119,7 +119,9 @@ export class StateManager {
         const party = await this._client.echo.joinParty(InvitationDescriptor.fromQueryParameters(invitation), secretProvider);
         await party.open();
 
-        await this.setParty(party);
+        // TODO(egorgripasov): joinParty should return PartyProxy?
+        const partyProxy = this._client.echo.getParty(party.key);
+        await this.setParty(partyProxy!);
       }
     } else {
       throw new Error('Either party key or invitation should be provided.');
@@ -140,41 +142,18 @@ export class StateManager {
   }
 
   /**
-   * Create Secret Invitation.
+   * Create Invitation.
    */
-  async createSecretInvitation (partyKey: string) {
+  async createInvitation (party: PartyProxy) {
     const passcode = generatePasscode();
     const secretProvider: SecretProvider = async () => Buffer.from(passcode);
 
     await this._assureClient();
     assert(this._client);
 
-    const party = await this._client.echo.getParty(PublicKey.from(partyKey));
-    assert(party);
-    const invitation = await party.createInvitation({ secretValidator: defaultSecretValidator, secretProvider });
+    const invitation = await this._client.echo.createInvitation(party.key, { secretProvider });
 
     return { invitation: invitation.toQueryParameters(), passcode };
-  }
-
-  /**
-   * Create Signature Invitation.
-   */
-  async createSignatureInvitation (partyKey: string, signatureKey: string) {
-    // Provided by inviter node.
-    const secretValidator: SecretValidator = async (invitation, secret) => {
-      const signature = secret.slice(0, SIGNATURE_LENGTH);
-      const message = secret.slice(SIGNATURE_LENGTH);
-      return verify(message, signature, keyToBuffer(signatureKey));
-    };
-
-    await this._assureClient();
-    assert(this._client);
-
-    const party = await this._client.echo.getParty(PublicKey.from(partyKey));
-    assert(party);
-    const invitation = await party.createInvitation({ secretValidator });
-
-    return invitation;
   }
 
   async destroy () {
@@ -223,7 +202,7 @@ export class StateManager {
     });
   }
 
-  async setParty (party: Party) {
+  async setParty (party: PartyProxy) {
     this._party = party;
 
     if (this._statePath) {
