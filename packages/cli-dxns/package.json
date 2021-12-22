@@ -60,7 +60,8 @@
     "node-fetch": "^2.6.1",
     "pify": "^5.0.0",
     "protobufjs": "^6.10.2",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "abort-controller": "~3.0.0"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.20",

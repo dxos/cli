@@ -72,7 +72,8 @@
     "pify": "^5.0.0",
     "semver": "^7.1.1",
     "url-join": "^4.0.1",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "abort-controller": "~3.0.0"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.20",
