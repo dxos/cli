@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "2.19.2",
+    "@dxos/debug": "~2.19.3",
     "assert": "^2.0.0",
     "ipfs-http-client": "48.1.1",
     "js-yaml": "^3.13.1",
@@ -45,7 +45,9 @@
     "lodash.set": "^4.3.2",
     "node-yaml": "^4.0.1",
     "semver": "^7.1.1",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "abort-controller": "~3.0.0",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.20",
