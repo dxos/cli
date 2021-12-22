@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "2.19.2",
+    "@dxos/debug": "~2.19.3",
     "assert": "^2.0.0",
     "ipfs-http-client": "48.1.1",
     "js-yaml": "^3.13.1",
