@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.11.4](https://www.github.com/dxos/cli/compare/v2.11.3...v2.11.4) (2021-12-22)
+
+
+### Bug Fixes
+
+* Relax protocols dependency strictness ([090bd24](https://www.github.com/dxos/cli/commit/090bd243ed9b76d5859973361ec5747c24821ee2))
+
 ### [2.11.3](https://www.github.com/dxos/cli/compare/v2.11.2...v2.11.3) (2021-12-13)
 
 
