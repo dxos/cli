@@ -120,6 +120,7 @@ export class TemplateHelper {
       }
     }
 
+    process.removeAllListeners('warning');
     await download(
       repoInfo.downloadUrl,
       downloadPackagePath,

@@ -8,8 +8,10 @@ import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 import { DEFAULT_PORT } from '../config';
-import { build, publish, register, query, serve } from '../handlers';
+import { build, publish, register, query, serve, create } from '../handlers';
 import { GetDXNSClient } from '../types';
+
+const DEFAULT_TEMPLATE = '';
 
 const getAppRecord = (config: any, namespace: string) => {
   const record = {
@@ -26,13 +28,14 @@ const getAppRecord = (config: any, namespace: string) => {
 
 interface Params {
   config: any,
-  getDXNSClient: GetDXNSClient
+  getDXNSClient: GetDXNSClient,
+  getReadlineInterface: Function
 }
 
 /**
  * App CLI module.
  */
-export const AppModule = ({ getDXNSClient, config }: Params) => {
+export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Params) => {
   return ({
     command: ['app'],
     describe: 'App CLI.',
@@ -153,6 +156,20 @@ export const AppModule = ({ getDXNSClient, config }: Params) => {
 
             handler: asyncHandler(serve.stop())
           })
+      })
+
+      // Create an app from the template.
+      .command({
+        command: ['create [name]'],
+        describe: 'Create app from template.',
+        builder: yargs => yargs
+          .option('template', { default: DEFAULT_TEMPLATE })
+          .option('path', { type: 'string' })
+          .option('name', { type: 'string' })
+          .option('force', { type: 'boolean' })
+          .option('github-token', { type: 'string' }),
+
+        handler: asyncHandler(create({ getReadlineInterface }))
       })
   });
 };
