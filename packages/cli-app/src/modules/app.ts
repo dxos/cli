@@ -11,7 +11,7 @@ import { DEFAULT_PORT } from '../config';
 import { build, publish, register, query, serve, create } from '../handlers';
 import { GetDXNSClient } from '../types';
 
-const DEFAULT_TEMPLATE = '';
+const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/app-template';
 
 const getAppRecord = (config: any, namespace: string) => {
   const record = {

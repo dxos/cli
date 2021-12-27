@@ -6,11 +6,13 @@ import assert from 'assert';
 import get from 'lodash.get';
 import { compare, valid } from 'semver';
 
-import { asyncHandler, print } from '@dxos/cli-core';
+import { TemplateHelper, asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
 import { addInstalled, removeInstalled, listInstalled } from '../extensions';
 import { Pluggable } from '../pluggable';
+
+const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/cli-template';
 
 /**
  * Extension CLI module.
@@ -160,6 +162,47 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
         await pluggable.uninstallModule(npmClient, { spinner });
 
         await removeInstalled(moduleName);
+      })
+    })
+
+    // Create an app from the template.
+    .command({
+      command: ['create [name]'],
+      describe: 'Create extension from template.',
+      builder: yargs => yargs
+        .option('template', { default: DEFAULT_TEMPLATE })
+        .option('path', { type: 'string' })
+        .option('name', { type: 'string' })
+        .option('force', { type: 'boolean' })
+        .option('github-token', { type: 'string' }),
+
+      handler: asyncHandler(async argv => {
+        const { template, path, githubToken, name, force, 'dry-run': noop } = argv;
+
+        if (noop) {
+          return;
+        }
+
+        const rl = getReadlineInterface();
+
+        const askUser = async question => new Promise(resolve => {
+          rl.question(question, answer => {
+            resolve(answer);
+          });
+        });
+
+        if (force) {
+          const answer = await askUser('All pervious data on destination folder would be lost - do you want to proceed? (yes/no): ');
+          if (!answer.toString().toLowerCase().startsWith('y')) {
+            return;
+          }
+        }
+        rl.close();
+
+        const created = await TemplateHelper.downloadTemplateFromRepo(template, githubToken, path || name, force);
+
+        const basename = created.split('/').slice(-1)[0];
+        log(`./${basename} <- ${template}`);
       })
     })
 });
