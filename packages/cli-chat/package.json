@@ -39,8 +39,8 @@
     "@dxos/crypto": "~2.19.3",
     "@dxos/debug": "~2.19.3",
     "@dxos/network-manager": "~2.19.3",
-    "@dxos/protocol-plugin-messenger": "~2.19.2",
-    "@dxos/protocol-plugin-presence": "~2.19.2",
+    "@dxos/protocol-plugin-messenger": "~2.19.3",
+    "@dxos/protocol-plugin-presence": "~2.19.3",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^16.2.0"
