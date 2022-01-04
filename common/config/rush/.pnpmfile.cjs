@@ -1,5 +1,8 @@
 'use strict';
 
+const fs = require('fs')
+const { join } = require('path');
+
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround
  * dependencies that have mistakes in their package.json file.  (This feature is
@@ -18,6 +21,12 @@ module.exports = {
   }
 };
 
+let tarballsPath = undefined;
+if (process.env.LINKED_PATH) {
+  const dir = fs.readdirSync(join(process.env.LINKED_PATH, 'common/temp/artifacts')).find(name => name.startsWith('local-'))
+  tarballsPath = join(process.env.LINKED_PATH, 'common/temp/artifacts', dir);
+}
+
 /**
  * This hook is invoked during installation before a package's dependencies
  * are selected.
@@ -27,6 +36,26 @@ module.exports = {
  * The return value is the updated object.
  */
 function readPackage(packageJson, context) {
+  if (process.env.LINKED_PATH) {
+    const { projects } = eval(`(${fs.readFileSync(join(process.env.LINKED_PATH, 'rush.json'))})`);
+
+    function processDeps(deps) {
+      for (const [name, version] of Object.entries(deps)) {
+        const project = projects.find(p => p.packageName === name);
+        if (!project) {
+          continue;
+        }
+
+        // TODO(burdon): Tempoarily looks in a remote repo determined by LINKED_PATH.
+        const pkgJson = require(join(process.env.LINKED_PATH, project.projectFolder, 'package.json'));
+
+        deps[name] = join(tarballsPath, `${name.replace('/', '-').replace('@', '')}-${pkgJson.version}.tgz`);
+      }
+    }
+
+    processDeps(packageJson.dependencies ?? {});
+    processDeps(packageJson.devDependencies ?? {});
+  }
 
   // // The karma types have a missing dependency on typings from the log4js package.
   // if (packageJson.name === '@types/karma') {

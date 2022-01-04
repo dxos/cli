@@ -2,66 +2,59 @@
 // Copyright 2020 DXOS.org
 //
 
+import { Argv } from 'yargs';
+
 import { asyncHandler } from '@dxos/cli-core';
 
 // import { spawn, invite, build, publish, register, query } from '../handlers/bot';
-import { install, setup /*, start */ } from '../handlers/bot-factory';
+import { install, setup, start} from '../handlers/bot-factory';
 
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ config /*, stateManager, getReadlineInterface, cliState, getDXNSClient */ }) => {
+export const BotModule = ({ config }: { config: any }) => {
   return {
     command: ['bot'],
     describe: 'Bot CLI.',
-    builder: yargs => yargs
+    builder: (yargs: Argv) => yargs
 
       .command({
+        handler: () => {},
         command: ['factory'],
         describe: 'Bot Factory Commands.',
-        builder: yargs => yargs
+        builder: (yargs: Argv) => yargs
           .command({
             command: ['install', 'upgrade'],
             describe: 'Download & Install @dxos/botkit binary.',
-            builder: yargs => yargs.version(false)
+            builder: (yargs: Argv) => yargs.version(false)
               .option('npmClient', { default: config.get('runtime.cli.npmClient') })
               .option('dry-run', { type: 'boolean', default: false })
               .option('channel', { default: config.get('runtime.cli.botFactory.channel') })
-              .option('version'),
-
+              .option('version', { type: 'string' }),
             handler: asyncHandler(install(config))
           })
 
           .command({
             command: ['setup'],
             describe: 'Setup a bot factory.',
-            builder: yargs => yargs
-              .option('local-dev', { alias: 'd', type: 'boolean', default: false, description: 'Local development mode' })
-              .option('reset', { type: 'boolean', default: false, description: 'Remove previously spawned bots' })
-              .option('topic', { alias: 't', type: 'string' })
-              .option('secret-key', { alias: 's', type: 'string' }),
-
+            builder: (yargs: Argv) => yargs,
             handler: asyncHandler(setup(config))
           })
 
-        // .command({
-        //   command: ['start'],
-        //   describe: 'Run a bot factory.',
-        //   builder: yargs => yargs
-        //     .option('local-dev', { alias: 'd', type: 'boolean', default: false, description: 'Local development mode' })
-        //     .option('reset', { type: 'boolean', default: false, description: 'Remove previously spawned bots' })
-        //     .option('topic', { alias: 't', type: 'string' })
-        //     .option('secret-key', { alias: 's', type: 'string' })
-        //     .option('single-instance', { type: 'boolean', default: false })
-        //     .option('detached', { type: 'boolean', alias: 'daemon', default: false })
-        //     .option('log-file', { type: 'string' })
-        //     .option('proc-name', { type: 'string' }),
+        .command({
+          command: ['start'],
+          describe: 'Run a bot factory.',
+          builder: (yargs: Argv) => yargs
+            .option('single-instance', { type: 'boolean', default: false })
+            .option('detached', { type: 'boolean', alias: 'daemon', default: false })
+            .option('log-file', { type: 'string' })
+            .option('proc-name', { type: 'string' }),
 
-        //   handler: asyncHandler(async argv => {
-        //     await setup(config, { includeNodePath: true })(argv);
-        //     await start(config)(argv);
-        //   })
-        // })
+          handler: asyncHandler(async (argv: any) => {
+            await setup(config, { includeNodePath: true })(argv);
+            await start()(argv);
+          })
+        })
       })
 
     // .command({

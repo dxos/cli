@@ -14,20 +14,25 @@ import { mapToKeyValues } from '@dxos/config';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
 import { BOTFACTORY_ENV_FILE } from '../../config';
+import assert from 'assert';
 
 const envmap = readFileSync(path.join(__dirname, '../../../env-map.yml')).toString();
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
-const BOT_FACTORY_DEBUG_NAMESPACES = ['bot-factory', 'bot-factory:*'];
+const BOT_FACTORY_DEBUG_NAMESPACES = ['dxos:bot*'];
 
 const PREBUILDS_DIR = 'prebuilds';
 const SODIUM_PREBUILDS = `sodium-native/${PREBUILDS_DIR}`;
 
+export interface SetupOptions {
+  topic: string
+}
+
 /**
  * Sets up proper location for sodium-native prebuilds so bots would be able to reuse it.
  */
-const setupPrebuilds = async (cliNodePath) => {
+const setupPrebuilds = async (cliNodePath: string) => {
   const prebuildsPath = path.join(cliNodePath, SODIUM_PREBUILDS);
   const prebuildsBotsPath = path.join(path.dirname(process.execPath), PREBUILDS_DIR);
 
@@ -38,23 +43,24 @@ const setupPrebuilds = async (cliNodePath) => {
   await fs.copy(prebuildsPath, prebuildsBotsPath);
 };
 
-export const setup = (config, { includeNodePath = false } = {}) => async ({ topic, secretKey /*, localDev, reset */ }) => {
+export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic } : SetupOptions) => {
+  assert(pkg, 'Unable to locate package.json');
   const cliNodePath = await getGlobalModulesPath(await isGlobalYarn(pkg.package.name));
 
   await setupPrebuilds(cliNodePath);
 
   const botFactoryEnvFile = path.join(process.cwd(), BOTFACTORY_ENV_FILE);
+  console.log('botFactoryEnvFile', botFactoryEnvFile)
   await fs.ensureFile(botFactoryEnvFile);
 
   const envFileData = await fs.readFile(botFactoryEnvFile);
 
-  let { DX_BOT_TOPIC = topic, DX_BOT_SECRET_KEY = secretKey } = parse(envFileData.toString());
+  let { DX_BOT_TOPIC = topic } = parse(envFileData.toString());
 
-  if (!DX_BOT_TOPIC || !DX_BOT_SECRET_KEY) {
-    const { publicKey, secretKey } = createKeyPair();
+  if (!DX_BOT_TOPIC) {
+    const { publicKey } = createKeyPair();
 
     DX_BOT_TOPIC = keyToString(publicKey);
-    DX_BOT_SECRET_KEY = keyToString(secretKey);
   }
 
   const env = {
@@ -64,9 +70,6 @@ export const setup = (config, { includeNodePath = false } = {}) => async ({ topi
     NODE_OPTIONS: '',
     ...mapToKeyValues(load(envmap), config.values),
     DX_BOT_TOPIC,
-    // DX_BOT_SECRET_KEY,
-    // DX_BOT_LOCAL_DEV: localDev,
-    // DEBUG_HIDE_DATE: true,
     ...(includeNodePath ? { DX_CLI_NODE_PATH: cliNodePath } : {})
   };
 

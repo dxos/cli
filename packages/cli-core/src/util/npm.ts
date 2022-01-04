@@ -20,7 +20,7 @@ export const prepareExec = (command: string) => {
  * @param {String} packageName - package to check.
  */
 export const isGlobalYarn = async (packageName: string) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<boolean>((resolve, reject) => {
     const args = 'list -g --depth 0 --json --silent';
 
     exec(`${prepareExec('npm')} ${args}`, (err, data) => {
@@ -44,7 +44,7 @@ export const isGlobalYarn = async (packageName: string) => {
 export const getGlobalModulesPath = async (isYarn = false) => {
   const command = isYarn ? 'echo $(yarn global dir)/node_modules' : `${prepareExec('npm')} root --quiet -g`;
 
-  return new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     exec(command, (err, data) => {
       if (err) {
         reject(err);
