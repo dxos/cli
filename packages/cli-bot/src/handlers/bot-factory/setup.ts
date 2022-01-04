@@ -2,6 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
 import { parse, stringify } from 'envfile';
 import { readFileSync } from 'fs';
 import fs from 'fs-extra';
@@ -14,7 +15,6 @@ import { mapToKeyValues } from '@dxos/config';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
 import { BOTFACTORY_ENV_FILE } from '../../config';
-import assert from 'assert';
 
 const envmap = readFileSync(path.join(__dirname, '../../../env-map.yml')).toString();
 
@@ -50,7 +50,7 @@ export const setup = (config: any, { includeNodePath = false } = {}) => async ({
   await setupPrebuilds(cliNodePath);
 
   const botFactoryEnvFile = path.join(process.cwd(), BOTFACTORY_ENV_FILE);
-  console.log('botFactoryEnvFile', botFactoryEnvFile)
+  console.log('botFactoryEnvFile', botFactoryEnvFile);
   await fs.ensureFile(botFactoryEnvFile);
 
   const envFileData = await fs.readFile(botFactoryEnvFile);

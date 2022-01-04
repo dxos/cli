@@ -15,7 +15,7 @@ export interface InstallOptions {
   'dry-run': boolean
 }
 
-export const install = (config: any) => async ({ 
+export const install = () => async ({
   npmClient,
   channel,
   version,

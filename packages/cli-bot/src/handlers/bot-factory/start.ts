@@ -9,7 +9,6 @@ import path from 'path';
 import { Runnable, sanitizeEnv } from '@dxos/cli-core';
 
 import { BOTFACTORY_ENV_FILE } from '../../config';
-import { Config, ConfigV1Object } from '@dxos/config';
 
 const BOT_FACTORY_PROCESS_NAME = 'bot-factory';
 
@@ -20,7 +19,7 @@ export interface StartOptions {
   procName?: string
 }
 
-export const start = () => async ({ 
+export const start = () => async ({
   singleInstance,
   logFile,
   detached,
@@ -42,7 +41,7 @@ export const start = () => async ({
     logFile
   };
 
-  const bin = "bot-factory";
+  const bin = 'bot-factory';
   const botFactoryRunnable = new Runnable(bin, []);
 
   await botFactoryRunnable.run([], options);

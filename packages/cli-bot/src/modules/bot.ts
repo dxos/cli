@@ -7,7 +7,7 @@ import { Argv } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 
 // import { spawn, invite, build, publish, register, query } from '../handlers/bot';
-import { install, setup, start} from '../handlers/bot-factory';
+import { install, setup, start } from '../handlers/bot-factory';
 
 /**
  * Bot CLI module.
@@ -31,7 +31,7 @@ export const BotModule = ({ config }: { config: any }) => {
               .option('dry-run', { type: 'boolean', default: false })
               .option('channel', { default: config.get('runtime.cli.botFactory.channel') })
               .option('version', { type: 'string' }),
-            handler: asyncHandler(install(config))
+            handler: asyncHandler(install())
           })
 
           .command({
@@ -41,20 +41,20 @@ export const BotModule = ({ config }: { config: any }) => {
             handler: asyncHandler(setup(config))
           })
 
-        .command({
-          command: ['start'],
-          describe: 'Run a bot factory.',
-          builder: (yargs: Argv) => yargs
-            .option('single-instance', { type: 'boolean', default: false })
-            .option('detached', { type: 'boolean', alias: 'daemon', default: false })
-            .option('log-file', { type: 'string' })
-            .option('proc-name', { type: 'string' }),
+          .command({
+            command: ['start'],
+            describe: 'Run a bot factory.',
+            builder: (yargs: Argv) => yargs
+              .option('single-instance', { type: 'boolean', default: false })
+              .option('detached', { type: 'boolean', alias: 'daemon', default: false })
+              .option('log-file', { type: 'string' })
+              .option('proc-name', { type: 'string' }),
 
-          handler: asyncHandler(async (argv: any) => {
-            await setup(config, { includeNodePath: true })(argv);
-            await start()(argv);
+            handler: asyncHandler(async (argv: any) => {
+              await setup(config, { includeNodePath: true })(argv);
+              await start()(argv);
+            })
           })
-        })
       })
 
     // .command({
