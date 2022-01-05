@@ -20,7 +20,7 @@ const DEFAULT_ARGS = { $0: '', _: [], return: true };
 
 jest.setTimeout(2000);
 
-describe('cli-data: Party', () => {
+describe.skip('cli-data: Party', () => {
   let signalBroker: Awaited<ReturnType<typeof createTestBroker>>;
   let alice: Client;
   let bob: Client;
