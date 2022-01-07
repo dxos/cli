@@ -146,14 +146,13 @@ export class StateManager {
    */
   async createInvitation (party: PartyProxy) {
     const passcode = generatePasscode();
-    const secretProvider: SecretProvider = async () => Buffer.from(passcode);
 
     await this._assureClient();
     assert(this._client);
 
-    const invitation = await this._client.echo.createInvitation(party.key, { secretProvider });
+    const invitation = await this._client.echo.createInvitation(party.key);
 
-    return { invitation: invitation.toQueryParameters(), passcode };
+    return { invitation: invitation.descriptor.toQueryParameters(), passcode };
   }
 
   async destroy () {

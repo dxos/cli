@@ -35,7 +35,7 @@ class PinHelper {
 
 jest.setTimeout(2000);
 
-describe('cli-data: Device', () => {
+describe.skip('cli-data: Device', () => {
   let signalBroker: Awaited<ReturnType<typeof createTestBroker>>;
   let alice: Client;
   let bob: Client;

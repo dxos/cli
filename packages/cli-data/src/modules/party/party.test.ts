@@ -6,7 +6,7 @@ import waitForExpect from 'wait-for-expect';
 
 import { Client } from '@dxos/client';
 import { createKeyPair, PublicKey } from '@dxos/crypto';
-import { Awaited } from '@dxos/echo-db';
+import { Awaited, InvitationDescriptor } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
 import { StateManager } from '../../state-manager';
@@ -20,7 +20,7 @@ const DEFAULT_ARGS = { $0: '', _: [], return: true };
 
 jest.setTimeout(2000);
 
-describe.skip('cli-data: Party', () => {
+describe('cli-data: Party', () => {
   let signalBroker: Awaited<ReturnType<typeof createTestBroker>>;
   let alice: Client;
   let bob: Client;
@@ -74,16 +74,16 @@ describe.skip('cli-data: Party', () => {
     PublicKey.assertValidPublicKey(PublicKey.from(inviteResult.partyKey));
   });
 
-  test('CLI <-> CLI invitations', async () => {
-    expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(0);
-    await createCommand(aliceStateManager).handler(DEFAULT_ARGS);
+  // test('CLI <-> CLI invitations', async () => {
+  //   expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(0);
+  //   await createCommand(aliceStateManager).handler(DEFAULT_ARGS);
 
-    const inviteResult = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
-    await joinCommand(bobStateManager).handler({ ...DEFAULT_ARGS, invitation: inviteResult.invitation, passcode: inviteResult.passcode });
+  //   const inviteResult = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
+  //   await joinCommand(bobStateManager).handler({ ...DEFAULT_ARGS, invitation: inviteResult.invitation, passcode: inviteResult.passcode });
 
-    await waitForExpect(async () => {
-      expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
-      expect(await membersCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(2);
-    }, 3000, 1000);
-  });
+  //   await waitForExpect(async () => {
+  //     expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
+  //     expect(await membersCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(2);
+  //   }, 3000, 1000);
+  // });
 });
