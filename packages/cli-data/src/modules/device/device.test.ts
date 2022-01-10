@@ -6,7 +6,7 @@ import waitForExpect from 'wait-for-expect';
 
 import { sleep, waitForCondition } from '@dxos/async';
 import { Client } from '@dxos/client';
-import { createKeyPair, /*, PublicKey */ } from '@dxos/crypto';
+import { createKeyPair /*, PublicKey */ } from '@dxos/crypto';
 import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 

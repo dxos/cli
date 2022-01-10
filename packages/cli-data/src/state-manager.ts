@@ -9,7 +9,7 @@ import path from 'path';
 import { promisify } from 'util';
 
 import { Client, PartyProxy } from '@dxos/client';
-import { generatePasscode, SecretProvider } from '@dxos/credentials';
+import { SecretProvider } from '@dxos/credentials';
 import { PublicKey } from '@dxos/crypto';
 import { log } from '@dxos/debug';
 import { InvitationDescriptor, InvitationQueryParameters, Item } from '@dxos/echo-db';
