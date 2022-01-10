@@ -36,9 +36,9 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.19.7",
-    "@dxos/debug": "~2.19.7",
-    "@dxos/network-manager": "~2.19.7",
+    "@dxos/crypto": "~2.19.8",
+    "@dxos/debug": "~2.19.8",
+    "@dxos/network-manager": "~2.19.8",
     "@dxos/protocol-plugin-messenger": "~2.19.2",
     "@dxos/protocol-plugin-presence": "~2.19.2",
     "assert": "^2.0.0",

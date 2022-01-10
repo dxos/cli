@@ -117,7 +117,6 @@ export class StateManager {
         };
 
         const secret = await secretProvider();
-        console.log('When accepting: ', secret.toString());
 
         const invitation = await this._client.echo.acceptInvitation(InvitationDescriptor.fromQueryParameters(invitationParams));
         invitation.authenticate(secret);

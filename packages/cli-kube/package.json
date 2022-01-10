@@ -38,12 +38,12 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.19.7",
+    "@dxos/async": "~2.19.8",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.19.7",
-    "@dxos/debug": "~2.19.7",
-    "@dxos/object-model": "~2.19.7",
-    "@dxos/registry-client": "~2.19.7",
+    "@dxos/crypto": "~2.19.8",
+    "@dxos/debug": "~2.19.8",
+    "@dxos/object-model": "~2.19.8",
+    "@dxos/registry-client": "~2.19.8",
     "assert": "^2.0.0",
     "do-wrapper": "^4.1.2",
     "got": "^11.8.2",

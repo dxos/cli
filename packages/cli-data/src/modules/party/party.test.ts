@@ -6,7 +6,7 @@ import waitForExpect from 'wait-for-expect';
 
 import { Client } from '@dxos/client';
 import { createKeyPair, PublicKey } from '@dxos/crypto';
-import { Awaited, InvitationDescriptor } from '@dxos/echo-db';
+import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
 import { StateManager } from '../../state-manager';
@@ -79,7 +79,6 @@ describe('cli-data: Party', () => {
     await createCommand(aliceStateManager).handler(DEFAULT_ARGS);
 
     const inviteResult = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
-    console.log('When inviting: ', inviteResult.passcode);
     await joinCommand(bobStateManager).handler({ ...DEFAULT_ARGS, invitation: inviteResult.invitation, passcode: inviteResult.passcode });
 
     await waitForExpect(async () => {
