@@ -74,16 +74,17 @@ describe('cli-data: Party', () => {
     PublicKey.assertValidPublicKey(PublicKey.from(inviteResult.partyKey));
   });
 
-  // test('CLI <-> CLI invitations', async () => {
-  //   expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(0);
-  //   await createCommand(aliceStateManager).handler(DEFAULT_ARGS);
+  test('CLI <-> CLI invitations', async () => {
+    expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(0);
+    await createCommand(aliceStateManager).handler(DEFAULT_ARGS);
 
-  //   const inviteResult = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
-  //   await joinCommand(bobStateManager).handler({ ...DEFAULT_ARGS, invitation: inviteResult.invitation, passcode: inviteResult.passcode });
+    const inviteResult = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
+    console.log('When inviting: ', inviteResult.passcode);
+    await joinCommand(bobStateManager).handler({ ...DEFAULT_ARGS, invitation: inviteResult.invitation, passcode: inviteResult.passcode });
 
-  //   await waitForExpect(async () => {
-  //     expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
-  //     expect(await membersCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(2);
-  //   }, 3000, 1000);
-  // });
+    await waitForExpect(async () => {
+      expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
+      expect(await membersCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(2);
+    }, 3000, 1000);
+  });
 });
