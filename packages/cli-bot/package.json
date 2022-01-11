@@ -48,7 +48,13 @@
     "js-yaml": "^3.13.1",
     "node-yaml": "^4.0.1",
     "read-pkg-up": "^6.0.0",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "lodash.defaultsdeep": "^4.6.1",
+    "@dxos/botkit": "~2.19.9",
+    "lodash.set": "^4.3.2",
+    "semver": "^7.1.1",
+    "ipfs-http-client": "48.1.1",
+    "cli-progress": "^3.8.2"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.20",
@@ -61,7 +67,11 @@
     "@types/yargs": "^16.0.1",
     "@types/jest": "~27.0.3",
     "@types/fs-extra": "^9.0.4",
-    "@types/js-yaml": "^3.12.5"
+    "@types/js-yaml": "^3.12.5",
+    "@types/lodash.defaultsdeep": "^4.6.6",
+    "@types/lodash.set": "^4.3.6",
+    "@types/semver": "~7.3.9",
+    "@types/cli-progress": "^3.9.2"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

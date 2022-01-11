@@ -96,6 +96,8 @@ describe('CLI', () => {
       await cmd('service install --from @dxos/cli-dxns --service dxns --force --dev').run();
 
       await cmd('service start --from @dxos/cli-dxns --service dxns --dev --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
+
+      await new Promise<void>(resolve => setTimeout(resolve, 5000));
     });
   });
 
@@ -181,12 +183,12 @@ describe('CLI', () => {
   });
 
   describe('app', () => {
-    it('start app server', async () => {
+    it.only('start app server', async () => {
       try {
         await cmd('app serve stop').run();
       } catch {}
 
-      await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').run();
+      await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').debug().run();
     });
 
     it('register app', async () => {
@@ -232,12 +234,12 @@ describe('CLI', () => {
     });
   });
 
-  // describe('bot', () => {
-  //   it('query bots', async () => {
-  //     const bots = await cmd('bot query --json').json();
-  //     expect(bots.length).toBe(1);
-  //   });
-  // });
+  describe('bot', () => {
+    it('query bots', async () => {
+      const bots = await cmd('bot query --json').json();
+      expect(bots.length).toBe(0);
+    });
+  });
 
   describe('kube', () => {
     it('register kube', async () => {
