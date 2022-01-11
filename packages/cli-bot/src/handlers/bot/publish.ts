@@ -5,12 +5,13 @@
 import assert from 'assert';
 import cliProgress from 'cli-progress';
 import fs from 'fs-extra';
+import IpfsHttpClient from 'ipfs-http-client';
 import set from 'lodash.set';
 import semverInc from 'semver/functions/inc';
-import IpfsHttpClient from 'ipfs-http-client';
+
+import { Config, ConfigV1Object } from '@dxos/config';
 
 import { getBotConfig, updateBotConfig } from '../../config';
-import { Config, ConfigV1Object } from '@dxos/config';
 
 export const publish = (config: Config<ConfigV1Object>) => async (buildPath: string) => {
   let ipfsEndpoint = config.get('runtime.services.ipfs.gateway');
