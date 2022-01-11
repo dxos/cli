@@ -35,9 +35,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.19.3",
+    "@dxos/async": "~2.19.9",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.19.3",
+    "@dxos/debug": "~2.19.9",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "cli-progress": "^3.8.2",
@@ -51,7 +51,7 @@
     "mime-types": "^2.1.27",
     "yargs": "^16.2.0",
     "@polkadot/api": "4.17.1",
-    "@dxos/registry-client": "~2.19.3",
+    "@dxos/registry-client": "~2.19.9",
     "abort-controller": "~3.0.0",
     "node-fetch": "^2.6.1"
   },

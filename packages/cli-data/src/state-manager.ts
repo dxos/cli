@@ -9,7 +9,7 @@ import path from 'path';
 import { promisify } from 'util';
 
 import { Client, PartyProxy } from '@dxos/client';
-import { generatePasscode, SecretProvider } from '@dxos/credentials';
+import { SecretProvider } from '@dxos/credentials';
 import { PublicKey } from '@dxos/crypto';
 import { log } from '@dxos/debug';
 import { InvitationDescriptor, InvitationQueryParameters, Item } from '@dxos/echo-db';
@@ -92,7 +92,7 @@ export class StateManager {
   /**
    * Join Party.
    */
-  async joinParty (partyKey: string | undefined, invitation: InvitationQueryParameters, passcode?: string) {
+  async joinParty (partyKey: string | undefined, invitationParams: InvitationQueryParameters, passcode?: string) {
     await this._assureClient();
     assert(this._client);
     if (partyKey) {
@@ -102,8 +102,8 @@ export class StateManager {
       const party = await this._client.echo.getParty(PublicKey.from(partyKey));
       assert(party);
       await this.setParty(party);
-    } else if (invitation) {
-      if (invitation) {
+    } else if (invitationParams) {
+      if (invitationParams) {
         const secretProvider: SecretProvider = () => {
           if (passcode) {
             return Promise.resolve(Buffer.from(passcode));
@@ -116,12 +116,14 @@ export class StateManager {
           });
         };
 
-        const party = await this._client.echo.joinParty(InvitationDescriptor.fromQueryParameters(invitation), secretProvider);
+        const secret = await secretProvider();
+
+        const invitation = await this._client.echo.acceptInvitation(InvitationDescriptor.fromQueryParameters(invitationParams));
+        invitation.authenticate(secret);
+        const party = await invitation.wait();
         await party.open();
 
-        // TODO(egorgripasov): joinParty should return PartyProxy?
-        const partyProxy = this._client.echo.getParty(party.key);
-        await this.setParty(partyProxy!);
+        await this.setParty(party);
       }
     } else {
       throw new Error('Either party key or invitation should be provided.');
@@ -145,15 +147,12 @@ export class StateManager {
    * Create Invitation.
    */
   async createInvitation (party: PartyProxy) {
-    const passcode = generatePasscode();
-    const secretProvider: SecretProvider = async () => Buffer.from(passcode);
-
     await this._assureClient();
     assert(this._client);
 
-    const invitation = await this._client.echo.createInvitation(party.key, { secretProvider });
+    const invitation = await this._client.echo.createInvitation(party.key);
 
-    return { invitation: invitation.toQueryParameters(), passcode };
+    return { invitation: invitation.descriptor.toQueryParameters(), passcode: invitation.secret.toString() };
   }
 
   async destroy () {

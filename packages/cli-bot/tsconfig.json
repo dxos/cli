@@ -2,13 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "lib": [
-      "DOM"
-    ],
-    "types": ["node", "jest"],
+    "types": ["node"],
   },
   "include": [
-    "src",
-    "src/**/*.json"
+    "src"
   ]
 }
