@@ -52,7 +52,7 @@ jobs:
     - name: Delete lockfile
       if: ${{ matrix.lockfile == 'no-lockfile' }}
       run: rm common/config/rush/pnpm-lock.yaml
-    - name: Build, lint, test
+    - name: Build, and E2E test
       env:
         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
       run: |
@@ -65,9 +65,8 @@ jobs:
           
           # Build
           node common/scripts/install-run-rush.js build --verbose
-
-          # Lint
-          node common/scripts/install-run-rush.js lint --verbose
-
-          # Test
-          node common/scripts/install-run-rush.js test --verbose
+    - name: Run E2E tests
+      run: |
+        \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
+        node common/scripts/install-run-rushx.js test:e2e
+      working-directory: ./packages/e2e
