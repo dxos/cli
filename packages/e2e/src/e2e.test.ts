@@ -183,7 +183,7 @@ describe('CLI', () => {
   });
 
   describe('app', () => {
-    it.only('start app server', async () => {
+    it('start app server', async () => {
       try {
         await cmd('app serve stop').run();
       } catch {}
