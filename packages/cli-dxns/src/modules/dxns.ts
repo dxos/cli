@@ -158,7 +158,8 @@ export const DXNSModule = (params: Params) => {
             describe: 'Increase account balance.',
             builder: yargs => yargs
               .option('account', { type: 'string' })
-              .option('amount', { type: 'string' }),
+              .option('amount', { type: 'string' })
+              .option('faucet', { type: 'string' }),
 
             handler: asyncHandler(increaseBalance({ getDXNSClient }))
           })
