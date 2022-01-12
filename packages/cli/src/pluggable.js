@@ -129,7 +129,7 @@ export class Pluggable {
       }
 
       const pkg = require(pkgPath);
-      this._modulePath = path.resolve(path.dirname(pkgPath), pkg.main);
+      this._modulePath = path.join(pkgPath.replace('package.json', ''), pkg.main);
     }
     return this._modulePath;
   }
