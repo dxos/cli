@@ -79,7 +79,6 @@ jobs:
 
           # Test
           cd packages/e2e
-          export DX_PROFILE=e2e-test
           node ../../common/scripts/install-run-rushx.js test:e2e --verbose
           cd ../..
 
