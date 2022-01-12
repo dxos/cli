@@ -18,7 +18,7 @@ importers:
       assert: ^2.0.0
       eslint: ^7.13.0
       find-root: ^1.1.0
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       got: ^11.8.2
       jest: ^27.4.4
       js-yaml: ^3.13.1
@@ -46,7 +46,7 @@ importers:
       '@dxos/random-access-multi-storage': 2.19.7
       assert: 2.0.0
       find-root: 1.1.0
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       got: 11.8.3
       js-yaml: 3.14.1
       lodash.defaults: 4.2.0
@@ -115,7 +115,7 @@ importers:
       cors: ^2.8.5
       eslint: ^7.13.0
       express: ^4.17.1
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       get-folder-size: ^2.0.1
       hypercore-crypto: ^1.0.0
       ipfs-http-client: 48.1.1
@@ -156,7 +156,7 @@ importers:
       cookie-parser: 1.4.6
       cors: 2.8.5
       express: 4.17.2
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       get-folder-size: 2.0.1
       hypercore-crypto: 1.0.0
       ipfs-http-client: 48.1.1_336890d8a6ddcc2441643adf7d57d244
@@ -216,7 +216,7 @@ importers:
       '@dxos/registry-client': ~2.19.9
       '@dxos/util': ^2.15.6
       '@types/cli-progress': ^3.9.2
-      '@types/fs-extra': ^9.0.4
+      '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3
       '@types/js-yaml': ^3.12.5
       '@types/lodash.defaultsdeep': ^4.6.6
@@ -224,17 +224,19 @@ importers:
       '@types/node': ~16.11.12
       '@types/semver': ~7.3.9
       '@types/yargs': ^16.0.1
+      abort-controller: ~3.0.0
       assert: ^2.0.0
       chance: ^1.1.3
       cli-progress: ^3.8.2
       envfile: ^6.17.0
       eslint: ^7.13.0
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       ipfs-http-client: 48.1.1
       jest: ^27.4.4
       js-yaml: ^3.13.1
       lodash.defaultsdeep: ^4.6.1
       lodash.set: ^4.3.2
+      node-fetch: ^2.6.1
       node-yaml: ^4.0.1
       read-pkg-up: ^6.0.0
       semver: ^7.1.1
@@ -250,15 +252,17 @@ importers:
       '@dxos/debug': 2.19.9
       '@dxos/registry-client': 2.19.9
       '@dxos/util': 2.19.7
+      abort-controller: 3.0.0
       assert: 2.0.0
       chance: 1.1.8
       cli-progress: 3.9.1
       envfile: 6.17.0
-      fs-extra: 9.0.0
-      ipfs-http-client: 48.1.1
+      fs-extra: 10.0.0
+      ipfs-http-client: 48.1.1_336890d8a6ddcc2441643adf7d57d244
       js-yaml: 3.14.1
       lodash.defaultsdeep: 4.6.1
       lodash.set: 4.3.2
+      node-fetch: 2.6.6
       node-yaml: 4.0.1_js-yaml@3.14.1
       read-pkg-up: 6.0.0
       semver: 7.3.5
@@ -334,7 +338,7 @@ importers:
       chance: ^1.1.3
       download: ^8.0.0
       eslint: ^7.13.0
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       hypercore-crypto: ^1.0.0
       ipfs-http-client: 48.1.1
       jest: ^27.4.4
@@ -356,7 +360,7 @@ importers:
       assert: 2.0.0
       chance: 1.1.8
       download: 8.0.0
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       hypercore-crypto: 1.0.0
       ipfs-http-client: 48.1.1_336890d8a6ddcc2441643adf7d57d244
       js-yaml: 3.14.1
@@ -387,7 +391,7 @@ importers:
       '@otplib/plugin-thirty-two': ^12.0.1
       '@types/dockerode': ^3.2.3
       '@types/download': ^6.2.4
-      '@types/fs-extra': ^9.0.4
+      '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3
       '@types/js-yaml': ^3.12.5
       '@types/lodash.get': ^4.4.6
@@ -404,7 +408,7 @@ importers:
       download: ^8.0.0
       eslint: ^7.13.0
       find-root: ^1.1.0
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       jest: ^27.4.4
       js-yaml: ^3.13.1
       lodash.defaults: ^4.2.0
@@ -445,7 +449,7 @@ importers:
       dockerode: 3.3.1
       download: 8.0.0
       find-root: 1.1.0
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       js-yaml: 3.14.1
       lodash.defaults: 4.2.0
       lodash.defaultsdeep: 4.6.1
@@ -504,7 +508,7 @@ importers:
       '@dxos/eslint-plugin': ~1.0.20
       '@dxos/random-access-multi-storage': ~2.19.2
       '@dxos/signal': ~2.19.9
-      '@types/fs-extra': ^9.0.4
+      '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3
       '@types/lockfile': ^1.0.2
       '@types/node': ~16.11.12
@@ -512,7 +516,7 @@ importers:
       assert: ^2.0.0
       base-x: ^3.0.9
       eslint: ^7.13.0
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       jest: ^27.4.4
       js-yaml: ^3.13.1
       lockfile: ^1.0.4
@@ -536,7 +540,7 @@ importers:
       '@dxos/random-access-multi-storage': 2.19.7
       assert: 2.0.0
       base-x: 3.0.9
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       js-yaml: 3.14.1
       lockfile: 1.0.4
       lodash.defaultsdeep: 4.6.1
@@ -991,21 +995,23 @@ importers:
       '@dxos/eslint-plugin': ~1.0.20
       '@types/expect': ^24.3.0
       '@types/express': ^4.17.13
-      '@types/fs-extra': ^9.0.4
+      '@types/fs-extra': ^9.0.13
       '@types/mocha': ^9.0.0
       '@types/node': ~16.11.12
       '@types/yargs': ^16.0.1
       eslint: ^7.13.0
       expect: ^27.2.1
       express: ^4.17.1
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       got: ^11.8.2
       mocha: ^9.1.1
+      node-yaml: ^4.0.1
       ts-node: ^10.2.1
       typescript: ^4.0.5
     dependencies:
       '@dxos/cli-core': link:../cli-core
       '@dxos/crypto': 2.19.9
+      node-yaml: 4.0.1
     devDependencies:
       '@dxos/botkit': 2.19.9
       '@dxos/eslint-plugin': 1.0.20_eslint@7.32.0+typescript@4.5.4
@@ -1018,7 +1024,7 @@ importers:
       eslint: 7.32.0
       expect: 27.4.2
       express: 4.17.2
-      fs-extra: 9.0.0
+      fs-extra: 10.0.0
       got: 11.8.3
       mocha: 9.1.3
       ts-node: 10.4.0_5d12c2add188ff0e728b4ade3dacd39b
@@ -3608,6 +3614,7 @@ packages:
   /at-least-node/1.0.0:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
     engines: {node: '>= 4.0.0'}
+    dev: false
 
   /atomic-batcher/1.0.2:
     resolution: {integrity: sha1-0WkB0QzOxZUWwZe5zNiTBom4E7Q=}
@@ -4811,17 +4818,6 @@ packages:
     dependencies:
       path-type: 4.0.0
 
-  /dns-over-http-resolver/1.2.3:
-    resolution: {integrity: sha512-miDiVSI6KSNbi4SVifzO/reD8rMnxgrlnkrlkugOLQpWQTe2qMdHsZp5DmfKjxNE+/T3VAAYLQUZMv9SMr6+AA==}
-    dependencies:
-      debug: 4.3.3
-      native-fetch: 3.0.0
-      receptacle: 1.3.2
-    transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
   /dns-over-http-resolver/1.2.3_node-fetch@2.6.6:
     resolution: {integrity: sha512-miDiVSI6KSNbi4SVifzO/reD8rMnxgrlnkrlkugOLQpWQTe2qMdHsZp5DmfKjxNE+/T3VAAYLQUZMv9SMr6+AA==}
     dependencies:
@@ -5813,6 +5809,14 @@ packages:
   /fs-constants/1.0.0:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
 
+  /fs-extra/10.0.0:
+    resolution: {integrity: sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      graceful-fs: 4.2.8
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+
   /fs-extra/8.1.0:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
     engines: {node: '>=6 <7 || >=8'}
@@ -5820,15 +5824,6 @@ packages:
       graceful-fs: 4.2.8
       jsonfile: 4.0.0
       universalify: 0.1.2
-
-  /fs-extra/9.0.0:
-    resolution: {integrity: sha512-pmEYSk3vYsG/bF651KPUXZ+hvjpgWYw/Gc7W9NFUe3ZVLczKKWIij3IKpOrQcdw4TILtibFslZ0UmR8Vvzig4g==}
-    engines: {node: '>=10'}
-    dependencies:
-      at-least-node: 1.0.0
-      graceful-fs: 4.2.8
-      jsonfile: 6.1.0
-      universalify: 1.0.0
 
   /fs-extra/9.1.0:
     resolution: {integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==}
@@ -6543,28 +6538,6 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
-  /ipfs-core-utils/0.5.4:
-    resolution: {integrity: sha512-V+OHCkqf/263jHU0Fc9Rx/uDuwlz3PHxl3qu6a5ka/mNi6gucbFuI53jWsevCrOOY9giWMLB29RINGmCV5dFeQ==}
-    dependencies:
-      any-signal: 2.1.2
-      blob-to-it: 1.0.4
-      browser-readablestream-to-it: 1.0.3
-      cids: 1.1.9
-      err-code: 2.0.3
-      ipfs-utils: 5.0.1
-      it-all: 1.0.6
-      it-map: 1.0.6
-      it-peekable: 1.0.3
-      multiaddr: 8.1.2
-      multiaddr-to-uri: 6.0.0
-      parse-duration: 0.4.4
-      timeout-abort-controller: 1.1.1
-      uint8arrays: 1.1.0
-    transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
   /ipfs-core-utils/0.5.4_node-fetch@2.6.6:
     resolution: {integrity: sha512-V+OHCkqf/263jHU0Fc9Rx/uDuwlz3PHxl3qu6a5ka/mNi6gucbFuI53jWsevCrOOY9giWMLB29RINGmCV5dFeQ==}
     dependencies:
@@ -6583,41 +6556,6 @@ packages:
       timeout-abort-controller: 1.1.1
       uint8arrays: 1.1.0
     transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
-  /ipfs-http-client/48.1.1:
-    resolution: {integrity: sha512-DZVm6EvB3zCxuvEwW5blDKigKtvAWWzPSIQEIUeWr04qzVThEe5eYK+Siu1qxrpthnBK1fYxS3okK2WI4kmluA==}
-    engines: {node: '>=10.3.0', npm: '>=3.0.0'}
-    dependencies:
-      any-signal: 2.1.2
-      bignumber.js: 9.0.2
-      cids: 1.1.9
-      debug: 4.3.3
-      form-data: 3.0.1
-      ipfs-core-utils: 0.5.4
-      ipfs-utils: 5.0.1
-      ipld-block: 0.11.1
-      ipld-dag-cbor: 0.17.1
-      ipld-dag-pb: 0.20.0
-      ipld-raw: 6.0.0
-      it-last: 1.0.6
-      it-map: 1.0.6
-      it-tar: 1.2.2
-      it-to-stream: 0.1.2
-      merge-options: 2.0.0
-      multiaddr: 8.1.2
-      multibase: 3.1.2
-      multicodec: 2.1.3
-      multihashes: 3.1.2
-      nanoid: 3.1.30
-      native-abort-controller: 0.0.3
-      parse-duration: 0.4.4
-      stream-to-it: 0.2.4
-      uint8arrays: 1.1.0
-    transitivePeerDependencies:
-      - abort-controller
       - node-fetch
       - supports-color
     dev: false
@@ -8471,35 +8409,10 @@ packages:
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  /multiaddr-to-uri/6.0.0:
-    resolution: {integrity: sha512-OjpkVHOXEmIKMO8WChzzQ7aZQcSQX8squxmvtDbRpy7/QNmJ3Z7jv6qyD74C28QtaeNie8O8ngW2AkeiMmKP7A==}
-    dependencies:
-      multiaddr: 8.1.2
-    transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
   /multiaddr-to-uri/6.0.0_node-fetch@2.6.6:
     resolution: {integrity: sha512-OjpkVHOXEmIKMO8WChzzQ7aZQcSQX8squxmvtDbRpy7/QNmJ3Z7jv6qyD74C28QtaeNie8O8ngW2AkeiMmKP7A==}
     dependencies:
       multiaddr: 8.1.2_node-fetch@2.6.6
-    transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
-  /multiaddr/8.1.2:
-    resolution: {integrity: sha512-r13IzW8+Sv9zab9Gt8RPMIN2WkptIPq99EpAzg4IbJ/zTELhiEwXWr9bAmEatSCI4j/LSA6ESJzvz95JZ+ZYXQ==}
-    dependencies:
-      cids: 1.1.9
-      class-is: 1.1.0
-      dns-over-http-resolver: 1.2.3
-      err-code: 2.0.3
-      is-ip: 3.1.0
-      multibase: 3.1.2
-      uint8arrays: 1.1.0
-      varint: 5.0.2
     transitivePeerDependencies:
       - node-fetch
       - supports-color
@@ -8728,14 +8641,6 @@ packages:
   /napi-macros/2.0.0:
     resolution: {integrity: sha512-A0xLykHtARfueITVDernsAWdtIMbOJgKgcluwENp3AlsKN/PloyO10HtmoqnFAQAcxPkgZN7wdfPfEd0zNGxbg==}
 
-  /native-abort-controller/0.0.3:
-    resolution: {integrity: sha512-YIxU5nWqSHG1Xbu3eOu3pdFRD882ivQpIcu6AiPVe2oSVoRbfYW63DVkZm3g1gHiMtZSvZzF6THSzTGEBYl8YA==}
-    peerDependencies:
-      abort-controller: '*'
-    dependencies:
-      globalthis: 1.0.2
-    dev: false
-
   /native-abort-controller/0.0.3_abort-controller@3.0.0:
     resolution: {integrity: sha512-YIxU5nWqSHG1Xbu3eOu3pdFRD882ivQpIcu6AiPVe2oSVoRbfYW63DVkZm3g1gHiMtZSvZzF6THSzTGEBYl8YA==}
     peerDependencies:
@@ -8760,12 +8665,6 @@ packages:
     dependencies:
       globalthis: 1.0.2
       node-fetch: 2.6.6
-    dev: false
-
-  /native-fetch/3.0.0:
-    resolution: {integrity: sha512-G3Z7vx0IFb/FQ4JxvtqGABsOTIqRWvgQz6e+erkB+JJD6LrszQtMozEHI4EkmgZQvnGHrpLVzUWk7t4sJCIkVw==}
-    peerDependencies:
-      node-fetch: '*'
     dev: false
 
   /native-fetch/3.0.0_node-fetch@2.6.6:
@@ -8895,6 +8794,16 @@ packages:
   /node-releases/2.0.1:
     resolution: {integrity: sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==}
     dev: true
+
+  /node-yaml/4.0.1:
+    resolution: {integrity: sha512-ZPKi3OexXdiklsRW9g4P7jAxHAhoBRZCFmIDMQ89clLhMz+MTJuCM9y5f1R7Ru75H84hWJouwpxVOq1SdRTe7A==}
+    peerDependencies:
+      js-yaml: ^3.13.x
+    dependencies:
+      co: 4.6.0
+      junk: 3.1.0
+      promise-fs: 2.1.1
+    dev: false
 
   /node-yaml/4.0.1_js-yaml@3.14.1:
     resolution: {integrity: sha512-ZPKi3OexXdiklsRW9g4P7jAxHAhoBRZCFmIDMQ89clLhMz+MTJuCM9y5f1R7Ru75H84hWJouwpxVOq1SdRTe7A==}
@@ -11211,10 +11120,6 @@ packages:
   /universalify/0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
-
-  /universalify/1.0.0:
-    resolution: {integrity: sha512-rb6X1W158d7pRQBg5gkR8uPaSfiids68LTJQYOtEUhoJUWBdaQHsuT/EUduxXYxcrt4r5PJ4fuHW1MHT6p0qug==}
-    engines: {node: '>= 10.0.0'}
 
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}

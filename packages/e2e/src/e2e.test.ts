@@ -255,9 +255,9 @@ describe('CLI', () => {
 
     it('publishes bot', async () => {
       const botConfigPath = join(dirname(bundledBotPath), 'bot.yml');
-      fse.moveSync(join(__dirname, '../mocks/bot/test-bot.ts'), join(dirname(bundledBotPath), 'bot.yml'));
+      fse.copySync(join(__dirname, '../mocks/bot/bot.yml'), join(dirname(bundledBotPath), 'bot.yml'));
       await cmd(`bot publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
-      const botConfig = await readFile(botConfigPath);
+      const botConfig = await readFile(botConfigPath, { absolute: true});
       botCid = botConfig.package['/'];
       expect(botCid).toBeDefined();
     });
