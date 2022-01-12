@@ -3,17 +3,21 @@
 //
 
 import assert from 'assert';
-import { spawnSync } from 'child_process';
 
 import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 
 import { getBotConfig } from '../../config';
+import { MaybePromise } from '@dxos/util';
 
 export const BOT_DXN_NAME = 'dxos:type.bot';
 
-export const register = ({ getDXNSClient }: { getDXNSClient: Function }) => async (argv: any) => {
+interface QueryParams {
+  getDXNSClient: () => MaybePromise<{ registryClient: IRegistryClient }>;
+}
+
+export const register = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
   const { verbose, version, 'dry-run': noop, name, domain } = argv;
 
   const conf = await getBotConfig();
@@ -26,17 +30,6 @@ export const register = ({ getDXNSClient }: { getDXNSClient: Function }) => asyn
 
   assert(conf.name, 'Invalid Bot Name.');
   assert(conf.version, 'Invalid Bot Version.');
-
-  const { status, stdout } = spawnSync('git', [
-    'describe',
-    '--tags',
-    '--first-parent',
-    '--abbrev=99',
-    '--long',
-    '--dirty',
-    '--always'
-  ], { shell: true });
-  conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
 
   log(`Registering ${conf.name}@${conf.version}...`);
 

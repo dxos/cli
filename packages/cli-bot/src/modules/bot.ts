@@ -8,11 +8,12 @@ import { asyncHandler } from '@dxos/cli-core';
 
 // import { spawn, invite, build, publish, register, query } from '../handlers/bot';
 import { install, setup, start } from '../handlers/bot-factory';
+import { publish, query, register, build } from '../handlers/bot';
 
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ config }: { config: any }) => {
+export const BotModule = ({ config, getDXNSClient }: { config: any, getDXNSClient: any }) => {
   return {
     command: ['bot'],
     describe: 'Bot CLI.',
@@ -99,32 +100,46 @@ export const BotModule = ({ config }: { config: any }) => {
     //   handler: asyncHandler(build())
     // })
 
-    // .command({
-    //   command: ['publish'],
-    //   describe: 'Publish Bot to IPFS.',
-    //   builder: yargs => yargs,
+    .command({
+      command: ['publish'],
+      describe: 'Publish Bot to IPFS.',
+      builder: yargs => yargs
+        .option('buildPath', { type: 'string' })
+        .demandOption('buildPath'),
 
-    //   handler: asyncHandler(publish(config))
-    // })
+      handler: asyncHandler(publish(config))
+    })
 
-    // .command({
-    //   command: ['register'],
-    //   describe: 'Register bot in DXNS.',
-    //   builder: yargs => yargs
-    //     .version(false)
-    //     .option('name', { type: 'array' })
-    //     .option('version', { type: 'string' })
-    //     .option('domain', { type: 'string' }),
+    .command({
+      command: ['register'],
+      describe: 'Register bot in DXNS.',
+      builder: yargs => yargs
+        .version(false)
+        .option('name', { type: 'array' })
+        .option('version', { type: 'string' })
+        .option('domain', { type: 'string' }),
 
-    //   handler: asyncHandler(register({ getDXNSClient }))
-    // })
+      handler: asyncHandler(register({ getDXNSClient }))
+    })
 
-    // .command({
-    //   command: ['query'],
-    //   describe: 'Query bots',
-    //   builder: yargs => yargs,
+    .command({
+      command: ['query'],
+      describe: 'Query bots',
+      builder: yargs => yargs,
 
-    //   handler: asyncHandler(query({ getDXNSClient }))
-    // })
+      handler: asyncHandler(query({ getDXNSClient }))
+    })
+
+    .command({
+      command: ['build'],
+      describe: 'Build bot',
+      builder: yargs => yargs
+        .option('entryPoint', { type: 'string' })
+        .demandOption('entryPoint')
+        .option('outfile', { type: 'string' })
+        .demandOption('outfile'),
+
+      handler: asyncHandler(build())
+    })
   };
 };

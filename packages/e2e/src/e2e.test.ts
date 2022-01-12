@@ -4,8 +4,12 @@
 
 import expect from 'expect';
 import { promises as fs } from 'fs';
+import fse from 'fs-extra';
 import got from 'got';
-import { join } from 'path';
+import { join, dirname } from 'path';
+
+import { createId } from '@dxos/crypto'
+import { readFile } from '@dxos/cli-core';
 
 import { HTTPServer } from '../mocks/http-server';
 import { IPFS } from '../mocks/ipfs';
@@ -13,7 +17,7 @@ import { cmd } from './cli';
 
 const PROFILE_NAME = 'e2e-test';
 
-const APP_SERVER_PORT = 5001;
+const APP_SERVER_PORT = 8888;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
 const KUBE_NAME = 'kube.test';
@@ -188,7 +192,7 @@ describe('CLI', () => {
         await cmd('app serve stop').run();
       } catch {}
 
-      await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').debug().run();
+      await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').run();
     });
 
     it('register app', async () => {
@@ -234,10 +238,32 @@ describe('CLI', () => {
     });
   });
 
-  describe('bot', () => {
+  describe.only('bot', () => {
+    let bundledBotPath: string;
+    let botCid: string;
+
     it('query bots', async () => {
       const bots = await cmd('bot query --json').json();
-      expect(bots.length).toBe(0);
+      expect(bots.length).toBe(1);
+    });
+
+    it('builds bot', async () => {
+      bundledBotPath = join(__dirname, '..', 'out', createId(), 'main.js');
+      await cmd(`bot build --entryPoint ${join(__dirname, '../mocks/bot/test-bot.ts')} --outfile ${bundledBotPath} --json`).run();
+      await fse.ensureFile(bundledBotPath);
+    });
+
+    it('publishes bot', async () => {
+      const botConfigPath = join(dirname(bundledBotPath), 'bot.yml');
+      fse.moveSync(join(__dirname, '../mocks/bot/test-bot.ts'), join(dirname(bundledBotPath), 'bot.yml'));
+      await cmd(`bot publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
+      const botConfig = await readFile(botConfigPath);
+      botCid = botConfig.package['/'];
+      expect(botCid).toBeDefined();
+    });
+
+    it('registers bot', async () => {
+
     });
   });
 

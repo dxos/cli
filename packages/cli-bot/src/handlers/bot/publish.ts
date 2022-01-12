@@ -13,7 +13,10 @@ import { Config, ConfigV1Object } from '@dxos/config';
 
 import { getBotConfig, updateBotConfig } from '../../config';
 
-export const publish = (config: Config<ConfigV1Object>) => async (buildPath: string) => {
+export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => {
+  const { buildPath } = argv;
+  assert(buildPath, 'buildPath is required.');
+
   let ipfsEndpoint = config.get('runtime.services.ipfs.gateway');
   assert(ipfsEndpoint, 'Invalid IPFS Gateway.');
 
@@ -23,6 +26,7 @@ export const publish = (config: Config<ConfigV1Object>) => async (buildPath: str
 
   // Update CIDs in bot.yml.
   const botConfig = await getBotConfig();
+  console.log('botConfig:', botConfig);
 
   const ipfs = IpfsHttpClient({
     url: ipfsEndpoint,
@@ -42,7 +46,7 @@ export const publish = (config: Config<ConfigV1Object>) => async (buildPath: str
 
   const cid = addResult.cid.toString();
 
-  set(botConfig, 'package.node["/"]', cid);
+  set(botConfig, 'package["/"]', cid);
 
   botConfig.version = semverInc(botConfig.version, 'patch');
   await updateBotConfig(botConfig);
