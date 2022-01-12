@@ -79,7 +79,7 @@ jobs:
 
           # Test
           cd packages/e2e
-          node common/scripts/install-run-rushx.js test:e2e --verbose
+          node ../../common/scripts/install-run-rushx.js test:e2e --verbose
           cd ../..
 
           echo "WHICH wire-app-server:"
