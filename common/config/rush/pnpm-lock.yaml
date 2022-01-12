@@ -113,8 +113,10 @@ importers:
       cli-progress: ^3.8.2
       cookie-parser: ^1.4.5
       cors: ^2.8.5
+      debug: ~4.3.3
       eslint: ^7.13.0
       express: ^4.17.1
+      find-up: ~5.0.0
       fs-extra: 9.0.0
       get-folder-size: ^2.0.1
       hypercore-crypto: ^1.0.0
@@ -155,7 +157,9 @@ importers:
       cli-progress: 3.9.1
       cookie-parser: 1.4.6
       cors: 2.8.5
+      debug: 4.3.3
       express: 4.17.2
+      find-up: 5.0.0
       fs-extra: 9.0.0
       get-folder-size: 2.0.1
       hypercore-crypto: 1.0.0
@@ -5711,7 +5715,6 @@ packages:
     dependencies:
       locate-path: 6.0.0
       path-exists: 4.0.0
-    dev: true
 
   /flat-cache/3.0.4:
     resolution: {integrity: sha512-dm9s5Pw7Jc0GvMYbshN6zchCA9RgQlzzEZX3vylR9IqFfS8XciblUXOKfW6SiuJ0e13eDYZoZV5wdrev7P3Nwg==}
@@ -7853,7 +7856,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
-    dev: true
 
   /lockfile/1.0.4:
     resolution: {integrity: sha512-cvbTwETRfsFh4nHsL1eGWapU1XFi5Ot9E85sWAwia7Y7EgB7vfqcZhTKZ+l7hCGxSPoushMv5GKhT5PdLv03WA==}
@@ -9136,7 +9138,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-limit: 3.1.0
-    dev: true
 
   /p-map/3.0.0:
     resolution: {integrity: sha512-d3qXVTF/s+W+CdJ5A29wywV2n8CQQYahlgz2bFiA+4eVNJbHJodPZ+/gXwPGh0bOqA+j8S+6+ckmvLGPk1QpxQ==}
