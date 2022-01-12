@@ -78,7 +78,9 @@ jobs:
           # node common/scripts/install-run-rush.js lint --verbose
 
           # Test
-          node common/scripts/install-run-rush.js test --verbose
+          cd packages/e2e
+          node common/scripts/install-run-rushx.js test:e2e --verbose
+          cd ../..
 
           echo "WHICH wire-app-server:"
           which wire-app-server || :
