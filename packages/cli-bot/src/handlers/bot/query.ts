@@ -3,6 +3,7 @@
 //
 
 import { print } from '@dxos/cli-core';
+import { raise } from '@dxos/debug';
 import { CID, DXN, IReadOnlyRegistryClient, RegistryDataRecord } from '@dxos/registry-client';
 import { MaybePromise } from '@dxos/util';
 
@@ -25,12 +26,7 @@ export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
   const { json } = argv;
   const client = await getDXNSClient();
   const registry = client.registryClient;
-  const botType = await registry.getResourceRecord(DXN.parse(BOT_TYPE_DXN), 'latest');
-
-  if (!botType) {
-    throw new Error('Bot type not found.');
-  }
-
+  const botType = await registry.getResourceRecord(DXN.parse(BOT_TYPE_DXN), 'latest') ?? raise(new Error('Bot type not found.'));
   const records = await registry.getDataRecords({ type: botType.record.cid });
 
   const bots = records.map(displayBots);

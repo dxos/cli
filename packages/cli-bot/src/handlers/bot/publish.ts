@@ -19,7 +19,7 @@ const updateConfig = async (cid: string) => {
 
   botConfig.version = semverInc(botConfig.version, 'patch');
   await updateBotConfig(botConfig);
-}
+};
 
 export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => {
   const { buildPath } = argv;
