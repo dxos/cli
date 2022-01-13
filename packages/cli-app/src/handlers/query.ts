@@ -6,7 +6,8 @@ import assert from 'assert';
 
 import { print } from '@dxos/cli-core';
 import { CID, DXN, RegistryDataRecord } from '@dxos/registry-client';
-import type { Params } from '../modules/app'
+
+import type { Params } from '../modules/app';
 
 const APP_TYPE_DXN = 'dxos:type.app';
 

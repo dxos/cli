@@ -10,11 +10,12 @@ import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 
+import type { Params } from '../modules/app';
 import { loadAppConfig, updateAppConfig } from './config';
 
 export interface RegisterParams {
   getAppRecord: Function,
-  getDXNSClient: Function
+  getDXNSClient: Params['getDXNSClient']
 }
 
 export const APP_DXN_NAME = 'dxos:type.app';

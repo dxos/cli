@@ -4,8 +4,9 @@
 
 import { print } from '@dxos/cli-core';
 import { raise } from '@dxos/debug';
-import { CID, DXN, IReadOnlyRegistryClient, RegistryDataRecord } from '@dxos/registry-client';
-import { MaybePromise } from '@dxos/util';
+import { CID, DXN, RegistryDataRecord } from '@dxos/registry-client';
+
+import type { Params } from '../../modules/bot';
 
 const BOT_TYPE_DXN = 'dxos:type.bot';
 
@@ -19,7 +20,7 @@ export const displayBots = (record: RegistryDataRecord) => {
 };
 
 interface QueryParams {
-  getDXNSClient: () => MaybePromise<{ registryClient: IReadOnlyRegistryClient }>;
+  getDXNSClient: Params['getDXNSClient']
 }
 
 export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {

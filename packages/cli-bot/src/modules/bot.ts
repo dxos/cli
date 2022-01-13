@@ -11,7 +11,7 @@ import type { DXNSClient } from '@dxos/cli-dxns';
 import { publish, query, register, build } from '../handlers/bot';
 import { install, setup, start } from '../handlers/bot-factory';
 
-interface Params {
+export interface Params {
   config: any,
   getDXNSClient(): Promise<DXNSClient>
 }

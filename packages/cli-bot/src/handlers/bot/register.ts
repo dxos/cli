@@ -7,14 +7,14 @@ import assert from 'assert';
 import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
-import { MaybePromise } from '@dxos/util';
 
 import { getBotConfig } from '../../config';
+import type { Params } from '../../modules/bot';
 
 export const BOT_DXN_NAME = 'dxos:type.bot';
 
 interface QueryParams {
-  getDXNSClient: () => MaybePromise<{ registryClient: IRegistryClient }>;
+  getDXNSClient: Params['getDXNSClient']
 }
 
 export const register = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
