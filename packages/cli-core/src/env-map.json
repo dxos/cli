@@ -26,6 +26,9 @@
   "DX_IPFS_GATEWAY": {
     "path": "runtime.services.ipfs.gateway"
   },
+  "DX_IPFS_SERVER": {
+    "path": "runtime.services.ipfs.server"
+  },
   "DX_APP_SERVER_CONFIG": {
     "path": "runtime.cli.app.serve.config"
   },
