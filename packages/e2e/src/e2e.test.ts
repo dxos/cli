@@ -240,7 +240,7 @@ describe('CLI', () => {
     });
   });
 
-  describe.only('bot', () => {
+  describe('bot', () => {
     let bundledBotPath: string;
     let botCid: string;
 
