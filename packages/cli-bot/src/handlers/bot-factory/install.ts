@@ -5,9 +5,9 @@
 import { spawn, SpawnOptions } from 'child_process';
 import { Argv } from 'yargs';
 
-import { log } from '@dxos/debug';
 import { CoreOptions } from '@dxos/cli-core';
 import { Config, ConfigV1Object } from '@dxos/config';
+import { log } from '@dxos/debug';
 
 import { BOTFACTORY_PACKAGE } from '../../config';
 

@@ -5,8 +5,8 @@
 import assert from 'assert';
 import { Argv } from 'yargs';
 
-import { log } from '@dxos/debug';
 import { CoreOptions } from '@dxos/cli-core';
+import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 

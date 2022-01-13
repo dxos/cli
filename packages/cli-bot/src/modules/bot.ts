@@ -7,7 +7,7 @@ import { Argv } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
-import { publish, query, register, build, botBuildOptions, botRegisterOptions} from '../handlers/bot';
+import { publish, query, register, build, botBuildOptions, botRegisterOptions } from '../handlers/bot';
 import { botFactoryStartOptions, botFactoryInstallOptions, install, setup, start } from '../handlers/bot-factory';
 
 export interface Params {
