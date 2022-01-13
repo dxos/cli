@@ -26,7 +26,6 @@ export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => 
 
   // Update CIDs in bot.yml.
   const botConfig = await getBotConfig();
-  console.log('botConfig:', botConfig);
 
   const ipfs = IpfsHttpClient({
     url: ipfsEndpoint,
