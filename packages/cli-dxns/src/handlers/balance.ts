@@ -4,6 +4,7 @@
 
 import assert from 'assert';
 import BN from 'bn.js';
+import fetch from 'node-fetch';
 
 import { print } from '@dxos/cli-core';
 
@@ -29,30 +30,43 @@ export const increaseBalance = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
   const { apiRaw, keypair, keyring, transactionHandler } = client;
-  const { account = keypair?.address, amount, mnemonic, json } = argv;
+  const { account = keypair?.address, amount, mnemonic, json, faucet } = argv;
 
   assert(account, 'Account should be provided.');
-  assert(mnemonic, 'Sudoer mnemonic should be provided.');
 
-  const sudoer = keyring.addFromUri(mnemonic.join(' '));
+  if (mnemonic) {
+    const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
-  const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
-  const requestedFree = previousFree.add(new BN(amount));
-  const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
+    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
+    const requestedFree = previousFree.add(new BN(amount));
+    const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
 
-  const events = await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
-  const event = events.map((e: any) => e.event).find(apiRaw.events.balances.BalanceSet.is);
-  assert(event, 'Balance has not been set.');
+    const events = await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
+    const event = events.map((e: any) => e.event).find(apiRaw.events.balances.BalanceSet.is);
+    assert(event, 'Balance has not been set.');
 
-  const newFree = event.data[1];
-  const newReserved = event.data[2];
+    const newFree = event.data[1];
+    const newReserved = event.data[2];
 
-  if (newFree.eq(requestedFree)) {
-    print({
-      newFree: newFree.toString(),
-      newReserved: newReserved.toString()
-    }, { json });
+    if (newFree.eq(requestedFree)) {
+      print({
+        newFree: newFree.toString(),
+        newReserved: newReserved.toString()
+      }, { json });
+    } else {
+      throw new Error('Requested free amount not received. Check if existential amount is reached.');
+    }
   } else {
-    throw new Error('Requested free amount not received. Check if existential amount is reached.');
+    // Use Faucet.
+    assert(faucet, 'Faucet URL should be provided.');
+
+    const response = await fetch(faucet, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ account })
+    });
+    const result = await response.json();
+
+    print(result, { json });
   }
 };

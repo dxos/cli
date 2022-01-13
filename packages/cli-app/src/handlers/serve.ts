@@ -3,11 +3,14 @@
 //
 
 import assert from 'assert';
+import findUp from 'find-up';
+import path from 'path';
 
 import { stopService, Runnable } from '@dxos/cli-core';
 
 const APP_SERVER_PROCESS_NAME = 'app-server';
-const APP_SERVER_BINARY = 'wire-app-server';
+const rootPath = path.dirname(findUp.sync('package.json', { cwd: __dirname }) ?? '../../');
+const APP_SERVER_BINARY = path.join(rootPath, 'bin/dx-app-server.js');
 
 const DEFAULT_LOG_FILE = '/var/log/app-server.log';
 
