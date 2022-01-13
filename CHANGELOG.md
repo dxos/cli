@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.12.0](https://www.github.com/dxos/cli/compare/v2.11.5...v2.12.0) (2022-01-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* add IPFS to envvars & include fix for extensions. (#379)
+
+### Features
+
+* add IPFS to envvars & include fix for extensions. ([#379](https://www.github.com/dxos/cli/issues/379)) ([21cd724](https://www.github.com/dxos/cli/commit/21cd7246ca642b637522257252e58727282617f6))
+
 ### [2.11.5](https://www.github.com/dxos/cli/compare/v2.11.4...v2.11.5) (2022-01-13)
 
 
