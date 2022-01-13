@@ -154,11 +154,11 @@ yarn build
 
 During local development there is a need for testing of a newly created / modified commands. For that purpose, any cli command could be called from the repo root via `pnpm run dx`, e.g.:
 
+> **Note:** Command arguments should be separated from the command via `--` for `pnpm` to pass it to executable.
+
 ```
 pnpm run dx dxns resource list -- --json
 ```
-
-> **Note:** Command arguments should be separated from the command via `--` for `pnpm` to pass it to executable.
 
 If the command ought to be called from the specific path (e.g. during app deployent), an alias for the local dx binary coud be created by adding such to the shell profile:
 
