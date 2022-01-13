@@ -7,9 +7,9 @@ import assert from 'assert';
 import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
+import { MaybePromise } from '@dxos/util';
 
 import { getBotConfig } from '../../config';
-import { MaybePromise } from '@dxos/util';
 
 export const BOT_DXN_NAME = 'dxos:type.bot';
 

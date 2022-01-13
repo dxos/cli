@@ -8,8 +8,8 @@ import fse from 'fs-extra';
 import got from 'got';
 import { join, dirname } from 'path';
 
-import { createId } from '@dxos/crypto'
 import { readFile } from '@dxos/cli-core';
+import { createId } from '@dxos/crypto';
 
 import { HTTPServer } from '../mocks/http-server';
 import { IPFS } from '../mocks/ipfs';
@@ -259,7 +259,7 @@ describe('CLI', () => {
       const botConfigPath = join(dirname(bundledBotPath), 'bot.yml');
       fse.copySync(join(__dirname, '../mocks/bot/bot.yml'), join(dirname(bundledBotPath), 'bot.yml'));
       await cmd(`bot publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
-      const botConfig = await readFile(botConfigPath, { absolute: true});
+      const botConfig = await readFile(botConfigPath, { absolute: true });
       botCid = botConfig.package['/'];
       expect(botCid).toBeDefined();
     });
