@@ -2,7 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
-import { print } from '@dxos/cli-core';
+import { Arguments } from 'yargs';
+
+import { print, CoreOptions } from '@dxos/cli-core';
 import { raise } from '@dxos/debug';
 import { CID, DXN, RegistryDataRecord } from '@dxos/registry-client';
 
@@ -23,7 +25,7 @@ interface QueryParams {
   getDXNSClient: Params['getDXNSClient']
 }
 
-export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
+export const query = ({ getDXNSClient }: QueryParams) => async (argv: Arguments<CoreOptions>) => {
   const { json } = argv;
   const client = await getDXNSClient();
   const registry = client.registryClient;
