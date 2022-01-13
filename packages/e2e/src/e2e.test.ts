@@ -269,7 +269,8 @@ describe('CLI', () => {
       await cmd(`bot register --name ${BOT_NAME} --domain ${BOT_DOMAIN}`, dirname(bundledBotPath)).run();
       const bots = await cmd('bot query --json').json();
       expect(bots.length).toBe(2);
-      expect(bots[1].description).toBe('Test bot description');
+      const newBot = bots.find((b: any) => b.description === 'Test bot description');
+      expect(newBot).toBeDefined();
     });
   });
 
