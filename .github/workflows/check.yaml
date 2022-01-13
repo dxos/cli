@@ -59,10 +59,6 @@ jobs:
           \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm install -g @microsoft/rush pnpm
-
-          echo "WHICH wire-app-server:"
-          which wire-app-server || :
-          ls -al /usr/local/bin
           
           # Install dependencies
           node common/scripts/install-run-rush.js update
