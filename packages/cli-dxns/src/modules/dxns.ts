@@ -23,7 +23,7 @@ import { DXNSClient } from '../index';
 
 interface Params {
   config: any,
-  getDXNSClient(): DXNSClient
+  getDXNSClient(): Promise<DXNSClient>
 }
 
 export const DXNSModule = (params: Params) => {

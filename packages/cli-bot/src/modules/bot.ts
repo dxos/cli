@@ -5,15 +5,21 @@
 import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
+import type { DXNSClient } from '@dxos/cli-dxns';
 
 // import { spawn, invite, build, publish, register, query } from '../handlers/bot';
 import { publish, query, register, build } from '../handlers/bot';
 import { install, setup, start } from '../handlers/bot-factory';
 
+interface Params {
+  config: any,
+  getDXNSClient(): Promise<DXNSClient>
+}
+
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ config, getDXNSClient }: { config: any, getDXNSClient: any }) => {
+export const BotModule = ({ config, getDXNSClient }: Params) => {
   return {
     command: ['bot'],
     describe: 'Bot CLI.',

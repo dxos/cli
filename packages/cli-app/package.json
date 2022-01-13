@@ -104,7 +104,8 @@
     "@types/lodash.set": "^4.3.6",
     "@types/lodash.omit": "^4.5.6",
     "@types/pify": "~5.0.1",
-    "@types/jest": "~27.0.3"
+    "@types/jest": "~27.0.3",
+    "@dxos/cli-dxns": "workspace:*"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

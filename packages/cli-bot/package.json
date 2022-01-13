@@ -73,7 +73,8 @@
     "@types/lodash.defaultsdeep": "^4.6.6",
     "@types/lodash.set": "^4.3.6",
     "@types/semver": "~7.3.9",
-    "@types/cli-progress": "^3.9.2"
+    "@types/cli-progress": "^3.9.2",
+    "@dxos/cli-dxns": "workspace:*"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

@@ -79,6 +79,7 @@ importers:
   ../../packages/cli-app:
     specifiers:
       '@dxos/cli-core': workspace:*
+      '@dxos/cli-dxns': workspace:*
       '@dxos/debug': ~2.19.9
       '@dxos/eslint-plugin': ~1.0.20
       '@dxos/registry-client': ~2.19.9
@@ -181,6 +182,7 @@ importers:
       url-join: 4.0.1
       yargs: 16.2.0
     devDependencies:
+      '@dxos/cli-dxns': link:../cli-dxns
       '@dxos/eslint-plugin': 1.0.20_eslint@7.32.0+typescript@4.5.4
       '@types/body-parser': 1.19.2
       '@types/cli-progress': 3.9.2
@@ -213,6 +215,7 @@ importers:
     specifiers:
       '@dxos/botkit': ~2.19.9
       '@dxos/cli-core': workspace:*
+      '@dxos/cli-dxns': workspace:*
       '@dxos/config': ~2.19.9
       '@dxos/crypto': ~2.19.9
       '@dxos/debug': ~2.19.9
@@ -272,6 +275,7 @@ importers:
       semver: 7.3.5
       yargs: 16.2.0
     devDependencies:
+      '@dxos/cli-dxns': link:../cli-dxns
       '@dxos/eslint-plugin': 1.0.20_eslint@7.32.0+typescript@4.5.4
       '@types/cli-progress': 3.9.2
       '@types/fs-extra': 9.0.13

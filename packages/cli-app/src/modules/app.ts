@@ -5,11 +5,11 @@
 import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
+import type { DXNSClient } from '@dxos/cli-dxns';
 import { log } from '@dxos/debug';
 
 import { DEFAULT_PORT } from '../config';
 import { build, publish, register, query, serve, create } from '../handlers';
-import { GetDXNSClient } from '../types';
 
 const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/app-template';
 
@@ -26,9 +26,9 @@ const getAppRecord = (config: any, namespace: string) => {
   return record;
 };
 
-interface Params {
+export interface Params {
   config: any,
-  getDXNSClient: GetDXNSClient,
+  getDXNSClient(): Promise<DXNSClient>,
   getReadlineInterface: Function
 }
 
