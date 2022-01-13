@@ -44,7 +44,7 @@
     "@dxos/crypto": "~2.19.9",
     "@dxos/debug": "~2.19.9",
     "@dxos/echo-db": "~2.19.9",
-    "@dxos/random-access-multi-storage": "~2.19.2",
+    "@dxos/random-access-multi-storage": "~2.19.9",
     "assert": "^2.0.0",
     "base-x": "^3.0.9",
     "fs-extra": "9.0.0",
@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@dxos/async": "~2.19.9",
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.21",
     "@dxos/signal": "~2.19.9",
     "@types/lockfile": "^1.0.2",
     "eslint": "^7.13.0",

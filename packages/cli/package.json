@@ -42,7 +42,7 @@
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
     "@dxos/debug": "~2.19.9",
-    "@dxos/random-access-multi-storage": "~2.19.2",
+    "@dxos/random-access-multi-storage": "~2.19.9",
     "assert": "^2.0.0",
     "find-root": "^1.1.0",
     "fs-extra": "9.0.0",
@@ -64,7 +64,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.21",
     "jest": "^27.4.4",
     "json2yaml": "^1.1.0",
     "ts-node": "^10.2.1",

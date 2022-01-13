@@ -17,7 +17,7 @@
     "bail": true
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.21",
     "@types/expect": "^24.3.0",
     "@types/mocha": "^9.0.0",
     "eslint": "^7.13.0",
