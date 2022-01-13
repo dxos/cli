@@ -1,5 +1,16 @@
 # Changelog
 
+### [2.11.5](https://www.github.com/dxos/cli/compare/v2.11.4...v2.11.5) (2022-01-13)
+
+
+### Bug Fixes
+
+* add app create command. ([#366](https://www.github.com/dxos/cli/issues/366)) ([bd97a53](https://www.github.com/dxos/cli/commit/bd97a53ffc78313b204e97dba778e3f6251ee14b))
+* create cli extension from template. ([#368](https://www.github.com/dxos/cli/issues/368)) ([bdfe213](https://www.github.com/dxos/cli/commit/bdfe21388aaeab8566560aacf0551af8d1ee4c16))
+* deploy latest fixes. ([2f699b6](https://www.github.com/dxos/cli/commit/2f699b6e17fdbcc2edb5c4580960cde6f92a6c2d))
+* increase balance from faucet. ([#376](https://www.github.com/dxos/cli/issues/376)) ([7b892a4](https://www.github.com/dxos/cli/commit/7b892a4fb1a16d274b1255be41405dcf2a3128de))
+* Restore E2E tests ([#375](https://www.github.com/dxos/cli/issues/375)) ([2d1bcab](https://www.github.com/dxos/cli/commit/2d1bcab144377175c62adb4ff6082aa0bb5f106b))
+
 ### [2.11.4](https://www.github.com/dxos/cli/compare/v2.11.3...v2.11.4) (2021-12-22)
 
 
