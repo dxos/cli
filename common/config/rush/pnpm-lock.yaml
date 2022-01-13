@@ -1005,13 +1005,11 @@ importers:
       fs-extra: 10.0.0
       got: ^11.8.2
       mocha: ^9.1.1
-      node-yaml: ^4.0.1
       ts-node: ^10.2.1
       typescript: ^4.0.5
     dependencies:
       '@dxos/cli-core': link:../cli-core
       '@dxos/crypto': 2.19.9
-      node-yaml: 4.0.1
     devDependencies:
       '@dxos/botkit': 2.19.9
       '@dxos/eslint-plugin': 1.0.20_eslint@7.32.0+typescript@4.5.4
@@ -8794,16 +8792,6 @@ packages:
   /node-releases/2.0.1:
     resolution: {integrity: sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==}
     dev: true
-
-  /node-yaml/4.0.1:
-    resolution: {integrity: sha512-ZPKi3OexXdiklsRW9g4P7jAxHAhoBRZCFmIDMQ89clLhMz+MTJuCM9y5f1R7Ru75H84hWJouwpxVOq1SdRTe7A==}
-    peerDependencies:
-      js-yaml: ^3.13.x
-    dependencies:
-      co: 4.6.0
-      junk: 3.1.0
-      promise-fs: 2.1.1
-    dev: false
 
   /node-yaml/4.0.1_js-yaml@3.14.1:
     resolution: {integrity: sha512-ZPKi3OexXdiklsRW9g4P7jAxHAhoBRZCFmIDMQ89clLhMz+MTJuCM9y5f1R7Ru75H84hWJouwpxVOq1SdRTe7A==}
