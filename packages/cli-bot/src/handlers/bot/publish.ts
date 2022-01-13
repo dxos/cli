@@ -17,7 +17,7 @@ export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => 
   const { buildPath } = argv;
   assert(buildPath, 'buildPath is required.');
 
-  let ipfsEndpoint = config.get('runtime.services.ipfs.gateway');
+  let ipfsEndpoint = config.get('runtime.services.ipfs.server');
   assert(ipfsEndpoint, 'Invalid IPFS Gateway.');
 
   if (!ipfsEndpoint.endsWith('/')) {
