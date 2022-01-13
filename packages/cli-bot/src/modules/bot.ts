@@ -115,9 +115,11 @@ export const BotModule = ({ config, getDXNSClient }: { config: any, getDXNSClien
       describe: 'Register bot in DXNS.',
       builder: yargs => yargs
         .version(false)
-        .option('name', { type: 'array' })
         .option('version', { type: 'string' })
-        .option('domain', { type: 'string' }),
+        .option('name', { type: 'string' })
+        .option('domain', { type: 'string' })
+        .demandOption('name')
+        .demandOption('domain'),
 
       handler: asyncHandler(register({ getDXNSClient }))
     })

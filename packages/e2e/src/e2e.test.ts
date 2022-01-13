@@ -21,6 +21,8 @@ const APP_SERVER_PORT = 8888;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
 const KUBE_NAME = 'kube.test';
+const BOT_DOMAIN = 'dxos';
+const BOT_NAME = 'bot.test';
 
 /**
  * NOTE: Test order is important in this file. **Tests depend on each other.**
@@ -238,7 +240,7 @@ describe('CLI', () => {
     });
   });
 
-  describe.only('bot', () => {
+  describe('bot', () => {
     let bundledBotPath: string;
     let botCid: string;
 
@@ -263,7 +265,10 @@ describe('CLI', () => {
     });
 
     it('registers bot', async () => {
-
+      await cmd(`bot register --name ${BOT_NAME} --domain ${BOT_DOMAIN}`, dirname(bundledBotPath)).run();
+      const bots = await cmd('bot query --json').json();
+      expect(bots.length).toBe(2);
+      expect(bots[1].description).toBe('Test bot description');
     });
   });
 
