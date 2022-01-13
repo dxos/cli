@@ -17,7 +17,7 @@ import { cmd } from './cli';
 
 const PROFILE_NAME = 'e2e-test';
 
-const APP_SERVER_PORT = 8888;
+const APP_SERVER_PORT = 5001;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
 const KUBE_NAME = 'kube.test';
@@ -240,7 +240,7 @@ describe('CLI', () => {
     });
   });
 
-  describe('bot', () => {
+  describe.only('bot', () => {
     let bundledBotPath: string;
     let botCid: string;
 
