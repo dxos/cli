@@ -3,8 +3,10 @@
 //
 
 import assert from 'assert';
+import { Argv } from 'yargs';
 
 import { log } from '@dxos/debug';
+import { CoreOptions } from '@dxos/cli-core';
 import { CID, DXN, RecordKind } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 
@@ -13,11 +15,28 @@ import type { Params } from '../../modules/bot';
 
 export const BOT_DXN_NAME = 'dxos:type.bot';
 
+export interface BotRegisterOptions extends CoreOptions {
+  name: string,
+  domain: string,
+  version?: string,
+  'dry-run'?: boolean
+}
+
+export const botRegisterOptions = (yargs: Argv<CoreOptions>): Argv<BotRegisterOptions> => {
+  return yargs.version(false)
+    .option('version', { type: 'string' })
+    .option('name', { type: 'string' })
+    .option('domain', { type: 'string' })
+    .option('dry-run', { type: 'boolean' })
+    .demandOption('name')
+    .demandOption('domain');
+};
+
 interface QueryParams {
   getDXNSClient: Params['getDXNSClient']
 }
 
-export const register = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
+export const register = ({ getDXNSClient }: QueryParams) => async (argv: BotRegisterOptions) => {
   const { verbose, version, 'dry-run': noop, name, domain } = argv;
 
   const conf = await getBotConfig();

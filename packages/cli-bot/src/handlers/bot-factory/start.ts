@@ -5,12 +5,28 @@
 import { parse } from 'envfile';
 import fs from 'fs-extra';
 import path from 'path';
+import { Argv } from 'yargs';
 
-import { Runnable, sanitizeEnv } from '@dxos/cli-core';
+import { CoreOptions, Runnable, sanitizeEnv } from '@dxos/cli-core';
 
 import { BOTFACTORY_ENV_FILE } from '../../config';
 
 const BOT_FACTORY_PROCESS_NAME = 'bot-factory';
+
+export interface BotFactoryStartOptions extends CoreOptions {
+  'single-instance': boolean,
+  detached: boolean,
+  'log-file'?: string,
+  'proc-name'?: string
+}
+
+export const botFactoryStartOptions = (yargs: Argv<CoreOptions>): Argv<BotFactoryStartOptions> => {
+  return yargs
+    .option('single-instance', { type: 'boolean', default: false })
+    .option('detached', { type: 'boolean', alias: 'daemon', default: false })
+    .option('log-file', { type: 'string' })
+    .option('proc-name', { type: 'string' });
+};
 
 export interface StartOptions {
   singleInstance: string,

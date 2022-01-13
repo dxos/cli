@@ -8,6 +8,7 @@ import fse from 'fs-extra';
 import got from 'got';
 import { join, dirname } from 'path';
 
+import { sleep } from '@dxos/async';
 import { readFile } from '@dxos/cli-core';
 import { createId } from '@dxos/crypto';
 
@@ -103,7 +104,7 @@ describe('CLI', () => {
 
       await cmd('service start --from @dxos/cli-dxns --service dxns --dev --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
 
-      await new Promise<void>(resolve => setTimeout(resolve, 5000));
+      await sleep(5000);
     });
   });
 

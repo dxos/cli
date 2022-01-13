@@ -32,13 +32,14 @@
     "@types/yargs": "^16.0.1",
     "@dxos/botkit": "~2.19.9",
     "fs-extra": "10.0.0",
-    "@types/fs-extra": "^9.0.13"
+    "@types/fs-extra": "^9.0.13",
+    "@dxos/crypto": "~2.19.9",
+    "@dxos/cli-core": "workspace:*"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
   },
   "dependencies": {
-    "@dxos/crypto": "~2.19.9",
-    "@dxos/cli-core": "workspace:*"
+    "@dxos/async": "~2.19.9"
   }
 }

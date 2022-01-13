@@ -7,9 +7,8 @@ import { Argv } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
-// import { spawn, invite, build, publish, register, query } from '../handlers/bot';
-import { publish, query, register, build } from '../handlers/bot';
-import { install, setup, start } from '../handlers/bot-factory';
+import { publish, query, register, build, botBuildOptions, botRegisterOptions} from '../handlers/bot';
+import { botFactoryStartOptions, botFactoryInstallOptions, install, setup, start } from '../handlers/bot-factory';
 
 export interface Params {
   config: any,
@@ -33,11 +32,7 @@ export const BotModule = ({ config, getDXNSClient }: Params) => {
           .command({
             command: ['install', 'upgrade'],
             describe: 'Download & Install @dxos/botkit binary.',
-            builder: (yargs: Argv) => yargs.version(false)
-              .option('npmClient', { default: config.get('runtime.cli.npmClient') })
-              .option('dry-run', { type: 'boolean', default: false })
-              .option('channel', { default: config.get('runtime.cli.botFactory.channel') })
-              .option('version', { type: 'string' }),
+            builder: botFactoryInstallOptions(config),
             handler: asyncHandler(install())
           })
 
@@ -51,11 +46,7 @@ export const BotModule = ({ config, getDXNSClient }: Params) => {
           .command({
             command: ['start'],
             describe: 'Run a bot factory.',
-            builder: (yargs: Argv) => yargs
-              .option('single-instance', { type: 'boolean', default: false })
-              .option('detached', { type: 'boolean', alias: 'daemon', default: false })
-              .option('log-file', { type: 'string' })
-              .option('proc-name', { type: 'string' }),
+            builder: botFactoryStartOptions,
 
             handler: asyncHandler(async (argv: any) => {
               await setup(config, { includeNodePath: true })(argv);
@@ -119,13 +110,7 @@ export const BotModule = ({ config, getDXNSClient }: Params) => {
       .command({
         command: ['register'],
         describe: 'Register bot in DXNS.',
-        builder: yargs => yargs
-          .version(false)
-          .option('version', { type: 'string' })
-          .option('name', { type: 'string' })
-          .option('domain', { type: 'string' })
-          .demandOption('name')
-          .demandOption('domain'),
+        builder: botRegisterOptions,
 
         handler: asyncHandler(register({ getDXNSClient }))
       })
@@ -141,11 +126,7 @@ export const BotModule = ({ config, getDXNSClient }: Params) => {
       .command({
         command: ['build'],
         describe: 'Build bot',
-        builder: yargs => yargs
-          .option('entryPoint', { type: 'string' })
-          .demandOption('entryPoint')
-          .option('outfile', { type: 'string' })
-          .demandOption('outfile'),
+        builder: botBuildOptions,
 
         handler: asyncHandler(build())
       })
