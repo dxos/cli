@@ -13,6 +13,14 @@ import { Config, ConfigV1Object } from '@dxos/config';
 
 import { getBotConfig, updateBotConfig } from '../../config';
 
+const updateConfig = async (cid: string) => {
+  const botConfig = await getBotConfig();
+  set(botConfig, 'package["/"]', cid);
+
+  botConfig.version = semverInc(botConfig.version, 'patch');
+  await updateBotConfig(botConfig);
+}
+
 export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => {
   const { buildPath } = argv;
   assert(buildPath, 'buildPath is required.');
@@ -23,9 +31,6 @@ export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => 
   if (!ipfsEndpoint.endsWith('/')) {
     ipfsEndpoint = `${ipfsEndpoint}/`;
   }
-
-  // Update CIDs in bot.yml.
-  const botConfig = await getBotConfig();
 
   const ipfs = IpfsHttpClient({
     url: ipfsEndpoint,
@@ -44,9 +49,5 @@ export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => 
   bar.stop();
 
   const cid = addResult.cid.toString();
-
-  set(botConfig, 'package["/"]', cid);
-
-  botConfig.version = semverInc(botConfig.version, 'patch');
-  await updateBotConfig(botConfig);
+  await updateConfig(cid);
 };
