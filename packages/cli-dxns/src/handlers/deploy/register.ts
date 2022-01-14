@@ -12,6 +12,7 @@ import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 
+import type { Params } from '../../modules/dxns';
 import { loadConfig } from '../../utils/config';
 
 const DEFAULT_CID_PATH = 'hash';
@@ -20,7 +21,7 @@ const TYPE_DXN_NAME_PREFIX = 'dxos:type';
 
 export interface RegisterParams {
   cid: string
-  getDXNSClient: Function
+  getDXNSClient: Params['getDXNSClient']
 }
 
 export const register = ({ cid, getDXNSClient }: RegisterParams) => async (argv: any) => {

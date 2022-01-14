@@ -1,72 +1,81 @@
-// //
-// // Copyright 2021 DXOS.org
-// //
+//
+// Copyright 2021 DXOS.org
+//
 
-// import assert from 'assert';
-// import { spawnSync } from 'child_process';
-// import clean from 'lodash-clean';
+import assert from 'assert';
+import { Argv } from 'yargs';
 
-// import { log } from '@dxos/debug';
-// import { CID, DXN, RecordKind } from '@dxos/registry-client';
-// import type { IRegistryClient } from '@dxos/registry-client';
+import { CoreOptions } from '@dxos/cli-core';
+import { log } from '@dxos/debug';
+import { CID, DXN, RecordKind } from '@dxos/registry-client';
+import type { IRegistryClient } from '@dxos/registry-client';
 
-// import { getBotConfig, updateBotConfig } from '../../config';
+import { getBotConfig } from '../../config';
+import type { Params } from '../../modules/bot';
 
-// export const BOT_DXN_NAME = 'dxos:type.bot';
+export const BOT_DXN_NAME = 'dxos:type.bot';
 
-// export const register = ({ getDXNSClient }: { getDXNSClient: Function }) => async (argv: any) => {
-//   const { verbose, version, 'dry-run': noop, name, domain } = argv;
+export interface BotRegisterOptions extends CoreOptions {
+  name: string,
+  domain: string,
+  version?: string,
+  'dry-run'?: boolean
+}
 
-//   const conf = {
-//     ...await getBotConfig(),
-//     ...clean({ version })
-//   };
+export const botRegisterOptions = (yargs: Argv<CoreOptions>): Argv<BotRegisterOptions> => {
+  return yargs.version(false)
+    .option('version', { type: 'string' })
+    .option('name', { type: 'string' })
+    .option('domain', { type: 'string' })
+    .option('dry-run', { type: 'boolean' })
+    .demandOption('name')
+    .demandOption('domain');
+};
 
-//   assert(name, 'Invalid DXNS record name.');
-//   assert(domain, 'Invalid DXNS record domain.');
+interface QueryParams {
+  getDXNSClient: Params['getDXNSClient']
+}
 
-//   assert(conf.name, 'Invalid Bot Name.');
-//   assert(conf.version, 'Invalid Bot Version.');
+export const register = ({ getDXNSClient }: QueryParams) => async (argv: BotRegisterOptions) => {
+  const { verbose, version, 'dry-run': noop, name, domain } = argv;
 
-//   const { status, stdout } = spawnSync('git', [
-//     'describe',
-//     '--tags',
-//     '--first-parent',
-//     '--abbrev=99',
-//     '--long',
-//     '--dirty',
-//     '--always'
-//   ], { shell: true });
-//   conf.repositoryVersion = status === 0 ? stdout.toString().trim() : undefined;
+  const conf = await getBotConfig();
+  if (version) {
+    conf.version = version;
+  }
 
-//   log(`Registering ${conf.name}@${conf.version}...`);
+  assert(name, 'Invalid DXNS record name.');
+  assert(domain, 'Invalid DXNS record domain.');
 
-//   if (verbose || noop) {
-//     log(JSON.stringify({ record: conf }, undefined, 2));
-//   }
+  assert(conf.name, 'Invalid Bot Name.');
+  assert(conf.version, 'Invalid Bot Version.');
 
-//   if (!noop) {
-//     await updateBotConfig(conf);
+  log(`Registering ${conf.name}@${conf.version}...`);
 
-//     const { description, package: pkg, ...rest } = conf;
+  if (verbose || noop) {
+    log(JSON.stringify({ record: conf }, undefined, 2));
+  }
 
-//     const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
+  if (!noop) {
+    const { description, package: pkg, ...rest } = conf;
 
-//     const botType = await registryClient.getResourceRecord(DXN.parse(BOT_DXN_NAME), 'latest');
-//     assert(botType);
-//     assert(botType.record.kind === RecordKind.Type);
+    const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
 
-//     const cid = await registryClient.insertDataRecord({
-//       hash: CID.from(pkg['/']).value,
-//       ...rest
-//     }, botType.record.cid, {
-//       description
-//     });
+    const botType = await registryClient.getResourceRecord(DXN.parse(BOT_DXN_NAME), 'latest');
+    assert(botType);
+    assert(botType.record.kind === RecordKind.Type);
 
-//     const domainKey = await registryClient.resolveDomainName(domain);
-//     const dxn = DXN.fromDomainKey(domainKey, name);
-//     await registryClient.updateResource(dxn, cid);
-//   }
+    const cid = await registryClient.insertDataRecord({
+      hash: CID.from(pkg['/']).value,
+      ...rest
+    }, botType.record.cid, {
+      description
+    });
 
-//   log(`Registered ${conf.name}@${conf.version}.`);
-// };
+    const domainKey = await registryClient.resolveDomainName(domain);
+    const dxn = DXN.fromDomainKey(domainKey, name);
+    await registryClient.updateResource(dxn, cid);
+  }
+
+  log(`Registered ${conf.name}@${conf.version}.`);
+};

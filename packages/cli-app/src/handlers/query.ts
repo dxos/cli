@@ -7,7 +7,7 @@ import assert from 'assert';
 import { print } from '@dxos/cli-core';
 import { CID, DXN, RegistryDataRecord } from '@dxos/registry-client';
 
-import { GetDXNSClient } from '../types';
+import type { Params } from '../modules/app';
 
 const APP_TYPE_DXN = 'dxos:type.app';
 
@@ -21,7 +21,7 @@ export const displayApps = (record: RegistryDataRecord) => {
 };
 
 interface QueryParams {
-  getDXNSClient: GetDXNSClient;
+  getDXNSClient: Params['getDXNSClient'];
 }
 
 export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {

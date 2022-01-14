@@ -21,9 +21,9 @@ import { setKeys } from '../handlers/setup';
 import { listTypes, getType, addType } from '../handlers/types';
 import { DXNSClient } from '../index';
 
-interface Params {
+export interface Params {
   config: any,
-  getDXNSClient(): DXNSClient
+  getDXNSClient(): Promise<DXNSClient>
 }
 
 export const DXNSModule = (params: Params) => {

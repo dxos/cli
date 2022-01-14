@@ -10,7 +10,7 @@ import { asyncHandler, CoreOptions } from '@dxos/cli-core';
 import { CLI_DEFAULT_PERSISTENT, resetStorage, resetStorageForProfile } from '../config';
 import { CliDataState } from '../init';
 export interface StorageOptions extends CoreOptions {
-  all?: boolean
+  all?: boolean,
 }
 
 const storageOptions = (yargs: Argv<CoreOptions>): Argv<StorageOptions> => {

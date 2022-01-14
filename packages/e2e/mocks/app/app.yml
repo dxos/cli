@@ -1,3 +1,10 @@
+build: yarn webpack -p
 name: TestApp
 package:
   /: QmNwD4gbVDC4VN33ffBJP7UHejCasgiHg9tUfm8uthyYZS
+description: Mock application
+repositoryVersion: v2.11.4-20-g782fa78ea30f12d755ad4d30367cd1ab620a9166-dirty
+version: 2.0.1
+tag:
+  - latest
+  - beta

@@ -9,7 +9,7 @@ import { DXNSClient } from '../index';
 
 export interface Params {
   config?: any,
-  getDXNSClient(): DXNSClient
+  getDXNSClient(): Promise<DXNSClient>
 }
 
 export const displayRecord = (record: RegistryRecord) => {

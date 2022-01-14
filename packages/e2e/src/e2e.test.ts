@@ -4,8 +4,13 @@
 
 import expect from 'expect';
 import { promises as fs } from 'fs';
+import fse from 'fs-extra';
 import got from 'got';
-import { join } from 'path';
+import { join, dirname } from 'path';
+
+import { sleep } from '@dxos/async';
+import { readFile } from '@dxos/cli-core';
+import { createId } from '@dxos/crypto';
 
 import { HTTPServer } from '../mocks/http-server';
 import { IPFS } from '../mocks/ipfs';
@@ -17,6 +22,8 @@ const APP_SERVER_PORT = 5001;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
 const KUBE_NAME = 'kube.test';
+const BOT_DOMAIN = 'dxos';
+const BOT_NAME = 'bot.test';
 
 /**
  * NOTE: Test order is important in this file. **Tests depend on each other.**
@@ -60,7 +67,10 @@ describe('CLI', () => {
     it('init profile', async () => {
       try {
         await fs.rm(join(process.env.HOME!, '.dx/profile', `${PROFILE_NAME}.yml`));
-      } catch {}
+        await fs.rm(join(process.env.HOME!, '.dx/storage', PROFILE_NAME), { recursive: true, force: true });
+      } catch (error: unknown) {
+        console.log(error);
+      }
 
       await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/main/packages/cli/profiles/e2e.yml`).run();
     });
@@ -96,6 +106,8 @@ describe('CLI', () => {
       await cmd('service install --from @dxos/cli-dxns --service dxns --force --dev').run();
 
       await cmd('service start --from @dxos/cli-dxns --service dxns --dev --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
+
+      await sleep(5000);
     });
   });
 
@@ -232,12 +244,38 @@ describe('CLI', () => {
     });
   });
 
-  // describe('bot', () => {
-  //   it('query bots', async () => {
-  //     const bots = await cmd('bot query --json').json();
-  //     expect(bots.length).toBe(1);
-  //   });
-  // });
+  describe('bot', () => {
+    let bundledBotPath: string;
+    let botCid: string;
+
+    it('query bots', async () => {
+      const bots = await cmd('bot query --json').json();
+      expect(bots.length).toBe(1);
+    });
+
+    it('builds bot', async () => {
+      bundledBotPath = join(__dirname, '..', 'out', createId(), 'main.js');
+      await cmd(`bot build --entryPoint ${join(__dirname, '../mocks/bot/test-bot.ts')} --outfile ${bundledBotPath} --json`).run();
+      await fse.ensureFile(bundledBotPath);
+    });
+
+    it('publishes bot', async () => {
+      const botConfigPath = join(dirname(bundledBotPath), 'bot.yml');
+      fse.copySync(join(__dirname, '../mocks/bot/bot.yml'), join(dirname(bundledBotPath), 'bot.yml'));
+      await cmd(`bot publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
+      const botConfig = await readFile(botConfigPath, { absolute: true });
+      botCid = botConfig.package['/'];
+      expect(botCid).toBeDefined();
+    });
+
+    it('registers bot', async () => {
+      await cmd(`bot register --name ${BOT_NAME} --domain ${BOT_DOMAIN}`, dirname(bundledBotPath)).run();
+      const bots = await cmd('bot query --json').json();
+      expect(bots.length).toBe(2);
+      const newBot = bots.find((b: any) => b.description === 'Test bot description');
+      expect(newBot).toBeDefined();
+    });
+  });
 
   describe('kube', () => {
     it('register kube', async () => {
