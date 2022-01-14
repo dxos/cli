@@ -3,12 +3,12 @@
 //
 
 import assert from 'assert';
+import { Argv } from 'yargs';
 
 import { BotFactoryClient } from '@dxos/bot-factory-client';
 import { print } from '@dxos/cli-core';
 import type { CoreOptions, CoreState } from '@dxos/cli-core';
 import type { StateManager } from '@dxos/cli-data';
-import { Argv } from 'yargs';
 import type { Config, ConfigV1Object } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
 
@@ -25,10 +25,10 @@ export interface BotSpawnOptions extends CoreOptions {
 }
 
 export const botSpawnOptions = (yargs: Argv<CoreOptions>): Argv<BotSpawnOptions> => {
-  return yargs.
-    option('dxn', { type: 'string' }).
-    option('ipfsCid', { type: 'string' }).
-    option('localPath', { type: 'string' });
+  return yargs
+    .option('dxn', { type: 'string' })
+    .option('ipfsCid', { type: 'string' })
+    .option('localPath', { type: 'string' });
 };
 
 export const spawn = ({ stateManager, cliState } : SpawnParameters) => async ({ dxn, ipfsCid, localPath, json } : BotSpawnOptions) => {
@@ -45,7 +45,7 @@ export const spawn = ({ stateManager, cliState } : SpawnParameters) => async ({ 
   assert(party, 'Party is required');
 
   const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
-  botFactoryClient.start(PublicKey.from(topic))
+  await botFactoryClient.start(PublicKey.from(topic));
   const botHandle = await botFactoryClient.spawn({ dxn, ipfsCid, localPath }, client, party);
 
   print({ botId: (botHandle as any)._id }, { json });
