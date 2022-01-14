@@ -56,7 +56,8 @@
     "ipfs-http-client": "48.1.1",
     "cli-progress": "^3.8.2",
     "node-fetch": "^2.6.1",
-    "abort-controller": "~3.0.0"
+    "abort-controller": "~3.0.0",
+    "@dxos/bot-factory-client": "~2.19.11"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.20",
@@ -74,7 +75,8 @@
     "@types/lodash.set": "^4.3.6",
     "@types/semver": "~7.3.9",
     "@types/cli-progress": "^3.9.2",
-    "@dxos/cli-dxns": "workspace:*"
+    "@dxos/cli-dxns": "workspace:*",
+    "@dxos/cli-data": "workspace:*"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
