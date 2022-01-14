@@ -68,7 +68,7 @@ describe('CLI', () => {
       try {
         await fs.rm(join(process.env.HOME!, '.dx/profile', `${PROFILE_NAME}.yml`));
         await fs.rm(join(process.env.HOME!, '.dx/storage', PROFILE_NAME), { recursive: true, force: true });
-      } catch (error: unknown){
+      } catch (error: unknown) {
         console.log(error);
       }
 
