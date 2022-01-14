@@ -67,7 +67,10 @@ describe('CLI', () => {
     it('init profile', async () => {
       try {
         await fs.rm(join(process.env.HOME!, '.dx/profile', `${PROFILE_NAME}.yml`));
-      } catch {}
+        await fs.rm(join(process.env.HOME!, '.dx/storage', PROFILE_NAME), { recursive: true, force: true });
+      } catch (error: unknown){
+        console.log(error);
+      }
 
       await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/main/packages/cli/profiles/e2e.yml`).run();
     });
