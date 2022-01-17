@@ -10,7 +10,6 @@ runtime:
     dxns:
       server: 'ws://127.0.0.1:9945'
       accountUri: //Alice
-      faucet: 'https://dxns2.kube.dxos.network/kube/faucet'
     ipfs:
       server: 'http://127.0.0.1:5001'
       gateway: 'http://127.0.0.1:8888/ipfs/'
