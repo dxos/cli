@@ -7,7 +7,7 @@
 To install or upgrade a version of the mdns run:
 
 ```bash
-$ dx mdns install
+dx mdns install
 ```
 
 This will install globally the latest version of mdns. The default npmClient (`npm`) is configured in your config.yml as `cli.npmClient`.
@@ -20,11 +20,11 @@ This will install globally the latest version of mdns. The default npmClient (`n
 To start the service:
 
 ```bash
-$ dx mdns start --daemon --hostnames <MDNS_NAMES> --interfaces <INTERFACES>
+dx mdns start --daemon --hostnames <MDNS_NAMES> --interfaces <INTERFACES>
 ```
 
 Then to stop:
 
 ```bash
-$ dx mdns stop
+dx mdns stop
 ```

@@ -15,13 +15,13 @@ If you are unfamiliar with DXOS, see our [website](https://dxos.org) for more in
 Install CLI globally:
 
 ```bash
-$ yarn global add @dxos/cli@dev
+yarn global add @dxos/cli
 ```
 
 or
 
 ```
-$ npm install --global @dxos/cli@dev
+npm install --global @dxos/cli
 ```
 
 ### Upgrade
@@ -29,10 +29,10 @@ $ npm install --global @dxos/cli@dev
 An older version of the CLI could be upgraded via `dx upgrade` command.
 
 ```
-$ dx version
+dx version
 v1.0.1-beta.15
 
-$ dx upgrade --force
+dx upgrade --force
 Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 ✔ Uninstalling @dxos/cli-data
 ✔ Uninstalling @dxos/cli-signal
@@ -45,8 +45,8 @@ Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 ✔ Installing @dxos/cli-signal
 ✔ Installing @dxos/cli-data
 
-$ dx version
-v1.0.1-beta.16
+dx version
+v2.12.0
 ```
 
 ## Usage
@@ -54,21 +54,21 @@ v1.0.1-beta.16
 All the CLI modules support `help` flag that provides desired command clarification, e.g.
 
 ```bash
-$ dx help
+dx help
 ```
 
 ```bash
-$ dx app help
+dx app help
 ```
 
 ```bash
-$ dx app register help
+dx app register help
 ```
 
 To use the CLI, a profile needs to be created and activated.
 
 ```bash
-$ dx profile init --name enterprise --template-url https://git.io/JDeiz
+dx profile init --name enterprise --template-url https://bit.ly/3A642xB
 ```
 
 Read more about [CLI profiles](./packages/cli/README.md#profiles) and [CLI extensions](./packages/cli/README.md#extensions).

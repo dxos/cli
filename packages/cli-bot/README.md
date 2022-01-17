@@ -26,8 +26,8 @@ To aid local development, bot factories can be made to run bot code directly fro
 For example:
 
 ```bash
-$ cd examples/echo-bot
-$ wire bot factory start --local-dev --reset
+cd examples/echo-bot
+wire bot factory start --local-dev --reset
   bot-factory {"started":true,"topic":"83e8b9ac8d7a22d096673f2f55b13346f225fd060fe869fab9c26042716753b5","peerId":"83e8b9ac8d7a22d096673f2f55b13346f225fd060fe869fab9c26042716753b5","localDev":true}
 ```
 
@@ -45,14 +45,14 @@ Note:
 Create self-contained bot packages for supported platforms.
 
 ```bash
-$ cd packages/echo-bot
-$ yarn package:macos-x64
+cd packages/echo-bot
+yarn package:macos-x64
 ```
 
 Upload the packages to IPFS.
 
 ```bash
-$ wire bot publish
+wire bot publish
 Uploaded macos-x64.tgz to IPFS, CID: QmXf72DJYLNokVG7HMZnxeXoc3gLdQ8q5H5gK8D9zmR4Mn
 Package contents have changed.
 Run 'wire bot register' to register the new bot version: 1.0.53
@@ -61,7 +61,7 @@ Run 'wire bot register' to register the new bot version: 1.0.53
 Inspect bot.yml before registering.
 
 ```bash
-$ cat bot.yml
+cat bot.yml
 name: ExampleBot
 version: 0.0.1
 package:
@@ -80,13 +80,13 @@ Register the bot with WNS.
 > You could use optional `--name` argument in order to assign specific name to the record.
 
 ```bash
-$ wire bot register --name "wrn://dxos/bot/example"
+wire bot register --name "wrn://dxos/bot/example"
 ```
 
 Query registered bot.
 
 ```bash
-$ wire bot query
+wire bot query
 [
   {
     "id": "bafyreialjdlezoavldq6wun6i4p3oq6iln4pniqmodweo4ut3q4n3kgxni",
@@ -128,9 +128,9 @@ $ wire bot query
 Start the bot factory. The `topic` logged by bot-factory is the swarm topic that the CLI uses to connect to the bot factory. Provide it to the spawn command later.
 
 ```bash
-$ cd dxos/botkit
+cd dxos/botkit
 
-$ wire bot factory start
+wire bot factory start
   bot-factory {"started":true,"topic":"0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e","peerId":"0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e","localDev":false}
 ```
 > Bot factory will attempt to restart previously running bots unless you provide `--reset` flag.
@@ -138,7 +138,7 @@ $ wire bot factory start
 From another terminal spawn new bot instance using bot factory topic .
 
 ```bash
-$ wire bot spawn --bot-name="wrn://dxos/bot/example" --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e
+wire bot spawn --bot-name="wrn://dxos/bot/example" --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e
 
 key     value
 ------  ----------------------------------------------------------------
@@ -148,7 +148,7 @@ botId  55c99bc68a6a35dd5216bebfde043ae07616d8a92a85a6fd3e91650ccccbfcef
 Create a new party.
 
 ```bash
-$ wire party create
+wire party create
 {
   "partyKey": "bd0f63cb1dad10889902d8b8ba450db128f9cf019b34d6b91e0362a108085483"
 }
@@ -180,7 +180,7 @@ Note: The bot package is downloaded to the `botkit/out/bots/<CID>` folder. Delet
 Check out bot factory status.
 
 ```bash
-$ wire bot factory status --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e | jq
+wire bot factory status --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba112f537467b0a1beb1e | jq
 {
   "started": true,
   "version": "1.0.0-beta.87",
@@ -205,7 +205,7 @@ $ wire bot factory status --topic 0955697f31e973503286ded7b426fa6725b9e6c9e06ba1
 Get status of running BotFactory:
 
 ```bash
-$ wire bot factory status --topic=$(wire wns name resolve wrn://dxos/service/bot-factory/apollo1 | jq -r '.records[0].attributes.topic') | jq
+wire bot factory status --topic=$(wire wns name resolve wrn://dxos/service/bot-factory/apollo1 | jq -r '.records[0].attributes.topic') | jq
 {
   "started": true,
   "version": "1.0.0-moon.4",
@@ -239,5 +239,5 @@ $ wire bot factory status --topic=$(wire wns name resolve wrn://dxos/service/bot
 Hard reset BotFactory (kills all bots, removes all the data/keys, restarts BotFactory):
 
 ```bash
-$ wire bot factory reset --hard --topic=$(wire wns name resolve wrn://dxos/service/bot-factory/apollo2 | jq -r '.records[0].attributes.topic')
+wire bot factory reset --hard --topic=$(wire wns name resolve wrn://dxos/service/bot-factory/apollo2 | jq -r '.records[0].attributes.topic')
 ```

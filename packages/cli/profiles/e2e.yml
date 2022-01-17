@@ -10,6 +10,7 @@ runtime:
     dxns:
       server: 'ws://127.0.0.1:9945'
       accountUri: //Alice
+      faucet: 'https://dxns2.kube.dxos.network/kube/faucet'
     ipfs:
       server: 'http://127.0.0.1:5001'
       gateway: 'http://127.0.0.1:8888/ipfs/'
@@ -39,7 +40,7 @@ runtime:
         keyPhrase: 'GoxWtucubK'
     console:
       package: '@dxos/kube-server'
-      channel: 'alpha'
+      channel: 'latest'
       bin: 'kube-server'
     mdns:
       package: '@dxos/mdns'
@@ -47,7 +48,7 @@ runtime:
       bin: 'dxos-mdns'
     signal:
       package: '@dxos/signal'
-      channel: 'alpha'
+      channel: 'latest'
       bin: 'dxos-signal'
     npmClient: 'yarn' # npm|yarn
-    channel: 'alpha'
+    channel: 'latest'
