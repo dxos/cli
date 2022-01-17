@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.12.1](https://www.github.com/dxos/cli/compare/v2.12.0...v2.12.1) (2022-01-17)
+
+
+### Bug Fixes
+
+* alpha -> dev; docs cleanup. ([#386](https://www.github.com/dxos/cli/issues/386)) ([183adb3](https://www.github.com/dxos/cli/commit/183adb35d87a0b39fbe62a9cc39b37d12bf3eea1))
+
 ## [2.12.0](https://www.github.com/dxos/cli/compare/v2.11.5...v2.12.0) (2022-01-13)
 
 
