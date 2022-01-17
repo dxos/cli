@@ -64,7 +64,7 @@ export class DigitalOceanProvider implements Provider {
       throw new Error(`${name} already exists.`);
     }
 
-    const cliChannel = dev ? 'alpha' : 'latest';
+    const cliChannel = dev ? 'dev' : 'latest';
 
     const cloudConfigScript =
          `#cloud-config
@@ -97,7 +97,7 @@ export class DigitalOceanProvider implements Provider {
            - echo "//registry.npmjs.org/:_authToken=${this._npmAccessToken}" >> $HOME/.npmrc
            - npm install --global yarn
            - yarn global add @dxos/cli@${cliChannel}
-           - dx profile init --name enterprise --template-url https://git.io/JDeiz
+           - dx profile init --name enterprise --template-url https://bit.ly/3A642xB
            - dx profile set enterprise
            - dx extension install @dxos/cli-kube --version ${cliChannel}
            - dx kube install ${dev ? '--dev' : ''}

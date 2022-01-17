@@ -15,6 +15,7 @@ runtime:
     dxns:
       server: 'wss://dxns1.kube.dxos.network/dxns/ws'
       accountUri:
+      faucet: 'https://dxns2.kube.dxos.network/kube/faucet'
     machine:
       doAccessToken: ''
       githubAccessToken: ''
@@ -48,7 +49,7 @@ runtime:
         keyPhrase: 'GoxWtucubK'
     console:
       package: '@dxos/kube-server'
-      channel: 'alpha'
+      channel: 'latest'
       bin: 'kube-server'
     mdns:
       package: '@dxos/mdns'
@@ -56,7 +57,7 @@ runtime:
       bin: 'dxos-mdns'
     signal:
       package: '@dxos/signal'
-      channel: 'alpha'
+      channel: 'latest'
       bin: 'dxos-signal'
     npmClient: 'yarn' # npm|yarn
-    channel: 'alpha'
+    channel: 'latest'
