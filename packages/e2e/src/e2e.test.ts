@@ -13,7 +13,6 @@ import { readFile } from '@dxos/cli-core';
 import { createId } from '@dxos/crypto';
 
 import { HTTPServer } from '../mocks/http-server';
-import { IPFS } from '../mocks/ipfs';
 import { cmd } from './cli';
 
 const PROFILE_NAME = 'e2e-test';
@@ -31,7 +30,6 @@ const BOT_NAME = 'bot.test';
  */
 
 describe('CLI', () => {
-  const ipfs: IPFS = new IPFS(APP_SERVER_PORT);
   const port = Math.round(Math.random() * 10000 + 5000);
   const kubeServices = [{
     name: 'app-server',
@@ -50,12 +48,10 @@ describe('CLI', () => {
   ]);
 
   before(async () => {
-    await ipfs.start();
     await httpServer.start();
   });
 
   after(async () => {
-    await ipfs.stop();
     await httpServer.stop();
   });
 
@@ -84,19 +80,6 @@ describe('CLI', () => {
     });
   });
 
-  describe('data', () => {
-    it('party create', async () => {
-      const { party } = await cmd('party create --json').json<{ party: string }>();
-      expect(typeof party).toBe('string');
-    });
-
-    it('party list', async () => {
-      const parties = await cmd('party list --json').json();
-      expect(Array.isArray(parties)).toBe(true);
-      expect(parties.length).toBeGreaterThanOrEqual(1);
-    });
-  });
-
   describe('services', () => {
     it('dxns', async () => {
       try {
@@ -108,6 +91,27 @@ describe('CLI', () => {
       await cmd('service start --from @dxos/cli-dxns --service dxns --dev --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
 
       await sleep(5000);
+    });
+
+    it('ipfs', async () => {
+      try {
+        await cmd('ipfs stop').run();
+      } catch {}
+
+      await cmd(`ipfs start --daemon --log-file "/tmp/ipfs.log" --forward "{ args: { port: ${APP_SERVER_PORT} } }"`).run();
+    });
+  });
+
+  describe('data', () => {
+    it('party create', async () => {
+      const { party } = await cmd('party create --json').json<{ party: string }>();
+      expect(typeof party).toBe('string');
+    });
+
+    it('party list', async () => {
+      const parties = await cmd('party list --json').json();
+      expect(Array.isArray(parties)).toBe(true);
+      expect(parties.length).toBeGreaterThanOrEqual(1);
     });
   });
 
@@ -274,6 +278,12 @@ describe('CLI', () => {
       expect(bots.length).toBe(2);
       const newBot = bots.find((b: any) => b.description === 'Test bot description');
       expect(newBot).toBeDefined();
+    });
+
+    it.skip('runs a bot-factory', async () => {
+      await cmd(`bot factory install`).run();
+      await cmd(`bot factory setup`).run();
+      await cmd(`bot factory start`).run();
     });
   });
 
