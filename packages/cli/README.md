@@ -15,7 +15,7 @@ To create a profile from a template, pass a profile name and template URL.
 Example:
 
 ```bash
-$ dx profile init --name enterprise --template-url https://git.io/JDeiz
+dx profile init --name enterprise --template-url https://bit.ly/3A642xB
 ```
 
 Profiles are stored in the `~/.dx/profile` folder. To further customize a profile, edit the profile configuration file.
@@ -31,25 +31,25 @@ Note: The first profile created automatically becomes the system default.
 View the name of the active profile:
 
 ```bash
-$ dx profile
+dx profile
 ```
 
 View the configuration values for the active profile:
 
 ```bash
-$ dx profile config
+dx profile config
 ```
 
 View the configuration values for a given profile:
 
 ```bash
-$ dx profile config <NAME>
+dx profile config <NAME>
 ```
 
 View the profile used for a command (using the `--dry-run` flag):
 
 ```bash
-$ dx extension list --dry-run
+dx extension list --dry-run
 Profile: /Users/ashwinp/.dx/profile/devnet.yml
 ```
 
@@ -60,37 +60,37 @@ Multiple templates can be created and shared with others to use different config
 In order to install CLI extensions, one could leverage automatic installation mechanism (for DXOS extensions only):
 
 ```bash
-$ dx dxns
+dx dxns
 ```
 
 ```bash
-$ dx app
+dx app
 ```
 
 In order to install arbitrary extension, `dx extension install` command could be used:
 
 ```
-$ dx extension install @dxos/cli-ipfs --version dev
+dx extension install @dxos/cli-ipfs
 
-✔ Installing @dxos/cli-ipfs@dev
+✔ Installing @dxos/cli-ipfs
 ```
 
 View installed extensions:
 
 ```
-$ dx extension list
+dx extension list
 
 extension       command  version       description
 --------------  -------  ------------  -----------------------
-@dxos/cli-app   app      1.0.1-beta.1  Application management.
-@dxos/cli-bot   bot      1.0.1-beta.1  Bot operations.
-@dxos/cli-ipfs  ipfs     1.0.1-beta.2  IPFS operations.
+@dxos/cli-app   app      2.12.0        Application management.
+@dxos/cli-bot   bot      2.12.0        Bot operations.
+@dxos/cli-ipfs  ipfs     2.12.0        IPFS operations.
 ```
 
 Uninstall extension:
 
 ```
-$ dx extension uninstall @dxos/cli-ipfs
+dx extension uninstall @dxos/cli-ipfs
 
 Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it? (Yes/No): y
 ✔ Uninstalling @dxos/cli-ipfs
@@ -124,7 +124,7 @@ In order to create a new CLI extension, existing CLI extension could be used as 
 In order for CLI to support custom certificate authorities, one would need to import root CA certificate using `dx cert import` command. For the case of XBOX, import command would look like:
 
 ```bash
-$ dx cert import --url https://kube.local/kube.pem
+dx cert import --url https://kube.local/kube.pem
 ```
 
 <!--TODO(egor): Host cert on .well-known endpoint?-->
@@ -185,13 +185,13 @@ Most of the weirdness in CLI behaviour could be caused by any combination of pre
 Check latest available version:
 
 ```bash
-$ yarn info @dxos/cli versions --json | jq '.data[-1]'
+yarn info @dxos/cli versions --json | jq '.data[-1]'
 ```
 
 Check installed version:
 
 ```bash
-$ dx version
+dx version
 ```
 
 If those outputs are different, make sure to remove old versions of `wire`.
@@ -202,13 +202,13 @@ For that purpose `dx uninstall` and `dx upgrade` commands are available.
 To remove CLI and all extensions:
 
 ```
-$ dx uninstall --npm-client yarn
+dx uninstall --npm-client yarn
 ```
 
 To force upgrade CLI and all installed extensions to the latest:
 
 ```
-$ dx upgrade --npm-client yarn --force
+dx upgrade --npm-client yarn --force
 ```
 
 `--version` attribute could be supplied in order to upgrade/downgrade to a specific version.

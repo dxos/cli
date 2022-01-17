@@ -11,7 +11,7 @@ To deploy apps we need a number of steps:
 All this operations can be resumed with one command:
 
 ```
-$ dx app deploy --domain "test" --name "app.example"
+dx app deploy --domain "test" --name "app.example"
 ```
 
 ### Build app.
@@ -35,13 +35,13 @@ build: yarn dist
 Then run:
 
 ```bash
-$ dx app build
+dx app build
 ```
 
 ### Publish to IPFS
 
 ```bash
-$ dx app publish
+dx app publish
 ```
 
 ### Registration
@@ -61,13 +61,13 @@ package:
 - register app:
 
 ```bash
-$ dx app register --domain "test" --name "app.example"
+dx app register --domain "test" --name "app.example"
 ```
 
 ### Query
 
 ```bash
-$ dx app query
+dx app query
 
 [
   {

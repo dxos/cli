@@ -9,7 +9,7 @@ export SCRIPT_DIR; SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/nu
 SERVICES_FILE_PATH='../dist/services.yml'
 
 DEV=${1:-"0"}
-[[ "$DEV" == "1" ]] && CLI_VER="alpha" || CLI_VER="latest"
+[[ "$DEV" == "1" ]] && CLI_VER="dev" || CLI_VER="latest"
 
 set -euo pipefail
 

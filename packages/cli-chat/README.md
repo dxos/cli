@@ -9,7 +9,7 @@ Optional `--topic` parameter defines swarm topic for messenger. (Default value i
 Optional `--generate-topic` flag allows to autogenerate a new topic, different from default.
 
 ```
-$ dx peer messenger
+dx peer messenger
 
 PeerId: 207906669fe9a2891e8ff86e99d271bb13bc4f2cc0b46e82334ac798a5454025
 Topic: 0000000000000000000000000000000000000000000000000000000000000000
