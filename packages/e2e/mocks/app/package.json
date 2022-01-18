@@ -3,6 +3,6 @@
   "version": "1.2.3",
   "description": "Mock application",
   "scripts": {
-    "build": "mkdir dist && cp index.html dist"
+    "build": "rm -rf dist && mkdir dist && cp index.html dist"
   }
 }

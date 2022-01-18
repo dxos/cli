@@ -10,6 +10,8 @@ import pify from 'pify';
 import pm2, { Proc } from 'pm2';
 import kill from 'tree-kill';
 
+import { sleep } from '@dxos/async';
+
 export interface RunnableConfig {
     env: any,
     name: string,
@@ -20,7 +22,8 @@ export interface RunnableConfig {
     maxMemory?: string,
     watch?: boolean,
     background?: boolean,
-    logFile?: string
+    logFile?: string,
+    startTimeout?: number
 }
 
 const PROCESS_PREFIX = 'dxos.';
@@ -184,7 +187,8 @@ export class Runnable {
       autorestart = true,
       interpreter = 'none',
       maxMemory = MAX_MEMORY,
-      watch = false
+      watch = false,
+      startTimeout
       // cwd
     } = options;
 
@@ -221,7 +225,7 @@ export class Runnable {
         env,
         logDateFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
       });
-      await new Promise<void>(resolve => setTimeout(resolve, 1000));
+      startTimeout && await sleep(startTimeout);
 
       await pm.dump();
     } finally {

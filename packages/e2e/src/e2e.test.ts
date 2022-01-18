@@ -95,10 +95,10 @@ describe('CLI', () => {
 
     it('ipfs', async () => {
       try {
-        await cmd('ipfs stop').debug().run();
+        await cmd('ipfs stop').run();
       } catch {}
 
-      await cmd('ipfs start --daemon').debug().run();
+      await cmd('ipfs start --daemon').run();
     });
   });
 
@@ -301,6 +301,20 @@ describe('CLI', () => {
       await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
       const recordsAfter = await cmd('dxns record list --json').json();
       expect(recordsAfter.length).toBe(recordsBefore.length + 1 + kubeServices.length);
+    });
+  });
+
+  describe('stop services', () => {
+    it('dxns', async () => {
+      try {
+        await cmd('service stop dxns').run();
+      } catch {}
+    });
+
+    it('ipfs', async () => {
+      try {
+        await cmd('ipfs stop').run();
+      } catch {}
     });
   });
 });

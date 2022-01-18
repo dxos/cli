@@ -396,6 +396,7 @@ importers:
 
   ../../packages/cli-core:
     specifiers:
+      '@dxos/async': ~2.19.11
       '@dxos/config': ~2.19.11
       '@dxos/crypto': ~2.19.11
       '@dxos/debug': ~2.19.11
@@ -451,6 +452,7 @@ importers:
       yargs-parser: ^19.0.4
       yargs-unparser: ^1.6.4
     dependencies:
+      '@dxos/async': 2.19.11
       '@dxos/config': 2.19.11
       '@dxos/crypto': 2.19.11
       '@dxos/debug': 2.19.11
