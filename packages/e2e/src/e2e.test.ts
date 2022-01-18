@@ -205,6 +205,10 @@ describe('CLI', () => {
       await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').run();
     });
 
+    it('build app', async () => {
+      await cmd('app build', join(__dirname, '../mocks/app')).run();
+    });
+
     it('publish app', async () => {
       await cmd('app publish', join(__dirname, '../mocks/app')).run();
     });
