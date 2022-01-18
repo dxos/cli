@@ -69,5 +69,7 @@ jobs:
     - name: Run E2E tests
       run: |
         \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
+        rm ipfs-logs
+        touch ipfs-logs
         node ../../common/scripts/install-run-rushx.js test:e2e
       working-directory: ./packages/e2e

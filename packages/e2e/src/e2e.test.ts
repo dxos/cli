@@ -98,7 +98,7 @@ describe('CLI', () => {
         await cmd('ipfs stop').run();
       } catch {}
 
-      await cmd('ipfs start --daemon').run();
+      await cmd('ipfs start --daemon --log-file "ipfs-log"').run();
     });
   });
 
