@@ -17,7 +17,7 @@ import { cmd } from './cli';
 
 const PROFILE_NAME = 'e2e-test';
 
-const APP_SERVER_PORT = 5001;
+const APP_SERVER_PORT = 5999;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
 const KUBE_NAME = 'kube.test';
@@ -203,6 +203,10 @@ describe('CLI', () => {
       } catch {}
 
       await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').run();
+    });
+
+    it('publish app', async () => {
+      await cmd('app publish', join(__dirname, '../mocks/app')).run();
     });
 
     it('register app', async () => {
