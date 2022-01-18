@@ -95,10 +95,10 @@ describe('CLI', () => {
 
     it('ipfs', async () => {
       try {
-        await cmd('ipfs stop').run();
+        await cmd('ipfs stop').debug().run();
       } catch {}
 
-      await cmd(`ipfs start --daemon --log-file "/tmp/ipfs.log" --forward "{ args: { port: ${APP_SERVER_PORT} } }"`).run();
+      await cmd('ipfs start --daemon').debug().run();
     });
   });
 

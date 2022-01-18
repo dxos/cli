@@ -221,6 +221,7 @@ export class Runnable {
         env,
         logDateFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
       });
+      await new Promise<void>(resolve => setTimeout(resolve, 1000));
 
       await pm.dump();
     } finally {
