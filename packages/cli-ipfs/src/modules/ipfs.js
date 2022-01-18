@@ -73,7 +73,7 @@ export const IPFSModule = ({ config }) => ({
           singleInstance: true,
           logFile,
           maxMemory,
-          startTimeout: 2000
+          startTimeout: 5000
         };
         await ipfsRunnable.run(['daemon', '--writable', ...forwardArgs], ipfsOptions);
       })
