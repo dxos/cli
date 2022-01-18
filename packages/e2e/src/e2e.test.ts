@@ -14,6 +14,7 @@ import { createId } from '@dxos/crypto';
 
 import { HTTPServer } from '../mocks/http-server';
 import { cmd } from './cli';
+import { exec } from 'child_process';
 
 const PROFILE_NAME = 'e2e-test';
 
@@ -117,6 +118,8 @@ describe('CLI', () => {
 
   describe('dxns', () => {
     it('seed', async () => {
+      exec('lsof -i tcp:5001').on('message', (message: string) => console.log('[ipfs check]', message)).on('exit', () => console.log('[ipfs check] Exited'));
+
       await cmd('dxns seed --mnemonic //Alice --verbose').run();
       await cmd('dxns dummy').run();
     });
