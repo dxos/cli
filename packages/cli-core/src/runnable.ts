@@ -211,14 +211,12 @@ export class Runnable {
       if (flushLogs) {
         await _flushLogs(name);
       }
-      console.log(`Starting ${this._executable}`);
-      console.log(`  args: ${[...this._args, ...args].join(' ')}`);
 
       await pm.start({
         script: this._executable,
         args: [...this._args, ...args],
-        // output: logFile,
-        // error: logFile,
+        output: logFile,
+        error: logFile,
         watch,
         name: procName,
         interpreter,
