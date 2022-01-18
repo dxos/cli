@@ -3,8 +3,8 @@ name: TestApp
 package:
   /: QmRAkSH88J8tG4Woy3jcaBVAmQzoDtdAaeqGo7H8oRtajr
 description: Mock application
-repositoryVersion: v2.12.0-10-gcdc54c95e78c68816438999c1e5858a5afc9967f-dirty
+repositoryVersion: v2.11.4-20-g782fa78ea30f12d755ad4d30367cd1ab620a9166-dirty
+version: 2.0.1
 tag:
   - latest
   - beta
-version: 2.0.1
