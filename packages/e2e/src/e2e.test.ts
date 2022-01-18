@@ -289,9 +289,9 @@ describe('CLI', () => {
     });
 
     it.skip('runs a bot-factory', async () => {
-      await cmd(`bot factory install`).run();
-      await cmd(`bot factory setup`).run();
-      await cmd(`bot factory start`).run();
+      await cmd('bot factory install').run();
+      await cmd('bot factory setup').run();
+      await cmd('bot factory start').run();
     });
   });
 
