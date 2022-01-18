@@ -17,7 +17,7 @@ import { loadConfig } from '../../utils/config';
 
 const DEFAULT_CID_PATH = 'hash';
 
-const TYPE_DXN_NAME_PREFIX = 'dxos:type';
+const TYPE_DXN_NAME_PREFIX = 'dxos:type.';
 
 export interface RegisterParams {
   cid: string
@@ -25,17 +25,29 @@ export interface RegisterParams {
 }
 
 export const register = ({ cid, getDXNSClient }: RegisterParams) => async (argv: any) => {
-  const { verbose, version, tag, 'dry-run': noop, name, domain, skipExisting, type, hashPath = DEFAULT_CID_PATH } = argv;
-
-  assert(name, 'Invalid name.');
-  assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(name), 'Name could contain only letters, numbers, dashes or dots.');
-
-  assert(domain, 'Invalid domain.');
-  assert(type, 'Invalid type.');
+  const { verbose, version, tag, 'dry-run': noop, skipExisting, hashPath = DEFAULT_CID_PATH } = argv;
 
   const conf = await loadConfig();
-
   const { record: recordData, ...rest } = conf.values.module!;
+
+  let { name, domain, type } = argv;
+
+  if ((!name || !domain) && rest.name) {
+    const recordDXN = DXN.parse(rest.name);
+    name = [recordDXN.resource];
+    domain = recordDXN.domain;
+  }
+
+  assert(name && name.length, 'Invalid name.');
+  assert(domain, 'Invalid domain.');
+
+  name.map((singleName: string) => assert(/^[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9-]{2,}$/.test(singleName), 'Name could contain only letters, numbers, dashes or dots.'));
+
+  if (!type && rest.type) {
+    type = rest.type.replace(TYPE_DXN_NAME_PREFIX, '');
+  }
+
+  assert(type, 'Invalid type.');
 
   // Type specific fields, e.g. for app, bot, etc records.
   const recordDataFromType = get(recordData, type, {});
@@ -51,8 +63,6 @@ export const register = ({ cid, getDXNSClient }: RegisterParams) => async (argv:
   if (record.version === 'false') {
     record.version = null;
   }
-
-  assert(record.name, 'Invalid record name.');
 
   // Repo version.
   const { status, stdout } = spawnSync('git', [
@@ -79,7 +89,7 @@ export const register = ({ cid, getDXNSClient }: RegisterParams) => async (argv:
 
   const client: { registryClient: IRegistryClient } = await getDXNSClient();
 
-  const recordType = await client.registryClient.getResourceRecord(DXN.parse(`${TYPE_DXN_NAME_PREFIX}.${type}`), 'latest');
+  const recordType = await client.registryClient.getResourceRecord(DXN.parse(`${TYPE_DXN_NAME_PREFIX}${type}`), 'latest');
   assert(recordType);
   assert(recordType.record.kind === RecordKind.Type, `Can not find type "${type}" in DXNS.`);
 
@@ -108,5 +118,5 @@ export const register = ({ cid, getDXNSClient }: RegisterParams) => async (argv:
     }
   }
 
-  verbose && log(`Registered ${record.name}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : '') + (record.version ? ` Version ${record.version}.` : ''));
+  verbose && log(`Registered ${name.join(', ')}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : '') + (record.version ? ` Version ${record.version}.` : ''));
 };
