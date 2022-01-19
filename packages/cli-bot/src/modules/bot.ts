@@ -58,13 +58,13 @@ export const BotModule = ({ config, getDXNSClient, cliState, stateManager }: Par
           })
       })
 
-    .command({
-      command: ['spawn'],
-      describe: 'Spawn new bot instance.',
-      builder: botSpawnOptions,
+      .command({
+        command: ['spawn'],
+        describe: 'Spawn new bot instance.',
+        builder: botSpawnOptions,
 
-      handler: asyncHandler(spawn({ cliState, stateManager, config }))
-    })
+        handler: asyncHandler(spawn({ cliState, stateManager, config }))
+      })
 
     // .command({
     //   command: ['invite'],
