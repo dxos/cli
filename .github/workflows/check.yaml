@@ -60,7 +60,6 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm install -g @microsoft/rush pnpm
           ./common/scripts/install-ipfs.sh
-          ipfs daemon --writable
 
           # Install dependencies
           node common/scripts/install-run-rush.js update
@@ -72,7 +71,7 @@ jobs:
         \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
         rm ipfs-logs || true
         touch ipfs-logs
-        ipfs daemon &
+        ipfs daemon --writable &
         sleep 5
         node ../../common/scripts/install-run-rushx.js test:e2e
       working-directory: ./packages/e2e
