@@ -13,12 +13,11 @@ import { readFile } from '@dxos/cli-core';
 import { createId } from '@dxos/crypto';
 
 import { HTTPServer } from '../mocks/http-server';
-import { IPFS } from '../mocks/ipfs';
 import { cmd } from './cli';
 
 const PROFILE_NAME = 'e2e-test';
 
-const APP_SERVER_PORT = 5001;
+const APP_SERVER_PORT = 5999;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app.test';
 const KUBE_NAME = 'kube.test';
@@ -31,7 +30,6 @@ const BOT_NAME = 'bot.test';
  */
 
 describe('CLI', () => {
-  const ipfs: IPFS = new IPFS(APP_SERVER_PORT);
   const port = Math.round(Math.random() * 10000 + 5000);
   const kubeServices = [{
     name: 'app-server',
@@ -50,12 +48,10 @@ describe('CLI', () => {
   ]);
 
   before(async () => {
-    await ipfs.start();
     await httpServer.start();
   });
 
   after(async () => {
-    await ipfs.stop();
     await httpServer.stop();
   });
 
@@ -84,19 +80,6 @@ describe('CLI', () => {
     });
   });
 
-  describe('data', () => {
-    it('party create', async () => {
-      const { party } = await cmd('party create --json').json<{ party: string }>();
-      expect(typeof party).toBe('string');
-    });
-
-    it('party list', async () => {
-      const parties = await cmd('party list --json').json();
-      expect(Array.isArray(parties)).toBe(true);
-      expect(parties.length).toBeGreaterThanOrEqual(1);
-    });
-  });
-
   describe('services', () => {
     it('dxns', async () => {
       try {
@@ -108,6 +91,27 @@ describe('CLI', () => {
       await cmd('service start --from @dxos/cli-dxns --service dxns --dev --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
 
       await sleep(5000);
+    });
+
+    it.skip('ipfs', async () => {
+      try {
+        await cmd('ipfs stop').run();
+      } catch {}
+
+      await cmd('ipfs start --daemon --log-file "ipfs-log"').run();
+    });
+  });
+
+  describe('data', () => {
+    it('party create', async () => {
+      const { party } = await cmd('party create --json').json<{ party: string }>();
+      expect(typeof party).toBe('string');
+    });
+
+    it('party list', async () => {
+      const parties = await cmd('party list --json').json();
+      expect(Array.isArray(parties)).toBe(true);
+      expect(parties.length).toBeGreaterThanOrEqual(1);
     });
   });
 
@@ -201,6 +205,14 @@ describe('CLI', () => {
       await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').run();
     });
 
+    it('build app', async () => {
+      await cmd('app build', join(__dirname, '../mocks/app')).run();
+    });
+
+    it('publish app', async () => {
+      await cmd('app publish', join(__dirname, '../mocks/app')).run();
+    });
+
     it('register app', async () => {
       await cmd(`app register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
     });
@@ -275,6 +287,12 @@ describe('CLI', () => {
       const newBot = bots.find((b: any) => b.description === 'Test bot description');
       expect(newBot).toBeDefined();
     });
+
+    it.skip('runs a bot-factory', async () => {
+      await cmd('bot factory install').run();
+      await cmd('bot factory setup').run();
+      await cmd('bot factory start').run();
+    });
   });
 
   describe('kube', () => {
@@ -283,6 +301,20 @@ describe('CLI', () => {
       await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
       const recordsAfter = await cmd('dxns record list --json').json();
       expect(recordsAfter.length).toBe(recordsBefore.length + 1 + kubeServices.length);
+    });
+  });
+
+  describe('stop services', () => {
+    it('dxns', async () => {
+      try {
+        await cmd('service stop dxns').run();
+      } catch {}
+    });
+
+    it.skip('ipfs', async () => {
+      try {
+        await cmd('ipfs stop').run();
+      } catch {}
     });
   });
 });

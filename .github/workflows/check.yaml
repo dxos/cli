@@ -59,7 +59,8 @@ jobs:
           \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm install -g @microsoft/rush pnpm
-          
+          ./common/scripts/install-ipfs.sh
+
           # Install dependencies
           node common/scripts/install-run-rush.js update
           
@@ -68,5 +69,13 @@ jobs:
     - name: Run E2E tests
       run: |
         \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
+        rm ipfs-logs || true
+        touch ipfs-logs
+        ipfs daemon --writable &
+        sleep 5
         node ../../common/scripts/install-run-rushx.js test:e2e
       working-directory: ./packages/e2e
+    - name: Cleanup
+      if: always()
+      run: |
+        ipfs shutdown || true

@@ -39,8 +39,8 @@ export const IPFSModule = ({ config }) => ({
         .option('daemon', { type: 'boolean', default: false })
         .option('log-file', { type: 'string', default: IPFS_DEFAULT_LOG_FILE })
         .option('proc-name', { type: 'string', default: IPFS_PROCESS_NAME })
-        .option('wns-bootstrap', {
-          describe: 'Start with WNS bootstrap',
+        .option('dxns-bootstrap', {
+          describe: 'Start with DXNS bootstrap',
           type: 'boolean',
           default: true
         })
@@ -49,16 +49,17 @@ export const IPFSModule = ({ config }) => ({
         .option('max-memory', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
-        const { logFile, daemon, procName, forward, connectInterval, connectIpv6, wnsBootstrap, maxMemory } = argv;
+        const { logFile, daemon, procName, forward, connectInterval, connectIpv6, dxnsBootstrap, maxMemory } = argv;
         const forwardArgs = forward ? JSON.parse(forward).args : [];
 
-        if (wnsBootstrap && connectInterval >= 0) {
+        if (dxnsBootstrap && connectInterval >= 0) {
           const swarmConnectorOptions = {
             name: IPFS_SWARM_CONNECTOR_PROCESS_NAME,
             detached: daemon,
             singleInstance: true,
             logFile: IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE,
-            background: true
+            background: true,
+            startTimeout: 10000
           };
           const { server } = config.get('runtime.services.dxns');
           await swarmConnectRunable.run(
@@ -72,7 +73,8 @@ export const IPFSModule = ({ config }) => ({
           detached: daemon,
           singleInstance: true,
           logFile,
-          maxMemory
+          maxMemory,
+          startTimeout: 10000
         };
         await ipfsRunnable.run(['daemon', '--writable', ...forwardArgs], ipfsOptions);
       })
