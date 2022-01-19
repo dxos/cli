@@ -60,7 +60,6 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm install -g @microsoft/rush pnpm
           ./common/scripts/install-ipfs.sh
-          ipfs init
           
           # Install dependencies
           node common/scripts/install-run-rush.js update

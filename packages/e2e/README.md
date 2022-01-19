@@ -1,5 +1,12 @@
 # E2E
 
+## Prerequisites
+
+1. Install [IPFS](https://github.com/ipfs/go-ipfs).
+2. Run `ipfs init`.
+
+## Running tests
+
 Run the E2E tests:
 
 ```bash
