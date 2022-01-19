@@ -71,5 +71,7 @@ jobs:
         \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
         rm ipfs-logs || true
         touch ipfs-logs
+        ipfs daemon &
+        sleep 5
         node ../../common/scripts/install-run-rushx.js test:e2e
       working-directory: ./packages/e2e

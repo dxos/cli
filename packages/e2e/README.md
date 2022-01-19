@@ -4,6 +4,7 @@
 
 1. Install [IPFS](https://github.com/ipfs/go-ipfs).
 2. Run `ipfs init`.
+3. Run `ipfs` in a separate window.
 
 ## Running tests
 
