@@ -1,5 +1,20 @@
 # Changelog
 
+### [2.12.2](https://www.github.com/dxos/cli/compare/v2.12.1...v2.12.2) (2022-01-18)
+
+
+### Bug Fixes
+
+* Set ipfs gateway port to 8080 in e2e tests ([#388](https://www.github.com/dxos/cli/issues/388)) ([6bc12ff](https://www.github.com/dxos/cli/commit/6bc12ff7a792d96df2d12869964f6e6a9313909c))
+* update dxns deploy command. ([#392](https://www.github.com/dxos/cli/issues/392)) ([993f146](https://www.github.com/dxos/cli/commit/993f146b61786a2637b845f2c78905008e3f53a3))
+
+### [2.12.1](https://www.github.com/dxos/cli/compare/v2.12.0...v2.12.1) (2022-01-17)
+
+
+### Bug Fixes
+
+* alpha -> dev; docs cleanup. ([#386](https://www.github.com/dxos/cli/issues/386)) ([183adb3](https://www.github.com/dxos/cli/commit/183adb35d87a0b39fbe62a9cc39b37d12bf3eea1))
+
 ## [2.12.0](https://www.github.com/dxos/cli/compare/v2.11.5...v2.12.0) (2022-01-13)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-console",
-  "version": "2.12.0",
+  "version": "2.12.2",
   "description": "DXOS Console CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-console#readme",
   "license": "AGPL-3.0",

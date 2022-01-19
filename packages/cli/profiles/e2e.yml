@@ -12,7 +12,7 @@ runtime:
       accountUri: //Alice
     ipfs:
       server: 'http://127.0.0.1:5001'
-      gateway: 'http://127.0.0.1:8888/ipfs/'
+      gateway: 'http://127.0.0.1:8080/ipfs/'
     signal:
       server: 'ws://127.0.0.1:4000'
       api: 'http://127.0.0.1:4000'
