@@ -94,7 +94,7 @@ describe('CLI', () => {
       await sleep(5000);
     });
 
-    it('ipfs', async () => {
+    it.skip('ipfs', async () => {
       try {
         await cmd('ipfs stop').run();
       } catch {}
@@ -314,7 +314,7 @@ describe('CLI', () => {
       } catch {}
     });
 
-    it('ipfs', async () => {
+    it.skip('ipfs', async () => {
       try {
         await cmd('ipfs stop').run();
       } catch {}
