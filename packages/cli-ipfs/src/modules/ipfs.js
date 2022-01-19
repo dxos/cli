@@ -59,7 +59,7 @@ export const IPFSModule = ({ config }) => ({
             singleInstance: true,
             logFile: IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE,
             background: true,
-            startTimeout: 2000
+            startTimeout: 10000
           };
           const { server } = config.get('runtime.services.dxns');
           await swarmConnectRunable.run(
@@ -74,7 +74,7 @@ export const IPFSModule = ({ config }) => ({
           singleInstance: true,
           logFile,
           maxMemory,
-          startTimeout: 2000
+          startTimeout: 10000
         };
         await ipfsRunnable.run(['daemon', '--writable', ...forwardArgs], ipfsOptions);
       })
