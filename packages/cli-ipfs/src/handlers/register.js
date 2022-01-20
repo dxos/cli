@@ -1,16 +1,53 @@
 // //
-// // Copyright 2020 DXOS.org
+// // Copyright 2021 DXOS.org
 // //
 
 // import assert from 'assert';
 
 // import { getGasAndFees } from '@dxos/cli-core';
 // import { log, logError } from '@dxos/debug';
-// import { Registry } from '@wirelineio/registry-client';
+// import { CID, DXN, RecordKind } from '@dxos/registry-client';
 
-// import { FILE_TYPE } from '../config';
+// import { FILE_DXN_NAME } from '../config';
 
-// export const register = (config) => async (argv) => {
+// export const register = ({ getDXNSClient, config }) => async (argv) => {
+//   const { name, domain,  }
+//   const client = await getDXNSClient();
+
+//   const fileType = await client.registryClient.getResourceRecord(DXN.parse(FILE_DXN_NAME), 'latest');
+//   assert(fileType);
+//   assert(fileType.record.kind === RecordKind.Type);
+
+//   const cid = await client.registryClient.insertDataRecord({
+//     hash: CID.from(pkg['/']).value,
+//     ...rest
+//   }, fileType?.record.cid, {
+//     description
+//   });
+
+//   const domainKey = await client.registryClient.resolveDomainName(domain);
+//   const opts = { version: conf.version, tags: conf.tag ?? ['latest'] };
+//   log(`Assigning name ${name}...`);
+//   if (cid) {
+//     try {
+//       await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, name), cid, opts);
+//     } catch (err) {
+//       if (skipExisting && String(err).includes('VersionAlreadyExists')) {
+//         log('Skipping existing version.');
+//       } else {
+//         throw err;
+//       }
+//     }
+//   }
+
+
+  
+  
+  
+  
+  
+  
+  
 //   const { txKey, name, cid, contentType, fileName, quiet = false } = argv;
 //   const wnsConfig = config.get('runtime.services.wns');
 //   const { server, userKey, bondId, chainId } = wnsConfig;
