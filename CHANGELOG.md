@@ -1,5 +1,17 @@
 # Changelog
 
+### [2.12.3](https://www.github.com/dxos/cli/compare/v2.12.2...v2.12.3) (2022-01-20)
+
+
+### Features
+
+* e2e test use ipfs service ([#384](https://www.github.com/dxos/cli/issues/384)) ([5201abb](https://www.github.com/dxos/cli/commit/5201abb613535eb8feb25e5333300f1c6c3b94b9))
+
+
+### Bug Fixes
+
+* reorder config entries. ([#395](https://www.github.com/dxos/cli/issues/395)) ([cb05e2f](https://www.github.com/dxos/cli/commit/cb05e2f978fffadd8aec06b8b9d0c3cb4af3fafa))
+
 ### [2.12.2](https://www.github.com/dxos/cli/compare/v2.12.1...v2.12.2) (2022-01-18)
 
 
