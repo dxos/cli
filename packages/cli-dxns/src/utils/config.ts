@@ -26,14 +26,14 @@ export const loadConfig = async (): Promise<Config<ConfigV1Object>> => {
 
   return new Config<ConfigV1Object>(
     {
-      build: {
-        command: DEFAULT_BUILD_COMMAND
+      module: {
+        ...packageProperties
       }
     },
     dxConfig,
     {
-      module: {
-        ...packageProperties
+      build: {
+        command: DEFAULT_BUILD_COMMAND
       }
     }
   );
