@@ -7,7 +7,7 @@ import path from 'path';
 
 import { Runnable, stopService, asyncHandler, print } from '@dxos/cli-core';
 
-import { publish, register /*, download, query */ } from '../handlers';
+import { publish, register, query /*, download */ } from '../handlers';
 
 const IPFS_EXEC = 'ipfs';
 const IPFS_PROCESS_NAME = 'ipfs';
@@ -208,35 +208,33 @@ export const IPFSModule = ({ config, getDXNSClient }) => ({
   //   handler: asyncHandler(download(config))
   // })
 
-  // Upload files.
-  .command({
-    command: ['upload <target>'],
-    describe: 'Upload a file to IPFS.',
-    builder: yargs => yargs
-      .positional('target', { type: 'string', required: true })
-      .option('quiet', { type: 'boolean', default: false, alias: 'q' })
-      .option('name', { type: 'string' })
-      .option('domain', { type: 'string' })
-      .option('version', { type: 'string' })
-      .option('tag', { type: 'string' })
-      .option('skipExisting', { type: 'boolean' })
-      .option('timeout', { type: 'string', default: '20m' }),
-    handler: asyncHandler(async argv => {
-      const result = await publish(config)(argv);
-      await register(getDXNSClient, { ...argv, ...result })
+    // Upload files.
+    .command({
+      command: ['upload <target>'],
+      describe: 'Upload a file to IPFS.',
+      builder: yargs => yargs
+        .version(false)
+        .positional('target', { type: 'string', required: true })
+        .option('quiet', { type: 'boolean', default: false, alias: 'q' })
+        .option('name', { type: 'string' })
+        .option('domain', { type: 'string' })
+        .option('version', { type: 'string' })
+        .option('tag', { type: 'string' })
+        .option('skipExisting', { type: 'boolean' })
+        .option('timeout', { type: 'string', default: '20m' }),
+      handler: asyncHandler(async argv => {
+        const result = await publish(config)(argv);
+        await register({ getDXNSClient })({ ...argv, ...result });
+      })
     })
-  })
 
-  // // Query files.
-  // .command({
-  //   command: ['query'],
-  //   describe: 'Query files.',
-  //   builder: yargs => yargs
-  //     .option('id')
-  //     .option('name')
-  //     .option('namespace'),
+    // Query files.
+    .command({
+      command: ['query'],
+      describe: 'Query files.',
+      builder: yargs => yargs,
 
-  //   handler: asyncHandler(query(config))
-  // })
+      handler: asyncHandler(query({ getDXNSClient }))
+    })
 
 });

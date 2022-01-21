@@ -7,9 +7,9 @@ import assert from 'assert';
 import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind } from '@dxos/registry-client';
 
-import { FILE_DXN_NAME } from '../config';
+import { FILE_TYPE_DXN } from '../config';
 
-export const register = (getDXNSClient) => async (argv) => {
+export const register = ({ getDXNSClient }) => async (argv) => {
   const { name, domain, cid: fileCID, contentType, fileName, version, tag, skipExisting } = argv;
 
   assert(name, 'Invalid name.');
@@ -18,7 +18,7 @@ export const register = (getDXNSClient) => async (argv) => {
 
   const client = await getDXNSClient();
 
-  const fileType = await client.registryClient.getResourceRecord(DXN.parse(FILE_DXN_NAME), 'latest');
+  const fileType = await client.registryClient.getResourceRecord(DXN.parse(FILE_TYPE_DXN), 'latest');
   assert(fileType);
   assert(fileType.record.kind === RecordKind.Type);
 

@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 import download from 'download';
-import { Octokit } from "octokit";
+import { Octokit } from 'octokit';
 import path from 'path';
 
 import { asyncHandler } from '@dxos/cli-core';
@@ -40,7 +40,7 @@ export const DevToolsModule = ({ config }) => ({
         const res = await octokit.request('GET /repos/{owner}/{repo}/actions/artifacts', {
           owner: OWNER,
           repo: REPO
-        })
+        });
 
         const latestArtifact = res.data.artifacts.find(artifact => artifact.name === ARTIFACT_NAME);
         assert(latestArtifact, `Latest ${ARTIFACT_NAME} is not found.`);
@@ -61,22 +61,10 @@ export const DevToolsModule = ({ config }) => ({
     .command({
       command: ['download'],
       describe: 'Download latest published Development tools.',
-      builder: yargs => yargs
-        .option('url', { type: 'string' }),
+      builder: yargs => yargs,
 
       handler: asyncHandler(async argv => {
-        const { url } = argv;
-
-        const res = await octokit.request('GET /repos/{owner}/{repo}/actions/artifacts', {
-          owner: 'dxos',
-          repo: 'protocols'
-        })
-
-        // Take the latest and publish it to IPFS
-
         
-        
-        console.log('>>>>>>', res.data.artifacts);
       })
     })
 });

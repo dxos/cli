@@ -4,5 +4,5 @@
 
 // export * from './download';
 export * from './publish';
-// export * from './register';
-// export * from './query';
+export * from './register';
+export * from './query';

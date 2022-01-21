@@ -1,36 +1,42 @@
-// //
-// // Copyright 2020 DXOS.org
-// //
+//
+// Copyright 2020 DXOS.org
+//
 
-// import assert from 'assert';
-// import clean from 'lodash-clean';
+import assert from 'assert';
 
-// import { log } from '@dxos/debug';
-// import { Registry } from '@wirelineio/registry-client';
+import { print } from '@dxos/cli-core';
+import { CID, DXN } from '@dxos/registry-client';
 
-// import { FILE_TYPE } from '../config';
+import { FILE_TYPE_DXN } from '../config';
 
-// export const query = config => async argv => {
-//   const { id, name, namespace } = argv;
+export const displayApps = (record) => {
+  return ({
+    cid: record.cid.toString(),
+    created: record.meta.created,
+    fileName: record.data.fileName,
+    contentType: record.data.contentType,
+    hash: CID.from(Buffer.from(record.data.hash, 'base64')).toString()
+  });
+};
 
-//   const { server, chainId } = config.get('runtime.services.wns');
+export const query = ({ getDXNSClient }) => async (argv) => {
+  const { json } = argv;
 
-//   assert(server, 'Invalid WNS endpoint.');
-//   assert(chainId, 'Invalid WNS Chain ID.');
+  let files = [];
+  assert(getDXNSClient);
+  const client = await getDXNSClient();
+  const registry = client.registryClient;
+  const fileType = await registry.getResourceRecord(DXN.parse(FILE_TYPE_DXN), 'latest');
 
-//   const registry = new Registry(server, chainId);
+  if (!fileType) {
+    throw new Error('App type not found.');
+  }
 
-//   let files = [];
-//   if (id) {
-//     files = await registry.getRecordsByIds([id])
-//       .filter(b => !name || (name && b.attributes.name === name))
-//       .filter(b => !namespace || (namespace && b.attributes.tag === namespace));
-//   } else {
-//     const attributes = clean({ type: FILE_TYPE, name, tag: namespace });
-//     files = await registry.queryRecords(attributes);
-//   }
+  const records = await registry.getDataRecords({ type: fileType.record.cid });
 
-//   if (files && files.length) {
-//     log(JSON.stringify(files, null, 2));
-//   }
-// };
+  files = records.map(displayApps);
+
+  if (files && files.length) {
+    print(files, { json });
+  }
+};
