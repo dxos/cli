@@ -6,6 +6,7 @@ import assert from 'assert';
 import download from 'download';
 import { Octokit } from 'octokit';
 import path from 'path';
+import urlJoin from 'url-join';
 
 import { asyncHandler } from '@dxos/cli-core';
 
@@ -61,10 +62,23 @@ export const DevToolsModule = ({ config }) => ({
     .command({
       command: ['download'],
       describe: 'Download latest published Development tools.',
-      builder: yargs => yargs,
+      builder: yargs => yargs
+        .option('from', { type: 'string' })
+        .option('path', { type: 'string' }),
 
       handler: asyncHandler(async argv => {
-        
+        const { from, path: downloadPath = process.cwd() } = argv;
+
+        assert(from, 'Invalid IPFS CID.');
+
+        const downloadPackagePath = path.isAbsolute(downloadPath) ? downloadPath : path.join(process.cwd(), downloadPath);
+
+        process.removeAllListeners('warning');
+        await download(
+          urlJoin(config.get('runtime.services.ipfs.gateway'), from),
+          downloadPackagePath,
+          CONFIG
+        );
       })
     })
 });

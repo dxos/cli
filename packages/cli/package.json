@@ -63,6 +63,7 @@
     "read-pkg-up": "^6.0.0",
     "semver": "^7.1.1",
     "strip-json-comments": "3.1.1",
+    "url-join": "^4.0.1",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
