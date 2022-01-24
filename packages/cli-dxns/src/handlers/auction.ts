@@ -12,6 +12,7 @@ export const createAuction = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const { name, startAmount } = argv;
+  assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
 
   assert(startAmount >= 0, 'Amount must be positive integer number.');
 
@@ -23,6 +24,7 @@ export const bidAuction = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const { name, amount } = argv;
+  assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
 
   assert(amount >= 0, 'Amount must be positive integer number.');
 
@@ -34,6 +36,7 @@ export const closeAuction = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const { name } = argv;
+  assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
 
   const client = await getDXNSClient();
   await client.auctionsClient.closeAuction(name);
@@ -43,6 +46,7 @@ export const forceCloseAuction = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const { name, mnemonic } = argv;
+  assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
 
   const client = await getDXNSClient();
   const { keyring, transactionHandler, apiRaw } = client;
@@ -56,6 +60,7 @@ export const claimAuction = (params: Params) => async (argv: any) => {
 
   const { name, json } = argv;
 
+  assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
   const client = await getDXNSClient();
 
   const domainKey = await client.auctionsClient.claimAuction(name);
