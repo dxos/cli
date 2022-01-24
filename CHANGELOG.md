@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.12.4](https://www.github.com/dxos/cli/compare/v2.12.3...v2.12.4) (2022-01-24)
+
+
+### Bug Fixes
+
+* various updates for better UX. ([#396](https://www.github.com/dxos/cli/issues/396)) ([9a245bd](https://www.github.com/dxos/cli/commit/9a245bd20a3b2fd93782a073cd89f11ef9f89cdc))
+
 ### [2.12.3](https://www.github.com/dxos/cli/compare/v2.12.2...v2.12.3) (2022-01-20)
 
 
