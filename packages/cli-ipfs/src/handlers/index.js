@@ -1,8 +1,8 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 // export * from './download';
-// export * from './publish';
-// export * from './register';
-// export * from './query';
+export * from './publish';
+export * from './register';
+export * from './query';

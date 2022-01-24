@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
-// export const FILE_TYPE = 'wrn:file';
+export const FILE_TYPE_DXN = 'dxos:type.file';

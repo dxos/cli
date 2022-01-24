@@ -12,6 +12,7 @@ import { getLoggers, createCLI, CoreState } from '@dxos/cli-core';
 
 import { listInstalled } from './extensions';
 import { CertModule } from './modules/cert';
+import { DevToolsModule } from './modules/devtools';
 import { ExtensionModule } from './modules/extension';
 import { UpgradeModule, UninstallModule } from './modules/installation';
 import { PluggableModule } from './modules/pluggable';
@@ -85,6 +86,7 @@ const destroy = async () => {
 
 const modules = [
   ProfileModule,
+  DevToolsModule,
   CertModule,
   ServicesModule,
   UpgradeModule,

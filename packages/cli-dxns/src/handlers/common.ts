@@ -3,7 +3,7 @@
 //
 
 import { print as cliPrint } from '@dxos/cli-core';
-import { RecordKind, RegistryRecord, Resource } from '@dxos/registry-client';
+import { RecordKind, RegistryRecord, Resource, CID } from '@dxos/registry-client';
 
 import { DXNSClient } from '../index';
 
@@ -11,6 +11,14 @@ export interface Params {
   config?: any,
   getDXNSClient(): Promise<DXNSClient>
 }
+
+export const displayHash = (data: any) => {
+  if (data.hash) {
+    const cid = CID.from(Buffer.from(data.hash, 'base64'));
+    data.hash = cid.toString();
+  }
+  return data;
+};
 
 export const displayRecord = (record: RegistryRecord) => {
   const common = {
@@ -33,7 +41,7 @@ export const displayRecord = (record: RegistryRecord) => {
         ...record.meta,
         created: record.meta.created?.toISOString(),
         size: record.dataSize,
-        data: record.data
+        data: displayHash(record.data)
       };
   }
 };
