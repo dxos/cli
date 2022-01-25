@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.19.11",
+    "@dxos/debug": "~2.22.0",
     "assert": "^2.0.0",
     "ipfs-http-client": "48.1.1",
     "js-yaml": "^3.13.1",
@@ -50,7 +50,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.21",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-node": "^10.2.1",

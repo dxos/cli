@@ -41,8 +41,8 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.19.11",
-    "@dxos/random-access-multi-storage": "~2.19.11",
+    "@dxos/debug": "~2.22.0",
+    "@dxos/random-access-multi-storage": "~2.22.0",
     "assert": "^2.0.0",
     "download": "^8.0.0",
     "find-root": "^1.1.0",
@@ -67,7 +67,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.21",
     "jest": "^27.4.4",
     "json2yaml": "^1.1.0",
     "ts-node": "^10.2.1",
