@@ -8,8 +8,26 @@ import { asyncHandler, CoreState } from '@dxos/cli-core';
 import type { StateManager } from '@dxos/cli-data';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
-import { publish, query, register, build, botBuildOptions, botRegisterOptions, botSpawnOptions, spawn } from '../handlers/bot';
-import { botFactoryStartOptions, botFactoryInstallOptions, install, setup, start, botFactorySetupOptions } from '../handlers/bot-factory';
+import { 
+  publish,
+  query,
+  register,
+  build,
+  botBuildOptions,
+  botRegisterOptions,
+  botSpawnOptions,
+  spawn
+} from '../handlers/bot';
+import { 
+  botFactoryStartOptions,
+  botFactoryInstallOptions,
+  install,
+  setup,
+  start,
+  botFactorySetupOptions,
+  botFactoryStopOptions,
+  stop 
+} from '../handlers/bot-factory';
 
 export interface Params {
   config: any,
@@ -55,6 +73,14 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
               await setup(config, { includeNodePath: true })(argv);
               await start()(argv);
             })
+          })
+
+          .command({
+            command: ['stop'],
+            describe: 'stop a bot factory.',
+            builder: botFactoryStopOptions,
+
+            handler: asyncHandler(stop())
           })
       })
 

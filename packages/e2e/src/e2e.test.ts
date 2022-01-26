@@ -51,12 +51,12 @@ describe('CLI', () => {
   ]);
 
   before(async () => {
-    // broker = await createTestBroker();
+    broker = await createTestBroker();
     await httpServer.start();
   });
 
   after(async () => {
-    // await broker.stop();
+    await broker.stop();
     await httpServer.stop();
   });
 
@@ -305,13 +305,17 @@ describe('CLI', () => {
     it('runs a bot-factory', async () => {
       await cmd('bot factory install').run();
       await cmd('bot factory setup --topic d5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb').run();
-      await cmd('bot factory start').debug().run();
+      await cmd('bot factory start --detached').debug().run();
     });
 
-    it('Spawn bot', async () => {
+    it('spawns a bot', async () => {
       await cmd('party open')
         .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME}`)
         .run();
+    });
+
+    it('stops a bot-factory', async () => {
+      await cmd('bot factory stop').run();
     });
   });
 

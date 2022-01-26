@@ -11,7 +11,7 @@ import { CoreOptions, Runnable, sanitizeEnv } from '@dxos/cli-core';
 
 import { BOTFACTORY_ENV_FILE } from '../../config';
 
-const BOT_FACTORY_PROCESS_NAME = 'bot-factory';
+export const BOT_FACTORY_PROCESS_NAME = 'bot-factory';
 
 export interface BotFactoryStartOptions extends CoreOptions {
   'single-instance': boolean,
