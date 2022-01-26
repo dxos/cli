@@ -16,6 +16,7 @@ export function cmd (command: string, cwd?: string): Command {
 
 export class Command {
   private _debug = GLOBAL_DEBUG;
+  private readonly _interactiveCommands: string[] = []
 
   private _stdout = Buffer.alloc(0)
   private _stderr = Buffer.alloc(0)
@@ -24,6 +25,12 @@ export class Command {
 
   debug (): this {
     this._debug = true;
+    return this;
+  }
+
+  addInteractiveCommand (command: string): Command {
+    this._interactiveCommands.push(command);
+
     return this;
   }
 
@@ -42,11 +49,23 @@ export class Command {
       }
     });
 
+    let sentSIGINT = false;
+
     cp.stdout.on('data', chunk => {
       this._stdout = Buffer.concat([this._stdout, chunk]);
 
       if (this._debug) {
         process.stdout.write(chunk);
+      }
+      if (chunk.toString() === '[dx]> ') {
+        if (this._interactiveCommands.length > 0) {
+          const interactiveCommand = this._interactiveCommands.shift()
+          cp.stdin.write(`${interactiveCommand}\n`);
+          process.stdout.write(`${interactiveCommand}\n`);
+        } else {
+          cp.kill('SIGINT');
+          sentSIGINT = true;
+        }
       }
     });
 
@@ -68,10 +87,12 @@ export class Command {
       console.log(`\n\n[E2E] Command exited with exit-code: ${cp.exitCode}, signal: ${cp.signalCode}.\n`);
     }
 
-    if (cp.exitCode !== 0) {
-      throw new Error(`Command "dx ${this._command}" exited with code ${cp.exitCode}`);
-    } else if (cp.exitCode === null) {
-      throw new Error(`Command "dx ${this._command}" exited with signal ${cp.signalCode}`);
+    if (cp.signalCode !== 'SIGINT' || !sentSIGINT) {
+      if (cp.exitCode !== 0) {
+        throw new Error(`Command "dx ${this._command}" exited with code ${cp.exitCode}`);
+      } else if (cp.exitCode === null) {
+        throw new Error(`Command "dx ${this._command}" exited with signal ${cp.signalCode}`);
+      }
     }
 
     return cp;

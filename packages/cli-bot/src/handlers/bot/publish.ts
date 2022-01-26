@@ -3,6 +3,7 @@
 //
 
 import assert from 'assert';
+import { basename } from 'path';
 import cliProgress from 'cli-progress';
 import fs from 'fs-extra';
 import IpfsHttpClient from 'ipfs-http-client';
@@ -43,7 +44,15 @@ export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => 
   bar.start(total, 0);
 
   // eslint-disable-next-line
-  const addResult = await ipfs.add(buildPath, { progress: (bytes: any) => bar.update(bytes) });
+  const fileContent = fs.readFileSync(buildPath);
+  const addResult = await ipfs.add({
+      path: basename(buildPath),
+      content: fileContent
+    }, 
+    { 
+      progress: (bytes: any) => bar.update(bytes) 
+    }
+  );
 
   bar.update(total);
   bar.stop();

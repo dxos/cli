@@ -10,11 +10,12 @@ import { load } from 'js-yaml';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
 
-import { isGlobalYarn, getGlobalModulesPath } from '@dxos/cli-core';
-import { mapToKeyValues } from '@dxos/config';
+import { isGlobalYarn, getGlobalModulesPath, CoreOptions } from '@dxos/cli-core';
+import { Config, ConfigV1Object, mapToKeyValues } from '@dxos/config';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
 import { BOTFACTORY_ENV_FILE } from '../../config';
+import { Argv } from 'yargs';
 
 const envmap = readFileSync(path.join(__dirname, '../../../env-map.yml')).toString();
 
@@ -25,9 +26,14 @@ const BOT_FACTORY_DEBUG_NAMESPACES = ['dxos:bot*'];
 const PREBUILDS_DIR = 'prebuilds';
 const SODIUM_PREBUILDS = `sodium-native/${PREBUILDS_DIR}`;
 
-export interface SetupOptions {
-  topic: string
+export interface BotFactorySetupOptions extends CoreOptions {
+  topic?: string
 }
+
+export const botFactorySetupOptions = (config: Config<ConfigV1Object>) => (yargs: Argv<CoreOptions>): Argv<BotFactorySetupOptions> => {
+  return yargs
+    .option('topic', { type: 'string', default: config.get('bot.topic') });
+};
 
 /**
  * Sets up proper location for sodium-native prebuilds so bots would be able to reuse it.
@@ -43,24 +49,26 @@ const setupPrebuilds = async (cliNodePath: string) => {
   await fs.copy(prebuildsPath, prebuildsBotsPath);
 };
 
-export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic } : SetupOptions) => {
+export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic } : BotFactorySetupOptions) => {
   assert(pkg, 'Unable to locate package.json');
   const cliNodePath = await getGlobalModulesPath(await isGlobalYarn(pkg.package.name));
 
   await setupPrebuilds(cliNodePath);
 
   const botFactoryEnvFile = path.join(process.cwd(), BOTFACTORY_ENV_FILE);
-  console.log('botFactoryEnvFile', botFactoryEnvFile);
   await fs.ensureFile(botFactoryEnvFile);
 
   const envFileData = await fs.readFile(botFactoryEnvFile);
 
-  let { DX_BOT_TOPIC = topic } = parse(envFileData.toString());
+  if(!topic) {
+    const { DX_BOT_TOPIC } = parse(envFileData.toString());
+    topic = DX_BOT_TOPIC;
+  }
 
-  if (!DX_BOT_TOPIC) {
+  if (!topic) {
     const { publicKey } = createKeyPair();
 
-    DX_BOT_TOPIC = keyToString(publicKey);
+    topic = keyToString(publicKey);
   }
 
   const env = {
@@ -69,7 +77,7 @@ export const setup = (config: any, { includeNodePath = false } = {}) => async ({
     ).join(','),
     NODE_OPTIONS: '',
     ...mapToKeyValues(load(envmap), config.values),
-    DX_BOT_TOPIC,
+    DX_BOT_TOPIC: topic,
     ...(includeNodePath ? { DX_CLI_NODE_PATH: cliNodePath } : {})
   };
 

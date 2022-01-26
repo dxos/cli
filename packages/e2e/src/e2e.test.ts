@@ -11,6 +11,8 @@ import { join, dirname } from 'path';
 import { sleep } from '@dxos/async';
 import { readFile } from '@dxos/cli-core';
 import { createId } from '@dxos/crypto';
+import type { Awaited } from '@dxos/async';
+import { createTestBroker } from '@dxos/signal'
 
 import { HTTPServer } from '../mocks/http-server';
 import { cmd } from './cli';
@@ -30,6 +32,7 @@ const BOT_NAME = 'bot.test';
  */
 
 describe('CLI', () => {
+  let broker: Awaited<ReturnType<typeof createTestBroker>>;
   const port = Math.round(Math.random() * 10000 + 5000);
   const kubeServices = [{
     name: 'app-server',
@@ -48,10 +51,12 @@ describe('CLI', () => {
   ]);
 
   before(async () => {
+    // broker = await createTestBroker();
     await httpServer.start();
   });
 
   after(async () => {
+    // await broker.stop();
     await httpServer.stop();
   });
 
@@ -91,6 +96,15 @@ describe('CLI', () => {
       await cmd('service start --from @dxos/cli-dxns --service dxns --dev --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
 
       await sleep(5000);
+    });
+
+    it.skip('signal', async () => {
+      try {
+        await cmd('signal stop').run();
+      } catch {}
+
+      await cmd('signal install').run();
+      await cmd('signal start --daemon').run();
     });
 
     it.skip('ipfs', async () => {
@@ -288,10 +302,16 @@ describe('CLI', () => {
       expect(newBot).toBeDefined();
     });
 
-    it.skip('runs a bot-factory', async () => {
+    it('runs a bot-factory', async () => {
       await cmd('bot factory install').run();
-      await cmd('bot factory setup').run();
-      await cmd('bot factory start').run();
+      await cmd('bot factory setup --topic d5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb').run();
+      await cmd('bot factory start').debug().run();
+    });
+
+    it('Spawn bot', async () => {
+      await cmd('party open')
+        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME}`)
+        .run();
     });
   });
 
@@ -308,6 +328,12 @@ describe('CLI', () => {
     it('dxns', async () => {
       try {
         await cmd('service stop dxns').run();
+      } catch {}
+    });
+
+    it.skip('signal', async () => {
+      try {
+        await cmd('signal stop').run();
       } catch {}
     });
 

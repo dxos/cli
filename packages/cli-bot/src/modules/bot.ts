@@ -9,7 +9,7 @@ import type { StateManager } from '@dxos/cli-data';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
 import { publish, query, register, build, botBuildOptions, botRegisterOptions, botSpawnOptions, spawn } from '../handlers/bot';
-import { botFactoryStartOptions, botFactoryInstallOptions, install, setup, start } from '../handlers/bot-factory';
+import { botFactoryStartOptions, botFactoryInstallOptions, install, setup, start, botFactorySetupOptions } from '../handlers/bot-factory';
 
 export interface Params {
   config: any,
@@ -21,7 +21,7 @@ export interface Params {
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ config, getDXNSClient, cliState, stateManager }: Params) => {
+export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
   return {
     command: ['bot'],
     describe: 'Bot CLI.',
@@ -42,7 +42,7 @@ export const BotModule = ({ config, getDXNSClient, cliState, stateManager }: Par
           .command({
             command: ['setup'],
             describe: 'Setup a bot factory.',
-            builder: (yargs: Argv) => yargs,
+            builder: botFactorySetupOptions(config),
             handler: asyncHandler(setup(config))
           })
 
@@ -63,7 +63,7 @@ export const BotModule = ({ config, getDXNSClient, cliState, stateManager }: Par
         describe: 'Spawn new bot instance.',
         builder: botSpawnOptions,
 
-        handler: asyncHandler(spawn({ cliState, stateManager, config }))
+        handler: asyncHandler(spawn({ stateManager, config }))
       })
 
     // .command({

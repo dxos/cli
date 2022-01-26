@@ -35,7 +35,10 @@
     "@types/fs-extra": "^9.0.13",
     "@dxos/crypto": "~2.19.11",
     "@dxos/async": "~2.19.11",
-    "@dxos/cli-core": "workspace:*"
+    "@dxos/cli-core": "workspace:*",
+    "@dxos/signal": "~2.19.11",
+    "@dxos/util": "^2.15.6",
+    "sodium-universal": "~3.0.4"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

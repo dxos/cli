@@ -14,7 +14,6 @@ import { PublicKey } from '@dxos/crypto';
 
 export interface SpawnParameters {
   stateManager: StateManager,
-  cliState: CoreState['cliState'],
   config: Config<ConfigV1Object>
 }
 
@@ -31,11 +30,10 @@ export const botSpawnOptions = (yargs: Argv<CoreOptions>): Argv<BotSpawnOptions>
     .option('localPath', { type: 'string' });
 };
 
-export const spawn = ({ stateManager, cliState } : SpawnParameters) => async ({ dxn, ipfsCid, localPath, json } : BotSpawnOptions) => {
+export const spawn = ({ stateManager } : SpawnParameters) => async ({ dxn, ipfsCid, localPath, json } : BotSpawnOptions) => {
   assert(stateManager, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
   assert(!!dxn || !!ipfsCid || !!localPath, 'At least one of the following options is required: dxn, ipfsCid, localPath');
 
-  const { interactive } = cliState;
   const topic = 'd5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb';
   assert(topic, 'Topic must be specified in config');
 
@@ -50,10 +48,5 @@ export const spawn = ({ stateManager, cliState } : SpawnParameters) => async ({ 
 
   print({ botId: (botHandle as any)._id }, { json });
 
-  if (interactive) {
-    await botFactoryClient.stop();
-  } else {
-    // Workaround for segfaults from node-wrtc.
-    process.exit(0);
-  }
+  await botFactoryClient.stop();
 };
