@@ -22,22 +22,11 @@ export const inviteCommand = (stateManager: StateManager, onPinGenerated: (pin: 
   handler: asyncHandler(async (argv: Arguments<DeviceOptions>) => {
     const client = await stateManager.getClient();
 
-    let onFinish;
-    const invitationIsFinished = new Promise(resolve => {
-      onFinish = resolve;
-    });
+    const invitation = await client.halo.createInvitation();
+    invitation.connected.on(() => onPinGenerated(invitation.descriptor.secret?.toString() ?? ''));
 
-    const invitation = await client.createHaloInvitation({
-      onFinish,
-      onPinGenerated
-    });
+    onGenerated && await onGenerated(invitation.descriptor.encode());
 
-    onGenerated && await onGenerated(invitation.invitationCode);
-
-    print({ code: invitation.invitationCode }, argv);
-
-    log('Waiting for another device to join...');
-
-    await invitationIsFinished;
+    print({ code: invitation.descriptor.encode() }, argv);
   })
 });

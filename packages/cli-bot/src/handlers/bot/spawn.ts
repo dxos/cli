@@ -44,7 +44,7 @@ export const spawn = ({ stateManager } : SpawnParameters) => async ({ dxn, ipfsC
 
   const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
   await botFactoryClient.start(PublicKey.from(topic));
-  const botHandle = await botFactoryClient.spawn({ dxn, ipfsCid, localPath }, client, party);
+  const botHandle = await botFactoryClient.spawn({ dxn, ipfsCid, localPath }, party);
 
   print({ botId: (botHandle as any)._id }, { json });
 

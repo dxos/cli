@@ -9,8 +9,8 @@ import { Arguments, Argv, CommandModule } from 'yargs';
 import { asyncHandler, print } from '@dxos/cli-core';
 
 import { StateManager } from '../../../state-manager';
-import { encodeInvitation } from '../../../utils';
 import { PartyOptions } from '../party';
+import { InvitationDescriptor } from '@dxos/echo-db';
 
 export interface PartyInviteOptions extends PartyOptions {
   appUrl?: string
@@ -32,17 +32,17 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOp
     assert(party, 'Invalid party.');
 
     const result: any = { partyKey: party.key.toHex() };
-    const { invitation: invite, passcode } = await stateManager.createInvitation(party);
+    const invitation = await stateManager.createInvitation(party);
 
     if (appUrl) {
       result.invitationUrl = path.join(
         appUrl.split('#')[0],
-        `#/auth?${queryString.stringify(invite)}`
+        `#/auth?${queryString.stringify(invitation.descriptor.toQueryParameters())}`
       );
     } else {
-      result.invitation = encodeInvitation(invite);
+      result.invitation = invitation.descriptor.encode()
     }
 
-    return print({ ...result, passcode }, { json });
+    return print({ ...result, passcode: invitation.descriptor.secret?.toString() }, { json });
   })
 });

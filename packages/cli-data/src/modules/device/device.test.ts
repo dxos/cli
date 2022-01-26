@@ -13,6 +13,7 @@ import { createTestBroker } from '@dxos/signal';
 import { StateManager } from '../../state-manager';
 import { createCommand as createPartyCommand, listCommand as listPartyCommand } from '../party/commands';
 import { infoCommand, inviteCommand, joinCommand } from './commands';
+import { assert } from 'console';
 
 const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');
@@ -86,7 +87,9 @@ describe('cli-data: Device', () => {
     const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
+      console.log(1);
       await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code });
+      console.log(2);
     };
     await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 
