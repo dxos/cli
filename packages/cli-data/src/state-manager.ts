@@ -12,7 +12,7 @@ import { Client, PartyProxy } from '@dxos/client';
 import { SecretProvider } from '@dxos/credentials';
 import { PublicKey } from '@dxos/crypto';
 import { log } from '@dxos/debug';
-import { InvitationDescriptor, InvitationQueryParameters, Item } from '@dxos/echo-db';
+import { InvitationDescriptor, Item } from '@dxos/echo-db';
 
 const STATE_STORAGE_FILENAME = 'state.json';
 

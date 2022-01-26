@@ -9,10 +9,10 @@ import got from 'got';
 import { join, dirname } from 'path';
 
 import { sleep } from '@dxos/async';
+import type { Awaited } from '@dxos/async';
 import { readFile } from '@dxos/cli-core';
 import { createId } from '@dxos/crypto';
-import type { Awaited } from '@dxos/async';
-import { createTestBroker } from '@dxos/signal'
+import { createTestBroker } from '@dxos/signal';
 
 import { HTTPServer } from '../mocks/http-server';
 import { cmd } from './cli';

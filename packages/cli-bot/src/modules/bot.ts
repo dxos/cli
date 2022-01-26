@@ -8,7 +8,7 @@ import { asyncHandler, CoreState } from '@dxos/cli-core';
 import type { StateManager } from '@dxos/cli-data';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
-import { 
+import {
   publish,
   query,
   register,
@@ -18,7 +18,7 @@ import {
   botSpawnOptions,
   spawn
 } from '../handlers/bot';
-import { 
+import {
   botFactoryStartOptions,
   botFactoryInstallOptions,
   install,
@@ -26,7 +26,7 @@ import {
   start,
   botFactorySetupOptions,
   botFactoryStopOptions,
-  stop 
+  stop
 } from '../handlers/bot-factory';
 
 export interface Params {

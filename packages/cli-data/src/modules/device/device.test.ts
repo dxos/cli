@@ -13,7 +13,6 @@ import { createTestBroker } from '@dxos/signal';
 import { StateManager } from '../../state-manager';
 import { createCommand as createPartyCommand, listCommand as listPartyCommand } from '../party/commands';
 import { infoCommand, inviteCommand, joinCommand } from './commands';
-import { assert } from 'console';
 
 const getReadlineInterface = () => {
   throw new Error('getReadlineInterface not mocked.');

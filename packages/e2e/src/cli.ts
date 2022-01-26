@@ -59,7 +59,7 @@ export class Command {
       }
       if (chunk.toString() === '[dx]> ') {
         if (this._interactiveCommands.length > 0) {
-          const interactiveCommand = this._interactiveCommands.shift()
+          const interactiveCommand = this._interactiveCommands.shift();
           cp.stdin.write(`${interactiveCommand}\n`);
           process.stdout.write(`${interactiveCommand}\n`);
         } else {

@@ -7,7 +7,7 @@ import { Argv } from 'yargs';
 
 import { BotFactoryClient } from '@dxos/bot-factory-client';
 import { print } from '@dxos/cli-core';
-import type { CoreOptions, CoreState } from '@dxos/cli-core';
+import type { CoreOptions } from '@dxos/cli-core';
 import type { StateManager } from '@dxos/cli-data';
 import type { Config, ConfigV1Object } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';

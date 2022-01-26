@@ -5,7 +5,6 @@
 import { Arguments, Argv, CommandModule } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
-import { log } from '@dxos/debug';
 
 import { StateManager } from '../../../state-manager';
 import { DeviceOptions } from '../device';

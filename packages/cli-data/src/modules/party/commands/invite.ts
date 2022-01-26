@@ -10,7 +10,6 @@ import { asyncHandler, print } from '@dxos/cli-core';
 
 import { StateManager } from '../../../state-manager';
 import { PartyOptions } from '../party';
-import { InvitationDescriptor } from '@dxos/echo-db';
 
 export interface PartyInviteOptions extends PartyOptions {
   appUrl?: string
@@ -40,7 +39,7 @@ export const inviteCommand = (stateManager: StateManager): CommandModule<PartyOp
         `#/auth?${queryString.stringify(invitation.descriptor.toQueryParameters())}`
       );
     } else {
-      result.invitation = invitation.descriptor.encode()
+      result.invitation = invitation.descriptor.encode();
     }
 
     return print({ ...result, passcode: invitation.descriptor.secret?.toString() }, { json });

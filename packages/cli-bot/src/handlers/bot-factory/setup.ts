@@ -9,13 +9,13 @@ import fs from 'fs-extra';
 import { load } from 'js-yaml';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
+import { Argv } from 'yargs';
 
 import { isGlobalYarn, getGlobalModulesPath, CoreOptions } from '@dxos/cli-core';
 import { Config, ConfigV1Object, mapToKeyValues } from '@dxos/config';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
 import { BOTFACTORY_ENV_FILE } from '../../config';
-import { Argv } from 'yargs';
 
 const envmap = readFileSync(path.join(__dirname, '../../../env-map.yml')).toString();
 
@@ -60,7 +60,7 @@ export const setup = (config: any, { includeNodePath = false } = {}) => async ({
 
   const envFileData = await fs.readFile(botFactoryEnvFile);
 
-  if(!topic) {
+  if (!topic) {
     const { DX_BOT_TOPIC } = parse(envFileData.toString());
     topic = DX_BOT_TOPIC;
   }
