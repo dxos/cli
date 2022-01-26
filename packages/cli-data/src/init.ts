@@ -4,10 +4,9 @@
 
 import assert from 'assert';
 
-import { CoreState } from '@dxos/cli-core';
+import { CoreState, createClient } from '@dxos/cli-core';
 
 import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
-import { createClient } from './create-client';
 import { StateManager } from './state-manager';
 
 export interface CliDataState extends CoreState {
