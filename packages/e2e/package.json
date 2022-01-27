@@ -38,7 +38,8 @@
     "@dxos/cli-core": "workspace:*",
     "@dxos/signal": "~2.23.0",
     "@dxos/util": "^2.15.6",
-    "sodium-universal": "~3.0.4"
+    "sodium-universal": "~3.0.4",
+    "sodium-native": "~3.3.0"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
