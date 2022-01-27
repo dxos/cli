@@ -14,6 +14,7 @@ import { listInstalled } from './extensions';
 import { CertModule } from './modules/cert';
 import { DevToolsModule } from './modules/devtools';
 import { ExtensionModule } from './modules/extension';
+import { HaloModule } from './modules/halo';
 import { UpgradeModule, UninstallModule } from './modules/installation';
 import { PluggableModule } from './modules/pluggable';
 import { ProfileModule } from './modules/profile';
@@ -89,6 +90,7 @@ const modules = [
   DevToolsModule,
   CertModule,
   ServicesModule,
+  HaloModule,
   UpgradeModule,
   UninstallModule,
   ExtensionModule
