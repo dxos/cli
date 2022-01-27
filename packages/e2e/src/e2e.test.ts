@@ -273,6 +273,7 @@ describe('CLI', () => {
   describe('bot', () => {
     let bundledBotPath: string;
     let botCid: string;
+    const topic = 'd5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb'
 
     it('query bots', async () => {
       const bots = await cmd('bot query --json').json();
@@ -304,14 +305,14 @@ describe('CLI', () => {
 
     it('runs a bot-factory', async () => {
       await cmd('bot factory install').run();
-      await cmd('bot factory setup --topic d5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb').run();
+      await cmd(`bot factory setup --topic ${topic}`).run();
       await cmd('bot factory start --detached --log-file bot-factory.log').run();
     });
 
     it('spawns a bot', async () => {
       let botId: string | undefined;
       const command = cmd('party open')
-        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --json`);
+        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --topic ${topic} --json`);
       command.interactiveOutput.on(data => {
         try {
           const json = JSON.parse(data);

@@ -18,6 +18,7 @@ export interface SpawnParameters {
 }
 
 export interface BotSpawnOptions extends CoreOptions {
+  topic: string,
   dxn?: string;
   ipfsCid?: string;
   localPath?: string;
@@ -25,17 +26,16 @@ export interface BotSpawnOptions extends CoreOptions {
 
 export const botSpawnOptions = (yargs: Argv<CoreOptions>): Argv<BotSpawnOptions> => {
   return yargs
+    .option('topic', { type: 'string' })
+    .demandOption('topic')
     .option('dxn', { type: 'string' })
     .option('ipfsCid', { type: 'string' })
     .option('localPath', { type: 'string' });
 };
 
-export const spawn = ({ stateManager } : SpawnParameters) => async ({ dxn, ipfsCid, localPath, json } : BotSpawnOptions) => {
+export const spawn = ({ stateManager } : SpawnParameters) => async ({ dxn, ipfsCid, localPath, topic, json } : BotSpawnOptions) => {
   assert(stateManager, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
   assert(!!dxn || !!ipfsCid || !!localPath, 'At least one of the following options is required: dxn, ipfsCid, localPath');
-
-  const topic = 'd5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb';
-  assert(topic, 'Topic must be specified in config');
 
   const client = await stateManager.getClient();
   const party = await stateManager.getParty();
