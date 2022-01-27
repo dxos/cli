@@ -69,8 +69,7 @@ export class Command {
           cp.stdin.write(`${interactiveCommand}\n`);
           process.stdout.write(`${interactiveCommand}\n`);
         } else {
-          cp.kill('SIGINT');
-          cp.kill('SIGINT');
+          cp.kill('SIGTERM');
           sentSIGINT = true;
         }
       } else if (this._interactiveMode) {
