@@ -2,9 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Event } from '@dxos/async';
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { join } from 'path';
+
+import { Event } from '@dxos/async';
 
 const EXECUTABLE_PATH = join(__dirname, '../../cli/bin/dx.js');
 
