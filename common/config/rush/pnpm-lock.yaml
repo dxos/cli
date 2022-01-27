@@ -1026,6 +1026,8 @@ importers:
       sodium-universal: ~3.0.4
       ts-node: ^10.2.1
       typescript: ^4.0.5
+      wrtc: ~0.4.7
+      ws: ~8.4.2
     devDependencies:
       '@dxos/async': 2.23.0
       '@dxos/botkit': 2.23.0
@@ -1050,6 +1052,8 @@ importers:
       sodium-universal: 3.0.4
       ts-node: 10.4.0_5d12c2add188ff0e728b4ade3dacd39b
       typescript: 4.5.4
+      wrtc: 0.4.7
+      ws: 8.4.2
 
 packages:
 
@@ -11446,6 +11450,19 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+
+  /ws/8.4.2:
+    resolution: {integrity: sha512-Kbk4Nxyq7/ZWqr/tarI9yIt/+iNNFOjBXEWgTb4ydaNHBNGgvf2QHbS9fdfsndfjFlFwEd4Al+mw83YkaD10ZA==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: true
 
   /xml-name-validator/3.0.0:
     resolution: {integrity: sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==}

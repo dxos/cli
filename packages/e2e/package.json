@@ -39,7 +39,9 @@
     "@dxos/signal": "~2.23.0",
     "@dxos/util": "^2.15.6",
     "sodium-universal": "~3.0.4",
-    "sodium-native": "~3.3.0"
+    "sodium-native": "~3.3.0",
+    "ws": "~8.4.2",
+    "wrtc": "~0.4.7"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
