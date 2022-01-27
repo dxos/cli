@@ -305,7 +305,7 @@ describe('CLI', () => {
     it('runs a bot-factory', async () => {
       await cmd('bot factory install').run();
       await cmd('bot factory setup --topic d5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb').run();
-      await cmd('bot factory start --detached').debug().run();
+      await cmd('bot factory start --detached --log-file bot-factory.log').run();
     });
 
     it('spawns a bot', async () => {
