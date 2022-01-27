@@ -54,7 +54,7 @@ export class Command {
       }
     });
 
-    let sentSIGINT = false;
+    let sentSIGTERM = false;
 
     cp.stdout.on('data', chunk => {
       this._stdout = Buffer.concat([this._stdout, chunk]);
@@ -70,7 +70,7 @@ export class Command {
           process.stdout.write(`${interactiveCommand}\n`);
         } else {
           cp.kill('SIGTERM');
-          sentSIGINT = true;
+          sentSIGTERM = true;
         }
       } else if (this._interactiveMode) {
         this.interactiveOutput.emit(chunk.toString());
@@ -95,7 +95,7 @@ export class Command {
       console.log(`\n\n[E2E] Command exited with exit-code: ${cp.exitCode}, signal: ${cp.signalCode}.\n`);
     }
 
-    if (cp.signalCode !== 'SIGINT' || !sentSIGINT) {
+    if (cp.signalCode !== 'SIGTERM' || !sentSIGTERM) {
       if (cp.exitCode !== 0) {
         throw new Error(`Command "dx ${this._command}" exited with code ${cp.exitCode}`);
       } else if (cp.exitCode === null) {
