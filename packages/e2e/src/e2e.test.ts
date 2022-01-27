@@ -273,7 +273,7 @@ describe('CLI', () => {
   describe('bot', () => {
     let bundledBotPath: string;
     let botCid: string;
-    const topic = 'd5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb'
+    const topic = 'd5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb';
 
     it('query bots', async () => {
       const bots = await cmd('bot query --json').json();
