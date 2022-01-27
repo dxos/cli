@@ -37,12 +37,12 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.19.11",
+    "@dxos/async": "~2.23.0",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/config": "~2.19.11",
-    "@dxos/crypto": "~2.19.11",
-    "@dxos/debug": "~2.19.11",
-    "@dxos/registry-client": "~2.19.11",
+    "@dxos/config": "~2.23.0",
+    "@dxos/crypto": "~2.23.0",
+    "@dxos/debug": "~2.23.0",
+    "@dxos/registry-client": "~2.23.0",
     "@polkadot/api": "4.17.1",
     "@polkadot/keyring": "6.11.1",
     "@polkadot/util-crypto": "^6.11.1",

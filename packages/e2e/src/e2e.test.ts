@@ -9,8 +9,10 @@ import got from 'got';
 import { join, dirname } from 'path';
 
 import { sleep } from '@dxos/async';
+import type { Awaited } from '@dxos/async';
 import { readFile } from '@dxos/cli-core';
 import { createId } from '@dxos/crypto';
+import { createTestBroker } from '@dxos/signal';
 
 import { HTTPServer } from '../mocks/http-server';
 import { cmd } from './cli';
@@ -30,6 +32,7 @@ const BOT_NAME = 'bot.test';
  */
 
 describe('CLI', () => {
+  let broker: Awaited<ReturnType<typeof createTestBroker>>;
   const port = Math.round(Math.random() * 10000 + 5000);
   const kubeServices = [{
     name: 'app-server',
@@ -48,10 +51,12 @@ describe('CLI', () => {
   ]);
 
   before(async () => {
+    broker = await createTestBroker();
     await httpServer.start();
   });
 
   after(async () => {
+    await broker.stop();
     await httpServer.stop();
   });
 
@@ -91,6 +96,15 @@ describe('CLI', () => {
       await cmd('service start --from @dxos/cli-dxns --service dxns --dev --replace-args -- dxns --dev --tmp --rpc-cors all -lsync=warn -lconsole-debug --ws-external --ws-port 9945').run();
 
       await sleep(5000);
+    });
+
+    it.skip('signal', async () => {
+      try {
+        await cmd('signal stop').run();
+      } catch {}
+
+      await cmd('signal install').run();
+      await cmd('signal start --daemon').run();
     });
 
     it.skip('ipfs', async () => {
@@ -259,6 +273,7 @@ describe('CLI', () => {
   describe('bot', () => {
     let bundledBotPath: string;
     let botCid: string;
+    const topic = 'd5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb';
 
     it('query bots', async () => {
       const bots = await cmd('bot query --json').json();
@@ -288,10 +303,28 @@ describe('CLI', () => {
       expect(newBot).toBeDefined();
     });
 
-    it.skip('runs a bot-factory', async () => {
+    it('runs a bot-factory', async () => {
       await cmd('bot factory install').run();
-      await cmd('bot factory setup').run();
-      await cmd('bot factory start').run();
+      await cmd(`bot factory setup --topic ${topic}`).run();
+      await cmd('bot factory start --detached --log-file bot-factory.log').run();
+    });
+
+    it('spawns a bot', async () => {
+      let botId: string | undefined;
+      const command = cmd('party open')
+        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --topic ${topic} --json`);
+      command.interactiveOutput.on(data => {
+        try {
+          const json = JSON.parse(data);
+          botId = json.botId;
+        } catch (e) {}
+      });
+      await command.run();
+      expect(botId).toBeDefined();
+    });
+
+    it('stops a bot-factory', async () => {
+      await cmd('bot factory stop').run();
     });
   });
 
@@ -308,6 +341,12 @@ describe('CLI', () => {
     it('dxns', async () => {
       try {
         await cmd('service stop dxns').run();
+      } catch {}
+    });
+
+    it.skip('signal', async () => {
+      try {
+        await cmd('signal stop').run();
       } catch {}
     });
 

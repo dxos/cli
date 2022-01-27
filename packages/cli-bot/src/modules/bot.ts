@@ -4,21 +4,42 @@
 
 import { Argv } from 'yargs';
 
-import { asyncHandler } from '@dxos/cli-core';
+import { asyncHandler, CoreState } from '@dxos/cli-core';
+import type { StateManager } from '@dxos/cli-data';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
-import { publish, query, register, build, botBuildOptions, botRegisterOptions } from '../handlers/bot';
-import { botFactoryStartOptions, botFactoryInstallOptions, install, setup, start } from '../handlers/bot-factory';
+import {
+  publish,
+  query,
+  register,
+  build,
+  botBuildOptions,
+  botRegisterOptions,
+  botSpawnOptions,
+  spawn
+} from '../handlers/bot';
+import {
+  botFactoryStartOptions,
+  botFactoryInstallOptions,
+  install,
+  setup,
+  start,
+  botFactorySetupOptions,
+  botFactoryStopOptions,
+  stop
+} from '../handlers/bot-factory';
 
 export interface Params {
   config: any,
-  getDXNSClient(): Promise<DXNSClient>
+  getDXNSClient(): Promise<DXNSClient>,
+  stateManager: StateManager,
+  cliState: CoreState['cliState']
 }
 
 /**
  * Bot CLI module.
  */
-export const BotModule = ({ config, getDXNSClient }: Params) => {
+export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
   return {
     command: ['bot'],
     describe: 'Bot CLI.',
@@ -39,7 +60,7 @@ export const BotModule = ({ config, getDXNSClient }: Params) => {
           .command({
             command: ['setup'],
             describe: 'Setup a bot factory.',
-            builder: (yargs: Argv) => yargs,
+            builder: botFactorySetupOptions(config),
             handler: asyncHandler(setup(config))
           })
 
@@ -53,23 +74,23 @@ export const BotModule = ({ config, getDXNSClient }: Params) => {
               await start()(argv);
             })
           })
+
+          .command({
+            command: ['stop'],
+            describe: 'stop a bot factory.',
+            builder: botFactoryStopOptions,
+
+            handler: asyncHandler(stop())
+          })
       })
 
-    // .command({
-    //   command: ['spawn'],
-    //   describe: 'Spawn new bot instance.',
-    //   builder: yargs => yargs
-    //     .option('topic', { alias: 't', type: 'string' })
-    //     .option('env', { type: 'string' })
-    //     .option('ipfsCID', { type: 'string' })
-    //     .option('ipfsEndpoint', { type: 'string' })
-    //     .option('id', { type: 'string' })
-    //     .option('name', { type: 'string' })
-    //     .option('bot-name', { type: 'string' })
-    //     .option('bot-path', { type: 'string' }),
+      .command({
+        command: ['spawn'],
+        describe: 'Spawn new bot instance.',
+        builder: botSpawnOptions,
 
-    //   handler: asyncHandler(spawn({ cliState, stateManager }))
-    // })
+        handler: asyncHandler(spawn({ stateManager, config }))
+      })
 
     // .command({
     //   command: ['invite'],

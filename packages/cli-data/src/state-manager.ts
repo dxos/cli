@@ -12,7 +12,7 @@ import { Client, PartyProxy } from '@dxos/client';
 import { SecretProvider } from '@dxos/credentials';
 import { PublicKey } from '@dxos/crypto';
 import { log } from '@dxos/debug';
-import { InvitationDescriptor, InvitationQueryParameters, Item } from '@dxos/echo-db';
+import { InvitationDescriptor, Item } from '@dxos/echo-db';
 
 const STATE_STORAGE_FILENAME = 'state.json';
 
@@ -92,7 +92,7 @@ export class StateManager {
   /**
    * Join Party.
    */
-  async joinParty (partyKey: string | undefined, invitationParams: InvitationQueryParameters, passcode?: string) {
+  async joinParty (partyKey: string | undefined, invitationDescriptor: InvitationDescriptor | undefined, passcode?: string) {
     await this._assureClient();
     assert(this._client);
     if (partyKey) {
@@ -102,29 +102,27 @@ export class StateManager {
       const party = await this._client.echo.getParty(PublicKey.from(partyKey));
       assert(party);
       await this.setParty(party);
-    } else if (invitationParams) {
-      if (invitationParams) {
-        const secretProvider: SecretProvider = () => {
-          if (passcode) {
-            return Promise.resolve(Buffer.from(passcode));
-          }
-          return new Promise(resolve => {
-            const rl = this._getReadlineInterface();
-            rl.question('Passcode: ', (pin: string) => {
-              resolve(Buffer.from(pin));
-            });
+    } else if (invitationDescriptor) {
+      const secretProvider: SecretProvider = () => {
+        if (passcode) {
+          return Promise.resolve(Buffer.from(passcode));
+        }
+        return new Promise(resolve => {
+          const rl = this._getReadlineInterface();
+          rl.question('Passcode: ', (pin: string) => {
+            resolve(Buffer.from(pin));
           });
-        };
+        });
+      };
 
-        const secret = await secretProvider();
+      const secret = await secretProvider();
 
-        const invitation = await this._client.echo.acceptInvitation(InvitationDescriptor.fromQueryParameters(invitationParams));
-        invitation.authenticate(secret);
-        const party = await invitation.wait();
-        await party.open();
+      const invitation = await this._client.echo.acceptInvitation(invitationDescriptor);
+      invitation.authenticate(secret);
+      const party = await invitation.wait();
+      await party.open();
 
-        await this.setParty(party);
-      }
+      await this.setParty(party);
     } else {
       throw new Error('Either party key or invitation should be provided.');
     }
@@ -150,9 +148,9 @@ export class StateManager {
     await this._assureClient();
     assert(this._client);
 
-    const invitation = await this._client.echo.createInvitation(party.key);
+    const invitation = await party.createInvitation();
 
-    return { invitation: invitation.descriptor.toQueryParameters(), passcode: invitation.secret.toString() };
+    return invitation;
   }
 
   async destroy () {

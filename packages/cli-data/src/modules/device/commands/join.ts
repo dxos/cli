@@ -10,7 +10,6 @@ import { InvitationDescriptor } from '@dxos/echo-db';
 
 import { CLI_DEFAULT_PERSISTENT, resetStorageForProfile } from '../../../config';
 import { CliDataState } from '../../../init';
-import { decodeInvitation } from '../../../utils';
 import { DeviceOptions } from '../device';
 
 export interface DeviceJoinOptions extends DeviceOptions {
@@ -42,11 +41,12 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
     await stateManager.initializeClient({ initProfile: false });
     const client = await stateManager.getClient();
 
-    const invitationDescriptor = InvitationDescriptor.fromQueryParameters(decodeInvitation(code));
+    const invitationDescriptor = InvitationDescriptor.decode(code);
 
-    const finishInvitation = await client.joinHaloInvitation(invitationDescriptor);
+    const invitation = await client.halo.acceptInvitation(invitationDescriptor);
     const secret = await secretProvider();
+    invitation.authenticate(secret);
 
-    await finishInvitation(secret.toString());
+    await invitation.wait();
   })
 });

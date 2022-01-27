@@ -6,9 +6,9 @@ import assert from 'assert';
 import { Argv, CommandModule, Arguments } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
+import { InvitationDescriptor } from '@dxos/echo-db';
 
 import { StateManager } from '../../../state-manager';
-import { decodeInvitation } from '../../../utils';
 import { PartyOptions } from '../party';
 
 export interface PartyJoinOptions extends PartyOptions {
@@ -34,11 +34,13 @@ export const joinCommand = (stateManager: StateManager): CommandModule<PartyOpti
 
     assert(partyKey || invitation || invitationUrl, 'Invalid party.');
 
-    let invite = null;
+    console.log('invitation', typeof invitation, { invitation });
+
+    let invite;
     if (invitation) {
-      invite = decodeInvitation(invitation);
+      invite = InvitationDescriptor.decode(invitation);
     } else if (invitationUrl) {
-      invite = decodeInvitation(invitationUrl.split('/').pop()!);
+      invite = InvitationDescriptor.decode(invitationUrl.split('/').pop()!);
     }
 
     await stateManager.joinParty(partyKey, invite, passcode);
