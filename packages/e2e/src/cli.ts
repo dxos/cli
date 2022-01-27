@@ -2,6 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
+import { Event } from '@dxos/async';
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { join } from 'path';
 
@@ -15,8 +16,11 @@ export function cmd (command: string, cwd?: string): Command {
 }
 
 export class Command {
+  public readonly interactiveOutput = new Event<string>();
+
   private _debug = GLOBAL_DEBUG;
-  private readonly _interactiveCommands: string[] = []
+  private readonly _interactiveCommands: string[] = [];
+  private _interactiveMode = false;
 
   private _stdout = Buffer.alloc(0)
   private _stderr = Buffer.alloc(0)
@@ -58,6 +62,7 @@ export class Command {
         process.stdout.write(chunk);
       }
       if (chunk.toString() === '[dx]> ') {
+        this._interactiveMode = true;
         if (this._interactiveCommands.length > 0) {
           const interactiveCommand = this._interactiveCommands.shift();
           cp.stdin.write(`${interactiveCommand}\n`);
@@ -66,6 +71,8 @@ export class Command {
           cp.kill('SIGINT');
           sentSIGINT = true;
         }
+      } else if (this._interactiveMode) {
+        this.interactiveOutput.emit(chunk.toString());
       }
     });
 

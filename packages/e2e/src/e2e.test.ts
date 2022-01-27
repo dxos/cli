@@ -309,9 +309,17 @@ describe('CLI', () => {
     });
 
     it('spawns a bot', async () => {
-      await cmd('party open')
-        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME}`)
-        .run();
+      let botId: string | undefined;
+      const command = cmd('party open')
+        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --json`);
+      command.interactiveOutput.on(data => {
+        try {
+          const json = JSON.parse(data);
+          botId = json.botId;
+        } catch (e) {}
+      });
+      await command.run();
+      expect(botId).toBeDefined();
     });
 
     it('stops a bot-factory', async () => {
