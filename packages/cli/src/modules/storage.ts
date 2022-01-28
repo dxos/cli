@@ -1,27 +1,27 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2022 DXOS.org
 //
 
 import assert from 'assert';
 import { Arguments, Argv } from 'yargs';
 
-import { asyncHandler, CoreOptions } from '@dxos/cli-core';
+import { asyncHandler, CoreOptions, CoreState, CLI_DEFAULT_PERSISTENT, resetStorage, resetStorageForClientProfile } from '@dxos/cli-core';
 
-import { CLI_DEFAULT_PERSISTENT, resetStorage, resetStorageForProfile } from '../config';
-import { CliDataState } from '../init';
 export interface StorageOptions extends CoreOptions {
   all?: boolean,
+  name?: string
 }
 
 const storageOptions = (yargs: Argv<CoreOptions>): Argv<StorageOptions> => {
   return yargs
+    .option('name', { type: 'string' })
     .option('all', { type: 'boolean', default: false });
 };
 
 /**
  * Storage CLI module.
  */
-export const StorageModule = ({ config, cliState, profilePath }: CliDataState) => ({
+export const StorageModule = ({ config, cliState }: CoreState) => ({
   command: ['storage'],
   describe: 'Storage management.',
 
@@ -33,7 +33,7 @@ export const StorageModule = ({ config, cliState, profilePath }: CliDataState) =
       describe: 'Reset storage for all or current profiles.',
       builder: yargs => storageOptions(yargs),
       handler: asyncHandler(async (argv: Arguments<StorageOptions>) => {
-        const { all } = argv;
+        const { name, all } = argv;
         assert(config, 'Missing config.');
 
         const { interactive } = cliState;
@@ -49,7 +49,7 @@ export const StorageModule = ({ config, cliState, profilePath }: CliDataState) =
           if (!persistent) {
             throw new Error('Persistent storage was not used for current profile.');
           }
-          resetStorageForProfile(config.get('runtime.client.storage.path'), profilePath!);
+          resetStorageForClientProfile(config.get('runtime.client.storage.path'), name);
         }
       })
     })

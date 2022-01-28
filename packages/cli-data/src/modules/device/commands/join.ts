@@ -5,10 +5,9 @@
 import assert from 'assert';
 import { Arguments, Argv, CommandModule } from 'yargs';
 
-import { asyncHandler } from '@dxos/cli-core';
+import { CLI_DEFAULT_PERSISTENT, asyncHandler, resetStorageForClientProfile } from '@dxos/cli-core';
 import { InvitationDescriptor } from '@dxos/echo-db';
 
-import { CLI_DEFAULT_PERSISTENT, resetStorageForProfile } from '../../../config';
 import { CliDataState } from '../../../init';
 import { DeviceOptions } from '../device';
 
@@ -35,9 +34,10 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
     if (config?.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT)) {
       assert(config, 'Missing config.');
       assert(profilePath, 'Missing profile path.');
-      resetStorageForProfile(config.get('runtime.client.storage.path'), profilePath);
+      resetStorageForClientProfile(config.get('runtime.client.storage.path'));
     }
 
+    // TODO - create profile folder & save as default?
     await stateManager.initializeClient({ initProfile: false });
     const client = await stateManager.getClient();
 

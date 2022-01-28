@@ -1,14 +1,14 @@
 //
-// Copyright 2021 DXOS.org
+// Copyright 2022 DXOS.org
 //
 
 import { Argv } from 'yargs';
 
-import { asyncHandler, createClientProfile } from '@dxos/cli-core';
+import { CLI_DEFAULT_PERSISTENT, CoreState, asyncHandler, createClient } from '@dxos/cli-core';
 
 // import { log } from '@dxos/debug';
 
-export const HaloModule = () => ({
+export const HaloModule = ({ config }: CoreState) => ({
   command: ['halo'],
   describe: 'HALO operations.',
   builder: (yargs: Argv) => yargs
@@ -17,8 +17,12 @@ export const HaloModule = () => ({
       command: ['init'],
       describe: 'Init halo profile.',
 
-      handler: asyncHandler(async () => {
-        await createClientProfile();
+      builder: yargs => yargs
+        .option('name', { type: 'string', describe: 'Profile name' }),
+
+      handler: asyncHandler(async (argv: any) => {
+        const { name } = argv;
+        await createClient(config!, [], { persistent: config!.get('runtime.client.storage.persistent') || CLI_DEFAULT_PERSISTENT, name, initProfile: true });
       })
     })
 });

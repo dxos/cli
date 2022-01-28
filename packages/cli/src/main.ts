@@ -19,6 +19,7 @@ import { UpgradeModule, UninstallModule } from './modules/installation';
 import { PluggableModule } from './modules/pluggable';
 import { ProfileModule } from './modules/profile';
 import { ServicesModule } from './modules/services';
+import { StorageModule } from './modules/storage';
 
 const KNOWN_EXTENSIONS = readFileSync(path.join(__dirname, '../known-extensions.yml')).toString();
 
@@ -90,6 +91,7 @@ const modules = [
   DevToolsModule,
   CertModule,
   ServicesModule,
+  StorageModule,
   HaloModule,
   UpgradeModule,
   UninstallModule,

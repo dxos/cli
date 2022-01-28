@@ -4,4 +4,3 @@
 
 export * from './device';
 export * from './party';
-export * from './storage';

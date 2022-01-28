@@ -25,6 +25,7 @@ const unlock = promisify(lockFile.unlock);
 
 export interface GetClientOpts {
   initProfile?: boolean,
+  name?: string
 }
 
 export interface StateManagerConstructorOpts {

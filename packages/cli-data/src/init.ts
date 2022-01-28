@@ -4,9 +4,8 @@
 
 import assert from 'assert';
 
-import { CoreState, createClient } from '@dxos/cli-core';
+import { CLI_DEFAULT_PERSISTENT, CoreState, createClient, getCurrentProfilePath } from '@dxos/cli-core';
 
-import { CLI_DEFAULT_PERSISTENT, getProfileAndStorage } from './config';
 import { StateManager } from './state-manager';
 
 export interface CliDataState extends CoreState {
@@ -22,12 +21,14 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
     return state as CliDataState; // Do not initialize cli-data if we don't have profile.
   }
 
-  const { storagePath, profileName } = getProfileAndStorage(config.get('runtime.client.storage.path'), profilePath);
+  assert(getReadlineInterface, 'Missing getReadlineinterface.');
+
+  // get current profile
+  const storagePath = getCurrentProfilePath();
   const persistent = config.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT)!;
 
-  assert(getReadlineInterface, 'Missing getReadlineinterface.');
   stateManager = new StateManager({
-    getClient: (opts) => createClient(config, models ?? [], { persistent, storagePath, profileName, initProfile: opts?.initProfile ?? true }),
+    getClient: (opts) => createClient(config, models ?? [], { persistent, initProfile: opts?.initProfile ?? true, name: opts?.name }),
     getReadlineInterface,
     storagePath: persistent ? storagePath : undefined
   });

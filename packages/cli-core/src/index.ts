@@ -16,6 +16,7 @@ export * from './util/yaml';
 export * from './util/fees';
 export * from './util/messages';
 export * from './util/npm';
+export * from './util/profile';
 export * from './util/template';
 export * from './util/OTP';
 export { CoreState };
