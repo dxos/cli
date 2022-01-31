@@ -718,41 +718,6 @@ importers:
       typescript: 4.5.5
       uuid: 3.4.0
 
-  ../../packages/cli-halo:
-    specifiers:
-      '@dxos/cli-core': workspace:*
-      '@dxos/crypto': ~2.23.0
-      '@dxos/debug': ~2.23.0
-      '@dxos/eslint-plugin': ~1.0.21
-      '@dxos/object-model': ~2.23.0
-      '@types/jest': ~27.0.3
-      '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
-      assert: ^2.0.0
-      eslint: ^7.13.0
-      jest: ^27.4.4
-      ts-node: ^10.2.1
-      typescript: ^4.0.5
-      uuid: ^3.3.3
-      yargs: ^16.2.0
-    dependencies:
-      '@dxos/cli-core': link:../cli-core
-      '@dxos/crypto': 2.23.0
-      '@dxos/debug': 2.23.0
-      '@dxos/object-model': 2.23.0
-      assert: 2.0.0
-      yargs: 16.2.0
-    devDependencies:
-      '@dxos/eslint-plugin': 1.0.21_eslint@7.32.0+typescript@4.5.5
-      '@types/jest': 27.0.3
-      '@types/node': 16.11.21
-      '@types/yargs': 16.0.4
-      eslint: 7.32.0
-      jest: 27.4.7_ts-node@10.4.0
-      ts-node: 10.4.0_06de4b00c69b73d094e2c5b522a6ad57
-      typescript: 4.5.5
-      uuid: 3.4.0
-
   ../../packages/cli-ipfs:
     specifiers:
       '@dxos/async': ~2.23.0

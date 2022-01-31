@@ -38,7 +38,7 @@ export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataS
     }
 
     // TODO - create profile folder & save as default?
-    await stateManager.initializeClient({ initProfile: false });
+    await stateManager.initializeClient({});
     const client = await stateManager.getClient();
 
     const invitationDescriptor = InvitationDescriptor.decode(code);

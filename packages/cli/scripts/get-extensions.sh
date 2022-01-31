@@ -7,15 +7,18 @@ KNOWN_EXTENSIONS_FILE="./known-extensions.yml"
 
 EXTENSIONS="["
 
+MAIN_CWD="$(pwd)"
+
 for extensiondir in `find ../ -name 'cli-*' -type d | grep -v node_modules | sort`; do
   pushd $extensiondir
 
   EXT_FILE_PATH=`find . -name $EXTENSION_FILE -not -path "./dist/*"`
   if [ -f "$EXT_FILE_PATH" ]; then
+    # $MAIN_CWD/node_modules/.bin/js-yaml $EXTENSION_FILE
     if [ "$EXTENSIONS" != "[" ]; then
       EXTENSIONS+=","
     fi
-    EXTENSIONS+=` yarn --silent yaml2json "$EXT_FILE_PATH"`
+    EXTENSIONS+=` $MAIN_CWD/node_modules/.bin/js-yaml $EXTENSION_FILE`
   fi
 
   popd

@@ -22,7 +22,8 @@ export const HaloModule = ({ config }: CoreState) => ({
 
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
-        await createClient(config!, [], { persistent: config!.get('runtime.client.storage.persistent') || CLI_DEFAULT_PERSISTENT, name, initProfile: true });
+        const client = await createClient(config!, [], { persistent: config!.get('runtime.client.storage.persistent') || CLI_DEFAULT_PERSISTENT, name, initProfile: true });
+        await client.destroy();
       })
     })
 });

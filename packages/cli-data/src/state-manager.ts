@@ -73,7 +73,7 @@ export class StateManager {
     if (this._client) {
       return this._client;
     }
-    return await this.initializeClient({ initProfile: true });
+    return await this.initializeClient({});
   }
 
   async initializeClient (opts: GetClientOpts) {
