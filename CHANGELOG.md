@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.12.5](https://www.github.com/dxos/cli/compare/v2.12.4...v2.12.5) (2022-01-31)
+
+
+### Bug Fixes
+
+* Change SIGTERM to SIGKILL ([#398](https://www.github.com/dxos/cli/issues/398)) ([a1c86d4](https://www.github.com/dxos/cli/commit/a1c86d447458fcf014f546c5c3a72b62fbd3d014))
+
 ### [2.12.4](https://www.github.com/dxos/cli/compare/v2.12.3...v2.12.4) (2022-01-24)
 
 
