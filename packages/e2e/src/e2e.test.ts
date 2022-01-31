@@ -68,7 +68,6 @@ describe('CLI', () => {
     it('init profile', async () => {
       try {
         await fs.rm(join(process.env.HOME!, '.dx/profile', `${PROFILE_NAME}.yml`));
-        await fs.rm(join(process.env.HOME!, '.dx/storage', PROFILE_NAME), { recursive: true, force: true });
       } catch (error: unknown) {
         console.log(error);
       }
@@ -82,6 +81,18 @@ describe('CLI', () => {
 
     it('config', async () => {
       await cmd('profile config').json();
+    });
+  });
+
+  describe('halo', () => {
+    it('init halo profile', async () => {
+      try {
+        await fs.rm(join(process.env.HOME!, '.dx/storage', PROFILE_NAME), { recursive: true, force: true });
+      } catch (error: unknown) {
+        console.log(error);
+      }
+
+      await cmd(`halo init --name ${PROFILE_NAME}`).run();
     });
   });
 
