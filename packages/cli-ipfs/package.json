@@ -57,7 +57,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.21",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-node": "^10.2.1",

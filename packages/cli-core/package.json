@@ -70,7 +70,7 @@
     "@dxos/async": "~2.23.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.21",
     "@types/dockerode": "^3.2.3",
     "@types/download": "^6.2.4",
     "@types/fs-extra": "^9.0.13",
