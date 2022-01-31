@@ -56,6 +56,9 @@ export const saveCurrentProfilePath = (currentProfilePath: string) => {
 };
 
 export const listClientProfiles = () => {
-  // const storagePath = path.join(os.homedir(), STORAGE_ROOT);
-  // TODO(egorgripasov): List all folders in storagePath
+  const storagePath = path.join(os.homedir(), STORAGE_ROOT);
+  const profiles = fs.readdirSync(storagePath, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+  return profiles;
 };
