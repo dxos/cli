@@ -45,7 +45,7 @@
   "devDependencies": {
     "@dxos/cli-data": "workspace:*",
     "@dxos/echo-db": "~2.23.0",
-    "@dxos/eslint-plugin": "~1.0.20",
+    "@dxos/eslint-plugin": "~1.0.21",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-node": "^10.2.1",
