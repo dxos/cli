@@ -36,9 +36,6 @@
         command: "party"
         describe: "Party management."
       - 
-        command: "storage"
-        describe: "Storage management."
-      - 
         command: "device"
         describe: "Device management."
     initRequired: true
@@ -48,6 +45,7 @@
     describe: "DXNS extension."
     command: 
       - "dxns"
+      - "ns"
     initRequired: true
     destroyRequired: true
   - 
@@ -55,13 +53,6 @@
     describe: "ECHO extension."
     command: 
       - "echo"
-    initRequired: false
-    destroyRequired: false
-  - 
-    moduleName: "@dxos/cli-halo"
-    describe: "HALO extension."
-    command: 
-      - "halo"
     initRequired: false
     destroyRequired: false
   - 

@@ -19,6 +19,7 @@ const getReadlineInterface = () => {
 };
 
 const DEFAULT_ARGS = { $0: '', _: [], return: true };
+const NEW_PROFILE_NAME = 'test';
 
 class PinHelper {
   _pin: string | undefined
@@ -105,7 +106,7 @@ describe('cli-data: Device', () => {
     const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
-      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code });
+      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code, name: NEW_PROFILE_NAME });
     };
     await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 

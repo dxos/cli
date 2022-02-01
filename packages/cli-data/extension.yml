@@ -9,8 +9,5 @@ command:
     command: "party"
     describe: "Party management."
   - 
-    command: "storage"
-    describe: "Storage management."
-  - 
     command: "device"
     describe: "Device management."

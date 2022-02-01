@@ -1,6 +1,0 @@
-name: dxos/cli-halo
-version: 0.0.1
-displayName: cli-halo
-description: HALO extension.
-command:
-  - halo

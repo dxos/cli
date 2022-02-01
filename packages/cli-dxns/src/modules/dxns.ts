@@ -29,7 +29,7 @@ export interface Params {
 export const DXNSModule = (params: Params) => {
   const { getDXNSClient, config } = params;
   return {
-    command: ['dxns'],
+    command: ['dxns', 'ns'],
     describe: 'DXNS operations.',
     builder: (yargs: Argv) => yargs
       .command({
