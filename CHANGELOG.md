@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.13.0](https://www.github.com/dxos/cli/compare/v2.12.4...v2.13.0) (2022-02-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* separate halo profile from config profile. (#402)
+
+### Features
+
+* separate halo profile from config profile. ([#402](https://www.github.com/dxos/cli/issues/402)) ([d0bfbfd](https://www.github.com/dxos/cli/commit/d0bfbfd33ddde82c32cb8c9819d0d31145ff9b18))
+
+
+### Bug Fixes
+
+* Change SIGTERM to SIGKILL ([#398](https://www.github.com/dxos/cli/issues/398)) ([a1c86d4](https://www.github.com/dxos/cli/commit/a1c86d447458fcf014f546c5c3a72b62fbd3d014))
+
 ### [2.12.4](https://www.github.com/dxos/cli/compare/v2.12.3...v2.12.4) (2022-01-24)
 
 
