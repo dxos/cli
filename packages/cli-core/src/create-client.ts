@@ -25,13 +25,13 @@ export const createClient = async (
   const { persistent, name, initProfile } = options;
 
   let storagePath;
+  const currentStoragePath = getCurrentProfilePath();
   if (name) {
-    storagePath = getClientProfilePath(config.get('runtime.client.storage.path'), name);
+    storagePath = getClientProfilePath(undefined, name);
     saveCurrentProfilePath(storagePath);
   }
-
   if (!storagePath) {
-    storagePath = getCurrentProfilePath();
+    storagePath = currentStoragePath ?? getClientProfilePath(config.get('runtime.client.storage.path'));
   }
 
   assert(storagePath, 'No active HALO profile found. Run "dx halo init" to init a new profile.');

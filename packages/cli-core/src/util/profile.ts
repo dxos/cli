@@ -18,7 +18,7 @@ const ensureProfileStore = () => {
 
 export const CLI_DEFAULT_PERSISTENT = true;
 
-export const getClientProfilePath = (storagePath: string | undefined, name: string) => {
+export const getClientProfilePath = (storagePath: string | undefined, name?: string) => {
   if (name) {
     storagePath = path.join(os.homedir(), STORAGE_ROOT, name);
   }
