@@ -45,6 +45,7 @@
     describe: "DXNS extension."
     command: 
       - "dxns"
+      - "ns"
     initRequired: true
     destroyRequired: true
   - 
