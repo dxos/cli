@@ -35,7 +35,7 @@ export const HaloModule = ({ config }: CoreState) => ({
 
       handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
-        print(listClientProfiles(), { json })
+        print(listClientProfiles(), { json });
       })
     })
 });
