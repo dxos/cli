@@ -29,15 +29,20 @@ export const getClientProfilePath = (storagePath: string | undefined, name?: str
 };
 
 export const resetStorageForClientProfile = (storagePath: string | undefined, name?: string) => {
+  const currentStoragePath = getCurrentProfilePath();
   if (name) {
     storagePath = path.join(os.homedir(), STORAGE_ROOT, name);
   }
   if (!storagePath) {
-    storagePath = getCurrentProfilePath();
+    storagePath = currentStoragePath;
   }
 
   assert(storagePath, 'Please provide storage path.');
   fs.emptyDirSync(storagePath);
+
+  if (storagePath === currentStoragePath) {
+    saveCurrentProfilePath('');
+  }
 };
 
 export const resetStorage = () => {
