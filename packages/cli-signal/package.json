@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.23.0",
+    "@dxos/debug": "~2.24.0",
     "lodash-clean": "^2.2.1",
     "yargs": "^16.2.0"
   },

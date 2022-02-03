@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.23.0",
+    "@dxos/debug": "~2.24.0",
     "assert": "^2.0.0"
   },
   "devDependencies": {
