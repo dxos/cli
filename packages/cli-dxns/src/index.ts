@@ -5,17 +5,16 @@
 import { ApiPromise } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
 import { KeyringPair } from '@polkadot/keyring/types';
+import debug from 'debug';
 import { readFileSync } from 'fs';
 import path from 'path';
-import debug from 'debug';
-
-const log = debug('dxos:cli-dxns');
 
 import { createCLI } from '@dxos/cli-core';
 import { createApiPromise, IAuctionsClient, IRegistryClient, ApiTransactionHandler, createKeyring, RegistryClient, AuctionsClient, SignTxFunction, DxosClientSigner } from '@dxos/registry-client';
 
 import { DXNSModule } from './modules/dxns';
-import { PublicKey } from '@dxos/crypto';
+
+const log = debug('dxos:cli-dxns');
 
 export interface DXNSClient {
   apiRaw: ApiPromise,
@@ -47,18 +46,18 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
     const apiServerUri = config.get('runtime.services.dxns.server');
     const apiPromise = await createApiPromise(apiServerUri);
 
-    let signFn: SignTxFunction
+    let signFn: SignTxFunction;
     if (keypair) {
-      log('Deprecated: Transactions will be signed with account from accountUri in your CLI profile.')
+      log('Deprecated: Transactions will be signed with account from accountUri in your CLI profile.');
       signFn = tx => tx.signAsync(keypair);
     } else if (account) {
-      log('Transactions will be signed using DXNS key stored in Halo.')
-      log('Using account: ', account)
+      log('Transactions will be signed using DXNS key stored in Halo.');
+      log('Using account: ', account);
       const dxosClient = await stateManager.getClient();
       const dxosClientSigner = new DxosClientSigner(dxosClient, account);
-      signFn = tx => tx.signAsync(account, {signer: dxosClientSigner});
+      signFn = tx => tx.signAsync(account, { signer: dxosClientSigner });
     } else {
-      log('No DXNS keys to sign transactions with - only read transactions available.')
+      log('No DXNS keys to sign transactions with - only read transactions available.');
       signFn = tx => tx;
     }
 
@@ -80,7 +79,7 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
 const initDXNSCliState = async (state: any) => {
   const { config, profilePath, profileExists, stateManager } = state;
   if (!stateManager) {
-    throw new Error('Missing StateManager. Is cli-data extension installed?')
+    throw new Error('Missing StateManager. Is cli-data extension installed?');
   }
 
   if (profilePath && profileExists) {

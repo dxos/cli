@@ -4,15 +4,14 @@
 
 import { Keyring } from '@polkadot/keyring';
 import { cryptoWaitReady, decodeAddress, mnemonicGenerate } from '@polkadot/util-crypto';
+import assert from 'assert';
 
 import { sleep } from '@dxos/async';
 import { print } from '@dxos/cli-core';
-import { PublicKey } from '@dxos/crypto';
 import { KeyType } from '@dxos/credentials';
-
+import { PublicKey } from '@dxos/crypto';
 
 import { Params } from './common';
-import assert from 'assert';
 
 export const generateAccount = () => async (argv: any) => {
   const { json } = argv;
@@ -38,10 +37,10 @@ export const listAccounts = (params: Params) => async (argv: any) => {
   await sleep(2000);
 };
 
-export const recoverAccount = ({stateManager}: Params) => async (argv: any) => {
+export const recoverAccount = ({ stateManager }: Params) => async (argv: any) => {
   const { mnemonic, json } = argv;
   assert(mnemonic, 'Mnemonic is required');
-  const uri = mnemonic.join('')
+  const uri = mnemonic.join('');
 
   await cryptoWaitReady();
   const keyring = new Keyring({ type: 'sr25519' });
@@ -56,4 +55,4 @@ export const recoverAccount = ({stateManager}: Params) => async (argv: any) => {
   });
 
   print({ account: keypair.address }, { json });
-}
+};

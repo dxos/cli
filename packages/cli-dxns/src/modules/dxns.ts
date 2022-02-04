@@ -5,8 +5,9 @@
 import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
-
 // TODO(marcin): simplify with index.ts
+import type { CliDataState } from '@dxos/cli-data';
+
 import { generateAccount, listAccounts, recoverAccount } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
@@ -20,7 +21,6 @@ import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { listTypes, getType, addType } from '../handlers/types';
 import { DXNSClient } from '../index';
-import type { CliDataState } from '@dxos/cli-data';
 
 export interface Params extends CliDataState {
   config: any,

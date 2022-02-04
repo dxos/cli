@@ -3,8 +3,8 @@
 //
 
 import { print as cliPrint } from '@dxos/cli-core';
-import { RecordKind, RegistryRecord, Resource, CID } from '@dxos/registry-client';
 import type { CliDataState } from '@dxos/cli-data';
+import { RecordKind, RegistryRecord, Resource, CID } from '@dxos/registry-client';
 
 import { DXNSClient } from '../index';
 
