@@ -33,7 +33,7 @@ describe('cli-data: Party', () => {
 
   beforeEach(async () => {
     [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
-      const client = new Client({ services: { signal: { server: 'ws://localhost:4001' } } });
+      const client = new Client({ version: 1, runtime: {services: { signal: { server: 'ws://localhost:4001' } } }});
       await client.initialize();
       await client.halo.createProfile({ ...createKeyPair(), username });
       return client;

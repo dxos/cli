@@ -273,7 +273,7 @@ export const DXNSModule = (params: Params) => {
             command: ['recover'],
             describe: 'Recover an existing DXNS account.',
             builder: yargs => yargs
-              .option('mnemonic', { type: 'string' }),
+              .option('mnemonic', { type: 'string', array: false }),
             handler: asyncHandler(recoverAccount(params))
           })
       })

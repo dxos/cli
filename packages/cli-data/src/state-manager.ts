@@ -8,7 +8,7 @@ import lockFile from 'lockfile';
 import path from 'path';
 import { promisify } from 'util';
 
-import { Client, PartyProxy } from '@dxos/client';
+import { Client, Party } from '@dxos/client';
 import { SecretProvider } from '@dxos/credentials';
 import { PublicKey } from '@dxos/crypto';
 import { log } from '@dxos/debug';
@@ -39,7 +39,7 @@ export interface StateManagerConstructorOpts {
  * Provides interface for authentication / invitation flow within a party.
  */
 export class StateManager {
-  private _party: PartyProxy | null = null;
+  private _party: Party | null = null;
   private _lockPath: string | undefined
   private _getReadlineInterface: StateManagerConstructorOpts['getReadlineInterface'];
   private _getClient: StateManagerConstructorOpts['getClient'];
@@ -145,7 +145,7 @@ export class StateManager {
   /**
    * Create Invitation.
    */
-  async createInvitation (party: PartyProxy) {
+  async createInvitation (party: Party) {
     await this._assureClient();
     assert(this._client);
 
@@ -200,7 +200,7 @@ export class StateManager {
     });
   }
 
-  async setParty (party: PartyProxy) {
+  async setParty (party: Party) {
     this._party = party;
 
     if (this._statePath) {
