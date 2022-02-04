@@ -37,7 +37,7 @@ export const createClient = async (
   assert(storagePath, 'No active HALO profile found. Run "dx halo init" to init a new profile.');
 
   // TODO(egorgripasov): Cleanup (config.values.runtime -> config.values) - Adapter to config v0.
-  const clientConf = new Config<ConfigV1Object>(config.values.runtime, {
+  const clientConf = new Config<ConfigV1Object>(config.values, {
     version: 1,
     runtime: {
       client: {
