@@ -3,10 +3,13 @@
 //
 
 import { Keyring } from '@polkadot/keyring';
-import { cryptoWaitReady, mnemonicGenerate } from '@polkadot/util-crypto';
+import { cryptoWaitReady, decodeAddress, mnemonicGenerate } from '@polkadot/util-crypto';
 
 import { sleep } from '@dxos/async';
 import { print } from '@dxos/cli-core';
+import { PublicKey } from '@dxos/crypto';
+import { KeyType } from '@dxos/credentials';
+
 
 import { Params } from './common';
 import assert from 'assert';
@@ -35,12 +38,22 @@ export const listAccounts = (params: Params) => async (argv: any) => {
   await sleep(2000);
 };
 
-export const recoverAccount = ({getDXNSClient, stateManager}: Params) => async (argv: any) => {
-  const { mnemonic } = argv;
+export const recoverAccount = ({stateManager}: Params) => async (argv: any) => {
+  const { mnemonic, json } = argv;
   assert(mnemonic, 'Mnemonic is required');
+  const uri = mnemonic.join('')
 
-  const dxnsClient = await getDXNSClient();
+  await cryptoWaitReady();
+  const keyring = new Keyring({ type: 'sr25519' });
+  const keypair = keyring.addFromUri(uri);
+
   const dxosClient = await stateManager.getClient();
-  // dxosClient.halo
-  // await dxosClient.halo.
+
+  await dxosClient.halo.addKeyRecord({
+    publicKey: PublicKey.from(decodeAddress(keypair.address)),
+    secretKey: Buffer.from(uri),
+    type: KeyType.DXNS
+  });
+
+  print({ account: keypair.address }, { json });
 }
