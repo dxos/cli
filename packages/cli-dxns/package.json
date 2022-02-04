@@ -82,7 +82,8 @@
     "@types/pify": "~5.0.1",
     "@types/get-folder-size": "^3.0.1",
     "@types/cli-progress": "^3.9.2",
-    "@types/jest": "~27.0.3"
+    "@types/jest": "~27.0.3",
+    "@dxos/cli-data": "workspace:*"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

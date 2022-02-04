@@ -4,12 +4,13 @@
 
 import { print as cliPrint } from '@dxos/cli-core';
 import { RecordKind, RegistryRecord, Resource, CID } from '@dxos/registry-client';
+import type { CliDataState } from '@dxos/cli-data';
 
 import { DXNSClient } from '../index';
 
-export interface Params {
+export interface Params extends CliDataState {
   config?: any,
-  getDXNSClient(): Promise<DXNSClient>
+  getDXNSClient(): Promise<DXNSClient>,
 }
 
 export const displayHash = (data: any) => {

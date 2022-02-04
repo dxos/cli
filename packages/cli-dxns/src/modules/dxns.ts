@@ -7,7 +7,7 @@ import { Argv } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 
 // TODO(marcin): simplify with index.ts
-import { generateAccount, listAccounts } from '../handlers/account';
+import { generateAccount, listAccounts, recoverAccount } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
 import { getBlocks } from '../handlers/block';
@@ -20,8 +20,9 @@ import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { listTypes, getType, addType } from '../handlers/types';
 import { DXNSClient } from '../index';
+import type { CliDataState } from '@dxos/cli-data';
 
-export interface Params {
+export interface Params extends CliDataState {
   config: any,
   getDXNSClient(): Promise<DXNSClient>
 }
@@ -40,14 +41,14 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['list'],
             describe: 'List all known types in the Registry.',
-            handler: asyncHandler(listTypes({ getDXNSClient }))
+            handler: asyncHandler(listTypes(params))
           })
 
           .command({
             command: ['get <cid | dxn>'],
             describe: 'Get type details by its CID or DXN.',
 
-            handler: asyncHandler(getType({ getDXNSClient }))
+            handler: asyncHandler(getType(params))
           })
 
           .command({
@@ -61,7 +62,7 @@ export const DXNSModule = (params: Params) => {
               .option('version', { describe: 'Version of the type', type: 'string' })
               .option('description', { describe: 'Description of the type', type: 'string' }),
 
-            handler: asyncHandler(addType({ getDXNSClient, config }))
+            handler: asyncHandler(addType(params))
           })
       })
 
@@ -73,14 +74,14 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['list'],
             describe: 'List all registered records.',
-            handler: asyncHandler(listRecords({ getDXNSClient }))
+            handler: asyncHandler(listRecords(params))
           })
 
           .command({
             command: ['get <cid | dxn>'],
             describe: 'Get a record by its CID or DXN.',
 
-            handler: asyncHandler(getRecord({ getDXNSClient }))
+            handler: asyncHandler(getRecord(params))
           })
 
           .command({
@@ -93,7 +94,7 @@ export const DXNSModule = (params: Params) => {
               .option('name', { describe: 'Register a resource name for this record.', type: 'string' })
               .option('domain', { describe: 'Specify a domain key for the record.', type: 'string' }),
 
-            handler: asyncHandler(addDataRecord({ getDXNSClient }))
+            handler: asyncHandler(addDataRecord(params))
           })
       })
 
@@ -105,19 +106,19 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['list'],
             describe: 'List all known resources in the Registry.',
-            handler: asyncHandler(listResources({ getDXNSClient }))
+            handler: asyncHandler(listResources(params))
           })
 
           .command({
             command: ['get <dxn>'],
             describe: 'Get a resource by its DXN.',
-            handler: asyncHandler(getResource({ getDXNSClient }))
+            handler: asyncHandler(getResource(params))
           })
 
           .command({
             command: ['delete <dxn>'],
             describe: 'Delete a resource by its DXN.',
-            handler: asyncHandler(deleteResource({ getDXNSClient }))
+            handler: asyncHandler(deleteResource(params))
           })
       })
 
@@ -150,7 +151,7 @@ export const DXNSModule = (params: Params) => {
             builder: yargs => yargs
               .option('account', { type: 'string' }),
 
-            handler: asyncHandler(getBalance({ getDXNSClient }))
+            handler: asyncHandler(getBalance(params))
           })
 
           .command({
@@ -161,7 +162,7 @@ export const DXNSModule = (params: Params) => {
               .option('amount', { type: 'string' })
               .option('faucet', { type: 'string' }),
 
-            handler: asyncHandler(increaseBalance({ getDXNSClient }))
+            handler: asyncHandler(increaseBalance(params))
           })
       })
 
@@ -173,13 +174,13 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['list'],
             describe: 'List domains.',
-            handler: asyncHandler(listDomains({ getDXNSClient }))
+            handler: asyncHandler(listDomains(params))
           })
 
           .command({
             command: ['create'],
             describe: 'Create free domain.',
-            handler: asyncHandler(getFreeDomain({ getDXNSClient }))
+            handler: asyncHandler(getFreeDomain(params))
           })
       })
 
@@ -195,7 +196,7 @@ export const DXNSModule = (params: Params) => {
               .option('name', { type: 'string' })
               .option('start-amount', { type: 'number' }),
 
-            handler: asyncHandler(createAuction({ getDXNSClient }))
+            handler: asyncHandler(createAuction(params))
           })
 
           .command({
@@ -205,7 +206,7 @@ export const DXNSModule = (params: Params) => {
               .option('name', { type: 'string' })
               .option('amount', { type: 'number' }),
 
-            handler: asyncHandler(bidAuction({ getDXNSClient }))
+            handler: asyncHandler(bidAuction(params))
           })
 
           .command({
@@ -214,7 +215,7 @@ export const DXNSModule = (params: Params) => {
             builder: yargs => yargs
               .option('name', { type: 'string' }),
 
-            handler: asyncHandler(closeAuction({ getDXNSClient }))
+            handler: asyncHandler(closeAuction(params))
           })
 
           .command({
@@ -223,7 +224,7 @@ export const DXNSModule = (params: Params) => {
             builder: yargs => yargs
               .option('name', { type: 'string' }),
 
-            handler: asyncHandler(forceCloseAuction({ getDXNSClient }))
+            handler: asyncHandler(forceCloseAuction(params))
           })
 
           .command({
@@ -232,14 +233,14 @@ export const DXNSModule = (params: Params) => {
             builder: yargs => yargs
               .option('name', { type: 'string' }),
 
-            handler: asyncHandler(claimAuction({ getDXNSClient }))
+            handler: asyncHandler(claimAuction(params))
           })
 
           .command({
             command: ['list'],
             describe: 'List auctions.',
 
-            handler: asyncHandler(listAuctions({ getDXNSClient }))
+            handler: asyncHandler(listAuctions(params))
           })
       })
 
@@ -250,7 +251,7 @@ export const DXNSModule = (params: Params) => {
           .option('domain', { type: 'string' })
           .option('dataOnly', { type: 'boolean', description: 'Skip domain registration. Register data types only.' }),
 
-        handler: asyncHandler(seedRegistry({ getDXNSClient, config }))
+        handler: asyncHandler(seedRegistry(params))
       })
 
       .command({
@@ -261,12 +262,19 @@ export const DXNSModule = (params: Params) => {
           .command({
             command: ['list'],
             describe: 'List accounts.',
-            handler: asyncHandler(listAccounts({ getDXNSClient, config }))
+            handler: asyncHandler(listAccounts(params))
           })
           .command({
             command: ['generate'],
             describe: 'Generate new account.',
             handler: asyncHandler(generateAccount())
+          })
+          .command({
+            command: ['recover'],
+            describe: 'Recover an existing DXNS account.',
+            builder: yargs => yargs
+              .option('mnemonic', { type: 'string' }),
+            handler: asyncHandler(recoverAccount(params))
           })
       })
 
@@ -274,14 +282,14 @@ export const DXNSModule = (params: Params) => {
         command: ['block'],
         describe: 'Get current DXNS block number.',
 
-        handler: asyncHandler(getBlocks({ getDXNSClient }))
+        handler: asyncHandler(getBlocks(params))
       })
 
       .command({
         command: ['dummy'],
-        describe: 'Adds all dummy data necessary for testing puproses.',
+        describe: 'Adds all dummy data necessary for testing purposes.',
 
-        handler: asyncHandler(addDummyData({ getDXNSClient }))
+        handler: asyncHandler(addDummyData(params))
       })
 
       .command({
