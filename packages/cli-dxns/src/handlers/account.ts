@@ -55,5 +55,5 @@ export const recoverAccount = ({ stateManager }: Params) => async (argv: any) =>
   });
 
   print({ account: keypair.address }, { json });
-  print('Manual step required: Put the account into your config > runtime > services > dxns > account')
+  print('Manual step required: Put the account into your config > runtime > services > dxns > account');
 };
