@@ -9,6 +9,7 @@ import { sleep } from '@dxos/async';
 import { print } from '@dxos/cli-core';
 
 import { Params } from './common';
+import assert from 'assert';
 
 export const generateAccount = () => async (argv: any) => {
   const { json } = argv;
@@ -33,3 +34,13 @@ export const listAccounts = (params: Params) => async (argv: any) => {
 
   await sleep(2000);
 };
+
+export const recoverAccount = ({getDXNSClient, stateManager}: Params) => async (argv: any) => {
+  const { mnemonic } = argv;
+  assert(mnemonic, 'Mnemonic is required');
+
+  const dxnsClient = await getDXNSClient();
+  const dxosClient = await stateManager.getClient();
+  // dxosClient.halo
+  // await dxosClient.halo.
+}
