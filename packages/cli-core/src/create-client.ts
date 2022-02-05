@@ -9,10 +9,9 @@ import { Client } from '@dxos/client';
 import { Config } from '@dxos/config';
 import { createKeyPair } from '@dxos/crypto';
 
-import { getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
+import { CLI_DEFAULT_PERSISTENT, getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
 
 type CreateClientOptions = {
-  persistent: boolean,
   initProfile: boolean,
   name?: string
 }
@@ -22,7 +21,9 @@ export const createClient = async (
   models: any[],
   options: CreateClientOptions
 ) => {
-  const { persistent, name, initProfile } = options;
+  const { name, initProfile } = options;
+
+  const persistent = config.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT)!;
 
   let storagePath;
   const currentStoragePath = getCurrentProfilePath();

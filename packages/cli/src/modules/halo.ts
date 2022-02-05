@@ -4,7 +4,7 @@
 
 import { Argv } from 'yargs';
 
-import { CLI_DEFAULT_PERSISTENT, CoreState, asyncHandler, createClient, listClientProfiles, print } from '@dxos/cli-core';
+import { CoreState, asyncHandler, createClient, listClientProfiles, print } from '@dxos/cli-core';
 
 // import { log } from '@dxos/debug';
 
@@ -22,7 +22,7 @@ export const HaloModule = ({ config }: CoreState) => ({
 
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
-        const client = await createClient(config!, [], { persistent: config!.get('runtime.client.storage.persistent') || CLI_DEFAULT_PERSISTENT, name, initProfile: true });
+        const client = await createClient(config!, [], { name, initProfile: true });
         await client.destroy();
       })
     })
