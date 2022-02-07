@@ -49,12 +49,9 @@ describe('cli-data: Device', () => {
   beforeEach(async () => {
     [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
       const client = new Client({
-        version: 1,
-        runtime: { 
-          services: { 
-            signal: { 
-              server: 'ws://localhost:4002'
-            }
+        services: {
+          signal: {
+            server: 'ws://localhost:4002'
           }
         }
       });
