@@ -32,7 +32,7 @@ export interface BotFactorySetupOptions extends CoreOptions {
 
 export const botFactorySetupOptions = (config: Config<ConfigV1Object>) => (yargs: Argv<CoreOptions>): Argv<BotFactorySetupOptions> => {
   return yargs
-    .option('topic', { type: 'string', default: config.get('bot.topic') });
+    .option('topic', { type: 'string', default: config.get('runtime.services.bot.topic') });
 };
 
 /**

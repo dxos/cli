@@ -37,12 +37,13 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.23.0",
+    "@dxos/async": "~2.25.0",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/config": "~2.23.0",
-    "@dxos/crypto": "~2.23.0",
-    "@dxos/debug": "~2.23.0",
-    "@dxos/registry-client": "~2.23.0",
+    "@dxos/config": "~2.25.0",
+    "@dxos/crypto": "~2.25.0",
+    "@dxos/debug": "~2.25.0",
+    "@dxos/registry-client": "~2.25.0",
+    "@dxos/credentials": "~2.25.0",
     "@polkadot/api": "4.17.1",
     "@polkadot/keyring": "6.11.1",
     "@polkadot/util-crypto": "^6.11.1",
@@ -61,6 +62,7 @@
     "pify": "^5.0.0",
     "protobufjs": "^6.10.2",
     "yargs": "^16.2.0",
+    "debug": "~4.3.3",
     "abort-controller": "~3.0.0"
   },
   "devDependencies": {
@@ -71,6 +73,7 @@
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
     "uuid": "^3.3.3",
+    "@polkadot/types": "4.17.1",
     "@types/node": "~16.11.12",
     "@types/yargs": "^16.0.1",
     "@types/lodash.pick": "^4.4.6",
@@ -82,7 +85,9 @@
     "@types/pify": "~5.0.1",
     "@types/get-folder-size": "^3.0.1",
     "@types/cli-progress": "^3.9.2",
-    "@types/jest": "~27.0.3"
+    "@types/jest": "~27.0.3",
+    "@dxos/client": "~2.25.0",
+    "@types/debug": "~4.1.7"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"

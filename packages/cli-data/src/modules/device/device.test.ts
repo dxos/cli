@@ -48,13 +48,7 @@ describe('cli-data: Device', () => {
 
   beforeEach(async () => {
     [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
-      const client = new Client({
-        services: {
-          signal: {
-            server: 'ws://localhost:4002'
-          }
-        }
-      });
+      const client = new Client({ version: 1, runtime: { services: { signal: { server: 'ws://localhost:4002' } } } });
       await client.initialize();
       if (username === 'Alice') {
         // Bob will be joining Alice's device invitation.

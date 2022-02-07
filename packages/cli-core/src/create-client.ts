@@ -6,7 +6,7 @@ import assert from 'assert';
 import os from 'os';
 
 import { Client } from '@dxos/client';
-import { Config } from '@dxos/config';
+import { Config, ConfigV1Object } from '@dxos/config';
 import { createKeyPair } from '@dxos/crypto';
 
 import { CLI_DEFAULT_PERSISTENT, getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
@@ -23,8 +23,6 @@ export const createClient = async (
 ) => {
   const { name, initProfile } = options;
 
-  const persistent = config.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT)!;
-
   let storagePath;
   const currentStoragePath = getCurrentProfilePath();
   if (name) {
@@ -37,12 +35,15 @@ export const createClient = async (
 
   assert(storagePath, 'No active HALO profile found. Run "dx halo init" to init a new profile.');
 
-  // TODO(egorgripasov): Cleanup (config.values.runtime -> config.values) - Adapter to config v0.
-  const clientConf = new Config(config.values.runtime, {
-    system: {
-      storage: {
-        persistent,
-        path: persistent ? storagePath : undefined
+  const persistent = config.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT)!;
+  const clientConf = new Config<ConfigV1Object>(config.values, {
+    version: 1,
+    runtime: {
+      client: {
+        storage: {
+          persistent,
+          path: persistent ? storagePath : undefined
+        }
       }
     }
   });
@@ -52,7 +53,7 @@ export const createClient = async (
   await dataClient.initialize();
 
   if (initProfile) {
-    if (dataClient.halo.getProfile()) {
+    if (dataClient.halo.profile) {
       throw new Error(`Profile "${name}" already exists!`);
     }
     // TODO(dboreham): Allow seed phrase to be supplied by the user.

@@ -2,14 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
-import { print as cliPrint } from '@dxos/cli-core';
+import { print as cliPrint, CoreState } from '@dxos/cli-core';
 import { RecordKind, RegistryRecord, Resource, CID } from '@dxos/registry-client';
 
 import { DXNSClient } from '../index';
 
-export interface Params {
+export interface Params extends CoreState {
   config?: any,
-  getDXNSClient(): Promise<DXNSClient>
+  getDXNSClient(): Promise<DXNSClient>,
 }
 
 export const displayHash = (data: any) => {
