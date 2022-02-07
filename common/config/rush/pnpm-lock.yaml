@@ -409,7 +409,7 @@ importers:
       '@dxos/debug': ~2.25.0
       '@dxos/eslint-plugin': ~1.0.21
       '@otplib/plugin-thirty-two': ^12.0.1
-      '@types/dockerode': ^3.2.3
+      '@types/dockerode': 3.2.3
       '@types/download': ^6.2.4
       '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3

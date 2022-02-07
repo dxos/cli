@@ -28,7 +28,7 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
   const persistent = config.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT)!;
 
   stateManager = new StateManager({
-    getClient: (opts) => createClient(config, models ?? [], { persistent, initProfile: opts?.initProfile ?? false, name: opts?.name }),
+    getClient: (opts) => createClient(config, models ?? [], { initProfile: opts?.initProfile ?? false, name: opts?.name }),
     getReadlineInterface,
     storagePath: persistent ? storagePath : undefined
   });

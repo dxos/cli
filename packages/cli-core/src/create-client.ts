@@ -11,7 +11,6 @@ import { createKeyPair } from '@dxos/crypto';
 import { getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
 
 type CreateClientOptions = {
-  persistent: boolean,
   initProfile: boolean,
   name?: string
 }
