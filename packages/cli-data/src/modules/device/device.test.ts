@@ -2,6 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
+import expect from 'expect';
 import waitForExpect from 'wait-for-expect';
 
 import { sleep, waitForCondition } from '@dxos/async';
@@ -34,8 +35,6 @@ class PinHelper {
   }
 }
 
-jest.setTimeout(2000);
-
 describe('cli-data: Device', () => {
   let signalBroker: Awaited<ReturnType<typeof createTestBroker>>;
   let alice: Client;
@@ -43,7 +42,7 @@ describe('cli-data: Device', () => {
   let aliceStateManager: StateManager;
   let bobStateManager: StateManager;
 
-  beforeAll(async () => {
+  before(async () => {
     signalBroker = await createTestBroker(4002);
   });
 
@@ -67,11 +66,11 @@ describe('cli-data: Device', () => {
     await bobStateManager?.destroy();
   });
 
-  afterAll(async () => {
+  after(async () => {
     await signalBroker.stop();
   });
 
-  test('Alice has identity and Bob has not.', async () => {
+  it('Alice has identity and Bob has not.', async () => {
     const aliceInfo = await infoCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
     const bobInfo = await infoCommand(bobStateManager).handler(DEFAULT_ARGS) as any;
     expect(aliceInfo.displayName).toEqual('Alice');
@@ -83,13 +82,11 @@ describe('cli-data: Device', () => {
     // PublicKey.assertValidPublicKey(PublicKey.from(aliceInfo.deviceKey));
   });
 
-  test('Can join a device invitation.', async () => {
+  it('Can join a device invitation.', async () => {
     const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
-      console.log(1);
       await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code });
-      console.log(2);
     };
     await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 
@@ -99,7 +96,7 @@ describe('cli-data: Device', () => {
     }, 3000, 1000);
   });
 
-  test('Joining device invitation removes current state and syncs with new state.', async () => {
+  it('Joining device invitation removes current state and syncs with new state.', async () => {
     await createPartyCommand(aliceStateManager).handler(DEFAULT_ARGS);
     expect(await listPartyCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
 

@@ -27,14 +27,8 @@
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests --forceExit",
+    "test": "NODE_ENV=test mocha -r @swc-node/register --exit './src/**/*.test.{ts,js}'",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
-  },
-  "jest": {
-    "preset": "ts-jest/presets/default",
-    "cacheDirectory": "/tmp/jest",
-    "verbose": false,
-    "testEnvironment": "node"
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
@@ -61,8 +55,6 @@
     "@dxos/signal": "~2.25.0",
     "@types/lockfile": "^1.0.2",
     "eslint": "^7.13.0",
-    "jest": "^27.4.4",
-    "ts-jest": "^27.0.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
     "uuid": "^3.3.3",
@@ -70,7 +62,11 @@
     "@types/node": "~16.11.12",
     "@types/yargs": "^16.0.1",
     "@types/fs-extra": "^9.0.13",
-    "@types/jest": "~27.0.3"
+    "mocha": "^9.1.1",
+    "@types/mocha": "^9.0.0",
+    "expect": "^27.2.1",
+    "@types/expect": "^24.3.0",
+    "@swc-node/register": "~1.4.2"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
