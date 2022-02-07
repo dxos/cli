@@ -6,7 +6,6 @@ import assert from 'assert';
 import os from 'os';
 
 import { Client } from '@dxos/client';
-import { Config, ConfigV1Object } from '@dxos/config';
 import { createKeyPair } from '@dxos/crypto';
 
 import { getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
@@ -22,7 +21,7 @@ export const createClient = async (
   models: any[],
   options: CreateClientOptions
 ) => {
-  const { persistent, name, initProfile } = options;
+  const { name, initProfile } = options;
 
   let storagePath;
   const currentStoragePath = getCurrentProfilePath();
@@ -36,20 +35,7 @@ export const createClient = async (
 
   assert(storagePath, 'No active HALO profile found. Run "dx halo init" to init a new profile.');
 
-  // TODO(egorgripasov): Cleanup (config.values.runtime -> config.values) - Adapter to config v0.
-  const clientConf = new Config<ConfigV1Object>(config.values, {
-    version: 1,
-    runtime: {
-      client: {
-        storage: {
-          persistent,
-          path: persistent ? storagePath : undefined
-        }
-      }
-    }
-  });
-
-  const dataClient = new Client(clientConf);
+  const dataClient = new Client(config.values);
 
   await dataClient.initialize();
 
