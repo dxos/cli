@@ -34,8 +34,6 @@ export const joinCommand = (stateManager: StateManager): CommandModule<PartyOpti
 
     assert(partyKey || invitation || invitationUrl, 'Invalid party.');
 
-    console.log('invitation', typeof invitation, { invitation });
-
     let invite;
     if (invitation) {
       invite = InvitationDescriptor.decode(invitation);

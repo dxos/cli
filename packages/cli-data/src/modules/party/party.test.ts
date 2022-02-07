@@ -2,6 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
+import expect from 'expect';
 import waitForExpect from 'wait-for-expect';
 
 import { Client } from '@dxos/client';
@@ -18,8 +19,6 @@ const getReadlineInterface = () => {
 
 const DEFAULT_ARGS = { $0: '', _: [], return: true };
 
-jest.setTimeout(2000);
-
 describe('cli-data: Party', () => {
   let signalBroker: Awaited<ReturnType<typeof createTestBroker>>;
   let alice: Client;
@@ -27,13 +26,22 @@ describe('cli-data: Party', () => {
   let aliceStateManager: StateManager;
   let bobStateManager: StateManager;
 
-  beforeAll(async () => {
+  before(async () => {
     signalBroker = await createTestBroker(4001);
   });
 
   beforeEach(async () => {
     [alice, bob] = await Promise.all(['Alice', 'Bob'].map(async username => {
-      const client = new Client({ services: { signal: { server: 'ws://localhost:4001' } } });
+      const client = new Client({
+        version: 1,
+        runtime: {
+          services: {
+            signal: {
+              server: 'ws://localhost:4001'
+            }
+          }
+        }
+      });
       await client.initialize();
       await client.halo.createProfile({ ...createKeyPair(), username });
       return client;
@@ -47,11 +55,11 @@ describe('cli-data: Party', () => {
     await bobStateManager?.destroy();
   });
 
-  afterAll(async () => {
+  after(async () => {
     await signalBroker.stop();
   });
 
-  test('Creates a party.', async () => {
+  it('Creates a party.', async () => {
     expect(await aliceStateManager.getParty()).toBeNull();
     expect(await listCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(0);
 
@@ -63,7 +71,7 @@ describe('cli-data: Party', () => {
     expect(createResult.party).toEqual(listResult[0].party);
   });
 
-  test('Creates an invitation', async () => {
+  it('Creates an invitation', async () => {
     await createCommand(aliceStateManager).handler(DEFAULT_ARGS);
     const inviteResult = await inviteCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
 
@@ -74,7 +82,7 @@ describe('cli-data: Party', () => {
     PublicKey.assertValidPublicKey(PublicKey.from(inviteResult.partyKey));
   });
 
-  test('CLI <-> CLI invitations', async () => {
+  it('CLI <-> CLI invitations', async () => {
     expect(await listCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(0);
     await createCommand(aliceStateManager).handler(DEFAULT_ARGS);
 
