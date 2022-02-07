@@ -6,10 +6,10 @@ import assert from 'assert';
 import os from 'os';
 
 import { Client } from '@dxos/client';
+import { Config, ConfigV1Object } from '@dxos/config';
 import { createKeyPair } from '@dxos/crypto';
 
 import { CLI_DEFAULT_PERSISTENT, getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
-import { Config, ConfigV1Object } from '@dxos/config';
 
 type CreateClientOptions = {
   initProfile: boolean,
