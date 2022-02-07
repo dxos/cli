@@ -37,7 +37,7 @@ export const listAccounts = (params: Params) => async (argv: any) => {
   await sleep(2000);
 };
 
-export const recoverAccount = ({ stateManager }: Params) => async (argv: any) => {
+export const recoverAccount = ({ getDXNSClient }: Params) => async (argv: any) => {
   const { mnemonic, json } = argv;
   assert(mnemonic, 'Mnemonic is required');
   const uri = mnemonic.join('');
@@ -46,7 +46,7 @@ export const recoverAccount = ({ stateManager }: Params) => async (argv: any) =>
   const keyring = new Keyring({ type: 'sr25519' });
   const keypair = keyring.addFromUri(uri);
 
-  const dxosClient = await stateManager.getClient();
+  const { dxosClient } = await getDXNSClient();
 
   await dxosClient.halo.addKeyRecord({
     publicKey: PublicKey.from(decodeAddress(keypair.address)),

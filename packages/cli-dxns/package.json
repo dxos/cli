@@ -86,7 +86,6 @@
     "@types/get-folder-size": "^3.0.1",
     "@types/cli-progress": "^3.9.2",
     "@types/jest": "~27.0.3",
-    "@dxos/cli-data": "workspace:*",
     "@dxos/client": "~2.25.0",
     "@types/debug": "~4.1.7"
   },

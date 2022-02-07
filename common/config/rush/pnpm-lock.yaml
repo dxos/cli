@@ -594,7 +594,6 @@ importers:
     specifiers:
       '@dxos/async': ~2.25.0
       '@dxos/cli-core': workspace:*
-      '@dxos/cli-data': workspace:*
       '@dxos/client': ~2.25.0
       '@dxos/config': ~2.25.0
       '@dxos/credentials': ~2.25.0
@@ -671,7 +670,6 @@ importers:
       protobufjs: 6.11.2
       yargs: 16.2.0
     devDependencies:
-      '@dxos/cli-data': link:../cli-data
       '@dxos/client': 2.25.0
       '@dxos/eslint-plugin': 1.0.21_eslint@7.32.0+typescript@4.5.5
       '@polkadot/types': 4.17.1

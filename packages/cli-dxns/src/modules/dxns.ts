@@ -4,9 +4,7 @@
 
 import { Argv } from 'yargs';
 
-import { asyncHandler } from '@dxos/cli-core';
-// TODO(marcin): simplify with index.ts
-import type { CliDataState } from '@dxos/cli-data';
+import { asyncHandler, CoreState } from '@dxos/cli-core';
 
 import { generateAccount, listAccounts, recoverAccount } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
@@ -22,7 +20,7 @@ import { setKeys } from '../handlers/setup';
 import { listTypes, getType, addType } from '../handlers/types';
 import { DXNSClient } from '../index';
 
-export interface Params extends CliDataState {
+export interface Params extends CoreState {
   config: any,
   getDXNSClient(): Promise<DXNSClient>
 }

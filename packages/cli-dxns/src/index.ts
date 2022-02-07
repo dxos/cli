@@ -9,7 +9,8 @@ import debug from 'debug';
 import { readFileSync } from 'fs';
 import path from 'path';
 
-import { createCLI } from '@dxos/cli-core';
+import { createClient as createDxosClient, createCLI } from '@dxos/cli-core';
+import type { Client } from '@dxos/client';
 import { createApiPromise, IAuctionsClient, IRegistryClient, ApiTransactionHandler, createKeyring, RegistryClient, AuctionsClient, SignTxFunction, DxosClientSigner } from '@dxos/registry-client';
 
 import { DXNSModule } from './modules/dxns';
@@ -22,19 +23,28 @@ export interface DXNSClient {
   keypair?: KeyringPair,
   registryClient: IRegistryClient,
   auctionsClient: IAuctionsClient,
-  transactionHandler: ApiTransactionHandler
+  transactionHandler: ApiTransactionHandler,
+  dxosClient: Client
 }
 
-let client: DXNSClient | undefined;
-const createClientGetter = (config: any, options: any) => async () => {
-  if (!client) {
-    client = await _createClient(config, options);
+let dxosClient: Client | undefined;
+const getDxosClient = async (config: any) => {
+  if (!dxosClient) {
+    dxosClient = await createDxosClient(config, [], { initProfile: false });
   }
-  return client;
+  return dxosClient;
 };
 
-const _createClient = async (config: any, options: any): Promise<DXNSClient | undefined> => {
-  const { profilePath, profileExists, stateManager } = options;
+let dxnsClient: DXNSClient | undefined;
+const createDxnsClientGetter = (config: any, options: any) => async () => {
+  if (!dxnsClient) {
+    dxnsClient = await _createDxnsClient(config, options);
+  }
+  return dxnsClient;
+};
+
+const _createDxnsClient = async (config: any, options: any): Promise<DXNSClient | undefined> => {
+  const { profilePath, profileExists } = options;
   if (profilePath && profileExists) {
     // The keyring need to be created AFTER api is created or we need to wait for WASM init.
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
@@ -46,6 +56,8 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
     const apiServerUri = config.get('runtime.services.dxns.server');
     const apiPromise = await createApiPromise(apiServerUri);
 
+    const dxosClient = await getDxosClient(config);
+
     let signFn: SignTxFunction;
     if (keypair) {
       log('Deprecated: Transactions will be signed with account from accountUri in your CLI profile.');
@@ -53,7 +65,6 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
     } else if (account) {
       log('Transactions will be signed using DXNS key stored in Halo.');
       log('Using account: ', account);
-      const dxosClient = await stateManager.getClient();
       const dxosClientSigner = new DxosClientSigner(dxosClient, account);
       signFn = tx => tx.signAsync(account, { signer: dxosClientSigner });
     } else {
@@ -71,25 +82,26 @@ const _createClient = async (config: any, options: any): Promise<DXNSClient | un
       keypair,
       registryClient,
       auctionsClient,
-      transactionHandler
+      transactionHandler,
+      dxosClient
     };
   }
 };
 
 const initDXNSCliState = async (state: any) => {
-  const { config, profilePath, profileExists, stateManager } = state;
-  if (!stateManager) {
-    throw new Error('Missing StateManager. Is cli-data extension installed?');
-  }
+  const { config, profilePath, profileExists } = state;
 
   if (profilePath && profileExists) {
-    state.getDXNSClient = createClientGetter(config, { profilePath, profileExists, stateManager });
+    state.getDXNSClient = createDxnsClientGetter(config, { profilePath, profileExists });
   }
 };
 
 const destroyDXNSCliState = async () => {
-  if (client) {
-    await client.apiRaw.disconnect();
+  if (dxnsClient) {
+    await dxnsClient.apiRaw.disconnect();
+  }
+  if (dxosClient) {
+    await dxosClient.destroy();
   }
 };
 
