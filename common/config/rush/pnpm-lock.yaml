@@ -409,7 +409,7 @@ importers:
       '@dxos/debug': ~2.23.0
       '@dxos/eslint-plugin': ~1.0.21
       '@otplib/plugin-thirty-two': ^12.0.1
-      '@types/dockerode': ^3.2.3
+      '@types/dockerode': 3.2.3
       '@types/download': ^6.2.4
       '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3
@@ -499,7 +499,7 @@ importers:
       yargs-unparser: 1.6.4
     devDependencies:
       '@dxos/eslint-plugin': 1.0.21_eslint@7.32.0+typescript@4.5.5
-      '@types/dockerode': 3.3.1
+      '@types/dockerode': 3.2.3
       '@types/download': 6.2.4
       '@types/fs-extra': 9.0.13
       '@types/jest': 27.0.3
@@ -3171,17 +3171,9 @@ packages:
       '@types/node': 16.11.21
     dev: true
 
-  /@types/docker-modem/3.0.2:
-    resolution: {integrity: sha512-qC7prjoEYR2QEe6SmCVfB1x3rfcQtUr1n4x89+3e0wSTMQ/KYCyf+/RAA9n2tllkkNc6//JMUZePdFRiGIWfaQ==}
+  /@types/dockerode/3.2.3:
+    resolution: {integrity: sha512-nZRhpSxm3PYianRBcRExcHxDvEzYHUPfGCnRL5Fe4/fSEZbtxrRNJ7okzCans3lXxj2t298EynFHGTnTC2f1Iw==}
     dependencies:
-      '@types/node': 16.11.21
-      '@types/ssh2': 0.5.51
-    dev: true
-
-  /@types/dockerode/3.3.1:
-    resolution: {integrity: sha512-pjEOl3C/N2viC+nU2iEM6ImFcyu/RoLZvfsAGc3xIW2MlyEox+ZtJgPDXCFfFVh8ZNouxCRL673aa2Ywbx20EQ==}
-    dependencies:
-      '@types/docker-modem': 3.0.2
       '@types/node': 16.11.21
     dev: true
 
@@ -3432,19 +3424,6 @@ packages:
     resolution: {integrity: sha512-GHrZSrLBqaa/puFQdLnhepOvPiqlDnHXbTbTMx4JdIzhnSJ9tg7iu795aPnMPV9QpQ5h7CR5XqfqORY1P2qehw==}
     dependencies:
       '@types/node': 16.11.21
-
-  /@types/ssh2-streams/0.1.9:
-    resolution: {integrity: sha512-I2J9jKqfmvXLR5GomDiCoHrEJ58hAOmFrekfFqmCFd+A6gaEStvWnPykoWUwld1PNg4G5ag1LwdA+Lz1doRJqg==}
-    dependencies:
-      '@types/node': 16.11.21
-    dev: true
-
-  /@types/ssh2/0.5.51:
-    resolution: {integrity: sha512-aIq7ownezauW/+VWYaeXwd5J1Evnn4EXyeKi7bT3H6ZLBLoqsmhdvkHYPLpnZPM6unKKKsxTHIyQAVOZnPiJBw==}
-    dependencies:
-      '@types/node': 16.11.21
-      '@types/ssh2-streams': 0.1.9
-    dev: true
 
   /@types/stack-utils/2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
@@ -3730,7 +3709,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       buffer: 5.7.1
-      immediate: 3.2.3
+      immediate: 3.3.0
       level-concat-iterator: 2.0.1
       level-supports: 1.0.1
       xtend: 4.0.2
