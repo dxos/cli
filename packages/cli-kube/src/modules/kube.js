@@ -56,6 +56,7 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       builder: yargs => yargs
         .option('key-phrase', { type: 'string', description: 'KUBE OTP keyphrase.' })
         .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) })
+        .option('services-override', { describe: 'Additional services config.', type: 'string', default: JSON.stringify([]) })
         .option('name', { type: 'string', description: 'Container name' })
         .option('fqdn', { type: 'string', description: 'Fully Qualified Domain Name.', default: DEFAULT_FQDN })
         .option('letsencrypt', { type: 'boolean', default: false })
@@ -87,6 +88,7 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
         .option('email', { type: 'string' })
         .option('key-phrase', { type: 'string' })
         .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) })
+        .option('services-override', { describe: 'Additional services config.', type: 'string', default: JSON.stringify([]) })
         .option('ssh-keys', { type: 'array' })
         .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
 
