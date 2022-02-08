@@ -51,12 +51,12 @@ describe('CLI', () => {
   ]);
 
   before(async () => {
-    broker = await createTestBroker();
+    // broker = await createTestBroker();
     await httpServer.start();
   });
 
   after(async () => {
-    await broker.stop();
+    // await broker.stop();
     await httpServer.stop();
   });
 
@@ -284,6 +284,7 @@ describe('CLI', () => {
   describe('bot', () => {
     let bundledBotPath: string;
     let botCid: string;
+    let botId: string | undefined;
     const topic = 'd5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb';
 
     it('query bots', async () => {
@@ -320,10 +321,9 @@ describe('CLI', () => {
       await cmd('bot factory start --detached --log-file bot-factory.log').run();
     });
 
-    it('spawns a bot', async () => {
-      let botId: string | undefined;
+    it.only('spawns a bot', async () => {
       const command = cmd('party open')
-        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --topic ${topic} --json`);
+        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --json`);
       command.interactiveOutput.on(data => {
         try {
           const json = JSON.parse(data);
@@ -334,12 +334,28 @@ describe('CLI', () => {
       expect(botId).toBeDefined();
     });
 
+    it.only('restarts a bot', async () => {
+      const botStatus = async () => {
+        const bots = await cmd('bot list --json').json();
+        return bots.find((b: any) => b.id === botId)?.status;
+      };
+      let status: string;
+      status = await botStatus();
+      expect(status).toBe('RUNNING');
+      await cmd(`bot stop ${botId}`).run();
+      status = await botStatus();
+      expect(status).toBe('STOPPED');
+      await cmd(`bot start ${botId}`).run();
+      status = await botStatus();
+      expect(status).toBe('RUNNING');
+    });
+
     it('stops a bot-factory', async () => {
       await cmd('bot factory stop').run();
     });
   });
 
-  describe('kube', () => {
+  describe.skip('kube', () => {
     it('register kube', async () => {
       const recordsBefore = await cmd('dxns record list --json').json();
       await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
@@ -349,7 +365,7 @@ describe('CLI', () => {
   });
 
   describe('stop services', () => {
-    it('dxns', async () => {
+    it.skip('dxns', async () => {
       try {
         await cmd('service stop dxns').run();
       } catch {}

@@ -7,3 +7,6 @@ export * from './publish';
 export * from './register';
 export * from './spawn';
 export * from './query';
+export * from './list';
+export * from './start';
+export * from './stop';

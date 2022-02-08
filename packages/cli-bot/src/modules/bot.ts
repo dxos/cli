@@ -13,10 +13,16 @@ import {
   query,
   register,
   build,
+  spawn,
+  list,
+  botStart,
+  botStop,
   botBuildOptions,
   botRegisterOptions,
   botSpawnOptions,
-  spawn
+  botListOptions,
+  botStartOptions,
+  botStopOptions
 } from '../handlers/bot';
 import {
   botFactoryStartOptions,
@@ -92,32 +98,6 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         handler: asyncHandler(spawn({ stateManager, config }))
       })
 
-    // .command({
-    //   command: ['invite'],
-    //   describe: 'Invite bot to a party.',
-    //   builder: yargs => yargs
-    //     .option('topic', { alias: 't', type: 'string' })
-    //     .option('bot-id', { type: 'string' })
-    //     .option('spec', { alias: 's', type: 'json' })
-    //     .option('env', { type: 'string' })
-    //     .option('ipfsCID', { type: 'string' })
-    //     .option('ipfsEndpoint', { type: 'string' })
-    //     .option('id', { type: 'string' })
-    //     .option('name', { type: 'string' })
-    //     .option('bot-name', { type: 'string' })
-    //     .option('bot-path', { type: 'string' }),
-
-    //   handler: asyncHandler(invite({ stateManager }))
-    // })
-
-    // .command({
-    //   command: ['build'],
-    //   describe: 'Build bot.',
-    //   builder: yargs => yargs,
-
-    //   handler: asyncHandler(build())
-    // })
-
       .command({
         command: ['publish'],
         describe: 'Publish Bot to IPFS.',
@@ -138,7 +118,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
 
       .command({
         command: ['query'],
-        describe: 'Query bots',
+        describe: 'Query bots.',
         builder: yargs => yargs,
 
         handler: asyncHandler(query({ getDXNSClient }))
@@ -146,10 +126,34 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
 
       .command({
         command: ['build'],
-        describe: 'Build bot',
+        describe: 'Build bot.',
         builder: botBuildOptions,
 
         handler: asyncHandler(build())
+      })
+
+      .command({
+        command: ['list'],
+        describe: 'List all bots in bot factory.',
+        builder: botListOptions,
+
+        handler: asyncHandler(list({ stateManager, config }))
+      })
+
+      .command({
+        command: ['start <botId>'],
+        describe: 'Start bot.',
+        builder: botStartOptions,
+
+        handler: asyncHandler(botStart({ stateManager, config }))
+      })
+
+      .command({
+        command: ['stop <botId>'],
+        describe: 'Stop bot.',
+        builder: botStopOptions,
+
+        handler: asyncHandler(botStop({ stateManager, config }))
       })
   };
 };
