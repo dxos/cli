@@ -1,5 +1,19 @@
 # Changelog
 
+### [2.13.1](https://www.github.com/dxos/cli/compare/v2.13.0...v2.13.1) (2022-02-08)
+
+
+### Features
+
+* Bot lifecycle start/stop ([#414](https://www.github.com/dxos/cli/issues/414)) ([a10443f](https://www.github.com/dxos/cli/commit/a10443f4aa54468cd798dde2433c183b228dcdaa))
+* Introduce DXNS transaction signing with key in Halo ([#405](https://www.github.com/dxos/cli/issues/405)) ([fb148f9](https://www.github.com/dxos/cli/commit/fb148f9c0c9ebb47f2fdeb54b1e035d80f2bd2c1))
+
+
+### Bug Fixes
+
+* cleanup & fix types. ([#406](https://www.github.com/dxos/cli/issues/406)) ([901e90b](https://www.github.com/dxos/cli/commit/901e90b3d58f569ce781621650390aecf6e0f0a6))
+* more HALO commands. ([#413](https://www.github.com/dxos/cli/issues/413)) ([d618aae](https://www.github.com/dxos/cli/commit/d618aae23bd70c37f3c4d92abed40049235ae637))
+
 ## [2.13.0](https://www.github.com/dxos/cli/compare/v2.12.4...v2.13.0) (2022-02-01)
 
 
