@@ -29,7 +29,8 @@ export interface RunnableConfig {
 const PROCESS_PREFIX = 'dxos.';
 const STATUS_RUNNING = 'online';
 
-const MAX_MEMORY = '500M';
+// TODO(yivlad): Figure out how to properly handle memory limit.
+const MAX_MEMORY = '2G';
 
 const pm = {
   connect: pify(pm2.connect.bind(pm2)),
