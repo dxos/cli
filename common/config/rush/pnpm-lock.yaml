@@ -411,6 +411,7 @@ importers:
       '@otplib/plugin-thirty-two': ^12.0.1
       '@types/dockerode': 3.2.3
       '@types/download': ^6.2.4
+      '@types/find-remove': ^2.0.1
       '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3
       '@types/js-yaml': ^3.12.5
@@ -427,6 +428,7 @@ importers:
       dockerode: ^3.2.1
       download: ^8.0.0
       eslint: ^7.13.0
+      find-remove: ^4.0.4
       find-root: ^1.1.0
       fs-extra: 10.0.0
       jest: ^27.4.4
@@ -470,6 +472,7 @@ importers:
       console.table: 0.10.0
       dockerode: 3.3.1
       download: 8.0.0
+      find-remove: 4.0.4
       find-root: 1.1.0
       fs-extra: 10.0.0
       js-yaml: 3.14.1
@@ -501,6 +504,7 @@ importers:
       '@dxos/eslint-plugin': 1.0.21_eslint@7.32.0+typescript@4.5.5
       '@types/dockerode': 3.2.3
       '@types/download': 6.2.4
+      '@types/find-remove': 2.0.1
       '@types/fs-extra': 9.0.13
       '@types/jest': 27.0.3
       '@types/js-yaml': 3.12.7
@@ -3216,6 +3220,10 @@ packages:
       '@types/express-serve-static-core': 4.17.28
       '@types/qs': 6.9.7
       '@types/serve-static': 1.13.10
+    dev: true
+
+  /@types/find-remove/2.0.1:
+    resolution: {integrity: sha512-x5dgfuPpdD7Knfu1aN/iaO0JiC2c5rpGFrq/k6H0gDrrTtTBt+e047k3OSEhXJFFggE/RN9SbqTEDoxDn2BoFA==}
     dev: true
 
   /@types/fs-extra/9.0.13:
@@ -6107,6 +6115,14 @@ packages:
       statuses: 1.5.0
       unpipe: 1.0.0
 
+  /find-remove/4.0.4:
+    resolution: {integrity: sha512-IVHi4dBLofdjv8xdL4mPDyLj80KY6Y3FcmKzFSJJyvJYbGGJRWtW6DC74GegI0K/1wZod5PAc46eY7oVkM4kzg==}
+    engines: {node: ^16.13.1, npm: ^8.1.2}
+    dependencies:
+      fmerge: 1.2.0
+      rimraf: 3.0.2
+    dev: false
+
   /find-root/1.1.0:
     resolution: {integrity: sha512-NKfW6bec6GfKc0SGx1e07QZY9PE99u0Bft/0rzSD5k3sO/vwkVUpDUKVm5Gpp5Ue3YfShPFTX2070tDs5kB9Ng==}
     dev: false
@@ -6165,6 +6181,11 @@ packages:
   /flatted/3.2.5:
     resolution: {integrity: sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==}
     dev: true
+
+  /fmerge/1.2.0:
+    resolution: {integrity: sha1-NumdKuJV4+4a9ma033gFU2cc9pI=}
+    requiresBuild: true
+    dev: false
 
   /follow-redirects/1.14.7_debug@4.3.3:
     resolution: {integrity: sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==}
