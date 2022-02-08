@@ -18,7 +18,6 @@ export interface SpawnParameters {
 }
 
 export interface BotSpawnOptions extends CoreOptions {
-  topic: string,
   dxn?: string;
   ipfsCid?: string;
   localPath?: string;
@@ -26,16 +25,16 @@ export interface BotSpawnOptions extends CoreOptions {
 
 export const botSpawnOptions = (yargs: Argv<CoreOptions>): Argv<BotSpawnOptions> => {
   return yargs
-    .option('topic', { type: 'string' })
-    .demandOption('topic')
     .option('dxn', { type: 'string' })
     .option('ipfsCid', { type: 'string' })
     .option('localPath', { type: 'string' });
 };
 
-export const spawn = ({ stateManager } : SpawnParameters) => async ({ dxn, ipfsCid, localPath, topic, json } : BotSpawnOptions) => {
+export const spawn = ({ stateManager, config } : SpawnParameters) => async ({ dxn, ipfsCid, localPath, json } : BotSpawnOptions) => {
   assert(stateManager, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
   assert(!!dxn || !!ipfsCid || !!localPath, 'At least one of the following options is required: dxn, ipfsCid, localPath');
+  const topic = config.get('runtime.services.bot.topic');
+  assert(topic, 'Topic must be provided in config');
 
   const client = await stateManager.getClient();
   const party = await stateManager.getParty();
@@ -43,10 +42,12 @@ export const spawn = ({ stateManager } : SpawnParameters) => async ({ dxn, ipfsC
   assert(party, 'Party is required');
 
   const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
-  await botFactoryClient.start(PublicKey.from(topic));
-  const botHandle = await botFactoryClient.spawn({ dxn, ipfsCid, localPath }, party);
+  try {
+    await botFactoryClient.start(PublicKey.from(topic));
+    const botHandle = await botFactoryClient.spawn({ dxn, ipfsCid, localPath }, party);
 
-  print({ botId: (botHandle as any)._id }, { json });
-
-  await botFactoryClient.stop();
+    print({ botId: (botHandle as any)._id }, { json });
+  } finally {
+    await botFactoryClient.stop();
+  }
 };
