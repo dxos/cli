@@ -57,8 +57,8 @@ export const start = () => async ({
     logFile
   };
 
-  const bin = '/Users/vladyslav/dxos/protocols/packages/bot/botkit/bin/main.js';
-  const botFactoryRunnable = new Runnable(bin, ['ts-node/register/transpile-only']);
+  const bin = 'bot-factory';
+  const botFactoryRunnable = new Runnable(bin, []);
 
   await botFactoryRunnable.run([], options);
 };
