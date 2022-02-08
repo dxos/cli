@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.13.2](https://www.github.com/dxos/cli/compare/v2.13.1...v2.13.2) (2022-02-08)
+
+
+### Bug Fixes
+
+* dx.yml path as param. ([#417](https://www.github.com/dxos/cli/issues/417)) ([c8b59dc](https://www.github.com/dxos/cli/commit/c8b59dc69a53993fd25b36421085208f24e11d8d))
+* service conf overrides for KUBEs ([#415](https://www.github.com/dxos/cli/issues/415)) ([55e1014](https://www.github.com/dxos/cli/commit/55e1014529879058035f6155a37091ae4cb009d1))
+
 ### [2.13.1](https://www.github.com/dxos/cli/compare/v2.13.0...v2.13.1) (2022-02-08)
 
 
