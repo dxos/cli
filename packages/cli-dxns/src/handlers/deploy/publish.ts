@@ -21,10 +21,11 @@ interface PublishParams {
   verbose?: boolean,
   timeout?: ClientOptions['timeout'],
   path?: string
+  config?: string
 }
 
-export const publish = (config: any) => async ({ verbose, timeout, path: distPath = DEFAULT_DIST_PATH }: PublishParams): Promise<string> => {
-  const conf = await loadConfig();
+export const publish = (config: any) => async ({ verbose, timeout, path: distPath = DEFAULT_DIST_PATH, config: configPath }: PublishParams): Promise<string> => {
+  const conf = await loadConfig(configPath);
 
   verbose && log(`Publishing ${conf.values.module?.name}...`);
 

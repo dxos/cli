@@ -8,8 +8,8 @@ import { log } from '@dxos/debug';
 
 import { loadConfig } from '../../utils/config';
 
-export const build = () => async ({ verbose }: any) => {
-  const config = await loadConfig();
+export const build = () => async ({ verbose, config: configPath }: any) => {
+  const config = await loadConfig(configPath);
 
   verbose && log(`Building ${config.values.module?.name}...`);
 
