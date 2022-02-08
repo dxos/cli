@@ -321,7 +321,7 @@ describe('CLI', () => {
       await cmd('bot factory start --detached --log-file bot-factory.log').run();
     });
 
-    it.only('spawns a bot', async () => {
+    it('spawns a bot', async () => {
       const command = cmd('party open')
         .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --json`);
       command.interactiveOutput.on(data => {
@@ -334,7 +334,7 @@ describe('CLI', () => {
       expect(botId).toBeDefined();
     });
 
-    it.only('restarts a bot', async () => {
+    it('restarts and removes a bot', async () => {
       const botStatus = async () => {
         const bots = await cmd('bot list --json').json();
         return bots.find((b: any) => b.id === botId)?.status;
@@ -348,6 +348,9 @@ describe('CLI', () => {
       await cmd(`bot start ${botId}`).run();
       status = await botStatus();
       expect(status).toBe('RUNNING');
+      await cmd(`bot remove ${botId}`).run();
+      const bots = await cmd('bot list --json').json();
+      expect(bots.length).toBe(0);
     });
 
     it('stops a bot-factory', async () => {
@@ -355,7 +358,7 @@ describe('CLI', () => {
     });
   });
 
-  describe.skip('kube', () => {
+  describe('kube', () => {
     it('register kube', async () => {
       const recordsBefore = await cmd('dxns record list --json').json();
       await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
@@ -365,7 +368,7 @@ describe('CLI', () => {
   });
 
   describe('stop services', () => {
-    it.skip('dxns', async () => {
+    it('dxns', async () => {
       try {
         await cmd('service stop dxns').run();
       } catch {}

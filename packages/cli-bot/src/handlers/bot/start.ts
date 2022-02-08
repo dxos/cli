@@ -35,7 +35,8 @@ export const botStart = ({ stateManager, config } : StartPatameters) => async ({
   const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
   try {
     await botFactoryClient.start(PublicKey.from(topic));
-    await botFactoryClient.start(PublicKey.from(botId));
+    const handle = await botFactoryClient.get(botId);
+    await handle.start();
   } catch (error: unknown) {
     throw error;
   } finally {

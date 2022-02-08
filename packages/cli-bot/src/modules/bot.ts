@@ -17,12 +17,14 @@ import {
   list,
   botStart,
   botStop,
+  botRemove,
   botBuildOptions,
   botRegisterOptions,
   botSpawnOptions,
   botListOptions,
   botStartOptions,
-  botStopOptions
+  botStopOptions,
+  botRemoveOptions
 } from '../handlers/bot';
 import {
   botFactoryStartOptions,
@@ -154,6 +156,14 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         builder: botStopOptions,
 
         handler: asyncHandler(botStop({ stateManager, config }))
+      })
+
+      .command({
+        command: ['remove <botId>'],
+        describe: 'Remove bot from a bot factory.',
+        builder: botRemoveOptions,
+
+        handler: asyncHandler(botRemove({ stateManager, config }))
       })
   };
 };
