@@ -45,10 +45,8 @@ export const spawn = ({ stateManager, config } : SpawnParameters) => async ({ dx
   try {
     await botFactoryClient.start(PublicKey.from(topic));
     const botHandle = await botFactoryClient.spawn({ dxn, ipfsCid, localPath }, party);
-  
+
     print({ botId: (botHandle as any)._id }, { json });
-  } catch (error: unknown) {
-    throw error;
   } finally {
     await botFactoryClient.stop();
   }

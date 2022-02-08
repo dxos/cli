@@ -17,7 +17,7 @@ export interface ListParameters {
   config: Config<ConfigV1Object>
 }
 
-export interface BotListOptions extends CoreOptions {}
+export type BotListOptions = CoreOptions
 
 export const botListOptions = (yargs: Argv<CoreOptions>): Argv<BotListOptions> => {
   return yargs;
@@ -33,10 +33,8 @@ export const list = ({ stateManager, config } : ListParameters) => async ({ json
   try {
     await botFactoryClient.start(PublicKey.from(topic));
     const bots = await botFactoryClient.list();
-  
-    print(bots.map(bot => ({ id: bot.id, status: bot.status == 1 ? 'RUNNING' : 'STOPPED'})), { json });
-  } catch (error: unknown) {
-    throw error;
+
+    print(bots.map(bot => ({ id: bot.id, status: bot.status === 1 ? 'RUNNING' : 'STOPPED' })), { json });
   } finally {
     await botFactoryClient.stop();
   }

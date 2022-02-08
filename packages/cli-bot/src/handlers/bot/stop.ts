@@ -37,8 +37,6 @@ export const botStop = ({ stateManager, config } : StopParameters) => async ({ b
     await botFactoryClient.start(PublicKey.from(topic));
     const handle = await botFactoryClient.get(botId);
     await handle.stop();
-  } catch (error: unknown) {
-    throw error;
   } finally {
     await botFactoryClient.stop();
   }
