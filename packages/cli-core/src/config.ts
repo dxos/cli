@@ -17,6 +17,7 @@ export const PROFILE_ROOT = '.dx/profile';
 
 export const STORAGE_ROOT = '.dx/storage';
 export const PROFILE_STORE = '.dx/storage/.default';
+export const SESSION_PROFILE_STORE = '.dx/storage/.sessions';
 
 // Default profile, ALWAYS a symlink.
 export const DEFAULT_PROFILE_SYMLINK = 'default';
