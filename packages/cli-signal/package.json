@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-signal",
-  "version": "2.13.2",
+  "version": "2.13.3",
   "description": "DXOS Signal CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-signal#readme",
   "license": "AGPL-3.0",

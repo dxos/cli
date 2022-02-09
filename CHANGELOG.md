@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.13.3](https://www.github.com/dxos/cli/compare/v2.13.2...v2.13.3) (2022-02-09)
+
+
+### Bug Fixes
+
+* bad merge fix. ([#418](https://www.github.com/dxos/cli/issues/418)) ([eeb1b28](https://www.github.com/dxos/cli/commit/eeb1b289ae71ab6cde96d7af0f39fdbd69b32523))
+* upd deps. ([#420](https://www.github.com/dxos/cli/issues/420)) ([2ac6eb1](https://www.github.com/dxos/cli/commit/2ac6eb118617a48e7baa1714f98abaf854af72db))
+
 ### [2.13.2](https://www.github.com/dxos/cli/compare/v2.13.1...v2.13.2) (2022-02-08)
 
 
