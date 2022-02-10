@@ -142,8 +142,8 @@ describe('CLI', () => {
 
   describe('dxns', () => {
     it('create dxns account', async () => {
-      await cmd('dxns account recover --mnemonic "//Alice"')
-    })
+      await cmd('dxns account recover --mnemonic "//Alice"');
+    });
 
     it('seed', async () => {
       await cmd('dxns seed --mnemonic //Alice --verbose').run();

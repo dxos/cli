@@ -55,7 +55,7 @@ export const recoverAccount = ({ getDXNSClient }: Params) => async (argv: any) =
   });
 
   const account = keypair.address
-  if (!accountClient.getAccount(account)) {
+  if (!await accountClient.getAccount(account)) {
     await accountClient.createAccount();
   }
 
@@ -74,4 +74,15 @@ export const addDeviceToAccount = ({ getDXNSClient, config }: Params) => async (
   for (const device of devices) {
     await accountClient.addDeviceToAccount(account, device);
   }
+};
+
+export const listDevices = ({ getDXNSClient, config }: Params) => async (argv: any) => {
+  const {json} = argv;
+  const { accountClient, keypair } = await getDXNSClient();
+  const account = keypair?.address ?? config.get('runtime.services.dxns.account');
+  assert(account, 'Create a DXNS account using `dx dxns account`')
+  
+  const accountRecord = await accountClient.getAccount(account);
+  
+  print({ devices: accountRecord?.devices.join('') }, {json})
 };
