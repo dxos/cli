@@ -37,7 +37,7 @@
     "@dxos/async": "~2.26.1",
     "@dxos/cli-core": "workspace:*",
     "@dxos/signal": "~2.26.1",
-    "@dxos/util": "^2.25.0",
+    "@dxos/util": "^2.26.1",
     "sodium-universal": "~3.0.4",
     "sodium-native": "~3.3.0",
     "ws": "~8.4.2",

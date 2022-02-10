@@ -42,7 +42,7 @@
     "@dxos/cli-core": "workspace:*",
     "@dxos/debug": "~2.26.1",
     "@dxos/registry-client": "~2.26.1",
-    "@dxos/util": "^2.25.0",
+    "@dxos/util": "^2.26.1",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@polkadot/api": "4.17.1",
     "assert": "^2.0.0",
