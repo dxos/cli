@@ -6,6 +6,9 @@ import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
+import { getBlocks } from '../handlers/block';
+import { build, publish, register } from '../handlers/deploy';
+import { addDummyData } from '../handlers/dummy-data';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { Params } from '../interfaces';
@@ -59,5 +62,45 @@ export const DXNSModule = (params: Params) => {
 
         handler: asyncHandler(seedRegistry(params))
       })
+
+      .command({
+        command: ['block'],
+        describe: 'Get current DXNS block number.',
+
+        handler: asyncHandler(getBlocks(params))
+      })
+
+      .command({
+        command: ['dummy'],
+        describe: 'Adds all dummy data necessary for testing purposes.',
+
+        handler: asyncHandler(addDummyData(params))
+      })
+
+      .command({
+        command: ['deploy'],
+        describe: 'Deploy and Register any DXOS entity.',
+
+        builder: (yargs: Argv) => yargs
+          .strict(false)
+          .version(false)
+          .option('name', { type: 'array' })
+          .option('domain', { type: 'string' })
+          .option('version', { type: 'string' })
+          .option('skipExisting', { type: 'boolean' })
+          .option('tag', { type: 'array' })
+          .option('timeout', { type: 'string', default: '10m' })
+          .option('path', { type: 'string' })
+          .option('config', { type: 'string' })
+          .option('type', { type: 'string' })
+          .option('hash-path', { type: 'string' }),
+
+        handler: asyncHandler(async (argv: any) => {
+          await build()(argv);
+          const cid = await publish(params.config)(argv);
+          await register({ cid, ...params })(argv);
+        })
+      })
+
   };
 };
