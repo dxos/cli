@@ -6,7 +6,7 @@ import { print } from '@dxos/cli-core';
 import { raise } from '@dxos/debug';
 import { createCID, DXN, IRegistryClient } from '@dxos/registry-client';
 
-import { Params } from './common';
+import { Params } from '../interfaces';
 
 const BOT_TYPE_DXN = 'dxos:type.bot';
 

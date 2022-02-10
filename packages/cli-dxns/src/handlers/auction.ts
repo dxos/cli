@@ -6,7 +6,7 @@ import assert from 'assert';
 
 import { print } from '@dxos/cli-core';
 
-import { Params } from './common';
+import { Params } from '../interfaces';
 
 export const createAuction = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;

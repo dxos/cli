@@ -5,7 +5,8 @@
 import { print } from '@dxos/cli-core';
 import { DXN } from '@dxos/registry-client';
 
-import { Params, displayResource } from './common';
+import { Params } from '../interfaces';
+import { displayResource } from './common';
 
 export const listResources = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;

@@ -12,7 +12,7 @@ import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 
-import type { Params } from '../../modules/dxns';
+import { Params } from '../../interfaces';
 import { loadConfig } from '../../utils/config';
 
 const DEFAULT_CID_PATH = 'hash';

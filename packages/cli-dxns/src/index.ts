@@ -2,30 +2,18 @@
 // Copyright 2020 DXOS.org
 //
 
-import { ApiPromise } from '@polkadot/api';
-import { Keyring } from '@polkadot/keyring';
-import { KeyringPair } from '@polkadot/keyring/types';
 import debug from 'debug';
 import { readFileSync } from 'fs';
 import path from 'path';
 
-import { createClient as createDxosClient, createCLI } from '@dxos/cli-core';
+import { createCLI, createClient as createDxosClient } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
-import { createApiPromise, IAuctionsClient, IRegistryClient, ApiTransactionHandler, createKeyring, RegistryClient, AuctionsClient, SignTxFunction, DxosClientSigner } from '@dxos/registry-client';
+import { ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
 
+import { DXNSClient } from './interfaces';
 import { DXNSModule } from './modules/dxns';
 
 const log = debug('dxos:cli-dxns');
-
-export interface DXNSClient {
-  apiRaw: ApiPromise,
-  keyring: Keyring,
-  keypair?: KeyringPair,
-  registryClient: IRegistryClient,
-  auctionsClient: IAuctionsClient,
-  transactionHandler: ApiTransactionHandler,
-  dxosClient: Client
-}
 
 let dxosClient: Client | undefined;
 const getDxosClient = async (config: any) => {

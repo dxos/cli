@@ -4,7 +4,7 @@
 
 import { DXN, CID } from '@dxos/registry-client';
 
-import { DXNSClient } from '../index';
+import { DXNSClient } from '../interfaces';
 
 export const resolveDXNorCID = async (client: DXNSClient, argv: any): Promise<CID> => {
   let dxn: DXN | undefined;

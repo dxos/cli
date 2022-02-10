@@ -6,8 +6,9 @@ import pb from 'protobufjs';
 
 import { DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
 
+import { Params } from '../interfaces';
 import { resolveDXNorCID, uploadToIPFS } from '../utils';
-import { Params, printRecord, printRecords, printResource } from './common';
+import { printRecord, printRecords, printResource } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
