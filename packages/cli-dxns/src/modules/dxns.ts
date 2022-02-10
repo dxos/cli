@@ -6,7 +6,7 @@ import { Argv } from 'yargs';
 
 import { asyncHandler, CoreState } from '@dxos/cli-core';
 
-import { generateAccount, listAccounts, recoverAccount } from '../handlers/account';
+import { addDeviceToAccount, generateAccount, listAccounts, recoverAccount } from '../handlers/account';
 import { createAuction, bidAuction, closeAuction, forceCloseAuction, claimAuction, listAuctions } from '../handlers/auction';
 import { getBalance, increaseBalance } from '../handlers/balance';
 import { getBlocks } from '../handlers/block';
@@ -273,6 +273,12 @@ export const DXNSModule = (params: Params) => {
             builder: yargs => yargs
               .option('mnemonic', { type: 'string', array: false }),
             handler: asyncHandler(recoverAccount(params))
+          })
+          .command({
+            command: ['add-device'],
+            describe: 'Add a new device to an existing DXNS account.',
+            builder: yargs => yargs,
+            handler: asyncHandler(addDeviceToAccount(params))
           })
       })
 
