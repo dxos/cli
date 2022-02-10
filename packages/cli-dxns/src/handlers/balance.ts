@@ -8,7 +8,7 @@ import fetch from 'node-fetch';
 
 import { print } from '@dxos/cli-core';
 
-import { Params } from './common';
+import { Params } from '../interfaces';
 
 export const getBalance = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;

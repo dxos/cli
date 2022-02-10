@@ -4,7 +4,7 @@
 
 import { print } from '@dxos/cli-core';
 
-import { Params } from './common';
+import { Params } from '../interfaces';
 
 export const listDomains = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;

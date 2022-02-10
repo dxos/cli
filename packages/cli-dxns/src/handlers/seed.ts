@@ -11,8 +11,8 @@ import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 import { DomainKey, DXN, IRegistryClient, TypeRecordMetadata } from '@dxos/registry-client';
 
+import { Params } from '../interfaces';
 import { uploadToIPFS } from '../utils';
-import { Params } from './common';
 
 const DEFAULT_BALANCE = '100000000000000000000';
 const DEFAULT_DOMAIN = 'dxos';
