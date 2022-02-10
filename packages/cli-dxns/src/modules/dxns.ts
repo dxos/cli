@@ -101,6 +101,5 @@ export const DXNSModule = (params: Params) => {
           await register({ cid, ...params })(argv);
         })
       })
-
   };
 };
