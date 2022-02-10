@@ -72,7 +72,7 @@ describe('CLI', () => {
         console.log(error);
       }
 
-      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/main/packages/cli/profiles/e2e.yml`).run();
+      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/rzadp/dxns-accounts/packages/cli/profiles/e2e.yml`).run();
     });
 
     it('select profile', async () => {
@@ -141,6 +141,10 @@ describe('CLI', () => {
   });
 
   describe('dxns', () => {
+    it('create dxns account', async () => {
+      await cmd('dxns account recover --mnemonic "//Alice"')
+    })
+
     it('seed', async () => {
       await cmd('dxns seed --mnemonic //Alice --verbose').run();
       await cmd('dxns dummy').run();

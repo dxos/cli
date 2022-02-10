@@ -6,7 +6,7 @@ import debug from 'debug';
 
 import { createClient as createDxosClient } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
-import { ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
+import { AccountClient, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
 
 import { DXNSClient } from './interfaces';
 
@@ -59,6 +59,7 @@ const _createDxnsClient = async (config: any, options: any): Promise<DXNSClient 
 
     const registryClient = new RegistryClient(apiPromise, signFn);
     const auctionsClient = new AuctionsClient(apiPromise, signFn);
+    const accountClient = new AccountClient(apiPromise, signFn);
     const transactionHandler = new ApiTransactionHandler(apiPromise, signFn);
 
     return {
@@ -67,6 +68,7 @@ const _createDxnsClient = async (config: any, options: any): Promise<DXNSClient 
       keypair,
       registryClient,
       auctionsClient,
+      accountClient,
       transactionHandler,
       dxosClient
     };

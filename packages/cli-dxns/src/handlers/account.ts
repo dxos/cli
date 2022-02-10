@@ -26,11 +26,11 @@ export const generateAccount = () => async (argv: any) => {
 };
 
 export const listAccounts = (params: Params) => async (argv: any) => {
-  const { getDXNSClient } = params;
+  const { getDXNSClient, config } = params;
 
   const client = await getDXNSClient();
   const { json } = argv;
-  const account = client.keypair?.address;
+  const account = client.keypair?.address ?? config.get('runtime.services.dxns.account');
 
   print({ account }, { json });
 
@@ -46,7 +46,7 @@ export const recoverAccount = ({ getDXNSClient }: Params) => async (argv: any) =
   const keyring = new Keyring({ type: 'sr25519' });
   const keypair = keyring.addFromUri(uri);
 
-  const { dxosClient } = await getDXNSClient();
+  const { dxosClient, accountClient } = await getDXNSClient();
 
   await dxosClient.halo.addKeyRecord({
     publicKey: PublicKey.from(decodeAddress(keypair.address)),
@@ -54,27 +54,24 @@ export const recoverAccount = ({ getDXNSClient }: Params) => async (argv: any) =
     type: KeyType.DXNS
   });
 
-  print({ account: keypair.address }, { json });
+  const account = keypair.address
+  if (!accountClient.getAccount(account)) {
+    await accountClient.createAccount();
+  }
+
+  print({ account }, { json });
   print('Manual step required: Put the account into your config > runtime > services > dxns > account');
 };
 
-export const addDeviceToAccount = ({ getDXNSClient }: Params) => async (argv: any) => {
-  const { mnemonic, json } = argv;
-  assert(mnemonic, 'Mnemonic is required');
-  const uri = mnemonic.join('');
+export const addDeviceToAccount = ({ getDXNSClient, config }: Params) => async (argv: {device: string[]}) => {
+  const { device: devices } = argv;
+  assert(devices, 'Device is required');
 
-  await cryptoWaitReady();
-  const keyring = new Keyring({ type: 'sr25519' });
-  const keypair = keyring.addFromUri(uri);
-
-  const { dxosClient } = await getDXNSClient();
-
-  await dxosClient.halo.addKeyRecord({
-    publicKey: PublicKey.from(decodeAddress(keypair.address)),
-    secretKey: Buffer.from(uri),
-    type: KeyType.DXNS
-  });
-
-  print({ account: keypair.address }, { json });
-  print('Manual step required: Put the account into your config > runtime > services > dxns > account');
+  const { accountClient, keypair } = await getDXNSClient();
+  const account = keypair?.address ?? config.get('runtime.services.dxns.account');
+  assert(account, 'Create a DXNS account using `dx dxns account`')
+  
+  for (const device of devices) {
+    await accountClient.addDeviceToAccount(account, device);
+  }
 };

@@ -34,7 +34,8 @@ export const accountCommand = (params: Params): CommandModule => ({
     .command({
       command: ['add-device'],
       describe: 'Add a new device to an existing DXNS account.',
-      builder: yargs => yargs,
+      builder: yargs => yargs
+        .option('device', { type: 'string', array: true}),
       handler: asyncHandler(addDeviceToAccount(params))
     })
 });
