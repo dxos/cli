@@ -7,6 +7,8 @@ import path from 'path';
 
 import { RUNNING_STATE, DockerContainer, DockerImage } from '@dxos/cli-core';
 
+import { overrideServices } from '../utils/override';
+
 const KUBE_PROFILE_ROOT = '.dx/kube';
 const KUBE_PROFILE_PATH = path.join(os.homedir(), KUBE_PROFILE_ROOT);
 
@@ -24,7 +26,7 @@ export const start = ({ kubeCompose }) => async (argv) => {
 
   const { services: { kube: service } } = kubeCompose;
 
-  const { name = service.container_name, keyPhrase, services, fqdn, letsencrypt, email, dev } = argv;
+  const { name = service.container_name, keyPhrase, services, servicesOverride, fqdn, letsencrypt, email, dev } = argv;
 
   const dockerImage = new DockerImage({ service, dev });
 
@@ -34,10 +36,12 @@ export const start = ({ kubeCompose }) => async (argv) => {
     `${KUBE_PROFILE_PATH}/storage:/root/.dx/storage:rw`
   ];
 
+  const servicesToRun = overrideServices(services, servicesOverride);
+
   // TODO(egorgripasov): Rm hardcoded WIRE.
   const env = [
     `DX_APP_SERVER_KEYPHRASE=${keyPhrase}`,
-    `DX_SERVICES=${services}`,
+    `DX_SERVICES=${servicesToRun}`,
     `HOST_OS=${capitalize(process.platform)}`,
     `KUBE_PROFILE_PATH=${KUBE_PROFILE_PATH}`,
     `KUBE_FQDN=${fqdn}`,

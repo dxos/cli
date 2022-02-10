@@ -310,6 +310,7 @@ export const DXNSModule = (params: Params) => {
           .option('tag', { type: 'array' })
           .option('timeout', { type: 'string', default: '10m' })
           .option('path', { type: 'string' })
+          .option('config', { type: 'string' })
           .option('type', { type: 'string' })
           .option('hash-path', { type: 'string' }),
 

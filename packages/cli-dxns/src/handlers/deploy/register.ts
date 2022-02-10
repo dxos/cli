@@ -25,9 +25,9 @@ export interface RegisterParams {
 }
 
 export const register = ({ cid, getDXNSClient }: RegisterParams) => async (argv: any) => {
-  const { verbose, version, tag, 'dry-run': noop, skipExisting, hashPath = DEFAULT_CID_PATH } = argv;
+  const { verbose, version, tag, 'dry-run': noop, skipExisting, hashPath = DEFAULT_CID_PATH, config: configPath } = argv;
 
-  const conf = await loadConfig();
+  const conf = await loadConfig(configPath);
   const { record: recordData, ...rest } = conf.values.module!;
 
   let { name, domain, type } = argv;
