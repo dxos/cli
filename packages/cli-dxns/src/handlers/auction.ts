@@ -56,14 +56,16 @@ export const forceCloseAuction = (params: Params) => async (argv: any) => {
 };
 
 export const claimAuction = (params: Params) => async (argv: any) => {
-  const { getDXNSClient } = params;
+  const { getDXNSClient, config } = params;
+  const account = config.get('runtime.services.dxns.account')
+  assert(account, 'Create a DXNS account using `dx dxns account`')
 
   const { name, json } = argv;
 
   assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
   const client = await getDXNSClient();
 
-  const domainKey = await client.auctionsClient.claimAuction(name);
+  const domainKey = await client.auctionsClient.claimAuction(name, account);
 
   print({ domainKey: domainKey.toHex() }, { json });
 };

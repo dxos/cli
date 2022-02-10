@@ -41,7 +41,7 @@ export const increaseBalance = (params: Params) => async (argv: any) => {
     const requestedFree = previousFree.add(new BN(amount));
     const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
 
-    const events = await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
+    const { events } = await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
     const event = events.map((e: any) => e.event).find(apiRaw.events.balances.BalanceSet.is);
     assert(event, 'Balance has not been set.');
 

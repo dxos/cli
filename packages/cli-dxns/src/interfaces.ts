@@ -9,6 +9,7 @@ import { KeyringPair } from '@polkadot/keyring/types';
 import { CoreState } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
 import { ApiTransactionHandler, IAuctionsClient, IRegistryClient } from '@dxos/registry-client';
+import { Config } from '@dxos/config';
 
 export interface DXNSClient {
   apiRaw: ApiPromise,
@@ -21,6 +22,6 @@ export interface DXNSClient {
 }
 
 export interface Params extends CoreState {
-  config: any,
+  config: Config,
   getDXNSClient(): Promise<DXNSClient>
 }

@@ -84,23 +84,22 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const client = await getDXNSClient();
   const { apiRaw, keypair, keyring, auctionsClient, transactionHandler } = client;
 
-  const account = keypair?.address;
+  const account = keypair?.address ?? config.get('runtime.services.dxns.account');
 
   let domainKey: DomainKey;
   if (!dataOnly) {
     const { mnemonic } = argv;
     assert(mnemonic, 'Sudo user mnemonic required');
+    assert(account, 'Create a DXNS account using `dx dxns account`')
     const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
     // Increase balance.
-    if (account) {
-      const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
-      const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
-      const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
+    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
+    const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
+    const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
 
-      verbose && log('Increasing Admin Balance..');
-      await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
-    }
+    verbose && log('Increasing Admin Balance..');
+    await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
 
     // Register Domain.
     verbose && log(`Creating auction for "${domain}" domain name..`);
@@ -110,7 +109,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
 
     verbose && log('Claiming Domain name..');
-    domainKey = await client.auctionsClient.claimAuction(domain);
+    domainKey = await client.auctionsClient.claimAuction(domain, account);
   } else {
     domainKey = await client.registryClient.resolveDomainName(domain);
   }
