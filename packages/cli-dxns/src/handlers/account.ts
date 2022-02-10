@@ -11,7 +11,7 @@ import { print } from '@dxos/cli-core';
 import { KeyType } from '@dxos/credentials';
 import { PublicKey } from '@dxos/crypto';
 
-import { Params } from './common';
+import { Params } from '../interfaces';
 
 export const generateAccount = () => async (argv: any) => {
   const { json } = argv;

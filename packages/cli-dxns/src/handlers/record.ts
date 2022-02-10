@@ -5,8 +5,9 @@
 import { print } from '@dxos/cli-core';
 import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-client';
 
+import { Params } from '../interfaces';
 import { resolveDXNorCID } from '../utils';
-import { displayRecord, Params } from './common';
+import { displayRecord } from './common';
 
 // TODO(marcin): Add query support.
 export const listRecords = (params: Params) => async (argv: any) => {
