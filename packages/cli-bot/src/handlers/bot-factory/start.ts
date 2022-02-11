@@ -17,7 +17,8 @@ export interface BotFactoryStartOptions extends CoreOptions {
   'single-instance': boolean,
   detached: boolean,
   'log-file'?: string,
-  'proc-name'?: string
+  'proc-name'?: string,
+  dev: boolean
 }
 
 export const botFactoryStartOptions = (yargs: Argv<CoreOptions>): Argv<BotFactoryStartOptions> => {
@@ -25,20 +26,23 @@ export const botFactoryStartOptions = (yargs: Argv<CoreOptions>): Argv<BotFactor
     .option('single-instance', { type: 'boolean', default: false })
     .option('detached', { type: 'boolean', alias: 'daemon', default: false })
     .option('log-file', { type: 'string' })
-    .option('proc-name', { type: 'string' });
+    .option('proc-name', { type: 'string' })
+    .option('dev', { type: 'boolean', default: false });
 };
 
 export interface StartOptions {
   singleInstance: string,
   logFile: string,
   detached: boolean,
-  procName?: string
+  dev: boolean
+  procName?: string,
 }
 
 export const start = () => async ({
   singleInstance,
   logFile,
   detached,
+  dev,
   procName = BOT_FACTORY_PROCESS_NAME
 }: StartOptions) => {
   const botFactoryEnvFile = path.join(process.cwd(), BOTFACTORY_ENV_FILE);
@@ -58,7 +62,8 @@ export const start = () => async ({
   };
 
   const bin = 'bot-factory';
-  const botFactoryRunnable = new Runnable(bin, []);
+  const binArgs = dev ? ['@swc-node/register'] : [];
+  const botFactoryRunnable = new Runnable(bin, binArgs);
 
   await botFactoryRunnable.run([], options);
 };
