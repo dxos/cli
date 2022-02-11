@@ -7,13 +7,14 @@ import os from 'os';
 
 import { Client } from '@dxos/client';
 import { Config, ConfigV1Object } from '@dxos/config';
-import { createKeyPair } from '@dxos/crypto';
+import { createKeyPair, keyPairFromSeedPhrase } from '@dxos/crypto';
 
 import { CLI_DEFAULT_PERSISTENT, getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
 
 type CreateClientOptions = {
   initProfile: boolean,
   name?: string
+  mnemonic?: string
 }
 
 export const createClient = async (
@@ -21,7 +22,7 @@ export const createClient = async (
   models: any[],
   options: CreateClientOptions
 ) => {
-  const { name, initProfile } = options;
+  const { name, mnemonic, initProfile } = options;
 
   let storagePath;
   const currentStoragePath = getCurrentProfilePath();
@@ -59,7 +60,7 @@ export const createClient = async (
     // TODO(dboreham): Allow seed phrase to be supplied by the user.
     const username = `cli:${os.userInfo().username}:${name}`;
 
-    await dataClient.halo.createProfile({ ...createKeyPair(), username });
+    await dataClient.halo.createProfile({ ...(mnemonic ? keyPairFromSeedPhrase(mnemonic) : createKeyPair()), username });
   }
 
   // Register models from other extensions.

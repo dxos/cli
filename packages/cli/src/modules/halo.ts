@@ -28,11 +28,11 @@ export const HaloModule = ({ config }: CoreState) => ({
         .option('name', { type: 'string', describe: 'Profile name', required: true }),
 
       handler: asyncHandler(async (argv: any) => {
-        const { name } = argv;
+        const { name, mnemonic } = argv;
 
         cleanSessionProfile();
 
-        const client = await createClient(config!, [], { name, initProfile: true });
+        const client = await createClient(config!, [], { name, mnemonic, initProfile: true });
         await client.destroy();
       })
     })
