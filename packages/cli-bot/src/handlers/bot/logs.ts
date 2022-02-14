@@ -11,22 +11,22 @@ import type { StateManager } from '@dxos/cli-data';
 import type { Config } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
 
-export interface RemoveParameters {
+export interface LogsParameters {
   stateManager: StateManager,
   config: Config
 }
 
-export interface BotRemoveOptions extends CoreOptions {
+export interface BotLogsOptions extends CoreOptions {
   botId: string;
 }
 
-export const botRemoveOptions = (yargs: Argv<CoreOptions>): Argv<BotRemoveOptions> => {
+export const botLogsOptions = (yargs: Argv<CoreOptions>): Argv<BotLogsOptions> => {
   return yargs
     .positional('botId', { type: 'string' })
     .demandOption('botId');
 };
 
-export const botRemove = ({ stateManager, config } : RemoveParameters) => async ({ botId } : BotRemoveOptions) => {
+export const botLogs = ({ stateManager, config } : LogsParameters) => async ({ botId } : BotLogsOptions) => {
   const topic = config.get('runtime.services.bot.topic');
   assert(topic, 'Topic must be provided required');
 
@@ -36,7 +36,6 @@ export const botRemove = ({ stateManager, config } : RemoveParameters) => async 
   try {
     await botFactoryClient.start(PublicKey.from(topic));
     const handle = await botFactoryClient.get(botId);
-    await handle.remove();
   } finally {
     await botFactoryClient.stop();
   }

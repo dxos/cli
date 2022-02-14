@@ -9,7 +9,7 @@ import yaml from 'js-yaml';
 import os from 'os';
 import path from 'path';
 
-import { Config, ConfigV1Object, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
+import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
 
 import envmap from './env-map.json';
 
@@ -122,7 +122,7 @@ export const getConfig = (configFilePath: string, argvConf = {}) => {
     }
   } : profileConfig;
 
-  const config = new Config<ConfigV1Object>(
+  const config = new Config(
     argvConf,
     mapFromKeyValues(envmap, process.env),
     customConfig

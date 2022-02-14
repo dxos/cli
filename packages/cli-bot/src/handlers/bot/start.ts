@@ -8,12 +8,12 @@ import { Argv } from 'yargs';
 import { BotFactoryClient } from '@dxos/bot-factory-client';
 import type { CoreOptions } from '@dxos/cli-core';
 import type { StateManager } from '@dxos/cli-data';
-import type { Config, ConfigV1Object } from '@dxos/config';
+import type { Config } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
 
-export interface StartPatameters {
+export interface StartParameters {
   stateManager: StateManager,
-  config: Config<ConfigV1Object>
+  config: Config
 }
 
 export interface BotStartOptions extends CoreOptions {
@@ -26,7 +26,7 @@ export const botStartOptions = (yargs: Argv<CoreOptions>): Argv<BotStartOptions>
     .demandOption('botId');
 };
 
-export const botStart = ({ stateManager, config } : StartPatameters) => async ({ botId } : BotStartOptions) => {
+export const botStart = ({ stateManager, config } : StartParameters) => async ({ botId } : BotStartOptions) => {
   const topic = config.get('runtime.services.bot.topic');
   assert(topic, 'Topic must be provided required');
 
