@@ -81,7 +81,7 @@ const _listServices = async (usage = true) => {
     exec: get(proc, 'pm2_env.pm_exec_path'),
     status: get(proc, 'pm2_env.status'),
     cpu: usage ? get(proc, 'monit.cpu') : 0,
-    memory: usage ? get(proc, 'monit.memory'): 0
+    memory: usage ? get(proc, 'monit.memory') : 0
   }));
   return { services, processes };
 };
