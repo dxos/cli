@@ -70,7 +70,7 @@ const _flushLogs = async (name: string) => {
   }
 };
 
-const _listServices = async () => {
+const _listServices = async (usage = true) => {
   let processes: Array<Proc> = [];
   let services = [];
   processes = await pm.list();
@@ -80,8 +80,8 @@ const _listServices = async () => {
     name: get(proc, 'name', '').replace(PROCESS_PREFIX, ''),
     exec: get(proc, 'pm2_env.pm_exec_path'),
     status: get(proc, 'pm2_env.status'),
-    cpu: get(proc, 'monit.cpu'),
-    memory: get(proc, 'monit.memory')
+    cpu: usage ? get(proc, 'monit.cpu') : 0,
+    memory: usage ? get(proc, 'monit.memory'): 0
   }));
   return { services, processes };
 };
