@@ -1,5 +1,17 @@
 # Changelog
 
+### [2.13.4](https://www.github.com/dxos/cli/compare/v2.13.3...v2.13.4) (2022-02-14)
+
+
+### Features
+
+* Bot factory dev flag ([#424](https://www.github.com/dxos/cli/issues/424)) ([53b90e6](https://www.github.com/dxos/cli/commit/53b90e68d3a983bb557d987af41bee0a9302c47a))
+
+
+### Bug Fixes
+
+* disable service usage by flag. ([#428](https://www.github.com/dxos/cli/issues/428)) ([b94011a](https://www.github.com/dxos/cli/commit/b94011a769d776e7c83e356399253c5b103f7731))
+
 ### [2.13.3](https://www.github.com/dxos/cli/compare/v2.13.2...v2.13.3) (2022-02-09)
 
 
