@@ -4,6 +4,7 @@
 
 import { Argv } from 'yargs';
 
+// eslint-disable-next-line
 import { buildBot } from '@dxos/botkit/dist/src/botkit';
 import { CoreOptions } from '@dxos/cli-core';
 export interface BotBuildOptions extends CoreOptions {
