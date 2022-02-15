@@ -142,8 +142,13 @@ describe('CLI', () => {
   });
 
   describe('dxns', () => {
-    it('create dxns account', async () => {
-      await cmd('dxns account recover --mnemonic "//Alice"');
+    it('create Polkadot address', async () => {
+      await cmd('dxns address recover --mnemonic "//Alice"').run();
+    });
+
+    it('create DXNS Account', async () => {
+      const account = await cmd('dxns account create').json();
+      console.log({account});
     });
 
     it('seed', async () => {
