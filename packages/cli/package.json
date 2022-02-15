@@ -41,8 +41,8 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.27.0",
-    "@dxos/random-access-multi-storage": "~2.27.0",
+    "@dxos/debug": "~2.27.1",
+    "@dxos/random-access-multi-storage": "~2.27.1",
     "assert": "^2.0.0",
     "download": "^8.0.0",
     "find-root": "^1.1.0",

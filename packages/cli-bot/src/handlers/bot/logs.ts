@@ -38,8 +38,8 @@ export const botLogs = ({ stateManager, config } : LogsParameters) => async ({ b
     const handle = await botFactoryClient.get(botId);
     const stream = handle.logsStream();
     await new Promise<void>(resolve => {
-      stream.subscribe(log => {
-        print(log.logs?.toString());
+      stream.subscribe(msg => {
+        print(msg.chunk?.toString());
       }, () => resolve());
     });
   } finally {
