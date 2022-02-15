@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-core",
-  "version": "2.13.3",
+  "version": "2.13.4",
   "description": "CLI Core",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
   "license": "AGPL-3.0",
@@ -72,7 +72,7 @@
     "@dxos/async": "~2.27.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.21",
+    "@dxos/eslint-plugin": "~1.0.24",
     "@types/dockerode": "3.2.3",
     "@types/download": "^6.2.4",
     "@types/find-remove": "^2.0.1",

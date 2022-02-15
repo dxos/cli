@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-data",
-  "version": "2.13.3",
+  "version": "2.13.4",
   "description": "DXOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
   "license": "AGPL-3.0",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@dxos/async": "~2.27.0",
-    "@dxos/eslint-plugin": "~1.0.21",
+    "@dxos/eslint-plugin": "~1.0.24",
     "@dxos/signal": "~2.27.0",
     "@types/lockfile": "^1.0.2",
     "eslint": "^7.13.0",

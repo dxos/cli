@@ -95,7 +95,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
         };
 
         const [{ services }, containerService] = await Promise.all([
-          await listServices(),
+          await listServices(usage),
           await listContainers()
         ]);
 

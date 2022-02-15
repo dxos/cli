@@ -10,7 +10,7 @@ import set from 'lodash.set';
 import { basename } from 'path';
 import semverInc from 'semver/functions/inc';
 
-import { Config, ConfigV1Object } from '@dxos/config';
+import { Config } from '@dxos/config';
 
 import { getBotConfig, updateBotConfig } from '../../config';
 
@@ -22,7 +22,7 @@ const updateConfig = async (cid: string) => {
   await updateBotConfig(botConfig);
 };
 
-export const publish = (config: Config<ConfigV1Object>) => async (argv: any) => {
+export const publish = (config: Config) => async (argv: any) => {
   const { buildPath } = argv;
   assert(buildPath, 'buildPath is required.');
 

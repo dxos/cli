@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-chat",
-  "version": "2.13.3",
+  "version": "2.13.4",
   "description": "DXOS Chat CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-chat#readme",
   "license": "AGPL-3.0",
@@ -46,7 +46,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.21",
+    "@dxos/eslint-plugin": "~1.0.24",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-node": "^10.2.1",

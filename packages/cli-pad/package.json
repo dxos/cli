@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-pad",
-  "version": "2.13.3",
+  "version": "2.13.4",
   "description": "DXOS Pad CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-pad#readme",
   "license": "AGPL-3.0",
@@ -50,7 +50,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.21",
+    "@dxos/eslint-plugin": "~1.0.24",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-node": "^10.2.1",

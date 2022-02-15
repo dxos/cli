@@ -8,9 +8,6 @@ jobs:
   publish:
     runs-on: [self-hosted, dind-actions-runner]
     timeout-minutes: 25
-    strategy:
-      matrix:
-        node-version: [16.1]
     env:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
@@ -20,9 +17,7 @@ jobs:
         clean: false
     - name: Check, install and build
       run: |
-        \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
-
-        npm install -g @microsoft/rush pnpm
+        \. "$NVM_DIR/nvm.sh" && nvm use
 
         # Install dependencies
         echo "::group::Install"
@@ -34,15 +29,13 @@ jobs:
         node common/scripts/github-actions-folding.js node common/scripts/install-run-rush.js test --verbose
     - name: Publish latest to NPM
       run:  |
-        \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}
-        npm install -g @microsoft/rush pnpm
+        \. "$NVM_DIR/nvm.sh" && nvm use
 
         # Publish under "latest" tag
         node common/scripts/install-run-rush.js publish --publish --include-all --tag latest
     - name: Publish dev to NPM
       run:  |
-        \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}
-        npm install -g @microsoft/rush pnpm
+        \. "$NVM_DIR/nvm.sh" && nvm use
 
         git config --global user.email "ci@dxos.org"
         git config --global user.name "ci"

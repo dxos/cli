@@ -6,7 +6,7 @@ import { spawn, SpawnOptions } from 'child_process';
 import { Argv } from 'yargs';
 
 import { CoreOptions } from '@dxos/cli-core';
-import { Config, ConfigV1Object } from '@dxos/config';
+import { Config } from '@dxos/config';
 import { log } from '@dxos/debug';
 
 import { BOTFACTORY_PACKAGE } from '../../config';
@@ -18,7 +18,7 @@ export interface BotFactoryInstallOptions extends CoreOptions {
   version?: string
 }
 
-export const botFactoryInstallOptions = (config: Config<ConfigV1Object>) => (yargs: Argv<CoreOptions>): Argv<BotFactoryInstallOptions> => {
+export const botFactoryInstallOptions = (config: Config) => (yargs: Argv<CoreOptions>): Argv<BotFactoryInstallOptions> => {
   return yargs.version(false)
     .option('npmClient', { default: config.get('runtime.cli.npmClient') })
     .demandOption('npmClient')

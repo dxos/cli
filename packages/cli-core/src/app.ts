@@ -10,7 +10,7 @@ import { Arguments } from 'yargs';
 import unparse from 'yargs-unparser';
 import yargs from 'yargs/yargs';
 
-import { Config, ConfigV1Object } from '@dxos/config';
+import { Config } from '@dxos/config';
 
 import { CoreOptions, coreOptions, FORWARD_OPTION } from './options';
 import { getLoggers } from './util/log';
@@ -20,7 +20,7 @@ const VERSION_COMMAND = 'version';
 const { log, logError } = getLoggers();
 
 export interface CoreState {
-  config?: Config<ConfigV1Object>,
+  config?: Config,
   getReadlineInterface?: Function,
   cliState: {interactive: boolean},
   models?: any[],

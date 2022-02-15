@@ -8,12 +8,12 @@ import { Argv } from 'yargs';
 import { BotFactoryClient } from '@dxos/bot-factory-client';
 import type { CoreOptions } from '@dxos/cli-core';
 import type { StateManager } from '@dxos/cli-data';
-import type { Config, ConfigV1Object } from '@dxos/config';
+import type { Config } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
 
 export interface StopParameters {
   stateManager: StateManager,
-  config: Config<ConfigV1Object>
+  config: Config
 }
 
 export interface BotStopOptions extends CoreOptions {

@@ -12,7 +12,7 @@ import readPkgUp from 'read-pkg-up';
 import { Argv } from 'yargs';
 
 import { isGlobalYarn, getGlobalModulesPath, CoreOptions } from '@dxos/cli-core';
-import { Config, ConfigV1Object, mapToKeyValues } from '@dxos/config';
+import { Config, mapToKeyValues } from '@dxos/config';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
 import { BOTFACTORY_ENV_FILE } from '../../config';
@@ -30,7 +30,7 @@ export interface BotFactorySetupOptions extends CoreOptions {
   topic?: string
 }
 
-export const botFactorySetupOptions = (config: Config<ConfigV1Object>) => (yargs: Argv<CoreOptions>): Argv<BotFactorySetupOptions> => {
+export const botFactorySetupOptions = (config: Config) => (yargs: Argv<CoreOptions>): Argv<BotFactorySetupOptions> => {
   return yargs
     .option('topic', { type: 'string', default: config.get('runtime.services.bot.topic') });
 };
