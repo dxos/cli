@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-mesh",
-  "version": "2.13.3",
+  "version": "2.13.4",
   "description": "DXOS Network CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-mesh#readme",
   "license": "AGPL-3.0",
@@ -35,9 +35,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.26.1",
+    "@dxos/async": "~2.27.0",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/network-manager": "~2.26.1",
+    "@dxos/network-manager": "~2.27.0",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "do-wrapper": "^4.1.2",
@@ -45,7 +45,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.21",
+    "@dxos/eslint-plugin": "~1.0.24",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-node": "^10.2.1",

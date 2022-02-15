@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-app",
-  "version": "2.13.3",
+  "version": "2.13.4",
   "description": "DXOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
   "license": "AGPL-3.0",
@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.26.1",
-    "@dxos/registry-client": "~2.26.1",
+    "@dxos/debug": "~2.27.0",
+    "@dxos/registry-client": "~2.27.0",
     "@dxos/util": "^2.25.0",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@polkadot/api": "4.17.1",
@@ -78,7 +78,7 @@
     "debug": "~4.3.3"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.21",
+    "@dxos/eslint-plugin": "~1.0.24",
     "@types/body-parser": "^1.19.1",
     "@types/cli-progress": "^3.9.2",
     "@types/cookie-parser": "^1.4.2",
