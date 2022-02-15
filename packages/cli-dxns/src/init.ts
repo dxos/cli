@@ -2,11 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
+import assert from 'assert';
 import debug from 'debug';
 
 import { CoreState, createClient as createDxosClient } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
-import { AccountClient, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
+import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
 
 import { DXNSClient } from './interfaces';
 import { Config } from '@dxos/config';
@@ -65,6 +66,12 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     const accountClient = new AccountClient(apiPromise, signFn);
     const transactionHandler = new ApiTransactionHandler(apiPromise, signFn);
 
+    const getDXNSAccount = () => {
+      const account = config.get('runtime.services.dxns.dxnsAccount');
+      assert(account, 'Create a DXNS account using `dx dxns account create`');
+      return AccountKey.fromHex(account);
+    };
+
     return {
       apiRaw: apiPromise,
       keyring,
@@ -73,7 +80,8 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
       auctionsClient,
       accountClient,
       transactionHandler,
-      dxosClient
+      dxosClient,
+      getDXNSAccount
     };
   }
 };

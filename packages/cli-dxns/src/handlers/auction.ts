@@ -5,7 +5,6 @@
 import assert from 'assert';
 
 import { print } from '@dxos/cli-core';
-import { AccountKey } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 
@@ -57,16 +56,14 @@ export const forceCloseAuction = (params: Params) => async (argv: any) => {
 };
 
 export const claimAuction = (params: Params) => async (argv: any) => {
-  const { getDXNSClient, config } = params;
-  const account = config.get('runtime.services.dxns.dxnsAccount');
-  assert(account, 'Create a DXNS account using `dx dxns account create`');
-
+  const { getDXNSClient } = params;
   const { name, json } = argv;
 
   assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
   const client = await getDXNSClient();
+  const account = client.getDXNSAccount();
 
-  const domainKey = await client.auctionsClient.claimAuction(name, AccountKey.fromHex(account));
+  const domainKey = await client.auctionsClient.claimAuction(name, account);
 
   print({ domainKey: domainKey.toHex() }, { json });
 };

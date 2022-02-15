@@ -62,29 +62,24 @@ const registerServices = async (options: RegisterServiceOptions) => {
   }
 };
 
-export const register = ({ getDXNSClient, config }: any) => async ({ domain, name, url }: any) => {
-  const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
+export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }: any) => {
+  const { registryClient, getDXNSAccount } = await getDXNSClient();
 
   const kubeType = await registryClient.getResourceRecord(DXN.parse(KUBE_DXN_NAME), 'latest');
   assert(kubeType);
   assert(kubeType.record.kind === RecordKind.Type);
 
-  const cid = await registryClient.insertDataRecord({
-    url
-  }, kubeType.record.cid, {
-  });
-
+  const cid = await registryClient.insertDataRecord({ url }, kubeType.record.cid, {});
   const domainKey = await registryClient.resolveDomainName(domain);
-  const account = config.get('runtime.services.dxns.dxnsAccount');
-  assert(account, 'Create a DXNS account using `dx dxns account create`');
   const dxn = DXN.fromDomainKey(domainKey, name);
-  await registryClient.updateResource(dxn, AccountKey.fromHex(account), cid);
+  const account = getDXNSAccount();
+  await registryClient.updateResource(dxn, account, cid);
   await registerServices({
     kubeName: name,
     registryClient,
     domainKey,
     kubeCID: cid,
     url,
-    account: AccountKey.fromHex(account)
+    account
   });
 };

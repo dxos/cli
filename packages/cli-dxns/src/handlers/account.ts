@@ -6,13 +6,10 @@ import assert from 'assert';
 
 import { sleep } from '@dxos/async';
 import { print } from '@dxos/cli-core';
-import { AccountKey } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 
-export const listAccount = (params: Params) => async (argv: any) => {
-  const { config } = params;
-
+export const listAccount = ({ config }: Params) => async (argv: any) => {
   const { json } = argv;
   const account = config.get('runtime.services.dxns.dxnsAccount');
 
@@ -21,11 +18,8 @@ export const listAccount = (params: Params) => async (argv: any) => {
   await sleep(2000);
 };
 
-export const createAccount = (params: Params) => async (argv: any) => {
-  const { getDXNSClient } = params;
-
+export const createAccount = ({ getDXNSClient }: Params) => async (argv: any) => {
   const { json } = argv;
-
   const { accountClient } = await getDXNSClient();
   const account = await accountClient.createAccount();
 
@@ -37,28 +31,24 @@ export const createAccount = (params: Params) => async (argv: any) => {
   }
 };
 
-export const addDeviceToAccount = ({ getDXNSClient, config }: Params) => async (argv: {device: string[]}) => {
+export const addDeviceToAccount = ({ getDXNSClient }: Params) => async (argv: {device: string[]}) => {
   const { device: devices } = argv;
   assert(devices, 'Device is required');
 
-  const account = config.get('runtime.services.dxns.dxnsAccount');
-  assert(account, 'Create an account using `dx dxns account create`.');
-
-  const { accountClient } = await getDXNSClient();
+  const { accountClient, getDXNSAccount } = await getDXNSClient();
+  const account = getDXNSAccount();
 
   for (const device of devices) {
-    await accountClient.addDeviceToAccount(AccountKey.fromHex(account), device);
+    await accountClient.addDeviceToAccount(account, device);
   }
 };
 
-export const listDevices = ({ getDXNSClient, config }: Params) => async (argv: any) => {
+export const listDevices = ({ getDXNSClient }: Params) => async (argv: any) => {
   const { json } = argv;
-  const { accountClient } = await getDXNSClient();
+  const { accountClient, getDXNSAccount } = await getDXNSClient();
+  const account = getDXNSAccount();
 
-  const account = config.get('runtime.services.dxns.dxnsAccount');
-  assert(account, 'Create an account using `dx dxns account create`.');
-
-  const accountRecord = await accountClient.getAccount(AccountKey.fromHex(account));
+  const accountRecord = await accountClient.getAccount(account);
 
   print({ devices: accountRecord?.devices.join('') }, { json });
 };

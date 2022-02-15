@@ -8,8 +8,7 @@ import { Argv } from 'yargs';
 import { CoreOptions } from '@dxos/cli-core';
 import { Config } from '@dxos/config';
 import { log } from '@dxos/debug';
-import { AccountKey, CID, DXN, RecordKind } from '@dxos/registry-client';
-import type { IRegistryClient } from '@dxos/registry-client';
+import { CID, DXN, RecordKind } from '@dxos/registry-client';
 
 import { getBotConfig } from '../../config';
 import type { Params } from '../../modules/bot';
@@ -52,9 +51,6 @@ export const register = ({ getDXNSClient, config }: RegisterParams) => async (ar
   assert(conf.name, 'Invalid Bot Name.');
   assert(conf.version, 'Invalid Bot Version.');
 
-  const account = config.get('runtime.services.dxns.dxnsAccount');
-  assert(account, 'Create a DXNS account using `dx dxns account create`');
-
   log(`Registering ${conf.name}@${conf.version}...`);
 
   if (verbose || noop) {
@@ -64,7 +60,8 @@ export const register = ({ getDXNSClient, config }: RegisterParams) => async (ar
   if (!noop) {
     const { description, package: pkg, ...rest } = conf;
 
-    const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
+    const { registryClient, getDXNSAccount } = await getDXNSClient();
+    const account = getDXNSAccount();
 
     const botType = await registryClient.getResourceRecord(DXN.parse(BOT_DXN_NAME), 'latest');
     assert(botType);
@@ -79,7 +76,7 @@ export const register = ({ getDXNSClient, config }: RegisterParams) => async (ar
 
     const domainKey = await registryClient.resolveDomainName(domain);
     const dxn = DXN.fromDomainKey(domainKey, name);
-    await registryClient.updateResource(dxn, AccountKey.fromHex(account), cid);
+    await registryClient.updateResource(dxn, account, cid);
   }
 
   log(`Registered ${conf.name}@${conf.version}.`);

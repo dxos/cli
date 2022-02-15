@@ -2,11 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import assert from 'assert';
 import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
-import { AccountKey } from '@dxos/registry-client';
 
 import { getBlocks } from '../handlers/block';
 import { build, publish, register } from '../handlers/deploy';
@@ -102,9 +100,9 @@ export const DXNSModule = (params: Params) => {
         handler: asyncHandler(async (argv: any) => {
           await build()(argv);
           const cid = await publish(params.config)(argv);
-          const account = params.config.get('runtime.services.dxns.dxnsAccount');
-          assert(account, 'Create a DXNS account using `dx dxns account create`');
-          await register({ cid, account: AccountKey.fromHex(account), ...params })(argv);
+          const client = await params.getDXNSClient();
+          const account = client.getDXNSAccount();
+          await register({ cid, account, ...params })(argv);
         })
       })
   };

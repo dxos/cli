@@ -9,7 +9,7 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { AccountKey, DomainKey, DXN, IRegistryClient, TypeRecordMetadata } from '@dxos/registry-client';
+import { DomainKey, DXN, IRegistryClient, TypeRecordMetadata } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { uploadToIPFS } from '../utils';
@@ -79,12 +79,11 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const { domain = DEFAULT_DOMAIN, dataOnly = false, json, verbose } = argv;
 
   const client = await getDXNSClient();
+  const account = client.getDXNSAccount();
   const { apiRaw, keypair, keyring, auctionsClient, transactionHandler } = client;
 
   const address = keypair?.address ?? config.get('runtime.services.dxns.polkadotAddress');
   assert(address, 'Create a Polkadot address using `dx dxns address`');
-  const account = config.get('runtime.services.dxns.dxnsAccount');
-  assert(account, 'Create a DXNS account using `dx dxns account create`');
 
   let domainKey: DomainKey;
   if (!dataOnly) {
@@ -108,7 +107,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
 
     verbose && log('Claiming Domain name..');
-    domainKey = await client.auctionsClient.claimAuction(domain, AccountKey.fromHex(account));
+    domainKey = await client.auctionsClient.claimAuction(domain, account);
   } else {
     domainKey = await client.registryClient.resolveDomainName(domain);
   }
@@ -128,7 +127,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
     const cid = await client.registryClient.insertTypeRecord(root, fqn, { ...meta, description });
     const dxn = DXN.fromDomainKey(domainKey, typeName);
-    await client.registryClient.updateResource(dxn, AccountKey.fromHex(account), cid);
+    await client.registryClient.updateResource(dxn, account, cid);
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
