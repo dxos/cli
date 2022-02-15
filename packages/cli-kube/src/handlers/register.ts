@@ -5,7 +5,7 @@
 import assert from 'assert';
 import got from 'got';
 
-import { CID, DomainKey, DXN, IRegistryClient, RecordKind } from '@dxos/registry-client';
+import { AccountKey, CID, DomainKey, DXN, IRegistryClient, RecordKind } from '@dxos/registry-client';
 
 export const KUBE_DXN_NAME = 'dxos:type.kube';
 export const SERVICE_TYPE_DXN = 'dxos:type.service';
@@ -16,7 +16,8 @@ interface RegisterServiceOptions {
   registryClient: IRegistryClient,
   kubeCID: CID,
   domainKey: DomainKey,
-  url: string
+  url: string,
+  account: AccountKey
 }
 
 const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: string) => {
@@ -57,11 +58,11 @@ const registerServices = async (options: RegisterServiceOptions) => {
 
     const name = `${options.kubeName}.service.${service.name}`;
     const dxn = DXN.fromDomainKey(options.domainKey, name);
-    await options.registryClient.updateResource(dxn, cid);
+    await options.registryClient.updateResource(dxn, options.account, cid);
   }
 };
 
-export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }: any) => {
+export const register = ({ getDXNSClient, config }: any) => async ({ domain, name, url }: any) => {
   const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
 
   const kubeType = await registryClient.getResourceRecord(DXN.parse(KUBE_DXN_NAME), 'latest');
@@ -74,13 +75,16 @@ export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }
   });
 
   const domainKey = await registryClient.resolveDomainName(domain);
+  const account = config.get('runtime.services.dxns.dxnsAccount');
+  assert(account, 'Create a DXNS account using `dx dxns account create`')
   const dxn = DXN.fromDomainKey(domainKey, name);
-  await registryClient.updateResource(dxn, cid);
+  await registryClient.updateResource(dxn, AccountKey.fromHex(account), cid);
   await registerServices({
     kubeName: name,
     registryClient,
     domainKey,
     kubeCID: cid,
-    url
+    url,
+    account: AccountKey.fromHex(account)
   });
 };
