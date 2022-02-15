@@ -6,7 +6,7 @@ import assert from 'assert';
 import { Argv } from 'yargs';
 
 import { BotFactoryClient } from '@dxos/bot-factory-client';
-import type { CoreOptions } from '@dxos/cli-core';
+import { CoreOptions, print } from '@dxos/cli-core';
 import type { StateManager } from '@dxos/cli-data';
 import type { Config } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
@@ -36,6 +36,12 @@ export const botLogs = ({ stateManager, config } : LogsParameters) => async ({ b
   try {
     await botFactoryClient.start(PublicKey.from(topic));
     const handle = await botFactoryClient.get(botId);
+    const stream = handle.logsStream();
+    await new Promise<void>(resolve => {
+      stream.subscribe(log => {
+        print(log.logs?.toString());
+      }, () => resolve());
+    });
   } finally {
     await botFactoryClient.stop();
   }

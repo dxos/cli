@@ -61,8 +61,8 @@ export const start = () => async ({
     logFile
   };
 
-  const bin = 'bot-factory';
-  const binArgs = dev ? ['@swc-node/register'] : [];
+  const bin = '/Users/vladyslav/dxos/protocols/packages/bot/botkit/bin/main.js';
+  const binArgs = dev ? ['ts-node/register/transpile-only'] : [];
   const botFactoryRunnable = new Runnable(bin, binArgs);
 
   await botFactoryRunnable.run([], options);
