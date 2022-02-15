@@ -2,16 +2,16 @@
 // Copyright 2020 DXOS.org
 //
 
+import assert from 'assert';
 import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 import type { DXNSClient } from '@dxos/cli-dxns';
 import { log } from '@dxos/debug';
+import { AccountKey } from '@dxos/registry-client';
 
 import { DEFAULT_PORT } from '../config';
 import { build, publish, register, query, serve, create } from '../handlers';
-import assert from 'assert';
-import { AccountKey } from '@dxos/registry-client';
 
 const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/app-template';
 
@@ -83,7 +83,7 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
 
         handler: asyncHandler(async (argv: any) => {
           const account = config.get('runtime.services.dxns.dxnsAccount');
-          assert(account, 'Create a DXNS account using `dx dxns account create`')
+          assert(account, 'Create a DXNS account using `dx dxns account create`');
           return register({ getAppRecord, getDXNSClient, account: AccountKey.fromHex(account) })(argv);
         })
       })
@@ -115,7 +115,7 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
           await build(config, { getAppRecord })(argv);
           await publish(config)(argv);
           const account = config.get('runtime.services.dxns.dxnsAccount');
-          assert(account, 'Create a DXNS account using `dx dxns account create`')
+          assert(account, 'Create a DXNS account using `dx dxns account create`');
           await register({ getAppRecord, getDXNSClient, account: AccountKey.fromHex(account) })(argv);
         })
       })
