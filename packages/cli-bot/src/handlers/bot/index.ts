@@ -11,3 +11,4 @@ export * from './list';
 export * from './start';
 export * from './stop';
 export * from './remove';
+export * from './logs';
