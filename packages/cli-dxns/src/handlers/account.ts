@@ -29,7 +29,7 @@ export const createAccount = (params: Params) => async (argv: any) => {
   const { accountClient } = await getDXNSClient();
   const account = await accountClient.createAccount();
 
-  print({ account }, { json });
+  print({ account: account.toHex() }, { json });
 
   await sleep(2000);
   print('Manual step required: Put the account into your config > runtime > services > dxns > dxnsAccount');

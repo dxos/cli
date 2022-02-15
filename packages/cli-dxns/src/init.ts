@@ -4,16 +4,18 @@
 
 import debug from 'debug';
 
-import { createClient as createDxosClient } from '@dxos/cli-core';
+import { CoreState, createClient as createDxosClient } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
 import { AccountClient, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
 
 import { DXNSClient } from './interfaces';
+import { Config } from '@dxos/config';
+import assert from 'assert';
 
 const log = debug('dxos:cli-dxns');
 
 let dxosClient: Client | undefined;
-const getDxosClient = async (config: any) => {
+const getDxosClient = async (config: Config) => {
   if (!dxosClient) {
     dxosClient = await createDxosClient(config, [], { initProfile: false });
   }
@@ -21,24 +23,25 @@ const getDxosClient = async (config: any) => {
 };
 
 let dxnsClient: DXNSClient | undefined;
-const createDxnsClientGetter = (config: any, options: any) => async () => {
+const createDxnsClientGetter = (config: Config, state: Partial<CoreState>) => async () => {
   if (!dxnsClient) {
-    dxnsClient = await _createDxnsClient(config, options);
+    dxnsClient = await _createDxnsClient(config, state);
   }
   return dxnsClient;
 };
 
-const _createDxnsClient = async (config: any, options: any): Promise<DXNSClient | undefined> => {
-  const { profilePath, profileExists } = options;
+const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Promise<DXNSClient | undefined> => {
+  const { profilePath, profileExists } = state;
   if (profilePath && profileExists) {
     // The keyring need to be created AFTER api is created or we need to wait for WASM init.
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
     const keyring = await createKeyring();
     const accountUri = config.get('runtime.services.dxns.accountUri');
-    const account = config.get('runtime.services.dxns.account');
+    const polkadotAddress = config.get('runtime.services.dxns.polkadotAddress');
     const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
 
     const apiServerUri = config.get('runtime.services.dxns.server');
+    assert(apiServerUri, 'Missing DXNS endpoint config at `runtime.services.dxns.server`')
     const apiPromise = await createApiPromise(apiServerUri);
 
     const dxosClient = await getDxosClient(config);
@@ -47,11 +50,11 @@ const _createDxnsClient = async (config: any, options: any): Promise<DXNSClient 
     if (keypair) {
       log('Deprecated: Transactions will be signed with account from accountUri in your CLI profile.');
       signFn = tx => tx.signAsync(keypair);
-    } else if (account) {
+    } else if (polkadotAddress) {
       log('Transactions will be signed using DXNS key stored in Halo.');
-      log('Using account: ', account);
-      const dxosClientSigner = new DxosClientSigner(dxosClient, account);
-      signFn = tx => tx.signAsync(account, { signer: dxosClientSigner });
+      log('Using account: ', polkadotAddress);
+      const dxosClientSigner = new DxosClientSigner(dxosClient, polkadotAddress);
+      signFn = tx => tx.signAsync(polkadotAddress, { signer: dxosClientSigner });
     } else {
       log('No DXNS keys to sign transactions with - only read transactions available.');
       signFn = tx => tx;
@@ -75,11 +78,16 @@ const _createDxnsClient = async (config: any, options: any): Promise<DXNSClient 
   }
 };
 
-export const initDXNSCliState = async (state: any) => {
+export interface CliDXNSState extends CoreState {
+  getDXNSClient: ReturnType<typeof createDxnsClientGetter>
+}
+
+export const initDXNSCliState = async (state: CoreState) => {
   const { config, profilePath, profileExists } = state;
+  assert(config, 'Missing config.');
 
   if (profilePath && profileExists) {
-    state.getDXNSClient = createDxnsClientGetter(config, { profilePath, profileExists });
+    (state as CliDXNSState).getDXNSClient = createDxnsClientGetter(config, { profilePath, profileExists });
   }
 };
 
