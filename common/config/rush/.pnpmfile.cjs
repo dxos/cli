@@ -63,5 +63,9 @@ function readPackage(packageJson, context) {
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
 
+  if(packageJson.name === 'eslint-plugin-unused-imports') {
+    packageJson.peerDependencies['@typescript-eslint/eslint-plugin'] = '^4.14.2 || ^5.0.0'
+  }
+
   return packageJson;
 }

@@ -8,7 +8,7 @@ import yaml from 'js-yaml';
 import readPkgUp from 'read-pkg-up';
 import parse from 'yargs-parser';
 
-import { Config, ConfigV1Object } from '@dxos/config';
+import { Config } from '@dxos/config';
 
 import { App } from './app';
 import { getConfig, getActiveProfilePath } from './config';
@@ -91,7 +91,7 @@ const getRunnable = (extension: ExtensionInfo) => {
 
     // Load config if profile exists.
     // These defaults are required as during 'dx profile init', there is no config to load, and so no client can be created.
-    const config: Config<ConfigV1Object> = profileExists ? (await getConfig(profilePath!)) : { get: () => ({}) } as any;
+    const config: Config = profileExists ? (await getConfig(profilePath!)) : { get: () => ({}) } as any;
 
     const app = new App({ modules, getModules, config, options, version, profilePath, profileExists });
 
