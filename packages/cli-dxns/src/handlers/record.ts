@@ -2,8 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
+
 import { print } from '@dxos/cli-core';
-import { DXN, DomainKey, CID, RecordMetadata } from '@dxos/registry-client';
+import { DXN, DomainKey, CID, RecordMetadata, AccountKey } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { resolveDXNorCID } from '../utils';
@@ -33,13 +35,16 @@ export const getRecord = (params: Params) => async (argv: any) => {
 };
 
 export const addDataRecord = (params: Params) => async (argv: any) => {
-  const { getDXNSClient } = params;
+  const { getDXNSClient, config } = params;
 
   const { domain, name, description, json, schema } = argv;
 
   if (!!name !== !!domain) {
     throw new Error('Must specify both name and domain or neither.');
   }
+
+  const account = config.get('runtime.services.dxns.dxnsAccount');
+  assert(account, 'Create a DXNS account using `dx dxns account create`');
 
   const client = await getDXNSClient();
 
@@ -55,7 +60,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
     const dxn = DXN.fromDomainKey(domainKey, resourceName);
-    await client.registryClient.updateResource(dxn, cid);
+    await client.registryClient.updateResource(dxn, AccountKey.fromHex(account), cid);
     return print({
       id: DXN.fromDomainKey(domainKey, resourceName).toString(),
       cid: cid.toB58String(),

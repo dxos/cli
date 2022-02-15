@@ -2,9 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
+import assert from 'assert';
 import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
+import { AccountKey } from '@dxos/registry-client';
 
 import { getBlocks } from '../handlers/block';
 import { build, publish, register } from '../handlers/deploy';
@@ -21,6 +23,7 @@ import {
   resourceCommand,
   typeCommand
 } from './commands';
+import { addressCommand } from './commands/address';
 
 export const DXNSModule = (params: Params) => {
   return {
@@ -33,6 +36,7 @@ export const DXNSModule = (params: Params) => {
       .command(balanceCommand(params))
       .command(domainCommand(params))
       .command(auctionCommand(params))
+      .command(addressCommand(params))
       .command(accountCommand(params))
 
       .command({
@@ -98,7 +102,9 @@ export const DXNSModule = (params: Params) => {
         handler: asyncHandler(async (argv: any) => {
           await build()(argv);
           const cid = await publish(params.config)(argv);
-          await register({ cid, ...params })(argv);
+          const account = params.config.get('runtime.services.dxns.dxnsAccount');
+          assert(account, 'Create a DXNS account using `dx dxns account create`');
+          await register({ cid, account: AccountKey.fromHex(account), ...params })(argv);
         })
       })
   };

@@ -2,9 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
 import pb from 'protobufjs';
 
-import { DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
+import { AccountKey, DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { resolveDXNorCID, uploadToIPFS } from '../utils';
@@ -35,6 +36,9 @@ export const addType = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
   const config = params.config;
 
+  const account = params.config.get('runtime.services.dxns.dxnsAccount');
+  assert(account, 'Create a DXNS account using `dx dxns account create`');
+
   if (!!resourceName !== !!domain) {
     throw new Error('You must specify both name and domain or neither.');
   }
@@ -59,7 +63,7 @@ export const addType = (params: Params) => async (argv: any) => {
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
     const dxn = DXN.fromDomainKey(domainKey, resourceName as string);
-    await client.registryClient.updateResource(dxn, cid);
+    await client.registryClient.updateResource(dxn, AccountKey.fromHex(account), cid);
     const resource = {
       id: DXN.fromDomainKey(domainKey, resourceName as string)
     };

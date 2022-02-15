@@ -2,8 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
+
 import { print } from '@dxos/cli-core';
-import { DXN } from '@dxos/registry-client';
+import { AccountKey, DXN } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { displayResource } from './common';
@@ -32,11 +34,14 @@ export const getResource = (params: Params) => async (argv: any) => {
 };
 
 export const deleteResource = (params: Params) => async (argv: any) => {
-  const { getDXNSClient } = params;
+  const { getDXNSClient, config } = params;
 
   const { dxn } = argv;
   const parsedDxn = DXN.parse(dxn);
 
+  const account = config.get('runtime.services.dxns.dxnsAccount');
+  assert(account, 'Create a DXNS account using `dx dxns account create`');
+
   const client = await getDXNSClient();
-  await client.registryClient.deleteResource(parsedDxn);
+  await client.registryClient.deleteResource(parsedDxn, AccountKey.fromHex(account));
 };

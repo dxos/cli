@@ -6,36 +6,29 @@ import { CommandModule } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { addDeviceToAccount, generateAccount, listAccounts, listDevices, recoverAccount } from '../../handlers/account';
+import { addDeviceToAccount, createAccount, listAccount, listDevices } from '../../handlers/account';
 import { Params } from '../../interfaces';
 
 export const accountCommand = (params: Params): CommandModule => ({
   command: ['account'],
-  describe: 'Account commands.',
+  describe: 'DXNS Account commands.',
   handler: () => {},
   builder: yargs => yargs
     .command({
       command: ['list'],
-      describe: 'List accounts.',
-      handler: asyncHandler(listAccounts(params))
+      describe: 'List DXNS ACCOUNTS.',
+      handler: asyncHandler(listAccount(params))
     })
     .command({
-      command: ['generate'],
-      describe: 'Generate new account.',
-      handler: asyncHandler(generateAccount())
-    })
-    .command({
-      command: ['recover'],
-      describe: 'Recover an existing DXNS account.',
-      builder: yargs => yargs
-        .option('mnemonic', { type: 'string', array: false }),
-      handler: asyncHandler(recoverAccount(params))
+      command: ['create'],
+      describe: 'Create new DXNS account.',
+      handler: asyncHandler(createAccount(params))
     })
     .command({
       command: ['add-device'],
       describe: 'Add a new device to an existing DXNS account.',
       builder: yargs => yargs
-        .option('device', { type: 'string', array: true}),
+        .option('device', { type: 'string', array: true }),
       handler: asyncHandler(addDeviceToAccount(params))
     })
     .command({
