@@ -115,7 +115,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         describe: 'Register bot in DXNS.',
         builder: botRegisterOptions,
 
-        handler: asyncHandler(register({ getDXNSClient }))
+        handler: asyncHandler(register({ getDXNSClient, config }))
       })
 
       .command({

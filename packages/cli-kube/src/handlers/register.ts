@@ -76,7 +76,7 @@ export const register = ({ getDXNSClient, config }: any) => async ({ domain, nam
 
   const domainKey = await registryClient.resolveDomainName(domain);
   const account = config.get('runtime.services.dxns.dxnsAccount');
-  assert(account, 'Create a DXNS account using `dx dxns account create`')
+  assert(account, 'Create a DXNS account using `dx dxns account create`');
   const dxn = DXN.fromDomainKey(domainKey, name);
   await registryClient.updateResource(dxn, AccountKey.fromHex(account), cid);
   await registerServices({
