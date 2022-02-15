@@ -32,7 +32,9 @@ export const createAccount = (params: Params) => async (argv: any) => {
   print({ account: account.toHex() }, { json });
 
   await sleep(2000);
-  print('Manual step required: Put the account into your config > runtime > services > dxns > dxnsAccount');
+  if (!json) {
+    print('Manual step required: Put the account into your config > runtime > services > dxns > dxnsAccount');
+  }
 };
 
 export const addDeviceToAccount = ({ getDXNSClient, config }: Params) => async (argv: {device: string[]}) => {

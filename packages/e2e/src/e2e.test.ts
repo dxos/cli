@@ -147,8 +147,8 @@ describe('CLI', () => {
     });
 
     it('create DXNS Account', async () => {
-      const account = await cmd('dxns account create').json();
-      console.log({account});
+      const account = await cmd('dxns account create --json').json();
+      // TODO(rzadp): This account needs to be added to the yml config.
     });
 
     it('seed', async () => {
