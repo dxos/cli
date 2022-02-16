@@ -80,7 +80,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
   const account = client.getDXNSAccount(argv);
-  const { apiRaw, keypair, keyring, auctionsClient, transactionHandler } = client;
+  const { apiRaw, keypair, keyring, auctionsClient, registryClient, transactionHandler } = client;
 
   const address = keypair?.address ?? config.get('runtime.services.dxns.polkadotAddress');
   assert(address, 'Create a Polkadot address using `dx dxns address`');
@@ -107,9 +107,9 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
 
     verbose && log('Claiming Domain name..');
-    domainKey = await client.auctionsClient.claimAuction(domain, account);
+    domainKey = await auctionsClient.claimAuction(domain, account);
   } else {
-    domainKey = await client.registryClient.resolveDomainName(domain);
+    domainKey = await registryClient.resolveDomainName(domain);
   }
 
   // Uploading types to IPFS
@@ -125,16 +125,16 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   for (const [typeName, { fqn, description }] of Object.entries(TYPES)) {
     verbose && log(`Registering ${typeName}..`);
 
-    const cid = await client.registryClient.insertTypeRecord(root, fqn, { ...meta, description });
+    const cid = await registryClient.insertTypeRecord(root, fqn, { ...meta, description });
     const dxn = DXN.fromDomainKey(domainKey, typeName);
-    await client.registryClient.updateResource(dxn, account, cid);
+    await registryClient.updateResource(dxn, account, cid);
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
 
   // Bootstrap IPFS
   verbose && log('Adding IPFS record...');
-  await bootstrapIPFS(client.registryClient);
+  await bootstrapIPFS(registryClient);
   verbose && log('IPFS record added.');
 
   print({ account, domain }, { json });
