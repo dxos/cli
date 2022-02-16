@@ -11,7 +11,6 @@ import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, creat
 
 import { DXNSClient } from './interfaces';
 import { Config } from '@dxos/config';
-import assert from 'assert';
 
 const log = debug('dxos:cli-dxns');
 
