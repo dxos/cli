@@ -10,12 +10,12 @@ import { Params } from '../interfaces';
 
 const BOT_TYPE_DXN = 'dxos:type.bot';
 
-export const addDummyData = (params: Params) => async () => {
+export const addDummyData = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const client = await getDXNSClient();
   const registry = client.registryClient;
-  const account = client.getDXNSAccount();
+  const account = client.getDXNSAccount(argv);
 
   print('Adding bot record');
 

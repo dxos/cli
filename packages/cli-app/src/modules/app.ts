@@ -40,6 +40,7 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
     command: ['app'],
     describe: 'App CLI.',
     builder: (yargs: Argv) => yargs
+      .option('account', { type: 'string', array: false, describe: 'Optionally override DXNS Account from config.' })
 
       // Build app.
       .command({
@@ -81,7 +82,7 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
 
         handler: asyncHandler(async (argv: any) => {
           const client = await getDXNSClient();
-          const account = client.getDXNSAccount();
+          const account = client.getDXNSAccount(argv);
           return register({ getAppRecord, getDXNSClient, account })(argv);
         })
       })
@@ -113,7 +114,7 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
           await build(config, { getAppRecord })(argv);
           await publish(config)(argv);
           const client = await getDXNSClient();
-          const account = client.getDXNSAccount();
+          const account = client.getDXNSAccount(argv);
           await register({ getAppRecord, getDXNSClient, account })(argv);
         })
       })

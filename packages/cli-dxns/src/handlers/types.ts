@@ -33,7 +33,7 @@ export const addType = (params: Params) => async (argv: any) => {
   const { path, domain, messageName, resourceName, description } = argv;
 
   const client = await params.getDXNSClient();
-  const account = client.getDXNSAccount();
+  const account = client.getDXNSAccount(argv);
   const config = params.config;
 
   if (!!resourceName !== !!domain) {

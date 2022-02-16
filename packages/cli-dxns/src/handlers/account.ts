@@ -36,7 +36,7 @@ export const addDeviceToAccount = ({ getDXNSClient }: Params) => async (argv: {d
   assert(devices, 'Device is required');
 
   const { accountClient, getDXNSAccount } = await getDXNSClient();
-  const account = getDXNSAccount();
+  const account = getDXNSAccount(argv);
 
   for (const device of devices) {
     await accountClient.addDeviceToAccount(account, device);
@@ -46,7 +46,7 @@ export const addDeviceToAccount = ({ getDXNSClient }: Params) => async (argv: {d
 export const listDevices = ({ getDXNSClient }: Params) => async (argv: any) => {
   const { json } = argv;
   const { accountClient, getDXNSAccount } = await getDXNSClient();
-  const account = getDXNSAccount();
+  const account = getDXNSAccount(argv);
 
   const accountRecord = await accountClient.getAccount(account);
 

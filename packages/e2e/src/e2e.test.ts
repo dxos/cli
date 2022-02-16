@@ -16,6 +16,7 @@ import { createTestBroker } from '@dxos/signal';
 
 import { HTTPServer } from '../mocks/http-server';
 import { cmd } from './cli';
+import assert from 'assert';
 
 const PROFILE_NAME = 'e2e-test';
 
@@ -142,18 +143,21 @@ describe('CLI', () => {
   });
 
   describe('dxns', () => {
+    let account: string;
+
     it('create Polkadot address', async () => {
       await cmd('dxns address recover --mnemonic "//Alice"').run();
     });
 
     it('create DXNS Account', async () => {
-      const account = await cmd('dxns account create --json').json();
-      // TODO(rzadp): This account needs to be added to the yml config.
+      const result = await cmd('dxns account create --json').json();
+      assert(result?.account);
+      account = result.account;
     });
 
     it('seed', async () => {
-      await cmd('dxns seed --mnemonic //Alice --verbose').run();
-      await cmd('dxns dummy').run();
+      await cmd(`dxns --account ${account} seed --mnemonic //Alice --verbose`).run();
+      await cmd(`dxns --account ${account} dummy`).run();
     });
 
     it('deploy', async () => {

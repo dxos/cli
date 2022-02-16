@@ -65,7 +65,10 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     const accountClient = new AccountClient(apiPromise, signFn);
     const transactionHandler = new ApiTransactionHandler(apiPromise, signFn);
 
-    const getDXNSAccount = () => {
+    const getDXNSAccount = (argv?: any) => {
+      if (argv.account) {
+        return AccountKey.fromHex(argv.account);
+      }
       const account = config.get('runtime.services.dxns.dxnsAccount');
       assert(account, 'Create a DXNS account using `dx dxns account create`');
       return AccountKey.fromHex(account);

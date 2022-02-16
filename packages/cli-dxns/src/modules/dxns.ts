@@ -28,6 +28,7 @@ export const DXNSModule = (params: Params) => {
     command: ['dxns', 'ns'],
     describe: 'DXNS operations.',
     builder: (yargs: Argv) => yargs
+      .option('account', { type: 'string', array: false, describe: 'Optionally override DXNS Account from config.' })
       .command(typeCommand(params))
       .command(recordCommand(params))
       .command(resourceCommand(params))
@@ -101,7 +102,7 @@ export const DXNSModule = (params: Params) => {
           await build()(argv);
           const cid = await publish(params.config)(argv);
           const client = await params.getDXNSClient();
-          const account = client.getDXNSAccount();
+          const account = client.getDXNSAccount(argv);
           await register({ cid, account, ...params })(argv);
         })
       })

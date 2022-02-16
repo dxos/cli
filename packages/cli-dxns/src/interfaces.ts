@@ -20,7 +20,7 @@ export interface DXNSClient {
   accountClient: AccountClient,
   transactionHandler: ApiTransactionHandler,
   dxosClient: Client,
-  getDXNSAccount: () => AccountKey
+  getDXNSAccount: (argv?: any) => AccountKey
 }
 
 export interface Params extends CoreState {

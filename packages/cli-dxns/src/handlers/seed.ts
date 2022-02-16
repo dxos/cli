@@ -79,7 +79,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const { domain = DEFAULT_DOMAIN, dataOnly = false, json, verbose } = argv;
 
   const client = await getDXNSClient();
-  const account = client.getDXNSAccount();
+  const account = client.getDXNSAccount(argv);
   const { apiRaw, keypair, keyring, auctionsClient, transactionHandler } = client;
 
   const address = keypair?.address ?? config.get('runtime.services.dxns.polkadotAddress');

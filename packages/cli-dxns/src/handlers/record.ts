@@ -42,7 +42,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   }
 
   const client = await getDXNSClient();
-  const account = client.getDXNSAccount();
+  const account = client.getDXNSAccount(argv);
 
   const data = JSON.parse(argv.data as string);
   const resourceName = name as string | undefined;
