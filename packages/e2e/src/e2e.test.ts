@@ -50,6 +50,7 @@ describe('CLI', () => {
       handler: () => kubeServices
     }
   ]);
+  let account: string; // DXNS Account.
 
   before(async () => {
     broker = await createTestBroker();
@@ -143,8 +144,6 @@ describe('CLI', () => {
   });
 
   describe('dxns', () => {
-    let account: string;
-
     it('create Polkadot address', async () => {
       await cmd('dxns address recover --mnemonic "//Alice"').run();
     });
@@ -155,13 +154,17 @@ describe('CLI', () => {
       account = result.account;
     });
 
+    it('Can add a device', async () => {
+      await cmd(`dxns --account ${account} account add-device --device 5CyDhvRgVwKey4Z88ZcDnzsWF7TWadHDrcCgY4ri7o5ZnPcc`).run();
+    })
+
     it('seed', async () => {
       await cmd(`dxns --account ${account} seed --mnemonic //Alice --verbose`).run();
       await cmd(`dxns --account ${account} dummy`).run();
     });
 
     it('deploy', async () => {
-      await cmd('dxns deploy --name app.dxnstest --domain dxos --type app --config ./dx-custom.yml --verbose', join(__dirname, '../mocks/dxns/app')).run();
+      await cmd(`dxns --account ${account} deploy --name app.dxnstest --domain dxos --type app --config ./dx-custom.yml --verbose`, join(__dirname, '../mocks/dxns/app')).run();
     });
 
     it('list resources', async () => {
@@ -209,7 +212,7 @@ describe('CLI', () => {
 
     describe('auctions', () => {
       it('create', async () => {
-        await cmd('dxns auction create test-domain 10000000').run();
+        await cmd(`dxns --account ${account} auction create test-domain 10000000`).run();
       });
 
       it('list', async () => {
@@ -224,7 +227,7 @@ describe('CLI', () => {
       });
 
       it('claim', async () => {
-        await cmd('dxns auction claim test-domain').run();
+        await cmd(`dxns --account ${account} auction claim test-domain`).run();
       });
 
       it('check that domain is claimed', async () => {
@@ -253,7 +256,7 @@ describe('CLI', () => {
     });
 
     it('register app', async () => {
-      await cmd(`app register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
+      await cmd(`app --account ${account} register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
     });
 
     it('query app', async () => {
@@ -267,7 +270,7 @@ describe('CLI', () => {
     });
 
     it('Registers versioned and tagged app', async () => {
-      await cmd(`app register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME} --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
+      await cmd(`app --account ${account} register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME} --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
     });
 
     it('Serves the app without any version', async () => {
@@ -315,7 +318,7 @@ describe('CLI', () => {
     it('publishes bot', async () => {
       const botConfigPath = join(dirname(bundledBotPath), 'bot.yml');
       fse.copySync(join(__dirname, '../mocks/bot/bot.yml'), join(dirname(bundledBotPath), 'bot.yml'));
-      await cmd(`bot publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
+      await cmd(`bot --account ${account} publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
       const botConfig = await readFile(botConfigPath, { absolute: true });
       botCid = botConfig.package['/'];
       expect(botCid).toBeDefined();
