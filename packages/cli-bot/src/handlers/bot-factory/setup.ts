@@ -28,6 +28,7 @@ const SODIUM_PREBUILDS = `sodium-native/${PREBUILDS_DIR}`;
 
 export interface BotFactorySetupOptions extends CoreOptions {
   topic?: string
+  json?: boolean
 }
 
 export const botFactorySetupOptions = (config: Config) => (yargs: Argv<CoreOptions>): Argv<BotFactorySetupOptions> => {
