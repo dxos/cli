@@ -1,5 +1,17 @@
 # Changelog
 
+### [2.13.5](https://www.github.com/dxos/cli/compare/v2.13.4...v2.13.5) (2022-02-17)
+
+
+### Features
+
+* Bot logs command ([#431](https://www.github.com/dxos/cli/issues/431)) ([fdaea84](https://www.github.com/dxos/cli/commit/fdaea84112a159f752a1e2f584603c2fd6ff6320))
+
+
+### Bug Fixes
+
+* try to update protocols. ([#433](https://www.github.com/dxos/cli/issues/433)) ([388855d](https://www.github.com/dxos/cli/commit/388855d3beff38d7fb3b372d594071a42c7e26f0))
+
 ### [2.13.4](https://www.github.com/dxos/cli/compare/v2.13.3...v2.13.4) (2022-02-14)
 
 

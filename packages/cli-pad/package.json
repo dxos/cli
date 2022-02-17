@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-pad",
-  "version": "2.13.4",
+  "version": "2.13.5",
   "description": "DXOS Pad CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-pad#readme",
   "license": "AGPL-3.0",
