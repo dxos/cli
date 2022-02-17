@@ -11,7 +11,7 @@ import path from 'path';
 import readPkgUp from 'read-pkg-up';
 import { Argv } from 'yargs';
 
-import { isGlobalYarn, getGlobalModulesPath, CoreOptions } from '@dxos/cli-core';
+import { isGlobalYarn, getGlobalModulesPath, CoreOptions, print } from '@dxos/cli-core';
 import { Config, mapToKeyValues } from '@dxos/config';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
@@ -49,7 +49,7 @@ const setupPrebuilds = async (cliNodePath: string) => {
   await fs.copy(prebuildsPath, prebuildsBotsPath);
 };
 
-export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic } : BotFactorySetupOptions) => {
+export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic, json } : BotFactorySetupOptions) => {
   assert(pkg, 'Unable to locate package.json');
   const cliNodePath = await getGlobalModulesPath(await isGlobalYarn(pkg.package.name));
 
@@ -82,4 +82,5 @@ export const setup = (config: any, { includeNodePath = false } = {}) => async ({
   };
 
   await fs.writeFile(botFactoryEnvFile, stringify(env));
+  print({ topic }, { json });
 };
