@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.13.6](https://www.github.com/dxos/cli/compare/v2.13.5...v2.13.6) (2022-02-17)
+
+
+### Bug Fixes
+
+* setup BF to print topic. ([#435](https://www.github.com/dxos/cli/issues/435)) ([33a2518](https://www.github.com/dxos/cli/commit/33a2518c63de9176ef7973aeeeec2de4e472affb))
+
 ### [2.13.5](https://www.github.com/dxos/cli/compare/v2.13.4...v2.13.5) (2022-02-17)
 
 
