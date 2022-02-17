@@ -38,7 +38,6 @@ export const start = ({ kubeCompose }) => async (argv) => {
 
   const servicesToRun = overrideServices(services, servicesOverride);
 
-  // TODO(egorgripasov): Rm hardcoded WIRE.
   const env = [
     `DX_APP_SERVER_KEYPHRASE=${keyPhrase}`,
     `DX_SERVICES=${servicesToRun}`,
