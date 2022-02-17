@@ -28,7 +28,7 @@ export const mergeResourceRecords = (records: RegistryDataRecord[], resources: R
   const bots: BotData[] = [];
   for (const resource of resources) {
     for (const tag of Object.keys(resource.tags)) {
-      for(const record of records) {
+      for (const record of records) {
         if (resource.tags[tag]?.equals(record.cid)) {
           bots.push({
             dxn: resource.id,
@@ -40,7 +40,7 @@ export const mergeResourceRecords = (records: RegistryDataRecord[], resources: R
       }
     }
     for (const version of Object.keys(resource.versions)) {
-      for(const record of records) {
+      for (const record of records) {
         if (resource.versions[version]?.equals(record.cid)) {
           bots.push({
             dxn: resource.id,
@@ -53,7 +53,7 @@ export const mergeResourceRecords = (records: RegistryDataRecord[], resources: R
     }
   }
   return bots;
-}
+};
 
 export const query = ({ getDXNSClient }: QueryParams) => async (argv: Arguments<CoreOptions>) => {
   const { json } = argv;
