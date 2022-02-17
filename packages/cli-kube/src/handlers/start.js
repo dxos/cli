@@ -51,6 +51,6 @@ export const start = ({ kubeCompose }) => async (argv) => {
     env.push(`LETS_ENCRYPT_EMAIL=${email}`);
   }
 
-  const container = await dockerImage.getOrCreateContainer(name, undefined, env, binds, true);
+  const container = await dockerImage.getOrCreateContainer({ name, env, binds, hostNet: true });
   await container.start();
 };
