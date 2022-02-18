@@ -139,18 +139,24 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('from', { describe: 'Extension name', required: true })
         .option('service', { describe: 'Service to upgrade', required: true })
         .option('auth', { type: 'boolean', default: false, description: 'Authentication required' })
-        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' })
+        .option('hot', { type: 'boolean', default: false, description: 'Hot upgrade' })
+        .option('name', { type: 'string', description: 'Container name' }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, auth: authRequired, dev } = argv;
+        const { from: moduleName, service: serviceName, auth: authRequired, dev, hot } = argv;
 
         const service = getServiceInfo(moduleName, serviceName);
         const auth = authRequired ? getAuth(config, service) : undefined;
 
+        const { name = service.container_name } = argv;
+
         const { image: imageName } = service;
 
         const container = await DockerContainer.find({ imageName });
-        if (container && container.started) {
+        const running = container?.started;
+
+        if (running && !hot) {
           throw new Error(`Unable to upgrade '${service.container_name}' while it's running.`);
         }
 
@@ -159,6 +165,11 @@ export const ServicesModule = ({ config, profilePath }) => ({
         await dockerImage.pull(true);
 
         await DockerImage.cleanNotLatest(imageName);
+
+        if (running) {
+          const newContainer = await dockerImage.getOrCreateContainer({ name, restore: true });
+          await newContainer.start();
+        }
       })
     })
 
