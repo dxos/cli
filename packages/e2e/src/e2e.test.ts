@@ -325,7 +325,7 @@ describe('CLI', () => {
     });
 
     it('registers bot', async () => {
-      await cmd(`bot register --name ${BOT_NAME} --domain ${BOT_DOMAIN}`, dirname(bundledBotPath)).run();
+      await cmd(`bot --account ${account} register --name ${BOT_NAME} --domain ${BOT_DOMAIN}`, dirname(bundledBotPath)).run();
       const bots = await cmd('bot query --json').json();
       expect(bots.length).toBe(2);
       const newBot = bots.find((b: any) => b.description === 'Test bot description');
@@ -378,7 +378,7 @@ describe('CLI', () => {
   describe('kube', () => {
     it('register kube', async () => {
       const recordsBefore = await cmd('dxns record list --json').json();
-      await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
+      await cmd(`kube --account ${account} register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
       const recordsAfter = await cmd('dxns record list --json').json();
       expect(recordsAfter.length).toBe(recordsBefore.length + 1 + kubeServices.length);
     });
