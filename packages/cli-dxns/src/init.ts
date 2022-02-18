@@ -53,7 +53,7 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     } else if (polkadotAddress) {
       log('Transactions will be signed using DXNS key stored in Halo.');
       log('Using Polkadot Address: ', polkadotAddress);
-      const dxosClientSigner = new DxosClientSigner(dxosClient, polkadotAddress);
+      const dxosClientSigner = new DxosClientSigner(dxosClient, polkadotAddress, apiPromise.registry);
       signFn = tx => tx.signAsync(polkadotAddress, { signer: dxosClientSigner });
     } else {
       log('No DXNS keys to sign transactions with - only read transactions available.');
