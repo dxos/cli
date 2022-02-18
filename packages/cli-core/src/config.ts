@@ -18,6 +18,7 @@ export const PROFILE_ROOT = '.dx/profile';
 export const STORAGE_ROOT = '.dx/storage';
 export const PROFILE_STORE = '.dx/storage/.default';
 export const SESSION_PROFILE_STORE = '.dx/storage/.sessions';
+export const SERVICES_STORE = '.dx/services';
 
 // Default profile, ALWAYS a symlink.
 export const DEFAULT_PROFILE_SYMLINK = 'default';
@@ -138,4 +139,11 @@ export const mapConfigToEnv = (config: any) => {
   assert(config);
 
   return mapToKeyValues(envmap, config.values);
+};
+
+export const ensureServicesStore = (name: string) => {
+  const storePath = path.join(os.homedir(), SERVICES_STORE, name);
+  fs.ensureFileSync(storePath);
+
+  return storePath;
 };

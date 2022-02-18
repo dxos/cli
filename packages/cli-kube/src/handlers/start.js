@@ -38,7 +38,6 @@ export const start = ({ kubeCompose }) => async (argv) => {
 
   const servicesToRun = overrideServices(services, servicesOverride);
 
-  // TODO(egorgripasov): Rm hardcoded WIRE.
   const env = [
     `DX_APP_SERVER_KEYPHRASE=${keyPhrase}`,
     `DX_SERVICES=${servicesToRun}`,
@@ -52,6 +51,6 @@ export const start = ({ kubeCompose }) => async (argv) => {
     env.push(`LETS_ENCRYPT_EMAIL=${email}`);
   }
 
-  const container = await dockerImage.getOrCreateContainer(name, undefined, env, binds, true);
+  const container = await dockerImage.getOrCreateContainer({ name, env, binds, hostNet: true });
   await container.start();
 };
