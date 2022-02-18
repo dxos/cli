@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.13.8](https://www.github.com/dxos/cli/compare/v2.13.7...v2.13.8) (2022-02-18)
+
+
+### Bug Fixes
+
+* hot service upgrade. ([#440](https://www.github.com/dxos/cli/issues/440)) ([706c130](https://www.github.com/dxos/cli/commit/706c1306f80f168a21b8aba17a9d9be5e5c75b23))
+
 ### [2.13.7](https://www.github.com/dxos/cli/compare/v2.13.6...v2.13.7) (2022-02-18)
 
 
