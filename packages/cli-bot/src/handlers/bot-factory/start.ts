@@ -62,7 +62,7 @@ export const start = () => async ({
   };
 
   const bin = 'bot-factory';
-  const binArgs = dev ? ['@swc-node/register'] : [];
+  const binArgs = dev ? ['ts-node/register/transpile-only'] : [];
   const botFactoryRunnable = new Runnable(bin, binArgs);
 
   await botFactoryRunnable.run([], options);
