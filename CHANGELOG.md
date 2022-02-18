@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.13.7](https://www.github.com/dxos/cli/compare/v2.13.6...v2.13.7) (2022-02-18)
+
+
+### Bug Fixes
+
+* update protocols. ([#438](https://www.github.com/dxos/cli/issues/438)) ([36f5400](https://www.github.com/dxos/cli/commit/36f540048f1c0ab4a53b718cec19138d1ec6869a))
+
 ### [2.13.6](https://www.github.com/dxos/cli/compare/v2.13.5...v2.13.6) (2022-02-17)
 
 
