@@ -52,7 +52,7 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
       signFn = tx => tx.signAsync(keypair);
     } else if (polkadotAddress) {
       log('Transactions will be signed using DXNS key stored in Halo.');
-      log('Using account: ', polkadotAddress);
+      log('Using Polkadot Address: ', polkadotAddress);
       const dxosClientSigner = new DxosClientSigner(dxosClient, polkadotAddress);
       signFn = tx => tx.signAsync(polkadotAddress, { signer: dxosClientSigner });
     } else {
