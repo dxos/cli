@@ -224,7 +224,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
           ...additionalBinds
         ];
 
-        const container = await dockerImage.getOrCreateContainer({ name, command, env, binds, hostNet, volumes });
+        const container = await dockerImage.getOrCreateContainer({ name, args: command, env, binds, hostNet, volumes });
         await container.start();
       })
     })
