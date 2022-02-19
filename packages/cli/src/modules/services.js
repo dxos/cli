@@ -174,6 +174,35 @@ export const ServicesModule = ({ config, profilePath }) => ({
     })
 
     .command({
+      command: ['restore'],
+      describe: 'Restore service from saved state.',
+      builder: yargs => yargs
+        .option('from', { describe: 'Extension name', required: true })
+        .option('service', { describe: 'Service to upgrade', required: true })
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' })
+        .option('name', { type: 'string', description: 'Container name' }),
+
+      handler: asyncHandler(async argv => {
+        const { from: moduleName, service: serviceName, dev } = argv;
+
+        const service = getServiceInfo(moduleName, serviceName);
+
+        const { name = service.container_name } = argv;
+
+        const { image: imageName } = service;
+
+        const container = await DockerContainer.find({ imageName });
+        if (container?.started) {
+          throw new Error(`Unable to restore '${service.container_name}' while it's running.`);
+        }
+
+        const dockerImage = new DockerImage({ service, dev });
+        const newContainer = await dockerImage.getOrCreateContainer({ name, restore: true });
+        await newContainer.start();
+      })
+    })
+
+    .command({
       command: ['start'],
       describe: 'Start service container.',
       builder: yargs => yargs
