@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.13.11](https://www.github.com/dxos/cli/compare/v2.13.10...v2.13.11) (2022-02-19)
+
+
+### Bug Fixes
+
+* fix service upgrade for dev tag. ([#446](https://www.github.com/dxos/cli/issues/446)) ([30e4742](https://www.github.com/dxos/cli/commit/30e4742b6353aacfb1c2b4f598175a1d2c6ff373))
+
 ### [2.13.10](https://www.github.com/dxos/cli/compare/v2.13.9...v2.13.10) (2022-02-19)
 
 
