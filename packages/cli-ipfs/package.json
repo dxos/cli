@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-ipfs",
-  "version": "2.13.9",
+  "version": "2.13.10",
   "description": "DXOS IPFS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-ipfs#readme",
   "license": "AGPL-3.0",

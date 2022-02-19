@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.13.10](https://www.github.com/dxos/cli/compare/v2.13.9...v2.13.10) (2022-02-19)
+
+
+### Bug Fixes
+
+* restore service. ([#444](https://www.github.com/dxos/cli/issues/444)) ([9931c45](https://www.github.com/dxos/cli/commit/9931c45dbeef8815d53793bb4e80a4f29412c6d7))
+* stop conatiner before destroy. ([390e400](https://www.github.com/dxos/cli/commit/390e400321b233f1bc207ee20103214580806308))
+
 ### [2.13.9](https://www.github.com/dxos/cli/compare/v2.13.8...v2.13.9) (2022-02-19)
 
 
