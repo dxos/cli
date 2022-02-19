@@ -156,8 +156,11 @@ export const ServicesModule = ({ config, profilePath }) => ({
         const container = await DockerContainer.find({ imageName });
         const running = container?.started;
 
-        if (running && !hot) {
-          throw new Error(`Unable to upgrade '${service.container_name}' while it's running.`);
+        if (running) {
+          if (!hot) {
+            throw new Error(`Unable to upgrade '${service.container_name}' while it's running.`);
+          }
+          await container.stop();
         }
 
         // TODO(egorgripasov): Already up-to-date message.
