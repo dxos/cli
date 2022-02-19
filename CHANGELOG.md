@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.13.9](https://www.github.com/dxos/cli/compare/v2.13.8...v2.13.9) (2022-02-19)
+
+
+### Bug Fixes
+
+* add services folder to kube binds. ([#442](https://www.github.com/dxos/cli/issues/442)) ([0127eab](https://www.github.com/dxos/cli/commit/0127eab7b7449de41de16bce05d91cdf72b280cc))
+
 ### [2.13.8](https://www.github.com/dxos/cli/compare/v2.13.7...v2.13.8) (2022-02-18)
 
 
