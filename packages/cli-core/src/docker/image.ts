@@ -115,6 +115,15 @@ export class DockerImage {
     let { args, env = null, binds = [], hostNet = false, volumes = [] } = restore ? JSON.parse(readFileSync(serviceStartInfo, { encoding: 'utf-8' })) : containerSettings;
 
     if (!restore) {
+      // Read env files if any (assuming should exists if provided).
+      this._envFiles.forEach(envFile => {
+        const envFilePath = path.join(process.cwd(), envFile);
+        if (!existsSync(envFilePath)) {
+          throw new Error(`${envFile} env file does not exists.`);
+        }
+        const envs = readFileSync(envFilePath, 'utf8').toString().split('\n').filter(line => line);
+        env = (env || []).concat(envs);
+      });
       // Store args for service restart.
       writeFileSync(serviceStartInfo, JSON.stringify({ name, args, env, binds, hostNet, volumes }), { encoding: 'utf-8' });
     }
@@ -123,16 +132,6 @@ export class DockerImage {
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
     }
-
-    // Read env files if any (assuming should exists if provided).
-    this._envFiles.forEach(envFile => {
-      const envFilePath = path.join(process.cwd(), envFile);
-      if (!existsSync(envFilePath)) {
-        throw new Error(`${envFile} env file does not exists.`);
-      }
-      const envs = readFileSync(envFilePath, 'utf8').toString().split('\n').filter(line => line);
-      env = (env || []).concat(envs);
-    });
 
     hostNet = hostNet && process.platform !== 'darwin';
 

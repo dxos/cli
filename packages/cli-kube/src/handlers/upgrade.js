@@ -11,7 +11,7 @@ export const upgrade = (config, { getAuth, kubeCompose }) => async ({ auth: auth
 
   const { image: imageName } = kube;
 
-  const container = await DockerContainer.find({ imageName });
+  const container = await DockerContainer.find({ imageName, dev });
   if (container && container.started) {
     throw new Error('Unable to upgrade KUBE while it\'s running.');
   }
