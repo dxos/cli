@@ -5,12 +5,14 @@
 import os from 'os';
 import path from 'path';
 
-import { RUNNING_STATE, DockerContainer, DockerImage } from '@dxos/cli-core';
+import { RUNNING_STATE, SERVICES_STORE, DockerContainer, DockerImage } from '@dxos/cli-core';
 
 import { overrideServices } from '../utils/override';
 
 const KUBE_PROFILE_ROOT = '.dx/kube';
 const KUBE_PROFILE_PATH = path.join(os.homedir(), KUBE_PROFILE_ROOT);
+
+const KUBE_SERVICES_PATH = path.join(os.homedir(), SERVICES_STORE);
 
 const capitalize = (str) => {
   return str[0].toUpperCase() + str.slice(1);
@@ -33,7 +35,8 @@ export const start = ({ kubeCompose }) => async (argv) => {
   const binds = [
     '/var/run/docker.sock:/var/run/docker.sock:rw',
     `${KUBE_PROFILE_PATH}/config:/root/.dx/kube:rw`,
-    `${KUBE_PROFILE_PATH}/storage:/root/.dx/storage:rw`
+    `${KUBE_PROFILE_PATH}/storage:/root/.dx/storage:rw`,
+    `${KUBE_SERVICES_PATH}:/root/.dx/services:rw`
   ];
 
   const servicesToRun = overrideServices(services, servicesOverride);
