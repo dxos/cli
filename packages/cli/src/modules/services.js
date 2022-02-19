@@ -153,7 +153,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
         const { image: imageName } = service;
 
-        const container = await DockerContainer.find({ imageName });
+        const container = await DockerContainer.find({ imageName, dev });
         const running = container?.started;
 
         if (running) {
@@ -194,7 +194,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
         const { image: imageName } = service;
 
-        const container = await DockerContainer.find({ imageName });
+        const container = await DockerContainer.find({ imageName, dev });
         if (container?.started) {
           throw new Error(`Unable to restore '${service.container_name}' while it's running.`);
         }
