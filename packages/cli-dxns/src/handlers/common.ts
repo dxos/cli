@@ -7,8 +7,12 @@ import { CID, RecordKind, RegistryRecord, Resource } from '@dxos/registry-client
 
 export const displayHash = (data: any) => {
   if (data.hash) {
-    const cid = CID.from(Buffer.from(data.hash, 'base64'));
-    data.hash = cid.toString();
+    try {
+      const cid = CID.from(Buffer.from(data.hash, 'base64'));
+      data.hash = cid.toString();
+    } catch (e) {
+      data.hash = '';
+    }
   }
   return data;
 };
