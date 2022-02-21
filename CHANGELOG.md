@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.13.12](https://www.github.com/dxos/cli/compare/v2.13.11...v2.13.12) (2022-02-21)
+
+
+### Bug Fixes
+
+* read build out from dx.yml ([#448](https://www.github.com/dxos/cli/issues/448)) ([4a06b7d](https://www.github.com/dxos/cli/commit/4a06b7d7e612d2195d4417cc6053b097badd12d0))
+
 ### [2.13.11](https://www.github.com/dxos/cli/compare/v2.13.10...v2.13.11) (2022-02-19)
 
 
