@@ -48,6 +48,7 @@ export const list = ({ stateManager, config } : ListParameters) => async ({ json
       id: bot.id,
       status: getBotStatus(bot),
       dxn: bot.packageSpecifier?.dxn,
+      partyKey: bot.partyKey?.toHex(),
     })), { json });
   } finally {
     await botFactoryClient.stop();
