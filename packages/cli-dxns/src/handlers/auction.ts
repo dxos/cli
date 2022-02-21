@@ -47,6 +47,7 @@ export const forceCloseAuction = (params: Params) => async (argv: any) => {
 
   const { name, mnemonic } = argv;
   assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
+  assert(mnemonic, 'Mnemonic of a sudoer is required.');
 
   const client = await getDXNSClient();
   const { keyring, transactionHandler, apiRaw } = client;
