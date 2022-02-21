@@ -2,8 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
+
 import { print } from '@dxos/cli-core';
-import { DXN } from '@dxos/registry-client';
+import { AccountKey, DXN } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { displayResource } from './common';
@@ -14,7 +16,17 @@ export const listResources = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const resources = await client.registryClient.queryResources();
+  let resources = await client.registryClient.queryResources();
+
+  if (argv.account) {
+    const account = await client.accountClient.getAccount(AccountKey.fromHex(argv.account));
+    assert(account, 'DXNS Account not found.');
+    const accountDomains = (await client.registryClient.getDomains())
+      .filter(domain => AccountKey.equals(domain.owner, account.id))
+      .map(domain => domain.name);
+
+    resources = resources.filter(resource => accountDomains.includes(resource.id.domain));
+  }
 
   print(resources.map(displayResource), { json });
 };
