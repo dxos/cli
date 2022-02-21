@@ -24,12 +24,12 @@ interface PublishParams {
   config?: string
 }
 
-export const publish = (config: any) => async ({ verbose, timeout, path: distPath = DEFAULT_DIST_PATH, config: configPath }: PublishParams): Promise<string> => {
+export const publish = (config: any) => async ({ verbose, timeout, path: distPath, config: configPath }: PublishParams): Promise<string> => {
   const conf = await loadConfig(configPath);
 
   verbose && log(`Publishing ${conf.values.module?.name}...`);
 
-  const publishFolder = path.join(process.cwd(), /* conf.values.build?.out || */ distPath);
+  const publishFolder = path.join(process.cwd(), distPath || conf.values.build?.out || DEFAULT_DIST_PATH);
 
   const total = await getFolderSize(publishFolder);
   const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
