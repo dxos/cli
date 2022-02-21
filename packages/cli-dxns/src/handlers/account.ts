@@ -50,5 +50,5 @@ export const listDevices = ({ getDXNSClient }: Params) => async (argv: any) => {
 
   const accountRecord = await accountClient.getAccount(account);
 
-  print({ devices: accountRecord?.devices.join('') }, { json });
+  print(accountRecord?.devices ?? [], { json });
 };

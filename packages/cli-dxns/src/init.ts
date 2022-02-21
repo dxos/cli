@@ -7,10 +7,10 @@ import debug from 'debug';
 
 import { CoreState, createClient as createDxosClient } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
+import { Config } from '@dxos/config';
 import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
 
 import { DXNSClient } from './interfaces';
-import { Config } from '@dxos/config';
 
 const log = debug('dxos:cli-dxns');
 
@@ -41,7 +41,7 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
 
     const apiServerUri = config.get('runtime.services.dxns.server');
-    assert(apiServerUri, 'Missing DXNS endpoint config at `runtime.services.dxns.server`')
+    assert(apiServerUri, 'Missing DXNS endpoint config at `runtime.services.dxns.server`');
     const apiPromise = await createApiPromise(apiServerUri);
 
     const dxosClient = await getDxosClient(config);
