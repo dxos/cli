@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-echo",
-  "version": "2.13.11",
+  "version": "2.13.12",
   "description": "DXOS ECHO CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-echo#readme",
   "license": "AGPL-3.0",
