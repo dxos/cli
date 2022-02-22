@@ -341,13 +341,13 @@ describe('CLI', () => {
       };
       let status: string;
       status = await botStatus();
-      expect(status).toBe('RUNNING');
+      expect(status.startsWith('UP')).toBe(true);
       await cmd(`bot stop ${botId}`).run();
       status = await botStatus();
       expect(status).toBe('STOPPED');
       await cmd(`bot start ${botId}`).run();
       status = await botStatus();
-      expect(status).toBe('RUNNING');
+      expect(status.startsWith('UP')).toBe(true);
       await cmd(`bot remove ${botId}`).run();
       const bots = await cmd('bot list --json').json();
       expect(bots.length).toBe(0);
