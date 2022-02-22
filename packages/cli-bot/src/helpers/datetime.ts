@@ -27,7 +27,7 @@ const dateDiff = (d1: Date, d2: Date = new Date()) => {
   }
 };
 
-export const getTimeDelta  = (d1: Date, d2: Date = new Date()) => {
+export const getTimeDelta = (d1: Date, d2: Date = new Date()) => {
   const diff = dateDiff(d1, d2);
   if (!diff) {
     return undefined;

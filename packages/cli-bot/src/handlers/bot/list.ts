@@ -31,7 +31,7 @@ const getBotStatus = (bot: Bot) => {
     return 'UP ' + getTimeDelta(bot.lastStart);
   }
   return Bot.Status[bot.status];
-}
+};
 
 export const list = ({ stateManager, config } : ListParameters) => async ({ json } : BotListOptions) => {
   const topic = config.get('runtime.services.bot.topic');
@@ -48,7 +48,7 @@ export const list = ({ stateManager, config } : ListParameters) => async ({ json
       id: bot.id,
       status: getBotStatus(bot),
       dxn: bot.packageSpecifier?.dxn,
-      partyKey: bot.partyKey?.toHex(),
+      partyKey: bot.partyKey?.toHex()
     })), { json });
   } finally {
     await botFactoryClient.stop();
