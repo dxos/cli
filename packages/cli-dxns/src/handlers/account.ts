@@ -11,7 +11,7 @@ import { Params } from '../interfaces';
 
 export const listAccount = ({ config }: Params) => async (argv: any) => {
   const { json } = argv;
-  const account = config.get('runtime.services.dxns.dxnsAccount');
+  const account = config.get('runtime.services.dxns.account');
 
   print({ account }, { json });
 
@@ -27,7 +27,7 @@ export const createAccount = ({ getDXNSClient }: Params) => async (argv: any) =>
 
   await sleep(2000);
   if (!json) {
-    print('Manual step required: Put the account into your config > runtime > services > dxns > dxnsAccount');
+    print('Manual step required: Put the account into your config > runtime > services > dxns > account');
   }
 };
 

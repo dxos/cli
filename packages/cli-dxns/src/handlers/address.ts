@@ -30,7 +30,7 @@ export const listAddress = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
   const { json } = argv;
-  const address = client.keypair?.address ?? config.get('runtime.services.dxns.polkadotAddress');
+  const address = client.keypair?.address ?? config.get('runtime.services.dxns.address');
 
   print({ address }, { json });
 

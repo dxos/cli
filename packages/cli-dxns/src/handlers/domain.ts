@@ -26,7 +26,7 @@ export const listDomains = (params: Params) => async (argv: any) => {
 
 export const getFreeDomain = (params: Params) => async (argv: any) => {
   const { getDXNSClient, config } = params;
-  const account = config.get('runtime.services.dxns.dxnsAccount');
+  const account = config.get('runtime.services.dxns.account');
   assert(account, 'Create a DXNS account using `dx dxns account create`');
 
   const { json } = argv;

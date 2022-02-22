@@ -82,7 +82,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   const account = client.getDXNSAccount(argv);
   const { apiRaw, keypair, keyring, auctionsClient, registryClient, transactionHandler } = client;
 
-  const address = keypair?.address ?? config.get('runtime.services.dxns.polkadotAddress');
+  const address = keypair?.address ?? config.get('runtime.services.dxns.address');
   assert(address, 'Create a Polkadot address using `dx dxns address`');
 
   let domainKey: DomainKey;

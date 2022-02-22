@@ -37,7 +37,7 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
     const keyring = await createKeyring();
     const accountUri = config.get('runtime.services.dxns.accountUri');
-    const polkadotAddress = config.get('runtime.services.dxns.polkadotAddress');
+    const polkadotAddress = config.get('runtime.services.dxns.address');
     const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
 
     const apiServerUri = config.get('runtime.services.dxns.server');
@@ -69,7 +69,7 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
       if (argv.account) {
         return AccountKey.fromHex(argv.account);
       }
-      const account = config.get('runtime.services.dxns.dxnsAccount');
+      const account = config.get('runtime.services.dxns.account');
       assert(account, 'Create a DXNS account using `dx dxns account create`');
       return AccountKey.fromHex(account);
     };
