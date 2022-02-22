@@ -212,7 +212,7 @@ describe('CLI', () => {
 
     describe('auctions', () => {
       it('create', async () => {
-        await cmd(`dxns --account ${account} auction create test-domain 10000000`).run();
+        await cmd(`dxns --account ${account} auction create test-domain --start-amount 10000000`).run();
       });
 
       it('list', async () => {

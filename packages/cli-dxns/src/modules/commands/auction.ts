@@ -15,11 +15,11 @@ export const auctionCommand = (params: Params): CommandModule => ({
   handler: () => {},
   builder: yargs => yargs
     .command({
-      command: ['create <name> <start-amount>'],
+      command: ['create <name>'],
       describe: 'Create a new auction.',
       builder: yargs => yargs
-        .option('name', { type: 'string' })
-        .option('start-amount', { type: 'number' }),
+        .option('name', { type: 'string', demandOption: true })
+        .option('start-amount', { type: 'number', demandOption: true }),
 
       handler: asyncHandler(createAuction(params))
     })

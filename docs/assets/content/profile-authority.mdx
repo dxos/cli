@@ -11,7 +11,7 @@ Let's say you work for `fooBar` team and you want to publish multiples apps.
 In order to register that authority (workspace) into our network you need to create auction for it:
 
 ```
-dx dxns auction create fooBar 1000000
+dx dxns auction create fooBar --start-amount 1000000
 ```
 
 After some time (~ 10 mins), you should be able to close the auction and claim that authority, if no one else has overbidded you.
