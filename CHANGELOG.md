@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.13.13](https://www.github.com/dxos/cli/compare/v2.13.12...v2.13.13) (2022-02-22)
+
+
+### Bug Fixes
+
+* update device test. ([#451](https://www.github.com/dxos/cli/issues/451)) ([f2e5acb](https://www.github.com/dxos/cli/commit/f2e5acbedee3673bfe9826e49cb0d4fcccfcde57))
+
 ### [2.13.12](https://www.github.com/dxos/cli/compare/v2.13.11...v2.13.12) (2022-02-21)
 
 
