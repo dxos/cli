@@ -51,7 +51,7 @@ export const recoverAddress = ({ getDXNSClient }: Params) => async (argv: any) =
   await dxosClient.halo.addKeyRecord({
     publicKey: PublicKey.from(decodeAddress(keypair.address)),
     secretKey: Buffer.from(uri),
-    type: KeyType.DXNS
+    type: KeyType.DXNS_ADDRESS
   });
 
   print({ address: keypair.address }, { json });
