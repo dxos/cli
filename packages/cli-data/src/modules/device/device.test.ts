@@ -61,7 +61,7 @@ describe('cli-data: Device', () => {
   });
 
   afterEach(async () => {
-    await sleep(20); // Issue on `protocols` side - require some time before destroying.
+    await sleep(200); // Issue on `protocols` side - require some time before destroying.
     await aliceStateManager?.destroy();
     await bobStateManager?.destroy();
   });
@@ -86,7 +86,7 @@ describe('cli-data: Device', () => {
     const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
-      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code });
+      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code, name: `${NEW_PROFILE_NAME}-1` });
     };
     await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 
@@ -103,7 +103,7 @@ describe('cli-data: Device', () => {
     const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
-      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code, name: NEW_PROFILE_NAME });
+      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code, name: `${NEW_PROFILE_NAME}-2` });
     };
     await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 
