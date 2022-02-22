@@ -14,7 +14,8 @@ const docker = new Docker();
 
 type ContainerFilter = {
   imageName?: string,
-  name?: string
+  name?: string,
+  dev?: boolean,
 }
 
 export class DockerContainer {
@@ -24,11 +25,13 @@ export class DockerContainer {
   _name: string;
 
   static async find (filter: ContainerFilter): Promise<DockerContainer | null> {
-    const { imageName, name } = filter;
+    const { imageName, name, dev = false } = filter;
+
+    const tag = dev ? 'dev' : 'latest';
 
     assert(imageName || name);
 
-    const image = imageName ? (imageName.indexOf(':') > 0 ? imageName : `${imageName}:latest`) : undefined;
+    const image = imageName ? `${imageName.split(':')[0]}:${tag}` : undefined;
 
     return new Promise((resolve, reject) => {
       docker.listContainers({ all: true }, (err, containers) => {

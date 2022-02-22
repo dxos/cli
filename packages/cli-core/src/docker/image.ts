@@ -4,11 +4,12 @@
 
 import assert from 'assert';
 import Docker from 'dockerode';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import yaml from 'js-yaml';
 import hash from 'object-hash';
 import path from 'path';
 
+import { ensureServicesStore } from '../config';
 import { CONTAINER_PREFIX, DockerContainer } from './container';
 import { DockerVolume } from './volume';
 
@@ -18,6 +19,16 @@ export const DEV_TAG = 'dev';
 const docker = new Docker();
 
 const HOST_NETWORK_MODE = 'host';
+
+type ContainerSettings = {
+  name: string,
+  args?: Array<any>,
+  env?: any,
+  binds?: any,
+  hostNet?: boolean,
+  volumes?: any,
+  restore?: boolean,
+};
 
 // TODO(egorgripasov): Extend with default values, etc.
 export const getImageInfo = (image: string) => yaml.load(image);
@@ -97,21 +108,30 @@ export class DockerImage {
     return images.length > 0;
   }
 
-  async getOrCreateContainer (name: string, args: Array<any>, env: any = null, binds: any = [], hostNet = false, volumes: any = []): Promise<DockerContainer> {
+  async getOrCreateContainer (containerSettings: ContainerSettings): Promise<DockerContainer> {
+    const { name, restore = false } = containerSettings;
+    const serviceStartInfo = ensureServicesStore(name);
+
+    let { args, env = null, binds = [], hostNet = false, volumes = [] } = restore ? JSON.parse(readFileSync(serviceStartInfo, { encoding: 'utf-8' })) : containerSettings;
+
+    if (!restore) {
+      // Read env files if any (assuming should exists if provided).
+      this._envFiles.forEach(envFile => {
+        const envFilePath = path.join(process.cwd(), envFile);
+        if (!existsSync(envFilePath)) {
+          throw new Error(`${envFile} env file does not exists.`);
+        }
+        const envs = readFileSync(envFilePath, 'utf8').toString().split('\n').filter(line => line);
+        env = (env || []).concat(envs);
+      });
+      // Store args for service restart.
+      writeFileSync(serviceStartInfo, JSON.stringify({ name, args, env, binds, hostNet, volumes }), { encoding: 'utf-8' });
+    }
+
     // TODO(egorgripasov): Forward logs to /var/logs?
     if (!(await this.imageExists())) {
       throw new Error(`Image '${this._imageName}' doesn't exists.`);
     }
-
-    // Read env files if any (assuming should exists if provided).
-    this._envFiles.forEach(envFile => {
-      const envFilePath = path.join(process.cwd(), envFile);
-      if (!existsSync(envFilePath)) {
-        throw new Error(`${envFile} env file does not exists.`);
-      }
-      const envs = readFileSync(envFilePath, 'utf8').toString().split('\n').filter(line => line);
-      env = (env || []).concat(envs);
-    });
 
     hostNet = hostNet && process.platform !== 'darwin';
 

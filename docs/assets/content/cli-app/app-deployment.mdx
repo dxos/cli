@@ -7,12 +7,12 @@ description: Deploy your app to our network
 
 To deploy apps we need a number of steps:
 
-- build: This generates the ditribution files along with configuration specific for the given app.yml
-- publish: Upload the dist folder to IPFS. Update the hash in the app.yml
-- register: Use app.yml to generate a record in DXNS.
+- build: This generates the ditribution files along with configuration specific for the given dx.yml
+- publish: Upload the dist folder to IPFS.
+- register: Use dx.yml to generate a record in DXNS.
 
-Assuming you are about to deploy "app.foo" Application in fooBar Authority, all these operations can be resumed with one command:
+Assuming you are about to deploy "app.test" Application in "example" Authority, all these operations can be resumed with one command:
 
 ```
-dx app deploy --dxns --name "app.foo" --domain "fooBar"
+dx ns deploy --name "app.test" --domain "example"
 ```

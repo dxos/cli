@@ -1,5 +1,34 @@
 # Changelog
 
+### [2.13.11](https://www.github.com/dxos/cli/compare/v2.13.10...v2.13.11) (2022-02-19)
+
+
+### Bug Fixes
+
+* fix service upgrade for dev tag. ([#446](https://www.github.com/dxos/cli/issues/446)) ([30e4742](https://www.github.com/dxos/cli/commit/30e4742b6353aacfb1c2b4f598175a1d2c6ff373))
+
+### [2.13.10](https://www.github.com/dxos/cli/compare/v2.13.9...v2.13.10) (2022-02-19)
+
+
+### Bug Fixes
+
+* restore service. ([#444](https://www.github.com/dxos/cli/issues/444)) ([9931c45](https://www.github.com/dxos/cli/commit/9931c45dbeef8815d53793bb4e80a4f29412c6d7))
+* stop conatiner before destroy. ([390e400](https://www.github.com/dxos/cli/commit/390e400321b233f1bc207ee20103214580806308))
+
+### [2.13.9](https://www.github.com/dxos/cli/compare/v2.13.8...v2.13.9) (2022-02-19)
+
+
+### Bug Fixes
+
+* add services folder to kube binds. ([#442](https://www.github.com/dxos/cli/issues/442)) ([0127eab](https://www.github.com/dxos/cli/commit/0127eab7b7449de41de16bce05d91cdf72b280cc))
+
+### [2.13.8](https://www.github.com/dxos/cli/compare/v2.13.7...v2.13.8) (2022-02-18)
+
+
+### Bug Fixes
+
+* hot service upgrade. ([#440](https://www.github.com/dxos/cli/issues/440)) ([706c130](https://www.github.com/dxos/cli/commit/706c1306f80f168a21b8aba17a9d9be5e5c75b23))
+
 ### [2.13.7](https://www.github.com/dxos/cli/compare/v2.13.6...v2.13.7) (2022-02-18)
 
 
