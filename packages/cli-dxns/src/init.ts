@@ -11,6 +11,7 @@ import { Config } from '@dxos/config';
 import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
 
 import { DXNSClient } from './interfaces';
+import { DXNS_ACCOUNT_PREFERENCE } from './utils';
 
 const log = debug('dxos:cli-dxns');
 
@@ -69,7 +70,7 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
       if (argv?.account) {
         return AccountKey.fromHex(argv.account);
       }
-      const account = config.get('runtime.services.dxns.account') ?? await dxosClient.halo.getGlobalPreference('DXNSAccount');
+      const account = config.get('runtime.services.dxns.account') ?? await dxosClient.halo.getGlobalPreference(DXNS_ACCOUNT_PREFERENCE);
       assert(account, 'Create a DXNS account using `dx dxns account create`');
       return AccountKey.fromHex(account);
     };
