@@ -20,7 +20,8 @@ export interface DXNSClient {
   accountClient: AccountClient,
   transactionHandler: ApiTransactionHandler,
   dxosClient: Client,
-  getDXNSAccount: (argv?: any) => AccountKey
+  dxnsAddress: string | undefined,
+  getDXNSAccount: (argv?: any) => Promise<AccountKey>
 }
 
 export interface Params extends CoreState {

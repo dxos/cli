@@ -102,7 +102,7 @@ export const DXNSModule = (params: Params) => {
           await build()(argv);
           const cid = await publish(params.config)(argv);
           const client = await params.getDXNSClient();
-          const account = client.getDXNSAccount(argv);
+          const account = await client.getDXNSAccount(argv);
           await register({ cid, account, ...params })(argv);
         })
       })

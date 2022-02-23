@@ -26,13 +26,10 @@ export const generateAddress = () => async (argv: any) => {
 };
 
 export const listAddress = (params: Params) => async (argv: any) => {
-  const { getDXNSClient, config } = params;
-
-  const client = await getDXNSClient();
+  const { dxnsAddress } = await params.getDXNSClient();
   const { json } = argv;
-  const address = client.keypair?.address ?? config.get('runtime.services.dxns.address');
 
-  print({ address }, { json });
+  print({ address: dxnsAddress }, { json });
 
   await sleep(2000);
 };
@@ -55,5 +52,4 @@ export const recoverAddress = ({ getDXNSClient }: Params) => async (argv: any) =
   });
 
   print({ address: keypair.address }, { json });
-  print('Manual step required: Put the address into your config > runtime > services > dxns > address');
 };

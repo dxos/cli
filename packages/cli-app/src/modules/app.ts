@@ -82,7 +82,7 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
 
         handler: asyncHandler(async (argv: any) => {
           const client = await getDXNSClient();
-          const account = client.getDXNSAccount(argv);
+          const account = await client.getDXNSAccount(argv);
           return register({ getAppRecord, getDXNSClient, account })(argv);
         })
       })
@@ -114,7 +114,7 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
           await build(config, { getAppRecord })(argv);
           await publish(config)(argv);
           const client = await getDXNSClient();
-          const account = client.getDXNSAccount(argv);
+          const account = await client.getDXNSAccount(argv);
           await register({ getAppRecord, getDXNSClient, account })(argv);
         })
       })

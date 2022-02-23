@@ -32,19 +32,19 @@ const createDxnsClientGetter = (config: Config, state: Partial<CoreState>) => as
 
 const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Promise<DXNSClient | undefined> => {
   const { profilePath, profileExists } = state;
+  const dxosClient = await getDxosClient(config);
+
   if (profilePath && profileExists) {
     // The keyring need to be created AFTER api is created or we need to wait for WASM init.
     // https://polkadot.js.org/docs/api/start/keyring#creating-a-keyring-instance
     const keyring = await createKeyring();
     const accountUri = config.get('runtime.services.dxns.accountUri');
-    const polkadotAddress = config.get('runtime.services.dxns.address');
     const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
+    const polkadotAddress = config.get('runtime.services.dxns.address') ?? await dxosClient.halo.getDXNSAddress();
 
     const apiServerUri = config.get('runtime.services.dxns.server');
     assert(apiServerUri, 'Missing DXNS endpoint config at `runtime.services.dxns.server`');
     const apiPromise = await createApiPromise(apiServerUri);
-
-    const dxosClient = await getDxosClient(config);
 
     let signFn: SignTxFunction;
     if (keypair) {
@@ -65,11 +65,11 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     const accountClient = new AccountClient(apiPromise, signFn);
     const transactionHandler = new ApiTransactionHandler(apiPromise, signFn);
 
-    const getDXNSAccount = (argv?: any) => {
+    const getDXNSAccount = async (argv?: any) => {
       if (argv.account) {
         return AccountKey.fromHex(argv.account);
       }
-      const account = config.get('runtime.services.dxns.account');
+      const account = config.get('runtime.services.dxns.account') ?? await dxosClient.halo.getGlobalPreference('DXNSAccount');
       assert(account, 'Create a DXNS account using `dx dxns account create`');
       return AccountKey.fromHex(account);
     };
@@ -83,7 +83,8 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
       accountClient,
       transactionHandler,
       dxosClient,
-      getDXNSAccount
+      getDXNSAccount,
+      dxnsAddress: keypair?.address ?? polkadotAddress
     };
   }
 };

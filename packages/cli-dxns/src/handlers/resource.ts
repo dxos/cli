@@ -50,7 +50,7 @@ export const deleteResource = (params: Params) => async (argv: any) => {
   const parsedDxn = DXN.parse(dxn);
 
   const client = await getDXNSClient();
-  const account = client.getDXNSAccount(argv);
+  const account = await client.getDXNSAccount(argv);
 
   await client.registryClient.deleteResource(parsedDxn, account);
 };

@@ -15,7 +15,7 @@ export const addDummyData = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
   const registry = client.registryClient;
-  const account = client.getDXNSAccount(argv);
+  const account = await client.getDXNSAccount(argv);
 
   print('Adding bot record');
 

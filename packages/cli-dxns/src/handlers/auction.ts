@@ -62,7 +62,7 @@ export const claimAuction = (params: Params) => async (argv: any) => {
 
   assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
   const client = await getDXNSClient();
-  const account = client.getDXNSAccount(argv);
+  const account = await client.getDXNSAccount(argv);
 
   const domainKey = await client.auctionsClient.claimAuction(name, account);
 

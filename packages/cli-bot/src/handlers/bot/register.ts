@@ -61,7 +61,7 @@ export const register = ({ getDXNSClient, config }: RegisterParams) => async (ar
     const { description, package: pkg, ...rest } = conf;
 
     const { registryClient, getDXNSAccount } = await getDXNSClient();
-    const account = getDXNSAccount(argv);
+    const account = await getDXNSAccount(argv);
 
     const botType = await registryClient.getResourceRecord(DXN.parse(BOT_DXN_NAME), 'latest');
     assert(botType);

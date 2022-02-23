@@ -73,7 +73,7 @@ export const register = ({ getDXNSClient }: any) => async (argv: any) => {
   const cid = await registryClient.insertDataRecord({ url }, kubeType.record.cid, {});
   const domainKey = await registryClient.resolveDomainName(domain);
   const dxn = DXN.fromDomainKey(domainKey, name);
-  const account = getDXNSAccount(argv);
+  const account = await getDXNSAccount(argv);
   await registryClient.updateResource(dxn, account, cid);
   await registerServices({
     kubeName: name,
