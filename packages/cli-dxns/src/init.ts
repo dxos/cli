@@ -66,7 +66,7 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     const transactionHandler = new ApiTransactionHandler(apiPromise, signFn);
 
     const getDXNSAccount = async (argv?: any) => {
-      if (argv.account) {
+      if (argv?.account) {
         return AccountKey.fromHex(argv.account);
       }
       const account = config.get('runtime.services.dxns.account') ?? await dxosClient.halo.getGlobalPreference('DXNSAccount');

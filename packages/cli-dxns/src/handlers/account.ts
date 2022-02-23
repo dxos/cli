@@ -9,26 +9,25 @@ import { print } from '@dxos/cli-core';
 
 import { Params } from '../interfaces';
 
-export const listAccount = ({ config }: Params) => async (argv: any) => {
+export const listAccount = (params: Params) => async (argv: any) => {
   const { json } = argv;
-  const account = config.get('runtime.services.dxns.account');
+  const { getDXNSAccount } = await params.getDXNSClient();
+  const account = await getDXNSAccount();
 
-  print({ account }, { json });
+  print({ account: account.toHex() }, { json });
 
   await sleep(2000);
 };
 
 export const createAccount = ({ getDXNSClient }: Params) => async (argv: any) => {
   const { json } = argv;
-  const { accountClient } = await getDXNSClient();
+  const { accountClient, dxosClient } = await getDXNSClient();
   const account = await accountClient.createAccount();
+  await dxosClient.halo.setGlobalPreference('DXNSAccount', account.toHex());
 
   print({ account: account.toHex() }, { json });
 
   await sleep(2000);
-  if (!json) {
-    print('Manual step required: Put the account into your config > runtime > services > dxns > account');
-  }
 };
 
 export const addDeviceToAccount = ({ getDXNSClient }: Params) => async (argv: {device: string[]}) => {
