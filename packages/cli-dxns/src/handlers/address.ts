@@ -55,5 +55,5 @@ export const recoverAddress = ({ getDXNSClient }: Params) => async (argv: any) =
   });
 
   print({ address: keypair.address }, { json });
-  print('Manual step required: Put the address into your config > runtime > services > dxns > polkadotAddress');
+  print('Manual step required: Put the address into your config > runtime > services > dxns > address');
 };
