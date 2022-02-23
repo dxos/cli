@@ -12,6 +12,7 @@ import { KeyType } from '@dxos/credentials';
 import { PublicKey } from '@dxos/crypto';
 
 import { Params } from '../interfaces';
+import { DXNS_ADDRESS_PREFERENCE } from '../utils';
 
 export const generateAddress = () => async (argv: any) => {
   const { json } = argv;
@@ -42,14 +43,17 @@ export const recoverAddress = ({ getDXNSClient }: Params) => async (argv: any) =
   await cryptoWaitReady();
   const keyring = new Keyring({ type: 'sr25519' });
   const keypair = keyring.addFromUri(uri);
+  const address = keypair.address;
 
   const { dxosClient } = await getDXNSClient();
 
   await dxosClient.halo.addKeyRecord({
-    publicKey: PublicKey.from(decodeAddress(keypair.address)),
+    publicKey: PublicKey.from(decodeAddress(address)),
     secretKey: Buffer.from(uri),
     type: KeyType.DXNS_ADDRESS
   });
 
-  print({ address: keypair.address }, { json });
+  await dxosClient.halo.setDevicePreference(DXNS_ADDRESS_PREFERENCE, address);
+
+  print({ address }, { json });
 };

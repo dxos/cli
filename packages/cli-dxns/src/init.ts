@@ -11,7 +11,7 @@ import { Config } from '@dxos/config';
 import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
 
 import { DXNSClient } from './interfaces';
-import { DXNS_ACCOUNT_PREFERENCE } from './utils';
+import { DXNS_ACCOUNT_PREFERENCE, DXNS_ADDRESS_PREFERENCE } from './utils';
 
 const log = debug('dxos:cli-dxns');
 
@@ -41,7 +41,8 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     const keyring = await createKeyring();
     const accountUri = config.get('runtime.services.dxns.accountUri');
     const keypair = accountUri ? keyring.addFromUri(accountUri) : undefined;
-    const polkadotAddress = config.get('runtime.services.dxns.address') ?? await dxosClient.halo.getDXNSAddress();
+    const polkadotAddress = config.get('runtime.services.dxns.address') ??
+      await dxosClient.halo.getDevicePreference(DXNS_ADDRESS_PREFERENCE);
 
     const apiServerUri = config.get('runtime.services.dxns.server');
     assert(apiServerUri, 'Missing DXNS endpoint config at `runtime.services.dxns.server`');
@@ -70,7 +71,8 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
       if (argv?.account) {
         return AccountKey.fromHex(argv.account);
       }
-      const account = config.get('runtime.services.dxns.account') ?? await dxosClient.halo.getGlobalPreference(DXNS_ACCOUNT_PREFERENCE);
+      const account = config.get('runtime.services.dxns.account') ??
+        await dxosClient.halo.getGlobalPreference(DXNS_ACCOUNT_PREFERENCE);
       assert(account, 'Create a DXNS account using `dx dxns account create`');
       return AccountKey.fromHex(account);
     };
