@@ -1,8 +1,0 @@
-#
-# https://docs.netlify.com/configure-builds/file-based-configuration
-#
-
-[build]
-  base = "docs/"
-  publish = "public/"
-  command = "yarn build"
