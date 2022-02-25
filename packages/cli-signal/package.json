@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-signal",
-  "version": "2.13.11",
+  "version": "2.13.13",
   "description": "DXOS Signal CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-signal#readme",
   "license": "AGPL-3.0",
@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.27.4",
+    "@dxos/debug": "~2.27.7",
     "lodash-clean": "^2.2.1",
     "yargs": "^16.2.0"
   },

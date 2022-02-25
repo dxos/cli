@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-ipfs",
-  "version": "2.13.11",
+  "version": "2.13.13",
   "description": "DXOS IPFS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-ipfs#readme",
   "license": "AGPL-3.0",
@@ -35,9 +35,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.27.4",
+    "@dxos/async": "~2.27.7",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.27.4",
+    "@dxos/debug": "~2.27.7",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "cli-progress": "^3.8.2",
@@ -52,7 +52,7 @@
     "pify": "^5.0.0",
     "yargs": "^16.2.0",
     "@polkadot/api": "4.17.1",
-    "@dxos/registry-client": "~2.27.4",
+    "@dxos/registry-client": "~2.27.7",
     "abort-controller": "~3.0.0",
     "node-fetch": "^2.6.1"
   },

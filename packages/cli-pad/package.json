@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-pad",
-  "version": "2.13.11",
+  "version": "2.13.13",
   "description": "DXOS Pad CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-pad#readme",
   "license": "AGPL-3.0",
@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.27.4",
+    "@dxos/debug": "~2.27.7",
     "assert": "^2.0.0",
     "ipfs-http-client": "48.1.1",
     "js-yaml": "^3.13.1",

@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-chat",
-  "version": "2.13.11",
+  "version": "2.13.13",
   "description": "DXOS Chat CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-chat#readme",
   "license": "AGPL-3.0",
@@ -36,11 +36,11 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.27.4",
-    "@dxos/debug": "~2.27.4",
-    "@dxos/network-manager": "~2.27.4",
-    "@dxos/protocol-plugin-messenger": "~2.27.4",
-    "@dxos/protocol-plugin-presence": "~2.27.4",
+    "@dxos/crypto": "~2.27.7",
+    "@dxos/debug": "~2.27.7",
+    "@dxos/network-manager": "~2.27.7",
+    "@dxos/protocol-plugin-messenger": "~2.27.7",
+    "@dxos/protocol-plugin-presence": "~2.27.7",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^16.2.0"
