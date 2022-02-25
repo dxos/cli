@@ -8,9 +8,9 @@ importers:
   ../../packages/cli:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.27.7
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/random-access-multi-storage': ~2.27.7
+      '@dxos/random-access-multi-storage': ~2.27.8
       '@types/jest': ~27.0.3
       '@types/js-yaml': ^3.12.5
       '@types/node': ~16.11.12
@@ -45,8 +45,8 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/debug': 2.27.7
-      '@dxos/random-access-multi-storage': 2.27.7
+      '@dxos/debug': 2.27.8
+      '@dxos/random-access-multi-storage': 2.27.8
       assert: 2.0.0
       download: 8.0.0
       find-root: 1.1.0
@@ -86,10 +86,10 @@ importers:
     specifiers:
       '@dxos/cli-core': workspace:*
       '@dxos/cli-dxns': workspace:*
-      '@dxos/debug': ~2.27.7
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/registry-client': ~2.27.7
-      '@dxos/util': ^2.27.7
+      '@dxos/registry-client': ~2.27.8
+      '@dxos/util': ^2.27.8
       '@otplib/plugin-thirty-two': ^12.0.1
       '@polkadot/api': 4.17.1
       '@types/body-parser': ^1.19.1
@@ -151,9 +151,9 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/debug': 2.27.7
-      '@dxos/registry-client': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/debug': 2.27.8
+      '@dxos/registry-client': 2.27.8
+      '@dxos/util': 2.27.8
       '@otplib/plugin-thirty-two': 12.0.1
       '@polkadot/api': 4.17.1
       abort-controller: 3.0.0
@@ -219,17 +219,17 @@ importers:
 
   ../../packages/cli-bot:
     specifiers:
-      '@dxos/bot-factory-client': ~2.27.7
-      '@dxos/botkit': ~2.27.7
+      '@dxos/bot-factory-client': ~2.27.8
+      '@dxos/botkit': ~2.27.8
       '@dxos/cli-core': workspace:*
       '@dxos/cli-data': workspace:*
       '@dxos/cli-dxns': workspace:*
-      '@dxos/config': ~2.27.7
-      '@dxos/crypto': ~2.27.7
-      '@dxos/debug': ~2.27.7
+      '@dxos/config': ~2.27.8
+      '@dxos/crypto': ~2.27.8
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/registry-client': ~2.27.7
-      '@dxos/util': ^2.27.7
+      '@dxos/registry-client': ~2.27.8
+      '@dxos/util': ^2.27.8
       '@types/cli-progress': ^3.9.2
       '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3
@@ -260,14 +260,14 @@ importers:
       uuid: ^3.3.3
       yargs: ^16.2.0
     dependencies:
-      '@dxos/bot-factory-client': 2.27.7
-      '@dxos/botkit': 2.27.7
+      '@dxos/bot-factory-client': 2.27.8
+      '@dxos/botkit': 2.27.8
       '@dxos/cli-core': link:../cli-core
-      '@dxos/config': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/registry-client': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/config': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/registry-client': 2.27.8
+      '@dxos/util': 2.27.8
       abort-controller: 3.0.0
       assert: 2.0.0
       chance: 1.1.8
@@ -305,12 +305,12 @@ importers:
   ../../packages/cli-chat:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/crypto': ~2.27.7
-      '@dxos/debug': ~2.27.7
+      '@dxos/crypto': ~2.27.8
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/network-manager': ~2.27.7
-      '@dxos/protocol-plugin-messenger': ~2.27.7
-      '@dxos/protocol-plugin-presence': ~2.27.7
+      '@dxos/network-manager': ~2.27.8
+      '@dxos/protocol-plugin-messenger': ~2.27.8
+      '@dxos/protocol-plugin-presence': ~2.27.8
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^16.0.1
@@ -324,11 +324,11 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/network-manager': 2.27.7
-      '@dxos/protocol-plugin-messenger': 2.27.7
-      '@dxos/protocol-plugin-presence': 2.27.7
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/network-manager': 2.27.8
+      '@dxos/protocol-plugin-messenger': 2.27.8
+      '@dxos/protocol-plugin-presence': 2.27.8
       assert: 2.0.0
       hypercore-crypto: 1.0.0
       yargs: 16.2.0
@@ -346,7 +346,7 @@ importers:
   ../../packages/cli-console:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.27.7
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
@@ -373,7 +373,7 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/debug': 2.27.7
+      '@dxos/debug': 2.27.8
       abort-controller: 3.0.0
       assert: 2.0.0
       chance: 1.1.8
@@ -402,11 +402,11 @@ importers:
 
   ../../packages/cli-core:
     specifiers:
-      '@dxos/async': ~2.27.7
-      '@dxos/client': ~2.27.7
-      '@dxos/config': ~2.27.7
-      '@dxos/crypto': ~2.27.7
-      '@dxos/debug': ~2.27.7
+      '@dxos/async': ~2.27.8
+      '@dxos/client': ~2.27.8
+      '@dxos/config': ~2.27.8
+      '@dxos/crypto': ~2.27.8
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
       '@otplib/plugin-thirty-two': ^12.0.1
       '@types/dockerode': 3.2.3
@@ -461,11 +461,11 @@ importers:
       yargs-parser: ^19.0.4
       yargs-unparser: ^1.6.4
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/client': 2.27.7
-      '@dxos/config': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/client': 2.27.8
+      '@dxos/config': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
       '@otplib/plugin-thirty-two': 12.0.1
       '@types/yargs': 16.0.4
       assert: 2.0.0
@@ -523,17 +523,17 @@ importers:
 
   ../../packages/cli-data:
     specifiers:
-      '@dxos/async': ~2.27.7
+      '@dxos/async': ~2.27.8
       '@dxos/cli-core': workspace:*
-      '@dxos/client': ~2.27.7
-      '@dxos/config': ~2.27.7
-      '@dxos/credentials': ~2.27.7
-      '@dxos/crypto': ~2.27.7
-      '@dxos/debug': ~2.27.7
-      '@dxos/echo-db': ~2.27.7
+      '@dxos/client': ~2.27.8
+      '@dxos/config': ~2.27.8
+      '@dxos/credentials': ~2.27.8
+      '@dxos/crypto': ~2.27.8
+      '@dxos/debug': ~2.27.8
+      '@dxos/echo-db': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/random-access-multi-storage': ~2.27.7
-      '@dxos/signal': ~2.27.7
+      '@dxos/random-access-multi-storage': ~2.27.8
+      '@dxos/signal': ~2.27.8
       '@swc-node/register': ~1.4.2
       '@types/expect': ^24.3.0
       '@types/fs-extra': ^9.0.13
@@ -559,13 +559,13 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/client': 2.27.7
-      '@dxos/config': 2.27.7
-      '@dxos/credentials': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/echo-db': 2.27.7
-      '@dxos/random-access-multi-storage': 2.27.7
+      '@dxos/client': 2.27.8
+      '@dxos/config': 2.27.8
+      '@dxos/credentials': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/echo-db': 2.27.8
+      '@dxos/random-access-multi-storage': 2.27.8
       assert: 2.0.0
       base-x: 3.0.9
       fs-extra: 10.0.0
@@ -576,9 +576,9 @@ importers:
       random-access-memory: 3.1.4
       yargs: 16.2.0
     devDependencies:
-      '@dxos/async': 2.27.7
+      '@dxos/async': 2.27.8
       '@dxos/eslint-plugin': 1.0.24_eslint@7.32.0+typescript@4.5.5
-      '@dxos/signal': 2.27.7
+      '@dxos/signal': 2.27.8
       '@swc-node/register': 1.4.2
       '@types/expect': 24.3.0
       '@types/fs-extra': 9.0.13
@@ -596,15 +596,15 @@ importers:
 
   ../../packages/cli-dxns:
     specifiers:
-      '@dxos/async': ~2.27.7
+      '@dxos/async': ~2.27.8
       '@dxos/cli-core': workspace:*
-      '@dxos/client': ~2.27.7
-      '@dxos/config': ~2.27.7
-      '@dxos/credentials': ~2.27.7
-      '@dxos/crypto': ~2.27.7
-      '@dxos/debug': ~2.27.7
+      '@dxos/client': ~2.27.8
+      '@dxos/config': ~2.27.8
+      '@dxos/credentials': ~2.27.8
+      '@dxos/crypto': ~2.27.8
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/registry-client': ~2.27.7
+      '@dxos/registry-client': ~2.27.8
       '@polkadot/api': 4.17.1
       '@polkadot/keyring': 6.11.1
       '@polkadot/types': 4.17.1
@@ -646,13 +646,13 @@ importers:
       uuid: ^3.3.3
       yargs: ^16.2.0
     dependencies:
-      '@dxos/async': 2.27.7
+      '@dxos/async': 2.27.8
       '@dxos/cli-core': link:../cli-core
-      '@dxos/config': 2.27.7
-      '@dxos/credentials': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/registry-client': 2.27.7
+      '@dxos/config': 2.27.8
+      '@dxos/credentials': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/registry-client': 2.27.8
       '@polkadot/api': 4.17.1
       '@polkadot/keyring': 6.11.1
       '@polkadot/util-crypto': 6.11.1
@@ -674,7 +674,7 @@ importers:
       protobufjs: 6.11.2
       yargs: 16.2.0
     devDependencies:
-      '@dxos/client': 2.27.7
+      '@dxos/client': 2.27.8
       '@dxos/eslint-plugin': 1.0.24_1a58291d5de64ba74d8d611ac4a671f0
       '@polkadot/types': 4.17.1
       '@types/bn.js': 5.1.0
@@ -701,11 +701,11 @@ importers:
     specifiers:
       '@dxos/cli-core': workspace:*
       '@dxos/cli-data': workspace:*
-      '@dxos/crypto': ~2.27.7
-      '@dxos/debug': ~2.27.7
-      '@dxos/echo-db': ~2.27.7
+      '@dxos/crypto': ~2.27.8
+      '@dxos/debug': ~2.27.8
+      '@dxos/echo-db': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/object-model': ~2.27.7
+      '@dxos/object-model': ~2.27.8
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^16.0.1
@@ -718,14 +718,14 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/object-model': 2.27.7
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/object-model': 2.27.8
       assert: 2.0.0
       yargs: 16.2.0
     devDependencies:
       '@dxos/cli-data': link:../cli-data
-      '@dxos/echo-db': 2.27.7
+      '@dxos/echo-db': 2.27.8
       '@dxos/eslint-plugin': 1.0.24_1a58291d5de64ba74d8d611ac4a671f0
       '@types/jest': 27.0.3
       '@types/node': 16.11.25
@@ -738,11 +738,11 @@ importers:
 
   ../../packages/cli-ipfs:
     specifiers:
-      '@dxos/async': ~2.27.7
+      '@dxos/async': ~2.27.8
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.27.7
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/registry-client': ~2.27.7
+      '@dxos/registry-client': ~2.27.8
       '@polkadot/api': 4.17.1
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
@@ -768,10 +768,10 @@ importers:
       uuid: ^3.3.3
       yargs: ^16.2.0
     dependencies:
-      '@dxos/async': 2.27.7
+      '@dxos/async': 2.27.8
       '@dxos/cli-core': link:../cli-core
-      '@dxos/debug': 2.27.7
-      '@dxos/registry-client': 2.27.7
+      '@dxos/debug': 2.27.8
+      '@dxos/registry-client': 2.27.8
       '@polkadot/api': 4.17.1
       abort-controller: 3.0.0
       assert: 2.0.0
@@ -801,13 +801,13 @@ importers:
 
   ../../packages/cli-kube:
     specifiers:
-      '@dxos/async': ~2.27.7
+      '@dxos/async': ~2.27.8
       '@dxos/cli-core': workspace:*
-      '@dxos/crypto': ~2.27.7
-      '@dxos/debug': ~2.27.7
+      '@dxos/crypto': ~2.27.8
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/object-model': ~2.27.7
-      '@dxos/registry-client': ~2.27.7
+      '@dxos/object-model': ~2.27.8
+      '@dxos/registry-client': ~2.27.8
       '@types/jest': ~27.0.3
       '@types/js-yaml': ^3.12.5
       '@types/lodash.defaultsdeep': ^4.6.6
@@ -827,12 +827,12 @@ importers:
       yamljs: ^0.3.0
       yargs: ^16.2.0
     dependencies:
-      '@dxos/async': 2.27.7
+      '@dxos/async': 2.27.8
       '@dxos/cli-core': link:../cli-core
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/object-model': 2.27.7
-      '@dxos/registry-client': 2.27.7
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/object-model': 2.27.8
+      '@dxos/registry-client': 2.27.8
       assert: 2.0.0
       do-wrapper: 4.5.1
       got: 11.8.3
@@ -857,7 +857,7 @@ importers:
   ../../packages/cli-mdns:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.27.7
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
@@ -870,7 +870,7 @@ importers:
       uuid: ^3.3.3
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/debug': 2.27.7
+      '@dxos/debug': 2.27.8
       assert: 2.0.0
     devDependencies:
       '@dxos/eslint-plugin': 1.0.24_1a58291d5de64ba74d8d611ac4a671f0
@@ -885,10 +885,10 @@ importers:
 
   ../../packages/cli-mesh:
     specifiers:
-      '@dxos/async': ~2.27.7
+      '@dxos/async': ~2.27.8
       '@dxos/cli-core': workspace:*
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/network-manager': ~2.27.7
+      '@dxos/network-manager': ~2.27.8
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^16.0.1
@@ -903,9 +903,9 @@ importers:
       uuid: ^3.3.3
       yargs: ^16.2.0
     dependencies:
-      '@dxos/async': 2.27.7
+      '@dxos/async': 2.27.8
       '@dxos/cli-core': link:../cli-core
-      '@dxos/network-manager': 2.27.7
+      '@dxos/network-manager': 2.27.8
       assert: 2.0.0
       boolean: 3.2.0
       do-wrapper: 4.5.1
@@ -925,7 +925,7 @@ importers:
   ../../packages/cli-pad:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.27.7
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
@@ -947,7 +947,7 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/debug': 2.27.7
+      '@dxos/debug': 2.27.8
       abort-controller: 3.0.0
       assert: 2.0.0
       ipfs-http-client: 48.1.1_f0d41ca2818bdc89ba47949028e75a64
@@ -972,7 +972,7 @@ importers:
   ../../packages/cli-signal:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.27.7
+      '@dxos/debug': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
@@ -985,7 +985,7 @@ importers:
       yargs: ^16.2.0
     dependencies:
       '@dxos/cli-core': link:../cli-core
-      '@dxos/debug': 2.27.7
+      '@dxos/debug': 2.27.8
       lodash-clean: 2.2.3
       yargs: 16.2.0
     devDependencies:
@@ -1000,13 +1000,13 @@ importers:
 
   ../../packages/e2e:
     specifiers:
-      '@dxos/async': ~2.27.7
-      '@dxos/botkit': ~2.27.7
+      '@dxos/async': ~2.27.8
+      '@dxos/botkit': ~2.27.8
       '@dxos/cli-core': workspace:*
-      '@dxos/crypto': ~2.27.7
+      '@dxos/crypto': ~2.27.8
       '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/signal': ~2.27.7
-      '@dxos/util': ^2.27.7
+      '@dxos/signal': ~2.27.8
+      '@dxos/util': ^2.27.8
       '@types/expect': ^24.3.0
       '@types/express': ^4.17.13
       '@types/fs-extra': ^9.0.13
@@ -1026,13 +1026,13 @@ importers:
       wrtc: ~0.4.7
       ws: ~8.4.2
     devDependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/botkit': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/botkit': 2.27.8
       '@dxos/cli-core': link:../cli-core
-      '@dxos/crypto': 2.27.7
+      '@dxos/crypto': 2.27.8
       '@dxos/eslint-plugin': 1.0.24_eslint@7.32.0+typescript@4.5.5
-      '@dxos/signal': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/signal': 2.27.8
+      '@dxos/util': 2.27.8
       '@types/expect': 24.3.0
       '@types/express': 4.17.13
       '@types/fs-extra': 9.0.13
@@ -1418,45 +1418,45 @@ packages:
       '@cspotcode/source-map-consumer': 0.8.0
     dev: true
 
-  /@dxos/async/2.27.7:
-    resolution: {integrity: sha512-wINLGP9dBzM8v/zeoUPTEizJA9fvbkHgjFCTfyXsYZrZGvRf3qbxKPPI8KzIMAzocyUhInl8r73wIZT6d/uB2g==}
+  /@dxos/async/2.27.8:
+    resolution: {integrity: sha512-EBnIx+MvO7BnsQqSWaqB+9K41XofObo+91H5GcXPqPfjAOoduD+GQvi8lgn6CQyGJU8UsOmWTp+RZiioD+p8Iw==}
     dependencies:
-      '@dxos/debug': 2.27.7
+      '@dxos/debug': 2.27.8
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/bot-factory-client/2.27.7:
-    resolution: {integrity: sha512-gAfgjXWRFkdFjAsbS/2yDobbaV4nY5g4pf8gT8qUcNgHqutQbetWciuQMC62kZPSc+eTV2Mff1TV3wDuD78R2Q==}
+  /@dxos/bot-factory-client/2.27.8:
+    resolution: {integrity: sha512-lRKj1YFguM2Lmrii5dMU7HZhoPetULdGGQyrjyXmeRMURq9IvUmxBeyfWCtNgGit4z0+R6RvPFvtOCVpTjUP/Q==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/credentials': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/echo-db': 2.27.7
-      '@dxos/network-manager': 2.27.7
-      '@dxos/protocol': 2.27.7
-      '@dxos/protocol-plugin-rpc': 2.27.7
-      '@dxos/rpc': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/credentials': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/echo-db': 2.27.8
+      '@dxos/network-manager': 2.27.8
+      '@dxos/protocol': 2.27.8
+      '@dxos/protocol-plugin-rpc': 2.27.8
+      '@dxos/rpc': 2.27.8
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  /@dxos/botkit/2.27.7:
-    resolution: {integrity: sha512-90hJ1b0v8Jxu19z5fV0kd7djtbEmi4jASUat/JkHoB9nGMHR/fN6gV+LsJIYu7qdB/uupnkYjsPMPRGNU7RAcQ==}
+  /@dxos/botkit/2.27.8:
+    resolution: {integrity: sha512-PgvHVACZLwMBj2RuXz56RfbAZUVYzB66AqIjzCpsylnV/HDzmQSkYlZ5vBfKke50uhMmWoD4pPqMgw8FdBSjLg==}
     hasBin: true
     dependencies:
-      '@dxos/bot-factory-client': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/config': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/echo-db': 2.27.7
-      '@dxos/network-manager': 2.27.7
-      '@dxos/protocol': 2.27.7
-      '@dxos/protocol-plugin-rpc': 2.27.7
-      '@dxos/registry-client': 2.27.7
-      '@dxos/rpc': 2.27.7
+      '@dxos/bot-factory-client': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/config': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/echo-db': 2.27.8
+      '@dxos/network-manager': 2.27.8
+      '@dxos/protocol': 2.27.8
+      '@dxos/protocol-plugin-rpc': 2.27.8
+      '@dxos/registry-client': 2.27.8
+      '@dxos/rpc': 2.27.8
       debug: 4.3.3
       download: 8.0.0
       esbuild: 0.11.23
@@ -1468,35 +1468,35 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@dxos/broadcast/2.27.7:
-    resolution: {integrity: sha512-ZQmaR1X7mJ+YkphhO65Erav14CHRLFXgtQp3tOjbMkEheooFY+ziXUKX2mu+6zXULkat3zRWHZC6VtTua5WZUw==}
+  /@dxos/broadcast/2.27.8:
+    resolution: {integrity: sha512-j0T6c/ywc7hM0gcLqVMak6YqQmiNmno7l8hrZG0vVfsUunhnns1MeCzxVeeec/36wQtnmgTTiiJLXS7T8+gbGQ==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/crypto': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/crypto': 2.27.8
       debug: 4.3.3
       tiny-lru: 7.0.6
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/client/2.27.7:
-    resolution: {integrity: sha512-ECEqrrE5cfx61B+YUFEFbcI7W59vkE+8pn9vyESK+fLCAXe7mhNB6WvXbgEb/z5YVup4ZhN+A8BasI6gNWaUXA==}
+  /@dxos/client/2.27.8:
+    resolution: {integrity: sha512-wOkz87EnVycg57EdlWJRfuqlnFaVh51NR3eIluEaBVYLoTD+sUKVGKFeOk4Ozguqz8EJCYyq6lrDLVmS1EDg4A==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/config': 2.27.7
-      '@dxos/credentials': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/echo-db': 2.27.7
-      '@dxos/echo-protocol': 2.27.7
-      '@dxos/feed-store': 2.27.7
-      '@dxos/model-factory': 2.27.7
-      '@dxos/network-manager': 2.27.7
-      '@dxos/object-model': 2.27.7
-      '@dxos/protocol': 2.27.7
-      '@dxos/rpc': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/config': 2.27.8
+      '@dxos/credentials': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/echo-db': 2.27.8
+      '@dxos/echo-protocol': 2.27.8
+      '@dxos/feed-store': 2.27.8
+      '@dxos/model-factory': 2.27.8
+      '@dxos/network-manager': 2.27.8
+      '@dxos/object-model': 2.27.8
+      '@dxos/protocol': 2.27.8
+      '@dxos/rpc': 2.27.8
+      '@dxos/util': 2.27.8
       '@polkadot/keyring': 6.11.1
       '@polkadot/util': 6.11.1
       '@polkadot/util-crypto': 6.11.1
@@ -1517,8 +1517,8 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@dxos/codec-protobuf/2.27.7:
-    resolution: {integrity: sha512-bV+sU08CzR4oaLOSIdEICBNLc+JwW1FGXGwD9j1KhdJvSlJ68XAUzKgKwZS4/n2PKiyLvy+a1CQB6RheE9YZZA==}
+  /@dxos/codec-protobuf/2.27.8:
+    resolution: {integrity: sha512-5eoXG73htTGnwd8J2REKD8zdhN/1UBN+i51e7cCcVfebxTylsfBpSCTjak6V5E3dn1V3aPmlo47ozTYXxtMo+Q==}
     dependencies:
       assert: 2.0.0
       debug: 4.3.3
@@ -1527,12 +1527,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/config/2.27.7:
-    resolution: {integrity: sha512-0OfOO8iTERDuiqHJ5HvE7iZRlj7CiJlStjWR8MH7wZ3Y75sYIB5cqnRQLuUpE5C8i9BpqWlOq/+3hyWzUnZlNQ==}
+  /@dxos/config/2.27.8:
+    resolution: {integrity: sha512-QvxnatvjXZLvTMPCIzF4jGz2zFOw9yTLvdYCupPkaTqZoO7owIaymCuvyh5noqBh+Lf3ekYl2YPOjtpDqtRyJA==}
     dependencies:
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/protocol': 2.27.7
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/protocol': 2.27.8
       boolean: 3.2.0
       debug: 4.3.3
       js-yaml: 3.14.1
@@ -1545,17 +1545,17 @@ packages:
       - encoding
       - supports-color
 
-  /@dxos/credentials/2.27.7:
-    resolution: {integrity: sha512-0Nk5hCOqMmRs+6U8RqkPa7N8kk71QrwA+hYOfcTYHMS7E3dK454X9Y8Jc3FlbBDkUYOE8YL5CQ4XZQpg7cVDZw==}
+  /@dxos/credentials/2.27.8:
+    resolution: {integrity: sha512-isbk9K3gbuduvSF0qUIH8hYPDb2OAfPO7pI/duG2j5CgR4ajSNqno8QLRYzWsCglIUypXzmbNRM0t8yMuk/Sdg==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/feed-store': 2.27.7
-      '@dxos/mesh-protocol': 2.27.7
-      '@dxos/protocol': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/feed-store': 2.27.8
+      '@dxos/mesh-protocol': 2.27.8
+      '@dxos/protocol': 2.27.8
+      '@dxos/util': 2.27.8
       buffer-json-encoding: 1.0.2
       debug: 4.3.3
       encoding-down: 6.3.0
@@ -1572,40 +1572,40 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/crypto/2.27.7:
-    resolution: {integrity: sha512-Y8OyvCsknDedpc6+29a89KnWi5tvRS2/8D0sz9UA/DGaQe7e5Vu8g09uWJqaZCrQk6uJuynwG0AP/0J0SLAgDQ==}
+  /@dxos/crypto/2.27.8:
+    resolution: {integrity: sha512-d0NH1/4KfhRQcfH33xkhlCIa9RiB8aepMXVRRoxRt+dOKArmesEFIW/0eH9ayI4NQIr1mIL+Et6wB5qAM4CpMw==}
     dependencies:
       bip39: 3.0.4
       crypto-js: 3.3.0
       hypercore-crypto: 2.3.2
 
-  /@dxos/debug/2.27.7:
-    resolution: {integrity: sha512-W1DFbpovJgV5+xL204iPzNC7VY2N+IiwiE9twfQSDOgIaFNl0vQupO/PKXG8jQicCJsJ9/INKfMonp8wE7inHw==}
+  /@dxos/debug/2.27.8:
+    resolution: {integrity: sha512-pHC80XUQPYjXupIWNgp7uRP5Oc5E/SsxVEnNORmtnc/4iiCsxxYzna9o4inX8X23SYBPDFfo4KixeavAZAfPpg==}
     dependencies:
       '@types/node': 14.18.12
       debug: 4.3.3
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/echo-db/2.27.7:
-    resolution: {integrity: sha512-XfPl96graW3W1Fp8Pde4bENsUEszsNti/52nqcvXilWSR9lhHeG1pW+x5RW49b/NhmJCbVIAt4k6DmrBO/tJSQ==}
+  /@dxos/echo-db/2.27.8:
+    resolution: {integrity: sha512-dKCZRFFuy3Wo+3WxMfyt/ki4K7ZM7LL6xGqdkpOKiTnqKt4dORs03vCEhElKA1c9ocHZB32aRwoR6oVo6WJIkg==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/credentials': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/echo-protocol': 2.27.7
-      '@dxos/feed-store': 2.27.7
-      '@dxos/mesh-protocol': 2.27.7
-      '@dxos/model-factory': 2.27.7
-      '@dxos/network-manager': 2.27.7
-      '@dxos/object-model': 2.27.7
-      '@dxos/protocol': 2.27.7
-      '@dxos/protocol-plugin-presence': 2.27.7
-      '@dxos/protocol-plugin-replicator': 2.27.7
-      '@dxos/random-access-multi-storage': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/credentials': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/echo-protocol': 2.27.8
+      '@dxos/feed-store': 2.27.8
+      '@dxos/mesh-protocol': 2.27.8
+      '@dxos/model-factory': 2.27.8
+      '@dxos/network-manager': 2.27.8
+      '@dxos/object-model': 2.27.8
+      '@dxos/protocol': 2.27.8
+      '@dxos/protocol-plugin-presence': 2.27.8
+      '@dxos/protocol-plugin-replicator': 2.27.8
+      '@dxos/random-access-multi-storage': 2.27.8
+      '@dxos/util': 2.27.8
       '@types/debug': 4.1.7
       '@types/json-stable-stringify': 1.0.33
       '@types/lodash': 4.14.178
@@ -1620,16 +1620,16 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@dxos/echo-protocol/2.27.7:
-    resolution: {integrity: sha512-tnQyjkikkITwq3ZsLbtPvV3ywaKDxLMh5Zqei6eox/FEGaqMI2WrmH187M8uhSqweVuTq46Wx2oDMdJ+b2H79g==}
+  /@dxos/echo-protocol/2.27.8:
+    resolution: {integrity: sha512-DU/bQV1pnRoriEVtVT8AsTVG5UhirHsamsuPTU6HSE25fo4olAyVrhTw6y+W4hZz3f/7URM9Tsg2Oj0NfIdFCg==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/credentials': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/feed-store': 2.27.7
-      '@dxos/protocol': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/credentials': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/feed-store': 2.27.8
+      '@dxos/protocol': 2.27.8
+      '@dxos/util': 2.27.8
       debug: 4.3.3
       pify: 5.0.0
       readable-stream: 3.6.0
@@ -1682,11 +1682,11 @@ packages:
       - supports-color
     dev: true
 
-  /@dxos/feed-store/2.27.7:
-    resolution: {integrity: sha512-p+BdLICZDLaLGLkWicCIcOejK9e9/baGrqeJX64Nj+90/zaNYkAvqi5nu+wTjtjSJ33y/ta0D4zQzUAlqxt3yQ==}
+  /@dxos/feed-store/2.27.8:
+    resolution: {integrity: sha512-izPw95K2bq6gGI0jVRP265RS/2IMi8U2njldPKQZ0DZjKbGPdqZJXwOwG1c7s0OL5rP63tnl8Y7+EhYKYoCsGw==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/util': 2.27.8
       buffer-json-encoding: 1.0.2
       debug: 4.3.3
       end-of-stream: 1.4.4
@@ -1698,12 +1698,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/mesh-protocol/2.27.7:
-    resolution: {integrity: sha512-wcZcnCI35bMDTZZiSBbO8+vZqwXY5qaYl54F/qd1j9mvHYsl43G3EXZXOFZ9K/TJbWrQ3j2Atnako21oVZw3gw==}
+  /@dxos/mesh-protocol/2.27.8:
+    resolution: {integrity: sha512-zFgBsxP88V/psZHoxu8PZA0vbB89hVPJNAsc5dopUCq2Nz7b9V0PEvDsk8YTZvwKsKju98zc1YSwu5MvXBtulQ==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/crypto': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/crypto': 2.27.8
       assert: 2.0.0
       buffer-json-encoding: 1.0.2
       debug: 4.3.3
@@ -1715,32 +1715,32 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/model-factory/2.27.7:
-    resolution: {integrity: sha512-uArYKYtT20T5EQYAIXsr6SCX4If/kKWEPxgpcE8zFCOs9hx1cPyHsv25spKT4lG5DjOL0jUeFvGcKJStNp3Jog==}
+  /@dxos/model-factory/2.27.8:
+    resolution: {integrity: sha512-BONhP4ftsUKDX6yW7Y9a7fJrB4+rFvPmuSsD2NekuTzyIFmNFq9ufj7zOg+cekRl3fKHBzQEyrG8YQsyL8esgA==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/echo-protocol': 2.27.7
-      '@dxos/feed-store': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/echo-protocol': 2.27.8
+      '@dxos/feed-store': 2.27.8
+      '@dxos/util': 2.27.8
       '@types/debug': 4.1.7
       '@types/node': 14.18.12
       debug: 4.3.3
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/network-manager/2.27.7:
-    resolution: {integrity: sha512-Z7EcvZZFU4Z1Xo71gZf8/rGmFiP2ocdXBSL+PbSSHZAMWe4uTShH9ddZZgAkXgVEHDSy/W0caczX6rSZ8/uDrg==}
+  /@dxos/network-manager/2.27.8:
+    resolution: {integrity: sha512-q1N9AfN5OJcAD9rrQfsMJS5L2+a7J0yI0dquzygzGr0thL7p0JBC6g2RMRB2WdzfIdWC7XuqQulDMU6YJgelyQ==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/credentials': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/mesh-protocol': 2.27.7
-      '@dxos/protocol-plugin-presence': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/credentials': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/mesh-protocol': 2.27.8
+      '@dxos/protocol-plugin-presence': 2.27.8
+      '@dxos/util': 2.27.8
       '@types/simple-peer': 9.11.3
       '@types/ws': 7.4.7
       assert: 2.0.0
@@ -1756,14 +1756,14 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@dxos/object-model/2.27.7:
-    resolution: {integrity: sha512-GcLZzIUxMXresC+Dd5S1BbGczaqB+dG4gg7UTsAfRBUy6R1fucej3IrV78ncR9Ss0MX2mN+Sb6MjzAF/tyumug==}
+  /@dxos/object-model/2.27.8:
+    resolution: {integrity: sha512-aomh6TINWbU3C2DXvVUOWCe0uqcOit00RQA9YV+xMpgcXU2DucQ8wO/PyxaOv/LTCDv+1tY6r9UlduLRxJtpKw==}
     dependencies:
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/echo-protocol': 2.27.7
-      '@dxos/model-factory': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/echo-protocol': 2.27.8
+      '@dxos/model-factory': 2.27.8
+      '@dxos/util': 2.27.8
       '@types/debug': 4.1.7
       '@types/lodash': 4.14.178
       '@types/node': 14.18.12
@@ -1773,24 +1773,24 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/protocol-plugin-messenger/2.27.7:
-    resolution: {integrity: sha512-abMLBckqu86z43AwhvlIlb44967aCloam+Uyq3pASJzLCyXaGWVvNJJM1W6vAhh4HrGlNixNjLnCINtx36MGlg==}
+  /@dxos/protocol-plugin-messenger/2.27.8:
+    resolution: {integrity: sha512-l+5xd8s1+oevqvqGpNVRSEvMnvYc1/5yvARMHRNT0uleEXBLI2NMZuD7xsYBrjLwtLavn3hH5Mx7BKcnxQLe0w==}
     dependencies:
-      '@dxos/broadcast': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/mesh-protocol': 2.27.7
+      '@dxos/broadcast': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/mesh-protocol': 2.27.8
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@dxos/protocol-plugin-presence/2.27.7:
-    resolution: {integrity: sha512-FA7z+WqlsBH3XPI8xJ7fkpBOU982M4RxFxbT5kaVaCszOYDJK6kBQq1BPKJwtMKqghmvlJQHZCInaBbfqK7cYQ==}
+  /@dxos/protocol-plugin-presence/2.27.8:
+    resolution: {integrity: sha512-tINajAB8G+asAXzhAhSfwRJL+MAuR1ZFe8fDDgfzEMQ8uYS+lkYCLGgsNVi/rVUhjgz+XVpqLbiyxMeePdE3tA==}
     dependencies:
-      '@dxos/broadcast': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/mesh-protocol': 2.27.7
+      '@dxos/broadcast': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/mesh-protocol': 2.27.8
       '@types/debug': 4.1.7
       '@types/node': 14.18.12
       buffer-json-encoding: 1.0.2
@@ -1801,38 +1801,38 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/protocol-plugin-replicator/2.27.7:
-    resolution: {integrity: sha512-wTuRJeWSOfQv3gYmmPTmK2GfbcctQ2VSfuX8sM07dtcTtDF36DBaZMOSlx34RIA8bd0wEQ7RE+DHzjsv5t1Hog==}
+  /@dxos/protocol-plugin-replicator/2.27.8:
+    resolution: {integrity: sha512-ZGVMkhzk6sEgI+HRtoo2TcSIRY1mWMnBjWGtNkpKeNsahnW2wL4LwDktStqie0G0g5qWgeP2WgU+Ydw1y7cTcQ==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/mesh-protocol': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/mesh-protocol': 2.27.8
+      '@dxos/util': 2.27.8
       buffer-json-encoding: 1.0.2
       debug: 4.3.3
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/protocol-plugin-rpc/2.27.7:
-    resolution: {integrity: sha512-R7VCgjsjwwaW0sM2L5etv//6ANiZrvYwr+Vaf2PCXpmYUROYDmK/H9ju1fqY3yE6kuDdoy1jpG4YLH3cqSi3ig==}
+  /@dxos/protocol-plugin-rpc/2.27.8:
+    resolution: {integrity: sha512-2jWhMB0GiZkJm2Viu7SniRsAmWL7WWmFC/I3nkbxvt32+DJOlDS+TK9466pyfQ3udVOwxgVZfytV9OZY2hPxxg==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/mesh-protocol': 2.27.7
-      '@dxos/rpc': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/mesh-protocol': 2.27.8
+      '@dxos/rpc': 2.27.8
+      '@dxos/util': 2.27.8
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/protocol/2.27.7:
-    resolution: {integrity: sha512-VRIeYztJuzKPbQe23IKy25hgn3WkEOYRb0F8VFVyV9YFjgs9id6YNHRcAwU7icemiq6gnzvPjyub2+KrrfHi3Q==}
+  /@dxos/protocol/2.27.8:
+    resolution: {integrity: sha512-yYXjSa8+hks/eEwV3vb9RbEzuk+n1eJGiOOEu0QhIUB+hl4a386PKc4cMwTs3XDbKWCjgfMy3t8xdNDjIvx5zQ==}
     dependencies:
-      '@dxos/codec-protobuf': 2.27.7
+      '@dxos/codec-protobuf': 2.27.8
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/random-access-multi-storage/2.27.7:
-    resolution: {integrity: sha512-kP9s8GKkz/fwLuCO+EIBcityQNkx2nfRsq/K5eeha31KY/Bt1H+DHDrRFVQK7/l/BLd5nwkiJGDNd7j87dV85w==}
+  /@dxos/random-access-multi-storage/2.27.8:
+    resolution: {integrity: sha512-ybRGY0LXMtTi18OVB0hsYUUflYUcH5AtBX8QWW62qleRVlMoUXM46kVbB3r0chZz5xcigH7UqpRikUV14gwGag==}
     dependencies:
       del: 5.1.0
       pify: 5.0.0
@@ -1841,14 +1841,14 @@ packages:
       random-access-memory: 3.1.4
       random-access-web: 2.0.3
 
-  /@dxos/registry-client/2.27.7:
-    resolution: {integrity: sha512-8b6oaq394GdgRCP7ptXVcBSCxowArB7cCq1hgWNRY4H4Oqxv+AO4qSMi6rllrWW2vx1P5ZpQnxmfz5OgwOo23w==}
+  /@dxos/registry-client/2.27.8:
+    resolution: {integrity: sha512-A6AwcswlrgRoVvVdbbIUy9vVO9guRVkqTEMjCz6v6pQzGRcfbz+DQFgF7ADbPnGqH2BJ3lmfLXM1ABDE5uCorA==}
     engines: {node: '>= 14'}
     dependencies:
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/util': 2.27.7
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/util': 2.27.8
       '@polkadot/api': 4.17.1
       '@polkadot/keyring': 6.11.1
       '@polkadot/metadata': 4.17.1
@@ -1865,24 +1865,24 @@ packages:
       - encoding
       - supports-color
 
-  /@dxos/rpc/2.27.7:
-    resolution: {integrity: sha512-L2cgfIDNqhb538bJUnDu37pxU2YXQoqDbB0uJf59LMrfxJcznjB4RiK30maq0nSBIbm6lccc427KlVrjkSqdUw==}
+  /@dxos/rpc/2.27.8:
+    resolution: {integrity: sha512-Y3nqYjjhDVjphjh9YlxDr8Gl31oqnz8CP97KOemql43wiKaD3WnOY1fP6GpVBek4JhVh+Sam/GLB5v0JkXPaaw==}
     dependencies:
-      '@dxos/async': 2.27.7
-      '@dxos/codec-protobuf': 2.27.7
-      '@dxos/debug': 2.27.7
-      '@dxos/protocol': 2.27.7
+      '@dxos/async': 2.27.8
+      '@dxos/codec-protobuf': 2.27.8
+      '@dxos/debug': 2.27.8
+      '@dxos/protocol': 2.27.8
       debug: 4.3.3
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/signal/2.27.7:
-    resolution: {integrity: sha512-ffLQA/hkSchOecwe/iSaREV6FknCzi0+AoSJ1+v9ATctJn/kmr9Dz+8NfFrVw6wPBbuwZJoZGSCEdN0mYm/Zmg==}
+  /@dxos/signal/2.27.8:
+    resolution: {integrity: sha512-1Cpsw4IjIBvYDCx+ljTcB3IxcmlEVOTE7qdfEYtL0C7eB6WtQpVUBWJXFzng8cBuRYrs46kuS+O9ZAtNI3tCYA==}
     hasBin: true
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@dxos/broadcast': 2.27.7
-      '@dxos/crypto': 2.27.7
+      '@dxos/broadcast': 2.27.8
+      '@dxos/crypto': 2.27.8
       '@hyperswarm/dht': 4.0.1
       buffer-json-encoding: 1.0.2
       debug: 4.3.3
@@ -1942,11 +1942,11 @@ packages:
       - winston
     dev: true
 
-  /@dxos/util/2.27.7:
-    resolution: {integrity: sha512-sf+CZEKe5b5L17ldgYwShqe25Y0EKtJWlAXySULqDCsg/rKEK5LnzN0HHpqrFOgqxp7wU3y5g6d+pXY2vxlRKQ==}
+  /@dxos/util/2.27.8:
+    resolution: {integrity: sha512-Fhs+Nhl+KYCluff7fpvHCShQRFgZfox2TAuQs1lSoJ8cxqRI7v0vUVS+Rk1149A/zLOiWBWRci1zc7phBjXbZw==}
     dependencies:
-      '@dxos/crypto': 2.27.7
-      '@dxos/debug': 2.27.7
+      '@dxos/crypto': 2.27.8
+      '@dxos/debug': 2.27.8
       '@types/node': 14.18.12
     transitivePeerDependencies:
       - supports-color
