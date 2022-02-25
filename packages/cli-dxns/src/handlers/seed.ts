@@ -80,10 +80,9 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
   const account = await client.getDXNSAccount(argv);
-  const { apiRaw, keypair, keyring, auctionsClient, registryClient, transactionHandler } = client;
+  const { apiRaw, keyring, auctionsClient, registryClient, transactionHandler, dxnsAddress } = client;
 
-  const address = keypair?.address ?? config.get('runtime.services.dxns.address');
-  assert(address, 'Create a Polkadot address using `dx dxns address`');
+  assert(dxnsAddress, 'Create a Polkadot address using `dx dxns address`');
 
   let domainKey: DomainKey;
   if (!dataOnly) {
@@ -92,9 +91,9 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
     // Increase balance.
-    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(address)).data;
+    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(dxnsAddress)).data;
     const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
-    const setBalanceTx = apiRaw.tx.balances.setBalance(address, requestedFree, previousReserved);
+    const setBalanceTx = apiRaw.tx.balances.setBalance(dxnsAddress, requestedFree, previousReserved);
 
     verbose && log('Increasing Admin Balance..');
     await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
