@@ -20,11 +20,11 @@ Install latest:
 yarn global add @dxos/cli
 ```
 
-Activate enterprise profile:
+Activate devnet profile:
 
 ```
-dx profile init --name enterprise --template-url https://bit.ly/3A642xB
-export DX_PROFILE="enterprise"
+dx profile init --name devnet --template-url https://bit.ly/3M37HBT
+export DX_PROFILE="devnet"
 ```
 
 Install required extensions:

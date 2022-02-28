@@ -24,7 +24,7 @@ or
 npm install --global @dxos/cli
 ```
 
-### Upgrade
+<!-- ### Upgrade
 
 An older version of the CLI could be upgraded via `dx upgrade` command.
 
@@ -47,7 +47,7 @@ Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 
 dx version
 v2.12.0
-```
+``` -->
 
 ## Usage
 
@@ -68,7 +68,7 @@ dx app register help
 To use the CLI, a profile needs to be created and activated.
 
 ```bash
-dx profile init --name enterprise --template-url https://bit.ly/3A642xB
+dx profile init --name devnet --template-url https://bit.ly/3M37HBT
 ```
 
 Read more about [CLI profiles](./packages/cli/README.md#profiles) and [CLI extensions](./packages/cli/README.md#extensions).
