@@ -5,6 +5,9 @@
   "DX_DXNS_USER_URI": {
     "path": "runtime.services.dxns.accountUri"
   },
+  "DX_DXNS_ACCOUNT": {
+    "path": "runtime.services.dxns.account"
+  },
   "DX_MACHINE_DO_TOKEN": {
     "path": "runtime.services.machine.doAccessToken"
   },
