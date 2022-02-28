@@ -99,8 +99,7 @@ describe('CLI', () => {
   });
 
   describe('services', () => {
-    // NOTE: Have to use local running node until https://github.com/dxos/dot/pull/242 is there.
-    it.skip('dxns', async () => {
+    it('dxns', async () => {
       try {
         await cmd('service stop dxns').run();
       } catch {}
