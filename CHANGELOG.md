@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.13.14](https://www.github.com/dxos/cli/compare/v2.13.13...v2.13.14) (2022-02-25)
+
+
+### Features
+
+* Extend bot list info ([#450](https://www.github.com/dxos/cli/issues/450)) ([e721af2](https://www.github.com/dxos/cli/commit/e721af2308714c498d48661d8234c66441a51cab))
+
 ### [2.13.13](https://www.github.com/dxos/cli/compare/v2.13.12...v2.13.13) (2022-02-22)
 
 
