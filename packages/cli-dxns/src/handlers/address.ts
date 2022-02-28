@@ -38,7 +38,7 @@ export const listAddress = (params: Params) => async (argv: any) => {
 export const recoverAddress = ({ getDXNSClient }: Params) => async (argv: any) => {
   const { mnemonic, json } = argv;
   assert(mnemonic, 'Mnemonic is required');
-  const uri = mnemonic.join('');
+  const uri = mnemonic.join(' ');
 
   await cryptoWaitReady();
   const keyring = new Keyring({ type: 'sr25519' });
