@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.14.0](https://www.github.com/dxos/cli/compare/v2.13.14...v2.14.0) (2022-02-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* Introduce DXNS Accounts (#423)
+
+### Features
+
+* Introduce DXNS Accounts ([#423](https://www.github.com/dxos/cli/issues/423)) ([7db2f76](https://www.github.com/dxos/cli/commit/7db2f76acad46e42a2d3c04a7fbf6c8ea239287d))
+
 ### [2.13.14](https://www.github.com/dxos/cli/compare/v2.13.13...v2.13.14) (2022-02-25)
 
 
