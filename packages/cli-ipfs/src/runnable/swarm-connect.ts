@@ -8,7 +8,9 @@ import { boolean } from 'boolean';
 import { spawnSync } from 'child_process';
 
 import { sleep } from '@dxos/async';
-import { DXN, IRegistryClient, RegistryClient, definitions } from '@dxos/registry-client';
+import { DXN, IRegistryClient, RegistryClient, definitions, RegistryDataRecord } from '@dxos/registry-client';
+
+const OLD_RECORD_CREATED = '2001-01-01';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;
@@ -88,7 +90,15 @@ export class SwarmConnector {
     const serviceCID = await this.getServiceTypeCID(SERVICE_DXN);
     const services = await this._registry.getDataRecords({ type: serviceCID });
 
-    const records = services.filter(service => ipfsServiceCID.equals(service.data.extension['@type']));
+    const getDate = (record: RegistryDataRecord) => new Date(record.meta.created ?? OLD_RECORD_CREATED).getTime();
+
+    // Find last service record for each registered IPFS service.
+    const records = services
+      .filter(service => ipfsServiceCID.equals(service.data.extension['@type']))
+      .sort((recordA: RegistryDataRecord, recordB: RegistryDataRecord) => getDate(recordA) - getDate(recordB)).reverse()
+      .filter((record, index, self) => {
+        return index === self.findIndex(r => r.data.extension.addresses[0].split('/').pop() === record.data.extension.addresses[0].split('/').pop());
+      });
 
     const active = records.sort(() => Math.random() - 0.5); // assuming all are active?
 

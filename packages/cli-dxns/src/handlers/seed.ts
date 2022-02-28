@@ -62,11 +62,11 @@ const bootstrapIPFS = async (registry: IRegistryClient) => {
     type: 'ipfs',
     extension: {
       '@type': ipfsCID,
-      description: 'ipfs-enterprise.kube.dxos.network',
+      description: 'ipfs1.kube.dxos.network',
       protocol: 'ipfs/0.1.0',
       addresses: [
-        '/ip4/165.227.111.25/tcp/4001/p2p/12D3KooWSy12JDJVZPyPmCtE8Qjfo3CLvJL6y3kpEJCCCCrTDLuv',
-        '/ip4/165.227.111.25/udp/4001/quic/p2p/12D3KooWSy12JDJVZPyPmCtE8Qjfo3CLvJL6y3kpEJCCCCrTDLuv'
+        '/ip4/167.99.123.6/tcp/4001/p2p/12D3KooWKsBxZVe4ycB1hkxsFuLkHvkZPtwpi3VMQmNrHhApUTTL',
+        '/ip4/167.99.123.6/udp/4001/quic/p2p/12D3KooWKsBxZVe4ycB1hkxsFuLkHvkZPtwpi3VMQmNrHhApUTTL'
       ]
     }
   };
