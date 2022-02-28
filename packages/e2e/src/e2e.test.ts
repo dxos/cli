@@ -2,6 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
 import expect from 'expect';
 import { promises as fs } from 'fs';
 import fse from 'fs-extra';
@@ -16,7 +17,6 @@ import { createTestBroker } from '@dxos/signal';
 
 import { HTTPServer } from '../mocks/http-server';
 import { cmd } from './cli';
-import assert from 'assert';
 
 const PROFILE_NAME = 'e2e-test';
 
@@ -156,7 +156,7 @@ describe('CLI', () => {
 
     it('Can add a device', async () => {
       await cmd(`dxns --account ${account} account add-device --device 5CyDhvRgVwKey4Z88ZcDnzsWF7TWadHDrcCgY4ri7o5ZnPcc`).run();
-    })
+    });
 
     it('seed', async () => {
       await cmd(`dxns --account ${account} seed --mnemonic //Alice --verbose`).run();
