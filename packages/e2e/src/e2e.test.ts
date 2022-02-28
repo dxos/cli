@@ -74,6 +74,7 @@ describe('CLI', () => {
         console.log(error);
       }
 
+      // TODO(rzadp): Change to main when this change gets merged.
       await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/rzadp/dxns-accounts/packages/cli/profiles/e2e.yml`).run();
     });
 
