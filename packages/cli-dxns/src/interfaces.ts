@@ -8,7 +8,8 @@ import { KeyringPair } from '@polkadot/keyring/types';
 
 import { CoreState } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
-import { ApiTransactionHandler, IAuctionsClient, IRegistryClient } from '@dxos/registry-client';
+import { Config } from '@dxos/config';
+import { AccountClient, AccountKey, ApiTransactionHandler, IAuctionsClient, IRegistryClient } from '@dxos/registry-client';
 
 export interface DXNSClient {
   apiRaw: ApiPromise,
@@ -16,11 +17,14 @@ export interface DXNSClient {
   keypair?: KeyringPair,
   registryClient: IRegistryClient,
   auctionsClient: IAuctionsClient,
+  accountClient: AccountClient,
   transactionHandler: ApiTransactionHandler,
-  dxosClient: Client
+  dxosClient: Client,
+  dxnsAddress: string | undefined,
+  getDXNSAccount: (argv?: any) => Promise<AccountKey>
 }
 
 export interface Params extends CoreState {
-  config: any,
+  config: Config,
   getDXNSClient(): Promise<DXNSClient>
 }

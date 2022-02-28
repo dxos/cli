@@ -2,6 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
 import expect from 'expect';
 import { promises as fs } from 'fs';
 import fse from 'fs-extra';
@@ -49,6 +50,7 @@ describe('CLI', () => {
       handler: () => kubeServices
     }
   ]);
+  let account: string; // DXNS Account.
 
   before(async () => {
     broker = await createTestBroker();
@@ -72,7 +74,8 @@ describe('CLI', () => {
         console.log(error);
       }
 
-      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/main/packages/cli/profiles/e2e.yml`).run();
+      // TODO(rzadp): Change to main when this change gets merged.
+      await cmd(`profile init --name ${PROFILE_NAME} --template-url https://raw.githubusercontent.com/dxos/cli/rzadp/dxns-accounts/packages/cli/profiles/e2e.yml`).run();
     });
 
     it('select profile', async () => {
@@ -141,13 +144,27 @@ describe('CLI', () => {
   });
 
   describe('dxns', () => {
+    it('create Polkadot address', async () => {
+      await cmd('dxns address recover --mnemonic "//Alice"').run();
+    });
+
+    it('create DXNS Account', async () => {
+      const result = await cmd('dxns account create --json').json();
+      assert(result?.account);
+      account = result.account;
+    });
+
+    it('Can add a device', async () => {
+      await cmd(`dxns --account ${account} account add-device --device 5CyDhvRgVwKey4Z88ZcDnzsWF7TWadHDrcCgY4ri7o5ZnPcc`).run();
+    });
+
     it('seed', async () => {
-      await cmd('dxns seed --mnemonic //Alice --verbose').run();
-      await cmd('dxns dummy').run();
+      await cmd(`dxns --account ${account} seed --mnemonic //Alice --verbose`).run();
+      await cmd(`dxns --account ${account} dummy`).run();
     });
 
     it('deploy', async () => {
-      await cmd('dxns deploy --name app.dxnstest --domain dxos --type app --config ./dx-custom.yml --verbose', join(__dirname, '../mocks/dxns/app')).run();
+      await cmd(`dxns --account ${account} deploy --name app.dxnstest --domain dxos --type app --config ./dx-custom.yml --verbose`, join(__dirname, '../mocks/dxns/app')).run();
     });
 
     it('list resources', async () => {
@@ -195,7 +212,7 @@ describe('CLI', () => {
 
     describe('auctions', () => {
       it('create', async () => {
-        await cmd('dxns auction create test-domain 10000000').run();
+        await cmd(`dxns --account ${account} auction create test-domain --start-amount 10000000`).run();
       });
 
       it('list', async () => {
@@ -210,7 +227,7 @@ describe('CLI', () => {
       });
 
       it('claim', async () => {
-        await cmd('dxns auction claim test-domain').run();
+        await cmd(`dxns --account ${account} auction claim test-domain`).run();
       });
 
       it('check that domain is claimed', async () => {
@@ -239,7 +256,7 @@ describe('CLI', () => {
     });
 
     it('register app', async () => {
-      await cmd(`app register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
+      await cmd(`app --account ${account} register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
     });
 
     it('query app', async () => {
@@ -253,7 +270,7 @@ describe('CLI', () => {
     });
 
     it('Registers versioned and tagged app', async () => {
-      await cmd(`app register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME} --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
+      await cmd(`app --account ${account} register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME} --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
     });
 
     it('Serves the app without any version', async () => {
@@ -301,14 +318,14 @@ describe('CLI', () => {
     it('publishes bot', async () => {
       const botConfigPath = join(dirname(bundledBotPath), 'bot.yml');
       fse.copySync(join(__dirname, '../mocks/bot/bot.yml'), join(dirname(bundledBotPath), 'bot.yml'));
-      await cmd(`bot publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
+      await cmd(`bot --account ${account} publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
       const botConfig = await readFile(botConfigPath, { absolute: true });
       botCid = botConfig.package['/'];
       expect(botCid).toBeDefined();
     });
 
     it('registers bot', async () => {
-      await cmd(`bot register --name ${BOT_NAME} --domain ${BOT_DOMAIN}`, dirname(bundledBotPath)).run();
+      await cmd(`bot --account ${account} register --name ${BOT_NAME} --domain ${BOT_DOMAIN}`, dirname(bundledBotPath)).run();
       const bots = await cmd('bot query --json').json();
       expect(bots.length).toBe(2);
       const newBot = bots.find((b: any) => b.description === 'Test bot description');
@@ -361,7 +378,7 @@ describe('CLI', () => {
   describe('kube', () => {
     it('register kube', async () => {
       const recordsBefore = await cmd('dxns record list --json').json();
-      await cmd(`kube register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
+      await cmd(`kube --account ${account} register --name ${KUBE_NAME} --domain ${APP_DOMAIN} --url http://localhost:${port}`).run();
       const recordsAfter = await cmd('dxns record list --json').json();
       expect(recordsAfter.length).toBe(recordsBefore.length + 1 + kubeServices.length);
     });

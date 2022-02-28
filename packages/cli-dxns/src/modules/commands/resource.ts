@@ -17,6 +17,8 @@ export const resourceCommand = (params: Params): CommandModule => ({
     .command({
       command: ['list'],
       describe: 'List all known resources in the Registry.',
+      builder: yargs => yargs
+        .option('account', { describe: 'Limit resources for a given DXNS Account' }),
       handler: asyncHandler(listResources(params))
     })
 

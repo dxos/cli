@@ -9,7 +9,7 @@ import get from 'lodash.get';
 import set from 'lodash.set';
 
 import { log } from '@dxos/debug';
-import { CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
+import { AccountKey, CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
 import type { IRegistryClient } from '@dxos/registry-client';
 
 import { Params } from '../../interfaces';
@@ -22,9 +22,10 @@ const TYPE_DXN_NAME_PREFIX = 'dxos:type.';
 export interface RegisterParams {
   cid: string
   getDXNSClient: Params['getDXNSClient']
+  account: AccountKey
 }
 
-export const register = ({ cid, getDXNSClient }: RegisterParams) => async (argv: any) => {
+export const register = ({ cid, getDXNSClient, account }: RegisterParams) => async (argv: any) => {
   const { verbose, version, tag, 'dry-run': noop, skipExisting, hashPath = DEFAULT_CID_PATH, config: configPath } = argv;
 
   const conf = await loadConfig(configPath);
@@ -107,7 +108,7 @@ export const register = ({ cid, getDXNSClient }: RegisterParams) => async (argv:
     verbose && log(`Assigning name ${dxn}...`);
     if (!noop && recordCID) {
       try {
-        await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), recordCID, opts);
+        await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, dxn), account, recordCID, opts);
       } catch (err) {
         if (skipExisting && String(err).includes('VersionAlreadyExists')) {
           verbose && log('Skipping existing version.');

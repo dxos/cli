@@ -78,13 +78,11 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   const { domain = DEFAULT_DOMAIN, dataOnly = false, json, verbose } = argv;
 
-  const dxnsUri = config.get('runtime.services.dxns.accountUri');
-  assert(dxnsUri, 'Admin Mnemonic should be provided via configuration profile.');
-
   const client = await getDXNSClient();
-  const { apiRaw, keypair, keyring, auctionsClient, transactionHandler } = client;
+  const account = await client.getDXNSAccount(argv);
+  const { apiRaw, keyring, auctionsClient, registryClient, transactionHandler, dxnsAddress } = client;
 
-  const account = keypair?.address;
+  assert(dxnsAddress, 'Create a Polkadot address using `dx dxns address`');
 
   let domainKey: DomainKey;
   if (!dataOnly) {
@@ -93,14 +91,12 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
     // Increase balance.
-    if (account) {
-      const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
-      const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
-      const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
+    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(dxnsAddress)).data;
+    const requestedFree = previousFree.add(new BN(DEFAULT_BALANCE));
+    const setBalanceTx = apiRaw.tx.balances.setBalance(dxnsAddress, requestedFree, previousReserved);
 
-      verbose && log('Increasing Admin Balance..');
-      await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
-    }
+    verbose && log('Increasing Admin Balance..');
+    await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
 
     // Register Domain.
     verbose && log(`Creating auction for "${domain}" domain name..`);
@@ -110,9 +106,9 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
 
     verbose && log('Claiming Domain name..');
-    domainKey = await client.auctionsClient.claimAuction(domain);
+    domainKey = await auctionsClient.claimAuction(domain, account);
   } else {
-    domainKey = await client.registryClient.resolveDomainName(domain);
+    domainKey = await registryClient.resolveDomainName(domain);
   }
 
   // Uploading types to IPFS
@@ -128,16 +124,16 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   for (const [typeName, { fqn, description }] of Object.entries(TYPES)) {
     verbose && log(`Registering ${typeName}..`);
 
-    const cid = await client.registryClient.insertTypeRecord(root, fqn, { ...meta, description });
+    const cid = await registryClient.insertTypeRecord(root, fqn, { ...meta, description });
     const dxn = DXN.fromDomainKey(domainKey, typeName);
-    await client.registryClient.updateResource(dxn, cid);
+    await registryClient.updateResource(dxn, account, cid);
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }
 
   // Bootstrap IPFS
   verbose && log('Adding IPFS record...');
-  await bootstrapIPFS(client.registryClient);
+  await bootstrapIPFS(registryClient);
   verbose && log('IPFS record added.');
 
   print({ account, domain }, { json });

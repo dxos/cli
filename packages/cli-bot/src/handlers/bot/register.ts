@@ -6,9 +6,9 @@ import assert from 'assert';
 import { Argv } from 'yargs';
 
 import { CoreOptions } from '@dxos/cli-core';
+import { Config } from '@dxos/config';
 import { log } from '@dxos/debug';
 import { CID, DXN, RecordKind } from '@dxos/registry-client';
-import type { IRegistryClient } from '@dxos/registry-client';
 
 import { getBotConfig } from '../../config';
 import type { Params } from '../../modules/bot';
@@ -32,11 +32,12 @@ export const botRegisterOptions = (yargs: Argv<CoreOptions>): Argv<BotRegisterOp
     .demandOption('domain');
 };
 
-interface QueryParams {
-  getDXNSClient: Params['getDXNSClient']
+interface RegisterParams {
+  getDXNSClient: Params['getDXNSClient'],
+  config: Config
 }
 
-export const register = ({ getDXNSClient }: QueryParams) => async (argv: BotRegisterOptions) => {
+export const register = ({ getDXNSClient, config }: RegisterParams) => async (argv: BotRegisterOptions) => {
   const { verbose, version, 'dry-run': noop, name, domain } = argv;
 
   const conf = await getBotConfig();
@@ -59,7 +60,8 @@ export const register = ({ getDXNSClient }: QueryParams) => async (argv: BotRegi
   if (!noop) {
     const { description, package: pkg, ...rest } = conf;
 
-    const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
+    const { registryClient, getDXNSAccount } = await getDXNSClient();
+    const account = await getDXNSAccount(argv);
 
     const botType = await registryClient.getResourceRecord(DXN.parse(BOT_DXN_NAME), 'latest');
     assert(botType);
@@ -74,7 +76,7 @@ export const register = ({ getDXNSClient }: QueryParams) => async (argv: BotRegi
 
     const domainKey = await registryClient.resolveDomainName(domain);
     const dxn = DXN.fromDomainKey(domainKey, name);
-    await registryClient.updateResource(dxn, cid);
+    await registryClient.updateResource(dxn, account, cid);
   }
 
   log(`Registered ${conf.name}@${conf.version}.`);

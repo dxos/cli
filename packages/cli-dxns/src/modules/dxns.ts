@@ -21,18 +21,21 @@ import {
   resourceCommand,
   typeCommand
 } from './commands';
+import { addressCommand } from './commands/address';
 
 export const DXNSModule = (params: Params) => {
   return {
     command: ['dxns', 'ns'],
     describe: 'DXNS operations.',
     builder: (yargs: Argv) => yargs
+      .option('account', { type: 'string', array: false, describe: 'Optionally override DXNS Account from config.' })
       .command(typeCommand(params))
       .command(recordCommand(params))
       .command(resourceCommand(params))
       .command(balanceCommand(params))
       .command(domainCommand(params))
       .command(auctionCommand(params))
+      .command(addressCommand(params))
       .command(accountCommand(params))
 
       .command({
@@ -98,7 +101,9 @@ export const DXNSModule = (params: Params) => {
         handler: asyncHandler(async (argv: any) => {
           await build()(argv);
           const cid = await publish(params.config)(argv);
-          await register({ cid, ...params })(argv);
+          const client = await params.getDXNSClient();
+          const account = await client.getDXNSAccount(argv);
+          await register({ cid, account, ...params })(argv);
         })
       })
   };

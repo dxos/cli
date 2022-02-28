@@ -47,6 +47,7 @@ export const forceCloseAuction = (params: Params) => async (argv: any) => {
 
   const { name, mnemonic } = argv;
   assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
+  assert(mnemonic, 'Mnemonic of a sudoer is required.');
 
   const client = await getDXNSClient();
   const { keyring, transactionHandler, apiRaw } = client;
@@ -57,13 +58,13 @@ export const forceCloseAuction = (params: Params) => async (argv: any) => {
 
 export const claimAuction = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
-
   const { name, json } = argv;
 
   assert(!/[A-Z]/g.test(name), 'Name could not contain capital letters.');
   const client = await getDXNSClient();
+  const account = await client.getDXNSAccount(argv);
 
-  const domainKey = await client.auctionsClient.claimAuction(name);
+  const domainKey = await client.auctionsClient.claimAuction(name, account);
 
   print({ domainKey: domainKey.toHex() }, { json });
 };

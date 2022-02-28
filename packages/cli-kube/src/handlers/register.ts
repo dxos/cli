@@ -5,7 +5,7 @@
 import assert from 'assert';
 import got from 'got';
 
-import { CID, DomainKey, DXN, IRegistryClient, RecordKind } from '@dxos/registry-client';
+import { AccountKey, CID, DomainKey, DXN, IRegistryClient, RecordKind } from '@dxos/registry-client';
 
 export const KUBE_DXN_NAME = 'dxos:type.kube';
 export const SERVICE_TYPE_DXN = 'dxos:type.service';
@@ -16,7 +16,8 @@ interface RegisterServiceOptions {
   registryClient: IRegistryClient,
   kubeCID: CID,
   domainKey: DomainKey,
-  url: string
+  url: string,
+  account: AccountKey
 }
 
 const getServiceTypeCID = async (registryClient: IRegistryClient, serviceName: string) => {
@@ -57,30 +58,29 @@ const registerServices = async (options: RegisterServiceOptions) => {
 
     const name = `${options.kubeName}.service.${service.name}`;
     const dxn = DXN.fromDomainKey(options.domainKey, name);
-    await options.registryClient.updateResource(dxn, cid);
+    await options.registryClient.updateResource(dxn, options.account, cid);
   }
 };
 
-export const register = ({ getDXNSClient }: any) => async ({ domain, name, url }: any) => {
-  const { registryClient }: { registryClient: IRegistryClient } = await getDXNSClient();
+export const register = ({ getDXNSClient }: any) => async (argv: any) => {
+  const { domain, name, url } = argv;
+  const { registryClient, getDXNSAccount } = await getDXNSClient();
 
   const kubeType = await registryClient.getResourceRecord(DXN.parse(KUBE_DXN_NAME), 'latest');
   assert(kubeType);
   assert(kubeType.record.kind === RecordKind.Type);
 
-  const cid = await registryClient.insertDataRecord({
-    url
-  }, kubeType.record.cid, {
-  });
-
+  const cid = await registryClient.insertDataRecord({ url }, kubeType.record.cid, {});
   const domainKey = await registryClient.resolveDomainName(domain);
   const dxn = DXN.fromDomainKey(domainKey, name);
-  await registryClient.updateResource(dxn, cid);
+  const account = await getDXNSAccount(argv);
+  await registryClient.updateResource(dxn, account, cid);
   await registerServices({
     kubeName: name,
     registryClient,
     domainKey,
     kubeCID: cid,
-    url
+    url,
+    account
   });
 };

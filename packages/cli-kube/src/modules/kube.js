@@ -28,6 +28,7 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
   command: ['kube'],
   describe: 'KUBE management.',
   builder: yargs => yargs
+    .option('account', { type: 'string', array: false, describe: 'Optionally override DXNS Account from config.' })
 
     .command({
       command: ['install'],

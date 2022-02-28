@@ -42,6 +42,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   }
 
   const client = await getDXNSClient();
+  const account = await client.getDXNSAccount(argv);
 
   const data = JSON.parse(argv.data as string);
   const resourceName = name as string | undefined;
@@ -55,7 +56,7 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
     const dxn = DXN.fromDomainKey(domainKey, resourceName);
-    await client.registryClient.updateResource(dxn, cid);
+    await client.registryClient.updateResource(dxn, account, cid);
     return print({
       id: DXN.fromDomainKey(domainKey, resourceName).toString(),
       cid: cid.toB58String(),

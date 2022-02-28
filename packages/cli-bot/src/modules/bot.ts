@@ -54,6 +54,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
     command: ['bot'],
     describe: 'Bot CLI.',
     builder: (yargs: Argv) => yargs
+      .option('account', { type: 'string', array: false, describe: 'Optionally override DXNS Account from config.' })
 
       .command({
         handler: () => {},
@@ -117,7 +118,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         describe: 'Register bot in DXNS.',
         builder: botRegisterOptions,
 
-        handler: asyncHandler(register({ getDXNSClient }))
+        handler: asyncHandler(register({ getDXNSClient, config }))
       })
 
       .command({

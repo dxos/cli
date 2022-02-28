@@ -40,6 +40,7 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
     command: ['app'],
     describe: 'App CLI.',
     builder: (yargs: Argv) => yargs
+      .option('account', { type: 'string', array: false, describe: 'Optionally override DXNS Account from config.' })
 
       // Build app.
       .command({
@@ -79,7 +80,11 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
           // TODO(egorgripasov): Remove.
           .option('dxns', { type: 'boolean', default: false }),
 
-        handler: asyncHandler(register({ getAppRecord, getDXNSClient }))
+        handler: asyncHandler(async (argv: any) => {
+          const client = await getDXNSClient();
+          const account = await client.getDXNSAccount(argv);
+          return register({ getAppRecord, getDXNSClient, account })(argv);
+        })
       })
 
       // Deploy app.
@@ -108,7 +113,9 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
           log('Preparing to deploy...'); // TODO(burdon): Standardize logging (stages, verbose).
           await build(config, { getAppRecord })(argv);
           await publish(config)(argv);
-          await register({ getAppRecord, getDXNSClient })(argv);
+          const client = await getDXNSClient();
+          const account = await client.getDXNSAccount(argv);
+          await register({ getAppRecord, getDXNSClient, account })(argv);
         })
       })
 

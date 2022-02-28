@@ -33,6 +33,7 @@ export const addType = (params: Params) => async (argv: any) => {
   const { path, domain, messageName, resourceName, description } = argv;
 
   const client = await params.getDXNSClient();
+  const account = await client.getDXNSAccount(argv);
   const config = params.config;
 
   if (!!resourceName !== !!domain) {
@@ -59,7 +60,7 @@ export const addType = (params: Params) => async (argv: any) => {
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
     const dxn = DXN.fromDomainKey(domainKey, resourceName as string);
-    await client.registryClient.updateResource(dxn, cid);
+    await client.registryClient.updateResource(dxn, account, cid);
     const resource = {
       id: DXN.fromDomainKey(domainKey, resourceName as string)
     };

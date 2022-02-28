@@ -9,7 +9,6 @@ runtime:
   services:
     dxns:
       server: 'ws://127.0.0.1:9945'
-      accountUri: //Alice
     ipfs:
       server: 'http://127.0.0.1:5001'
       gateway: 'http://127.0.0.1:8080/ipfs/'

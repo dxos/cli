@@ -29,49 +29,49 @@ jobs:
 
           # Test
           node common/scripts/install-run-rush.js test --verbose
-  # e2e-test:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 30
+  e2e-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
 
-  #   strategy:
-  #     matrix:
-  #       node-version: [16.x]
-  #       lockfile: [lockfile, no-lockfile]
+    strategy:
+      matrix:
+        node-version: [16.x]
+        lockfile: [lockfile, no-lockfile]
 
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v1
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       registry-url: https://registry.npmjs.org/
-  #   - name: Delete lockfile
-  #     if: ${{ matrix.lockfile == 'no-lockfile' }}
-  #     run: rm common/config/rush/pnpm-lock.yaml
-  #   - name: Build, and E2E test
-  #     env:
-  #       NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-  #     run: |
-  #         \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
-  #         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-  #         npm install -g @microsoft/rush pnpm
-  #         ./common/scripts/install-ipfs.sh
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: https://registry.npmjs.org/
+    - name: Delete lockfile
+      if: ${{ matrix.lockfile == 'no-lockfile' }}
+      run: rm common/config/rush/pnpm-lock.yaml
+    - name: Build, and E2E test
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      run: |
+          \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+          npm install -g @microsoft/rush pnpm
+          ./common/scripts/install-ipfs.sh
 
-  #         # Install dependencies
-  #         node common/scripts/install-run-rush.js update
+          # Install dependencies
+          node common/scripts/install-run-rush.js update
           
-  #         # Build
-  #         node common/scripts/install-run-rush.js build --verbose
-  #   - name: Run E2E tests
-  #     run: |
-  #       \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
-  #       rm bot-factory.log || true
-  #       touch bot-factory.log
-  #       ipfs daemon --writable &
-  #       sleep 5
-  #       node ../../common/scripts/install-run-rushx.js test:e2e
-  #     working-directory: ./packages/e2e
-  #   - name: Cleanup
-  #     if: always()
-  #     run: |
-  #       ipfs shutdown || true
+          # Build
+          node common/scripts/install-run-rush.js build --verbose
+    - name: Run E2E tests
+      run: |
+        \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
+        rm bot-factory.log || true
+        touch bot-factory.log
+        ipfs daemon --writable &
+        sleep 5
+        node ../../common/scripts/install-run-rushx.js test:e2e
+      working-directory: ./packages/e2e
+    - name: Cleanup
+      if: always()
+      run: |
+        ipfs shutdown || true
