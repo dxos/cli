@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.14.2](https://www.github.com/dxos/cli/compare/v2.14.1...v2.14.2) (2022-03-01)
+
+
+### Bug Fixes
+
+* Rename account to address in balance increase ([#463](https://www.github.com/dxos/cli/issues/463)) ([831022e](https://www.github.com/dxos/cli/commit/831022e58e9b073052ab72a8a498703884cf975e))
+
 ### [2.14.1](https://www.github.com/dxos/cli/compare/v2.14.0...v2.14.1) (2022-03-01)
 
 
