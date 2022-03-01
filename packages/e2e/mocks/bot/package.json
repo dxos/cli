@@ -1,0 +1,7 @@
+{
+  "name": "bot-to-register",
+  "version": "1.2.3",
+  "scripts": {
+    "bundle": "rm -rf out && node ./scripts/bundle.js"
+  }
+}
