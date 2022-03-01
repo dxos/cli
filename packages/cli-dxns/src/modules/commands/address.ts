@@ -22,7 +22,7 @@ export const addressCommand = (params: Params): CommandModule => ({
     .command({
       command: ['generate'],
       describe: 'Generate new Polkadot Address.',
-      handler: asyncHandler(generateAddress())
+      handler: asyncHandler(generateAddress(params))
     })
     .command({
       command: ['recover'],
