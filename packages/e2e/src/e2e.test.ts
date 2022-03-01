@@ -5,14 +5,11 @@
 import assert from 'assert';
 import expect from 'expect';
 import { promises as fs } from 'fs';
-import fse from 'fs-extra';
 import got from 'got';
-import { join, dirname } from 'path';
+import { join } from 'path';
 
 import { sleep } from '@dxos/async';
 import type { Awaited } from '@dxos/async';
-import { readFile } from '@dxos/cli-core';
-import { createId } from '@dxos/crypto';
 import { createTestBroker } from '@dxos/signal';
 
 import { HTTPServer } from '../mocks/http-server';
@@ -298,8 +295,6 @@ describe('CLI', () => {
   });
 
   describe('bot', () => {
-    let bundledBotPath: string;
-    let botCid: string;
     let botId: string | undefined;
     const topic = 'd5943248a8b8390bc0c08d9fc5fc447a3fff88abb0474c9fd647672fc8b03edb';
 
@@ -308,23 +303,15 @@ describe('CLI', () => {
       expect(bots.length).toBe(1);
     });
 
-    it('builds bot', async () => {
-      bundledBotPath = join(__dirname, '..', 'out', createId(), 'main.js');
-      await cmd(`bot build --entryPoint ${join(__dirname, '../mocks/bot/test-bot.ts')} --outfile ${bundledBotPath} --json`).run();
-      await fse.ensureFile(bundledBotPath);
-    });
-
-    it('publishes bot', async () => {
-      const botConfigPath = join(dirname(bundledBotPath), 'bot.yml');
-      fse.copySync(join(__dirname, '../mocks/bot/bot.yml'), join(dirname(bundledBotPath), 'bot.yml'));
-      await cmd(`bot --account ${account} publish --buildPath ${bundledBotPath} --json`, dirname(bundledBotPath)).debug().run();
-      const botConfig = await readFile(botConfigPath, { absolute: true });
-      botCid = botConfig.package['/'];
-      expect(botCid).toBeDefined();
-    });
-
     it('registers bot', async () => {
-      await cmd(`bot --account ${account} register --name ${BOT_NAME} --domain ${BOT_DOMAIN}`, dirname(bundledBotPath)).run();
+      await cmd(`dxns --account ${account} deploy \
+        --config dx.yml \
+        --path out \
+        --tag latest \
+        --version false \
+        --skipExisting`,
+      'mocks/bot'
+      ).run();
       const bots = await cmd('bot query --json').json();
       expect(bots.length).toBe(2);
       const newBot = bots.find((b: any) => b.description === 'Test bot description');

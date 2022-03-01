@@ -1,0 +1,12 @@
+version: 1
+
+module:
+  type: dxos:type.bot
+  name: dxos:test.bot
+  description: Test bot descriptiom
+  author: DXOS.org
+  license: AGPL-3.0
+  repository: 'https://github.com/dxos/cli'
+
+build:
+  command: npm run bundle
