@@ -14,11 +14,11 @@ export const getBalance = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;
 
   const client = await getDXNSClient();
-  const { account = client.keypair?.address, json } = argv;
+  const { address = client.keypair?.address, json } = argv;
 
-  assert(account, 'Account should be provided.');
+  assert(address, 'Address should be provided.');
 
-  const currentFree = (await client.apiRaw.query.system.account(account)).data.free;
+  const currentFree = (await client.apiRaw.query.system.account(address)).data.free;
 
   const balance = currentFree.toString();
 
