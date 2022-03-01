@@ -2,7 +2,7 @@ version: 1
 
 module:
   type: dxos:type.bot
-  name: dxos:test.bot
+  name: dxos:bot.test
   description: Test bot description
   author: DXOS.org
   license: AGPL-3.0
