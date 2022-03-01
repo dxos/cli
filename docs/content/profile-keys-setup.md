@@ -20,7 +20,7 @@ address   5EpqhyY9AfHgmrqwFs7tFh3V89ktNamgTP3TWM5zgeQM8y7a
 To add funds to a newly created DXNS account using faucet:
 
 ```
-dx dxns balance increase --faucet https://dxns2.kube.dxos.network/kube/faucet --account 5EpqhyY9AfHgmrqwFs7tFh3V89ktNamgTP3TWM5zgeQM8y7a
+dx dxns balance increase --faucet https://dxns2.kube.dxos.network/kube/faucet --address 5EpqhyY9AfHgmrqwFs7tFh3V89ktNamgTP3TWM5zgeQM8y7a
 ```
 
 To check balance:

@@ -15,19 +15,19 @@ export const balanceCommand = (params: Params): CommandModule => ({
   handler: () => {},
   builder: yargs => yargs
     .command({
-      command: ['get [account]'],
-      describe: 'Get account balance.',
+      command: ['get [address]'],
+      describe: 'Get address balance.',
       builder: yargs => yargs
-        .option('account', { type: 'string' }),
+        .option('address', { type: 'string' }),
 
       handler: asyncHandler(getBalance(params))
     })
 
     .command({
-      command: ['increase [account]'],
-      describe: 'Increase account balance.',
+      command: ['increase [address]'],
+      describe: 'Increase address balance.',
       builder: yargs => yargs
-        .option('account', { type: 'string' })
+        .option('address', { type: 'string' })
         .option('amount', { type: 'string' })
         .option('faucet', { type: 'string' }),
 
