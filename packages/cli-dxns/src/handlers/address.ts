@@ -14,7 +14,7 @@ import { PublicKey } from '@dxos/crypto';
 import { Params } from '../interfaces';
 import { DXNS_ADDRESS_PREFERENCE } from '../utils';
 
-export const generateAddress = () => async (argv: any) => {
+export const generateAddress = ({ getDXNSClient }: Params) => async (argv: any) => {
   const { json } = argv;
 
   await cryptoWaitReady();
@@ -22,6 +22,16 @@ export const generateAddress = () => async (argv: any) => {
 
   const keyring = new Keyring({ type: 'sr25519' });
   const { address } = await keyring.addFromUri(mnemonic);
+
+  const { dxosClient } = await getDXNSClient();
+
+  await dxosClient.halo.addKeyRecord({
+    publicKey: PublicKey.from(decodeAddress(address)),
+    secretKey: Buffer.from(mnemonic),
+    type: KeyType.DXNS_ADDRESS
+  });
+
+  await dxosClient.halo.setDevicePreference(DXNS_ADDRESS_PREFERENCE, address);
 
   print({ mnemonic, address }, { json });
 };
