@@ -9,18 +9,13 @@ import type { StateManager } from '@dxos/cli-data';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
 import {
-  publish,
   query,
-  register,
-  build,
   spawn,
   list,
   botStart,
   botStop,
   botRemove,
   botLogs,
-  botBuildOptions,
-  botRegisterOptions,
   botSpawnOptions,
   botListOptions,
   botStartOptions,
@@ -104,37 +99,11 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
       })
 
       .command({
-        command: ['publish'],
-        describe: 'Publish Bot to IPFS.',
-        builder: yargs => yargs
-          .option('buildPath', { type: 'string' })
-          .demandOption('buildPath'),
-
-        handler: asyncHandler(publish(config))
-      })
-
-      .command({
-        command: ['register'],
-        describe: 'Register bot in DXNS.',
-        builder: botRegisterOptions,
-
-        handler: asyncHandler(register({ getDXNSClient, config }))
-      })
-
-      .command({
         command: ['query'],
         describe: 'Query bots.',
         builder: yargs => yargs,
 
         handler: asyncHandler(query({ getDXNSClient }))
-      })
-
-      .command({
-        command: ['build'],
-        describe: 'Build bot.',
-        builder: botBuildOptions,
-
-        handler: asyncHandler(build())
       })
 
       .command({
