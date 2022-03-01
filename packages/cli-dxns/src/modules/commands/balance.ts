@@ -24,10 +24,10 @@ export const balanceCommand = (params: Params): CommandModule => ({
     })
 
     .command({
-      command: ['increase [account]'],
-      describe: 'Increase account balance.',
+      command: ['increase [address]'],
+      describe: 'Increase address balance.',
       builder: yargs => yargs
-        .option('account', { type: 'string' })
+        .option('address', { type: 'string' })
         .option('amount', { type: 'string' })
         .option('faucet', { type: 'string' }),
 

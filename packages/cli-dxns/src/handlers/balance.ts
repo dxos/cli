@@ -30,16 +30,16 @@ export const increaseBalance = (params: Params) => async (argv: any) => {
 
   const client = await getDXNSClient();
   const { apiRaw, keypair, keyring, transactionHandler } = client;
-  const { account = keypair?.address, amount, mnemonic, json, faucet } = argv;
+  const { address = keypair?.address, amount, mnemonic, json, faucet } = argv;
 
-  assert(account, 'Account should be provided.');
+  assert(address, 'Address should be provided.');
 
   if (mnemonic) {
     const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
-    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(account)).data;
+    const { free: previousFree, reserved: previousReserved } = (await apiRaw.query.system.account(address)).data;
     const requestedFree = previousFree.add(new BN(amount));
-    const setBalanceTx = apiRaw.tx.balances.setBalance(account, requestedFree, previousReserved);
+    const setBalanceTx = apiRaw.tx.balances.setBalance(address, requestedFree, previousReserved);
 
     const { events } = await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
     const event = events.map((e: any) => e.event).find(apiRaw.events.balances.BalanceSet.is);
@@ -63,7 +63,7 @@ export const increaseBalance = (params: Params) => async (argv: any) => {
     const response = await fetch(faucet, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ account })
+      body: JSON.stringify({ account: address })
     });
     const result = await response.json();
 
