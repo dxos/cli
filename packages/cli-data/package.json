@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-data",
-  "version": "2.14.1",
+  "version": "2.14.2",
   "description": "DXOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
   "license": "AGPL-3.0",
