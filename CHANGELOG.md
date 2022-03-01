@@ -1,5 +1,20 @@
 # Changelog
 
+### [2.14.1](https://www.github.com/dxos/cli/compare/v2.14.0...v2.14.1) (2022-03-01)
+
+
+### Features
+
+* Add a mapping for DX_DXNS_ACCOUNT ([0f323d5](https://www.github.com/dxos/cli/commit/0f323d5ebd14e7d233f4ac113fc9d1b64fbd9f2e))
+* Protocols v2.28.1 ([#461](https://www.github.com/dxos/cli/issues/461)) ([b805e82](https://www.github.com/dxos/cli/commit/b805e8237e1bfe622181c8d13d093071c49c5751))
+
+
+### Bug Fixes
+
+* Generating address saves it to HALO ([#462](https://www.github.com/dxos/cli/issues/462)) ([04319ff](https://www.github.com/dxos/cli/commit/04319ff614fa26c1a5a843b265d1383a9d5baa26))
+* introduce devnet profile. ([02e5026](https://www.github.com/dxos/cli/commit/02e50262c5c058ee5b1d20845ec10369e65dcb69))
+* use only latest ipfs records for swarm; fix seed. ([a1fd4e0](https://www.github.com/dxos/cli/commit/a1fd4e09e5f7ce53e7b16f4228f20459e93d501d))
+
 ## [2.14.0](https://www.github.com/dxos/cli/compare/v2.13.14...v2.14.0) (2022-02-28)
 
 
