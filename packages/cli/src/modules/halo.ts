@@ -22,10 +22,10 @@ export const HaloModule = ({ config }: CoreState) => ({
 
     .command({
       command: ['init'],
-      describe: 'Init HALO profile.',
+      describe: 'Init HALO identity.',
 
       builder: yargs => yargs
-        .option('name', { type: 'string', describe: 'Profile name', required: true }),
+        .option('name', { type: 'string', describe: 'Identity name', required: true }),
 
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
@@ -39,7 +39,7 @@ export const HaloModule = ({ config }: CoreState) => ({
 
     .command({
       command: ['list'],
-      describe: 'List HALO profiles.',
+      describe: 'List HALO identities.',
 
       builder: yargs => yargs,
 
@@ -51,10 +51,10 @@ export const HaloModule = ({ config }: CoreState) => ({
 
     .command({
       command: ['use [name]'],
-      describe: 'Switch HALO profile for current terminal session only.',
+      describe: 'Switch HALO identity for current terminal session only.',
 
       builder: yargs => yargs
-        .option('name', { type: 'string', describe: 'Profile name', required: true }),
+        .option('name', { type: 'string', describe: 'Identity name', required: true }),
 
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
@@ -64,10 +64,10 @@ export const HaloModule = ({ config }: CoreState) => ({
 
     .command({
       command: ['set [name]'],
-      describe: 'Set default HALO profile.',
+      describe: 'Set default HALO identity.',
 
       builder: yargs => yargs
-        .option('name', { type: 'string', describe: 'Profile name', required: true }),
+        .option('name', { type: 'string', describe: 'Identity name', required: true }),
 
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
