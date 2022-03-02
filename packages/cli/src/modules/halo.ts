@@ -17,7 +17,7 @@ import {
 
 export const HaloModule = ({ config }: CoreState) => ({
   command: ['halo'],
-  describe: 'HALO operations.',
+  describe: 'HALO identity management.',
   builder: (yargs: Argv) => yargs
 
     .command({
