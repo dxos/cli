@@ -3,6 +3,7 @@
 //
 
 export * from './account';
+export * from './address';
 export * from './auction';
 export * from './balance';
 export * from './domain';
