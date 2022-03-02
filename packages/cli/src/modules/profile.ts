@@ -16,7 +16,8 @@ import {
   getProfilePath,
   getProfileName,
   printMissingProfile,
-  printProfileNotFound
+  printProfileNotFound,
+  listClientProfileConfigs
 } from '@dxos/cli-core';
 
 /**
@@ -45,6 +46,18 @@ export const ProfileModule = () => ({
     })
 
     .command({
+      command: ['list'],
+      describe: 'List CLI profiles.',
+
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv: any) => {
+        const { json } = argv;
+        print(listClientProfileConfigs(), { json });
+      })
+    })
+
+    .command({
       command: ['set [name]'],
       describe: 'Set profile as default.',
 
@@ -65,7 +78,7 @@ export const ProfileModule = () => ({
 
     .command({
       command: ['config [profile]'],
-      describe: 'Profile config.',
+      describe: 'Print profile config.',
 
       handler: asyncHandler(async (argv: any) => {
         const { profile } = argv;

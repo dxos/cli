@@ -7,6 +7,7 @@ import findRemoveSync from 'find-remove';
 import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
+import { PROFILE_ROOT } from '../config';
 
 import { STORAGE_ROOT, PROFILE_STORE, SESSION_PROFILE_STORE } from '../config';
 
@@ -91,7 +92,15 @@ export const saveCurrentProfilePath = (currentProfilePath: string) => {
   fs.writeFileSync(profileStorePath, currentProfilePath, { encoding: 'utf8', flag: 'w' });
 };
 
-export const listClientProfiles = () => {
+export const listClientProfileConfigs = () => {
+  const profilesPath = path.join(os.homedir(), PROFILE_ROOT);
+  const profiles = fs.readdirSync(profilesPath, { withFileTypes: true })
+    .filter(file => !file.isDirectory() && file.name.endsWith('.yml'))
+    .map(file => file.name.split('.yml')[0]);
+  return profiles;
+};
+
+export const listClientProfilePaths = () => {
   const storagePath = path.join(os.homedir(), STORAGE_ROOT);
   const profiles = fs.readdirSync(storagePath, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))

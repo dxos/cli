@@ -8,7 +8,7 @@ import {
   CoreState,
   asyncHandler,
   createClient,
-  listClientProfiles,
+  listClientProfilePaths,
   useProfile,
   cleanSessionProfile,
   setProfile,
@@ -45,12 +45,12 @@ export const HaloModule = ({ config }: CoreState) => ({
 
       handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
-        print(listClientProfiles(), { json });
+        print(listClientProfilePaths(), { json });
       })
     })
 
     .command({
-      command: ['use'],
+      command: ['use [name]'],
       describe: 'Switch HALO profile for current terminal session only.',
 
       builder: yargs => yargs
@@ -63,7 +63,7 @@ export const HaloModule = ({ config }: CoreState) => ({
     })
 
     .command({
-      command: ['set'],
+      command: ['set [name]'],
       describe: 'Set default HALO profile.',
 
       builder: yargs => yargs
