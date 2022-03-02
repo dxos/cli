@@ -2,6 +2,7 @@
 // Copyright 2022 DXOS.org
 //
 
+import path from 'path';
 import { Argv } from 'yargs';
 
 import {
@@ -12,7 +13,8 @@ import {
   useProfile,
   cleanSessionProfile,
   setProfile,
-  print
+  print,
+  getCurrentProfilePath
 } from '@dxos/cli-core';
 
 export const HaloModule = ({ config }: CoreState) => ({
@@ -73,5 +75,9 @@ export const HaloModule = ({ config }: CoreState) => ({
         const { name } = argv;
         setProfile(name);
       })
-    })
+    }),
+
+  handler: asyncHandler(async () => {
+    print(path.basename(getCurrentProfilePath()));
+  })
 });
