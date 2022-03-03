@@ -9,6 +9,7 @@ import { asyncHandler } from '@dxos/cli-core';
 import { getBlocks } from '../handlers/block';
 import { build, publish, register } from '../handlers/deploy';
 import { addDummyData } from '../handlers/dummy-data';
+import { listAll } from '../handlers/list-all';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { Params } from '../interfaces';
@@ -19,9 +20,9 @@ import {
   domainCommand,
   recordCommand,
   resourceCommand,
-  typeCommand
+  typeCommand,
+  addressCommand
 } from './commands';
-import { addressCommand } from './commands/address';
 
 export const DXNSModule = (params: Params) => {
   return {
@@ -105,6 +106,13 @@ export const DXNSModule = (params: Params) => {
           const account = await client.getDXNSAccount(argv);
           await register({ cid, account, ...params })(argv);
         })
+      })
+
+      .command({
+        command: ['list'],
+        describe: 'List CLI Profile, HALO identity, DXNS Address, DXNS Account.',
+        builder: yargs => yargs,
+        handler: asyncHandler(listAll(params))
       })
   };
 };

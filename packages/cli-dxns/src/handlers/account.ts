@@ -13,7 +13,7 @@ import { DXNS_ACCOUNT_PREFERENCE } from '../utils';
 export const listAccount = (params: Params) => async (argv: any) => {
   const { json } = argv;
   const { getDXNSAccount } = await params.getDXNSClient();
-  const account = await getDXNSAccount();
+  const account = await getDXNSAccount(argv);
 
   print({ account: account.toHex() }, { json });
 

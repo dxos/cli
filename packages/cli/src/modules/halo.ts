@@ -2,30 +2,32 @@
 // Copyright 2022 DXOS.org
 //
 
+import path from 'path';
 import { Argv } from 'yargs';
 
 import {
   CoreState,
   asyncHandler,
   createClient,
-  listClientProfiles,
+  listClientProfilePaths,
   useProfile,
   cleanSessionProfile,
   setProfile,
-  print
+  print,
+  getCurrentProfilePath
 } from '@dxos/cli-core';
 
 export const HaloModule = ({ config }: CoreState) => ({
   command: ['halo'],
-  describe: 'HALO operations.',
+  describe: 'HALO identity management.',
   builder: (yargs: Argv) => yargs
 
     .command({
       command: ['init'],
-      describe: 'Init HALO profile.',
+      describe: 'Init HALO identity.',
 
       builder: yargs => yargs
-        .option('name', { type: 'string', describe: 'Profile name', required: true }),
+        .option('name', { type: 'string', describe: 'Identity name', required: true }),
 
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
@@ -39,22 +41,22 @@ export const HaloModule = ({ config }: CoreState) => ({
 
     .command({
       command: ['list'],
-      describe: 'List HALO profiles.',
+      describe: 'List HALO identities.',
 
       builder: yargs => yargs,
 
       handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
-        print(listClientProfiles(), { json });
+        print(listClientProfilePaths(), { json });
       })
     })
 
     .command({
-      command: ['use'],
-      describe: 'Switch HALO profile for current terminal session only.',
+      command: ['use [name]'],
+      describe: 'Switch HALO identity for current terminal session only.',
 
       builder: yargs => yargs
-        .option('name', { type: 'string', describe: 'Profile name', required: true }),
+        .option('name', { type: 'string', describe: 'Identity name', required: true }),
 
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
@@ -63,15 +65,19 @@ export const HaloModule = ({ config }: CoreState) => ({
     })
 
     .command({
-      command: ['set'],
-      describe: 'Set default HALO profile.',
+      command: ['set [name]'],
+      describe: 'Set default HALO identity.',
 
       builder: yargs => yargs
-        .option('name', { type: 'string', describe: 'Profile name', required: true }),
+        .option('name', { type: 'string', describe: 'Identity name', required: true }),
 
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
         setProfile(name);
       })
-    })
+    }),
+
+  handler: asyncHandler(async () => {
+    print(path.basename(getCurrentProfilePath()));
+  })
 });

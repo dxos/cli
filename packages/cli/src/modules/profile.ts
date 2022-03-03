@@ -4,6 +4,7 @@
 
 import assert from 'assert';
 import fs from 'fs-extra';
+import { Argv } from 'yargs';
 
 import {
   asyncHandler,
@@ -15,18 +16,18 @@ import {
   getProfilePath,
   getProfileName,
   printMissingProfile,
-  printProfileNotFound
+  printProfileNotFound,
+  listClientProfileConfigs
 } from '@dxos/cli-core';
 
 /**
  * Profile CLI module.
- * @returns {object}
  */
 export const ProfileModule = () => ({
   command: ['profile'],
   describe: 'CLI profile management.',
 
-  builder: yargs => yargs
+  builder: (yargs: Argv) => yargs
     .command({
       command: ['init'],
       describe: 'Init profile.',
@@ -34,7 +35,7 @@ export const ProfileModule = () => ({
         .option('name', { type: 'string', describe: 'Profile name' })
         .option('template-url', { type: 'string', describe: 'URL to download profile template' }),
 
-      handler: asyncHandler(async argv => {
+      handler: asyncHandler(async (argv: any) => {
         const { name, templateUrl } = argv;
 
         assert(name, 'Invalid profile name.');
@@ -45,10 +46,22 @@ export const ProfileModule = () => ({
     })
 
     .command({
+      command: ['list'],
+      describe: 'List CLI profiles.',
+
+      builder: yargs => yargs,
+
+      handler: asyncHandler(async (argv: any) => {
+        const { json } = argv;
+        print(listClientProfileConfigs(), { json });
+      })
+    })
+
+    .command({
       command: ['set [name]'],
       describe: 'Set profile as default.',
 
-      handler: asyncHandler(async argv => {
+      handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
 
         assert(name, 'Invalid profile name.');
@@ -65,18 +78,18 @@ export const ProfileModule = () => ({
 
     .command({
       command: ['config [profile]'],
-      describe: 'Profile config.',
+      describe: 'Print profile config.',
 
-      handler: asyncHandler(async argv => {
+      handler: asyncHandler(async (argv: any) => {
         const { profile } = argv;
 
         const profilePath = (profile ? getProfilePath(profile) : getActiveProfilePath());
-        if (!fs.existsSync(profilePath)) {
-          printProfileNotFound(profilePath);
+        if (!fs.existsSync(profilePath!)) {
+          printProfileNotFound(profilePath!);
           return;
         }
 
-        print(getConfig(profilePath).values, { json: true });
+        print(getConfig(profilePath!).values, { json: true });
       })
     }),
 
