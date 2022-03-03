@@ -7,9 +7,8 @@ import findRemoveSync from 'find-remove';
 import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
-import { PROFILE_ROOT } from '../config';
 
-import { STORAGE_ROOT, PROFILE_STORE, SESSION_PROFILE_STORE } from '../config';
+import { PROFILE_ROOT, STORAGE_ROOT, PROFILE_STORE, SESSION_PROFILE_STORE } from '../config';
 
 const ensureProfileStore = () => {
   const profileStorePath = path.join(os.homedir(), PROFILE_STORE);
