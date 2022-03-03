@@ -8,6 +8,9 @@
   "DX_DXNS_ACCOUNT": {
     "path": "runtime.services.dxns.account"
   },
+  "DX_DXNS_ADDRESS": {
+    "path": "runtime.services.dxns.address"
+  },
   "DX_MACHINE_DO_TOKEN": {
     "path": "runtime.services.machine.doAccessToken"
   },
