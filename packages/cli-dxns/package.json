@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-dxns",
-  "version": "2.14.2",
+  "version": "2.14.3",
   "description": "DXOS DXNS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-halo#readme",
   "license": "AGPL-3.0",

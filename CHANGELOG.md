@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.14.3](https://www.github.com/dxos/cli/compare/v2.14.2...v2.14.3) (2022-03-03)
+
+
+### Bug Fixes
+
+* Consolidate `dxns` commands ([#467](https://www.github.com/dxos/cli/issues/467)) ([fcdadfb](https://www.github.com/dxos/cli/commit/fcdadfbbf98b78c7b78eccafff3f2aba3815a07a))
+
 ### [2.14.2](https://www.github.com/dxos/cli/compare/v2.14.1...v2.14.2) (2022-03-01)
 
 
