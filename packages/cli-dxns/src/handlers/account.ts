@@ -20,6 +20,17 @@ export const listAccount = (params: Params) => async (argv: any) => {
   await sleep(2000);
 };
 
+export const listAllAccount = (params: Params) => async (argv: any) => {
+  const { json } = argv;
+  const { accountClient } = await params.getDXNSClient();
+  const allAccounts = await accountClient.getAllAccounts();
+  const accounts = allAccounts.map(account => account.id);
+
+  print(accounts, { json });
+
+  await sleep(2000);
+};
+
 export const createAccount = ({ getDXNSClient }: Params) => async (argv: any) => {
   const { json } = argv;
   const { accountClient, dxosClient } = await getDXNSClient();
