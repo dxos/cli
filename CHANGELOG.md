@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.15.0](https://www.github.com/dxos/cli/compare/v2.14.3...v2.15.0) (2022-03-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename `ns list` to `ns info` (#470)
+
+### Code Refactoring
+
+* Rename `ns list` to `ns info` ([#470](https://www.github.com/dxos/cli/issues/470)) ([29fcfc6](https://www.github.com/dxos/cli/commit/29fcfc6773c8058bbd8825912fdf3b90812e4d70))
+
 ### [2.14.3](https://www.github.com/dxos/cli/compare/v2.14.2...v2.14.3) (2022-03-03)
 
 
