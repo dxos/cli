@@ -13,7 +13,7 @@ import { Params } from '../interfaces';
 
 const log = debug('dxos:cli-dxns');
 
-export const listAll = (params: Params) => async (argv: any) => {
+export const info = (params: Params) => async (argv: any) => {
   const { json, profile } = argv;
   const { getDXNSAccount, dxnsAddress } = await params.getDXNSClient();
   let account: AccountKey | undefined;

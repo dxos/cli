@@ -9,7 +9,7 @@ import { asyncHandler } from '@dxos/cli-core';
 import { getBlocks } from '../handlers/block';
 import { build, publish, register } from '../handlers/deploy';
 import { addDummyData } from '../handlers/dummy-data';
-import { listAll } from '../handlers/list-all';
+import { info } from '../handlers/info';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { Params } from '../interfaces';
@@ -109,10 +109,10 @@ export const DXNSModule = (params: Params) => {
       })
 
       .command({
-        command: ['list'],
-        describe: 'List CLI Profile, HALO identity, DXNS Address, DXNS Account.',
+        command: ['info'],
+        describe: 'Print information about CLI Profile, HALO identity, DXNS Address, DXNS Account.',
         builder: yargs => yargs,
-        handler: asyncHandler(listAll(params))
+        handler: asyncHandler(info(params))
       })
   };
 };
