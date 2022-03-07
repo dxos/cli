@@ -3,7 +3,7 @@ version: 1
 module:
   type: dxos:type.app
   name: dxos:app.mock
-  description: Mock App description
+  description: Mock application
   author: DXOS.org
   license: AGPL-3.0
   repository: 'https://github.com/dxos/cli'

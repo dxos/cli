@@ -250,16 +250,8 @@ describe('CLI', () => {
       await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').run();
     });
 
-    it('build app', async () => {
-      await cmd('app build', join(__dirname, '../mocks/app')).run();
-    });
-
-    it('publish app', async () => {
-      await cmd('app publish', join(__dirname, '../mocks/app')).run();
-    });
-
-    it('register app', async () => {
-      await cmd(`app --account ${account} register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
+    it('deploy app', async () => {
+      await cmd(`dxns --account ${account} deploy --name ${APP_NAME} --domain ${APP_DOMAIN} --type app --verbose`, join(__dirname, '../mocks/app')).run();
     });
 
     it('query app', async () => {
@@ -273,7 +265,7 @@ describe('CLI', () => {
     });
 
     it('Registers versioned and tagged app', async () => {
-      await cmd(`app --account ${account} register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME} --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
+      await cmd(`dxns --account ${account} deploy --name ${APP_NAME} --domain ${APP_DOMAIN} --type app --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
     });
 
     it('Serves the app without any version', async () => {
