@@ -47,6 +47,7 @@ describe('CLI', () => {
       handler: () => kubeServices
     }
   ]);
+  let address: string; // DXNS Address.
   let account: string; // DXNS Account.
 
   before(async () => {
@@ -141,7 +142,13 @@ describe('CLI', () => {
 
   describe('dxns', () => {
     it('create Polkadot address', async () => {
-      await cmd('dxns address recover --mnemonic "//Alice"').run();
+      const result = await cmd('dxns address generate --json').json();
+      assert(result.address);
+      address = result.address;
+    });
+
+    it('increase balance', async () => {
+      await cmd(`dxns balance increase --address ${address} --amount 10000000000 --mnemonic //Alice`).run();
     });
 
     it('create DXNS Account', async () => {
