@@ -18,7 +18,6 @@
     "dist/"
   ],
   "bin": {
-    "wire-data": "bin/dx-data.js",
     "dx-data": "bin/dx-data.js"
   },
   "scripts": {

@@ -18,7 +18,6 @@
     "dist/"
   ],
   "bin": {
-    "wire-ipfs": "bin/dx-ipfs.js",
     "dx-ipfs": "bin/dx-ipfs.js"
   },
   "scripts": {

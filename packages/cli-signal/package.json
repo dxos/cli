@@ -18,7 +18,6 @@
     "dist/"
   ],
   "bin": {
-    "wire-signal": "bin/dx-signal.js",
     "dx-signal": "bin/dx-signal.js"
   },
   "scripts": {

@@ -18,8 +18,6 @@
     "dist/"
   ],
   "bin": {
-    "wire-app": "bin/dx-app.js",
-    "wire-app-server": "bin/dx-app-server.js",
     "dx-app": "bin/dx-app.js",
     "dx-app-server": "bin/dx-app-server.js"
   },

@@ -12,7 +12,6 @@
     "url": "git+https://github.com/dxos/cli.git"
   },
   "bin": {
-    "wire-bot": "bin/dx-bot.js",
     "dx-bot": "bin/dx-bot.js"
   },
   "main": "dist/src/index.js",
