@@ -12,8 +12,7 @@
     "url": "git+https://github.com/dxos/cli.git"
   },
   "bin": {
-    "dx": "bin/dx.js",
-    "wire": "bin/dx.js"
+    "dx": "bin/dx.js"
   },
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -29,7 +28,7 @@
     "dx": "./bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
-    "prebuild": "./scripts/get-extensions.sh &> /dev/null",
+    "prebuild": "./scripts/get-extensions.sh",
     "preinstall": "npm run checkNew && npm run checkOld",
     "checkOld": "[ -d ~/.wire ] && [ ! -L ~/.dx ] && ln -s ~/.wire ~/.dx || true",
     "checkNew": "[ ! -d ~/.wire ] && [ ! -d ~/.dx ] && mkdir -p ~/.dx || true"

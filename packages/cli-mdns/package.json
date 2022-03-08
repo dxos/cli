@@ -18,7 +18,6 @@
     "dist/"
   ],
   "bin": {
-    "wire-mdns": "bin/dx-mdns.js",
     "dx-mdns": "bin/dx-mdns.js"
   },
   "scripts": {

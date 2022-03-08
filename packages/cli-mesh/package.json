@@ -18,7 +18,6 @@
     "dist/"
   ],
   "bin": {
-    "wire-mesh": "bin/dx-mesh.js",
     "dx-mesh": "bin/dx-mesh.js"
   },
   "scripts": {

@@ -8,7 +8,7 @@ import path from 'path';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { assemble, del, deploy, get, install, list, register, setupOTP, start, stop, upgrade } from '../handlers';
+import { assemble, del, deploy, get, importCertificate, install, list, register, setupOTP, start, stop, upgrade } from '../handlers';
 
 const KubeServices = readFileSync(path.join(__dirname, '../../services.yml')).toString();
 const compose = readFileSync(path.join(__dirname, '../../docker-compose.yml')).toString();
@@ -148,5 +148,20 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
         .option('key-phrase', { type: 'string' }),
 
       handler: asyncHandler(setupOTP())
+    })
+
+    .command({
+      command: ['cert'],
+      describe: 'Certificate management.',
+      handler: () => {},
+      builder: yargs => yargs
+        .command({
+          command: ['import'],
+          describe: 'Import certificate.',
+          builder: yargs => yargs
+            .option('url', { default: config.get('runtime.services.kube.endpoints.cert') }),
+
+          handler: asyncHandler(importCertificate())
+        })
     })
 });

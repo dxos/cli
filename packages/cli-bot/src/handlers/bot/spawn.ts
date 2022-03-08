@@ -31,7 +31,7 @@ export const botSpawnOptions = (yargs: Argv<CoreOptions>): Argv<BotSpawnOptions>
 };
 
 export const spawn = ({ stateManager, config } : SpawnParameters) => async ({ dxn, ipfsCid, localPath, json } : BotSpawnOptions) => {
-  assert(stateManager, 'Data client is required, run \'wire extension install @dxos/cli-data\'');
+  assert(stateManager, 'Data client is required, run \'dx extension install @dxos/cli-data\'');
   assert(!!dxn || !!ipfsCid || !!localPath, 'At least one of the following options is required: dxn, ipfsCid, localPath');
   const topic = config.get('runtime.services.bot.topic');
   assert(topic, 'Topic must be provided in config');

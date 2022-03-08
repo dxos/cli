@@ -5,5 +5,9 @@ description: DXNS extension.
 initRequired: true
 destroyRequired: true
 command:
-  - dxns
-  - ns
+  -
+    command: "dxns"
+    describe: "DXNS extension."
+  -
+    command: "ns"
+    describe: "DXNS extension alias."

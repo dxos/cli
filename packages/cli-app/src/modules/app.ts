@@ -6,25 +6,11 @@ import { Argv } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 import type { DXNSClient } from '@dxos/cli-dxns';
-import { log } from '@dxos/debug';
 
 import { DEFAULT_PORT } from '../config';
-import { build, publish, register, query, serve, create } from '../handlers';
+import { query, serve, create } from '../handlers';
 
 const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/app-template';
-
-const getAppRecord = (config: any, namespace: string) => {
-  const record = {
-    ...config
-  };
-
-  // TODO(burdon): Tags are obsolete?
-  if (namespace) {
-    record.tag = namespace;
-  }
-
-  return record;
-};
 
 export interface Params {
   config: any,
@@ -41,83 +27,6 @@ export const AppModule = ({ getDXNSClient, getReadlineInterface, config }: Param
     describe: 'App CLI.',
     builder: (yargs: Argv) => yargs
       .option('account', { type: 'string', array: false, describe: 'Optionally override DXNS Account from config.' })
-
-      // Build app.
-      .command({
-        command: ['build'],
-        describe: 'Build app.',
-        builder: (yargs: Argv) => yargs,
-        handler: asyncHandler(build(config, { getAppRecord }))
-      })
-
-      // Publish app.
-      .command({
-        command: ['publish'],
-        describe: 'Publish app to IPFS.',
-        builder: (yargs: Argv) => yargs
-          .option('path', { type: 'string' })
-          .option('timeout', { type: 'string', default: '10m' }),
-
-        handler: asyncHandler(publish(config))
-      })
-
-      // Register app.
-      .command({
-        command: ['register'],
-        describe: 'Register app.',
-        builder: (yargs: Argv) => yargs
-          .version(false)
-          .option('id', { type: 'string' })
-          .option('name', { type: 'array' })
-          .option('domain', { type: 'string' })
-          .option('version', { type: 'string' })
-          .option('skipExisting', { type: 'boolean' })
-          .option('tag', { type: 'array' })
-          .option('namespace', { type: 'string' })
-          .option('gas', { type: 'string' })
-          .option('fees', { type: 'string' })
-          .option('schema', { type: 'string' })
-          // TODO(egorgripasov): Remove.
-          .option('dxns', { type: 'boolean', default: false }),
-
-        handler: asyncHandler(async (argv: any) => {
-          const client = await getDXNSClient();
-          const account = await client.getDXNSAccount(argv);
-          return register({ getAppRecord, getDXNSClient, account })(argv);
-        })
-      })
-
-      // Deploy app.
-      .command({
-        command: ['deploy'],
-        describe: 'Build publish and register app.',
-        builder: (yargs: Argv) => yargs
-          .strict(false)
-          .version(false)
-          .option('id', { type: 'string' })
-          .option('name', { type: 'array' })
-          .option('domain', { type: 'string' })
-          .option('namespace', { type: 'string' }) // TODO(burdon): Why not required in register above?
-          .option('version', { type: 'string' })
-          .option('skipExisting', { type: 'boolean' })
-          .option('tag', { type: 'array' })
-          .option('gas', { type: 'string' })
-          .option('fees', { type: 'string' })
-          .option('schema', { type: 'string' })
-          .option('timeout', { type: 'string', default: '10m' })
-          .option('path', { type: 'string' })
-          // TODO(egorgripasov): Remove.
-          .option('dxns', { type: 'boolean', default: false }),
-
-        handler: asyncHandler(async (argv: any) => {
-          log('Preparing to deploy...'); // TODO(burdon): Standardize logging (stages, verbose).
-          await build(config, { getAppRecord })(argv);
-          await publish(config)(argv);
-          const client = await getDXNSClient();
-          const account = await client.getDXNSAccount(argv);
-          await register({ getAppRecord, getDXNSClient, account })(argv);
-        })
-      })
 
       // Query apps.
       .command({

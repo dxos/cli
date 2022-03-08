@@ -219,7 +219,7 @@ export class App {
         interactive = get(result, 'argv.interactive') || get(output, 'argv.interactive');
         poll = get(result, 'argv.poll') || get(output, 'argv.poll');
 
-        if (!interactive && output && !output.argv) {
+        if (output && !output.argv) {
           log(output.toString());
         }
 

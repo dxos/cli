@@ -19,4 +19,5 @@ export * from './util/npm';
 export * from './util/profile';
 export * from './util/template';
 export * from './util/OTP';
+export * from './util/certs';
 export { CoreState };

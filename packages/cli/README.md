@@ -112,7 +112,6 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 | [KUBE CLI](../cli-kube/README.md) |
 | [MDNS CLI](../cli-mdns/README.md) |
 | [Mesh CLI](../cli-mesh/README.md) |
-| [Pad CLI](../cli-pad/README.md) |
 | [Signal CLI](../cli-signal/README.md) |
 
 #### Developing CLI extensions

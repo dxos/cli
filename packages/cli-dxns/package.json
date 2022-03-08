@@ -14,7 +14,6 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "bin": {
-    "wire-dxns": "bin/dx-dxns.js",
     "dx-dxns": "bin/dx-dxns.js"
   },
   "files": [

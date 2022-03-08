@@ -14,7 +14,6 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "bin": {
-    "wire-kube": "bin/dx-kube.js",
     "dx-kube": "bin/dx-kube.js"
   },
   "files": [

@@ -18,7 +18,6 @@
     "dist/"
   ],
   "bin": {
-    "wire-console": "bin/dx-console.js",
     "dx-console": "bin/dx-console.js"
   },
   "scripts": {

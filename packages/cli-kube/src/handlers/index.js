@@ -3,6 +3,7 @@
 //
 
 export * from './assemble';
+export * from './cert';
 export * from './delete';
 export * from './deploy';
 export * from './get';
