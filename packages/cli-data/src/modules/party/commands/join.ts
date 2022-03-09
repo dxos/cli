@@ -20,9 +20,8 @@ export interface PartyJoinOptions extends PartyOptions {
 const options = (yargs: Argv<PartyOptions>): Argv<PartyJoinOptions> => {
   return yargs
     .option('interactive', { hidden: true, default: true }) // override the default.
-    .option('invitation', { type: 'string' })
-    .option('passcode', { type: 'string' })
-    .option('invitation-url', { type: 'string' });
+    .option('invitation', { type: 'string', alias: 'invitation-url' })
+    .option('passcode', { type: 'string' });
 };
 
 export const joinCommand = (stateManager: StateManager): CommandModule<PartyOptions, PartyJoinOptions> => ({
@@ -30,15 +29,13 @@ export const joinCommand = (stateManager: StateManager): CommandModule<PartyOpti
   describe: 'Join party.',
   builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<PartyJoinOptions>) => {
-    const { partyKey, invitationUrl, invitation, json, passcode } = argv;
+    const { partyKey, invitation, json, passcode } = argv;
 
-    assert(partyKey || invitation || invitationUrl, 'Invalid party.');
+    assert(partyKey || invitation, 'Invalid party.');
 
     let invite;
     if (invitation) {
-      invite = InvitationDescriptor.decode(invitation);
-    } else if (invitationUrl) {
-      invite = InvitationDescriptor.decode(invitationUrl.split('/').pop()!);
+      invite = InvitationDescriptor.decode(invitation.split('/').pop()!);
     }
 
     await stateManager.joinParty(partyKey, invite, passcode);

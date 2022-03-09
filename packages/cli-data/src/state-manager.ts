@@ -116,10 +116,11 @@ export class StateManager {
         });
       };
 
-      const secret = await secretProvider();
-
       const invitation = await this._client.echo.acceptInvitation(invitationDescriptor);
+
+      const secret = await secretProvider();
       invitation.authenticate(secret);
+
       const party = await invitation.wait();
       await party.open();
 
