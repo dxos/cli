@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.16.0](https://www.github.com/dxos/cli/compare/v2.15.0...v2.16.0) (2022-03-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* cleanup. (#474)
+
+### Features
+
+* cleanup. ([#474](https://www.github.com/dxos/cli/issues/474)) ([22f29d0](https://www.github.com/dxos/cli/commit/22f29d0bad36f3bfcda523dc37b198e95b46dd78))
+
+
+### Bug Fixes
+
+* browser to cli invitation. ([#476](https://www.github.com/dxos/cli/issues/476)) ([81612a4](https://www.github.com/dxos/cli/commit/81612a43a9df1e899bbc72cb4216f77b1740316a))
+* ipfs upload ([#477](https://www.github.com/dxos/cli/issues/477)) ([1861ce5](https://www.github.com/dxos/cli/commit/1861ce5be97c6945a9008d28627fff7710f75282))
+
 ## [2.15.0](https://www.github.com/dxos/cli/compare/v2.14.3...v2.15.0) (2022-03-04)
 
 
