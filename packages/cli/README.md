@@ -134,7 +134,6 @@ Corresponding certificate would be downloaded to `~/.dx/certs` and considered by
 
 ### Dependencies
 
-- [yarn](https://yarnpkg.com/)
 - [jq](https://stedolan.github.io/jq/)
 
 ### Setup
@@ -143,10 +142,10 @@ Corresponding certificate would be downloaded to `~/.dx/certs` and considered by
 # CLI is a yarn monorepo
 
 # Install dependencies
-yarn
+rush update
 
 # Build all packages
-yarn build
+rush build
 ```
 
 ### Running commands locally
