@@ -29,11 +29,13 @@ const SODIUM_PREBUILDS = `sodium-native/${PREBUILDS_DIR}`;
 export interface BotFactorySetupOptions extends CoreOptions {
   topic?: string
   json?: boolean
+  withNodePath?: boolean
 }
 
 export const botFactorySetupOptions = (config: Config) => (yargs: Argv<CoreOptions>): Argv<BotFactorySetupOptions> => {
   return yargs
-    .option('topic', { type: 'string', default: config.get('runtime.services.bot.topic') });
+    .option('topic', { type: 'string', default: config.get('runtime.services.bot.topic') })
+    .option('with-node-path', { type: 'boolean', default: false });
 };
 
 /**
@@ -50,7 +52,7 @@ const setupPrebuilds = async (cliNodePath: string) => {
   await fs.copy(prebuildsPath, prebuildsBotsPath);
 };
 
-export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic, json } : BotFactorySetupOptions) => {
+export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic, json, withNodePath } : BotFactorySetupOptions) => {
   assert(pkg, 'Unable to locate package.json');
   const cliNodePath = await getGlobalModulesPath(await isGlobalYarn(pkg.package.name));
 
@@ -79,7 +81,7 @@ export const setup = (config: any, { includeNodePath = false } = {}) => async ({
     NODE_OPTIONS: '',
     ...mapToKeyValues(load(envmap), config.values),
     DX_BOT_TOPIC: topic,
-    ...(includeNodePath ? { DX_CLI_NODE_PATH: cliNodePath } : {})
+    ...(includeNodePath || withNodePath ? { NODE_PATH: cliNodePath } : {})
   };
 
   await fs.writeFile(botFactoryEnvFile, stringify(env));
