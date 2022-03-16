@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.16.1](https://www.github.com/dxos/cli/compare/v2.16.0...v2.16.1) (2022-03-16)
+
+
+### Bug Fixes
+
+* optionaly include NODE_PATH for BF. ([51ea7f2](https://www.github.com/dxos/cli/commit/51ea7f20d49b5923d0a02168a9510910773c1cf0))
+
 ## [2.16.0](https://www.github.com/dxos/cli/compare/v2.15.0...v2.16.0) (2022-03-11)
 
 
