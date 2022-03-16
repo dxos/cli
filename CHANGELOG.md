@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.16.2](https://www.github.com/dxos/cli/compare/v2.16.1...v2.16.2) (2022-03-16)
+
+
+### Bug Fixes
+
+* upd bot-factory start options. ([110bb6c](https://www.github.com/dxos/cli/commit/110bb6c41aa90f5d7acc1d35e91ac383b3f74684))
+
 ### [2.16.1](https://www.github.com/dxos/cli/compare/v2.16.0...v2.16.1) (2022-03-16)
 
 
