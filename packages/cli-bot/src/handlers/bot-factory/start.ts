@@ -27,7 +27,8 @@ export const botFactoryStartOptions = (yargs: Argv<CoreOptions>): Argv<BotFactor
     .option('detached', { type: 'boolean', alias: 'daemon', default: false })
     .option('log-file', { type: 'string' })
     .option('proc-name', { type: 'string' })
-    .option('dev', { type: 'boolean', default: false });
+    .option('dev', { type: 'boolean', default: false })
+    .option('with-node-path', { type: 'boolean', default: false });
 };
 
 export interface StartOptions {
