@@ -4,6 +4,7 @@
 
 import cliProgress from 'cli-progress';
 import folderSize from 'get-folder-size';
+// eslint-disable-next-line
 import { ClientOptions } from 'ipfs-http-client/src/lib/core';
 import path from 'path';
 import pify from 'pify';
