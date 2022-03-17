@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.16.3](https://www.github.com/dxos/cli/compare/v2.16.2...v2.16.3) (2022-03-17)
+
+
+### Bug Fixes
+
+* ns account use. ([c5d0f27](https://www.github.com/dxos/cli/commit/c5d0f272ce83eb1e5a772de987956f8635ece3ef))
+* trigger build. ([bff01b0](https://www.github.com/dxos/cli/commit/bff01b06484d48cd8276bf45851d70d6067bdf71))
+* update protocols. ([#481](https://www.github.com/dxos/cli/issues/481)) ([8c7e26b](https://www.github.com/dxos/cli/commit/8c7e26bb1c087df230eebe0a98e111b84af73efd))
+
 ### [2.16.2](https://www.github.com/dxos/cli/compare/v2.16.1...v2.16.2) (2022-03-16)
 
 
