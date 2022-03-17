@@ -35,15 +35,15 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.28.1",
-    "@dxos/debug": "~2.28.1",
-    "@dxos/object-model": "~2.28.1",
+    "@dxos/crypto": "~2.28.5",
+    "@dxos/debug": "~2.28.5",
+    "@dxos/object-model": "~2.28.5",
     "assert": "^2.0.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@dxos/cli-data": "workspace:*",
-    "@dxos/echo-db": "~2.28.1",
+    "@dxos/echo-db": "~2.28.5",
     "@dxos/eslint-plugin": "~1.0.24",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
