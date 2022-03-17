@@ -25,7 +25,7 @@ export const addressCommand = (params: Params): CommandModule => ({
       handler: asyncHandler(generateAddress(params))
     })
     .command({
-      command: ['recover'],
+      command: ['use', 'recover'],
       describe: 'Recover an existing Polkadot Address.',
       builder: yargs => yargs
         .option('mnemonic', { type: 'string', array: false }),

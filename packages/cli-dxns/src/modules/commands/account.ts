@@ -6,7 +6,7 @@ import { CommandModule } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { addDeviceToAccount, createAccount, listAccount, listDevices } from '../../handlers/account';
+import { addDeviceToAccount, createAccount, listAccount, listDevices, restoreAccount } from '../../handlers/account';
 import { Params } from '../../interfaces';
 
 export const accountCommand = (params: Params): CommandModule => ({
@@ -23,6 +23,13 @@ export const accountCommand = (params: Params): CommandModule => ({
       command: ['create'],
       describe: 'Create new DXNS account.',
       handler: asyncHandler(createAccount(params))
+    })
+    .command({
+      command: ['use', 'recover'],
+      describe: 'Use existing DXNS account.',
+      builder: yargs => yargs
+        .option('account', { type: 'string', required: true }),
+      handler: asyncHandler(restoreAccount(params))
     })
     .command({
       command: ['add-device'],
