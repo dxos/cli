@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.16.4](https://www.github.com/dxos/cli/compare/v2.16.3...v2.16.4) (2022-03-22)
+
+
+### Bug Fixes
+
+* add BF swarm command. ([#482](https://www.github.com/dxos/cli/issues/482)) ([d104e7a](https://www.github.com/dxos/cli/commit/d104e7adeeda0e6a6d974aeb02b87a517745d29e))
+
 ### [2.16.3](https://www.github.com/dxos/cli/compare/v2.16.2...v2.16.3) (2022-03-17)
 
 
