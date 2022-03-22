@@ -35,10 +35,10 @@ export const botLogs = ({ stateManager, config } : LogsParameters) => async ({ b
   const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
   try {
     await botFactoryClient.start(PublicKey.from(topic));
-    const handle = await botFactoryClient.get(botId);
+    const handle = await botFactoryClient.getBot(botId);
     const stream = handle.logsStream();
     await new Promise<void>(resolve => {
-      stream.subscribe(msg => {
+      stream.subscribe((msg: any) => {
         print(msg.chunk?.toString());
       }, () => resolve());
     });

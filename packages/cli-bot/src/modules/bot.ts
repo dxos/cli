@@ -25,10 +25,12 @@ import {
 } from '../handlers/bot';
 import {
   botFactoryStartOptions,
+  botFactorySwarmOptions,
   botFactoryInstallOptions,
   install,
   setup,
   start,
+  swarm,
   botFactorySetupOptions,
   botFactoryStopOptions,
   stop
@@ -79,6 +81,13 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
               await setup(config, { includeNodePath: true })(argv);
               await start()(argv);
             })
+          })
+
+          .command({
+            command: ['swarm'],
+            describe: 'Swarm with a bot factory.',
+            builder: botFactorySwarmOptions,
+            handler: asyncHandler(swarm(config))
           })
 
           .command({

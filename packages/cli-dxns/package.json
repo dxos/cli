@@ -36,13 +36,13 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.28.5",
+    "@dxos/async": "~2.28.8",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/config": "~2.28.5",
-    "@dxos/crypto": "~2.28.5",
-    "@dxos/debug": "~2.28.5",
-    "@dxos/registry-client": "~2.28.5",
-    "@dxos/credentials": "~2.28.5",
+    "@dxos/config": "~2.28.8",
+    "@dxos/crypto": "~2.28.8",
+    "@dxos/debug": "~2.28.8",
+    "@dxos/registry-client": "~2.28.8",
+    "@dxos/credentials": "~2.28.8",
     "@polkadot/api": "4.17.1",
     "@polkadot/keyring": "6.11.1",
     "@polkadot/util-crypto": "^6.11.1",
@@ -85,7 +85,7 @@
     "@types/get-folder-size": "^3.0.1",
     "@types/cli-progress": "^3.9.2",
     "@types/jest": "~27.0.3",
-    "@dxos/client": "~2.28.5",
+    "@dxos/client": "~2.28.8",
     "@types/debug": "~4.1.7"
   },
   "eslintConfig": {

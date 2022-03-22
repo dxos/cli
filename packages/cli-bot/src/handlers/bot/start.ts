@@ -35,7 +35,7 @@ export const botStart = ({ stateManager, config } : StartParameters) => async ({
   const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
   try {
     await botFactoryClient.start(PublicKey.from(topic));
-    const handle = await botFactoryClient.get(botId);
+    const handle = await botFactoryClient.getBot(botId);
     await handle.start();
   } finally {
     await botFactoryClient.stop();
