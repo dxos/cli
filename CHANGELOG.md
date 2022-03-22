@@ -71,7 +71,7 @@
 ### Features
 
 * Add a mapping for DX_DXNS_ACCOUNT ([0f323d5](https://www.github.com/dxos/cli/commit/0f323d5ebd14e7d233f4ac113fc9d1b64fbd9f2e))
-* Protocols v2.28.5 ([#461](https://www.github.com/dxos/cli/issues/461)) ([b805e82](https://www.github.com/dxos/cli/commit/b805e8237e1bfe622181c8d13d093071c49c5751))
+* Protocols v2.28.8 ([#461](https://www.github.com/dxos/cli/issues/461)) ([b805e82](https://www.github.com/dxos/cli/commit/b805e8237e1bfe622181c8d13d093071c49c5751))
 
 
 ### Bug Fixes

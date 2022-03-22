@@ -35,7 +35,7 @@ export const botRemove = ({ stateManager, config } : RemoveParameters) => async 
   const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
   try {
     await botFactoryClient.start(PublicKey.from(topic));
-    const handle = await botFactoryClient.get(botId);
+    const handle = await botFactoryClient.getBot(botId);
     await handle.remove();
   } finally {
     await botFactoryClient.stop();
