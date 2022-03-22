@@ -34,10 +34,13 @@
     "verbose": false
   },
   "dependencies": {
+    "@dxos/async": "~2.28.5",
+    "@dxos/bot-factory-client": "~2.28.5",
     "@dxos/cli-core": "workspace:*",
     "@dxos/config": "~2.28.5",
     "@dxos/crypto": "~2.28.5",
     "@dxos/debug": "~2.28.5",
+    "@dxos/network-manager": "~2.28.5",
     "@dxos/registry-client": "~2.28.5",
     "@dxos/util": "^2.28.0",
     "assert": "^2.0.0",
@@ -55,8 +58,7 @@
     "ipfs-http-client": "48.1.1",
     "cli-progress": "^3.8.2",
     "node-fetch": "^2.6.1",
-    "abort-controller": "~3.0.0",
-    "@dxos/bot-factory-client": "~2.28.5"
+    "abort-controller": "~3.0.0"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.24",
