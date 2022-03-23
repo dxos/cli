@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.16.5](https://www.github.com/dxos/cli/compare/v2.16.4...v2.16.5) (2022-03-23)
+
+
+### Bug Fixes
+
+* save init & destroy info on extension installation. ([491d845](https://www.github.com/dxos/cli/commit/491d845422268cd16b6ae21f67f29fc0fdcbc36f))
+* trigger build. ([7855d53](https://www.github.com/dxos/cli/commit/7855d5351480aa212c4ad37782f0048dc4634ad8))
+
 ### [2.16.4](https://www.github.com/dxos/cli/compare/v2.16.3...v2.16.4) (2022-03-22)
 
 
