@@ -17,7 +17,7 @@ export const getInfo = async (name) => {
 };
 
 export const addInstalled = async (name, info) => {
-  const { package: { version }, command, description } = info;
+  const { package: { version }, command, description, initRequired, destroyRequired } = info;
   let { extensions = [] } = await readFile(filePath, { absolute: true });
   extensions = extensions.filter(({ moduleName }) => moduleName !== name);
 
@@ -25,7 +25,9 @@ export const addInstalled = async (name, info) => {
     moduleName: name,
     version,
     describe: description,
-    command
+    command,
+    initRequired,
+    destroyRequired
   });
 
   return writeFile({ extensions }, filePath, { absolute: true });
