@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-e2e-test",
-  "version": "2.16.6",
+  "version": "2.16.7",
   "description": "E2E test script for CLI packages",
   "private": true,
   "scripts": {
