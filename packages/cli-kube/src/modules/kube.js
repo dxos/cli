@@ -8,7 +8,7 @@ import path from 'path';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { assemble, del, deploy, get, importCertificate, install, list, register, setupOTP, start, stop, upgrade } from '../handlers';
+import { assemble, del, deploy, get, importCertificate, install, list, ping, register, setupOTP, start, status, stop, upgrade } from '../handlers';
 
 const KubeServices = readFileSync(path.join(__dirname, '../../services.yml')).toString();
 const compose = readFileSync(path.join(__dirname, '../../docker-compose.yml')).toString();
@@ -162,6 +162,23 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
             .option('url', { default: config.get('runtime.services.kube.endpoints.cert') }),
 
           handler: asyncHandler(importCertificate())
+        })
+    })
+
+    .command({
+      command: ['local'],
+      describe: 'Local KUBE management.',
+      handler: () => {},
+      builder: yargs => yargs
+        .command({
+          command: ['ping'],
+          describe: 'Ping.',
+          handler: asyncHandler(ping())
+        })
+        .command({
+          command: ['status'],
+          describe: 'Get status.',
+          handler: asyncHandler(status())
         })
     })
 });
