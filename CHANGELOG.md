@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.16.7](https://www.github.com/dxos/cli/compare/v2.16.6...v2.16.7) (2022-03-24)
+
+
+### Bug Fixes
+
+* kube local commands. ([db05d3a](https://www.github.com/dxos/cli/commit/db05d3a3b2faef93354226d84a88877585fc79d7))
+
 ### [2.16.6](https://www.github.com/dxos/cli/compare/v2.16.5...v2.16.6) (2022-03-24)
 
 
