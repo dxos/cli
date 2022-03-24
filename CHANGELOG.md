@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.16.6](https://www.github.com/dxos/cli/compare/v2.16.5...v2.16.6) (2022-03-24)
+
+
+### Bug Fixes
+
+* add default values for init& destroy ([383f98d](https://www.github.com/dxos/cli/commit/383f98d4f16b0415974a46f9a91b609fa616ab1f))
+* update protocols. ([523ad9c](https://www.github.com/dxos/cli/commit/523ad9c1623938e38c32508bb0c2a1621366b10f))
+
 ### [2.16.5](https://www.github.com/dxos/cli/compare/v2.16.4...v2.16.5) (2022-03-23)
 
 
