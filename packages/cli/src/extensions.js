@@ -26,8 +26,8 @@ export const addInstalled = async (name, info) => {
     version,
     describe: description,
     command,
-    initRequired,
-    destroyRequired
+    initRequired: !!initRequired,
+    destroyRequired: !!destroyRequired
   });
 
   return writeFile({ extensions }, filePath, { absolute: true });
