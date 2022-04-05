@@ -325,7 +325,7 @@ describe('CLI', () => {
 
     it('spawns a bot', async () => {
       const command = cmd('party open')
-        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --json`);
+        .addInteractiveCommand(`bot spawn --name ${BOT_DOMAIN}:${BOT_NAME} --json`);
       command.interactiveOutput.on(data => {
         try {
           const json = JSON.parse(data);
