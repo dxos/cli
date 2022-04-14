@@ -148,6 +148,10 @@ rush update
 rush build
 ```
 
+### Developing of a single extension
+
+While developing a specific cli extension as a package in the monorepo, `rushx build:watch` command is available from the root of this package.
+
 ### Running commands locally
 
 During local development there is a need for testing of a newly created / modified commands. For that purpose, any cli command could be called from the repo root via `pnpm run dx`, e.g.:

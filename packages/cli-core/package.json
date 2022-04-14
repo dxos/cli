@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "build:watch": "tsc --watch",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
