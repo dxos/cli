@@ -9,7 +9,7 @@ import { Argv } from 'yargs';
 
 import { CoreOptions, Runnable, sanitizeEnv } from '@dxos/cli-core';
 
-import { BOTFACTORY_ENV_FILE } from '../../config';
+import { BOTFACTORY_ENV_FILE, BOT_FACTORY_PERSISTENT, BOT_RETRY_ATTEMPTS } from '../../config';
 
 export const BOT_FACTORY_PROCESS_NAME = 'bot-factory';
 
@@ -18,7 +18,10 @@ export interface BotFactoryStartOptions extends CoreOptions {
   detached: boolean,
   'log-file'?: string,
   'proc-name'?: string,
-  dev: boolean
+  dev: boolean,
+  withNodePath?: boolean
+  persistent?: boolean
+  retryAttempts?: number
 }
 
 export const botFactoryStartOptions = (yargs: Argv<CoreOptions>): Argv<BotFactoryStartOptions> => {
@@ -28,7 +31,9 @@ export const botFactoryStartOptions = (yargs: Argv<CoreOptions>): Argv<BotFactor
     .option('log-file', { type: 'string' })
     .option('proc-name', { type: 'string' })
     .option('dev', { type: 'boolean', default: false })
-    .option('with-node-path', { type: 'boolean', default: false });
+    .option('with-node-path', { type: 'boolean', default: false })
+    .option('persistent', { type: 'boolean', default: BOT_FACTORY_PERSISTENT })
+    .option('retry-attempts', { type: 'number', default: BOT_RETRY_ATTEMPTS });
 };
 
 export interface StartOptions {
@@ -36,7 +41,7 @@ export interface StartOptions {
   logFile: string,
   detached: boolean,
   dev: boolean
-  procName?: string,
+  procName?: string
 }
 
 export const start = () => async ({
