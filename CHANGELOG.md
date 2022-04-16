@@ -1,5 +1,15 @@
 # Changelog
 
+### [2.16.8](https://www.github.com/dxos/cli/compare/v2.16.7...v2.16.8) (2022-04-16)
+
+
+### Bug Fixes
+
+* new botfactory settings. ([0a68eb0](https://www.github.com/dxos/cli/commit/0a68eb00d3cf9251ceb569c79cf1633435a862b4))
+* spawn bot by name with version or tag. ([#488](https://www.github.com/dxos/cli/issues/488)) ([d94e310](https://www.github.com/dxos/cli/commit/d94e310783a4f0acdfc7159b63f21e5102626323))
+* update kube profile ([0565225](https://www.github.com/dxos/cli/commit/05652254f672789ad5daaf6168d56d7a9c99a5a4))
+* update protocols. ([#489](https://www.github.com/dxos/cli/issues/489)) ([f79128d](https://www.github.com/dxos/cli/commit/f79128d4aa5d7b8147739f9767f78192550867b0))
+
 ### [2.16.7](https://www.github.com/dxos/cli/compare/v2.16.6...v2.16.7) (2022-03-24)
 
 
