@@ -46,7 +46,9 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       describe: 'Upgrade KUBE.',
       builder: yargs => yargs
         .option('auth', { type: 'boolean', default: false, description: 'Authentication required' })
-        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' })
+        .option('hot', { type: 'boolean', default: false, description: 'Hot upgrade' })
+        .option('name', { type: 'string', description: 'Container name' }),
 
       handler: asyncHandler(upgrade(config, { getAuth, kubeCompose }))
     })
