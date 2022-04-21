@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.16.9](https://www.github.com/dxos/cli/compare/v2.16.8...v2.16.9) (2022-04-21)
+
+
+### Bug Fixes
+
+* better upgrade. ([5c0279e](https://www.github.com/dxos/cli/commit/5c0279efdd5265af373bc0b782d2345e743d4188))
+
 ### [2.16.8](https://www.github.com/dxos/cli/compare/v2.16.7...v2.16.8) (2022-04-16)
 
 
