@@ -6,7 +6,7 @@ import { CommandModule } from 'yargs';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { addDeviceToAccount, createAccount, listAccount, listDevices, restoreAccount } from '../../handlers/account';
+import { addDeviceToAccount, createAccount, listAccount, listAllAccount, listDevices, restoreAccount } from '../../handlers/account';
 import { Params } from '../../interfaces';
 
 export const accountCommand = (params: Params): CommandModule => ({
@@ -16,8 +16,13 @@ export const accountCommand = (params: Params): CommandModule => ({
   builder: yargs => yargs
     .command({
       command: ['list'],
-      describe: 'List DXNS ACCOUNTS.',
+      describe: 'List DXNS Accounts.',
       handler: asyncHandler(listAccount(params))
+    })
+    .command({
+      command: ['list-all'],
+      describe: 'List all DXNS Accounts existing on the blockchain.',
+      handler: asyncHandler(listAllAccount(params))
     })
     .command({
       command: ['create'],
