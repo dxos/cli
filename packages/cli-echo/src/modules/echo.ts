@@ -32,7 +32,7 @@ export const EchoModule = ({ stateManager }: CliDataState) => ({
         const { json } = argv;
 
         const party = await stateManager.getParty();
-        const items: Item<any>[] = party?.database.select().query().value ?? [];
+        const items: Item<any>[] = party?.database.select().query().entities ?? [];
         const result = (items || []).map(item => {
           const modelName = Object.getPrototypeOf(item.model).constructor.name;
           return {

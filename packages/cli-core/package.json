@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-core",
-  "version": "2.14.3",
+  "version": "2.16.9",
   "description": "CLI Core",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
   "license": "AGPL-3.0",
@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "build:watch": "tsc --watch",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
@@ -31,10 +32,10 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/client": "~2.28.1",
-    "@dxos/config": "~2.28.1",
-    "@dxos/crypto": "~2.28.1",
-    "@dxos/debug": "~2.28.1",
+    "@dxos/client": "~2.29.1",
+    "@dxos/config": "~2.29.1",
+    "@dxos/crypto": "~2.29.1",
+    "@dxos/debug": "~2.29.1",
     "@types/yargs": "^16.0.1",
     "assert": "^2.0.0",
     "console.table": "^0.10.0",
@@ -69,7 +70,7 @@
     "yargs-parser": "^19.0.4",
     "yargs-unparser": "^1.6.4",
     "@otplib/plugin-thirty-two": "^12.0.1",
-    "@dxos/async": "~2.28.1"
+    "@dxos/async": "~2.29.1"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.24",

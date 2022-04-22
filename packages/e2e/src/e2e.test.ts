@@ -47,6 +47,7 @@ describe('CLI', () => {
       handler: () => kubeServices
     }
   ]);
+  let address: string; // DXNS Address.
   let account: string; // DXNS Account.
 
   before(async () => {
@@ -141,7 +142,13 @@ describe('CLI', () => {
 
   describe('dxns', () => {
     it('create Polkadot address', async () => {
-      await cmd('dxns address recover --mnemonic "//Alice"').run();
+      const result = await cmd('dxns address generate --json').json();
+      assert(result.address);
+      address = result.address;
+    });
+
+    it('increase balance', async () => {
+      await cmd(`dxns balance increase --address ${address} --amount 10000000000 --mnemonic //Alice`).run();
     });
 
     it('create DXNS Account', async () => {
@@ -243,16 +250,8 @@ describe('CLI', () => {
       await cmd('app serve start --daemon --auth false --log-file /tmp/app-server.log').run();
     });
 
-    it('build app', async () => {
-      await cmd('app build', join(__dirname, '../mocks/app')).run();
-    });
-
-    it('publish app', async () => {
-      await cmd('app publish', join(__dirname, '../mocks/app')).run();
-    });
-
-    it('register app', async () => {
-      await cmd(`app --account ${account} register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME}`, join(__dirname, '../mocks/app')).run();
+    it('deploy app', async () => {
+      await cmd(`dxns --account ${account} deploy --name ${APP_NAME} --domain ${APP_DOMAIN} --type app --verbose`, join(__dirname, '../mocks/app')).run();
     });
 
     it('query app', async () => {
@@ -266,7 +265,7 @@ describe('CLI', () => {
     });
 
     it('Registers versioned and tagged app', async () => {
-      await cmd(`app --account ${account} register --dxns --domain ${APP_DOMAIN} --name ${APP_NAME} --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
+      await cmd(`dxns --account ${account} deploy --name ${APP_NAME} --domain ${APP_DOMAIN} --type app --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
     });
 
     it('Serves the app without any version', async () => {
@@ -326,7 +325,7 @@ describe('CLI', () => {
 
     it('spawns a bot', async () => {
       const command = cmd('party open')
-        .addInteractiveCommand(`bot spawn --dxn ${BOT_DOMAIN}:${BOT_NAME} --json`);
+        .addInteractiveCommand(`bot spawn --name ${BOT_DOMAIN}:${BOT_NAME} --json`);
       command.interactiveOutput.on(data => {
         try {
           const json = JSON.parse(data);

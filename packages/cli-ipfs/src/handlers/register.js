@@ -1,5 +1,5 @@
 //
-// Copyright 2021 DXOS.org
+// Copyright 2022 DXOS.org
 //
 
 import assert from 'assert';
@@ -9,7 +9,7 @@ import { CID, DXN, RecordKind } from '@dxos/registry-client';
 
 import { FILE_TYPE_DXN } from '../config';
 
-export const register = ({ getDXNSClient }) => async (argv) => {
+export const register = ({ getDXNSClient, account }) => async (argv) => {
   const { name, domain, cid: fileCID, contentType, fileName, version, tag, skipExisting } = argv;
 
   assert(name, 'Invalid name.');
@@ -32,7 +32,7 @@ export const register = ({ getDXNSClient }) => async (argv) => {
   const opts = { version, tags: tag ?? ['latest'] };
   log(`Assigning name ${name}...`);
   try {
-    await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, name), cid, opts);
+    await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, name), account, cid, opts);
   } catch (err) {
     if (skipExisting && String(err).includes('VersionAlreadyExists')) {
       log('Skipping existing version.');

@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-data",
-  "version": "2.14.3",
+  "version": "2.16.9",
   "description": "DXOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
   "license": "AGPL-3.0",
@@ -18,11 +18,11 @@
     "dist/"
   ],
   "bin": {
-    "wire-data": "bin/dx-data.js",
     "dx-data": "bin/dx-data.js"
   },
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
+    "build:watch": "tsc --watch",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
@@ -32,13 +32,13 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/client": "~2.28.1",
-    "@dxos/config": "~2.28.1",
-    "@dxos/credentials": "~2.28.1",
-    "@dxos/crypto": "~2.28.1",
-    "@dxos/debug": "~2.28.1",
-    "@dxos/echo-db": "~2.28.1",
-    "@dxos/random-access-multi-storage": "~2.28.1",
+    "@dxos/client": "~2.29.1",
+    "@dxos/config": "~2.29.1",
+    "@dxos/credentials": "~2.29.1",
+    "@dxos/crypto": "~2.29.1",
+    "@dxos/debug": "~2.29.1",
+    "@dxos/echo-db": "~2.29.1",
+    "@dxos/random-access-multi-storage": "~2.29.1",
     "assert": "^2.0.0",
     "base-x": "^3.0.9",
     "fs-extra": "10.0.0",
@@ -50,9 +50,9 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@dxos/async": "~2.28.1",
+    "@dxos/async": "~2.29.1",
     "@dxos/eslint-plugin": "~1.0.24",
-    "@dxos/signal": "~2.28.1",
+    "@dxos/signal": "~2.29.1",
     "@types/lockfile": "^1.0.2",
     "eslint": "^7.13.0",
     "ts-node": "^10.2.1",

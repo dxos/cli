@@ -8,7 +8,7 @@ import path from 'path';
 
 import { asyncHandler } from '@dxos/cli-core';
 
-import { assemble, del, deploy, get, install, list, register, setupOTP, start, stop, upgrade } from '../handlers';
+import { assemble, del, deploy, get, importCertificate, install, list, ping, register, setupOTP, start, status, stop, upgrade } from '../handlers';
 
 const KubeServices = readFileSync(path.join(__dirname, '../../services.yml')).toString();
 const compose = readFileSync(path.join(__dirname, '../../docker-compose.yml')).toString();
@@ -46,7 +46,9 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       describe: 'Upgrade KUBE.',
       builder: yargs => yargs
         .option('auth', { type: 'boolean', default: false, description: 'Authentication required' })
-        .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
+        .option('dev', { type: 'boolean', default: false, description: 'Dev build' })
+        .option('hot', { type: 'boolean', default: false, description: 'Hot upgrade' })
+        .option('name', { type: 'string', description: 'Container name' }),
 
       handler: asyncHandler(upgrade(config, { getAuth, kubeCompose }))
     })
@@ -148,5 +150,37 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
         .option('key-phrase', { type: 'string' }),
 
       handler: asyncHandler(setupOTP())
+    })
+
+    .command({
+      command: ['cert'],
+      describe: 'Certificate management.',
+      handler: () => {},
+      builder: yargs => yargs
+        .command({
+          command: ['import'],
+          describe: 'Import certificate.',
+          builder: yargs => yargs
+            .option('url', { default: config.get('runtime.services.kube.endpoints.cert') }),
+
+          handler: asyncHandler(importCertificate())
+        })
+    })
+
+    .command({
+      command: ['local'],
+      describe: 'Local KUBE management.',
+      handler: () => {},
+      builder: yargs => yargs
+        .command({
+          command: ['ping'],
+          describe: 'Ping.',
+          handler: asyncHandler(ping())
+        })
+        .command({
+          command: ['status'],
+          describe: 'Get status.',
+          handler: asyncHandler(status())
+        })
     })
 });

@@ -13,21 +13,9 @@ DX_IPFS_SERVER:
   path: runtime.services.ipfs.server
 DX_IPFS_GATEWAY:
   path: runtime.services.ipfs.gateway
-# DX_BOT_RESET:
-#   path: runtime.bot.reset
-#   type: boolean
-# DX_BOT_SPEC:
-#   path: runtime.bot.botSpec
-#   type: json
-# DX_BOT_INVITATION:
-#   path: runtime.bot.invitation
-#   type: json
-# DX_BOT_PEER_ID:
-#   path: runtime.bot.peerId
 DX_BOT_TOPIC:
   path: runtime.bot.topic
-DX_BOT_SECRET_KEY:
-  path: runtime.bot.secretKey
-# DX_BOT_LOCAL_DEV:
-#   path: runtime.bot.localDev
-#   type: boolean
+DX_BOT_PERSISTENT:
+  path: runtime.services.bot.persistent
+DX_BOT_RETRY_ATTEMPTS:
+  path: runtime.services.bot.retryAttempts

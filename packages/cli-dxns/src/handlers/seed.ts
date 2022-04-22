@@ -24,7 +24,7 @@ interface TypeDescription {
 }
 
 // TODO(marik-d): Find a better way to do this, export proto resolution logic from codec-protobuf.
-const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns/type.proto');
+const SCHEMA_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns/types.proto');
 const DXNS_PROTO_DIR_PATH = join(dirname(require.resolve('@dxos/registry-client/package.json')), 'src/proto/dxns');
 
 // Mapping from resource name to protobuf name for types that will be registered on-chain.

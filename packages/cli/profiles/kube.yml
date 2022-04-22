@@ -1,5 +1,5 @@
 #
-# Copyright 2021 DXOS.org
+# Copyright 2022 DXOS.org
 #
 
 version: 1
@@ -7,21 +7,6 @@ version: 1
 runtime:
   # DXOS services.
   services:
-    dxns:
-      server: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
-      accountUri:
-      faucet: 'https://dxns2.kube.dxos.network/kube/faucet'
-    ipfs:
-      server: 'https://kube.local/dxos/ipfs/api'
-      gateway: 'https://kube.local/dxos/ipfs/gateway'
-    signal:
-      server: 'wss://kube.local/dxos/signal/api'
-      api: 'https://kube.local/dxos/signal'
-    ice:
-      - urls: 'stun:night.2e1a47.xyz:3478'
-      - urls: 'turn:night.2e1a47.xyz:3478'
-        username: 'dxos'
-        credential: 'dxos'
     kube:
       endpoints:
         logs: '/kube/logs'
@@ -31,6 +16,24 @@ runtime:
     app:
       prefix: '/app'
       server: 'https://kube.local'
+    dxns:
+      server: 'wss://node1.devnet.dxos.network/dxns/ws'
+      accountUri:
+      faucet: 'https://node2.devnet.dxos.network/kube/faucet'
+    ipfs:
+      server: 'https://kube.local/dxos/ipfs/api'
+      gateway: 'https://kube.local/dxos/ipfs/gateway/'
+    signal:
+      server: 'wss://kube.local/dxos/signal'
+      api: 'https://kube.local/dxos/signal/api'
+      status: 'https://kube.local/dxos/signal/status'
+    ice:
+      - urls: 'stun:kube.local:3478'
+      - urls: 'turn:kube.local:3478'
+        username: 'dxos'
+        credential: 'dxos'
+    bot:
+      topic:
 
   cli:
     app:

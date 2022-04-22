@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-mesh",
-  "version": "2.14.3",
+  "version": "2.16.9",
   "description": "DXOS Network CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-mesh#readme",
   "license": "AGPL-3.0",
@@ -18,11 +18,11 @@
     "dist/"
   ],
   "bin": {
-    "wire-mesh": "bin/dx-mesh.js",
     "dx-mesh": "bin/dx-mesh.js"
   },
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
+    "build:watch": "tsc --watch",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
@@ -35,9 +35,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.28.1",
+    "@dxos/async": "~2.29.1",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/network-manager": "~2.28.1",
+    "@dxos/network-manager": "~2.29.1",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "do-wrapper": "^4.1.2",

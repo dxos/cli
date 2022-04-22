@@ -44,8 +44,12 @@
     moduleName: "@dxos/cli-dxns"
     describe: "DXNS extension."
     command: 
-      - "dxns"
-      - "ns"
+      - 
+        command: "dxns"
+        describe: "DXNS extension."
+      - 
+        command: "ns"
+        describe: "DXNS extension alias."
     initRequired: true
     destroyRequired: true
   - 
@@ -84,22 +88,10 @@
     initRequired: false
     destroyRequired: false
   - 
-    moduleName: "@dxos/cli-pad"
-    describe: "Pad extension."
-    command: 
-      - "pad"
-    initRequired: false
-    destroyRequired: false
-  - 
     moduleName: "@dxos/cli-signal"
     describe: "Signal server extension."
     command: 
-      - 
-        command: "signal"
-        describe: "Signal server as process."
-      - 
-        command: "container-signal"
-        describe: "Signal server as container."
+      - "signal"
     initRequired: false
     destroyRequired: false
 

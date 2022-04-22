@@ -217,6 +217,7 @@ export const IPFSModule = ({ config, getDXNSClient }) => ({
       builder: yargs => yargs
         .version(false)
         .positional('target', { type: 'string', required: true })
+        .option('account', { type: 'string' })
         .option('quiet', { type: 'boolean', default: false, alias: 'q' })
         .option('name', { type: 'string' })
         .option('domain', { type: 'string' })
@@ -225,8 +226,10 @@ export const IPFSModule = ({ config, getDXNSClient }) => ({
         .option('skipExisting', { type: 'boolean' })
         .option('timeout', { type: 'string', default: '20m' }),
       handler: asyncHandler(async argv => {
+        const client = await getDXNSClient();
+        const account = await client.getDXNSAccount(argv);
         const result = await publish(config)(argv);
-        await register({ getDXNSClient })({ ...argv, ...result });
+        await register({ getDXNSClient, account })({ ...argv, ...result });
       })
     })
 

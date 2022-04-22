@@ -15,7 +15,7 @@ import { isGlobalYarn, getGlobalModulesPath, CoreOptions, print } from '@dxos/cl
 import { Config, mapToKeyValues } from '@dxos/config';
 import { createKeyPair, keyToString } from '@dxos/crypto';
 
-import { BOTFACTORY_ENV_FILE } from '../../config';
+import { BOTFACTORY_ENV_FILE, BOT_FACTORY_PERSISTENT, BOT_RETRY_ATTEMPTS } from '../../config';
 
 const envmap = readFileSync(path.join(__dirname, '../../../env-map.yml')).toString();
 
@@ -29,11 +29,17 @@ const SODIUM_PREBUILDS = `sodium-native/${PREBUILDS_DIR}`;
 export interface BotFactorySetupOptions extends CoreOptions {
   topic?: string
   json?: boolean
+  withNodePath?: boolean
+  persistent?: boolean
+  retryAttempts?: number
 }
 
 export const botFactorySetupOptions = (config: Config) => (yargs: Argv<CoreOptions>): Argv<BotFactorySetupOptions> => {
   return yargs
-    .option('topic', { type: 'string', default: config.get('runtime.services.bot.topic') });
+    .option('topic', { type: 'string', default: config.get('runtime.services.bot.topic') })
+    .option('with-node-path', { type: 'boolean', default: false })
+    .option('persistent', { type: 'boolean', default: BOT_FACTORY_PERSISTENT })
+    .option('retry-attempts', { type: 'number', default: BOT_RETRY_ATTEMPTS });
 };
 
 /**
@@ -50,7 +56,7 @@ const setupPrebuilds = async (cliNodePath: string) => {
   await fs.copy(prebuildsPath, prebuildsBotsPath);
 };
 
-export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic, json } : BotFactorySetupOptions) => {
+export const setup = (config: any, { includeNodePath = false } = {}) => async ({ topic, json, withNodePath, persistent, retryAttempts }: BotFactorySetupOptions) => {
   assert(pkg, 'Unable to locate package.json');
   const cliNodePath = await getGlobalModulesPath(await isGlobalYarn(pkg.package.name));
 
@@ -79,7 +85,9 @@ export const setup = (config: any, { includeNodePath = false } = {}) => async ({
     NODE_OPTIONS: '',
     ...mapToKeyValues(load(envmap), config.values),
     DX_BOT_TOPIC: topic,
-    ...(includeNodePath ? { DX_CLI_NODE_PATH: cliNodePath } : {})
+    DX_BOT_PERSISTENT: persistent,
+    DX_BOT_RETRY_ATTEMPTS: retryAttempts,
+    ...(includeNodePath || withNodePath ? { NODE_PATH: cliNodePath } : {})
   };
 
   await fs.writeFile(botFactoryEnvFile, stringify(env));

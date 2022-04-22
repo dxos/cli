@@ -112,7 +112,6 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 | [KUBE CLI](../cli-kube/README.md) |
 | [MDNS CLI](../cli-mdns/README.md) |
 | [Mesh CLI](../cli-mesh/README.md) |
-| [Pad CLI](../cli-pad/README.md) |
 | [Signal CLI](../cli-signal/README.md) |
 
 #### Developing CLI extensions
@@ -135,7 +134,6 @@ Corresponding certificate would be downloaded to `~/.dx/certs` and considered by
 
 ### Dependencies
 
-- [yarn](https://yarnpkg.com/)
 - [jq](https://stedolan.github.io/jq/)
 
 ### Setup
@@ -144,11 +142,15 @@ Corresponding certificate would be downloaded to `~/.dx/certs` and considered by
 # CLI is a yarn monorepo
 
 # Install dependencies
-yarn
+rush update
 
 # Build all packages
-yarn build
+rush build
 ```
+
+### Developing of a single extension
+
+While developing a specific cli extension as a package in the monorepo, `rushx build:watch` command is available from the root of this package.
 
 ### Running commands locally
 

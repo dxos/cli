@@ -1,6 +1,0 @@
-name: dxos/cli-pad
-version: 0.0.1
-displayName: cli-pad
-description: Pad extension.
-command:
-  - pad

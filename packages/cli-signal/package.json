@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-signal",
-  "version": "2.14.3",
+  "version": "2.16.9",
   "description": "DXOS Signal CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-signal#readme",
   "license": "AGPL-3.0",
@@ -18,11 +18,11 @@
     "dist/"
   ],
   "bin": {
-    "wire-signal": "bin/dx-signal.js",
     "dx-signal": "bin/dx-signal.js"
   },
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
+    "build:watch": "tsc --watch",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.28.1",
+    "@dxos/debug": "~2.29.1",
     "lodash-clean": "^2.2.1",
     "yargs": "^16.2.0"
   },

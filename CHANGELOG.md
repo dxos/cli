@@ -1,5 +1,103 @@
 # Changelog
 
+### [2.16.9](https://www.github.com/dxos/cli/compare/v2.16.8...v2.16.9) (2022-04-21)
+
+
+### Bug Fixes
+
+* better upgrade. ([5c0279e](https://www.github.com/dxos/cli/commit/5c0279efdd5265af373bc0b782d2345e743d4188))
+
+### [2.16.8](https://www.github.com/dxos/cli/compare/v2.16.7...v2.16.8) (2022-04-16)
+
+
+### Bug Fixes
+
+* new botfactory settings. ([0a68eb0](https://www.github.com/dxos/cli/commit/0a68eb00d3cf9251ceb569c79cf1633435a862b4))
+* spawn bot by name with version or tag. ([#488](https://www.github.com/dxos/cli/issues/488)) ([d94e310](https://www.github.com/dxos/cli/commit/d94e310783a4f0acdfc7159b63f21e5102626323))
+* update kube profile ([0565225](https://www.github.com/dxos/cli/commit/05652254f672789ad5daaf6168d56d7a9c99a5a4))
+* update protocols. ([#489](https://www.github.com/dxos/cli/issues/489)) ([f79128d](https://www.github.com/dxos/cli/commit/f79128d4aa5d7b8147739f9767f78192550867b0))
+
+### [2.16.7](https://www.github.com/dxos/cli/compare/v2.16.6...v2.16.7) (2022-03-24)
+
+
+### Bug Fixes
+
+* kube local commands. ([db05d3a](https://www.github.com/dxos/cli/commit/db05d3a3b2faef93354226d84a88877585fc79d7))
+
+### [2.16.6](https://www.github.com/dxos/cli/compare/v2.16.5...v2.16.6) (2022-03-24)
+
+
+### Bug Fixes
+
+* add default values for init& destroy ([383f98d](https://www.github.com/dxos/cli/commit/383f98d4f16b0415974a46f9a91b609fa616ab1f))
+* update protocols. ([523ad9c](https://www.github.com/dxos/cli/commit/523ad9c1623938e38c32508bb0c2a1621366b10f))
+
+### [2.16.5](https://www.github.com/dxos/cli/compare/v2.16.4...v2.16.5) (2022-03-23)
+
+
+### Bug Fixes
+
+* save init & destroy info on extension installation. ([491d845](https://www.github.com/dxos/cli/commit/491d845422268cd16b6ae21f67f29fc0fdcbc36f))
+* trigger build. ([7855d53](https://www.github.com/dxos/cli/commit/7855d5351480aa212c4ad37782f0048dc4634ad8))
+
+### [2.16.4](https://www.github.com/dxos/cli/compare/v2.16.3...v2.16.4) (2022-03-22)
+
+
+### Bug Fixes
+
+* add BF swarm command. ([#482](https://www.github.com/dxos/cli/issues/482)) ([d104e7a](https://www.github.com/dxos/cli/commit/d104e7adeeda0e6a6d974aeb02b87a517745d29e))
+
+### [2.16.3](https://www.github.com/dxos/cli/compare/v2.16.2...v2.16.3) (2022-03-17)
+
+
+### Bug Fixes
+
+* ns account use. ([c5d0f27](https://www.github.com/dxos/cli/commit/c5d0f272ce83eb1e5a772de987956f8635ece3ef))
+* trigger build. ([bff01b0](https://www.github.com/dxos/cli/commit/bff01b06484d48cd8276bf45851d70d6067bdf71))
+* update protocols. ([#481](https://www.github.com/dxos/cli/issues/481)) ([8c7e26b](https://www.github.com/dxos/cli/commit/8c7e26bb1c087df230eebe0a98e111b84af73efd))
+
+### [2.16.2](https://www.github.com/dxos/cli/compare/v2.16.1...v2.16.2) (2022-03-16)
+
+
+### Bug Fixes
+
+* upd bot-factory start options. ([110bb6c](https://www.github.com/dxos/cli/commit/110bb6c41aa90f5d7acc1d35e91ac383b3f74684))
+
+### [2.16.1](https://www.github.com/dxos/cli/compare/v2.16.0...v2.16.1) (2022-03-16)
+
+
+### Bug Fixes
+
+* optionaly include NODE_PATH for BF. ([51ea7f2](https://www.github.com/dxos/cli/commit/51ea7f20d49b5923d0a02168a9510910773c1cf0))
+
+## [2.16.0](https://www.github.com/dxos/cli/compare/v2.15.0...v2.16.0) (2022-03-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* cleanup. (#474)
+
+### Features
+
+* cleanup. ([#474](https://www.github.com/dxos/cli/issues/474)) ([22f29d0](https://www.github.com/dxos/cli/commit/22f29d0bad36f3bfcda523dc37b198e95b46dd78))
+
+
+### Bug Fixes
+
+* browser to cli invitation. ([#476](https://www.github.com/dxos/cli/issues/476)) ([81612a4](https://www.github.com/dxos/cli/commit/81612a43a9df1e899bbc72cb4216f77b1740316a))
+* ipfs upload ([#477](https://www.github.com/dxos/cli/issues/477)) ([1861ce5](https://www.github.com/dxos/cli/commit/1861ce5be97c6945a9008d28627fff7710f75282))
+
+## [2.15.0](https://www.github.com/dxos/cli/compare/v2.14.3...v2.15.0) (2022-03-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename `ns list` to `ns info` (#470)
+
+### Code Refactoring
+
+* Rename `ns list` to `ns info` ([#470](https://www.github.com/dxos/cli/issues/470)) ([29fcfc6](https://www.github.com/dxos/cli/commit/29fcfc6773c8058bbd8825912fdf3b90812e4d70))
+
 ### [2.14.3](https://www.github.com/dxos/cli/compare/v2.14.2...v2.14.3) (2022-03-03)
 
 
@@ -20,7 +118,7 @@
 ### Features
 
 * Add a mapping for DX_DXNS_ACCOUNT ([0f323d5](https://www.github.com/dxos/cli/commit/0f323d5ebd14e7d233f4ac113fc9d1b64fbd9f2e))
-* Protocols v2.28.1 ([#461](https://www.github.com/dxos/cli/issues/461)) ([b805e82](https://www.github.com/dxos/cli/commit/b805e8237e1bfe622181c8d13d093071c49c5751))
+* Protocols v2.28.10 ([#461](https://www.github.com/dxos/cli/issues/461)) ([b805e82](https://www.github.com/dxos/cli/commit/b805e8237e1bfe622181c8d13d093071c49c5751))
 
 
 ### Bug Fixes

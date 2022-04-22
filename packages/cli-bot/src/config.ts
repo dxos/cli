@@ -11,6 +11,9 @@ export const BOTFACTORY_ENV_FILE = 'bot-factory.env';
 export const BOTFACTORY_PACKAGE = '@dxos/botkit';
 export const BOT_CONFIG_FILENAME = 'bot.yml';
 
+export const BOT_FACTORY_PERSISTENT = true;
+export const BOT_RETRY_ATTEMPTS = 3;
+
 export const getBotConfig = async () => {
   const botConfig = fs.existsSync(BOT_CONFIG_FILENAME) ? await readFile(BOT_CONFIG_FILENAME) : {};
 

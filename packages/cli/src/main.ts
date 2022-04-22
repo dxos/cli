@@ -11,7 +11,6 @@ import readPkgUp from 'read-pkg-up';
 import { getLoggers, createCLI, CoreState } from '@dxos/cli-core';
 
 import { listInstalled } from './extensions';
-import { CertModule } from './modules/cert';
 import { DevToolsModule } from './modules/devtools';
 import { ExtensionModule } from './modules/extension';
 import { HaloModule } from './modules/halo';
@@ -89,7 +88,6 @@ const destroy = async () => {
 const modules = [
   ProfileModule,
   DevToolsModule,
-  CertModule,
   ServicesModule,
   StorageModule,
   HaloModule,

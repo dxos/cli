@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-echo",
-  "version": "2.14.3",
+  "version": "2.16.9",
   "description": "DXOS ECHO CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-echo#readme",
   "license": "AGPL-3.0",
@@ -18,11 +18,11 @@
     "dist/"
   ],
   "bin": {
-    "wire-echo": "bin/dx-echo.js",
     "dx-echo": "bin/dx-echo.js"
   },
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
+    "build:watch": "tsc --watch",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
@@ -36,15 +36,15 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.28.1",
-    "@dxos/debug": "~2.28.1",
-    "@dxos/object-model": "~2.28.1",
+    "@dxos/crypto": "~2.29.1",
+    "@dxos/debug": "~2.29.1",
+    "@dxos/object-model": "~2.29.1",
     "assert": "^2.0.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@dxos/cli-data": "workspace:*",
-    "@dxos/echo-db": "~2.28.1",
+    "@dxos/echo-db": "~2.29.1",
     "@dxos/eslint-plugin": "~1.0.24",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",

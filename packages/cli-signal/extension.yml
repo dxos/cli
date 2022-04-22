@@ -3,9 +3,4 @@ version: 0.0.1
 displayName: cli-signal
 description: Signal server extension.
 command:
-  - 
-    command: "signal"
-    describe: "Signal server as process."
-  - 
-    command: "container-signal"
-    describe: "Signal server as container."
+  - signal

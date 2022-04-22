@@ -558,13 +558,6 @@
     },
 
     {
-      "packageName": "@dxos/cli-pad",
-      "projectFolder": "packages/cli-pad",
-      "shouldPublish": true,
-      "versionPolicyName": "lockStepPolicy"
-    },
-
-    {
       "packageName": "@dxos/cli-signal",
       "projectFolder": "packages/cli-signal",
       "shouldPublish": true,

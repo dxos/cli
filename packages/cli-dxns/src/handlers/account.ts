@@ -6,6 +6,7 @@ import assert from 'assert';
 
 import { sleep } from '@dxos/async';
 import { print } from '@dxos/cli-core';
+import { AccountKey } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { DXNS_ACCOUNT_PREFERENCE } from '../utils';
@@ -35,6 +36,18 @@ export const createAccount = ({ getDXNSClient }: Params) => async (argv: any) =>
   const { json } = argv;
   const { accountClient, dxosClient } = await getDXNSClient();
   const account = await accountClient.createAccount();
+  await dxosClient.halo.setGlobalPreference(DXNS_ACCOUNT_PREFERENCE, account.toHex());
+
+  print({ account: account.toHex() }, { json });
+
+  await sleep(2000);
+};
+
+export const restoreAccount = ({ getDXNSClient }: Params) => async (argv: any) => {
+  const { account: accKey, json } = argv;
+  const account = AccountKey.fromHex(accKey);
+
+  const { dxosClient } = await getDXNSClient();
   await dxosClient.halo.setGlobalPreference(DXNS_ACCOUNT_PREFERENCE, account.toHex());
 
   print({ account: account.toHex() }, { json });

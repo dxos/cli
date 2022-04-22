@@ -6,14 +6,11 @@ import { spawn } from 'child_process';
 
 import { Runnable, sanitizeEnv, stopService, asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-// import { Registry } from '@wirelineio/registry-client';
 
 const SIGNAL_PROCESS_NAME = 'signal';
 const DEFAULT_LOG_FILE = '/var/log/signal.log';
 
 const LIMIT = 5;
-// const RECORD_TYPE = 'wrn:service';
-// const SERVICE_TYPE = 'signal';
 
 /**
  * Signal CLI module.

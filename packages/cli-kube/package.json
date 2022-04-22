@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-kube",
-  "version": "2.14.3",
+  "version": "2.16.9",
   "description": "DXOS KUBE CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-kube#readme",
   "license": "AGPL-3.0",
@@ -14,7 +14,6 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "bin": {
-    "wire-kube": "bin/dx-kube.js",
     "dx-kube": "bin/dx-kube.js"
   },
   "files": [
@@ -24,6 +23,7 @@
   ],
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
+    "build:watch": "tsc --watch",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
@@ -38,17 +38,18 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.28.1",
+    "@dxos/async": "~2.29.1",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.28.1",
-    "@dxos/debug": "~2.28.1",
-    "@dxos/object-model": "~2.28.1",
-    "@dxos/registry-client": "~2.28.1",
+    "@dxos/crypto": "~2.29.1",
+    "@dxos/debug": "~2.29.1",
+    "@dxos/object-model": "~2.29.1",
+    "@dxos/registry-client": "~2.29.1",
     "assert": "^2.0.0",
     "do-wrapper": "^4.1.2",
     "got": "^11.8.2",
     "js-yaml": "^3.13.1",
     "lodash.defaultsdeep": "^4.6.1",
+    "node-fetch": "^2.6.1",
     "yamljs": "^0.3.0",
     "yargs": "^16.2.0"
   },

@@ -83,7 +83,11 @@ export const UpgradeModule = ({ config }) => ({
     // Remove old modules.
     for await (const module of modules) {
       const spinner = `Uninstalling ${module.moduleName}`;
-      await module.uninstallModule(npmClient, { spinner });
+      try {
+        await module.uninstallModule(npmClient, { spinner });
+      } catch (error) {
+        log(`Unable to uninstall ${module.moduleName}: ${error.message}`);
+      }
       await removeInstalled(module.moduleName);
     }
 
