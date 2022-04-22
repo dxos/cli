@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.16.10](https://www.github.com/dxos/cli/compare/v2.16.9...v2.16.10) (2022-04-22)
+
+
+### Features
+
+* Introduce a command to list all DXNS Accounts ([#469](https://www.github.com/dxos/cli/issues/469)) ([04fd2b7](https://www.github.com/dxos/cli/commit/04fd2b77f48677a06b8d64eee550707438c7e068))
+
 ### [2.16.9](https://www.github.com/dxos/cli/compare/v2.16.8...v2.16.9) (2022-04-21)
 
 
