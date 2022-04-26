@@ -30,18 +30,18 @@
     "@types/node": "~16.11.12",
     "@types/express": "^4.17.13",
     "@types/yargs": "^16.0.1",
-    "@dxos/botkit": "~2.29.1",
+    "@dxos/botkit": "~2.30.2",
     "fs-extra": "10.0.0",
     "@types/fs-extra": "^9.0.13",
-    "@dxos/crypto": "~2.29.1",
-    "@dxos/async": "~2.29.1",
+    "@dxos/crypto": "~2.30.2",
+    "@dxos/async": "~2.30.2",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/signal": "~2.29.1",
+    "@dxos/signal": "~2.30.2",
     "@dxos/util": "^2.28.0",
     "sodium-universal": "~3.0.4",
     "sodium-native": "~3.3.0",
     "ws": "~8.4.2",
-    "wrtc": "~0.4.7"
+    "@koush/wrtc": "^0.5.3"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
