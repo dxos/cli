@@ -2,8 +2,8 @@
 // Copyright 2022 DXOS.org
 //
 
-import { NetworkManager } from '@dxos/network-manager';
 import type { Config } from '@dxos/config';
+import { NetworkManager } from '@dxos/network-manager';
 
 export const createNetworkManager = (config: Config): NetworkManager => {
   return new NetworkManager({
@@ -11,4 +11,4 @@ export const createNetworkManager = (config: Config): NetworkManager => {
     ice: config.get('runtime.services.ice'),
     log: true
   });
-}
+};
