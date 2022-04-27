@@ -1,13 +1,13 @@
 version: 1
 
 module:
-  name: dxos:app.test
-  type: dxos:type.app
+  name: dxos:app/test
+  type: dxos:type/app
 
   record:
     app: # Same as dxos.type.App (from DXNS)
       contentType:
-        - 'dxos:type.chess.board'
+        - 'dxos:type/chess/board'
 
 build:
   command: npm run build

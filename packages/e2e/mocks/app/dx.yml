@@ -1,8 +1,8 @@
 version: 1
 
 module:
-  type: dxos:type.app
-  name: dxos:app.mock
+  type: dxos:type/app
+  name: dxos:app/mock
   description: Mock application
   author: DXOS.org
   license: AGPL-3.0

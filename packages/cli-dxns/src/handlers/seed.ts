@@ -29,15 +29,15 @@ const DXNS_PROTO_DIR_PATH = join(dirname(require.resolve('@dxos/registry-client/
 
 // Mapping from resource name to protobuf name for types that will be registered on-chain.
 const TYPES: Record<string, TypeDescription> = {
-  'type.app': { fqn: '.dxos.type.App', description: 'Base DXOS App schema' },
-  'type.bot': { fqn: '.dxos.type.Bot', description: 'Base DXOS Bot schema' },
-  'type.file': { fqn: '.dxos.type.File', description: 'Base DXOS File schema' },
-  'type.kube': { fqn: '.dxos.type.KUBE', description: 'Base DXOS Kube schema' },
-  'type.service': { fqn: '.dxos.type.Service', description: 'Base DXOS Service schema' },
-  'type.service.ipfs': { fqn: '.dxos.type.IPFS', description: 'Base DXOS IPFS Service schema' },
-  'type.service.bot-factory': { fqn: '.dxos.type.BotFactory', description: 'Base DXOS Bot Factory Service schema' },
-  'type.service.signal': { fqn: '.dxos.type.Signal', description: 'Base DXOS Signal Service schema' },
-  'type.service.app-server': { fqn: '.dxos.type.AppServer', description: 'Base DXOS App Server Service schema' }
+  'type/app': { fqn: '.dxos.type.App', description: 'Base DXOS App schema' },
+  'type/bot': { fqn: '.dxos.type.Bot', description: 'Base DXOS Bot schema' },
+  'type/file': { fqn: '.dxos.type.File', description: 'Base DXOS File schema' },
+  'type/kube': { fqn: '.dxos.type.KUBE', description: 'Base DXOS Kube schema' },
+  'type/service': { fqn: '.dxos.type.Service', description: 'Base DXOS Service schema' },
+  'type/service/ipfs': { fqn: '.dxos.type.IPFS', description: 'Base DXOS IPFS Service schema' },
+  'type/service/bot-factory': { fqn: '.dxos.type.BotFactory', description: 'Base DXOS Bot Factory Service schema' },
+  'type/service/signal': { fqn: '.dxos.type.Signal', description: 'Base DXOS Signal Service schema' },
+  'type/service/app-server': { fqn: '.dxos.type.AppServer', description: 'Base DXOS App Server Service schema' }
 };
 
 const IPFS_SERVICE_DXN = 'dxos:type.service.ipfs';

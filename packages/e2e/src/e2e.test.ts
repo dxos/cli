@@ -19,10 +19,10 @@ const PROFILE_NAME = 'e2e-test';
 
 const APP_SERVER_PORT = 5999;
 const APP_DOMAIN = 'dxos';
-const APP_NAME = 'app.test';
-const KUBE_NAME = 'kube.test';
+const APP_NAME = 'app/test';
+const KUBE_NAME = 'kube/test';
 const BOT_DOMAIN = 'dxos';
-const BOT_NAME = 'bot.test';
+const BOT_NAME = 'bot/test';
 
 /**
  * NOTE: Test order is important in this file. **Tests depend on each other.**
@@ -167,19 +167,19 @@ describe('CLI', () => {
     });
 
     it('deploy', async () => {
-      await cmd(`dxns --account ${account} deploy --name app.dxnstest --domain dxos --type app --config ./dx-custom.yml --verbose`, join(__dirname, '../mocks/dxns/app')).run();
+      await cmd(`dxns --account ${account} deploy --name app/dxnstest --domain dxos --type app --config ./dx-custom.yml --verbose`, join(__dirname, '../mocks/dxns/app')).run();
     });
 
     it('list resources', async () => {
       const resources = await cmd('dxns resource list --json').json();
 
-      expect(resources.some((r: any) => r.dxn === 'dxos:type.app')).toBe(true);
+      expect(resources.some((r: any) => r.dxn === 'dxos:type/app')).toBe(true);
     });
 
     it('get resource', async () => {
-      const resource = await cmd('dxns resource get dxos:type.app --json').json();
+      const resource = await cmd('dxns resource get dxos:type/app --json').json();
 
-      expect(resource.dxn).toEqual('dxos:type.app');
+      expect(resource.dxn).toEqual('dxos:type/app');
     });
 
     it('list records', async () => {
@@ -189,7 +189,7 @@ describe('CLI', () => {
     });
 
     it('get record', async () => {
-      const record = await cmd('dxns record get dxos:type.app --json').json();
+      const record = await cmd('dxns record get dxos:type/app --json').json();
 
       expect(record.messageName).toBe('.dxos.type.App');
       expect(record.cid).toBeDefined();
@@ -205,7 +205,7 @@ describe('CLI', () => {
     });
 
     it('get type', async () => {
-      const t = await cmd('dxns type get dxos:type.kube --json').json();
+      const t = await cmd('dxns type get dxos:type/kube --json').json();
 
       expect(t.cid).toBeDefined();
 

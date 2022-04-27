@@ -10,7 +10,7 @@ import { DXN, RegistryDataRecord, Resource } from '@dxos/registry-client';
 
 import type { Params } from '../../modules/bot';
 
-const BOT_TYPE_DXN = 'dxos:type.bot';
+const BOT_TYPE_DXN = 'dxos:type/bot';
 
 interface BotData {
   dxn: DXN,

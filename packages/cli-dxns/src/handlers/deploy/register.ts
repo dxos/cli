@@ -17,7 +17,7 @@ import { loadConfig } from '../../utils/config';
 
 const DEFAULT_CID_PATH = 'hash';
 
-const TYPE_DXN_NAME_PREFIX = 'dxos:type.';
+const TYPE_DXN_NAME_PREFIX = 'dxos:type/';
 
 export interface RegisterParams {
   cid: string

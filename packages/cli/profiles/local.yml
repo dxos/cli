@@ -40,7 +40,7 @@ runtime:
     app:
       serve:
         config: '~/.dx/remote.yml'
-        loginApp: 'dxos:dxos:app.keyhole'
+        loginApp: 'dxos:app/keyhole'
         keyPhrase: 'GoxWtucubK'
     console:
       package: '@dxos/kube-server'
