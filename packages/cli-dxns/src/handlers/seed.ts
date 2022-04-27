@@ -40,8 +40,8 @@ const TYPES: Record<string, TypeDescription> = {
   'type/service/app-server': { fqn: '.dxos.type.AppServer', description: 'Base DXOS App Server Service schema' }
 };
 
-const IPFS_SERVICE_DXN = 'dxos:type.service.ipfs';
-const SERVICE_DXN = 'dxos:type.service';
+const IPFS_SERVICE_DXN = 'dxos:type/service/ipfs';
+const SERVICE_DXN = 'dxos:type/service';
 
 const bootstrapIPFS = async (registry: IRegistryClient) => {
   const ipfsType = await registry.getResourceRecord(DXN.parse(IPFS_SERVICE_DXN), 'latest');
