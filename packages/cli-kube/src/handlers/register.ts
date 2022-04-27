@@ -56,7 +56,7 @@ const registerServices = async (options: RegisterServiceOptions) => {
 
     const cid = await options.registryClient.insertDataRecord(serviceData, generalServiceTypeCid, {});
 
-    const name = `${options.kubeName}.service.${service.name}`;
+    const name = `${options.kubeName}/service/${service.name}`;
     const dxn = DXN.fromDomainKey(options.domainKey, name);
     await options.registryClient.updateResource(dxn, options.account, cid);
   }
