@@ -67,7 +67,7 @@ class Resolver {
     if (id.includes(':')) {
       const [dxn, versionOrTag] = id.split('@', 2);
       // TODO(egorgripasov): new DXN method to urldecode.
-      const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn.replace(/\./g,'/')), versionOrTag ?? 'latest');
+      const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn.replace(/\./g, '/')), versionOrTag ?? 'latest');
       record = resourceRecord?.record;
     } else {
       record = await this._registryClient.getRecord(CID.from(id));
