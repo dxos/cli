@@ -388,6 +388,7 @@ importers:
       '@dxos/crypto': ~2.30.2
       '@dxos/debug': ~2.30.2
       '@dxos/eslint-plugin': ~1.0.24
+      '@dxos/registry-client': ~2.30.2
       '@otplib/plugin-thirty-two': ^12.0.1
       '@types/dockerode': 3.2.3
       '@types/download': ^6.2.4
@@ -446,6 +447,7 @@ importers:
       '@dxos/config': 2.30.2
       '@dxos/crypto': 2.30.2
       '@dxos/debug': 2.30.2
+      '@dxos/registry-client': 2.30.2
       '@otplib/plugin-thirty-two': 12.0.1
       '@types/yargs': 16.0.4
       assert: 2.0.0

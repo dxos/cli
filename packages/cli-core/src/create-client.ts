@@ -8,6 +8,7 @@ import os from 'os';
 import { Client } from '@dxos/client';
 import { Config } from '@dxos/config';
 import { createKeyPair } from '@dxos/crypto';
+import { ClientSignerAdapter } from '@dxos/registry-client';
 
 import { CLI_DEFAULT_PERSISTENT, getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
 
@@ -48,7 +49,9 @@ export const createClient = async (
     }
   });
 
-  const dataClient = new Client(clientConf);
+  const dataClient = new Client(clientConf, {
+    signer: new ClientSignerAdapter()
+  });
 
   await dataClient.initialize();
 
