@@ -7,12 +7,12 @@ import { Argv } from 'yargs';
 
 import { BotFactoryClient } from '@dxos/bot-factory-client';
 import type { CoreOptions } from '@dxos/cli-core';
-import type { StateManager } from '@dxos/cli-data';
 import type { Config } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
 
+import { createNetworkManager } from '../../helpers';
+
 export interface StartParameters {
-  stateManager: StateManager,
   config: Config
 }
 
@@ -26,18 +26,18 @@ export const botStartOptions = (yargs: Argv<CoreOptions>): Argv<BotStartOptions>
     .demandOption('botId');
 };
 
-export const botStart = ({ stateManager, config } : StartParameters) => async ({ botId } : BotStartOptions) => {
+export const botStart = ({ config } : StartParameters) => async ({ botId } : BotStartOptions) => {
   const topic = config.get('runtime.services.bot.topic');
   assert(topic, 'Topic must be provided required');
 
-  const client = await stateManager.getClient();
-
-  const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
+  const networkManager = createNetworkManager(config);
+  const botFactoryClient = new BotFactoryClient(networkManager);
   try {
     await botFactoryClient.start(PublicKey.from(topic));
     const handle = await botFactoryClient.getBot(botId);
     await handle.start();
   } finally {
     await botFactoryClient.stop();
+    await networkManager.destroy();
   }
 };

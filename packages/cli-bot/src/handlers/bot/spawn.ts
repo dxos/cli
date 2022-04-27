@@ -12,6 +12,8 @@ import type { StateManager } from '@dxos/cli-data';
 import type { Config } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
 
+import { createNetworkManager } from '../../helpers';
+
 export interface SpawnParameters {
   stateManager: StateManager,
   config: Config
@@ -36,12 +38,12 @@ export const spawn = ({ stateManager, config } : SpawnParameters) => async ({ na
   const topic = config.get('runtime.services.bot.topic');
   assert(topic, 'Topic must be provided in config');
 
-  const client = await stateManager.getClient();
   const party = await stateManager.getParty();
 
   assert(party, 'Party is required');
 
-  const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
+  const networkManager = createNetworkManager(config);
+  const botFactoryClient = new BotFactoryClient(networkManager);
   try {
     await botFactoryClient.start(PublicKey.from(topic));
     const botHandle = await botFactoryClient.spawn({ name, ipfsCid, localPath }, party);
@@ -49,5 +51,6 @@ export const spawn = ({ stateManager, config } : SpawnParameters) => async ({ na
     print({ botId: (botHandle as any)._id }, { json });
   } finally {
     await botFactoryClient.stop();
+    await networkManager.destroy();
   }
 };

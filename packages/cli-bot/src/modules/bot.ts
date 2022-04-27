@@ -120,7 +120,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         describe: 'List all bots in bot factory.',
         builder: botListOptions,
 
-        handler: asyncHandler(list({ stateManager, config }))
+        handler: asyncHandler(list({ config }))
       })
 
       .command({
@@ -128,7 +128,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         describe: 'Start bot.',
         builder: botStartOptions,
 
-        handler: asyncHandler(botStart({ stateManager, config }))
+        handler: asyncHandler(botStart({ config }))
       })
 
       .command({
@@ -136,7 +136,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         describe: 'Stop bot.',
         builder: botStopOptions,
 
-        handler: asyncHandler(botStop({ stateManager, config }))
+        handler: asyncHandler(botStop({ config }))
       })
 
       .command({
@@ -144,7 +144,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         describe: 'Remove bot from a bot factory.',
         builder: botRemoveOptions,
 
-        handler: asyncHandler(botRemove({ stateManager, config }))
+        handler: asyncHandler(botRemove({ config }))
       })
 
       .command({
@@ -152,7 +152,7 @@ export const BotModule = ({ config, getDXNSClient, stateManager }: Params) => {
         describe: 'Get logs of a bot.',
         builder: botLogsOptions,
 
-        handler: asyncHandler(botLogs({ stateManager, config }))
+        handler: asyncHandler(botLogs({ config }))
       })
   };
 };

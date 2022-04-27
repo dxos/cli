@@ -8,7 +8,7 @@ import { createCID, DXN } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 
-const BOT_TYPE_DXN = 'dxos:type.bot';
+const BOT_TYPE_DXN = 'dxos:type/bot';
 
 export const addDummyData = (params: Params) => async (argv: any) => {
   const { getDXNSClient } = params;

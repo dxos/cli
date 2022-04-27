@@ -8,7 +8,7 @@ import debug from 'debug';
 import { CoreState, createClient as createDxosClient } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
 import { Config } from '@dxos/config';
-import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, DxosClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
+import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, ClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
 
 import { DXNSClient } from './interfaces';
 import { DXNS_ACCOUNT_PREFERENCE, DXNS_ADDRESS_PREFERENCE } from './utils';
@@ -55,8 +55,8 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
     } else if (polkadotAddress) {
       log('Transactions will be signed using DXNS key stored in Halo.');
       log('Using Polkadot Address: ', polkadotAddress);
-      const dxosClientSigner = new DxosClientSigner(dxosClient, polkadotAddress, apiPromise.registry);
-      signFn = tx => tx.signAsync(polkadotAddress, { signer: dxosClientSigner });
+      const clientSigner = new ClientSigner(dxosClient, apiPromise.registry, polkadotAddress);
+      signFn = tx => tx.signAsync(polkadotAddress, { signer: clientSigner });
     } else {
       log('No DXNS keys to sign transactions with - only read transactions available.');
       signFn = tx => tx;

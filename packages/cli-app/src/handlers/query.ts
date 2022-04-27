@@ -9,7 +9,7 @@ import { CID, DXN, RegistryDataRecord } from '@dxos/registry-client';
 
 import type { Params } from '../modules/app';
 
-const APP_TYPE_DXN = 'dxos:type.app';
+const APP_TYPE_DXN = 'dxos:type/app';
 
 export const displayApps = (record: RegistryDataRecord) => {
   return ({

@@ -16,8 +16,8 @@ const LIMIT = 5;
 const TIMEOUT = 10000;
 const SERVICE_EXEC = 'ipfs';
 const SVC_NAME = 'ipfs-swarm-connect';
-const IPFS_SERVICE_DXN = 'dxos:type.service.ipfs';
-const SERVICE_DXN = 'dxos:type.service';
+const IPFS_SERVICE_DXN = 'dxos:type/service/ipfs';
+const SERVICE_DXN = 'dxos:type/service';
 
 const connect = (address: string) => {
   const result = spawnSync(SERVICE_EXEC, ['swarm', 'connect', address]);

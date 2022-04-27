@@ -8,14 +8,12 @@ import { Argv } from 'yargs';
 import { Bot, BotFactoryClient } from '@dxos/bot-factory-client';
 import { print } from '@dxos/cli-core';
 import type { CoreOptions } from '@dxos/cli-core';
-import type { StateManager } from '@dxos/cli-data';
 import type { Config } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
 
-import { getTimeDelta } from '../../helpers';
+import { getTimeDelta, createNetworkManager } from '../../helpers';
 
 export interface ListParameters {
-  stateManager: StateManager,
   config: Config
 }
 
@@ -33,13 +31,12 @@ const getBotStatus = (bot: Bot) => {
   return Bot.Status[bot.status];
 };
 
-export const list = ({ stateManager, config } : ListParameters) => async ({ json } : BotListOptions) => {
+export const list = ({ config } : ListParameters) => async ({ json } : BotListOptions) => {
   const topic = config.get('runtime.services.bot.topic');
   assert(topic, 'Topic must be provided required');
 
-  const client = await stateManager.getClient();
-
-  const botFactoryClient = new BotFactoryClient(client.echo.networkManager);
+  const networkManager = createNetworkManager(config);
+  const botFactoryClient = new BotFactoryClient(networkManager);
   try {
     await botFactoryClient.start(PublicKey.from(topic));
     const bots = await botFactoryClient.list();
@@ -52,5 +49,6 @@ export const list = ({ stateManager, config } : ListParameters) => async ({ json
     })), { json });
   } finally {
     await botFactoryClient.stop();
+    await networkManager.destroy();
   }
 };

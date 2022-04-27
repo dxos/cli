@@ -11,7 +11,7 @@ To deploy apps we need a number of steps:
 All this operations can be resumed with one command:
 
 ```
-dx app deploy --domain "test" --name "app.example"
+dx app deploy --domain "test" --name "app/example"
 ```
 
 ### Build app.
@@ -61,7 +61,7 @@ package:
 - register app:
 
 ```bash
-dx app register --domain "test" --name "app.example"
+dx app register --domain "test" --name "app/example"
 ```
 
 ### Query

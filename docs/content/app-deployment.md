@@ -11,8 +11,8 @@ To deploy apps we need a number of steps:
 - publish: Upload the dist folder to IPFS.
 - register: Use dx.yml to generate a record in DXNS.
 
-Assuming you are about to deploy "app.test" Application in "example" Authority, all these operations can be resumed with one command:
+Assuming you are about to deploy "app/test" Application in "example" Authority, all these operations can be resumed with one command:
 
 ```
-dx ns deploy --name "app.test" --domain "example"
+dx ns deploy --name "app/test" --domain "example"
 ```
