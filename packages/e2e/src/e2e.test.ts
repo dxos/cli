@@ -20,6 +20,7 @@ const PROFILE_NAME = 'e2e-test';
 const APP_SERVER_PORT = 5999;
 const APP_DOMAIN = 'dxos';
 const APP_NAME = 'app/test';
+const APP_NAME_DOTTED = 'app.test';
 const KUBE_NAME = 'kube/test';
 const BOT_DOMAIN = 'dxos';
 const BOT_NAME = 'bot/test';
@@ -260,7 +261,7 @@ describe('CLI', () => {
     });
 
     it('serve app', async () => {
-      const response = await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}/`);
+      const response = await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}/`);
       expect(response.statusCode).toBe(200);
     });
 
@@ -269,16 +270,16 @@ describe('CLI', () => {
     });
 
     it('Serves the app without any version', async () => {
-      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}/`)).statusCode).toBe(200);
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}/`)).statusCode).toBe(200);
     });
 
     it('Serves the app by a version', async () => {
-      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}@2.0.1/`)).statusCode).toBe(200);
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@2.0.1/`)).statusCode).toBe(200);
     });
 
     it('Serves the app by tags', async () => {
-      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}@latest/`)).statusCode).toBe(200);
-      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME}@beta/`)).statusCode).toBe(200);
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@latest/`)).statusCode).toBe(200);
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@beta/`)).statusCode).toBe(200);
     });
 
     it('Serves directly by CID', async () => {

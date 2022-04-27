@@ -42,7 +42,7 @@ export const register = ({ cid, getDXNSClient, account }: RegisterParams) => asy
   assert(name && name.length, 'Invalid name.');
   assert(domain, 'Invalid domain.');
 
-  name.map((singleName: string) => assert(/^[a-zA-Z0-9][a-zA-Z0-9-\/]{1,61}[a-zA-Z0-9-]{2,}$/.test(singleName), 'Name could contain only letters, numbers, dashes or slashes.'));
+  name.map((singleName: string) => assert(/^[a-zA-Z0-9][a-zA-Z0-9-/]{1,61}[a-zA-Z0-9-]{2,}$/.test(singleName), 'Name could contain only letters, numbers, dashes or slashes.'));
 
   if (!type && rest.type) {
     type = rest.type.replace(TYPE_DXN_NAME_PREFIX, '');
