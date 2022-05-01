@@ -1,12 +1,15 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
     "lib": [
       "esnext"
     ],
-    "types": ["node", "mocha"],
+    "types": [
+      "node",
+      "mocha"
+    ]
   },
+  "extends": "../../tsconfig.json",
   "include": [
     "src",
     "mocks"
