@@ -3,7 +3,6 @@
   "version": "2.17.0",
   "description": "CLI Core",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
-  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -11,6 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
+  "license": "AGPL-3.0",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "files": [
@@ -22,21 +22,26 @@
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/index.ts",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests",
-    "prepublishOnly": "npm run clean && npm run build && npm run test"
+    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
   },
   "jest": {
-    "preset": "ts-jest/presets/default",
     "cacheDirectory": "/tmp/jest",
+    "preset": "ts-jest/presets/default",
     "testEnvironment": "node",
     "verbose": false
   },
   "dependencies": {
+    "@dxos/async": "~2.30.2",
     "@dxos/client": "~2.30.2",
     "@dxos/config": "~2.30.2",
     "@dxos/crypto": "~2.30.2",
     "@dxos/debug": "~2.30.2",
     "@dxos/registry-client": "~2.30.2",
+    "@otplib/plugin-thirty-two": "^12.0.1",
     "@types/yargs": "^16.0.1",
     "assert": "^2.0.0",
     "console.table": "^0.10.0",
@@ -68,9 +73,7 @@
     "tree-kill": "^1.2.1",
     "yargs": "^16.2.0",
     "yargs-parser": "^19.0.4",
-    "yargs-unparser": "^1.6.4",
-    "@otplib/plugin-thirty-two": "^12.0.1",
-    "@dxos/async": "~2.30.2"
+    "yargs-unparser": "^1.6.4"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.24",
@@ -78,24 +81,21 @@
     "@types/download": "^6.2.4",
     "@types/find-remove": "^2.0.1",
     "@types/fs-extra": "^9.0.13",
+    "@types/jest": "~27.0.3",
     "@types/js-yaml": "^3.12.5",
     "@types/lodash.get": "^4.4.6",
     "@types/lodash.omit": "^4.5.6",
     "@types/lodash.set": "^4.3.6",
+    "@types/node": "~16.11.12",
     "@types/object-hash": "^2.1.0",
+    "@types/pify": "~5.0.1",
+    "@types/qrcode": "^1.4.1",
+    "@types/yargs": "^16.0.1",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-jest": "^27.0.0",
     "ts-node": "^10.2.1",
-    "typescript": "^4.0.5",
-    "@types/node": "~16.11.12",
-    "@types/pify": "~5.0.1",
-    "@types/qrcode": "^1.4.1",
-    "@types/yargs": "^16.0.1",
-    "@types/jest": "~27.0.3"
-  },
-  "eslintConfig": {
-    "extends": "plugin:@dxos/recomended"
+    "typescript": "^4.0.5"
   },
   "publishConfig": {
     "access": "public"

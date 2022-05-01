@@ -3,7 +3,6 @@
   "version": "2.17.0",
   "description": "DXOS DXNS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-halo#readme",
-  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -11,6 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
+  "license": "AGPL-3.0",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "bin": {
@@ -27,29 +27,34 @@
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests",
-    "prepublishOnly": "npm run clean && npm run build && npm run test"
+    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
   },
   "jest": {
+    "cacheDirectory": "/tmp/jest",
     "preset": "ts-jest/presets/default",
     "testEnvironment": "node",
-    "cacheDirectory": "/tmp/jest",
     "verbose": false
   },
   "dependencies": {
     "@dxos/async": "~2.30.2",
     "@dxos/cli-core": "workspace:*",
     "@dxos/config": "~2.30.2",
+    "@dxos/credentials": "~2.30.2",
     "@dxos/crypto": "~2.30.2",
     "@dxos/debug": "~2.30.2",
     "@dxos/registry-client": "~2.30.2",
-    "@dxos/credentials": "~2.30.2",
     "@polkadot/api": "4.17.1",
     "@polkadot/keyring": "6.11.1",
     "@polkadot/util-crypto": "^6.11.1",
+    "abort-controller": "~3.0.0",
     "assert": "^2.0.0",
     "bn.js": "^4.11.9",
     "cli-progress": "^3.8.2",
+    "debug": "~4.3.3",
     "get-folder-size": "^2.0.1",
     "ipfs-http-client": "48.1.1",
     "lodash-clean": "^2.2.1",
@@ -61,36 +66,31 @@
     "node-fetch": "^2.6.1",
     "pify": "^5.0.0",
     "protobufjs": "^6.10.2",
-    "yargs": "^16.2.0",
-    "debug": "~4.3.3",
-    "abort-controller": "~3.0.0"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
+    "@dxos/client": "~2.30.2",
     "@dxos/eslint-plugin": "~1.0.24",
+    "@polkadot/types": "4.17.1",
+    "@types/bn.js": "~5.1.0",
+    "@types/cli-progress": "^3.9.2",
+    "@types/debug": "~4.1.7",
+    "@types/get-folder-size": "^3.0.1",
+    "@types/jest": "~27.0.3",
+    "@types/lodash.get": "^4.4.6",
+    "@types/lodash.mapvalues": "^4.6.6",
+    "@types/lodash.omit": "^4.5.6",
+    "@types/lodash.pick": "^4.4.6",
+    "@types/lodash.set": "^4.3.6",
+    "@types/node": "~16.11.12",
+    "@types/pify": "~5.0.1",
+    "@types/yargs": "^16.0.1",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-jest": "^27.0.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
-    "uuid": "^3.3.3",
-    "@polkadot/types": "4.17.1",
-    "@types/node": "~16.11.12",
-    "@types/yargs": "^16.0.1",
-    "@types/lodash.pick": "^4.4.6",
-    "@types/lodash.omit": "^4.5.6",
-    "@types/lodash.mapvalues": "^4.6.6",
-    "@types/bn.js": "~5.1.0",
-    "@types/lodash.set": "^4.3.6",
-    "@types/lodash.get": "^4.4.6",
-    "@types/pify": "~5.0.1",
-    "@types/get-folder-size": "^3.0.1",
-    "@types/cli-progress": "^3.9.2",
-    "@types/jest": "~27.0.3",
-    "@dxos/client": "~2.30.2",
-    "@types/debug": "~4.1.7"
-  },
-  "eslintConfig": {
-    "extends": "plugin:@dxos/recomended"
+    "uuid": "^3.3.3"
   },
   "peerDependencies": {
     "@dxos/cli": "^2.0.0"
