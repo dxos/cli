@@ -2,9 +2,9 @@
   "name": "app-to-register",
   "version": "1.2.2",
   "description": "Mock application",
-  "author": "DXOS.org",
-  "license": "GPL-3.0",
   "repository": "https://github.com/dxos/frame-app",
+  "license": "GPL-3.0",
+  "author": "DXOS.org",
   "scripts": {
     "build": "mkdir -p out && echo test > out/index.html"
   }

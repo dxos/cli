@@ -3,7 +3,6 @@
   "version": "2.17.0",
   "description": "DXOS Chat CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-chat#readme",
-  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -11,15 +10,16 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
+  "license": "AGPL-3.0",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
+  "bin": {
+    "dx-chat": "bin/dx-chat.js"
+  },
   "files": [
     "bin/",
     "dist/"
   ],
-  "bin": {
-    "dx-chat": "bin/dx-chat.js"
-  },
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
     "build:watch": "tsc --watch",
@@ -27,8 +27,11 @@
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests",
-    "prepublishOnly": "npm run clean && npm run build && npm run test"
+    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
   },
   "jest": {
     "cacheDirectory": "/tmp/jest",
@@ -47,17 +50,13 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.24",
+    "@types/jest": "~27.0.3",
+    "@types/node": "~16.11.12",
+    "@types/yargs": "^16.0.1",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-node": "^10.2.1",
-    "typescript": "^4.0.5",
-    "uuid": "^3.3.3",
-    "@types/node": "~16.11.12",
-    "@types/yargs": "^16.0.1",
-    "@types/jest": "~27.0.3"
-  },
-  "eslintConfig": {
-    "extends": "plugin:@dxos/recomended"
+    "typescript": "^4.0.5"
   },
   "peerDependencies": {
     "@dxos/cli": "^2.0.0"

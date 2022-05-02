@@ -9,7 +9,6 @@
 import { exec } from 'child_process';
 import findRoot from 'find-root';
 import fs from 'fs';
-import isArray from 'lodash.isarray';
 import ora from 'ora';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
@@ -56,7 +55,7 @@ const getWorkspaceRoot = from => {
       const pkgPath = path.join(dir, 'package.json');
       if (fs.existsSync(pkgPath)) {
         const { workspaces } = require(pkgPath);
-        return workspaces && (isArray(workspaces) || workspaces.packages);
+        return workspaces && (Array.isArray(workspaces) || workspaces.packages);
       }
     });
   } catch (err) {

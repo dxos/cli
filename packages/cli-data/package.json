@@ -3,7 +3,6 @@
   "version": "2.17.0",
   "description": "DXOS Data CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
-  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
@@ -11,15 +10,16 @@
     "type": "git",
     "url": "git+https://github.com/dxos/cli.git"
   },
+  "license": "AGPL-3.0",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
+  "bin": {
+    "dx-data": "bin/dx-data.js"
+  },
   "files": [
     "bin/",
     "dist/"
   ],
-  "bin": {
-    "dx-data": "bin/dx-data.js"
-  },
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
     "build:watch": "tsc --watch",
@@ -27,8 +27,11 @@
     "cli": "ts-node --files ./src/index.ts",
     "dx": "../cli/bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "test": "NODE_ENV=test mocha -r @swc-node/register --exit './src/**/*.test.{ts,js}'",
-    "prepublishOnly": "npm run clean && npm run build && npm run test"
+    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "test": "NODE_ENV=test mocha -r @swc-node/register --exit './src/**/*.test.{ts,js}'"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
@@ -53,23 +56,18 @@
     "@dxos/async": "~2.30.2",
     "@dxos/eslint-plugin": "~1.0.24",
     "@dxos/signal": "~2.30.2",
+    "@swc-node/register": "~1.4.2",
+    "@types/fs-extra": "^9.0.13",
     "@types/lockfile": "^1.0.2",
-    "eslint": "^7.13.0",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.0.5",
-    "uuid": "^3.3.3",
-    "wait-for-expect": "^3.0.2",
+    "@types/mocha": "^9.0.0",
     "@types/node": "~16.11.12",
     "@types/yargs": "^16.0.1",
-    "@types/fs-extra": "^9.0.13",
-    "mocha": "^9.1.1",
-    "@types/mocha": "^9.0.0",
+    "eslint": "^7.13.0",
     "expect": "^27.2.1",
-    "@types/expect": "^24.3.0",
-    "@swc-node/register": "~1.4.2"
-  },
-  "eslintConfig": {
-    "extends": "plugin:@dxos/recomended"
+    "mocha": "^9.1.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.0.5",
+    "wait-for-expect": "^3.0.2"
   },
   "peerDependencies": {
     "@dxos/cli": "^2.0.0"

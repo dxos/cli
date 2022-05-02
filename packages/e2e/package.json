@@ -1,49 +1,48 @@
 {
   "name": "@dxos/cli-e2e-test",
   "version": "2.17.0",
-  "description": "E2E test script for CLI packages",
   "private": true,
+  "description": "E2E test script for CLI packages",
   "scripts": {
     "build": "tsc",
     "lint": "eslint './src/**/*.{ts,js}'",
     "test": "exit 0",
     "test:e2e": "mocha 'src/**/*.test.ts'"
   },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/recomended"
+  },
   "mocha": {
+    "bail": true,
     "require": [
       "ts-node/register"
     ],
-    "timeout": 0,
-    "bail": true
+    "timeout": 0
   },
   "devDependencies": {
+    "@dxos/async": "~2.30.2",
+    "@dxos/botkit": "~2.30.2",
+    "@dxos/cli-core": "workspace:*",
+    "@dxos/crypto": "~2.30.2",
     "@dxos/eslint-plugin": "~1.0.24",
-    "@types/expect": "^24.3.0",
+    "@dxos/signal": "~2.30.2",
+    "@dxos/util": "^2.28.0",
+    "@koush/wrtc": "^0.5.3",
+    "@types/express": "^4.17.13",
+    "@types/fs-extra": "^9.0.13",
     "@types/mocha": "^9.0.0",
+    "@types/node": "~16.11.12",
+    "@types/yargs": "^16.0.1",
     "eslint": "^7.13.0",
     "expect": "^27.2.1",
     "express": "^4.17.1",
+    "fs-extra": "10.0.0",
     "got": "^11.8.2",
     "mocha": "^9.1.1",
+    "sodium-native": "~3.3.0",
+    "sodium-universal": "~3.0.4",
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
-    "@types/node": "~16.11.12",
-    "@types/express": "^4.17.13",
-    "@types/yargs": "^16.0.1",
-    "@dxos/botkit": "~2.30.2",
-    "fs-extra": "10.0.0",
-    "@types/fs-extra": "^9.0.13",
-    "@dxos/crypto": "~2.30.2",
-    "@dxos/async": "~2.30.2",
-    "@dxos/cli-core": "workspace:*",
-    "@dxos/signal": "~2.30.2",
-    "@dxos/util": "^2.28.0",
-    "sodium-universal": "~3.0.4",
-    "sodium-native": "~3.3.0",
-    "ws": "~8.4.2",
-    "@koush/wrtc": "^0.5.3"
-  },
-  "eslintConfig": {
-    "extends": "plugin:@dxos/recomended"
+    "ws": "~8.4.2"
   }
 }

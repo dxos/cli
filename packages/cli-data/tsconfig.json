@@ -1,12 +1,15 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
     "lib": [
       "DOM"
     ],
-    "types": ["node", "mocha"],
+    "types": [
+      "node",
+      "mocha"
+    ]
   },
+  "extends": "../../tsconfig.json",
   "include": [
     "src",
     "src/**/*.json"
