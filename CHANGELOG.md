@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.17.1](https://www.github.com/dxos/cli/compare/v2.17.0...v2.17.1) (2022-05-02)
+
+
+### Bug Fixes
+
+* update stale deps. ([#495](https://www.github.com/dxos/cli/issues/495)) ([708a54e](https://www.github.com/dxos/cli/commit/708a54e5b700b0a7a8beeae45c5105263559646b))
+
 ## [2.17.0](https://www.github.com/dxos/cli/compare/v2.16.9...v2.17.0) (2022-04-27)
 
 
