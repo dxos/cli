@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.30.3-dev.c4e7eac9",
+    "@dxos/debug": "~2.31.0",
     "abort-controller": "~3.0.0",
     "assert": "^2.0.0",
     "chance": "^1.1.3",

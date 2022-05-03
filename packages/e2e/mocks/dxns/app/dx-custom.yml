@@ -1,17 +1,17 @@
 version: 1
 
-module:
-  name: dxos:app/test
-  type: dxos:type/app
+package:
+  license: MIT
 
-  record:
-    app: # Same as dxos.type.App (from DXNS)
-      contentType:
-        - 'dxos:type/chess/board'
-
-build:
-  command: npm run build
-
-runtime:
-  props:
-    title: "Test App"
+  modules:
+    - type: dxos:type/app
+      name: dxos:app/mock
+      displayName: Mock App
+      description: Mock App for testing purposes
+      tags:
+        - test
+      build:
+        command: npm run build
+      record:
+        web:
+          entryPoint: ./path/to/main.js

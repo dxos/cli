@@ -38,9 +38,9 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.30.3-dev.c4e7eac9",
+    "@dxos/async": "~2.31.0",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/network-manager": "~2.30.3-dev.c4e7eac9",
+    "@dxos/network-manager": "~2.31.0",
     "assert": "^2.0.0",
     "boolean": "^3.0.1",
     "do-wrapper": "^4.1.2",
