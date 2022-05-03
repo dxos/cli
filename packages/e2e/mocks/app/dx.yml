@@ -10,3 +10,31 @@ module:
 
 build:
   command: npm run build
+
+
+
+version: 1
+
+package:
+  license: MIT
+  repos:
+    - type: git
+      url: https://github.com/dxos/cli
+
+  modules:
+    - type: dxos:type/app
+      name: dxos:app/mock
+      display_name: Tasks List
+      description: App for managing a todo list
+      tags:
+        - tasks
+        - todo
+        - productivity
+      build:
+        command: npm run build
+        outDir: './out'
+        version: 1.2.3
+        tag: latest
+      record:
+        web:
+          entryPoint: ./path/to/main.js

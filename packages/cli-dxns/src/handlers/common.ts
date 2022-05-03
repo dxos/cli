@@ -6,12 +6,12 @@ import { print as cliPrint } from '@dxos/cli-core';
 import { CID, RecordKind, RegistryRecord, Resource } from '@dxos/registry-client';
 
 export const displayHash = (data: any) => {
-  if (data.hash) {
+  if (data.bundle) {
     try {
-      const cid = CID.from(Buffer.from(data.hash, 'base64'));
-      data.hash = cid.toString();
+      const cid = CID.from(Buffer.from(data.bundle, 'base64'));
+      data.bundle = cid.toString();
     } catch (e) {
-      data.hash = '';
+      data.bundle = '';
     }
   }
   return data;

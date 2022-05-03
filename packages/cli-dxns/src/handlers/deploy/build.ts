@@ -6,14 +6,12 @@ import { spawnSync } from 'child_process';
 
 import { log } from '@dxos/debug';
 
-import { loadConfig } from '../../utils/config';
+import { PackageModule } from '../../utils/config';
 
-export const build = () => async ({ verbose, config: configPath }: any) => {
-  const config = await loadConfig(configPath);
+export const build = (module: PackageModule) => async ({ verbose }: any) => {
+  verbose && log(`Building module ${module.name}...`);
 
-  verbose && log(`Building ${config.values.module?.name}...`);
-
-  const [command, ...args] = config.values.build!.command!.split(' ');
+  const [command, ...args] = module.build!.command!.split(' ');
 
   // Build with configuration.
   const { status } = spawnSync(command, args, {

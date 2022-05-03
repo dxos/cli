@@ -16,7 +16,7 @@ export const displayApps = (record: RegistryDataRecord) => {
     cid: record.cid.toString(),
     created: record.meta.created,
     description: record.meta.description,
-    hash: CID.from(Buffer.from(record.data.hash, 'base64')).toString()
+    hash: CID.from(Buffer.from(record.data.bundle, 'base64')).toString()
   });
 };
 

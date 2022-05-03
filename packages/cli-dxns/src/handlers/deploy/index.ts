@@ -3,5 +3,6 @@
 //
 
 export * from './build';
+export * from './deploy';
 export * from './publish';
 export * from './register';

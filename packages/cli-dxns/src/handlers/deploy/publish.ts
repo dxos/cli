@@ -9,28 +9,30 @@ import { ClientOptions } from 'ipfs-http-client/src/lib/core';
 import path from 'path';
 import pify from 'pify';
 
+import type { Config } from '@dxos/config';
 import { log } from '@dxos/debug';
 
-import { loadConfig } from '../../utils/config';
+import { PackageModule } from '../../utils/config';
 import { uploadToIPFS } from '../../utils/ipfs-upload';
 
 const getFolderSize = pify(folderSize);
 
-const DEFAULT_DIST_PATH = 'out';
+export interface PublishParams {
+  config: Config,
+  module: PackageModule
+}
 
-interface PublishParams {
+interface PublishArgs {
   verbose?: boolean,
   timeout?: ClientOptions['timeout'],
   path?: string
   config?: string
 }
 
-export const publish = (config: any) => async ({ verbose, timeout, path: distPath, config: configPath }: PublishParams): Promise<string> => {
-  const conf = await loadConfig(configPath);
+export const publish = ({ config, module }: PublishParams) => async ({ verbose, timeout, path: distPath }: PublishArgs): Promise<string> => {
+  verbose && log(`Publishing ${module?.name}...`);
 
-  verbose && log(`Publishing ${conf.values.module?.name}...`);
-
-  const publishFolder = path.join(process.cwd(), distPath || conf.values.build?.out || DEFAULT_DIST_PATH);
+  const publishFolder = path.join(process.cwd(), distPath || module.build!.outDir!);
 
   const total = await getFolderSize(publishFolder);
   const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
@@ -44,7 +46,7 @@ export const publish = (config: any) => async ({ verbose, timeout, path: distPat
   bar.update(total);
   bar.stop();
 
-  verbose && log(`Published ${conf.values.module?.name} with cid ${cid}`);
+  verbose && log(`Published ${module?.name} with cid ${cid}`);
 
   return cid;
 };
