@@ -1,12 +1,25 @@
 version: 1
 
-module:
-  type: dxos:type/app
-  name: dxos:app/mock
-  description: Mock application
-  author: DXOS.org
-  license: AGPL-3.0
-  repository: 'https://github.com/dxos/cli'
+package:
+  license: MIT
+  repos:
+    - type: git
+      url: https://github.com/dxos/cli
 
-build:
-  command: npm run build
+  modules:
+    - type: dxos:type/app
+      name: dxos:app/test
+      displayName: Tasks List
+      description: Mock application
+      tags:
+        - tasks
+        - todo
+        - productivity
+      build:
+        command: npm run build
+        outDir: 'out'
+        version: 1.2.3
+        tag: latest
+      record:
+        web:
+          entryPoint: ./path/to/main.js

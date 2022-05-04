@@ -66,8 +66,7 @@ class Resolver {
     let record: RegistryRecord | undefined;
     if (id.includes(':')) {
       const [dxn, versionOrTag] = id.split('@', 2);
-      // TODO(egorgripasov): new DXN method to urldecode.
-      const resourceRecord = await this._registryClient.getResourceRecord(DXN.parse(dxn.replace(/\./g, '/')), versionOrTag ?? 'latest');
+      const resourceRecord = await this._registryClient.getResourceRecord(DXN.urldecode(dxn), versionOrTag ?? 'latest');
       record = resourceRecord?.record;
     } else {
       record = await this._registryClient.getRecord(CID.from(id));
@@ -78,7 +77,7 @@ class Resolver {
       return;
     }
 
-    const ipfsCid = CID.from(Buffer.from(get(record, 'data.hash'), 'base64'));
+    const ipfsCid = CID.from(Buffer.from(get(record, 'data.bundle'), 'base64'));
     const cid = ipfsCid.toString();
 
     this._cache.set(id, { cid, expiration: Date.now() + MAX_CACHE_AGE });

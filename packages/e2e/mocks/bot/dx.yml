@@ -1,12 +1,20 @@
 version: 1
 
-module:
-  type: dxos:type/bot
-  name: dxos:bot/test
-  description: Test bot description
-  author: DXOS.org
-  license: AGPL-3.0
-  repository: 'https://github.com/dxos/cli'
+package:
+  license: MIT
+  repos:
+    - type: git
+      url: https://github.com/dxos/cli
 
-build:
-  command: npm run bundle
+  modules:
+    - type: dxos:type/bot
+      name: dxos:bot/test
+      displayName: Test bot
+      description: Test bot description
+      tags:
+        - tasks
+        - todo
+        - productivity
+      build:
+        command: npm run bundle
+        outDir: 'out'

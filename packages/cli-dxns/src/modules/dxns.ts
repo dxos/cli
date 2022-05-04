@@ -7,7 +7,7 @@ import { Argv } from 'yargs';
 import { asyncHandler } from '@dxos/cli-core';
 
 import { getBlocks } from '../handlers/block';
-import { build, publish, register } from '../handlers/deploy';
+import { deploy } from '../handlers/deploy';
 import { addDummyData } from '../handlers/dummy-data';
 import { info } from '../handlers/info';
 import { seedRegistry } from '../handlers/seed';
@@ -88,23 +88,16 @@ export const DXNSModule = (params: Params) => {
         builder: (yargs: Argv) => yargs
           .strict(false)
           .version(false)
-          .option('name', { type: 'array' })
-          .option('domain', { type: 'string' })
           .option('version', { type: 'string' })
           .option('skipExisting', { type: 'boolean' })
           .option('tag', { type: 'array' })
           .option('timeout', { type: 'string', default: '10m' })
           .option('path', { type: 'string' })
           .option('config', { type: 'string' })
-          .option('type', { type: 'string' })
           .option('hash-path', { type: 'string' }),
 
         handler: asyncHandler(async (argv: any) => {
-          await build()(argv);
-          const cid = await publish(params.config)(argv);
-          const client = await params.getDXNSClient();
-          const account = await client.getDXNSAccount(argv);
-          await register({ cid, account, ...params })(argv);
+          await deploy(params)(argv);
         })
       })
 

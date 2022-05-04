@@ -19,7 +19,6 @@ const PROFILE_NAME = 'e2e-test';
 
 const APP_SERVER_PORT = 5999;
 const APP_DOMAIN = 'dxos';
-const APP_NAME = 'app/test';
 const APP_NAME_DOTTED = 'app.test';
 const KUBE_NAME = 'kube/test';
 const BOT_DOMAIN = 'dxos';
@@ -168,7 +167,7 @@ describe('CLI', () => {
     });
 
     it('deploy', async () => {
-      await cmd(`dxns --account ${account} deploy --name app/dxnstest --domain dxos --type app --config ./dx-custom.yml --verbose`, join(__dirname, '../mocks/dxns/app')).run();
+      await cmd(`dxns --account ${account} deploy --config ./dx-custom.yml --verbose`, join(__dirname, '../mocks/dxns/app')).run();
     });
 
     it('list resources', async () => {
@@ -252,7 +251,7 @@ describe('CLI', () => {
     });
 
     it('deploy app', async () => {
-      await cmd(`dxns --account ${account} deploy --name ${APP_NAME} --domain ${APP_DOMAIN} --type app --verbose`, join(__dirname, '../mocks/app')).run();
+      await cmd(`dxns --account ${account} deploy --verbose`, join(__dirname, '../mocks/app')).run();
     });
 
     it('query app', async () => {
@@ -266,7 +265,7 @@ describe('CLI', () => {
     });
 
     it('Registers versioned and tagged app', async () => {
-      await cmd(`dxns --account ${account} deploy --name ${APP_NAME} --domain ${APP_DOMAIN} --type app --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
+      await cmd(`dxns --account ${account} deploy --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
     });
 
     it('Serves the app without any version', async () => {
