@@ -257,7 +257,6 @@ describe('CLI', () => {
 
     it('query app', async () => {
       const apps = await cmd('app query --dxns --json').json();
-      console.log('>>>>>>>>', JSON.stringify(apps, null, 2));
       expect(apps.length).toBe(2);
     });
 
@@ -285,7 +284,6 @@ describe('CLI', () => {
 
     it('Serves directly by CID', async () => {
       const records = await cmd('dxns record list --json').json();
-      console.log('<<<<<<<', JSON.stringify(records, null, 2));
       const cid = records.find((r: any) => r.description === 'Mock application').cid;
 
       expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${cid}/`)).statusCode).toBe(200);
