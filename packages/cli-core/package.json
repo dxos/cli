@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-core",
-  "version": "2.17.0",
+  "version": "2.18.0",
   "description": "CLI Core",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-core#readme",
   "bugs": {

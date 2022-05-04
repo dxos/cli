@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-dxns",
-  "version": "2.17.0",
+  "version": "2.18.0",
   "description": "DXOS DXNS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-halo#readme",
   "bugs": {
