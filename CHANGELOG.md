@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.18.0](https://www.github.com/dxos/cli/compare/v2.17.0...v2.18.0) (2022-05-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* updated config schema. (#498)
+
+### Features
+
+* updated config schema. ([#498](https://www.github.com/dxos/cli/issues/498)) ([e798b73](https://www.github.com/dxos/cli/commit/e798b73bf790341c8782da46c8f10e4859331bd5))
+
+
+### Bug Fixes
+
+* update stale deps. ([#495](https://www.github.com/dxos/cli/issues/495)) ([708a54e](https://www.github.com/dxos/cli/commit/708a54e5b700b0a7a8beeae45c5105263559646b))
+
 ## [2.17.0](https://www.github.com/dxos/cli/compare/v2.16.9...v2.17.0) (2022-04-27)
 
 

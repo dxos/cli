@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-mdns",
-  "version": "2.17.0",
+  "version": "2.18.0",
   "description": "DXOS MDNS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-mdns#readme",
   "bugs": {
