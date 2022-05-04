@@ -15,7 +15,7 @@ export const displayApps = (record) => {
     created: record.meta.created,
     fileName: record.data.fileName,
     contentType: record.data.contentType,
-    hash: CID.from(Buffer.from(record.data.bundle, 'base64')).toString()
+    bundle: CID.from(Buffer.from(record.data.bundle, 'base64')).toString()
   });
 };
 

@@ -15,7 +15,7 @@ export const deploy = (params: Params) => async (argv: any) => {
   const moduleConfig = await loadConfig(configPath);
 
   for (const module of moduleConfig.values.package?.modules ?? []) {
-    verbose && log(`Deploying  module ${module.name}...`);
+    verbose && log(`Deploying module ${module.name}...`);
 
     await build(module)(argv);
     const cid = await publish({ config: params.config, module })(argv);

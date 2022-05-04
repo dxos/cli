@@ -19,7 +19,6 @@ const PROFILE_NAME = 'e2e-test';
 
 const APP_SERVER_PORT = 5999;
 const APP_DOMAIN = 'dxos';
-// const APP_NAME = 'app/test';
 const APP_NAME_DOTTED = 'app.test';
 const KUBE_NAME = 'kube/test';
 const BOT_DOMAIN = 'dxos';
