@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.18.1](https://www.github.com/dxos/cli/compare/v2.18.0...v2.18.1) (2022-05-05)
+
+
+### Bug Fixes
+
+* update protocols. ([1fbf611](https://www.github.com/dxos/cli/commit/1fbf611f02e3f7f2ba670d90e60f8edbe22dca4f))
+
 ## [2.18.0](https://www.github.com/dxos/cli/compare/v2.17.0...v2.18.0) (2022-05-04)
 
 
