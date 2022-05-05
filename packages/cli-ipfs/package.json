@@ -38,10 +38,10 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.31.1",
+    "@dxos/async": "~2.31.3",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.31.1",
-    "@dxos/registry-client": "~2.31.1",
+    "@dxos/debug": "~2.31.3",
+    "@dxos/registry-client": "~2.31.3",
     "@polkadot/api": "4.17.1",
     "abort-controller": "~3.0.0",
     "assert": "^2.0.0",

@@ -17,4 +17,4 @@ package:
         - productivity
       build:
         command: npm run bundle
-        outDir: 'out'
+        outdir: 'out'

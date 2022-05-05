@@ -32,7 +32,7 @@ interface PublishArgs {
 export const publish = ({ config, module }: PublishParams) => async ({ verbose, timeout, path: distPath }: PublishArgs): Promise<string> => {
   verbose && log(`Publishing ${module?.name}...`);
 
-  const publishFolder = path.join(process.cwd(), distPath || module.build!.outDir!);
+  const publishFolder = path.join(process.cwd(), distPath || module.build!.outdir!);
 
   const total = await getFolderSize(publishFolder);
   const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);

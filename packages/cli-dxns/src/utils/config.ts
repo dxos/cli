@@ -63,7 +63,7 @@ export const loadConfig = async (configPath: string = CONFIG_FILENAME): Promise<
         modules: dxConfig.package.modules.map((mod: PackageModule) => defaultsDeep(mod, {
           tags: packageProps.keywords ?? [],
           description: packageProps.description,
-          build: { command: DEFAULT_BUILD_COMMAND, outDir: DEFAULT_DIST_PATH },
+          build: { command: DEFAULT_BUILD_COMMAND, outdir: DEFAULT_DIST_PATH },
           repos: mod.repos ?? repos
         }))
       }

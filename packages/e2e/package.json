@@ -20,12 +20,12 @@
     "timeout": 0
   },
   "devDependencies": {
-    "@dxos/async": "~2.31.1",
-    "@dxos/botkit": "~2.31.1",
+    "@dxos/async": "~2.31.3",
+    "@dxos/botkit": "~2.31.3",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.31.1",
+    "@dxos/crypto": "~2.31.3",
     "@dxos/eslint-plugin": "~1.0.24",
-    "@dxos/signal": "~2.31.1",
+    "@dxos/signal": "~2.31.3",
     "@dxos/util": "^2.28.0",
     "@koush/wrtc": "^0.5.3",
     "@types/express": "^4.17.13",
