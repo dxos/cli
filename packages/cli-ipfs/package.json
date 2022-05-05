@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-ipfs",
-  "version": "2.18.0",
+  "version": "2.18.1",
   "description": "DXOS IPFS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-ipfs#readme",
   "bugs": {
