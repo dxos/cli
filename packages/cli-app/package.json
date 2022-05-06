@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-app",
-  "version": "2.18.1",
+  "version": "2.18.2",
   "description": "DXOS App CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-app#readme",
   "bugs": {

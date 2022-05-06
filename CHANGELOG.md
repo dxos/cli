@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.18.2](https://www.github.com/dxos/cli/compare/v2.18.1...v2.18.2) (2022-05-06)
+
+
+### Bug Fixes
+
+* add missing package. ([cac2c7e](https://www.github.com/dxos/cli/commit/cac2c7ed5d26eecc456348d7b9a8f90d91b71cae))
+* new build. ([270ffd5](https://www.github.com/dxos/cli/commit/270ffd53bc49742bbeb948eb194e9fc7b1127e6c))
+
 ### [2.18.1](https://www.github.com/dxos/cli/compare/v2.18.0...v2.18.1) (2022-05-05)
 
 
