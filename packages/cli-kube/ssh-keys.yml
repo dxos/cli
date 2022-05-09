@@ -1,12 +1,8 @@
 #
 # SSH Keys.
-# TODO(dboreham): Get from profile.
 #
 
 keys:
-  - 'ec:e0:6b:82:1e:b2:b7:74:a2:c3:1b:b4:3c:6d:72:a0'   # David
-  - '09:fb:eb:d5:e4:4c:b7:74:2a:02:f0:80:2e:62:e6:29'   # Ashwin
   - '5b:69:89:61:4e:17:ac:65:b2:29:42:41:71:70:4b:12'   # Dmytro
-  - '63:97:a3:21:0c:42:fb:ed:b8:ce:9c:1a:33:90:98:35'   # Ashwin
   - '5f:82:c0:88:68:41:26:1b:d7:9f:be:82:24:7c:29:e3'   # Egor
-  - '43:39:3f:ab:1f:e8:6b:ad:55:4e:94:a8:9e:8d:62:66'   # Przemek
+  - '19:2e:af:14:c4:a4:9e:7c:8f:3d:ff:10:ca:18:57:8f'   # Egor
