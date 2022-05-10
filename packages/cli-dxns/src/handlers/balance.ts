@@ -63,7 +63,7 @@ export const increaseBalance = (params: Params) => async (argv: any) => {
     const response = await fetch(faucet, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ account: address })
+      body: JSON.stringify({ address })
     });
     const result = await response.json();
 
