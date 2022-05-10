@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          clean: false
+          clean: true
       - name: Build, lint and test
         run: |
           \. "$NVM_DIR/nvm.sh" && nvm use
