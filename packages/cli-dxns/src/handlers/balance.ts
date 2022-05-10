@@ -26,11 +26,11 @@ export const getBalance = (params: Params) => async (argv: any) => {
 };
 
 export const increaseBalance = (params: Params) => async (argv: any) => {
-  const { getDXNSClient } = params;
+  const { config, getDXNSClient } = params;
 
   const client = await getDXNSClient();
   const { apiRaw, keypair, keyring, transactionHandler } = client;
-  const { address = keypair?.address, amount, mnemonic, json, faucet } = argv;
+  const { address = keypair?.address, amount, mnemonic, json, faucet = config.get('runtime.services.dxns.faucet') } = argv;
 
   assert(address, 'Address should be provided.');
 
