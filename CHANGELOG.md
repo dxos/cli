@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.18.3](https://www.github.com/dxos/cli/compare/v2.18.2...v2.18.3) (2022-05-10)
+
+
+### Bug Fixes
+
+* upd faucet conf. ([9a302c2](https://www.github.com/dxos/cli/commit/9a302c28c15fae7954088631ca254982fe76e491))
+* update faucet params. ([23e0b04](https://www.github.com/dxos/cli/commit/23e0b0474e02d448988d3680b238608fc699db4f))
+* update ssh keys for public kubes. ([52261f2](https://www.github.com/dxos/cli/commit/52261f2348b6d76695a9864d68f86dff13df4b73))
+
 ### [2.18.2](https://www.github.com/dxos/cli/compare/v2.18.1...v2.18.2) (2022-05-06)
 
 
