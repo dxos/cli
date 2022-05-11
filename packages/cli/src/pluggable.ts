@@ -14,21 +14,18 @@ import path from 'path';
 import readPkgUp from 'read-pkg-up';
 import stripJsonComments from 'strip-json-comments';
 
-import { prepareExec, isGlobalYarn } from '@dxos/cli-core';
+import { prepareExec, isGlobalYarn, CoreState, Extension } from '@dxos/cli-core';
 
 import { addInstalled } from './extensions';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
 /**
- * @param {String} command
- * @param {Array} args
- * @param {Object} options
+ * Asynchronosly run the shell command.
  */
-const runCommand = async (command, args, options) => {
+const runCommand = async (command: string, args: string[], options: any) => {
   return new Promise((resolve, reject) => {
     const { spinner: spinnerText } = options;
-
     const spinner = ora(spinnerText);
     spinner.start();
 
@@ -39,7 +36,7 @@ const runCommand = async (command, args, options) => {
       } else {
         spinner.succeed();
         spinner.clear();
-        resolve();
+        resolve(true);
       }
     });
   });
@@ -47,9 +44,8 @@ const runCommand = async (command, args, options) => {
 
 /**
  * Finds root dir of a workspace.
- * @param {String} from
  */
-const getWorkspaceRoot = from => {
+const getWorkspaceRoot = (from: string) => {
   try {
     return findRoot(from, dir => {
       const pkgPath = path.join(dir, 'package.json');
@@ -67,31 +63,42 @@ const getWorkspaceRoot = from => {
  * Pluggable CLI module.
  */
 export class Pluggable {
-  _modulePath;
+  _modulePath?: string;
+  _moduleName: string;
+  _version: string;
+  _workspaceRoot: string;
+  // Rush projects types.
+  _workspacePackages: { packageName: string, projectFolder: string }[];
+  _workspaceInfo?: { projectFolder: string };
+  _isInWorkspace?: boolean;
+  _isInCWD: boolean;
+  _installed: boolean;
 
   /**
    * Pluggable factory.
-   * @param {Object} options
    */
-  static create (options) {
-    return new Pluggable(options);
+  static create (config: Extension) {
+    return new Pluggable(config);
   }
 
-  /**
-   * @constructor
-   * @param {String} moduleName
-   * @param {String} version
-   */
-  constructor ({ moduleName, version }) {
+  // TODO(burdon): Change from object?
+  constructor ({ moduleName, version }: Extension) {
     this._moduleName = moduleName;
     this._version = version;
 
     this._workspaceRoot = getWorkspaceRoot(__dirname);
-    this._workspacePackages = this._workspaceRoot && JSON.parse(stripJsonComments(fs.readFileSync(path.join(this._workspaceRoot, 'rush.json')).toString())).projects;
-    this._workspaceInfo = this._workspacePackages && this._workspacePackages.find(module => module.packageName === this._moduleName);
 
-    this._isInWorkspace = this._workspaceInfo && fs.existsSync(path.join(this._workspaceRoot, this._workspaceInfo.projectFolder));
-    this._isInCWD = fs.existsSync(path.join(process.cwd(), 'package.json')) && require(path.join(process.cwd(), 'package.json'))?.name === this._moduleName;
+    this._workspacePackages = this._workspaceRoot &&
+      JSON.parse(stripJsonComments(fs.readFileSync(path.join(this._workspaceRoot, 'rush.json')).toString())).projects;
+
+    this._workspaceInfo = this._workspacePackages &&
+      this._workspacePackages.find(module => module.packageName === this._moduleName);
+
+    this._isInWorkspace = this._workspaceInfo &&
+      fs.existsSync(path.join(this._workspaceRoot, this._workspaceInfo.projectFolder));
+
+    this._isInCWD = fs.existsSync(path.join(process.cwd(), 'package.json')) &&
+      require(path.join(process.cwd(), 'package.json'))?.name === this._moduleName;
 
     this._installed = this.isInstalled();
   }
@@ -122,7 +129,7 @@ export class Pluggable {
       if (this._isInCWD) {
         pkgPath = path.join(process.cwd(), 'package.json');
       } else if (this._isInWorkspace) {
-        pkgPath = path.join(this._workspaceRoot, this._workspaceInfo.projectFolder, 'package.json');
+        pkgPath = path.join(this._workspaceRoot, this._workspaceInfo!.projectFolder, 'package.json');
       } else {
         pkgPath = `${this.moduleName}/package.json`;
       }
@@ -130,6 +137,7 @@ export class Pluggable {
       const pkg = require(pkgPath);
       this._modulePath = path.join(pkgPath.replace('package.json', ''), pkg.main);
     }
+
     return this._modulePath;
   }
 
@@ -169,7 +177,7 @@ export class Pluggable {
   /**
    * Install CLI extension.
    */
-  async installModule (npmClient, options = {}) {
+  async installModule (npmClient?: string, options = {}) {
     const moduleName = this._moduleName;
     const version = this._version;
 
@@ -178,7 +186,7 @@ export class Pluggable {
       return;
     }
 
-    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg.package.name);
+    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg!.package.name);
 
     const command = isYarn ? 'yarn' : 'npm';
     const args = isYarn ? ['global', 'add'] : ['install', '-g'];
@@ -190,7 +198,7 @@ export class Pluggable {
   /**
    * Uninstall CLI extension.
    */
-  async uninstallModule (npmClient, options = {}) {
+  async uninstallModule (npmClient: string, options = {}) {
     const moduleName = this._moduleName;
 
     if (this.isWorkspace()) {
@@ -198,7 +206,7 @@ export class Pluggable {
       return;
     }
 
-    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg.package.name);
+    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg!.package.name);
 
     const command = isYarn ? 'yarn' : 'npm';
     const args = isYarn ? ['global', 'remove'] : ['uninstall', '-g'];
@@ -209,31 +217,27 @@ export class Pluggable {
 
   /**
    * Init extension in a scope of main CLI.
-   * @param {Object} state
    */
-  async init (state) {
-    return this.module.init(state);
+  async init (state: CoreState) {
+    return this.module.init?.(state);
   }
 
   /**
    * Destroy extension in a scope of main CLI.
-   * @param {Object} state
    */
-  async destroy (state) {
-    return this.module.destroy(state);
+  async destroy (state: CoreState) {
+    return this.module.destroy?.(state);
   }
 
   /**
    * Runs command of an CLI extension.
-   * @param {Object} state
-   * @param {Object} argv
    */
-  async run (state, argv) {
+  async run (state: CoreState, argv: any) {
     const { installed, moduleName, version } = this;
     if (!installed) {
       const spinner = `Installing ${moduleName}${version ? `@${version}` : ''}`;
       try {
-        await this.installModule(null, { spinner });
+        await this.installModule(undefined, { spinner });
         await addInstalled(moduleName, this.getInfo());
 
         const { init, destroy } = this.module;

@@ -8,14 +8,17 @@ importers:
   ../../packages/cli:
     specifiers:
       '@dxos/cli-core': workspace:*
+      '@dxos/config': ~2.31.3
       '@dxos/debug': ~2.31.3
       '@dxos/eslint-plugin': ~1.0.24
       '@dxos/random-access-multi-storage': ~2.31.3
+      '@types/find-root': ^1.1.2
       '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3
       '@types/js-yaml': ^3.12.5
+      '@types/lodash.uniqby': ^4.7.7
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       download: ^8.0.0
       eslint: ^7.13.0
@@ -43,9 +46,10 @@ importers:
       uint8arrays: 1.1.0
       url-join: ^4.0.1
       yaml2json: ^1.0.2
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/cli-core': link:../cli-core
+      '@dxos/config': 2.31.3
       '@dxos/debug': 2.31.3
       '@dxos/random-access-multi-storage': 2.31.3
       assert: 2.0.0
@@ -69,14 +73,16 @@ importers:
       strip-json-comments: 3.1.1
       uint8arrays: 1.1.0
       url-join: 4.0.1
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
+      '@types/find-root': 1.1.2
       '@types/fs-extra': 9.0.13
       '@types/jest': 27.0.3
       '@types/js-yaml': 3.12.7
+      '@types/lodash.uniqby': 4.7.7
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       json2yaml: 1.1.0
@@ -113,13 +119,13 @@ importers:
       '@types/pify': ~5.0.1
       '@types/qrcode': ^1.4.1
       '@types/url-join': ^4.0.1
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       body-parser: ^1.19.0
       boolean: ^3.0.1
       cookie-parser: ^1.4.5
       cors: ^2.8.5
-      debug: ~4.3.3
+      debug: ^4.3.3
       eslint: ^7.13.0
       express: ^4.17.1
       find-up: ~5.0.0
@@ -136,7 +142,7 @@ importers:
       ts-node: ^10.2.1
       typescript: ^4.0.5
       url-join: ^4.0.1
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/cli-core': link:../cli-core
       '@dxos/debug': 2.31.3
@@ -161,7 +167,7 @@ importers:
       lodash.pick: 4.4.0
       node-fetch: 2.6.7
       url-join: 4.0.1
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/cli-dxns': link:../cli-dxns
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
@@ -184,7 +190,7 @@ importers:
       '@types/pify': 5.0.1
       '@types/qrcode': 1.4.2
       '@types/url-join': 4.0.1
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-jest: 27.1.4_9487ad9e34e2da76c8bfa2f943caee49
@@ -214,7 +220,7 @@ importers:
       '@types/lodash.set': ^4.3.6
       '@types/node': ~16.11.12
       '@types/semver': ~7.3.9
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       abort-controller: ~3.0.0
       assert: ^2.0.0
       chance: ^1.1.3
@@ -233,7 +239,7 @@ importers:
       semver: ^7.1.1
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/async': 2.31.3
       '@dxos/bot-factory-client': 2.31.3
@@ -259,7 +265,7 @@ importers:
       node-yaml: 4.0.1_js-yaml@3.14.1
       read-pkg-up: 6.0.0
       semver: 7.3.7
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/cli-data': link:../cli-data
       '@dxos/cli-dxns': link:../cli-dxns
@@ -272,7 +278,7 @@ importers:
       '@types/lodash.set': 4.3.7
       '@types/node': 16.11.33
       '@types/semver': 7.3.9
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-node: 10.7.0_fd4b5ff48b408bf425abfec4a641da13
@@ -289,14 +295,14 @@ importers:
       '@dxos/protocol-plugin-presence': ~2.31.3
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       eslint: ^7.13.0
       hypercore-crypto: ^1.0.0
       jest: ^27.4.4
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/cli-core': link:../cli-core
       '@dxos/crypto': 2.31.3
@@ -306,12 +312,12 @@ importers:
       '@dxos/protocol-plugin-presence': 2.31.3
       assert: 2.0.0
       hypercore-crypto: 1.0.0
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-node: 10.7.0_fd4b5ff48b408bf425abfec4a641da13
@@ -324,7 +330,7 @@ importers:
       '@dxos/eslint-plugin': ~1.0.24
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       abort-controller: ~3.0.0
       assert: ^2.0.0
       chance: ^1.1.3
@@ -343,7 +349,7 @@ importers:
       tar: ^6.0.1
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/cli-core': link:../cli-core
       '@dxos/debug': 2.31.3
@@ -361,12 +367,12 @@ importers:
       node-yaml: 4.0.1_js-yaml@3.14.1
       semver: 7.3.7
       tar: 6.1.11
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-node: 10.7.0_fd4b5ff48b408bf425abfec4a641da13
@@ -395,7 +401,7 @@ importers:
       '@types/object-hash': ^2.1.0
       '@types/pify': ~5.0.1
       '@types/qrcode': ^1.4.1
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       console.table: ^0.10.0
       dockerode: ^3.2.1
@@ -429,9 +435,9 @@ importers:
       ts-jest: ^27.0.0
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
       yargs-parser: ^19.0.4
-      yargs-unparser: ^1.6.4
+      yargs-unparser: ^2.0.0
     dependencies:
       '@dxos/async': 2.31.3
       '@dxos/client': 2.31.3
@@ -440,7 +446,7 @@ importers:
       '@dxos/debug': 2.31.3
       '@dxos/registry-client': 2.31.3
       '@otplib/plugin-thirty-two': 12.0.1
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       assert: 2.0.0
       console.table: 0.10.0
       dockerode: 3.3.1
@@ -469,9 +475,9 @@ importers:
       read-pkg-up: 6.0.0
       syswide-cas: 5.3.0
       tree-kill: 1.2.2
-      yargs: 16.2.0
+      yargs: 17.4.1
       yargs-parser: 19.0.4
-      yargs-unparser: 1.6.4
+      yargs-unparser: 2.0.0
     devDependencies:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/dockerode': 3.2.3
@@ -511,7 +517,7 @@ importers:
       '@types/lockfile': ^1.0.2
       '@types/mocha': ^9.0.0
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       base-x: ^3.0.9
       eslint: ^7.13.0
@@ -526,7 +532,7 @@ importers:
       ts-node: ^10.2.1
       typescript: ^4.0.5
       wait-for-expect: ^3.0.2
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/cli-core': link:../cli-core
       '@dxos/client': 2.31.3
@@ -544,7 +550,7 @@ importers:
       lodash.defaultsdeep: 4.6.1
       query-string: 6.14.1
       random-access-memory: 3.1.4
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/async': 2.31.3
       '@dxos/eslint-plugin': 1.0.27_eslint@7.32.0+typescript@4.6.4
@@ -554,7 +560,7 @@ importers:
       '@types/lockfile': 1.0.2
       '@types/mocha': 9.1.1
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       expect: 27.5.1
       mocha: 9.2.2
@@ -590,12 +596,12 @@ importers:
       '@types/lodash.set': ^4.3.6
       '@types/node': ~16.11.12
       '@types/pify': ~5.0.1
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       abort-controller: ~3.0.0
       assert: ^2.0.0
       bn.js: ^4.11.9
       cli-progress: ^3.8.2
-      debug: ~4.3.3
+      debug: ^4.3.3
       eslint: ^7.13.0
       get-folder-size: ^2.0.1
       ipfs-http-client: 48.1.1
@@ -613,7 +619,7 @@ importers:
       ts-jest: ^27.0.0
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/async': 2.31.3
       '@dxos/cli-core': link:../cli-core
@@ -642,7 +648,7 @@ importers:
       node-fetch: 2.6.7
       pify: 5.0.0
       protobufjs: 6.11.2
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/client': 2.31.3
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
@@ -660,7 +666,7 @@ importers:
       '@types/lodash.set': 4.3.7
       '@types/node': 16.11.33
       '@types/pify': 5.0.1
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-jest: 27.1.4_9487ad9e34e2da76c8bfa2f943caee49
@@ -678,27 +684,27 @@ importers:
       '@dxos/object-model': ~2.31.3
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       eslint: ^7.13.0
       jest: ^27.4.4
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/cli-core': link:../cli-core
       '@dxos/crypto': 2.31.3
       '@dxos/debug': 2.31.3
       '@dxos/object-model': 2.31.3
       assert: 2.0.0
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/cli-data': link:../cli-data
       '@dxos/echo-db': 2.31.3
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-node: 10.7.0_fd4b5ff48b408bf425abfec4a641da13
@@ -714,7 +720,7 @@ importers:
       '@polkadot/api': 4.17.1
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       abort-controller: ~3.0.0
       assert: ^2.0.0
       boolean: ^3.0.1
@@ -733,7 +739,7 @@ importers:
       pify: ^5.0.0
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/async': 2.31.3
       '@dxos/cli-core': link:../cli-core
@@ -754,12 +760,12 @@ importers:
       mime-types: 2.1.35
       node-fetch: 2.6.7
       pify: 5.0.0
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-node: 10.7.0_fd4b5ff48b408bf425abfec4a641da13
@@ -778,7 +784,7 @@ importers:
       '@types/js-yaml': ^3.12.5
       '@types/lodash.defaultsdeep': ^4.6.6
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       do-wrapper: ^4.1.2
       eslint: ^7.13.0
@@ -791,7 +797,7 @@ importers:
       ts-node: ^10.2.1
       typescript: ^4.0.5
       yamljs: ^0.3.0
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/async': 2.31.3
       '@dxos/cli-core': link:../cli-core
@@ -806,14 +812,14 @@ importers:
       lodash.defaultsdeep: 4.6.1
       node-fetch: 2.6.7
       yamljs: 0.3.0
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/js-yaml': 3.12.7
       '@types/lodash.defaultsdeep': 4.6.7
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-jest: 27.1.4_9487ad9e34e2da76c8bfa2f943caee49
@@ -827,7 +833,7 @@ importers:
       '@dxos/eslint-plugin': ~1.0.24
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       eslint: ^7.13.0
       jest: ^27.4.4
@@ -841,7 +847,7 @@ importers:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-node: 10.7.0_fd4b5ff48b408bf425abfec4a641da13
@@ -851,34 +857,40 @@ importers:
     specifiers:
       '@dxos/async': ~2.31.3
       '@dxos/cli-core': workspace:*
+      '@dxos/crypto': ~2.31.3
       '@dxos/eslint-plugin': ~1.0.24
       '@dxos/network-manager': ~2.31.3
+      '@dxos/protocol': ~2.28.0
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       assert: ^2.0.0
       boolean: ^3.0.1
+      debug: ^4.3.3
       do-wrapper: ^4.1.2
       eslint: ^7.13.0
       jest: ^27.4.4
       performance-now: ^2.1.0
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/async': 2.31.3
       '@dxos/cli-core': link:../cli-core
+      '@dxos/crypto': 2.31.3
       '@dxos/network-manager': 2.31.3
+      '@dxos/protocol': 2.28.0
       assert: 2.0.0
       boolean: 3.2.0
+      debug: 4.3.4
       do-wrapper: 4.5.1
       performance-now: 2.1.0
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-node: 10.7.0_fd4b5ff48b408bf425abfec4a641da13
@@ -891,23 +903,23 @@ importers:
       '@dxos/eslint-plugin': ~1.0.24
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       eslint: ^7.13.0
       jest: ^27.4.4
       lodash-clean: ^2.2.1
       ts-node: ^10.2.1
       typescript: ^4.0.5
-      yargs: ^16.2.0
+      yargs: ^17.4.1
     dependencies:
       '@dxos/cli-core': link:../cli-core
       '@dxos/debug': 2.31.3
       lodash-clean: 2.2.3
-      yargs: 16.2.0
+      yargs: 17.4.1
     devDependencies:
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       jest: 27.5.1_ts-node@10.7.0
       ts-node: 10.7.0_fd4b5ff48b408bf425abfec4a641da13
@@ -927,7 +939,7 @@ importers:
       '@types/fs-extra': ^9.0.13
       '@types/mocha': ^9.0.0
       '@types/node': ~16.11.12
-      '@types/yargs': ^16.0.1
+      '@types/yargs': ^17.0.10
       eslint: ^7.13.0
       expect: ^27.2.1
       express: ^4.17.1
@@ -952,7 +964,7 @@ importers:
       '@types/fs-extra': 9.0.13
       '@types/mocha': 9.1.1
       '@types/node': 16.11.33
-      '@types/yargs': 16.0.4
+      '@types/yargs': 17.0.10
       eslint: 7.32.0
       expect: 27.5.1
       express: 4.18.1
@@ -1417,6 +1429,17 @@ packages:
       - supports-color
       - utf-8-validate
 
+  /@dxos/codec-protobuf/2.28.0:
+    resolution: {integrity: sha512-NnypMgTB/SmedPtucvS1PG9rgEKNmikNP0I9PRU+CJt/vzs/h+Gsk88z5SThuzl28qy7NZglIALc0m9d8lh5+A==}
+    dependencies:
+      assert: 2.0.0
+      debug: 4.3.4
+      lodash.merge: 4.6.2
+      protobufjs: 6.11.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@dxos/codec-protobuf/2.31.3:
     resolution: {integrity: sha512-n9/uCuxsqLhYUcvofwb6ieXzNouzyjjvG8tJ0FwYPXvFU3N04wgDXfV57vr8poSGRh+fYcmA/DqqnMDe5YRV2A==}
     dependencies:
@@ -1722,6 +1745,14 @@ packages:
       '@dxos/util': 2.31.3
     transitivePeerDependencies:
       - supports-color
+
+  /@dxos/protocol/2.28.0:
+    resolution: {integrity: sha512-ZaslIzdwVaMrBBcuiyHsELwhQgz0Q/W21lV0/mAiclkLUdTnMIqzZ+A5BSvl9bagbsgOEVAZfi9Mr0xZI+yDFA==}
+    dependencies:
+      '@dxos/codec-protobuf': 2.28.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@dxos/protocols/2.31.3:
     resolution: {integrity: sha512-jaUKwjMeePcm8zy+C6Zl2UZVyBIXlYfajbqUx8U/kgpGgonf2ie1JJk+zmL4vHkyH23TrzXCi64oqIG+HtZhug==}
@@ -3207,6 +3238,10 @@ packages:
     resolution: {integrity: sha512-x5dgfuPpdD7Knfu1aN/iaO0JiC2c5rpGFrq/k6H0gDrrTtTBt+e047k3OSEhXJFFggE/RN9SbqTEDoxDn2BoFA==}
     dev: true
 
+  /@types/find-root/1.1.2:
+    resolution: {integrity: sha512-lGuMq71TL466jtCpvh7orGd+mrdBmo2h8ozvtOOTbq3ByfWpuN+UVxv4sOv3YpsD4NhW2k6ESGhnT/FIg4Ouzw==}
+    dev: true
+
   /@types/fs-extra/9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
@@ -3329,6 +3364,12 @@ packages:
       '@types/lodash': 4.14.182
     dev: true
 
+  /@types/lodash.uniqby/4.7.7:
+    resolution: {integrity: sha512-sv2g6vkCIvEUsK5/Vq17haoZaisfj2EWW8mP7QWlnKi6dByoNmeuHDDXHR7sabuDqwO4gvU7ModIL22MmnOocg==}
+    dependencies:
+      '@types/lodash': 4.14.182
+    dev: true
+
   /@types/lodash/4.14.182:
     resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
     dev: true
@@ -3433,6 +3474,12 @@ packages:
 
   /@types/yargs/16.0.4:
     resolution: {integrity: sha512-T8Yc9wt/5LbJyCaLiHPReJa0kApcIgJ7Bn735GjItUfh08Z1pJvu8QZqb9s+mMvKV6WUQRV7K2R46YbjMXTTJw==}
+    dependencies:
+      '@types/yargs-parser': 21.0.0
+    dev: true
+
+  /@types/yargs/17.0.10:
+    resolution: {integrity: sha512-gmEaFwpj/7f/ROdtIlci1R1VYU1J4j95m8T+Tj3iBgiBFKg1foE/PSl93bBd5T9LDXNPo8UlNN6W0qwD8O5OaA==}
     dependencies:
       '@types/yargs-parser': 21.0.0
 
@@ -4355,7 +4402,6 @@ packages:
   /camelcase/6.3.0:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
-    dev: true
 
   /caniuse-lite/1.0.30001336:
     resolution: {integrity: sha512-/YxSlBmL7iKXTbIJ48IQTnAOBk7XmWsxhBF1PZLOko5Dt9qc4Pl+84lfqG3Tc4EuavurRn1QLoVJGxY2iSycfw==}
@@ -4516,14 +4562,6 @@ packages:
       string-width: 1.0.2
       strip-ansi: 3.0.1
       wrap-ansi: 2.1.0
-
-  /cliui/5.0.0:
-    resolution: {integrity: sha512-PYeGSEmmHM6zvoef2w8TPzlrnNpXIjTipYK780YswmIP9vjxmd6Y2a3CB2Ks6/AU8NHjZugXvo8w3oWM2qnwXA==}
-    dependencies:
-      string-width: 3.1.0
-      strip-ansi: 5.2.0
-      wrap-ansi: 5.1.0
-    dev: false
 
   /cliui/6.0.0:
     resolution: {integrity: sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==}
@@ -4841,7 +4879,6 @@ packages:
   /decamelize/4.0.0:
     resolution: {integrity: sha512-9iE1PgSik9HeIIw2JO94IidnE3eBoQrFJ3w7sFuzSX4DpmZ3v5sZpUiV5Swcf6mQEF+Y0ru8Neo+p+nyh2J+hQ==}
     engines: {node: '>=10'}
-    dev: true
 
   /decimal.js/10.3.1:
     resolution: {integrity: sha512-V0pfhfr8suzyPGOx3nmq4aHqabehUZn6Ch9kyFpV79TGDTWFmHqUqXdabR7QHqxzrYolF4+tVmJhUG4OURg5dQ==}
@@ -5224,6 +5261,7 @@ packages:
 
   /emoji-regex/7.0.3:
     resolution: {integrity: sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==}
+    dev: true
 
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -6052,13 +6090,6 @@ packages:
     dependencies:
       locate-path: 2.0.0
     dev: true
-
-  /find-up/3.0.0:
-    resolution: {integrity: sha512-1yD6RmLI1XBfxugvORwlck6f75tYL+iR0jqwsOrOxMZyGYqUuDhJ0l4AXdO1iX/FTs9cBAMEk1gWSEx1kSbylg==}
-    engines: {node: '>=6'}
-    dependencies:
-      locate-path: 3.0.0
-    dev: false
 
   /find-up/4.1.0:
     resolution: {integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==}
@@ -7073,6 +7104,7 @@ packages:
   /is-fullwidth-code-point/2.0.0:
     resolution: {integrity: sha1-o7MKXE8ZkYMWeqq5O+764937ZU8=}
     engines: {node: '>=4'}
+    dev: true
 
   /is-fullwidth-code-point/3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
@@ -8190,14 +8222,6 @@ packages:
       p-locate: 2.0.0
       path-exists: 3.0.0
     dev: true
-
-  /locate-path/3.0.0:
-    resolution: {integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==}
-    engines: {node: '>=6'}
-    dependencies:
-      p-locate: 3.0.0
-      path-exists: 3.0.0
-    dev: false
 
   /locate-path/5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
@@ -9485,13 +9509,6 @@ packages:
       p-limit: 1.3.0
     dev: true
 
-  /p-locate/3.0.0:
-    resolution: {integrity: sha512-x+12w/To+4GFfgJhBEpiDcLozRJGegY+Ei7/z0tSLkMmxGZNybVMSfWj9aJn8Z5Fc7dBUNJOOVgPv2H7IwulSQ==}
-    engines: {node: '>=6'}
-    dependencies:
-      p-limit: 2.3.0
-    dev: false
-
   /p-locate/4.1.0:
     resolution: {integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==}
     engines: {node: '>=8'}
@@ -9605,6 +9622,7 @@ packages:
   /path-exists/3.0.0:
     resolution: {integrity: sha1-zg6+ql94yxiSXqfYENe1mwEP1RU=}
     engines: {node: '>=4'}
+    dev: true
 
   /path-exists/4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -10910,6 +10928,7 @@ packages:
       emoji-regex: 7.0.3
       is-fullwidth-code-point: 2.0.0
       strip-ansi: 5.2.0
+    dev: true
 
   /string-width/4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -11788,7 +11807,7 @@ packages:
   /wide-align/1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
     dependencies:
-      string-width: 1.0.2
+      string-width: 4.2.3
 
   /word-wrap/1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
@@ -11812,6 +11831,7 @@ packages:
       ansi-styles: 3.2.1
       string-width: 3.1.0
       strip-ansi: 5.2.0
+    dev: true
 
   /wrap-ansi/6.2.0:
     resolution: {integrity: sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==}
@@ -11962,13 +11982,6 @@ packages:
       glob: 7.2.0
     dev: false
 
-  /yargs-parser/15.0.3:
-    resolution: {integrity: sha512-/MVEVjTXy/cGAjdtQf8dW3V9b97bPN7rNn8ETj6BmAQL7ibC7O1Q9SPJbGjgh3SlwoBNXMzj/ZGIj8mBgl12YA==}
-    dependencies:
-      camelcase: 5.3.1
-      decamelize: 1.2.0
-    dev: false
-
   /yargs-parser/18.1.3:
     resolution: {integrity: sha512-o50j0JeToy/4K6OZcaQmW6lyXXKhq7csREXcDwk2omFPJEwUNOVtJKvmDr9EI1fAJZUyZcRF7kxGBWmRXudrCQ==}
     engines: {node: '>=6'}
@@ -11990,23 +12003,18 @@ packages:
   /yargs-parser/20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
+    dev: true
+
+  /yargs-parser/21.0.1:
+    resolution: {integrity: sha512-9BK1jFpLzJROCI5TzwZL/TU4gqjK5xiHV/RfWLOahrjAko/e4DJkRDZQXfvqAsiZzzYhgAzbgz6lg48jcm4GLg==}
+    engines: {node: '>=12'}
+    dev: false
 
   /yargs-parser/5.0.1:
     resolution: {integrity: sha512-wpav5XYiddjXxirPoCTUPbqM0PXvJ9hiBMvuJgInvo4/lAOTZzUprArw17q2O1P2+GHhbBr18/iQwjL5Z9BqfA==}
     dependencies:
       camelcase: 3.0.0
       object.assign: 4.1.2
-
-  /yargs-unparser/1.6.4:
-    resolution: {integrity: sha512-QxEx9+qEr7jwVM4ngnk95+sKZ5QXm5gx0cL97LDby0SiC8HHoUK0LPBg475JwQcRCqIVfMD8SubCWp1dEgKuwQ==}
-    engines: {node: '>=6'}
-    dependencies:
-      camelcase: 5.3.1
-      decamelize: 1.2.0
-      flat: 5.0.2
-      is-plain-obj: 1.1.0
-      yargs: 14.2.3
-    dev: false
 
   /yargs-unparser/2.0.0:
     resolution: {integrity: sha512-7pRTIA9Qc1caZ0bZ6RYRGbHJthJWuakf+WmHK0rVeLkNrrGhfoabBNdue6kdINI6r4if7ocq9aD/n7xwKOdzOA==}
@@ -12016,23 +12024,6 @@ packages:
       decamelize: 4.0.0
       flat: 5.0.2
       is-plain-obj: 2.1.0
-    dev: true
-
-  /yargs/14.2.3:
-    resolution: {integrity: sha512-ZbotRWhF+lkjijC/VhmOT9wSgyBQ7+zr13+YLkhfsSiTriYsMzkTUFP18pFhWwBeMa5gUc1MzbhrO6/VB7c9Xg==}
-    dependencies:
-      cliui: 5.0.0
-      decamelize: 1.2.0
-      find-up: 3.0.0
-      get-caller-file: 2.0.5
-      require-directory: 2.1.1
-      require-main-filename: 2.0.0
-      set-blocking: 2.0.0
-      string-width: 3.1.0
-      which-module: 2.0.0
-      y18n: 4.0.3
-      yargs-parser: 15.0.3
-    dev: false
 
   /yargs/15.4.1:
     resolution: {integrity: sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==}
@@ -12062,6 +12053,20 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 20.2.9
+    dev: true
+
+  /yargs/17.4.1:
+    resolution: {integrity: sha512-WSZD9jgobAg3ZKuCQZSa3g9QOJeCCqLoLAykiWgmXnDo9EPnn4RPf5qVTtzgOx66o6/oqhcA5tHtJXpG8pMt3g==}
+    engines: {node: '>=12'}
+    dependencies:
+      cliui: 7.0.4
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.3
+      y18n: 5.0.8
+      yargs-parser: 21.0.1
+    dev: false
 
   /yargs/7.1.2:
     resolution: {integrity: sha512-ZEjj/dQYQy0Zx0lgLMLR8QuaqTihnxirir7EwUHp1Axq4e3+k8jXU5K0VLbNvedv1f4EWtBonDIZm0NUr+jCcA==}

@@ -8,7 +8,7 @@ import readline from 'readline';
 import { Argv } from 'yargs';
 
 import { createCLI } from './cli-factory';
-import { asyncHandler } from './util/async';
+import { asyncHandler } from './utils';
 
 const CLI_BASE_COMMAND = 'dx';
 
@@ -107,7 +107,7 @@ const extCommand = 'test';
 
 const info = `
   name: ${extName}
-  version: 0.0.1
+  version: 1.0.0
   displayName: cli-test
   description: TEST CLI.
   command:

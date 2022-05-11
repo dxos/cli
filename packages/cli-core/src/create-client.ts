@@ -10,7 +10,7 @@ import { Config } from '@dxos/config';
 import { createKeyPair } from '@dxos/crypto';
 import { ClientSignerAdapter } from '@dxos/registry-client';
 
-import { CLI_DEFAULT_PERSISTENT, getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './util/profile';
+import { CLI_DEFAULT_PERSISTENT, getCurrentProfilePath, getClientProfilePath, saveCurrentProfilePath } from './utils';
 
 type CreateClientOptions = {
   initProfile: boolean,

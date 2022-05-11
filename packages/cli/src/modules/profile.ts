@@ -48,9 +48,7 @@ export const ProfileModule = () => ({
     .command({
       command: ['list'],
       describe: 'List CLI profiles.',
-
       builder: yargs => yargs,
-
       handler: asyncHandler(async (argv: any) => {
         const { json } = argv;
         print(listClientProfileConfigs(), { json });
@@ -60,10 +58,8 @@ export const ProfileModule = () => ({
     .command({
       command: ['set [name]'],
       describe: 'Set profile as default.',
-
       handler: asyncHandler(async (argv: any) => {
         const { name } = argv;
-
         assert(name, 'Invalid profile name.');
 
         const profilePath = getProfilePath(name);
@@ -79,7 +75,6 @@ export const ProfileModule = () => ({
     .command({
       command: ['config [profile]'],
       describe: 'Print profile config.',
-
       handler: asyncHandler(async (argv: any) => {
         const { profile } = argv;
 

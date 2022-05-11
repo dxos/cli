@@ -6,8 +6,8 @@ import { Arguments, CommandModule } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
 
-import { DeviceOptions } from '..';
 import { StateManager } from '../../../state-manager';
+import { DeviceOptions } from '..';
 
 export const infoCommand = (stateManager: StateManager): CommandModule<DeviceOptions, DeviceOptions> => ({
   command: ['info'],

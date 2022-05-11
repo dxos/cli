@@ -46,7 +46,7 @@
     "@dxos/eslint-plugin": "~1.0.24",
     "@types/jest": "~27.0.3",
     "@types/node": "~16.11.12",
-    "@types/yargs": "^16.0.1",
+    "@types/yargs": "^17.0.10",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-node": "^10.2.1",

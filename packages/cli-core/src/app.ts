@@ -6,33 +6,43 @@ import assert from 'assert';
 import get from 'lodash.get';
 import omit from 'lodash.omit';
 import readline from 'readline';
-import { Arguments } from 'yargs';
+import Yargs, { Arguments } from 'yargs';
 import unparse from 'yargs-unparser';
 import yargs from 'yargs/yargs';
 
 import { Config } from '@dxos/config';
 
 import { CoreOptions, coreOptions, FORWARD_OPTION } from './options';
-import { getLoggers } from './util/log';
+import { getLoggers } from './utils';
 
 const VERSION_COMMAND = 'version';
 
 const { log, logError } = getLoggers();
 
+/**
+ * Global CLI state.
+ */
 export interface CoreState {
-  config?: Config,
-  getReadlineInterface?: Function,
-  cliState: {interactive: boolean},
-  models?: any[],
-  profilePath?: string | undefined,
-  profileExists?: boolean,
-  options?: {prompt?: any, baseCommand?: any, enableInteractive?: boolean},
-  modules?: Array<Function>,
-  getModules?: Function,
+  config?: Config
+  cliState: {
+    interactive: boolean
+  }
+  models?: any[]
+  modules?: Array<Function>
+  profilePath?: string | undefined
+  profileExists?: boolean
+  options?: {
+    prompt?: any
+    baseCommand?: any
+    enableInteractive?: boolean
+  }
+
+  getModules?: Function
+  getReadlineInterface?: Function
 }
 
 export interface ConstructorConfig extends Omit<CoreState, 'cliState'> {
-  state?: CoreState,
+  state?: CoreState
   version?: string
 }
 
@@ -81,6 +91,13 @@ export class App {
 
     // http://yargs.js.org/docs/#api-strictenabledtrue
     .strict(true)
+
+    .command({
+      command: '*',
+      handler () {
+        Yargs.showHelp();
+      }
+    })
 
     // http://yargs.js.org/docs/#api-failfn
     .fail(msg => {

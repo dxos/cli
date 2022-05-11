@@ -22,15 +22,12 @@
   ],
   "scripts": {
     "prebuild": "./scripts/get-extensions.sh",
-    "build": "tsc && cp -R ./*.yml dist",
+    "build": "tsc && cp -R ./gen/* dist",
     "build:watch": "tsc --watch",
-    "checkNew": "[ ! -d ~/.wire ] && [ ! -d ~/.dx ] && mkdir -p ~/.dx || true",
-    "checkOld": "[ -d ~/.wire ] && [ ! -L ~/.dx ] && ln -s ~/.wire ~/.dx || true",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/main.ts",
     "dev": "npm run cli",
     "dx": "./bin/dx.js",
-    "preinstall": "npm run checkNew && npm run checkOld",
     "lint": "eslint './src/**/*.{ts,js}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
@@ -44,6 +41,7 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
+    "@dxos/config": "~2.31.3",
     "@dxos/debug": "~2.31.3",
     "@dxos/random-access-multi-storage": "~2.31.3",
     "assert": "^2.0.0",
@@ -67,15 +65,17 @@
     "strip-json-comments": "3.1.1",
     "uint8arrays": "1.1.0",
     "url-join": "^4.0.1",
-    "yargs": "^16.2.0"
+    "yargs": "^17.4.1"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.24",
+    "@types/find-root": "^1.1.2",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "~27.0.3",
     "@types/js-yaml": "^3.12.5",
     "@types/node": "~16.11.12",
-    "@types/yargs": "^16.0.1",
+    "@types/yargs": "^17.0.10",
+    "@types/lodash.uniqby": "^4.7.7",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "json2yaml": "^1.1.0",

@@ -101,7 +101,7 @@ To create item:
 key     value
 ------  ----------------------------------------------------------------
 id      b3d7f2ef8290f27f6c60fbfac5a2863190269f3ac3e105261216468a867760a1
-type    wrn://dxos.org/item/general
+type    dxn://dxos/item/general
 parent  null
 props   {"foo":"bar","foo2":"bar2"}
 ```
@@ -112,8 +112,8 @@ To list items:
 [dx]> echo list
 id                                                                type                         modelType                             modelName    deleted
 ----------------------------------------------------------------  ---------------------------  ------------------------------------  -----------  -------
-2f1ff4677c3f93bded320b2625a1a0a0445fcd3c9088c6b71c71772165c759d2  wrn://dxos.org/item/party    wrn://protocol.dxos.org/model/object  ObjectModel  false
-b3d7f2ef8290f27f6c60fbfac5a2863190269f3ac3e105261216468a867760a1  wrn://dxos.org/item/general  wrn://protocol.dxos.org/model/object  ObjectModel  false
+2f1ff4677c3f93bded320b2625a1a0a0445fcd3c9088c6b71c71772165c759d2  dxn://dxos/item/party    dxn://protocol.dxos.org/model/object  ObjectModel  false
+b3d7f2ef8290f27f6c60fbfac5a2863190269f3ac3e105261216468a867760a1  dxn://dxos/item/general  dxn://protocol.dxos.org/model/object  ObjectModel  false
 ```
 
 To update item:
@@ -123,7 +123,7 @@ To update item:
 key     value
 ------  ----------------------------------------------------------------
 id      b3d7f2ef8290f27f6c60fbfac5a2863190269f3ac3e105261216468a867760a1
-type    wrn://dxos.org/item/general
+type    dxn://dxos/item/general
 parent  null
 props   {"foo":"bar","foo2":"notBar2"}
 ```
@@ -135,7 +135,7 @@ Soft delete / restore:
 key     value
 ------  ----------------------------------------------------------------
 id      b3d7f2ef8290f27f6c60fbfac5a2863190269f3ac3e105261216468a867760a1
-type    wrn://dxos.org/item/general
+type    dxn://dxos/item/general
 parent  null
 props   {"foo":"bar","foo2":"notBar2","deleted":true}
 
@@ -143,7 +143,7 @@ props   {"foo":"bar","foo2":"notBar2","deleted":true}
 key     value
 ------  ----------------------------------------------------------------
 id      b3d7f2ef8290f27f6c60fbfac5a2863190269f3ac3e105261216468a867760a1
-type    wrn://dxos.org/item/general
+type    dxn://dxos/item/general
 parent  null
 props   {"foo":"bar","foo2":"notBar2","deleted":false}
 ```

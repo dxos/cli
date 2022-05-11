@@ -18,7 +18,7 @@ const IPFS_SWARM_CONNECTOR_PROCESS_NAME = 'ipfs-swarm-connect';
 const IPFS_SWARM_CONNECTOR_PATH = path.join(__dirname, '../runnable/swarm-connect.js');
 const IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE = '/var/log/ipfs-swarm-connect.log';
 
-// const RECORD_TYPE = 'wrn:service';
+// const RECORD_TYPE = 'dxn:service';
 // const SERVICE_TYPE = 'ipfs';
 
 const ipfsRunnable = new Runnable(IPFS_EXEC);

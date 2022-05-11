@@ -1,6 +1,6 @@
 name: dxos/cli-mesh
-version: 0.0.1
+version: 1.0.0
 displayName: cli-mesh
 description: MESH extension.
-command:
-  - mesh
+modules:
+  - command: "mesh"

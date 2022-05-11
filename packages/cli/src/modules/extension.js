@@ -21,7 +21,6 @@ const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/cli-templa
 export const ExtensionModule = ({ getReadlineInterface }) => ({
   command: ['extension'],
   describe: 'CLI extensions.',
-
   builder: yargs => yargs
 
     // List.
@@ -33,11 +32,11 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
       handler: asyncHandler(async argv => {
         const { json } = argv;
         let extensions = await listInstalled();
-        extensions = extensions.map(({ moduleName, version, describe, command }) => ({
+        extensions = extensions.map(({ moduleName, version, description, modules }) => ({
           extension: moduleName,
-          command,
+          modules,
           version,
-          description: describe
+          description
         }));
 
         print(extensions, { json });

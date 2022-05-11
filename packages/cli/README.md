@@ -53,7 +53,8 @@ dx extension list --dry-run
 Profile: /Users/ashwinp/.dx/profile/devnet.yml
 ```
 
-Multiple templates can be created and shared with others to use different configuration values. Some [sample templates](./profiles/README.md) are included in the repo.
+Multiple templates can be created and shared with others to use different configuration values. 
+Some [sample templates](./profiles/README.md) are included in the repo.
 
 ### Extensions
 
@@ -116,7 +117,8 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 
 #### Developing CLI extensions
 
-In order to create a new CLI extension, existing CLI extension could be used as a boilerplate. While developing a new extension out of CLI Monorepo, make sure you add `@dxos/cli` as devDependency (and `@dxos/cli-data` as well if you are planning on using DXOS SDK Client).
+In order to create a new CLI extension, existing CLI extension could be used as a boilerplate. 
+While developing a new extension out of CLI Monorepo, make sure you add `@dxos/cli` as devDependency (and `@dxos/cli-data` as well if you are planning on using DXOS SDK Client).
 
 ### Certification
 
@@ -154,29 +156,36 @@ While developing a specific cli extension as a package in the monorepo, `rushx b
 
 ### Running commands locally
 
-During local development there is a need for testing of a newly created / modified commands. For that purpose, any cli command could be called from the repo root via `pnpm run dx`, e.g.:
+During local development there is a need for testing of a newly created/modified commands. 
+For that purpose, any cli command could be called from the repo root via `pnpm run dx`, e.g.:
 
 > **Note:** Command arguments should be separated from the command via `--` for `pnpm` to pass it to executable.
 
-```
+```bash
 pnpm run dx dxns resource list -- --json
 ```
 
-If the command ought to be called from the specific path (e.g. during app deployent), an alias for the local dx binary coud be created by adding such to the shell profile:
+If the command ought to be called from the specific path (e.g. during app deployent), 
+an alias for the local dx binary coud be created by adding such to the shell profile:
 
-```
-alias dx-local='node ~/path/to/cli/packages/cli/bin/dx.js'
+```bash
+`eval $(./scripts/dev.sh)`
 ```
 
-Then, all commands could be called via `dx-local` in any directory, like:
+Then run `rushx build:watch` in for all packages that are being edited.
 
-```
-dx-local dxns resource list --json
-```
+Run `dx info` to check if the local version is being run.
+
+Set the `DEBUG` environment variable to `true` to see full exception traces on error.
+
+```bash
+DEBUG=dxos:cli dx
+````
 
 ### Environment Variables
 
-While the usage of ENV variables is minimized, in some edge cases CLI still uses ENV variables for configuration. Those variables are mapped to the canonical structure: [ENV mapping](../cli-core/src/env-map.json)
+While the usage of ENV variables is minimized, in some edge cases CLI still uses ENV variables for configuration. 
+Those variables are mapped to the canonical structure: [ENV mapping](../cli-core/src/env-map.json)
 
 ENV variables are also used to pass configuration between CLI and spawned processes, but this happens transparently for CLI user.
 
@@ -196,20 +205,20 @@ Check installed version:
 dx version
 ```
 
-If those outputs are different, make sure to remove old versions of `wire`.
+If those outputs are different, make sure to remove old versions of `dx`.
 Remove old CLI and extensions, installed globally.
 
 For that purpose `dx uninstall` and `dx upgrade` commands are available.
 
 To remove CLI and all extensions:
 
-```
+```bash
 dx uninstall --npm-client yarn
 ```
 
 To force upgrade CLI and all installed extensions to the latest:
 
-```
+```bash
 dx upgrade --npm-client yarn --force
 ```
 

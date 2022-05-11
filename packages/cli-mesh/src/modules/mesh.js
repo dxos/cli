@@ -22,9 +22,7 @@ const createNetworkManager = async (config, swarm, target) => {
   const topology = target ? new StarTopology(target) : new MMSTTopology();
 
   const { plugin: net, provider } = netProtocolProvider(swarm.asBuffer(), nodeId.asBuffer());
-
   const join = () => networkManager.joinProtocolSwarm({ topic: swarm, peerId: nodeId, protocol: provider, topology });
-
   return { nodeId, net, networkManager, join };
 };
 

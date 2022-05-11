@@ -13,6 +13,6 @@ module.exports = createCLI({
   modules: [KubeModule],
   dir: __dirname,
   main: !module.parent,
-  info: readFileSync(path.join(__dirname, '../extension.yml')).toString(),
+  info: readFileSync(path.join(__dirname, '../dx.yml')).toString(),
   compose: readFileSync(path.join(__dirname, '../docker-compose.yml')).toString()
 });

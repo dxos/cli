@@ -54,7 +54,7 @@
     "assert": "^2.0.0",
     "bn.js": "^4.11.9",
     "cli-progress": "^3.8.2",
-    "debug": "~4.3.3",
+    "debug": "^4.3.3",
     "get-folder-size": "^2.0.1",
     "ipfs-http-client": "48.1.1",
     "lodash-clean": "^2.2.1",
@@ -67,7 +67,7 @@
     "node-fetch": "^2.6.1",
     "pify": "^5.0.0",
     "protobufjs": "^6.10.2",
-    "yargs": "^16.2.0"
+    "yargs": "^17.4.1"
   },
   "devDependencies": {
     "@dxos/client": "~2.31.3",
@@ -86,7 +86,7 @@
     "@types/lodash.set": "^4.3.6",
     "@types/node": "~16.11.12",
     "@types/pify": "~5.0.1",
-    "@types/yargs": "^16.0.1",
+    "@types/yargs": "^17.0.10",
     "eslint": "^7.13.0",
     "jest": "^27.4.4",
     "ts-jest": "^27.0.0",

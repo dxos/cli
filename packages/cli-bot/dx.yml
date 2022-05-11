@@ -1,6 +1,6 @@
 name: dxos/cli-bot
-version: 0.0.1
+version: 1.0.0
 displayName: cli-bot
 description: Bot extension.
-command:
-  - bot
+modules:
+  - command: "bot"

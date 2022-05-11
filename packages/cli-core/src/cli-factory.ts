@@ -12,11 +12,8 @@ import { Config } from '@dxos/config';
 
 import { App } from './app';
 import { getConfig, getActiveProfilePath } from './config';
-import { loadCerts } from './util/certs';
-import { getLoggers } from './util/log';
-import { printMissingProfile } from './util/messages';
-
-export const EXTENSION_CONFIG_FILENAME = 'extension.yml';
+import { CLI, EXTENSION_CONFIG_FILENAME, ExtensionInfo } from './types';
+import { getLoggers, loadCerts, printMissingProfile } from './utils';
 
 // Commands which are permitted to run without an active profile.
 const COMMANDS_PERMIT_NO_PROFILE = [
@@ -28,28 +25,6 @@ const COMMANDS_PERMIT_NO_PROFILE = [
 ];
 
 const { log, debugLog, logError } = getLoggers();
-
-export interface ExtensionInfo {
-  modules?: Array<any>,
-  getModules?: Function,
-  version: string,
-  init?: Function,
-  destroy?: Function,
-  options?: any,
-  state?: any,
-}
-
-export interface CLI {
-  modules?: Array<any>,
-  getModules?: Function,
-  init?: Function,
-  destroy?: Function,
-  dir: string,
-  main?: boolean,
-  options?: any,
-  info: any,
-  compose?: string
-}
 
 /**
  * Provides command executor in form of CLI extension.
@@ -113,42 +88,51 @@ const getRunnable = (extension: ExtensionInfo) => {
 
 /**
  * Create new instance of CLI.
- * @param {CLI} options
  */
-export const createCLI = (options: CLI) => {
-  const { modules, getModules, init, destroy, dir, main, options: cliOptions, info, compose } = options;
-
-  assert(dir);
+// TODO(burdon): Return type.
+export const createCLI = ({
+  modules,
+  getModules,
+  init,
+  destroy,
+  dir,
+  main,
+  options,
+  info,
+  compose
+}: CLI) => {
   assert(info, `Invalid ${EXTENSION_CONFIG_FILENAME} file.`);
+  assert(dir);
 
   const pkg = readPkgUp.sync({ cwd: dir });
   const version = `v${pkg!.package.version}`;
 
-  const run = getRunnable({ modules, getModules, version, options: cliOptions, init, destroy });
-
+  const run = getRunnable({ modules, getModules, version, options, init, destroy });
   if (main) {
-    // eslint-disable-next-line
-    run();
+    void run();
     return;
   }
 
-  const { command, ...restInfo } = yaml.load(info);
+  // dx.yml file.
+  const { modules: commandModules, ...restInfo } = yaml.load(info);
+
   // TODO(egorgripasov): Docker compose.
   const dockerCompose = compose ? yaml.load(compose) : undefined;
 
+  // TODO(burdon): Change to class?
   return {
-    run,
-    runAsExtension: getRunnableExtension({ modules, getModules, version, options: cliOptions }),
-    init,
-    destroy,
     info: {
-      command: command ? command.map((cmd: any) => typeof cmd === 'object' ? cmd.command : cmd) : undefined,
       ...restInfo,
+      command: commandModules ? commandModules.map((module: any) => module.command) : undefined, // TODO(burdon): Type?
       package: {
         name: pkg!.package.name,
         version: pkg!.package.version
       }
     },
+    run,
+    runAsExtension: getRunnableExtension({ modules, getModules, version, options }),
+    init,
+    destroy,
     dockerCompose
   };
 };

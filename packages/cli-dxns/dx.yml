@@ -1,0 +1,9 @@
+name: dxos/cli-dxns
+version: 0.1.0
+displayName: cli-dxns
+description: DXNS extension.
+modules:
+  - command: "dxns"
+    describe: "DXNS extension."
+  - command: "ns"
+    describe: "DXNS extension."

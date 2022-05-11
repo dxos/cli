@@ -28,5 +28,5 @@ export default createCLI({
   main: !module.parent,
   init: initDataCliState,
   destroy: destroyDataCliState,
-  info: readFileSync(path.join(__dirname, '../extension.yml')).toString()
+  info: readFileSync(path.join(__dirname, '../dx.yml')).toString()
 });

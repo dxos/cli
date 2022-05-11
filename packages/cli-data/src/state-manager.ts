@@ -35,9 +35,10 @@ export interface StateManagerConstructorOpts {
 }
 
 /**
- * Represents state of the CLI within a party, as well as list of active parties;
+ * Represents state of the CLI within a party, as well as list of active parties.
  * Provides interface for authentication / invitation flow within a party.
  */
+// TODO(burdon): Move to main CLI (since used by multiple extensions).
 export class StateManager {
   private _party: Party | null = null;
   private _lockPath: string | undefined
@@ -139,7 +140,6 @@ export class StateManager {
 
     const party = await this._client.echo.createParty();
     await this.setParty(party);
-
     return party;
   }
 
@@ -151,7 +151,6 @@ export class StateManager {
     assert(this._client);
 
     const invitation = await party.createInvitation();
-
     return invitation;
   }
 
@@ -160,6 +159,7 @@ export class StateManager {
       await unlock(this._lockPath);
       this._lockAquired = false;
     }
+
     await this._client?.destroy();
   }
 
