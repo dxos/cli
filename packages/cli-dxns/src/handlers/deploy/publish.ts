@@ -17,8 +17,6 @@ import { uploadToIPFS } from '../../utils/ipfs-upload';
 
 const getFolderSize = pify(folderSize);
 
-const encodeName = (name: string) => name.replaceAll(':', '-').replaceAll('/', '-');
-
 export interface PublishParams {
   config: Config,
   module: PackageModule
@@ -34,9 +32,7 @@ interface PublishArgs {
 export const publish = ({ config, module }: PublishParams) => async ({ verbose, timeout, path }: PublishArgs): Promise<string> => {
   verbose && log(`Publishing ${module.name}...`);
 
-  const outPath = path ?? module.build?.outdir ?? `out/${encodeName(module.name!)}`;
-  const publishFolder = join(process.cwd(), outPath);
-
+  const publishFolder = join(process.cwd(), path ?? module.build!.outdir!);
   const total = await getFolderSize(publishFolder);
   const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
   bar.start(total, 0);

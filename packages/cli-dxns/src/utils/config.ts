@@ -27,6 +27,13 @@ const REPO_GIT = 'git';
 
 const IGNORED_CONFIG_ATTRIBUTES = ['version'];
 
+/**
+ * Encodes DXN string to fs path.
+ *
+ * Example: `example:app/braneframe` => `example/app/braneframe`
+ */
+const encodeName = (name: string) => name.replaceAll(':', '/');
+
 export const loadConfig = async (configPath: string = CONFIG_FILENAME): Promise<Config> => {
   // Props from package.json.
   const packageProps = mapvalues(pick(fs.existsSync(PACKAGE_JSON_FILENAME)
@@ -60,12 +67,16 @@ export const loadConfig = async (configPath: string = CONFIG_FILENAME): Promise<
       package: {
         license: dxConfig.package.license ?? packageProps.license,
         repos,
-        modules: dxConfig.package.modules.map((mod: PackageModule) => defaultsDeep(mod, {
-          tags: packageProps.keywords ?? [],
-          description: packageProps.description,
-          build: { command: DEFAULT_BUILD_COMMAND, outdir: DEFAULT_DIST_PATH },
-          repos: mod.repos ?? repos
-        }))
+        modules: dxConfig.package.modules.map((module: PackageModule) => {
+          const moduleOut = module.name && `out/${encodeName(module.name)}`;
+          const outdir = moduleOut && fs.existsSync(moduleOut) ? moduleOut : DEFAULT_DIST_PATH;
+          return defaultsDeep(module, {
+            tags: packageProps.keywords ?? [],
+            description: packageProps.description,
+            build: { command: DEFAULT_BUILD_COMMAND, outdir },
+            repos: module.repos ?? repos
+          });
+        })
       }
     }
   );
