@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "lib": [
-      "DOM"
+      "DOM",
+      "ESNext"
     ],
     "types": [
       "node",
