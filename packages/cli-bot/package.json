@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-bot",
-  "version": "2.18.3",
+  "version": "2.18.4",
   "description": "DXOS Bot CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-bot#readme",
   "bugs": {
