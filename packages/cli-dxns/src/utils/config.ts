@@ -21,18 +21,10 @@ export type PackageRepo = NonNullable<NonNullable<ConfigObject['package']>['repo
 export const CONFIG_FILENAME = 'dx.yml';
 
 const DEFAULT_BUILD_COMMAND = 'npm run build';
-const DEFAULT_DIST_PATH = 'out';
 
 const REPO_GIT = 'git';
 
 const IGNORED_CONFIG_ATTRIBUTES = ['version'];
-
-/**
- * Encodes DXN string to fs path.
- *
- * Example: `example:app/braneframe` => `example/app/braneframe`
- */
-const encodeName = (name: string) => name.replaceAll(':', '/');
 
 export const loadConfig = async (configPath: string = CONFIG_FILENAME): Promise<Config> => {
   // Props from package.json.
@@ -67,16 +59,12 @@ export const loadConfig = async (configPath: string = CONFIG_FILENAME): Promise<
       package: {
         license: dxConfig.package.license ?? packageProps.license,
         repos,
-        modules: dxConfig.package.modules.map((module: PackageModule) => {
-          const moduleOut = module.name && `out/${encodeName(module.name)}`;
-          const outdir = moduleOut && fs.existsSync(moduleOut) ? moduleOut : DEFAULT_DIST_PATH;
-          return defaultsDeep(module, {
-            tags: packageProps.keywords ?? [],
-            description: packageProps.description,
-            build: { command: DEFAULT_BUILD_COMMAND, outdir },
-            repos: module.repos ?? repos
-          });
-        })
+        modules: dxConfig.package.modules.map((module: PackageModule) => defaultsDeep(module, {
+          tags: packageProps.keywords ?? [],
+          description: packageProps.description,
+          build: { command: DEFAULT_BUILD_COMMAND },
+          repos: module.repos ?? repos
+        }))
       }
     }
   );
