@@ -111,7 +111,7 @@ const info: Extension = {
   modules: [{
     command: 'test'
   }]
-}
+};
 
 let cli: any;
 

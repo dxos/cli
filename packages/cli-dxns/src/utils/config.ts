@@ -15,7 +15,7 @@ import {
   DEFAULT_PACKAGE_JSON_ATTRIBUTES,
   EXTENSION_CONFIG_FILENAME,
   PACKAGE_JSON_FILENAME,
-  readFile,
+  readFile
 } from '@dxos/cli-core';
 import { Config } from '@dxos/config';
 import type { ConfigObject } from '@dxos/config';

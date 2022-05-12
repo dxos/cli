@@ -49,7 +49,7 @@ const getServiceInfo = (moduleName, serviceName) => {
   return service;
 };
 
-const getAuth = (config/*: ConfigObject*/, imageInfo) => ({
+const getAuth = (config/* : ConfigObject */, imageInfo) => ({
   username: config.get('runtime.services.machine.githubUsername'),
   password: config.get('runtime.services.machine.githubAccessToken'),
   serveraddress: `https://${imageInfo.image.split('/')[0]}`
