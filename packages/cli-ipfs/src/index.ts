@@ -10,8 +10,8 @@ import { createCLI } from '@dxos/cli-core';
 import { IPFSModule } from './modules/ipfs';
 
 module.exports = createCLI({
-  modules: [IPFSModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [IPFSModule],
   info: readFileSync(path.join(__dirname, '../dx.yml')).toString()
 });

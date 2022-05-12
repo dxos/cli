@@ -10,8 +10,8 @@ import { createCLI } from '@dxos/cli-core';
 import { EchoModule } from './modules/echo';
 
 module.exports = createCLI({
-  modules: [EchoModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [EchoModule],
   info: readFileSync(path.join(__dirname, '../dx.yml')).toString()
 });

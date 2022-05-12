@@ -97,11 +97,11 @@ process.on('uncaughtException', handleError);
 process.on('unhandledRejection', handleError);
 
 module.exports = createCLI({
-  options: CLI_CONFIG,
   dir: __dirname,
   main: !module.parent,
   info: {},
   init, // TODO(burdon): This has side-effects. Better to get modules from calling this method?
   destroy,
-  getModules: async () => modules
+  getModules: async () => modules,
+  options: CLI_CONFIG
 });

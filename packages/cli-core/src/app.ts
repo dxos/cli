@@ -10,41 +10,13 @@ import Yargs, { Arguments } from 'yargs';
 import unparse from 'yargs-unparser';
 import yargs from 'yargs/yargs';
 
-import { Config } from '@dxos/config';
-
 import { CoreOptions, coreOptions, FORWARD_OPTION } from './options';
+import { CoreState } from './types';
 import { getLoggers } from './utils';
 
 const VERSION_COMMAND = 'version';
 
 const { log, logError } = getLoggers();
-
-/**
- * Global CLI state.
- */
-export interface CoreState {
-  config?: Config
-  cliState: {
-    interactive: boolean
-  }
-  models?: any[]
-  modules?: Array<Function>
-  profilePath?: string | undefined
-  profileExists?: boolean
-  options?: {
-    prompt?: any
-    baseCommand?: any
-    enableInteractive?: boolean
-  }
-
-  getModules?: Function
-  getReadlineInterface?: Function
-}
-
-export interface ConstructorConfig extends Omit<CoreState, 'cliState'> {
-  state?: CoreState
-  version?: string
-}
 
 // http://patorjk.com/software/taag/#p=testall&f=Patorjk-HeX&t=DXOS
 const BANNER = '\n' +
@@ -54,6 +26,11 @@ const BANNER = '\n' +
   '______________/\\/\\____/\\/\\____/\\/\\/\\/\\____/\\/\\____/\\/\\________/\\/\\______________\n' +
   '______________/\\/\\/\\/\\/\\____/\\/\\____/\\/\\____/\\/\\/\\/\\____/\\/\\/\\/\\________________\n\n' +
   '                           DXOS Command Line Interface \n\n';
+
+export interface ConstructorConfig extends Omit<CoreState, 'cliState'> {
+  state?: CoreState
+  version?: string
+}
 
 /**
  * CLI app.
@@ -143,7 +120,7 @@ export class App {
   }
 
   /**
-   * yargs does not support async functions, so we wrap the call with a promise.
+   * Yargs does not support async functions, so we wrap the call with a promise.
    *
    * TODO(burdon): Async commands?
    * https://github.com/yargs/yargs/issues/918
@@ -163,7 +140,7 @@ export class App {
       }
 
       // http://yargs.js.org/docs/#api-parseargs-context-parsecallback
-      this._parser
+      void this._parser
         // Bug: yargs resets help settings after first usage of external CLI, so need to set it again.
         .help(true)
 
@@ -229,7 +206,7 @@ export class App {
         // Issue: yargs removes quotes.
         // https://github.com/yargs/yargs-parser/issues/180
         const result: any = await this.parseAsync(
-          this._args.map((a: any) => String(a).replace(/^{/g, '\'{').replace(/={/g, '=\'{').replace(/}$/g, '}\'')).join(' ')
+          this._args.map((arg: any) => String(arg).replace(/^{/g, '\'{').replace(/={/g, '=\'{').replace(/}$/g, '}\'')).join(' ')
         );
         const { output } = result;
 

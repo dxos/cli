@@ -7,13 +7,13 @@ import { Argv } from 'yargs';
 export const FORWARD_OPTION = 'forward';
 
 export interface CoreOptions {
-  verbose?: boolean,
-  json?: boolean,
-  dryRun?: boolean,
-  profile?: string,
-  [FORWARD_OPTION]?: string,
-  mnemonic?: (string | number)[],
-  interactive?: boolean,
+  verbose?: boolean
+  json?: boolean
+  dryRun?: boolean
+  profile?: string
+  [FORWARD_OPTION]?: string
+  mnemonic?: (string | number)[]
+  interactive?: boolean
 }
 
 export const coreOptions = (yargs: Argv<{}>): Argv<CoreOptions> => {
@@ -50,7 +50,7 @@ export const coreOptions = (yargs: Argv<{}>): Argv<CoreOptions> => {
       type: 'string'
     })
 
-  // Args to pass through to underlying binary (e.g. registry, signal, etc.).
+    // Args to pass through to underlying binary (e.g. registry, signal, etc.).
     .option({
       [FORWARD_OPTION]: {
         type: 'string',
@@ -58,7 +58,7 @@ export const coreOptions = (yargs: Argv<{}>): Argv<CoreOptions> => {
       }
     })
 
-  // Special case - required for extensions.
+    // Special case - required for extensions.
     .option('mnemonic', {
       type: 'array',
       hidden: true

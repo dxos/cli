@@ -22,11 +22,11 @@ const CLI_CONFIG = {
 export { CliDataState, StateManager };
 
 export default createCLI({
-  options: CLI_CONFIG,
-  modules: [PartyModule, DeviceModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [PartyModule, DeviceModule],
   init: initDataCliState,
   destroy: destroyDataCliState,
-  info: readFileSync(path.join(__dirname, '../dx.yml')).toString()
+  info: readFileSync(path.join(__dirname, '../dx.yml')).toString(),
+  options: CLI_CONFIG
 });

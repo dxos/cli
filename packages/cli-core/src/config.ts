@@ -11,7 +11,9 @@ import path from 'path';
 
 import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
 
-import envmap from './env-map.json';
+import envmap from './config/env-map.json';
+
+export const ENVS = Object.keys(envmap);
 
 export const PROFILE_ROOT = '.dx/profile';
 
@@ -27,8 +29,6 @@ export const PACKAGE_JSON_FILENAME = 'package.json';
 export const DEFAULT_PACKAGE_JSON_ATTRIBUTES = [
   'version', 'license', 'description', 'keywords', 'repository'
 ];
-
-export const ENVS = Object.keys(envmap);
 
 export const getProfilePath = (profile: string) => {
   return path.join(os.homedir(), PROFILE_ROOT, `${profile}.yml`);

@@ -2,7 +2,31 @@
 // Copyright 2022 DXOS.org
 //
 
+import { Config } from '@dxos/config';
+
 export const EXTENSION_CONFIG_FILENAME = 'dx.yml';
+
+/**
+ * Global CLI state.
+ */
+export interface CoreState {
+  config?: Config
+  cliState: {
+    interactive: boolean
+  }
+  models?: any[]
+  modules?: Array<Function>
+  profilePath?: string | undefined
+  profileExists?: boolean
+  options?: {
+    prompt?: any
+    baseCommand?: any
+    enableInteractive?: boolean
+  }
+
+  getModules?: Function
+  getReadlineInterface?: Function
+}
 
 /**
  * Generated CLI extension info.
@@ -27,17 +51,4 @@ export interface ExtensionInfo {
   destroy?: Function
   options?: any
   state?: any
-}
-
-// TODO(burdon): Change to class.
-export interface CLI {
-  modules?: any[]
-  getModules?: Function
-  init?: Function
-  destroy?: Function
-  dir: string
-  main?: boolean
-  options?: any
-  info: any
-  compose?: string
 }

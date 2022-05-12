@@ -14,9 +14,9 @@ import { DXNSModule } from './modules/dxns';
 export { DXNSClient };
 
 module.exports = createCLI({
-  modules: [DXNSModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [DXNSModule],
   init: initDXNSCliState,
   destroy: destroyDXNSCliState,
   info: readFileSync(path.join(__dirname, '../dx.yml')).toString(),

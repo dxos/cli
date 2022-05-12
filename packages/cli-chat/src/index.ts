@@ -10,8 +10,8 @@ import { createCLI } from '@dxos/cli-core';
 import { ChatModule } from './modules/chat';
 
 module.exports = createCLI({
-  modules: [ChatModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [ChatModule],
   info: readFileSync(path.join(__dirname, '../dx.yml')).toString()
 });

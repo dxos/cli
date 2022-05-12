@@ -10,8 +10,8 @@ import { createCLI } from '@dxos/cli-core';
 import { MeshModule } from './modules/mesh';
 
 module.exports = createCLI({
-  modules: [MeshModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [MeshModule],
   info: readFileSync(path.join(__dirname, '../dx.yml')).toString()
 });

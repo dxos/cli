@@ -12,9 +12,9 @@ import { createCLI } from '@dxos/cli-core';
 import { AppModule } from './modules/app';
 
 module.exports = createCLI({
-  modules: [AppModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [AppModule],
   info: readFileSync(path.join(__dirname, '../dx.yml')).toString(),
   compose: readFileSync(path.join(__dirname, '../docker-compose.yml')).toString()
 });

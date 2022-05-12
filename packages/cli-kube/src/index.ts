@@ -10,9 +10,9 @@ import { createCLI } from '@dxos/cli-core';
 import { KubeModule } from './modules/kube';
 
 module.exports = createCLI({
-  modules: [KubeModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [KubeModule],
   info: readFileSync(path.join(__dirname, '../dx.yml')).toString(),
   compose: readFileSync(path.join(__dirname, '../docker-compose.yml')).toString()
 });

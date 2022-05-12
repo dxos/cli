@@ -123,13 +123,13 @@ const exitSpy = jest.spyOn(process, 'exit').mockImplementation();
 
 beforeEach(() => {
   cli = createCLI({
-    options: CLI_CONFIG,
-    modules: [TestModule],
     dir: __dirname,
     main: false,
+    modules: [TestModule],
     info,
     init: initMock,
-    destroy: destroyMock
+    destroy: destroyMock,
+    options: CLI_CONFIG
   });
 });
 

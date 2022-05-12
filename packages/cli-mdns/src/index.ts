@@ -10,8 +10,8 @@ import { createCLI } from '@dxos/cli-core';
 import { MDNSModule } from './modules/mdns';
 
 module.exports = createCLI({
-  modules: [MDNSModule],
   dir: __dirname,
   main: !module.parent,
+  modules: [MDNSModule],
   info: readFileSync(path.join(__dirname, '../dx.yml')).toString()
 });

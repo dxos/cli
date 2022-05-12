@@ -12,7 +12,7 @@ import { Config } from '@dxos/config';
 
 import { App } from './app';
 import { getConfig, getActiveProfilePath } from './config';
-import { CLI, EXTENSION_CONFIG_FILENAME, ExtensionInfo } from './types';
+import { CoreState, EXTENSION_CONFIG_FILENAME, ExtensionInfo } from './types';
 import { getLoggers, loadCerts, printMissingProfile } from './utils';
 
 // Commands which are permitted to run without an active profile.
@@ -28,11 +28,10 @@ const { log, debugLog, logError } = getLoggers();
 
 /**
  * Provides command executor in form of CLI extension.
- * @param {ExtensionInfo} options
  */
 const getRunnableExtension = (extension: ExtensionInfo) => {
   const { modules, getModules, version, options = {} } = extension;
-  return async (state: any, argv: any) => {
+  return async (state: CoreState, argv: any) => {
     const app = new App({ modules, getModules, state, options, version });
     return app.start(argv);
   };
@@ -40,7 +39,6 @@ const getRunnableExtension = (extension: ExtensionInfo) => {
 
 /**
  * Provides command executor in form of standalone CLI.
- * @param {ExtensionInfo} options
  */
 const getRunnable = (extension: ExtensionInfo) => {
   const { modules, getModules, version, init, destroy, options = {} } = extension;
@@ -74,6 +72,7 @@ const getRunnable = (extension: ExtensionInfo) => {
       if (init) {
         await init(app.state);
       }
+
       await app.start();
     } catch (err) {
       logError(err);
@@ -86,30 +85,50 @@ const getRunnable = (extension: ExtensionInfo) => {
   };
 };
 
+export interface CLIOptions {
+  dir: string
+  main?: boolean
+  modules?: any[]
+  getModules?: Function
+  init?: Function
+  destroy?: Function
+  info: any // TODO(burdon): Define type.
+  compose?: string
+  options?: any
+}
+
+export type CLIObject = {
+  info: any // TODO(burdon): Define type.
+  run: () => Promise<void> // TODO(burdon): Rename runnable.
+  runAsExtension: (state: CoreState, argv: any) => Promise<void>
+  init?: Function
+  destroy?: Function
+  dockerCompose?: any
+}
+
 /**
  * Create new instance of CLI.
  */
-// TODO(burdon): Return type.
 export const createCLI = ({
+  dir,
   modules,
   getModules,
   init,
   destroy,
-  dir,
   main,
   options,
   info,
   compose
-}: CLI) => {
+}: CLIOptions): CLIObject | undefined => {
   assert(info, `Invalid ${EXTENSION_CONFIG_FILENAME} file.`);
   assert(dir);
 
   const pkg = readPkgUp.sync({ cwd: dir });
   const version = `v${pkg!.package.version}`;
 
-  const run = getRunnable({ modules, getModules, version, options, init, destroy });
+  const runnable = getRunnable({ modules, getModules, version, options, init, destroy });
   if (main) {
-    void run();
+    void runnable();
     return;
   }
 
@@ -129,7 +148,7 @@ export const createCLI = ({
         version: pkg!.package.version
       }
     },
-    run,
+    run: runnable,
     runAsExtension: getRunnableExtension({ modules, getModules, version, options }),
     init,
     destroy,
