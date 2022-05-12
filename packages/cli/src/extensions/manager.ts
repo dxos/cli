@@ -28,6 +28,12 @@ export class ExtensionManager {
     return writeFile({ extensions }, filePath, { absolute: true });
   }
 
+  async list () {
+    await this.load();
+    this._extensions.sort(({ moduleName: a }, { moduleName: b }) => a > b ? 1 : a < b ? -1 : 0);
+    return this._extensions;
+  }
+
   async get (name: string) {
     await this.load();
     return this._extensions.find(({ moduleName }) => moduleName === name);
@@ -51,11 +57,5 @@ export class ExtensionManager {
     await this.load();
     const extensions = this._extensions.filter(({ moduleName }) => moduleName !== name);
     await this.save(extensions);
-  }
-
-  async list () {
-    await this.load();
-    this._extensions.sort(({ moduleName: a }, { moduleName: b }) => a > b ? 1 : a < b ? -1 : 0);
-    return this._extensions;
   }
 }
