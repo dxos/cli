@@ -39,16 +39,11 @@ export class ExtensionManager {
     return this._extensions.find(({ moduleName }) => moduleName === name);
   }
 
-  async add (name: string, info: any) { // TODO(burdon): Type.
+  async add (name: string, extension: Extension) {
     await this.load();
+
     const extensions = this._extensions.filter(({ moduleName }) => moduleName !== name);
-    const { package: { version }, modules, description } = info;
-    extensions.push({
-      moduleName: name,
-      version,
-      description,
-      modules
-    });
+    extensions.push(extension);
 
     await this.save(extensions);
   }

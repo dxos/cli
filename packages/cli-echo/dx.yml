@@ -1,4 +1,4 @@
-name: dxos/cli-echo
+moduleName: "@dxos/cli-echo"
 version: 1.0.0
 displayName: cli-echo
 description: ECHO extension.

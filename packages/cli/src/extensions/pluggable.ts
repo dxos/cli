@@ -216,7 +216,7 @@ export class Pluggable {
     return this.module.runAsExtension(state, argv);
   }
 
-  getInfo () {
+  getInfo (): Extension {
     this._cleanCache();
     return this.module.info;
   }

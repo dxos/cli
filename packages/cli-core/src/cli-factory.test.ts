@@ -8,6 +8,7 @@ import readline from 'readline';
 import { Argv } from 'yargs';
 
 import { createCLI } from './cli-factory';
+import { Extension } from './types';
 import { asyncHandler } from './utils';
 
 const CLI_BASE_COMMAND = 'dx';
@@ -102,17 +103,15 @@ const TestModule = () => {
   });
 };
 
-const extName = 'dxos/cli-test';
-const extCommand = 'test';
-
-const info = `
-  name: ${extName}
-  version: 1.0.0
-  displayName: cli-test
-  description: TEST CLI.
-  command:
-    - ${extCommand}
-`;
+const info: Extension = {
+  moduleName: '@dxos/cli-test',
+  version: '1.0.0',
+  displayName: 'cli-test',
+  description: 'TEST CLI.',
+  modules: [{
+    command: 'test'
+  }]
+}
 
 let cli: any;
 

@@ -34,10 +34,11 @@ export interface CoreState {
 export type Extension = {
   moduleName: string
   version: string
+  displayName: string
   description: string
   modules: {
     command: string
-    description: string
+    description?: string
   }[]
 };
 

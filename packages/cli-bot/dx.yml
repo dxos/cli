@@ -1,4 +1,4 @@
-name: dxos/cli-bot
+moduleName: "@dxos/cli-bot"
 version: 1.0.0
 displayName: cli-bot
 description: Bot extension.

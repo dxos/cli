@@ -21,7 +21,7 @@
     "dist/"
   ],
   "scripts": {
-    "build": "./scripts/get-extensions.sh && tsc && cp -R ./gen/* dist",
+    "build": "./scripts/get-extensions.sh && tsc && cp -R ./gen/* dx.yml dist",
     "build:watch": "tsc --watch",
     "clean": "rm -rf ./dist",
     "cli": "ts-node --files ./src/main.ts",

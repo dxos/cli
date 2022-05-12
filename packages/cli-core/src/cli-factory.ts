@@ -11,7 +11,7 @@ import { Config } from '@dxos/config';
 
 import { App } from './app';
 import { getConfig, getActiveProfilePath } from './config';
-import { CoreState, EXTENSION_CONFIG_FILENAME, ExtensionInfo } from './types';
+import { CoreState, EXTENSION_CONFIG_FILENAME, ExtensionInfo, Extension } from './types';
 import { getLoggers, loadCerts, printMissingProfile } from './utils';
 
 // Commands which are permitted to run without an active profile.
@@ -92,13 +92,13 @@ export interface CLIOptions {
   getModules?: Function
   init?: Function
   destroy?: Function
-  info: any // TODO(burdon): Define type (dx.yml).
+  info: Extension
   docker?: any
   options?: any
 }
 
 export type CLIObject = {
-  info: any // TODO(burdon): Define type.
+  info: Extension
   run: () => Promise<void> // TODO(burdon): Rename runnable.
   runAsExtension: (state: CoreState, argv: any) => Promise<void>
   init?: Function
@@ -124,6 +124,8 @@ export const createCLI = ({
   assert(dir);
 
   const pkg = readPkgUp.sync({ cwd: dir });
+
+  info.version = pkg!.package.version;
   const version = `v${pkg!.package.version}`;
 
   const runnable = getRunnable({ modules, getModules, version, options, init, destroy });
@@ -132,20 +134,8 @@ export const createCLI = ({
     return;
   }
 
-  // dx.yml file.
-  // TODO(burdon): Type from protobuf definition.
-  const { modules: commandModules, ...restInfo } = info;
-
   return {
-    info: {
-      ...restInfo,
-      // TODO(burdon): Type and property?
-      commands: commandModules ? commandModules.map((module: any) => module.command) : undefined,
-      package: {
-        name: pkg!.package.name,
-        version: pkg!.package.version
-      }
-    },
+    info,
     run: runnable,
     runAsExtension: getRunnableExtension({ modules, getModules, version, options }),
     init,

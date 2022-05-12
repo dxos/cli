@@ -1,4 +1,4 @@
-name: dxos/cli-ipfs
+moduleName: "@dxos/cli-ipfs"
 version: 1.0.0
 displayName: cli-ipfs
 description: IPFS extension.

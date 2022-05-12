@@ -1,4 +1,4 @@
-name: dxos/cli-kube
+moduleName: "@dxos/cli-kube"
 version: 1.0.0
 displayName: cli-kube
 description: KUBE extension.

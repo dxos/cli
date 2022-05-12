@@ -53,14 +53,7 @@ const init = async (state: CoreState) => {
   const localExtensionFile = path.join(process.cwd(), EXTENSION_CONFIG_FILENAME);
   if (existsSync(localExtensionFile)) {
     const devExtensionInfo = loadYml(localExtensionFile);
-    const { name, version, description, modules } = devExtensionInfo;
-
-    knownExtensions.push({
-      moduleName: `@${name}`, // TODO(burdon): Just keep name and convert where needed via util?
-      version,
-      description,
-      modules
-    });
+    knownExtensions.push(devExtensionInfo);
   }
 
   const extensionManager = new ExtensionManager();
@@ -93,7 +86,7 @@ process.on('unhandledRejection', handleError);
 module.exports = createCLI({
   dir: __dirname,
   main: !module.parent,
-  info: {},
+  info: loadYml(path.join(__dirname, `../${EXTENSION_CONFIG_FILENAME}`)),
   init, // TODO(burdon): This has side-effects. Better to get modules from calling this method?
   destroy,
   getModules: async () => modules,

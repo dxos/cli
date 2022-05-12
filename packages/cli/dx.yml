@@ -1,0 +1,14 @@
+moduleName: "@dxos/cli"
+version: 1.0.0
+displayName: cli
+description: DXOS CLI
+modules:
+  - command: "devtools"
+  - command: "extension"
+  - command: "service"
+  - command: "uninstall"
+  - command: "upgrade"
+  - command: "halo"
+  - command: "info"
+  - command: "profile"
+  - command: "storage"

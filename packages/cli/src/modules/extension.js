@@ -3,13 +3,12 @@
 //
 
 import assert from 'assert';
-import get from 'lodash.get';
 import { compare, valid } from 'semver';
 
 import { TemplateHelper, asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { ExtensionManager, Pluggable, addInstalled } from '../extensions';
+import { ExtensionManager, Pluggable } from '../extensions';
 
 // TODO(burdon): Move to config.
 const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/cli-template';
@@ -35,7 +34,7 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
         let extensions = await extensionManager.list();
         extensions = extensions.map(({ moduleName, version, description, modules }) => ({
           extension: moduleName,
-          modules,
+          modules: modules.map(module => module.command),
           version,
           description
         }));
@@ -73,11 +72,11 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
         }
         if (pluggable.installed) {
           const info = pluggable.getInfo();
-          const installedVersion = get(info, 'package.version');
+          const installedVersion = info.version;
 
           let action = 'upgrade';
 
-          // TODO(egorgripasov): Read verison number from WNS.
+          // TODO(egorgripasov): Read verison number from DXNS.
           if (version && valid(version) && installedVersion) {
             const comp = compare(version, installedVersion);
             switch (comp) {
@@ -145,11 +144,10 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
         }
 
         const info = pluggable.getInfo();
-        const installedVersion = get(info, 'package.version');
 
         const rl = getReadlineInterface();
         const wishToProceed = await new Promise(resolve => {
-          rl.question(`Found Extension ${moduleName}${installedVersion ? `@${installedVersion}` : ''} installed, do you wish to remove it? (Yes/No): `, answer => {
+          rl.question(`Found Extension ${moduleName}${info.version ? `@${info.version}` : ''} installed, do you wish to remove it? (Yes/No): `, answer => {
             resolve(answer);
           });
         });
