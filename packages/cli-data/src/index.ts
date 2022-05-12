@@ -2,10 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import { readFileSync } from 'fs';
 import path from 'path';
 
-import { EXTENSION_CONFIG_FILENAME, createCLI } from '@dxos/cli-core';
+import { EXTENSION_CONFIG_FILENAME, createCLI, loadYml } from '@dxos/cli-core';
 
 import { destroyDataCliState, initDataCliState, CliDataState } from './init';
 import { PartyModule, DeviceModule } from './modules';
@@ -27,6 +26,6 @@ export default createCLI({
   modules: [PartyModule, DeviceModule],
   init: initDataCliState,
   destroy: destroyDataCliState,
-  info: readFileSync(path.join(__dirname, `../${EXTENSION_CONFIG_FILENAME}`)).toString(),
+  info: loadYml(path.join(__dirname, `../${EXTENSION_CONFIG_FILENAME}`)),
   options: CLI_CONFIG
 });

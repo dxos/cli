@@ -4,7 +4,6 @@
 
 import assert from 'assert';
 import fs from 'fs';
-import yaml from 'js-yaml';
 import readPkgUp from 'read-pkg-up';
 import parse from 'yargs-parser';
 
@@ -66,6 +65,7 @@ const getRunnable = (extension: ExtensionInfo) => {
     // These defaults are required as during 'dx profile init', there is no config to load, and so no client can be created.
     const config: Config = profileExists ? (await getConfig(profilePath!)) : { get: () => ({}) } as any;
 
+    // Create app.
     const app = new App({ modules, getModules, config, options, version, profilePath, profileExists });
 
     try {
@@ -92,8 +92,8 @@ export interface CLIOptions {
   getModules?: Function
   init?: Function
   destroy?: Function
-  info: any // TODO(burdon): Define type.
-  compose?: string
+  info: any // TODO(burdon): Define type (dx.yml).
+  docker?: any
   options?: any
 }
 
@@ -103,7 +103,7 @@ export type CLIObject = {
   runAsExtension: (state: CoreState, argv: any) => Promise<void>
   init?: Function
   destroy?: Function
-  dockerCompose?: any
+  docker?: any
 }
 
 /**
@@ -118,7 +118,7 @@ export const createCLI = ({
   main,
   options,
   info,
-  compose
+  docker
 }: CLIOptions): CLIObject | undefined => {
   assert(info, `Invalid ${EXTENSION_CONFIG_FILENAME} file.`);
   assert(dir);
@@ -134,16 +134,13 @@ export const createCLI = ({
 
   // dx.yml file.
   // TODO(burdon): Type from protobuf definition.
-  const { modules: commandModules, ...restInfo } = yaml.load(info);
-
-  // TODO(egorgripasov): Docker compose.
-  const dockerCompose = compose ? yaml.load(compose) : undefined;
+  const { modules: commandModules, ...restInfo } = info;
 
   return {
     info: {
       ...restInfo,
-      // TODO(burdon): ???
-      commands: commandModules ? commandModules.map((module: any) => module.command) : undefined, // TODO(burdon): Type?
+      // TODO(burdon): Type and property?
+      commands: commandModules ? commandModules.map((module: any) => module.command) : undefined,
       package: {
         name: pkg!.package.name,
         version: pkg!.package.version
@@ -153,6 +150,6 @@ export const createCLI = ({
     runAsExtension: getRunnableExtension({ modules, getModules, version, options }),
     init,
     destroy,
-    dockerCompose
+    docker
   };
 };

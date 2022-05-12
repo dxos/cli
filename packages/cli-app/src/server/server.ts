@@ -10,13 +10,13 @@ import cors from 'cors';
 import debug from 'debug';
 import express, { Request, RequestHandler, Response } from 'express';
 import fs from 'fs';
-import yaml from 'js-yaml';
 import get from 'lodash.get';
 import fetch from 'node-fetch';
 import os from 'os';
 import { join } from 'path';
 import urlJoin from 'url-join';
 
+import { loadYml } from '@dxos/cli-core';
 import { DXN, CID, RegistryClient, RegistryRecord } from '@dxos/registry-client';
 
 import { BASE_URL, DEFAULT_PORT } from '../config';
@@ -119,7 +119,7 @@ export const serve = async ({ port = DEFAULT_PORT, ipfsGateway, configFile, logi
         return res.json({});
       }
 
-      res.json(yaml.load(String(fs.readFileSync(path))));
+      res.json(loadYml(path));
     } catch (err) {
       log(err);
       res.status(500);

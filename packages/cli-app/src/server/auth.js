@@ -4,9 +4,10 @@
 
 import debug from 'debug';
 import fs from 'fs';
-import yaml from 'js-yaml';
+import os from 'os';
+import path from 'path';
 
-import { generateQRCode, verifyToken } from '@dxos/cli-core';
+import { generateQRCode, loadYml, verifyToken } from '@dxos/cli-core';
 
 import { BASE_URL } from '../config';
 import { createPath } from './server';
@@ -16,7 +17,7 @@ debug.enable('dxos:*');
 
 const COOKIE_MAX_AGE = 60;
 
-const whitelistFile = '~/.dx/keyhole-whitelist.yml';
+const whitelistFile = path.join(os.homedir(), '.dx/keyhole-whitelist.yml');
 
 const bypassAuthParamRegexp = /\?code=[0-9]{6}/;
 
@@ -48,20 +49,19 @@ export const authMiddleware = (loginApp, enabled) => async (req, res, next) => {
 
 export const walletAuthHandler = async (req, res) => {
   const path = createPath(whitelistFile);
-
   if (!fs.existsSync(path)) {
-    log(`No file ${path}, whitelist is empty.`);
+    log(`Missing whitelist file: ${path}`);
     return res.sendStatus(401);
   }
 
-  const whitelist = yaml.load(fs.readFileSync(path));
+  const whitelist = loadYml(path);
   const keys = whitelist.whitelistedPublicKeys ?? [];
 
   if (req.body.key && keys.includes(req.body.key)) {
-    log('Found public key in the whitelist');
+    log('Found public key in the whitelist.');
     return res.sendStatus(200);
   } else {
-    log('Didn\'t find public key in the whitelist');
+    log('Public key not in whitelist.');
     return res.sendStatus(401);
   }
 };

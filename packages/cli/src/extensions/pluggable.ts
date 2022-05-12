@@ -223,7 +223,7 @@ export class Pluggable {
 
   getDockerCompose () {
     this._cleanCache();
-    return this.module.dockerCompose;
+    return this.module.docker;
   }
 
   _cleanCache () {
