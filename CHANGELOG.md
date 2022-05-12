@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.18.4](https://www.github.com/dxos/cli/compare/v2.18.3...v2.18.4) (2022-05-12)
+
+
+### Features
+
+* **cli-dxns:** Default deploy path is out/<encoded-dxn> ([#504](https://www.github.com/dxos/cli/issues/504)) ([2f209bf](https://www.github.com/dxos/cli/commit/2f209bf82cded3771450f8e6fab8f905bce13190))
+
 ### [2.18.3](https://www.github.com/dxos/cli/compare/v2.18.2...v2.18.3) (2022-05-10)
 
 
