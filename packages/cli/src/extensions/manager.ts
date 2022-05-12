@@ -11,6 +11,9 @@ export const EXTENSIONS_CONFIG = '.dx/extensions.yml';
 
 const filePath = path.join(os.homedir(), EXTENSIONS_CONFIG);
 
+/**
+ * Manages saved extension info.
+ */
 export class ExtensionsManager {
   _extensions: Extension[] = [];
 
