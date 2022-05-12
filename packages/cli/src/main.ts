@@ -9,7 +9,7 @@ import path from 'path';
 
 import { getLoggers, createCLI, CoreState, Extension, EXTENSION_CONFIG_FILENAME } from '@dxos/cli-core';
 
-import { PluggableModule, listInstalled } from './extensions';
+import { PluggableModule, ExtensionManager } from './extensions';
 import {
   DevtoolsModule,
   ExtensionModule,
@@ -67,7 +67,8 @@ const init = async (state: CoreState) => {
     });
   }
 
-  const installedExtensions: Extension[] = await listInstalled();
+  const extensionManager = new ExtensionManager();
+  const installedExtensions: Extension[] = await extensionManager.list();
   const pluggableExtensions: Extension[] = uniqBy(knownExtensions.concat(installedExtensions), 'moduleName');
   for await (const pluggableExtension of pluggableExtensions) {
     const pluggableModule = new PluggableModule(pluggableExtension, state);

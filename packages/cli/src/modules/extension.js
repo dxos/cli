@@ -9,7 +9,7 @@ import { compare, valid } from 'semver';
 import { TemplateHelper, asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { Pluggable, addInstalled, removeInstalled, listInstalled } from '../system';
+import { ExtensionManager, Pluggable, addInstalled } from '../extensions';
 
 // TODO(burdon): Move to config.
 const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/cli-template';
@@ -31,7 +31,8 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
       handler: asyncHandler(async argv => {
         const { json } = argv;
-        let extensions = await listInstalled();
+        const extensionManager = new ExtensionManager();
+        let extensions = await extensionManager.list();
         extensions = extensions.map(({ moduleName, version, description, modules }) => ({
           extension: moduleName,
           modules,
@@ -104,7 +105,8 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
           if (!(/^y/i.test(wishToUpgrade))) {
             log('Abotring.');
-            await addInstalled(moduleName, info);
+            const extensionManager = new ExtensionManager();
+            await extensionManager.add(moduleName, info);
             return;
           }
         }
@@ -113,7 +115,8 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
         await pluggable.installModule(npmClient, { spinner });
 
         const updatedInfo = pluggable.getInfo();
-        await addInstalled(moduleName, updatedInfo);
+        const extensionManager = new ExtensionManager();
+        await extensionManager.add(moduleName, updatedInfo);
       })
     })
 
@@ -127,7 +130,6 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
       handler: asyncHandler(async argv => {
         const { module: moduleName, npmClient } = argv;
-
         assert(moduleName, 'Invalid extension.');
 
         const pluggable = new Pluggable({ moduleName });
@@ -136,8 +138,9 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
           return;
         }
 
+        const extensionManager = new ExtensionManager();
         if (!pluggable.installed) {
-          await removeInstalled(moduleName);
+          await extensionManager.remove(moduleName);
           return;
         }
 
@@ -159,8 +162,7 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
         const spinner = `Uninstalling ${moduleName}`;
         await pluggable.uninstallModule(npmClient, { spinner });
-
-        await removeInstalled(moduleName);
+        await extensionManager.remove(moduleName);
       })
     })
 

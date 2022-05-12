@@ -14,10 +14,10 @@ const filePath = path.join(os.homedir(), EXTENSIONS_CONFIG);
 /**
  * Manages saved extension info.
  */
-export class ExtensionsManager {
+export class ExtensionManager {
   _extensions: Extension[] = [];
 
-  // TODO(burdon): Change to sync.
+  // TODO(burdon): Change to sync read/write.
 
   async load () {
     const { extensions = [] } = await readFile(filePath, { absolute: true });
@@ -59,25 +59,3 @@ export class ExtensionsManager {
     return this._extensions;
   }
 }
-
-// TODO(burdon): Make load/save sync and replace with ExtensionsManager.
-
-export const getExtension = async (name: string) => {
-  const manager = new ExtensionsManager();
-  return manager.get(name);
-};
-
-export const addInstalled = async (name: string, info: Extension) => {
-  const manager = new ExtensionsManager();
-  await manager.add(name, info);
-};
-
-export const removeInstalled = async (name: string) => {
-  const manager = new ExtensionsManager();
-  await manager.remove(name);
-};
-
-export const listInstalled = async () => {
-  const manager = new ExtensionsManager();
-  return manager.list();
-};

@@ -12,7 +12,7 @@ import stripJsonComments from 'strip-json-comments';
 
 import { isGlobalYarn, CoreState, Extension, CLIObject } from '@dxos/cli-core';
 
-import { addInstalled } from './manager';
+import { ExtensionManager } from './manager';
 import { getWorkspaceRoot, runCommand } from './utils';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
@@ -198,7 +198,9 @@ export class Pluggable {
       const spinner = `Installing ${moduleName}${version ? `@${version}` : ''}`;
       try {
         await this.installModule(undefined, { spinner });
-        await addInstalled(moduleName, this.getInfo());
+
+        const extensionManager = new ExtensionManager();
+        await extensionManager.add(moduleName, this.getInfo());
 
         const { init, destroy } = this.module;
         if (init || destroy) {
