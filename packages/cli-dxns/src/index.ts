@@ -5,7 +5,7 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 
-import { createCLI } from '@dxos/cli-core';
+import { EXTENSION_CONFIG_FILENAME, createCLI } from '@dxos/cli-core';
 
 import { destroyDXNSCliState, initDXNSCliState } from './init';
 import { DXNSClient } from './interfaces';
@@ -19,6 +19,6 @@ module.exports = createCLI({
   modules: [DXNSModule],
   init: initDXNSCliState,
   destroy: destroyDXNSCliState,
-  info: readFileSync(path.join(__dirname, '../dx.yml')).toString(),
+  info: readFileSync(path.join(__dirname, `../${EXTENSION_CONFIG_FILENAME}`)).toString(),
   compose: readFileSync(path.join(__dirname, '../docker-compose.yml')).toString()
 });

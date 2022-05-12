@@ -23,13 +23,12 @@ export interface CoreState {
     baseCommand?: any
     enableInteractive?: boolean
   }
-
   getModules?: Function
   getReadlineInterface?: Function
 }
 
 /**
- * Generated CLI extension info.
+ * Config from dx.yml file.
  */
 // TODO(burdon): Use consistently across all packages.
 export type Extension = {

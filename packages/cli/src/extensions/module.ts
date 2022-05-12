@@ -4,14 +4,13 @@
 
 import { asyncHandler, CoreState, Extension, getLoggers } from '@dxos/cli-core';
 
-import { Pluggable } from '../pluggable';
+import { Pluggable } from './pluggable';
 
 const { debugLog } = getLoggers();
 
 /**
  * Wrapper class for CLI extension.
  */
-// TODO(burdon): Move out of modules folder.
 export class PluggableModule {
   _pluggable?: Pluggable;
 

@@ -133,16 +133,17 @@ export const createCLI = ({
   }
 
   // dx.yml file.
+  // TODO(burdon): Type from protobuf definition.
   const { modules: commandModules, ...restInfo } = yaml.load(info);
 
   // TODO(egorgripasov): Docker compose.
   const dockerCompose = compose ? yaml.load(compose) : undefined;
 
-  // TODO(burdon): Change to class?
   return {
     info: {
       ...restInfo,
-      command: commandModules ? commandModules.map((module: any) => module.command) : undefined, // TODO(burdon): Type?
+      // TODO(burdon): ???
+      commands: commandModules ? commandModules.map((module: any) => module.command) : undefined, // TODO(burdon): Type?
       package: {
         name: pkg!.package.name,
         version: pkg!.package.version

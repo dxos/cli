@@ -7,15 +7,14 @@ import yaml from 'js-yaml';
 import uniqBy from 'lodash.uniqby';
 import path from 'path';
 
-import { getLoggers, createCLI, CoreState, Extension } from '@dxos/cli-core';
+import { getLoggers, createCLI, CoreState, Extension, EXTENSION_CONFIG_FILENAME } from '@dxos/cli-core';
 
-import { listInstalled } from './extensions';
+import { PluggableModule, listInstalled } from './extensions';
 import {
   DevtoolsModule,
   ExtensionModule,
   HaloModule,
   InfoModule,
-  PluggableModule,
   ProfileModule,
   ServicesModule,
   StorageModule,
@@ -24,8 +23,6 @@ import {
 } from './modules';
 
 const CLI_BASE_COMMAND = 'dx';
-
-const EXTENSION_FILE = 'dx.yml';
 
 const { logError } = getLoggers();
 
@@ -55,7 +52,7 @@ const init = async (state: CoreState) => {
   const knownExtensions: Extension[] = yaml.load(extensionDefs);
 
   // If developing new extension - read info from cwd.
-  const localExtensionFile = path.join(process.cwd(), EXTENSION_FILE);
+  const localExtensionFile = path.join(process.cwd(), EXTENSION_CONFIG_FILENAME);
   if (existsSync(localExtensionFile)) {
     // Load DXNS YML file.
     const devExtension = readFileSync(localExtensionFile).toString();

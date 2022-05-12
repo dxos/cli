@@ -9,8 +9,7 @@ import readPkgUp from 'read-pkg-up';
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { addInstalled, removeInstalled, listInstalled } from '../extensions';
-import { Pluggable } from '../pluggable';
+import { Pluggable, addInstalled, removeInstalled, listInstalled } from '../system';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
@@ -77,6 +76,7 @@ export const UpgradeModule = ({ config }) => ({
         log(`Found extensions: ${extensions.map(({ moduleName }) => moduleName).join(', ')}`);
         modules = extensions.map(({ moduleName }) => new Pluggable({ moduleName, version: newVersion }));
       }
+
       modules.push(new Pluggable({ moduleName: pkg.package.name, version: newVersion }));
     }
 
@@ -88,6 +88,7 @@ export const UpgradeModule = ({ config }) => ({
       } catch (error) {
         log(`Unable to uninstall ${module.moduleName}: ${error.message}`);
       }
+
       await removeInstalled(module.moduleName);
     }
 

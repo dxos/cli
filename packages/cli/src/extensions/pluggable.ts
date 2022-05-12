@@ -2,62 +2,20 @@
 // Copyright 2020 DXOS.org
 //
 
-/* eslint import/no-dynamic-require: 0 */
 /* eslint @typescript-eslint/no-var-requires: 0 */
 /* eslint global-require: 0 */
 
-import { exec } from 'child_process';
-import findRoot from 'find-root';
 import fs from 'fs';
-import ora from 'ora';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
 import stripJsonComments from 'strip-json-comments';
 
-import { prepareExec, isGlobalYarn, CoreState, Extension } from '@dxos/cli-core';
+import { isGlobalYarn, CoreState, Extension, CLIObject } from '@dxos/cli-core';
 
-import { addInstalled } from './extensions';
+import { addInstalled } from './manager';
+import { getWorkspaceRoot, runCommand } from './utils';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
-
-/**
- * Asynchronosly run the shell command.
- */
-const runCommand = async (command: string, args: string[], options: any) => {
-  return new Promise((resolve, reject) => {
-    const { spinner: spinnerText } = options;
-    const spinner = ora(spinnerText);
-    spinner.start();
-
-    exec(`${prepareExec(command)} ${args.join(' ')}`, (err) => {
-      if (err) {
-        spinner.fail();
-        reject(err);
-      } else {
-        spinner.succeed();
-        spinner.clear();
-        resolve(true);
-      }
-    });
-  });
-};
-
-/**
- * Finds root dir of a workspace.
- */
-const getWorkspaceRoot = (from: string) => {
-  try {
-    return findRoot(from, dir => {
-      const pkgPath = path.join(dir, 'package.json');
-      if (fs.existsSync(pkgPath)) {
-        const { workspaces } = require(pkgPath);
-        return workspaces && (Array.isArray(workspaces) || workspaces.packages);
-      }
-    });
-  } catch (err) {
-    return '';
-  }
-};
 
 /**
  * Pluggable CLI module.
@@ -77,11 +35,10 @@ export class Pluggable {
   /**
    * Pluggable factory.
    */
-  static create (config: Extension) {
-    return new Pluggable(config);
+  static create (extension: Extension) {
+    return new Pluggable(extension);
   }
 
-  // TODO(burdon): Change from object?
   constructor ({ moduleName, version }: Extension) {
     this._moduleName = moduleName;
     this._version = version;
@@ -103,24 +60,13 @@ export class Pluggable {
     this._installed = this.isInstalled();
   }
 
-  get moduleName () {
-    return this._moduleName;
-  }
-
-  get version () {
-    return this._version;
-  }
-
-  get workspaceRoot () {
-    return this._workspaceRoot;
-  }
-
-  get installed () {
-    return this._installed;
-  }
-
-  get isInWorkspace () {
-    return this._isInWorkspace;
+  /**
+   * Returns the exported info.
+   */
+  get module (): CLIObject {
+    const module = require(this.modulePath);
+    const cli = module.default ?? module; // Difference between `module.exports` and `export default`.
+    return cli;
   }
 
   get modulePath () {
@@ -141,10 +87,24 @@ export class Pluggable {
     return this._modulePath;
   }
 
-  get module () {
-    const module = require(this.modulePath);
-    const moduleCli = module.default ?? module; // Difference between `module.exports` and `export default`.
-    return moduleCli;
+  get moduleName () {
+    return this._moduleName;
+  }
+
+  get version () {
+    return this._version;
+  }
+
+  get workspaceRoot () {
+    return this._workspaceRoot;
+  }
+
+  get installed () {
+    return this._installed;
+  }
+
+  get isInWorkspace () {
+    return this._isInWorkspace;
   }
 
   /**

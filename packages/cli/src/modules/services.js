@@ -25,7 +25,7 @@ import {
 // TODO(burdon): Convert to TS.
 // import type { ConfigObject } from '@dxos/config';
 
-import { Pluggable } from '../pluggable';
+import { Pluggable } from '../system';
 
 const DEFAULT_LOG_LINES = 100;
 const DEFAULT_CONFIG_PATH = '/root/.dx/profile/local.yml';

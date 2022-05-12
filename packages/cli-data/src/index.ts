@@ -5,7 +5,7 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 
-import { createCLI } from '@dxos/cli-core';
+import { EXTENSION_CONFIG_FILENAME, createCLI } from '@dxos/cli-core';
 
 import { destroyDataCliState, initDataCliState, CliDataState } from './init';
 import { PartyModule, DeviceModule } from './modules';
@@ -27,6 +27,6 @@ export default createCLI({
   modules: [PartyModule, DeviceModule],
   init: initDataCliState,
   destroy: destroyDataCliState,
-  info: readFileSync(path.join(__dirname, '../dx.yml')).toString(),
+  info: readFileSync(path.join(__dirname, `../${EXTENSION_CONFIG_FILENAME}`)).toString(),
   options: CLI_CONFIG
 });

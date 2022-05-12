@@ -9,9 +9,9 @@ import { compare, valid } from 'semver';
 import { TemplateHelper, asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { addInstalled, removeInstalled, listInstalled } from '../extensions';
-import { Pluggable } from '../pluggable';
+import { Pluggable, addInstalled, removeInstalled, listInstalled } from '../system';
 
+// TODO(burdon): Move to config.
 const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/cli-template';
 
 /**
