@@ -8,10 +8,10 @@
  *
  * @param func {Function<{argv}>}
  */
-export const asyncHandler = (func: Function) => {
-  return (argv: any) => {
+ export const asyncHandler = (func: Function) => {
+  return async (argv: any) => {
     try {
-      argv._result = func(argv);
+      argv._result = await func(argv);
       return argv._result;
     } catch (err) {
       argv._result = Promise.reject(err);

@@ -180,8 +180,7 @@ describe('cli-factory', () => {
     expect(mockMethod.mock.calls[0][0][testArg]).toEqual(testArgValue);
   });
 
-  // TODO(egorgripasov): Fix flacky test.
-  test.skip('thrown error - graceful exit', async () => {
+  test('thrown error - graceful exit', async () => {
     process.argv = ['node', 'jest', 'test', 'fail-command'];
 
     const errPrintSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
