@@ -8,7 +8,7 @@
  *
  * @param func {Function<{argv}>}
  */
- export const asyncHandler = (func: Function) => {
+export const asyncHandler = (func: Function) => {
   return async (argv: any) => {
     try {
       argv._result = await func(argv);
