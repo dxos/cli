@@ -2,11 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-import { asyncHandler, CoreState, Extension, getLoggers } from '@dxos/cli-core';
+import { asyncHandler, CoreState, Extension /*, getLoggers */ } from '@dxos/cli-core';
 
 import { Pluggable } from './pluggable';
 
-const { debugLog } = getLoggers();
+// const { debugLog } = getLoggers();
 
 /**
  * Wrapper class for CLI extension.
@@ -44,10 +44,10 @@ export class PluggableModule {
    */
   // TODO(burdon): Type.
   export (): any[] {
-    const { moduleName, modules } = this._extension;
+    const { /* moduleName, */ modules } = this._extension;
     return modules.map(({ command, description }) => {
       return (() => {
-        debugLog(`Export ${moduleName}:${command}`);
+        // debugLog(`Export ${moduleName}:${command}`);
 
         return {
           command,
