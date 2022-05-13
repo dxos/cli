@@ -69,13 +69,6 @@ export class App {
     // http://yargs.js.org/docs/#api-strictenabledtrue
     .strict(true)
 
-    .command({
-      command: '*',
-      handler () {
-        Yargs.showHelp();
-      }
-    })
-
     // http://yargs.js.org/docs/#api-failfn
     .fail(msg => {
       throw new Error(msg);
