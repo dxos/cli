@@ -53,7 +53,10 @@ const init = async (state: CoreState) => {
   const localExtensionFile = path.join(process.cwd(), EXTENSION_CONFIG_FILENAME);
   if (existsSync(localExtensionFile)) {
     const devExtensionInfo = loadYml(localExtensionFile);
-    knownExtensions.push(devExtensionInfo);
+    // TODO(egorgripasov): Once proper dx.yml in place check if DXNS type == 'extension' instead.
+    if (devExtensionInfo.moduleName) {
+      knownExtensions.push(devExtensionInfo);
+    }
   }
 
   const extensionManager = new ExtensionManager();
