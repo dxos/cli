@@ -5,16 +5,14 @@
 import assert from 'assert';
 import crypto from 'crypto';
 import DigitalOcean from 'do-wrapper';
-import { readFileSync } from 'fs';
-import yaml from 'js-yaml';
 import path from 'path';
 
 import { waitForCondition } from '@dxos/async';
+import { loadYml } from '@dxos/cli-core';
 
 import { KUBE_TAG, KubeDeployOptions, KubeDomainCreateOptions, Provider } from './common';
 
-const SSH_KEYS = readFileSync(path.join(__dirname, '../../ssh-keys.yml')).toString();
-const { keys: defaultSSHKeys } = yaml.load(SSH_KEYS);
+const { keys: defaultSSHKeys } = loadYml(path.join(__dirname, '../../ssh-keys.yml'));
 
 const DEFAULT_REGION = 'nyc3';
 const DEFAULT_MEMORY = 4;

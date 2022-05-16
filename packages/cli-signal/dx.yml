@@ -1,6 +1,5 @@
-name: dxos/cli-signal
-version: 0.0.1
+moduleName: "@dxos/cli-signal"
 displayName: cli-signal
 description: Signal server extension.
-command:
-  - signal
+modules:
+  - command: "signal"

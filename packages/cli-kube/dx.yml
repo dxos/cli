@@ -1,0 +1,5 @@
+moduleName: "@dxos/cli-kube"
+displayName: cli-kube
+description: KUBE extension.
+modules:
+  - command: "kube"

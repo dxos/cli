@@ -9,7 +9,7 @@ import type { CliDataState } from '@dxos/cli-data';
 import type { Item } from '@dxos/echo-db';
 import { ObjectModel } from '@dxos/object-model';
 
-const DEFAULT_ITEM_TYPE = 'wrn://dxos.org/item/general';
+const DEFAULT_ITEM_TYPE = 'dxn://dxos/item/general';
 
 const displayItem = ({ id, type, parent, model }: any) => ({
   id,
@@ -22,15 +22,12 @@ export const EchoModule = ({ stateManager }: CliDataState) => ({
   command: ['echo'],
   describe: 'ECHO database.',
   builder: (yargs: Argv<CoreOptions>) => yargs
-
     .command({
       command: ['list'],
       describe: 'List echo items.',
       builder: yargs => yargs,
-
       handler: asyncHandler(async (argv: Arguments<CoreOptions>) => {
         const { json } = argv;
-
         const party = await stateManager.getParty();
         const items: Item<any>[] = party?.database.select().query().entities ?? [];
         const result = (items || []).map(item => {

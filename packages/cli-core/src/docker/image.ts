@@ -30,6 +30,7 @@ type ContainerSettings = {
   restore?: boolean,
 };
 
+// TODO(burdon): Not used?
 // TODO(egorgripasov): Extend with default values, etc.
 export const getImageInfo = (image: string) => yaml.load(image);
 

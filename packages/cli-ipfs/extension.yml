@@ -1,6 +1,0 @@
-name: dxos/cli-ipfs
-version: 0.0.1
-displayName: cli-ipfs
-description: IPFS extension.
-command:
-  - ipfs

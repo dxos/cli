@@ -13,7 +13,6 @@ import { PROFILE_ROOT, STORAGE_ROOT, PROFILE_STORE, SESSION_PROFILE_STORE } from
 const ensureProfileStore = () => {
   const profileStorePath = path.join(os.homedir(), PROFILE_STORE);
   fs.ensureFileSync(profileStorePath);
-
   return profileStorePath;
 };
 
@@ -31,8 +30,8 @@ export const getClientProfilePath = (storagePath: string | undefined, name?: str
   if (name) {
     storagePath = path.join(os.homedir(), STORAGE_ROOT, name);
   }
-  assert(storagePath, 'Please provide storage path.');
 
+  assert(storagePath, 'Please provide storage path.');
   fs.ensureDirSync(storagePath);
   return storagePath;
 };
@@ -48,7 +47,6 @@ export const resetStorageForClientProfile = (storagePath: string | undefined, na
 
   assert(storagePath, 'Please provide storage path.');
   fs.removeSync(storagePath);
-
   if (storagePath === currentStoragePath) {
     saveCurrentProfilePath('');
     cleanSessionProfile();
@@ -75,11 +73,13 @@ export const getCurrentProfilePath = () => {
       currentProfilePath = fs.readFileSync(tpmProfilesPath, { encoding: 'utf8' });
     }
   }
+
   // Read from regular file.
   if (!currentProfilePath) {
     const profileStorePath = ensureProfileStore();
     currentProfilePath = fs.readFileSync(profileStorePath, { encoding: 'utf8' });
   }
+
   return currentProfilePath;
 };
 
@@ -96,6 +96,7 @@ export const listClientProfileConfigs = () => {
   const profiles = fs.readdirSync(profilesPath, { withFileTypes: true })
     .filter(file => !file.isDirectory() && file.name.endsWith('.yml'))
     .map(file => file.name.split('.yml')[0]);
+
   return profiles;
 };
 
@@ -104,6 +105,7 @@ export const listClientProfilePaths = () => {
   const profiles = fs.readdirSync(storagePath, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
     .map(dirent => dirent.name);
+
   return profiles;
 };
 
@@ -114,7 +116,6 @@ export const useProfile = (name: string) => {
   const tmpProfileStorage = getTmpProfileStorage();
   // eslint-disable-next-line
   assert(tmpProfileStorage, `Unable to determine shell session Id. Please update your shell profile with this snippet:\n\n[ -n "$TERM_SESSION_ID" ] || export TERM_SESSION_ID="$(uuidgen)" \n\n and restart yor terminal.`);
-
   const tpmProfilesRoot = path.join(os.homedir(), SESSION_PROFILE_STORE);
 
   const currentProfilePath = assureProfileExistance(name);

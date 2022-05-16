@@ -11,14 +11,17 @@ import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 import path from 'path';
 
-import { DEFAULT_PACKAGE_JSON_ATTRIBUTES, PACKAGE_JSON_FILENAME, readFile } from '@dxos/cli-core';
+import {
+  DEFAULT_PACKAGE_JSON_ATTRIBUTES,
+  EXTENSION_CONFIG_FILENAME,
+  PACKAGE_JSON_FILENAME,
+  readFile
+} from '@dxos/cli-core';
 import { Config } from '@dxos/config';
 import type { ConfigObject } from '@dxos/config';
 
 export type PackageModule = NonNullable<NonNullable<ConfigObject['package']>['modules']>[0];
 export type PackageRepo = NonNullable<NonNullable<ConfigObject['package']>['repos']>[0];
-
-export const CONFIG_FILENAME = 'dx.yml';
 
 const DEFAULT_BUILD_COMMAND = 'npm run build';
 
@@ -26,7 +29,7 @@ const REPO_GIT = 'git';
 
 const IGNORED_CONFIG_ATTRIBUTES = ['version'];
 
-export const loadConfig = async (configPath: string = CONFIG_FILENAME): Promise<Config> => {
+export const loadConfig = async (configPath: string = EXTENSION_CONFIG_FILENAME): Promise<Config> => {
   // Props from package.json.
   const packageProps = mapvalues(pick(fs.existsSync(PACKAGE_JSON_FILENAME)
     ? await readFile(PACKAGE_JSON_FILENAME)
@@ -34,7 +37,9 @@ export const loadConfig = async (configPath: string = CONFIG_FILENAME): Promise<
 
   // dx.yml.
   assert(fs.existsSync(configPath), `"${configPath}" not found.`);
-  const dxConfig = omit(await readFile(configPath, { absolute: path.isAbsolute(configPath) }), IGNORED_CONFIG_ATTRIBUTES) as ConfigObject;
+  const dxConfig = omit(await readFile(configPath, {
+    absolute: path.isAbsolute(configPath)
+  }), IGNORED_CONFIG_ATTRIBUTES) as ConfigObject;
 
   assert(dxConfig.package?.modules?.length, `No modules found in ${configPath}`);
 

@@ -4,7 +4,6 @@
 
 import assert from 'assert';
 import fs from 'fs';
-import yaml from 'js-yaml';
 import readPkgUp from 'read-pkg-up';
 import parse from 'yargs-parser';
 
@@ -12,11 +11,8 @@ import { Config } from '@dxos/config';
 
 import { App } from './app';
 import { getConfig, getActiveProfilePath } from './config';
-import { loadCerts } from './util/certs';
-import { getLoggers } from './util/log';
-import { printMissingProfile } from './util/messages';
-
-export const EXTENSION_CONFIG_FILENAME = 'extension.yml';
+import { CoreState, EXTENSION_CONFIG_FILENAME, ExtensionInfo, Extension } from './types';
+import { getLoggers, loadCerts, printMissingProfile } from './utils';
 
 // Commands which are permitted to run without an active profile.
 const COMMANDS_PERMIT_NO_PROFILE = [
@@ -29,35 +25,12 @@ const COMMANDS_PERMIT_NO_PROFILE = [
 
 const { log, debugLog, logError } = getLoggers();
 
-export interface ExtensionInfo {
-  modules?: Array<any>,
-  getModules?: Function,
-  version: string,
-  init?: Function,
-  destroy?: Function,
-  options?: any,
-  state?: any,
-}
-
-export interface CLI {
-  modules?: Array<any>,
-  getModules?: Function,
-  init?: Function,
-  destroy?: Function,
-  dir: string,
-  main?: boolean,
-  options?: any,
-  info: any,
-  compose?: string
-}
-
 /**
  * Provides command executor in form of CLI extension.
- * @param {ExtensionInfo} options
  */
 const getRunnableExtension = (extension: ExtensionInfo) => {
   const { modules, getModules, version, options = {} } = extension;
-  return async (state: any, argv: any) => {
+  return async (state: CoreState, argv: any) => {
     const app = new App({ modules, getModules, state, options, version });
     return app.start(argv);
   };
@@ -65,7 +38,6 @@ const getRunnableExtension = (extension: ExtensionInfo) => {
 
 /**
  * Provides command executor in form of standalone CLI.
- * @param {ExtensionInfo} options
  */
 const getRunnable = (extension: ExtensionInfo) => {
   const { modules, getModules, version, init, destroy, options = {} } = extension;
@@ -93,12 +65,14 @@ const getRunnable = (extension: ExtensionInfo) => {
     // These defaults are required as during 'dx profile init', there is no config to load, and so no client can be created.
     const config: Config = profileExists ? (await getConfig(profilePath!)) : { get: () => ({}) } as any;
 
+    // Create app.
     const app = new App({ modules, getModules, config, options, version, profilePath, profileExists });
 
     try {
       if (init) {
         await init(app.state);
       }
+
       await app.start();
     } catch (err) {
       logError(err);
@@ -111,44 +85,61 @@ const getRunnable = (extension: ExtensionInfo) => {
   };
 };
 
+export interface CLIOptions {
+  dir: string
+  main?: boolean
+  modules?: any[]
+  getModules?: Function
+  init?: Function
+  destroy?: Function
+  info: Extension
+  docker?: any
+  options?: any
+}
+
+export type CLIObject = {
+  info: Extension
+  run: () => Promise<void> // TODO(burdon): Rename runnable.
+  runAsExtension: (state: CoreState, argv: any) => Promise<void>
+  init?: Function
+  destroy?: Function
+  docker?: any
+}
+
 /**
  * Create new instance of CLI.
- * @param {CLI} options
  */
-export const createCLI = (options: CLI) => {
-  const { modules, getModules, init, destroy, dir, main, options: cliOptions, info, compose } = options;
-
-  assert(dir);
+export const createCLI = ({
+  dir,
+  modules,
+  getModules,
+  init,
+  destroy,
+  main,
+  options,
+  info,
+  docker
+}: CLIOptions): CLIObject | undefined => {
   assert(info, `Invalid ${EXTENSION_CONFIG_FILENAME} file.`);
+  assert(dir);
 
   const pkg = readPkgUp.sync({ cwd: dir });
+
+  info.version = pkg!.package.version;
   const version = `v${pkg!.package.version}`;
 
-  const run = getRunnable({ modules, getModules, version, options: cliOptions, init, destroy });
-
+  const runnable = getRunnable({ modules, getModules, version, options, init, destroy });
   if (main) {
-    // eslint-disable-next-line
-    run();
+    void runnable();
     return;
   }
 
-  const { command, ...restInfo } = yaml.load(info);
-  // TODO(egorgripasov): Docker compose.
-  const dockerCompose = compose ? yaml.load(compose) : undefined;
-
   return {
-    run,
-    runAsExtension: getRunnableExtension({ modules, getModules, version, options: cliOptions }),
+    info,
+    run: runnable,
+    runAsExtension: getRunnableExtension({ modules, getModules, version, options }),
     init,
     destroy,
-    info: {
-      command: command ? command.map((cmd: any) => typeof cmd === 'object' ? cmd.command : cmd) : undefined,
-      ...restInfo,
-      package: {
-        name: pkg!.package.name,
-        version: pkg!.package.version
-      }
-    },
-    dockerCompose
+    docker
   };
 };

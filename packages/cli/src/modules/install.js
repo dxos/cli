@@ -9,8 +9,7 @@ import readPkgUp from 'read-pkg-up';
 import { asyncHandler } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { addInstalled, removeInstalled, listInstalled } from '../extensions';
-import { Pluggable } from '../pluggable';
+import { ExtensionManager, Pluggable } from '../extensions';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
 
@@ -29,7 +28,8 @@ export const UninstallModule = () => ({
   handler: asyncHandler(async argv => {
     const { npmClient } = argv;
 
-    const extensions = await listInstalled();
+    const extensionManager = new ExtensionManager();
+    const extensions = await extensionManager.list();
 
     // Remove extensions.
     if (extensions.length) {
@@ -38,7 +38,7 @@ export const UninstallModule = () => ({
       for await (const pluggableModule of pluggableModules) {
         const spinner = `Uninstalling ${pluggableModule.moduleName}`;
         await pluggableModule.uninstallModule(npmClient, { spinner });
-        await removeInstalled(pluggableModule.moduleName);
+        await extensionManager.remove(pluggableModule.moduleName);
       }
     }
 
@@ -69,14 +69,16 @@ export const UpgradeModule = ({ config }) => ({
     const newVersion = version || channel;
     assert(newVersion, 'Invalid Version.');
 
-    const extensions = await listInstalled();
-    let modules = [];
+    const extensionManager = new ExtensionManager();
+    const extensions = await extensionManager.list();
 
+    let modules = [];
     if (force) {
       if (extensions.length) {
         log(`Found extensions: ${extensions.map(({ moduleName }) => moduleName).join(', ')}`);
         modules = extensions.map(({ moduleName }) => new Pluggable({ moduleName, version: newVersion }));
       }
+
       modules.push(new Pluggable({ moduleName: pkg.package.name, version: newVersion }));
     }
 
@@ -88,7 +90,8 @@ export const UpgradeModule = ({ config }) => ({
       } catch (error) {
         log(`Unable to uninstall ${module.moduleName}: ${error.message}`);
       }
-      await removeInstalled(module.moduleName);
+
+      await extensions.remove(module.moduleName);
     }
 
     // Install new modules.
@@ -96,7 +99,7 @@ export const UpgradeModule = ({ config }) => ({
       const spinner = `Installing ${module.moduleName}`;
       await module.installModule(npmClient, { spinner });
       if (module.moduleName !== pkg.package.name) {
-        await addInstalled(module.moduleName, module.getInfo());
+        await extensions.add(module.moduleName, module.getInfo());
       }
     }
   })

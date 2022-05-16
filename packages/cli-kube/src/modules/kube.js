@@ -2,21 +2,18 @@
 // Copyright 2020 DXOS.org
 //
 
-import { readFileSync } from 'fs';
-import yaml from 'js-yaml';
 import path from 'path';
 
-import { asyncHandler } from '@dxos/cli-core';
+import { asyncHandler, loadYml } from '@dxos/cli-core';
 
-import { assemble, del, deploy, get, importCertificate, install, list, ping, register, setupOTP, start, status, stop, upgrade } from '../handlers';
+import {
+  assemble, del, deploy, get, importCertificate, install, list, ping, register, setupOTP, start, status, stop, upgrade
+} from '../handlers';
 
-const KubeServices = readFileSync(path.join(__dirname, '../../services.yml')).toString();
-const compose = readFileSync(path.join(__dirname, '../../docker-compose.yml')).toString();
+const services = loadYml(path.join(__dirname, '../../services.yml'));
+const docker = loadYml(path.join(__dirname, '../../docker-compose.yml'));
 
 const DEFAULT_FQDN = 'kube.local';
-
-const kubeCompose = yaml.load(compose);
-const defaultServices = yaml.load(KubeServices);
 
 const getAuth = (config, imageInfo) => ({
   username: config.get('runtime.services.machine.githubUsername'),
@@ -37,8 +34,7 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
         .option('force', { type: 'boolean', default: false, description: 'Force install' })
         .option('auth', { type: 'boolean', default: false, description: 'Authentication required' })
         .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
-
-      handler: asyncHandler(install(config, { getAuth, kubeCompose }))
+      handler: asyncHandler(install(config, { getAuth, kubeCompose: docker }))
     })
 
     .command({
@@ -49,8 +45,7 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
         .option('dev', { type: 'boolean', default: false, description: 'Dev build' })
         .option('hot', { type: 'boolean', default: false, description: 'Hot upgrade' })
         .option('name', { type: 'string', description: 'Container name' }),
-
-      handler: asyncHandler(upgrade(config, { getAuth, kubeCompose }))
+      handler: asyncHandler(upgrade(config, { getAuth, kubeCompose: docker }))
     })
 
     .command({
@@ -58,15 +53,14 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       describe: 'Run KUBE.',
       builder: yargs => yargs
         .option('key-phrase', { type: 'string', description: 'KUBE OTP keyphrase.' })
-        .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) })
+        .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(services) })
         .option('services-override', { describe: 'Additional services config.', type: 'string', default: JSON.stringify([]) })
         .option('name', { type: 'string', description: 'Container name' })
         .option('fqdn', { type: 'string', description: 'Fully Qualified Domain Name.', default: DEFAULT_FQDN })
         .option('letsencrypt', { type: 'boolean', default: false })
         .option('email', { type: 'string' })
         .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
-
-      handler: asyncHandler(start({ kubeCompose }))
+      handler: asyncHandler(start({ kubeCompose: docker }))
     })
 
     .command({
@@ -74,7 +68,6 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       describe: 'Stop KUBE.',
       builder: yargs => yargs
         .option('cleanup', { type: 'boolean', description: 'Remove containers.', default: false }),
-
       handler: asyncHandler(stop())
     })
 
@@ -90,11 +83,10 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
         .option('letsencrypt', { type: 'boolean', default: false })
         .option('email', { type: 'string' })
         .option('key-phrase', { type: 'string' })
-        .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(defaultServices) })
+        .option('services', { describe: 'Services to run.', type: 'string', default: JSON.stringify(services) })
         .option('services-override', { describe: 'Additional services config.', type: 'string', default: JSON.stringify([]) })
         .option('ssh-keys', { type: 'array' })
         .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
-
       handler: asyncHandler(deploy(config))
     })
 
@@ -103,14 +95,12 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       describe: 'Get deployed KUBEs info.',
       builder: yargs => yargs
         .option('name', { type: 'string' }),
-
       handler: asyncHandler(get(config))
     })
 
     .command({
       command: ['list'],
       describe: 'List deployed KUBEs.',
-
       handler: asyncHandler(list(config))
     })
 
@@ -119,7 +109,6 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       describe: 'Delete deployed KUBEs.',
       builder: yargs => yargs
         .option('name', { type: 'string' }),
-
       handler: asyncHandler(del(config))
     })
 
@@ -128,7 +117,6 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       describe: 'Install CLI extensions and Services required for running KUBE.',
       builder: yargs => yargs.version(false)
         .option('dev', { type: 'boolean', default: false, description: 'Dev build' }),
-
       handler: asyncHandler(assemble())
     })
 
@@ -139,7 +127,6 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
         .option('name', { required: true, type: 'string' })
         .option('domain', { required: true, type: 'string' })
         .option('url', { required: true, type: 'string' }),
-
       handler: asyncHandler(register({ getDXNSClient }))
     })
 
@@ -148,7 +135,6 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
       describe: 'Setup KUBE OTP.',
       builder: yargs => yargs
         .option('key-phrase', { type: 'string' }),
-
       handler: asyncHandler(setupOTP())
     })
 
@@ -162,7 +148,6 @@ export const KubeModule = ({ config, getDXNSClient }) => ({
           describe: 'Import certificate.',
           builder: yargs => yargs
             .option('url', { default: config.get('runtime.services.kube.endpoints.cert') }),
-
           handler: asyncHandler(importCertificate())
         })
     })

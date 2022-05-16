@@ -1,0 +1,5 @@
+moduleName: "@dxos/cli-chat"
+displayName: cli-chat
+description: Chat extension.
+modules:
+  - command: "chat"

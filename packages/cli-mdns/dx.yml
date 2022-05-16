@@ -1,0 +1,5 @@
+moduleName: "@dxos/cli-mdns"
+displayName: cli-mdns
+description: MDNS extension.
+modules:
+  - command: "mdns"

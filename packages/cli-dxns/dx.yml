@@ -1,0 +1,6 @@
+moduleName: "@dxos/cli-dxns"
+displayName: cli-dxns
+description: DXNS extension.
+modules:
+  - command: "dxns"
+  - command: "ns"

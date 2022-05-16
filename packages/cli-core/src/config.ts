@@ -5,13 +5,15 @@
 import assert from 'assert';
 import download from 'download';
 import fs from 'fs-extra';
-import yaml from 'js-yaml';
 import os from 'os';
 import path from 'path';
 
 import { Config, mapFromKeyValues, mapToKeyValues } from '@dxos/config';
 
-import envmap from './env-map.json';
+import envmap from './config/env-map.json';
+import { loadYml } from './utils';
+
+export const ENVS = Object.keys(envmap);
 
 export const PROFILE_ROOT = '.dx/profile';
 
@@ -27,8 +29,6 @@ export const PACKAGE_JSON_FILENAME = 'package.json';
 export const DEFAULT_PACKAGE_JSON_ATTRIBUTES = [
   'version', 'license', 'description', 'keywords', 'repository'
 ];
-
-export const ENVS = Object.keys(envmap);
 
 export const getProfilePath = (profile: string) => {
   return path.join(os.homedir(), PROFILE_ROOT, `${profile}.yml`);
@@ -113,7 +113,7 @@ export const getConfig = (configFilePath: string, argvConf = {}) => {
     throw new Error(`${configFilePath} does not exist.`);
   }
 
-  const profileConfig = yaml.load(fs.readFileSync(configFilePath).toString());
+  const profileConfig = loadYml(configFilePath);
 
   // TODO(egorgripasov): Cleanup - Adapter to config v1.
   const customConfig = (!profileConfig.version) ? {

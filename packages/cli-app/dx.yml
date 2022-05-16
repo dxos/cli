@@ -1,0 +1,5 @@
+moduleName: "@dxos/cli-app"
+displayName: cli-app
+description: App proxy extension.
+modules:
+  - command: "app"

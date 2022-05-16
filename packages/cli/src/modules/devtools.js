@@ -20,9 +20,10 @@ const CONFIG = { timeout: 30000, extract: false, strip: 1, mode: '755' };
  * Cert CLI module.
  * @returns {object}
  */
-export const DevToolsModule = ({ config }) => ({
+// TODO(burdon): Move to debug CLI?
+export const DevtoolsModule = ({ config }) => ({
   command: ['devtools'],
-  describe: 'Development tools.',
+  describe: 'Browser development tools.',
 
   builder: yargs => yargs
     .command({
@@ -35,9 +36,7 @@ export const DevToolsModule = ({ config }) => ({
         const { path: downloadPath = process.cwd() } = argv;
 
         const githubToken = config.get('runtime.services.machine.githubAccessToken');
-
         const octokit = new Octokit({ auth: githubToken });
-
         const res = await octokit.request('GET /repos/{owner}/{repo}/actions/artifacts', {
           owner: OWNER,
           repo: REPO
@@ -68,7 +67,6 @@ export const DevToolsModule = ({ config }) => ({
 
       handler: asyncHandler(async argv => {
         const { from, path: downloadPath = process.cwd() } = argv;
-
         assert(from, 'Invalid IPFS CID.');
 
         const downloadPackagePath = path.isAbsolute(downloadPath) ? downloadPath : path.join(process.cwd(), downloadPath);

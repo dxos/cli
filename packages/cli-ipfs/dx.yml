@@ -1,0 +1,5 @@
+moduleName: "@dxos/cli-ipfs"
+displayName: cli-ipfs
+description: IPFS extension.
+modules:
+  - command: "ipfs"

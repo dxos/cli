@@ -8,7 +8,7 @@ import { EventEmitter } from 'events';
 
 import { keyToString, createId } from '@dxos/crypto';
 import { protocolFactory } from '@dxos/network-manager';
-import { Extension } from '@dxos/protocol';
+import { Extension } from '@dxos/protocol'; // TODO(burdon): Deprecated.
 
 const log = debug('dxos:protocol:net');
 
@@ -21,8 +21,8 @@ const getPeerId = (protocol) => {
 
 const webrtcDetails = async (protocol) => {
   // TODO(telackey): there does not seem to be a public accessor in hypercore to this Peer object.
-  // We need to keep investigating to determine whether there is, or is another way to obtain
-  // the connection details.
+  //  We need to keep investigating to determine whether there is, or is another way to obtain
+  //  the connection details.
   const peer = protocol.stream?._readableState?.pipes;
   if (!peer) {
     return {};

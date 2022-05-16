@@ -5,7 +5,14 @@
 import assert from 'assert';
 import { Arguments, Argv } from 'yargs';
 
-import { asyncHandler, CoreOptions, CoreState, CLI_DEFAULT_PERSISTENT, resetStorage, resetStorageForClientProfile } from '@dxos/cli-core';
+import {
+  asyncHandler,
+  CoreOptions,
+  CoreState,
+  CLI_DEFAULT_PERSISTENT,
+  resetStorage,
+  resetStorageForClientProfile
+} from '@dxos/cli-core';
 
 export interface StorageOptions extends CoreOptions {
   all?: boolean,

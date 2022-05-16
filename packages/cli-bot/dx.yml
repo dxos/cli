@@ -1,0 +1,5 @@
+moduleName: "@dxos/cli-bot"
+displayName: cli-bot
+description: Bot extension.
+modules:
+  - command: "bot"

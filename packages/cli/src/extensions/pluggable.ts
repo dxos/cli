@@ -2,98 +2,89 @@
 // Copyright 2020 DXOS.org
 //
 
-/* eslint import/no-dynamic-require: 0 */
 /* eslint @typescript-eslint/no-var-requires: 0 */
 /* eslint global-require: 0 */
 
-import { exec } from 'child_process';
-import findRoot from 'find-root';
 import fs from 'fs';
-import ora from 'ora';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
 import stripJsonComments from 'strip-json-comments';
 
-import { prepareExec, isGlobalYarn } from '@dxos/cli-core';
+import { isGlobalYarn, CoreState, Extension, CLIObject } from '@dxos/cli-core';
 
-import { addInstalled } from './extensions';
+import { ExtensionManager } from './manager';
+import { getWorkspaceRoot, runCommand } from './utils';
 
 const pkg = readPkgUp.sync({ cwd: path.join(__dirname, '../') });
-
-/**
- * @param {String} command
- * @param {Array} args
- * @param {Object} options
- */
-const runCommand = async (command, args, options) => {
-  return new Promise((resolve, reject) => {
-    const { spinner: spinnerText } = options;
-
-    const spinner = ora(spinnerText);
-    spinner.start();
-
-    exec(`${prepareExec(command)} ${args.join(' ')}`, (err) => {
-      if (err) {
-        spinner.fail();
-        reject(err);
-      } else {
-        spinner.succeed();
-        spinner.clear();
-        resolve();
-      }
-    });
-  });
-};
-
-/**
- * Finds root dir of a workspace.
- * @param {String} from
- */
-const getWorkspaceRoot = from => {
-  try {
-    return findRoot(from, dir => {
-      const pkgPath = path.join(dir, 'package.json');
-      if (fs.existsSync(pkgPath)) {
-        const { workspaces } = require(pkgPath);
-        return workspaces && (Array.isArray(workspaces) || workspaces.packages);
-      }
-    });
-  } catch (err) {
-    return '';
-  }
-};
 
 /**
  * Pluggable CLI module.
  */
 export class Pluggable {
-  _modulePath;
+  _modulePath?: string;
+  _moduleName: string;
+  _version: string;
+  _workspaceRoot: string;
+  // Rush projects types.
+  _workspacePackages: { packageName: string, projectFolder: string }[];
+  _workspaceInfo?: { projectFolder: string };
+  _isInWorkspace?: boolean;
+  _isInCWD: boolean;
+  _installed: boolean;
 
   /**
    * Pluggable factory.
-   * @param {Object} options
    */
-  static create (options) {
-    return new Pluggable(options);
+  static create (extension: Extension) {
+    return new Pluggable(extension);
   }
 
-  /**
-   * @constructor
-   * @param {String} moduleName
-   * @param {String} version
-   */
-  constructor ({ moduleName, version }) {
+  constructor ({ moduleName, version }: Extension) {
     this._moduleName = moduleName;
     this._version = version;
 
     this._workspaceRoot = getWorkspaceRoot(__dirname);
-    this._workspacePackages = this._workspaceRoot && JSON.parse(stripJsonComments(fs.readFileSync(path.join(this._workspaceRoot, 'rush.json')).toString())).projects;
-    this._workspaceInfo = this._workspacePackages && this._workspacePackages.find(module => module.packageName === this._moduleName);
 
-    this._isInWorkspace = this._workspaceInfo && fs.existsSync(path.join(this._workspaceRoot, this._workspaceInfo.projectFolder));
-    this._isInCWD = fs.existsSync(path.join(process.cwd(), 'package.json')) && require(path.join(process.cwd(), 'package.json'))?.name === this._moduleName;
+    this._workspacePackages = this._workspaceRoot &&
+      JSON.parse(stripJsonComments(fs.readFileSync(path.join(this._workspaceRoot, 'rush.json')).toString())).projects;
+
+    this._workspaceInfo = this._workspacePackages &&
+      this._workspacePackages.find(module => module.packageName === this._moduleName);
+
+    this._isInWorkspace = this._workspaceInfo &&
+      fs.existsSync(path.join(this._workspaceRoot, this._workspaceInfo.projectFolder));
+
+    this._isInCWD = fs.existsSync(path.join(process.cwd(), 'package.json')) &&
+      require(path.join(process.cwd(), 'package.json'))?.name === this._moduleName;
 
     this._installed = this.isInstalled();
+  }
+
+  /**
+   * Returns the exported info.
+   */
+  get module (): CLIObject {
+    const module = require(this.modulePath);
+    const cli = module.default ?? module; // Difference between `module.exports` and `export default`.
+    return cli;
+  }
+
+  get modulePath () {
+    if (!this._modulePath) {
+      let pkgPath;
+      if (this._isInCWD) {
+        pkgPath = path.join(process.cwd(), 'package.json');
+      } else if (this._isInWorkspace) {
+        pkgPath = path.join(this._workspaceRoot, this._workspaceInfo!.projectFolder, 'package.json');
+      } else {
+        pkgPath = `${this.moduleName}/package.json`;
+      }
+
+      const pkg = require(pkgPath);
+      this._modulePath = path.join(pkgPath.replace('package.json', ''), pkg.main);
+    }
+
+    return this._modulePath;
   }
 
   get moduleName () {
@@ -114,29 +105,6 @@ export class Pluggable {
 
   get isInWorkspace () {
     return this._isInWorkspace;
-  }
-
-  get modulePath () {
-    if (!this._modulePath) {
-      let pkgPath;
-      if (this._isInCWD) {
-        pkgPath = path.join(process.cwd(), 'package.json');
-      } else if (this._isInWorkspace) {
-        pkgPath = path.join(this._workspaceRoot, this._workspaceInfo.projectFolder, 'package.json');
-      } else {
-        pkgPath = `${this.moduleName}/package.json`;
-      }
-
-      const pkg = require(pkgPath);
-      this._modulePath = path.join(pkgPath.replace('package.json', ''), pkg.main);
-    }
-    return this._modulePath;
-  }
-
-  get module () {
-    const module = require(this.modulePath);
-    const moduleCli = module.default ?? module; // Difference between `module.exports` and `export default`.
-    return moduleCli;
   }
 
   /**
@@ -169,7 +137,7 @@ export class Pluggable {
   /**
    * Install CLI extension.
    */
-  async installModule (npmClient, options = {}) {
+  async installModule (npmClient?: string, options = {}) {
     const moduleName = this._moduleName;
     const version = this._version;
 
@@ -178,7 +146,7 @@ export class Pluggable {
       return;
     }
 
-    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg.package.name);
+    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg!.package.name);
 
     const command = isYarn ? 'yarn' : 'npm';
     const args = isYarn ? ['global', 'add'] : ['install', '-g'];
@@ -190,7 +158,7 @@ export class Pluggable {
   /**
    * Uninstall CLI extension.
    */
-  async uninstallModule (npmClient, options = {}) {
+  async uninstallModule (npmClient: string, options = {}) {
     const moduleName = this._moduleName;
 
     if (this.isWorkspace()) {
@@ -198,7 +166,7 @@ export class Pluggable {
       return;
     }
 
-    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg.package.name);
+    const isYarn = npmClient ? npmClient === 'yarn' : await isGlobalYarn(pkg!.package.name);
 
     const command = isYarn ? 'yarn' : 'npm';
     const args = isYarn ? ['global', 'remove'] : ['uninstall', '-g'];
@@ -209,32 +177,30 @@ export class Pluggable {
 
   /**
    * Init extension in a scope of main CLI.
-   * @param {Object} state
    */
-  async init (state) {
-    return this.module.init(state);
+  async init (state: CoreState) {
+    return this.module.init?.(state);
   }
 
   /**
    * Destroy extension in a scope of main CLI.
-   * @param {Object} state
    */
-  async destroy (state) {
-    return this.module.destroy(state);
+  async destroy (state: CoreState) {
+    return this.module.destroy?.(state);
   }
 
   /**
    * Runs command of an CLI extension.
-   * @param {Object} state
-   * @param {Object} argv
    */
-  async run (state, argv) {
+  async run (state: CoreState, argv: any) {
     const { installed, moduleName, version } = this;
     if (!installed) {
       const spinner = `Installing ${moduleName}${version ? `@${version}` : ''}`;
       try {
-        await this.installModule(null, { spinner });
-        await addInstalled(moduleName, this.getInfo());
+        await this.installModule(undefined, { spinner });
+
+        const extensionManager = new ExtensionManager();
+        await extensionManager.add(moduleName, this.getInfo());
 
         const { init, destroy } = this.module;
         if (init || destroy) {
@@ -250,14 +216,14 @@ export class Pluggable {
     return this.module.runAsExtension(state, argv);
   }
 
-  getInfo () {
+  getInfo (): Extension {
     this._cleanCache();
     return this.module.info;
   }
 
   getDockerCompose () {
     this._cleanCache();
-    return this.module.dockerCompose;
+    return this.module.docker;
   }
 
   _cleanCache () {

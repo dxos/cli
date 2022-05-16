@@ -8,7 +8,8 @@ import readline from 'readline';
 import { Argv } from 'yargs';
 
 import { createCLI } from './cli-factory';
-import { asyncHandler } from './util/async';
+import { Extension } from './types';
+import { asyncHandler } from './utils';
 
 const CLI_BASE_COMMAND = 'dx';
 
@@ -102,17 +103,15 @@ const TestModule = () => {
   });
 };
 
-const extName = 'dxos/cli-test';
-const extCommand = 'test';
-
-const info = `
-  name: ${extName}
-  version: 0.0.1
-  displayName: cli-test
-  description: TEST CLI.
-  command:
-    - ${extCommand}
-`;
+const info: Extension = {
+  moduleName: '@dxos/cli-test',
+  version: '1.0.0',
+  displayName: 'cli-test',
+  description: 'TEST CLI.',
+  modules: [{
+    command: 'test'
+  }]
+};
 
 let cli: any;
 
@@ -123,13 +122,13 @@ const exitSpy = jest.spyOn(process, 'exit').mockImplementation();
 
 beforeEach(() => {
   cli = createCLI({
-    options: CLI_CONFIG,
-    modules: [TestModule],
     dir: __dirname,
     main: false,
+    modules: [TestModule],
     info,
     init: initMock,
-    destroy: destroyMock
+    destroy: destroyMock,
+    options: CLI_CONFIG
   });
 });
 

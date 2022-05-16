@@ -1,6 +1,0 @@
-name: dxos/cli-chat
-version: 0.0.1
-displayName: cli-chat
-description: Chat extension.
-command:
-  - chat

@@ -3,15 +3,14 @@
 //
 
 import assert from 'assert';
-import get from 'lodash.get';
 import { compare, valid } from 'semver';
 
 import { TemplateHelper, asyncHandler, print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { addInstalled, removeInstalled, listInstalled } from '../extensions';
-import { Pluggable } from '../pluggable';
+import { ExtensionManager, Pluggable } from '../extensions';
 
+// TODO(burdon): Move to config.
 const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/cli-template';
 
 /**
@@ -21,7 +20,6 @@ const DEFAULT_TEMPLATE = 'https://github.com/dxos/templates/tree/main/cli-templa
 export const ExtensionModule = ({ getReadlineInterface }) => ({
   command: ['extension'],
   describe: 'CLI extensions.',
-
   builder: yargs => yargs
 
     // List.
@@ -32,12 +30,13 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
       handler: asyncHandler(async argv => {
         const { json } = argv;
-        let extensions = await listInstalled();
-        extensions = extensions.map(({ moduleName, version, describe, command }) => ({
+        const extensionManager = new ExtensionManager();
+        let extensions = await extensionManager.list();
+        extensions = extensions.map(({ moduleName, version, description, modules }) => ({
           extension: moduleName,
-          command,
+          modules: modules.map(module => module.command),
           version,
-          description: describe
+          description
         }));
 
         print(extensions, { json });
@@ -73,11 +72,11 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
         }
         if (pluggable.installed) {
           const info = pluggable.getInfo();
-          const installedVersion = get(info, 'package.version');
+          const installedVersion = info.version;
 
           let action = 'upgrade';
 
-          // TODO(egorgripasov): Read verison number from WNS.
+          // TODO(egorgripasov): Read verison number from DXNS.
           if (version && valid(version) && installedVersion) {
             const comp = compare(version, installedVersion);
             switch (comp) {
@@ -105,7 +104,8 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
           if (!(/^y/i.test(wishToUpgrade))) {
             log('Abotring.');
-            await addInstalled(moduleName, info);
+            const extensionManager = new ExtensionManager();
+            await extensionManager.add(moduleName, info);
             return;
           }
         }
@@ -114,7 +114,8 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
         await pluggable.installModule(npmClient, { spinner });
 
         const updatedInfo = pluggable.getInfo();
-        await addInstalled(moduleName, updatedInfo);
+        const extensionManager = new ExtensionManager();
+        await extensionManager.add(moduleName, updatedInfo);
       })
     })
 
@@ -128,7 +129,6 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
       handler: asyncHandler(async argv => {
         const { module: moduleName, npmClient } = argv;
-
         assert(moduleName, 'Invalid extension.');
 
         const pluggable = new Pluggable({ moduleName });
@@ -137,17 +137,17 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
           return;
         }
 
+        const extensionManager = new ExtensionManager();
         if (!pluggable.installed) {
-          await removeInstalled(moduleName);
+          await extensionManager.remove(moduleName);
           return;
         }
 
         const info = pluggable.getInfo();
-        const installedVersion = get(info, 'package.version');
 
         const rl = getReadlineInterface();
         const wishToProceed = await new Promise(resolve => {
-          rl.question(`Found Extension ${moduleName}${installedVersion ? `@${installedVersion}` : ''} installed, do you wish to remove it? (Yes/No): `, answer => {
+          rl.question(`Found Extension ${moduleName}${info.version ? `@${info.version}` : ''} installed, do you wish to remove it? (Yes/No): `, answer => {
             resolve(answer);
           });
         });
@@ -160,8 +160,7 @@ export const ExtensionModule = ({ getReadlineInterface }) => ({
 
         const spinner = `Uninstalling ${moduleName}`;
         await pluggable.uninstallModule(npmClient, { spinner });
-
-        await removeInstalled(moduleName);
+        await extensionManager.remove(moduleName);
       })
     })
 

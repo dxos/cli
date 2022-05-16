@@ -22,7 +22,10 @@ import {
   DockerVolume
 } from '@dxos/cli-core';
 
-import { Pluggable } from '../pluggable';
+// TODO(burdon): Convert to TS.
+// import type { ConfigObject } from '@dxos/config';
+
+import { Pluggable } from '../extensions';
 
 const DEFAULT_LOG_LINES = 100;
 const DEFAULT_CONFIG_PATH = '/root/.dx/profile/local.yml';
@@ -33,11 +36,11 @@ const SERVICE_CONTAINER = 'container';
 
 const getServiceInfo = (moduleName, serviceName) => {
   assert(moduleName, 'Invalid extension.');
-
   const pluggable = new Pluggable({ moduleName });
   if (!pluggable.installed) {
     throw new Error(`Extension '${moduleName}' is not installed.`);
   }
+
   const compose = pluggable.getDockerCompose();
   assert(compose, `Extension '${moduleName}' does not provide containers.`);
   // TODO(egorgripasov): Docker compose?
@@ -46,7 +49,7 @@ const getServiceInfo = (moduleName, serviceName) => {
   return service;
 };
 
-const getAuth = (config, imageInfo) => ({
+const getAuth = (config/* : ConfigObject */, imageInfo) => ({
   username: config.get('runtime.services.machine.githubUsername'),
   password: config.get('runtime.services.machine.githubAccessToken'),
   serveraddress: `https://${imageInfo.image.split('/')[0]}`
@@ -61,10 +64,10 @@ const getServiceType = async (serviceName) => {
  * Services CLI module.
  * @returns {object}
  */
+// TODO(burdon): Move to cli-kube?
 export const ServicesModule = ({ config, profilePath }) => ({
   command: ['service'],
   describe: 'DXOS service management.',
-
   builder: yargs => yargs
     .command({
       command: ['list', '$0'],
@@ -77,7 +80,6 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
         const listContainers = async () => {
           const containers = await DockerContainer.list();
-
           const containerService = await Promise.all(containers.map(async container => ({
             name: container.name,
             exec: container.image,
@@ -122,12 +124,9 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
       handler: asyncHandler(async argv => {
         const { from: moduleName, service: serviceName, auth: authRequired, force, dev } = argv;
-
         const service = getServiceInfo(moduleName, serviceName);
         const auth = authRequired ? getAuth(config, service) : undefined;
-
         const dockerImage = new DockerImage({ service, auth, dev });
-
         await dockerImage.pull(force);
       })
     })
@@ -145,21 +144,18 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
       handler: asyncHandler(async argv => {
         const { from: moduleName, service: serviceName, auth: authRequired, dev, hot } = argv;
-
         const service = getServiceInfo(moduleName, serviceName);
         const auth = authRequired ? getAuth(config, service) : undefined;
-
         const { name = service.container_name } = argv;
-
         const { image: imageName } = service;
 
         const container = await DockerContainer.find({ imageName, dev });
         const running = container?.started;
-
         if (running) {
           if (!hot) {
             throw new Error(`Unable to upgrade '${service.container_name}' while it's running.`);
           }
+
           await container.stop();
         }
 
@@ -187,11 +183,8 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
       handler: asyncHandler(async argv => {
         const { from: moduleName, service: serviceName, dev } = argv;
-
         const service = getServiceInfo(moduleName, serviceName);
-
         const { name = service.container_name } = argv;
-
         const { image: imageName } = service;
 
         const container = await DockerContainer.find({ imageName, dev });
@@ -221,16 +214,23 @@ export const ServicesModule = ({ config, profilePath }) => ({
         .option('replace-args', { type: 'boolean', description: 'Replace default arguments with provided.', default: false }),
 
       handler: asyncHandler(async argv => {
-        const { from: moduleName, service: serviceName, forward, forwardEnv, hostNet, profilePath: profile, storagePath, binds: additionalBinds = [], dev, replaceArgs } = argv;
-
+        const {
+          from: moduleName,
+          service: serviceName,
+          forward,
+          forwardEnv,
+          hostNet,
+          profilePath: profile,
+          storagePath,
+          binds: additionalBinds = [],
+          dev,
+          replaceArgs
+        } = argv;
         const service = getServiceInfo(moduleName, serviceName);
         const dockerImage = new DockerImage({ service, dev });
-
         const forwardArgs = forward ? JSON.parse(forward).args : [];
         const command = replaceArgs ? forwardArgs : service.command.split(' ').concat(forwardArgs);
-
         const { name = service.container_name } = argv;
-
         assert(name, 'Service name is required.');
 
         // TODO(egorgripasov): Share volumes between services.
@@ -274,7 +274,6 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
       handler: asyncHandler(async argv => {
         const { name, lines, runningOnly, logFile, follow } = argv;
-
         assert(name, 'Invalid Service Name.');
 
         const serviceType = await getServiceType(name);
@@ -285,6 +284,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
           if (!container) {
             throw new Error(`Unable to find "${name}" service.`);
           }
+
           await container.logs(lines, follow);
         }
       })
@@ -299,8 +299,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
       handler: asyncHandler(async argv => {
         const { name } = argv;
-
-        assert(name, 'Invalid Service Name.');
+        assert(name, 'Invalid service name.');
 
         const serviceType = await getServiceType(name);
         if (serviceType === SERVICE_DAEMON) {
@@ -310,6 +309,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
           if (!container) {
             throw new Error(`Unable to find "${name}" service.`);
           }
+
           await container.restart();
         }
       })
@@ -324,8 +324,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
       handler: asyncHandler(async argv => {
         const { name } = argv;
-
-        assert(name, 'Invalid Service Name.');
+        assert(name, 'Invalid service name.');
 
         const serviceType = await getServiceType(name);
         if (serviceType === SERVICE_DAEMON) {
@@ -349,7 +348,6 @@ export const ServicesModule = ({ config, profilePath }) => ({
 
       handler: asyncHandler(async argv => {
         const { name, volume, json } = argv;
-
         const container = await DockerContainer.find({ name });
         if (!container) {
           throw new Error(`Unable to find "${name}" service.`);
@@ -371,6 +369,7 @@ export const ServicesModule = ({ config, profilePath }) => ({
             }
           }));
         }
+
         print(volumesToDelete.map(vol => vol.name), { json });
       })
     })

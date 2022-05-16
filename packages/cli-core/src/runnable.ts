@@ -13,17 +13,17 @@ import kill from 'tree-kill';
 import { sleep } from '@dxos/async';
 
 export interface RunnableConfig {
-    env: any,
-    name: string,
-    flushLogs?: boolean,
-    singleInstance?: boolean,
-    autorestart?: boolean,
-    interpreter?: string,
-    maxMemory?: string,
-    watch?: boolean,
-    background?: boolean,
-    logFile?: string,
-    startTimeout?: number
+  env: any
+  name: string
+  flushLogs?: boolean
+  singleInstance?: boolean
+  autorestart?: boolean
+  interpreter?: string
+  maxMemory?: string
+  watch?: boolean
+  background?: boolean
+  logFile?: string
+  startTimeout?: number
 }
 
 const PROCESS_PREFIX = 'dxos.';
@@ -71,11 +71,10 @@ const _flushLogs = async (name: string) => {
 };
 
 const _listServices = async (usage = true) => {
-  let processes: Array<Proc> = [];
-  let services = [];
-  processes = await pm.list();
+  let processes: Array<Proc> = await pm.list();
   processes = processes.filter(proc => proc.name!.startsWith(PROCESS_PREFIX));
 
+  let services = [];
   services = processes.map(proc => ({
     name: get(proc, 'name', '').replace(PROCESS_PREFIX, ''),
     exec: get(proc, 'pm2_env.pm_exec_path'),
@@ -83,6 +82,7 @@ const _listServices = async (usage = true) => {
     cpu: usage ? get(proc, 'monit.cpu') : 0,
     memory: usage ? get(proc, 'monit.memory') : 0
   }));
+
   return { services, processes };
 };
 
@@ -106,16 +106,13 @@ const _getLogs = async (name: string, options: any = {}) => {
   if (!logFile) {
     const descriptors = await pm.describe(procName);
     const process = get(descriptors, '[0]');
-
     assert(process, 'Unable to find process');
-
     if (runningOnly && get(process, 'pm2_env.status') !== STATUS_RUNNING) {
       throw new Error('Process not running');
     }
 
     logFile = get(process, 'pm2_env.pm_out_log_path');
   }
-
   assert(logFile, 'Unable to locate log file.');
 
   const command = 'tail';
@@ -128,6 +125,7 @@ const _getLogs = async (name: string, options: any = {}) => {
   spawn(command, args, { stdio: 'inherit' });
 };
 
+// TODO(burdon): Wrap class.
 export const listServices = withPM2(_listServices);
 export const stopService = withPM2(_stopService, true);
 export const restartService = withPM2(_restartService, true);
@@ -251,6 +249,7 @@ export class Runnable {
         if (child.pid) {
           kill(child.pid);
         }
+
         process.exit();
       });
     });

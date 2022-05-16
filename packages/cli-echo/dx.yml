@@ -1,0 +1,5 @@
+moduleName: "@dxos/cli-echo"
+displayName: cli-echo
+description: ECHO extension.
+modules:
+  - command: "echo"
