@@ -6,7 +6,7 @@ import assert from 'assert';
 import get from 'lodash.get';
 import omit from 'lodash.omit';
 import readline from 'readline';
-import Yargs, { Arguments } from 'yargs';
+import { Arguments } from 'yargs';
 import unparse from 'yargs-unparser';
 import yargs from 'yargs/yargs';
 
