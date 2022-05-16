@@ -30,7 +30,7 @@ export DX_PROFILE="devnet"
 Install required extensions:
 
 ```
-dx extension install @dxos/cli-data
+dx extension install @dxos/cli-party
 dx extension install @dxos/cli-echo
 ```
 
@@ -38,10 +38,10 @@ Verify installed extensions:
 
 ```
 dx extension list
-extension       command          version         description
---------------  ---------------  --------------  -----------------
-@dxos/cli-data  party            2.12.0          Party management.
-@dxos/cli-echo  echo             2.12.0          Echo operations.
+extension        command          version         description
+--------------   ---------------  --------------  -----------------
+@dxos/cli-party  party            2.12.0          Party management.
+@dxos/cli-echo   echo             2.12.0          Echo operations.
 ```
 
 ### Party

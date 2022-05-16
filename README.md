@@ -33,8 +33,8 @@ dx version
 v1.0.1-beta.15
 
 dx upgrade --force
-Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
-✔ Uninstalling @dxos/cli-data
+Found extensions: @dxos/cli-party, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
+✔ Uninstalling @dxos/cli-party
 ✔ Uninstalling @dxos/cli-signal
 ✔ Uninstalling @dxos/cli-bot
 ✔ Uninstalling @dxos/cli-app
@@ -43,7 +43,7 @@ Found extensions: @dxos/cli-data, @dxos/cli-signal, @dxos/cli-bot, @dxos/cli-app
 ✔ Installing @dxos/cli-app
 ✔ Installing @dxos/cli-bot
 ✔ Installing @dxos/cli-signal
-✔ Installing @dxos/cli-data
+✔ Installing @dxos/cli-party
 
 dx version
 v2.12.0

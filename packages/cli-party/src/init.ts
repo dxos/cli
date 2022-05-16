@@ -18,7 +18,7 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
   assert(config, 'Missing config.');
 
   if (!profilePath || !profileExists) {
-    return state as CliDataState; // Do not initialize cli-data if we don't have profile.
+    return state as CliDataState; // Do not initialize cli-party if we don't have profile.
   }
 
   assert(getReadlineInterface, 'Missing getReadlineinterface.');

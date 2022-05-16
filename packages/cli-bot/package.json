@@ -65,7 +65,7 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@dxos/cli-data": "workspace:*",
+    "@dxos/cli-party": "workspace:*",
     "@dxos/cli-dxns": "workspace:*",
     "@dxos/eslint-plugin": "~1.0.24",
     "@types/cli-progress": "^3.9.2",
