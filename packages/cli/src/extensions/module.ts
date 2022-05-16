@@ -44,14 +44,14 @@ export class PluggableModule {
    */
   // TODO(burdon): Type.
   export (): any[] {
-    const { /* moduleName, */ modules } = this._extension;
+    const { /* moduleName, */ modules, description: mainDescription } = this._extension;
     return modules.map(({ command, description }) => {
       return (() => {
         // debugLog(`Export ${moduleName}:${command}`);
 
         return {
           command,
-          describe: description,
+          describe: description ?? mainDescription,
           builder: (yargs: any) => yargs.help(false).strict(false),
           handler: asyncHandler(async (argv: any) => {
             return this.pluggable.run(this._state, argv);
