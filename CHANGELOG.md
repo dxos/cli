@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.19.0](https://www.github.com/dxos/cli/compare/v2.18.4...v2.19.0) (2022-05-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* update main cli with TS defs. (#506)
+
+### Features
+
+* rename cli-data to cli-party. ([#509](https://www.github.com/dxos/cli/issues/509)) ([9180f7c](https://www.github.com/dxos/cli/commit/9180f7c43e6c046e37662e87aa160fc0e1f7e70a))
+* update main cli with TS defs. ([#506](https://www.github.com/dxos/cli/issues/506)) ([5022f9c](https://www.github.com/dxos/cli/commit/5022f9cffad414881e908f9b99e30cbc71921673))
+
+
+### Bug Fixes
+
+* disable build cache. ([0ef7f7b](https://www.github.com/dxos/cli/commit/0ef7f7b5a1c6a5748b7423e3ba15c9c8102f3a79))
+
 ### [2.18.4](https://www.github.com/dxos/cli/compare/v2.18.3...v2.18.4) (2022-05-12)
 
 
