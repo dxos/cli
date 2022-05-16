@@ -1,5 +1,4 @@
 moduleName: "@dxos/cli"
-version: 1.0.0
 displayName: cli
 description: DXOS CLI
 modules:

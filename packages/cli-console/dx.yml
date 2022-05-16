@@ -1,5 +1,4 @@
 moduleName: "@dxos/cli-console"
-version: 1.0.0
 displayName: cli-console
 description: KUBE console extension.
 modules:

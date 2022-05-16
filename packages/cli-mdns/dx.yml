@@ -1,5 +1,4 @@
 moduleName: "@dxos/cli-mdns"
-version: 1.0.0
 displayName: cli-mdns
 description: MDNS extension.
 modules:

@@ -1,5 +1,4 @@
 moduleName: "@dxos/cli-mesh"
-version: 1.0.0
 displayName: cli-mesh
 description: MESH extension.
 modules:
