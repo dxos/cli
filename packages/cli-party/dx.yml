@@ -1,5 +1,5 @@
-moduleName: "@dxos/cli-data"
-displayName: cli-data
+moduleName: "@dxos/cli-party"
+displayName: cli-party
 description: Party and Device management.
 modules:
   - command: "party"

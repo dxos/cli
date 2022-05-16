@@ -19,7 +19,7 @@ const getReadlineInterface = () => {
 
 const DEFAULT_ARGS = { $0: '', _: [], return: true };
 
-describe('cli-data: Party', () => {
+describe('cli-party: Party', () => {
   let signalBroker: Awaited<ReturnType<typeof createTestBroker>>;
   let alice: Client;
   let bob: Client;

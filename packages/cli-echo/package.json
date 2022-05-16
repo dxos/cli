@@ -46,7 +46,7 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@dxos/cli-data": "workspace:*",
+    "@dxos/cli-party": "workspace:*",
     "@dxos/echo-db": "~2.31.3",
     "@dxos/eslint-plugin": "~1.0.24",
     "@types/jest": "~27.0.3",

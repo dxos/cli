@@ -5,7 +5,7 @@
 import { Argv, Arguments } from 'yargs';
 
 import { asyncHandler, CoreOptions, print } from '@dxos/cli-core';
-import type { CliDataState } from '@dxos/cli-data';
+import type { CliDataState } from '@dxos/cli-party';
 import type { Item } from '@dxos/echo-db';
 import { ObjectModel } from '@dxos/object-model';
 

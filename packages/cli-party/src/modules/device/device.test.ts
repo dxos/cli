@@ -35,7 +35,7 @@ class PinHelper {
   }
 }
 
-describe('cli-data: Device', () => {
+describe('cli-party: Device', () => {
   let signalBroker: Awaited<ReturnType<typeof createTestBroker>>;
   let alice: Client;
   let bob: Client;

@@ -509,8 +509,8 @@
     },
 
     {
-      "packageName": "@dxos/cli-data",
-      "projectFolder": "packages/cli-data",
+      "packageName": "@dxos/cli-party",
+      "projectFolder": "packages/cli-party",
       "shouldPublish": true,
       "versionPolicyName": "lockStepPolicy"
     },

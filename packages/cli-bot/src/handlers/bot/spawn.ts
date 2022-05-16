@@ -8,7 +8,7 @@ import { Argv } from 'yargs';
 import { BotFactoryClient } from '@dxos/bot-factory-client';
 import { print } from '@dxos/cli-core';
 import type { CoreOptions } from '@dxos/cli-core';
-import type { StateManager } from '@dxos/cli-data';
+import type { StateManager } from '@dxos/cli-party';
 import type { Config } from '@dxos/config';
 import { PublicKey } from '@dxos/crypto';
 
@@ -33,7 +33,7 @@ export const botSpawnOptions = (yargs: Argv<CoreOptions>): Argv<BotSpawnOptions>
 };
 
 export const spawn = ({ stateManager, config } : SpawnParameters) => async ({ name, ipfsCid, localPath, json } : BotSpawnOptions) => {
-  assert(stateManager, 'Data client is required, run \'dx extension install @dxos/cli-data\'');
+  assert(stateManager, 'Data client is required, run \'dx extension install @dxos/cli-party\'');
   assert(!!name || !!ipfsCid || !!localPath, 'At least one of the following options is required: name, ipfsCid, localPath');
   const topic = config.get('runtime.services.bot.topic');
   assert(topic, 'Topic must be provided in config');

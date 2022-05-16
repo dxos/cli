@@ -105,7 +105,7 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 | [Bot CLI](../cli-bot/README.md) |
 | [Chat CLI](../cli-chat/README.md) |
 | [Console CLI](../cli-console/README.md) |
-| [Data CLI](../cli-data/README.md) |
+| [Party CLI](../cli-party/README.md) |
 | [DXNS CLI](../cli-dxns/README.md) |
 | [ECHO CLI](../cli-echo/README.md) |
 | [HALO CLI](../cli-halo/README.md) |
@@ -118,7 +118,7 @@ Found Extension @dxos/cli-ipfs@1.0.1-beta.2 installed, do you wish to remove it?
 #### Developing CLI extensions
 
 In order to create a new CLI extension, existing CLI extension could be used as a boilerplate. 
-While developing a new extension out of CLI Monorepo, make sure you add `@dxos/cli` as devDependency (and `@dxos/cli-data` as well if you are planning on using DXOS SDK Client).
+While developing a new extension out of CLI Monorepo, make sure you add `@dxos/cli` as devDependency (and `@dxos/cli-party` as well if you are planning on using DXOS SDK Client).
 
 ### Certification
 

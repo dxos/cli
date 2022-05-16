@@ -5,7 +5,7 @@
 import { Argv } from 'yargs';
 
 import { asyncHandler, CoreState } from '@dxos/cli-core';
-import type { StateManager } from '@dxos/cli-data';
+import type { StateManager } from '@dxos/cli-party';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
 import {

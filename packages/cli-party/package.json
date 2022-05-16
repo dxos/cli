@@ -1,8 +1,8 @@
 {
-  "name": "@dxos/cli-data",
+  "name": "@dxos/cli-party",
   "version": "2.18.4",
   "description": "DXOS Data CLI",
-  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-data#readme",
+  "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-party#readme",
   "bugs": {
     "url": "https://github.com/dxos/cli/issues"
   },
