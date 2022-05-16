@@ -24,7 +24,6 @@ export type PackageModule = NonNullable<NonNullable<ConfigObject['package']>['mo
 export type PackageRepo = NonNullable<NonNullable<ConfigObject['package']>['repos']>[0];
 
 const DEFAULT_BUILD_COMMAND = 'npm run build';
-const DEFAULT_DIST_PATH = 'out';
 
 const REPO_GIT = 'git';
 
@@ -65,11 +64,11 @@ export const loadConfig = async (configPath: string = EXTENSION_CONFIG_FILENAME)
       package: {
         license: dxConfig.package.license ?? packageProps.license,
         repos,
-        modules: dxConfig.package.modules.map((mod: PackageModule) => defaultsDeep(mod, {
+        modules: dxConfig.package.modules.map((module: PackageModule) => defaultsDeep(module, {
           tags: packageProps.keywords ?? [],
           description: packageProps.description,
-          build: { command: DEFAULT_BUILD_COMMAND, outdir: DEFAULT_DIST_PATH },
-          repos: mod.repos ?? repos
+          build: { command: DEFAULT_BUILD_COMMAND },
+          repos: module.repos ?? repos
         }))
       }
     }
