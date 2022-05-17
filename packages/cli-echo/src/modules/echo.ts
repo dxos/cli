@@ -38,7 +38,7 @@ export const EchoModule = ({ stateManager }: CliDataState) => ({
             type: item.type,
             modelType: item.model._meta.type,
             modelName,
-            deleted: !!item.model.toObject().deleted
+            deleted: item.model.toObject && !!item.model.toObject()?.deleted
           };
         });
         print(result, { json });
