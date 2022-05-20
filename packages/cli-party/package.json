@@ -42,6 +42,7 @@
     "@dxos/debug": "~2.31.3",
     "@dxos/echo-db": "~2.31.3",
     "@dxos/random-access-multi-storage": "~2.31.3",
+    "@dxos/object-model": "~2.31.3",
     "assert": "^2.0.0",
     "base-x": "^3.0.9",
     "fs-extra": "10.0.0",

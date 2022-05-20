@@ -3,4 +3,5 @@
 //
 
 export * from './device';
-export * from './party';
+export * from './echo';
+export * from './party'
