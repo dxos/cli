@@ -523,13 +523,6 @@
     },
 
     {
-      "packageName": "@dxos/cli-echo",
-      "projectFolder": "packages/cli-echo",
-      "shouldPublish": true,
-      "versionPolicyName": "lockStepPolicy"
-    },
-
-    {
       "packageName": "@dxos/cli-ipfs",
       "projectFolder": "packages/cli-ipfs",
       "shouldPublish": true,

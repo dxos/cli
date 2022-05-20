@@ -606,43 +606,6 @@ importers:
       ts-node: 10.7.0_3f276d54c583198e50f311697b18b00b
       typescript: 4.6.4
 
-  ../../packages/cli-echo:
-    specifiers:
-      '@dxos/cli-core': workspace:*
-      '@dxos/cli-party': workspace:*
-      '@dxos/crypto': ~2.31.3
-      '@dxos/debug': ~2.31.3
-      '@dxos/echo-db': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/object-model': ~2.31.3
-      '@types/jest': ~27.0.3
-      '@types/node': ~16.11.12
-      '@types/yargs': ^17.0.10
-      assert: ^2.0.0
-      eslint: ^7.13.0
-      jest: ^27.4.4
-      ts-node: ^10.2.1
-      typescript: ^4.0.5
-      yargs: ^17.4.1
-    dependencies:
-      '@dxos/cli-core': link:../cli-core
-      '@dxos/crypto': 2.31.7
-      '@dxos/debug': 2.31.7
-      '@dxos/object-model': 2.31.7
-      assert: 2.0.0
-      yargs: 17.5.1
-    devDependencies:
-      '@dxos/cli-party': link:../cli-party
-      '@dxos/echo-db': 2.31.7
-      '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
-      '@types/jest': 27.0.3
-      '@types/node': 16.11.35
-      '@types/yargs': 17.0.10
-      eslint: 7.32.0
-      jest: 27.5.1_ts-node@10.7.0
-      ts-node: 10.7.0_3f276d54c583198e50f311697b18b00b
-      typescript: 4.6.4
-
   ../../packages/cli-ipfs:
     specifiers:
       '@dxos/async': ~2.31.3
@@ -840,6 +803,7 @@ importers:
       '@dxos/debug': ~2.31.3
       '@dxos/echo-db': ~2.31.3
       '@dxos/eslint-plugin': ~1.0.24
+      '@dxos/object-model': ~2.31.3
       '@dxos/random-access-multi-storage': ~2.31.3
       '@dxos/signal': ~2.31.3
       '@swc-node/register': ~1.4.2
@@ -871,6 +835,7 @@ importers:
       '@dxos/crypto': 2.31.7
       '@dxos/debug': 2.31.7
       '@dxos/echo-db': 2.31.7
+      '@dxos/object-model': 2.31.7
       '@dxos/random-access-multi-storage': 2.31.7
       assert: 2.0.0
       base-x: 3.0.9
