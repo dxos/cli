@@ -11,13 +11,7 @@ import { createKeyPair /*, PublicKey */ } from '@dxos/crypto';
 import { Awaited } from '@dxos/echo-db';
 import { createTestBroker } from '@dxos/signal';
 
-import { StateManager } from '../../state-manager';
-import { createCommand as createPartyCommand, listCommand as listPartyCommand } from '../party/commands';
 import { infoCommand, inviteCommand, joinCommand } from './commands';
-
-const getReadlineInterface = () => {
-  throw new Error('getReadlineInterface not mocked.');
-};
 
 const DEFAULT_ARGS = { $0: '', _: [], return: true };
 const NEW_PROFILE_NAME = 'test';
@@ -39,8 +33,8 @@ describe('cli-party: Device', () => {
   let signalBroker: Awaited<ReturnType<typeof createTestBroker>>;
   let alice: Client;
   let bob: Client;
-  let aliceStateManager: StateManager;
-  let bobStateManager: StateManager;
+  let aliceGetClient: (name?: string) => Promise<Client>;
+  let bobGetClient: (name?: string) => Promise<Client>;
 
   before(async () => {
     signalBroker = await createTestBroker(4002);
@@ -56,14 +50,14 @@ describe('cli-party: Device', () => {
       }
       return client;
     }));
-    aliceStateManager = new StateManager({ getClient: async () => alice, getReadlineInterface });
-    bobStateManager = new StateManager({ getClient: async () => bob, getReadlineInterface });
+    aliceGetClient = async () => alice;
+    bobGetClient = async () => bob;
   });
 
   afterEach(async () => {
     await sleep(200); // Issue on `protocols` side - require some time before destroying.
-    await aliceStateManager?.destroy();
-    await bobStateManager?.destroy();
+    await alice?.destroy();
+    await bob?.destroy();
   });
 
   after(async () => {
@@ -71,8 +65,8 @@ describe('cli-party: Device', () => {
   });
 
   it('Alice has identity and Bob has not.', async () => {
-    const aliceInfo = await infoCommand(aliceStateManager).handler(DEFAULT_ARGS) as any;
-    const bobInfo = await infoCommand(bobStateManager).handler(DEFAULT_ARGS) as any;
+    const aliceInfo = await infoCommand({ getClient: aliceGetClient }).handler(DEFAULT_ARGS) as any;
+    const bobInfo = await infoCommand({ getClient: bobGetClient }).handler(DEFAULT_ARGS) as any;
     expect(aliceInfo.displayName).toEqual('Alice');
     expect(bobInfo.displayName).toBeUndefined();
     // expect(bobInfo.identityKey).toBeUndefined();
@@ -86,29 +80,13 @@ describe('cli-party: Device', () => {
     const pinHelper = new PinHelper();
 
     const onInvitationGenerated = async (code: string) => {
-      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code, name: `${NEW_PROFILE_NAME}-1` });
+      await joinCommand({ getClient: bobGetClient, cliState: { interactive: false }, storage: { persistent: false } }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code, name: `${NEW_PROFILE_NAME}-1` });
     };
-    await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
+    await inviteCommand({ getClient: aliceGetClient }, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
 
     await waitForExpect(async () => {
-      expect((await infoCommand(aliceStateManager).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice');
-      expect((await infoCommand(bobStateManager).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice'); // Got replaced because it is now Alice's device.
-    }, 3000, 1000);
-  });
-
-  it('Joining device invitation removes current state and syncs with new state.', async () => {
-    await createPartyCommand(aliceStateManager).handler(DEFAULT_ARGS);
-    expect(await listPartyCommand(aliceStateManager).handler(DEFAULT_ARGS)).toHaveLength(1);
-
-    const pinHelper = new PinHelper();
-
-    const onInvitationGenerated = async (code: string) => {
-      await joinCommand({ stateManager: bobStateManager }, pinHelper.getPin.bind(pinHelper)).handler({ ...DEFAULT_ARGS, code, name: `${NEW_PROFILE_NAME}-2` });
-    };
-    await inviteCommand(aliceStateManager, pinHelper.setPin.bind(pinHelper), onInvitationGenerated).handler(DEFAULT_ARGS) as any;
-
-    await waitForExpect(async () => {
-      expect(await listPartyCommand(bobStateManager).handler(DEFAULT_ARGS)).toHaveLength(1); // The parties get synced up.
+      expect((await infoCommand({ getClient: aliceGetClient }).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice');
+      expect((await infoCommand({ getClient: bobGetClient }).handler(DEFAULT_ARGS) as any).displayName).toEqual('Alice'); // Got replaced because it is now Alice's device.
     }, 3000, 1000);
   });
 });

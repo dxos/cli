@@ -5,8 +5,8 @@
 import { Arguments, Argv, CommandModule } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
+import type { Client } from '@dxos/client';
 
-import { StateManager } from '../../../state-manager';
 import { DeviceOptions } from '../device';
 
 const options = (yargs: Argv<DeviceOptions>): Argv<DeviceOptions> => {
@@ -14,12 +14,16 @@ const options = (yargs: Argv<DeviceOptions>): Argv<DeviceOptions> => {
     .option('interactive', { hidden: true, default: true }); // override the default.
 };
 
-export const inviteCommand = (stateManager: StateManager, onPinGenerated: (pin: string) => void, onGenerated?: (code: string) => void): CommandModule<DeviceOptions, DeviceOptions> => ({
+type DeviceInviteOptions = {
+  getClient: (name?: string) => Promise<Client>
+}
+
+export const inviteCommand = ({ getClient }: DeviceInviteOptions, onPinGenerated: (pin: string) => void, onGenerated?: (code: string) => void): CommandModule<DeviceOptions, DeviceOptions> => ({
   command: ['invite'],
   describe: 'Invite another device.',
   builder: yargs => options(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceOptions>) => {
-    const client = await stateManager.getClient();
+    const client = await getClient();
 
     const invitation = await client.halo.createInvitation();
     invitation.connected.on(() => onPinGenerated(invitation.descriptor.secret?.toString() ?? ''));

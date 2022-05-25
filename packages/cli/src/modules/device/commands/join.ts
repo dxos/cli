@@ -1,15 +1,23 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2022 DXOS.org
 //
 
 import assert from 'assert';
 import { Arguments, Argv } from 'yargs';
 
-import { CLI_DEFAULT_PERSISTENT, asyncHandler, resetStorageForClientProfile } from '@dxos/cli-core';
+import { CLI_DEFAULT_PERSISTENT, CoreState, asyncHandler, resetStorageForClientProfile } from '@dxos/cli-core';
+import type { Client } from '@dxos/client';
 import { InvitationDescriptor } from '@dxos/echo-db';
 
-import { CliDataState } from '../../../init';
 import { DeviceOptions } from '../device';
+
+type DeviceJoinCommandOptions = Pick<CoreState, | 'profilePath' | 'cliState'> & {
+  getClient: (name?: string) => Promise<Client>
+  storage?: {
+    persistent?: boolean
+    path?: string
+  }
+}
 
 export interface DeviceJoinOptions extends DeviceOptions {
   code: string
@@ -23,30 +31,27 @@ const options = (yargs: Argv<DeviceJoinOptions>): Argv<DeviceJoinOptions> => {
     .option('code', { type: 'string', required: true });
 };
 
-export const joinCommand = ({ stateManager, config, profilePath }: Pick<CliDataState, 'stateManager' | 'config' | 'profilePath' | 'getReadlineInterface'>, secretProvider: Function) => ({
+export const joinCommand = ({ storage, profilePath, cliState, getClient }: DeviceJoinCommandOptions, secretProvider: Function) => ({
   command: ['join'],
   describe: 'Join device invitation.',
   builder: (yargs: Argv<any>) => options(yargs),
   handler: asyncHandler(async (argv: Arguments<DeviceJoinOptions>) => {
     const { code, name } = argv;
-    if (stateManager.client) {
-      throw new Error('Profile already initialized. Reset storage first. (`> storage reset`)');
+    if (cliState.interactive) {
+      throw new Error('Can not join from interactive mode.');
     }
 
-    const persistent = config?.get('runtime.client.storage.persistent', CLI_DEFAULT_PERSISTENT);
+    const persistent = storage?.persistent ?? CLI_DEFAULT_PERSISTENT;
     if (persistent && !name) {
       throw new Error('Profile name is not provided.');
     }
 
     if (persistent) {
-      assert(config, 'Missing config.');
       assert(profilePath, 'Missing profile path.');
-      resetStorageForClientProfile(config.get('runtime.client.storage.path'), name);
+      resetStorageForClientProfile(storage?.path, name);
     }
 
-    // TODO - create profile folder & save as default?
-    await stateManager.initializeClient({ name });
-    const client = await stateManager.getClient();
+    const client = await getClient(name);
 
     const invitationDescriptor = InvitationDescriptor.decode(code);
 

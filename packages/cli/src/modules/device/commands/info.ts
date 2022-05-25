@@ -5,16 +5,16 @@
 import { Arguments, CommandModule } from 'yargs';
 
 import { asyncHandler, print } from '@dxos/cli-core';
+import type { Client } from '@dxos/client';
 
 import { DeviceOptions } from '..';
-import { StateManager } from '../../../state-manager';
 
-export const infoCommand = (stateManager: StateManager): CommandModule<DeviceOptions, DeviceOptions> => ({
+export const infoCommand = ({ getClient }: { getClient: (name?: string) => Promise<Client> }): CommandModule<DeviceOptions, DeviceOptions> => ({
   command: ['info'],
   describe: 'Current device info.',
   builder: yargs => yargs,
   handler: asyncHandler(async (argv: Arguments<DeviceOptions>) => {
-    const client = await stateManager.getClient();
+    const client = await getClient();
 
     const data = {
       displayName: client.halo.profile?.username
