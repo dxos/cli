@@ -28,7 +28,7 @@
     "dev": "npm run cli",
     "dx": "./bin/dx.js",
     "lint": "eslint './src/**/*.{ts,js}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "NODE_ENV=test mocha -r @swc-node/register --exit './src/**/*.test.{ts,js}'"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/recomended"
@@ -40,8 +40,10 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
+    "@dxos/client": "~2.31.3",
     "@dxos/config": "~2.31.3",
     "@dxos/debug": "~2.31.3",
+    "@dxos/echo-db": "~2.31.3",
     "@dxos/random-access-multi-storage": "~2.31.3",
     "assert": "^2.0.0",
     "download": "^8.0.0",
@@ -67,20 +69,26 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
+    "@dxos/async": "~2.31.3",
+    "@dxos/crypto": "~2.31.3",
     "@dxos/eslint-plugin": "~1.0.24",
+    "@dxos/signal": "~2.31.3",
     "@types/find-root": "^1.1.2",
     "@types/fs-extra": "^9.0.13",
-    "@types/jest": "~27.0.3",
     "@types/js-yaml": "^3.12.5",
+    "@types/mocha": "^9.0.0",
     "@types/node": "~16.11.12",
     "@types/yargs": "^17.0.10",
     "@types/lodash.uniqby": "^4.7.7",
     "eslint": "^7.13.0",
+    "expect": "^27.2.1",
     "jest": "^27.4.4",
     "json2yaml": "^1.1.0",
+    "mocha": "^9.1.1",
     "node-jq": "^2.3.3",
     "ts-node": "^10.2.1",
     "typescript": "^4.0.5",
+    "wait-for-expect": "^3.0.2",
     "yaml2json": "^1.0.2"
   },
   "publishConfig": {

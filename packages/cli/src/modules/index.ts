@@ -2,6 +2,7 @@
 // Copyright 2022 DXOS.org
 //
 
+export * from './device';
 export * from './devtools';
 export * from './extension';
 export * from './halo';

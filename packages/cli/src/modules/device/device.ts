@@ -4,10 +4,9 @@
 
 import { Argv } from 'yargs';
 
-import { CoreOptions } from '@dxos/cli-core';
+import { CoreOptions, CoreState, createClient } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
 
-import { CliDataState } from '../../init';
 import { infoCommand, inviteCommand, joinCommand } from './commands';
 
 export type DeviceOptions = CoreOptions
@@ -16,7 +15,7 @@ const deviceOptions = (yargs: Argv<CoreOptions>): Argv<DeviceOptions> => {
   return yargs;
 };
 
-export const DeviceModule = ({ stateManager, config, profilePath, getReadlineInterface }: CliDataState) => {
+export const DeviceModule = ({ config, profilePath, getReadlineInterface, cliState }: CoreState) => {
   const secretProvider = async () => {
     return new Promise(resolve => {
       const rl = getReadlineInterface!();
@@ -30,13 +29,19 @@ export const DeviceModule = ({ stateManager, config, profilePath, getReadlineInt
     log('Pin: ', pin);
   };
 
+  const getClient = async (name?: string) => {
+    return createClient(config!, [], { name, initProfile: false });
+  };
+
+  const storage = config!.get('runtime.client.storage');
+
   return {
     command: ['device'],
-    describe: 'Device CLI.',
+    describe: 'Device management.',
     handler: undefined as any,
     builder: (yargs: Argv<CoreOptions>) => deviceOptions(yargs)
-      .command(joinCommand({ stateManager, config, profilePath }, secretProvider))
-      .command(infoCommand(stateManager))
-      .command(inviteCommand(stateManager, onPinGenerated))
+      .command(joinCommand({ storage, profilePath, cliState, getClient }, secretProvider))
+      .command(infoCommand({ getClient }))
+      .command(inviteCommand({ getClient }, onPinGenerated))
   };
 };

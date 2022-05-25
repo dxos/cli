@@ -4,7 +4,5 @@ description: Party and Device management.
 modules:
   - command: "party"
     description: "Party management."
-  - command: "device"
-    description: "Device management."
   - command: "echo"
     description: "ECHO operations."

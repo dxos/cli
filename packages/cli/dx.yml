@@ -11,3 +11,4 @@ modules:
   - command: "info"
   - command: "profile"
   - command: "storage"
+  - command: "device"

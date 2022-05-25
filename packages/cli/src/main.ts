@@ -10,6 +10,7 @@ import { EXTENSION_CONFIG_FILENAME, getLoggers, createCLI, CoreState, Extension,
 
 import { PluggableModule, ExtensionManager } from './extensions';
 import {
+  DeviceModule,
   DevtoolsModule,
   ExtensionModule,
   HaloModule,
@@ -32,6 +33,7 @@ const CLI_CONFIG = {
 };
 
 const modules = [
+  DeviceModule,
   InfoModule,
   ProfileModule,
   DevtoolsModule,
