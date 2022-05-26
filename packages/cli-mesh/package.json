@@ -38,10 +38,10 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.31.3",
-    "@dxos/crypto": "~2.31.3",
+    "@dxos/async": "~2.31.7",
+    "@dxos/crypto": "~2.31.7",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/network-manager": "~2.31.3",
+    "@dxos/network-manager": "~2.31.7",
     "@dxos/protocol": "~2.28.0",
     "assert": "^2.0.0",
     "debug": "^4.3.3",
@@ -51,7 +51,7 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.24",
+    "@dxos/eslint-plugin": "~1.0.27",
     "@types/jest": "~27.0.3",
     "@types/node": "~16.11.12",
     "@types/yargs": "^17.0.10",

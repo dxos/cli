@@ -7,16 +7,16 @@ importers:
 
   ../../packages/cli:
     specifiers:
-      '@dxos/async': ~2.31.3
+      '@dxos/async': ~2.31.7
       '@dxos/cli-core': workspace:*
-      '@dxos/client': ~2.31.3
-      '@dxos/config': ~2.31.3
-      '@dxos/crypto': ~2.31.3
-      '@dxos/debug': ~2.31.3
-      '@dxos/echo-db': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/random-access-multi-storage': ~2.31.3
-      '@dxos/signal': ~2.31.3
+      '@dxos/client': ~2.31.7
+      '@dxos/config': ~2.31.7
+      '@dxos/crypto': ~2.31.7
+      '@dxos/debug': ~2.31.7
+      '@dxos/echo-db': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/random-access-multi-storage': ~2.31.7
+      '@dxos/signal': ~2.31.7
       '@types/find-root': ^1.1.2
       '@types/fs-extra': ^9.0.13
       '@types/js-yaml': ^3.12.5
@@ -112,10 +112,10 @@ importers:
     specifiers:
       '@dxos/cli-core': workspace:*
       '@dxos/cli-dxns': workspace:*
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/registry-client': ~2.31.3
-      '@dxos/util': ^2.28.0
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/registry-client': ~2.31.7
+      '@dxos/util': ^2.31.7
       '@otplib/plugin-thirty-two': ^12.0.1
       '@polkadot/api': 4.17.1
       '@types/body-parser': ^1.19.1
@@ -217,19 +217,19 @@ importers:
 
   ../../packages/cli-bot:
     specifiers:
-      '@dxos/async': ~2.31.3
-      '@dxos/bot-factory-client': ~2.31.3
-      '@dxos/botkit': ~2.31.3
+      '@dxos/async': ~2.31.7
+      '@dxos/bot-factory-client': ~2.31.7
+      '@dxos/botkit': ~2.31.7
       '@dxos/cli-core': workspace:*
       '@dxos/cli-dxns': workspace:*
       '@dxos/cli-party': workspace:*
-      '@dxos/config': ~2.31.3
-      '@dxos/crypto': ~2.31.3
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/network-manager': ~2.31.3
-      '@dxos/registry-client': ~2.31.3
-      '@dxos/util': ^2.28.0
+      '@dxos/config': ~2.31.7
+      '@dxos/crypto': ~2.31.7
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/network-manager': ~2.31.7
+      '@dxos/registry-client': ~2.31.7
+      '@dxos/util': ^2.31.7
       '@types/cli-progress': ^3.9.2
       '@types/fs-extra': ^9.0.13
       '@types/jest': ~27.0.3
@@ -305,12 +305,12 @@ importers:
   ../../packages/cli-chat:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/crypto': ~2.31.3
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/network-manager': ~2.31.3
-      '@dxos/protocol-plugin-messenger': ~2.31.3
-      '@dxos/protocol-plugin-presence': ~2.31.3
+      '@dxos/crypto': ~2.31.7
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/network-manager': ~2.31.7
+      '@dxos/protocol-plugin-messenger': ~2.31.7
+      '@dxos/protocol-plugin-presence': ~2.31.7
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^17.0.10
@@ -344,8 +344,8 @@ importers:
   ../../packages/cli-console:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^17.0.10
@@ -398,13 +398,13 @@ importers:
 
   ../../packages/cli-core:
     specifiers:
-      '@dxos/async': ~2.31.3
-      '@dxos/client': ~2.31.3
-      '@dxos/config': ~2.31.3
-      '@dxos/crypto': ~2.31.3
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/registry-client': ~2.31.3
+      '@dxos/async': ~2.31.7
+      '@dxos/client': ~2.31.7
+      '@dxos/config': ~2.31.7
+      '@dxos/crypto': ~2.31.7
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/registry-client': ~2.31.7
       '@otplib/plugin-thirty-two': ^12.0.1
       '@types/dockerode': 3.2.3
       '@types/download': ^6.2.4
@@ -519,15 +519,15 @@ importers:
 
   ../../packages/cli-dxns:
     specifiers:
-      '@dxos/async': ~2.31.3
+      '@dxos/async': ~2.31.7
       '@dxos/cli-core': workspace:*
-      '@dxos/client': ~2.31.3
-      '@dxos/config': ~2.31.3
-      '@dxos/credentials': ~2.31.3
-      '@dxos/crypto': ~2.31.3
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/registry-client': ~2.31.3
+      '@dxos/client': ~2.31.7
+      '@dxos/config': ~2.31.7
+      '@dxos/credentials': ~2.31.7
+      '@dxos/crypto': ~2.31.7
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/registry-client': ~2.31.7
       '@polkadot/api': 4.17.1
       '@polkadot/keyring': 6.11.1
       '@polkadot/types': 4.17.1
@@ -624,11 +624,11 @@ importers:
 
   ../../packages/cli-ipfs:
     specifiers:
-      '@dxos/async': ~2.31.3
+      '@dxos/async': ~2.31.7
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/registry-client': ~2.31.3
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/registry-client': ~2.31.7
       '@polkadot/api': 4.17.1
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
@@ -685,13 +685,13 @@ importers:
 
   ../../packages/cli-kube:
     specifiers:
-      '@dxos/async': ~2.31.3
+      '@dxos/async': ~2.31.7
       '@dxos/cli-core': workspace:*
-      '@dxos/crypto': ~2.31.3
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/object-model': ~2.31.3
-      '@dxos/registry-client': ~2.31.3
+      '@dxos/crypto': ~2.31.7
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/object-model': ~2.31.7
+      '@dxos/registry-client': ~2.31.7
       '@types/jest': ~27.0.3
       '@types/js-yaml': ^3.12.5
       '@types/lodash.defaultsdeep': ^4.6.6
@@ -741,8 +741,8 @@ importers:
   ../../packages/cli-mdns:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^17.0.10
@@ -767,11 +767,11 @@ importers:
 
   ../../packages/cli-mesh:
     specifiers:
-      '@dxos/async': ~2.31.3
+      '@dxos/async': ~2.31.7
       '@dxos/cli-core': workspace:*
-      '@dxos/crypto': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/network-manager': ~2.31.3
+      '@dxos/crypto': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/network-manager': ~2.31.7
       '@dxos/protocol': ~2.28.0
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
@@ -810,18 +810,18 @@ importers:
 
   ../../packages/cli-party:
     specifiers:
-      '@dxos/async': ~2.31.3
+      '@dxos/async': ~2.31.7
       '@dxos/cli-core': workspace:*
-      '@dxos/client': ~2.31.3
-      '@dxos/config': ~2.31.3
-      '@dxos/credentials': ~2.31.3
-      '@dxos/crypto': ~2.31.3
-      '@dxos/debug': ~2.31.3
-      '@dxos/echo-db': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/object-model': ~2.31.3
-      '@dxos/random-access-multi-storage': ~2.31.3
-      '@dxos/signal': ~2.31.3
+      '@dxos/client': ~2.31.7
+      '@dxos/config': ~2.31.7
+      '@dxos/credentials': ~2.31.7
+      '@dxos/crypto': ~2.31.7
+      '@dxos/debug': ~2.31.7
+      '@dxos/echo-db': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/object-model': ~2.31.7
+      '@dxos/random-access-multi-storage': ~2.31.7
+      '@dxos/signal': ~2.31.7
       '@swc-node/register': ~1.4.2
       '@types/fs-extra': ^9.0.13
       '@types/lockfile': ^1.0.2
@@ -882,8 +882,8 @@ importers:
   ../../packages/cli-signal:
     specifiers:
       '@dxos/cli-core': workspace:*
-      '@dxos/debug': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
+      '@dxos/debug': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^17.0.10
@@ -910,13 +910,13 @@ importers:
 
   ../../packages/e2e:
     specifiers:
-      '@dxos/async': ~2.31.3
-      '@dxos/botkit': ~2.31.3
+      '@dxos/async': ~2.31.7
+      '@dxos/botkit': ~2.31.7
       '@dxos/cli-core': workspace:*
-      '@dxos/crypto': ~2.31.3
-      '@dxos/eslint-plugin': ~1.0.24
-      '@dxos/signal': ~2.31.3
-      '@dxos/util': ^2.28.0
+      '@dxos/crypto': ~2.31.7
+      '@dxos/eslint-plugin': ~1.0.27
+      '@dxos/signal': ~2.31.7
+      '@dxos/util': ^2.31.7
       '@koush/wrtc': ^0.5.3
       '@types/express': ^4.17.13
       '@types/fs-extra': ^9.0.13
@@ -4350,7 +4350,7 @@ packages:
     resolution: {integrity: sha512-xq+q3SRMOxGivLhBNaUdC64hDTQwejJ+H0T/NB1XMtTVEwNTrfFF3gAxiyW0Bu/xWEGhjVKgUcMhCrUy2+uCWg==}
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
       isarray: 1.0.0
     dev: false
     optional: true
@@ -4585,7 +4585,7 @@ packages:
     engines: {node: '>=6'}
 
   /cli-color/0.3.2:
-    resolution: {integrity: sha1-dfpfcowwjMSsWUsF4GzF2A2szYY=}
+    resolution: {integrity: sha512-Ys/nDhHNRcxrS4EUI2RS/QCUE+61AMuEOj3sWDX+EIHkJWj+4XkRbOdwdxJteAJKjXYBbeFJMtfaEPd1MBF9pQ==}
     dependencies:
       d: 0.1.1
       es5-ext: 0.10.61

@@ -38,10 +38,10 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.31.3",
+    "@dxos/async": "~2.31.7",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.31.3",
-    "@dxos/registry-client": "~2.31.3",
+    "@dxos/debug": "~2.31.7",
+    "@dxos/registry-client": "~2.31.7",
     "@polkadot/api": "4.17.1",
     "abort-controller": "~3.0.0",
     "assert": "^2.0.0",
@@ -60,7 +60,7 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.24",
+    "@dxos/eslint-plugin": "~1.0.27",
     "@types/jest": "~27.0.3",
     "@types/node": "~16.11.12",
     "@types/yargs": "^17.0.10",
