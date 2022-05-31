@@ -92,6 +92,7 @@ export interface CLIOptions {
   getModules?: Function
   init?: Function
   destroy?: Function
+  onExit?: Function
   info: Extension
   docker?: any
   options?: any
@@ -103,6 +104,7 @@ export type CLIObject = {
   runAsExtension: (state: CoreState, argv: any) => Promise<void>
   init?: Function
   destroy?: Function
+  onExit?: Function
   docker?: any
 }
 
@@ -115,6 +117,7 @@ export const createCLI = ({
   getModules,
   init,
   destroy,
+  onExit,
   main,
   options,
   info,
@@ -140,6 +143,7 @@ export const createCLI = ({
     runAsExtension: getRunnableExtension({ modules, getModules, version, options }),
     init,
     destroy,
+    onExit,
     docker
   };
 };

@@ -154,12 +154,15 @@ export class StateManager {
     return invitation;
   }
 
-  async destroy () {
-    if (this._lockPath && this._lockAquired) {
+  async unlock (force = false) {
+    if (this._lockPath && (this._lockAquired || force)) {
       await unlock(this._lockPath);
       this._lockAquired = false;
     }
+  }
 
+  async destroy () {
+    await this.unlock();
     await this._client?.destroy();
   }
 
@@ -176,7 +179,7 @@ export class StateManager {
         await lock(this._lockPath);
         this._lockAquired = true;
       } catch (err) {
-        throw new Error('Client is already running under the same profile. Close previously started session or choose another profile.');
+        throw new Error('Client is already running under the same profile. Close previously started session or choose another profile. If that is not the case you could forece-unlock party with \'dx party unlock\' command.');
       }
     }
   }
