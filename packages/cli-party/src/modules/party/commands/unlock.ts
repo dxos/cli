@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2022 DXOS.org
 //
 
 import { Arguments, CommandModule } from 'yargs';
