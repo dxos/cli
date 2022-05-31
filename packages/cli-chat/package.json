@@ -39,17 +39,17 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.31.3",
-    "@dxos/debug": "~2.31.3",
-    "@dxos/network-manager": "~2.31.3",
-    "@dxos/protocol-plugin-messenger": "~2.31.3",
-    "@dxos/protocol-plugin-presence": "~2.31.3",
+    "@dxos/crypto": "~2.32.0",
+    "@dxos/debug": "~2.32.0",
+    "@dxos/network-manager": "~2.32.0",
+    "@dxos/protocol-plugin-messenger": "~2.32.0",
+    "@dxos/protocol-plugin-presence": "~2.32.0",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.24",
+    "@dxos/eslint-plugin": "~1.0.27",
     "@types/jest": "~27.0.3",
     "@types/node": "~16.11.12",
     "@types/yargs": "^17.0.10",
