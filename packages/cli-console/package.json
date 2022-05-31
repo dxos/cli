@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-console",
-  "version": "2.19.0",
+  "version": "2.20.0",
   "description": "DXOS Console CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-console#readme",
   "bugs": {
