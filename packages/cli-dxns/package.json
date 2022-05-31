@@ -40,13 +40,13 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.31.7",
+    "@dxos/async": "~2.32.0",
     "@dxos/cli-core": "workspace:*",
-    "@dxos/config": "~2.31.7",
-    "@dxos/credentials": "~2.31.7",
-    "@dxos/crypto": "~2.31.7",
-    "@dxos/debug": "~2.31.7",
-    "@dxos/registry-client": "~2.31.7",
+    "@dxos/config": "~2.32.0",
+    "@dxos/credentials": "~2.32.0",
+    "@dxos/crypto": "~2.32.0",
+    "@dxos/debug": "~2.32.0",
+    "@dxos/registry-client": "~2.32.0",
     "@polkadot/api": "4.17.1",
     "@polkadot/keyring": "6.11.1",
     "@polkadot/util-crypto": "^6.11.1",
@@ -70,7 +70,7 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@dxos/client": "~2.31.7",
+    "@dxos/client": "~2.32.0",
     "@dxos/eslint-plugin": "~1.0.27",
     "@polkadot/types": "4.17.1",
     "@types/bn.js": "~5.1.0",

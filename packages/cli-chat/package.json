@@ -39,11 +39,11 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/crypto": "~2.31.7",
-    "@dxos/debug": "~2.31.7",
-    "@dxos/network-manager": "~2.31.7",
-    "@dxos/protocol-plugin-messenger": "~2.31.7",
-    "@dxos/protocol-plugin-presence": "~2.31.7",
+    "@dxos/crypto": "~2.32.0",
+    "@dxos/debug": "~2.32.0",
+    "@dxos/network-manager": "~2.32.0",
+    "@dxos/protocol-plugin-messenger": "~2.32.0",
+    "@dxos/protocol-plugin-presence": "~2.32.0",
     "assert": "^2.0.0",
     "hypercore-crypto": "^1.0.0",
     "yargs": "^17.4.1"

@@ -35,12 +35,12 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.31.7",
-    "@dxos/client": "~2.31.7",
-    "@dxos/config": "~2.31.7",
-    "@dxos/crypto": "~2.31.7",
-    "@dxos/debug": "~2.31.7",
-    "@dxos/registry-client": "~2.31.7",
+    "@dxos/async": "~2.32.0",
+    "@dxos/client": "~2.32.0",
+    "@dxos/config": "~2.32.0",
+    "@dxos/crypto": "~2.32.0",
+    "@dxos/debug": "~2.32.0",
+    "@dxos/registry-client": "~2.32.0",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@types/yargs": "^17.0.10",
     "assert": "^2.0.0",
