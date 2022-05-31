@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.20.0](https://www.github.com/dxos/cli/compare/v2.19.0...v2.20.0) (2022-05-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* new minor version.
+
+### Bug Fixes
+
+* echo err. ([50eb480](https://www.github.com/dxos/cli/commit/50eb480122322a90da55cbcb874b809c36bc72d1))
+* lightweight clean-up on term signals. ([#513](https://www.github.com/dxos/cli/issues/513)) ([2b9c1a6](https://www.github.com/dxos/cli/commit/2b9c1a6a668d82be24fe65cc690244a05cef71f4))
+* move device commands to main CLI. ([#512](https://www.github.com/dxos/cli/issues/512)) ([87a5f68](https://www.github.com/dxos/cli/commit/87a5f68e63844b291ffbbe3881447691e18deea2))
+* move echo commands to cli-party. ([#511](https://www.github.com/dxos/cli/issues/511)) ([6ca7764](https://www.github.com/dxos/cli/commit/6ca77640d71ddf00275db4f62b5c67499522bc4b))
+* new minor version. ([3d8e059](https://www.github.com/dxos/cli/commit/3d8e0593f3667b2bfd9455950bfd543754de60bc))
+
 ## [2.19.0](https://www.github.com/dxos/cli/compare/v2.18.4...v2.19.0) (2022-05-16)
 
 
