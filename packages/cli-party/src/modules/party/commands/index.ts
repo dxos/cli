@@ -9,3 +9,4 @@ export * from './join';
 export * from './list';
 export * from './members';
 export * from './open';
+export * from './unlock';

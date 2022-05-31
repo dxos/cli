@@ -189,6 +189,10 @@ export class Pluggable {
     return this.module.destroy?.(state);
   }
 
+  async handleExit (state: CoreState) {
+    return this.module.onExit?.(state);
+  }
+
   /**
    * Runs command of an CLI extension.
    */

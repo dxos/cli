@@ -44,7 +44,9 @@ export const initDataCliState = async (state: CoreState): Promise<CliDataState> 
 };
 
 export const destroyDataCliState = async () => {
-  if (stateManager) {
-    await stateManager.destroy();
-  }
+  return stateManager?.destroy();
+};
+
+export const handleExit = async () => {
+  return stateManager?.unlock();
 };

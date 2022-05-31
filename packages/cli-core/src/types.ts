@@ -49,6 +49,7 @@ export interface ExtensionInfo {
   version: string
   init?: Function
   destroy?: Function
+  onExit?: Function
   options?: any
   state?: any
 }

@@ -7,7 +7,7 @@ import { Argv } from 'yargs';
 import { CoreOptions } from '@dxos/cli-core';
 
 import { CliDataState } from '../../init';
-import { createCommand, infoCommand, inviteCommand, joinCommand, listCommand, membersCommand, openCommand } from './commands';
+import { createCommand, infoCommand, inviteCommand, joinCommand, listCommand, membersCommand, openCommand, unlockCommand } from './commands';
 
 export interface PartyOptions extends CoreOptions {
   partyKey?: string
@@ -30,4 +30,5 @@ export const PartyModule = ({ stateManager }: CliDataState) => ({
     .command(createCommand(stateManager))
     .command(membersCommand(stateManager))
     .command(inviteCommand(stateManager))
+    .command(unlockCommand(stateManager))
 });

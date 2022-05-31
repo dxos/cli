@@ -80,13 +80,22 @@ const destroy = async () => {
   }
 };
 
-const handleError = (err: any) => {
+const handleExit = async () => {
+  for await (const pluggableModule of pluggableModules) {
+    await pluggableModule.handleExit();
+  }
+};
+
+const handleError = async (err: any) => {
+  await handleExit();
   logError(err);
   process.exit(1);
 };
 
 process.on('uncaughtException', handleError);
 process.on('unhandledRejection', handleError);
+process.on('SIGINT', handleExit);
+process.on('SIGTERM', handleExit);
 
 module.exports = createCLI({
   dir: __dirname,

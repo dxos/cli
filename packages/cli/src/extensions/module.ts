@@ -34,8 +34,14 @@ export class PluggableModule {
   }
 
   async destroy () {
-    if (this.pluggable.installed && this.pluggable.destroy) {
+    if (this.pluggable.installed) {
       await this.pluggable.destroy(this._state);
+    }
+  }
+
+  async handleExit () {
+    if (this.pluggable.installed) {
+      await this.pluggable.handleExit(this._state);
     }
   }
 
