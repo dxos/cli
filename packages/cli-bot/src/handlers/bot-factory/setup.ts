@@ -7,6 +7,7 @@ import { parse, stringify } from 'envfile';
 import { readFileSync } from 'fs';
 import fs from 'fs-extra';
 import { load } from 'js-yaml';
+import os from 'os';
 import path from 'path';
 import readPkgUp from 'read-pkg-up';
 import { Argv } from 'yargs';
@@ -62,7 +63,7 @@ export const setup = (config: any, { includeNodePath = false } = {}) => async ({
 
   await setupPrebuilds(cliNodePath);
 
-  const botFactoryEnvFile = path.join(process.cwd(), BOTFACTORY_ENV_FILE);
+  const botFactoryEnvFile = path.join(os.homedir(), BOTFACTORY_ENV_FILE);
   await fs.ensureFile(botFactoryEnvFile);
 
   const envFileData = await fs.readFile(botFactoryEnvFile);

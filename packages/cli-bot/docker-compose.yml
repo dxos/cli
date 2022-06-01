@@ -5,4 +5,4 @@ services:
     container_name: bot-factory
     command: 'bot-factory'
     env_file:
-      - bot-factory.env
+      - ~/.dx/bots/bot-factory.env

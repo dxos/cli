@@ -4,6 +4,7 @@
 
 import { parse } from 'envfile';
 import fs from 'fs-extra';
+import os from 'os';
 import path from 'path';
 import { Argv } from 'yargs';
 
@@ -51,7 +52,7 @@ export const start = () => async ({
   dev,
   procName = BOT_FACTORY_PROCESS_NAME
 }: StartOptions) => {
-  const botFactoryEnvFile = path.join(process.cwd(), BOTFACTORY_ENV_FILE);
+  const botFactoryEnvFile = path.join(os.homedir(), BOTFACTORY_ENV_FILE);
   const envFileData = await fs.readFile(botFactoryEnvFile);
 
   const env = parse(envFileData.toString());

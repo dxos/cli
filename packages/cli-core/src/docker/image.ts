@@ -7,6 +7,7 @@ import Docker from 'dockerode';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import yaml from 'js-yaml';
 import hash from 'object-hash';
+import os from 'os';
 import path from 'path';
 
 import { ensureServicesStore } from '../config';
@@ -118,7 +119,10 @@ export class DockerImage {
     if (!restore) {
       // Read env files if any (assuming should exists if provided).
       this._envFiles.forEach(envFile => {
-        const envFilePath = path.join(process.cwd(), envFile);
+        const envFilePath = envFile.startsWith('~')
+          ? envFile.replace('~', os.homedir())
+          : path.join(process.cwd(), envFile);
+
         if (!existsSync(envFilePath)) {
           throw new Error(`${envFile} env file does not exists.`);
         }
