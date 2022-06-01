@@ -7,7 +7,7 @@ import defaultsDeep from 'lodash.defaultsdeep';
 
 import { readFile, writeFile } from '@dxos/cli-core';
 
-export const BOTFACTORY_ENV_FILE = 'bot-factory.env';
+export const BOTFACTORY_ENV_FILE = '.dx/bots/bot-factory.env';
 export const BOTFACTORY_PACKAGE = '@dxos/botkit';
 export const BOT_CONFIG_FILENAME = 'bot.yml';
 
