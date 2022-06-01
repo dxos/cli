@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-signal",
-  "version": "2.20.0",
+  "version": "2.20.1",
   "description": "DXOS Signal CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-signal#readme",
   "bugs": {

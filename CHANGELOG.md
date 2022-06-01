@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.20.1](https://www.github.com/dxos/cli/compare/v2.20.0...v2.20.1) (2022-06-01)
+
+
+### Bug Fixes
+
+* move bot-factory.env to ~.dx folder. ([#515](https://www.github.com/dxos/cli/issues/515)) ([ed3e1af](https://www.github.com/dxos/cli/commit/ed3e1af65aaf791179249d1370eaf6d8ddd632fd))
+
 ## [2.20.0](https://www.github.com/dxos/cli/compare/v2.19.0...v2.20.0) (2022-05-31)
 
 
