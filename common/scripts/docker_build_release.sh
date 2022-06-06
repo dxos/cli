@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright 2021 DXOS.org
+# Copyright 2022 DXOS.org
 #
 
 export REPO_ROOT; REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -10,7 +10,7 @@ ORG=dxos
 
 CHANNEL=${1:-latest}
 
-VERSION=`cat $REPO_ROOT/package.json | jq -r .version`
+VERSION=`sed "/\/\*.*\*\//d;/\/\*/,/\*\// d" $REPO_ROOT/common/config/rush/version-policies.json | sed 's/\/\/.*//' | jq -r '.[0].version'`
 HASH=`git log --pretty=format:'%h' -n 1`
 
 if [ "$CHANNEL" == "dev" ]; then
@@ -41,8 +41,8 @@ function push_docker_image {
   docker push "ghcr.io/$ORG/$NAME" --all-tags
 }
 
-for clidir in `find ./packages -name 'cli-*' -type d | grep -v node_modules`; do
-  pushd $clidir > /dev/null
+for pckgdir in `find ./packages/* -type d -maxdepth 0`; do
+  pushd $pckgdir > /dev/null
 
   if [ -f "./Dockerfile" -a -f "./IMAGE" ]; then
     IMAGE=`cat ./IMAGE`
