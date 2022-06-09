@@ -4,17 +4,17 @@
 
 import pb from 'protobufjs';
 
-import { DomainKey, DXN, RecordKind, RegistryTypeRecord, Resource, TypeRecordMetadata } from '@dxos/registry-client';
+import { CID, DomainKey, DXN, RegistryType, Resource, TypeRecordMetadata } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { resolveDXNorCID, uploadToIPFS } from '../utils';
-import { printRecord, printRecords, printResource } from './common';
+import { printResource, printType, printTypes } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
   const types = await client.registryClient.getTypeRecords();
 
-  printRecords(types, argv);
+  printTypes(types, argv);
 };
 
 export const getType = (params: Params) => async (argv: any) => {
@@ -26,7 +26,7 @@ export const getType = (params: Params) => async (argv: any) => {
     throw new Error(`No type registered under CID ${cid}.`);
   }
 
-  printRecord(typeRecord, argv);
+  printType(typeRecord, argv);
 };
 
 export const addType = (params: Params) => async (argv: any) => {
@@ -42,31 +42,33 @@ export const addType = (params: Params) => async (argv: any) => {
 
   const schemaRoot = await pb.load(path as string);
 
-  const sourceIpfsCid = await uploadToIPFS(config, path);
+  const protobufIpfsCid = await uploadToIPFS(config, path);
   const meta: TypeRecordMetadata = {
     description,
-    sourceIpfsCid
+    protobufIpfsCid
   };
 
-  const cid = await client.registryClient.insertTypeRecord(schemaRoot, messageName, meta);
-  const typeRecord: RegistryTypeRecord = {
-    kind: RecordKind.Type,
+  const cid = await client.registryClient.registerTypeRecord(messageName, schemaRoot, meta);
+  const typeRecord: RegistryType = {
     cid,
-    protobufDefs: schemaRoot,
-    messageName: messageName,
-    meta
+    ...meta,
+    type: {
+      messageName: messageName,
+      protobufDefs: schemaRoot,
+      protobufIpfsCid: CID.from(protobufIpfsCid)
+    }
   };
 
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
     const dxn = DXN.fromDomainKey(domainKey, resourceName as string);
-    await client.registryClient.updateResource(dxn, account, cid);
+    await client.registryClient.registerResource(dxn, cid, account);
     const resource = {
-      id: DXN.fromDomainKey(domainKey, resourceName as string)
+      name: DXN.fromDomainKey(domainKey, resourceName as string)
     };
 
     printResource(resource as Resource, argv);
   } else {
-    printRecord(typeRecord, argv);
+    printType(typeRecord, argv);
   }
 };

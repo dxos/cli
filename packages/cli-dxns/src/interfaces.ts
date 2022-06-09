@@ -9,13 +9,13 @@ import { KeyringPair } from '@polkadot/keyring/types';
 import { CoreState } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
 import { Config } from '@dxos/config';
-import { AccountClient, AccountKey, ApiTransactionHandler, IAuctionsClient, IRegistryClient } from '@dxos/registry-client';
+import { AccountClient, AccountKey, ApiTransactionHandler, IAuctionsClient, RegistryClient } from '@dxos/registry-client';
 
 export interface DXNSClient {
   apiRaw: ApiPromise,
   keyring: Keyring,
   keypair?: KeyringPair,
-  registryClient: IRegistryClient,
+  registryClient: RegistryClient,
   auctionsClient: IAuctionsClient,
   accountClient: AccountClient,
   transactionHandler: ApiTransactionHandler,

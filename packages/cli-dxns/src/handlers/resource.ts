@@ -16,7 +16,7 @@ export const listResources = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  let resources = await client.registryClient.queryResources();
+  let resources = await client.registryClient.getResources();
 
   if (argv.account) {
     const account = await client.accountClient.getAccount(AccountKey.fromHex(argv.account));
@@ -25,7 +25,7 @@ export const listResources = (params: Params) => async (argv: any) => {
       .filter(domain => AccountKey.equals(domain.owner, account.id))
       .map(domain => domain.name);
 
-    resources = resources.filter(resource => accountDomains.includes(resource.id.domain));
+    resources = resources.filter(resource => accountDomains.includes(resource.name.domain));
   }
 
   print(resources.map(displayResource), { json });
@@ -52,5 +52,5 @@ export const deleteResource = (params: Params) => async (argv: any) => {
   const client = await getDXNSClient();
   const account = await client.getDXNSAccount(argv);
 
-  await client.registryClient.deleteResource(parsedDxn, account);
+  await client.registryClient.registerResource(parsedDxn, undefined, account);
 };

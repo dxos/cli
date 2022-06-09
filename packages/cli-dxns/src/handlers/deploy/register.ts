@@ -7,8 +7,8 @@ import clean from 'lodash-clean';
 import set from 'lodash.set';
 
 import { log } from '@dxos/debug';
-import { AccountKey, CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
-import type { IRegistryClient } from '@dxos/registry-client';
+import { AccountKey, CID, DXN } from '@dxos/registry-client';
+import type { RegistryClient } from '@dxos/registry-client';
 
 import { Params } from '../../interfaces';
 import { PackageModule } from '../../utils/config';
@@ -59,27 +59,32 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
     log(JSON.stringify({ record }, undefined, 2));
   }
 
-  const client: { registryClient: IRegistryClient } = await getDXNSClient();
+  const client: { registryClient: RegistryClient } = await getDXNSClient();
 
-  const recordType = await client.registryClient.getResourceRecord(DXN.parse(type), 'latest');
-  assert(recordType);
-  assert(recordType.record.kind === RecordKind.Type, `Can not find type "${type}" in DXNS.`);
+  const typeResource = await client.registryClient.getResource(DXN.parse(type));
+  assert(typeResource, `Can not find type "${type}".`);
+  const typeCid = typeResource.tags.latest;
+  assert(typeCid, `No latest tag registered for type "${type}".`);
 
   let recordCID;
   if (!noop) {
-    recordCID = await client.registryClient.insertDataRecord(record, recordType?.record.cid, {
+    recordCID = await client.registryClient.registerRecord(record, typeCid, {
       description,
       displayName,
       tags
     });
   }
 
-  const domainKey = await client.registryClient.resolveDomainName(domain);
-  const opts: UpdateResourceOptions = { version: record.version, tags: record.tag ?? ['latest'] };
+  const domainKey = await client.registryClient.getDomainKey(domain);
   verbose && log(`Assigning name ${resource}...`);
   if (!noop && recordCID) {
     try {
-      await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, resource), account, recordCID, opts);
+      await client.registryClient.registerResource(
+        DXN.fromDomainKey(domainKey, resource),
+        recordCID,
+        account,
+        record.tag ?? 'latest'
+      );
     } catch (err) {
       if (skipExisting && String(err).includes('VersionAlreadyExists')) {
         verbose && log('Skipping existing version.');

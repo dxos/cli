@@ -8,7 +8,7 @@ import debug from 'debug';
 import { CoreState, createClient as createDxosClient } from '@dxos/cli-core';
 import type { Client } from '@dxos/client';
 import { Config } from '@dxos/config';
-import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, ClientSigner, RegistryClient, SignTxFunction } from '@dxos/registry-client';
+import { AccountClient, AccountKey, ApiTransactionHandler, AuctionsClient, createApiPromise, createKeyring, ClientSigner, RegistryClient, SignTxFunction, PolkadotRegistryClientBackend } from '@dxos/registry-client';
 
 import { DXNSClient } from './interfaces';
 import { DXNS_ACCOUNT_PREFERENCE, DXNS_ADDRESS_PREFERENCE } from './utils';
@@ -62,7 +62,7 @@ const _createDxnsClient = async (config: Config, state: Partial<CoreState>): Pro
       signFn = tx => tx;
     }
 
-    const registryClient = new RegistryClient(apiPromise, signFn);
+    const registryClient = new RegistryClient(new PolkadotRegistryClientBackend(apiPromise, signFn));
     const auctionsClient = new AuctionsClient(apiPromise, signFn);
     const accountClient = new AccountClient(apiPromise, signFn);
     const transactionHandler = new ApiTransactionHandler(apiPromise, signFn);

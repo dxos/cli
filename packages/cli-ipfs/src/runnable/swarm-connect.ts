@@ -8,7 +8,7 @@ import { boolean } from 'boolean';
 import { spawnSync } from 'child_process';
 
 import { sleep } from '@dxos/async';
-import { DXN, IRegistryClient, RegistryClient, definitions, RegistryDataRecord } from '@dxos/registry-client';
+import { DXN, RegistryClient, definitions, PolkadotRegistryClientBackend, RegistryRecord } from '@dxos/registry-client';
 
 const OLD_RECORD_CREATED = '2001-01-01';
 
@@ -42,7 +42,7 @@ export class SwarmConnector {
   private readonly _allowIPv6: boolean;
   private readonly _interval: number;
   private readonly _registryEndpoint: string;
-  private _registry: IRegistryClient | undefined;
+  private _registry: RegistryClient | undefined;
 
   constructor (options: SwarmConnectorOptions) {
     const { registryEndpoint, interval = 0, allowIPv6 = false } = options;
@@ -60,7 +60,7 @@ export class SwarmConnector {
     const types = Object.values(definitions).reduce((res, { types }) => ({ ...res, ...types }), {});
     const api = await ApiPromise.create({ provider, types });
 
-    this._registry = new RegistryClient(api);
+    this._registry = new RegistryClient(new PolkadotRegistryClientBackend(api));
 
     await this.connect();
 
@@ -88,16 +88,16 @@ export class SwarmConnector {
     }
     const ipfsServiceCID = await this.getServiceTypeCID(IPFS_SERVICE_DXN);
     const serviceCID = await this.getServiceTypeCID(SERVICE_DXN);
-    const services = await this._registry.getDataRecords({ type: serviceCID });
+    const services = await this._registry.getRecords({ type: serviceCID });
 
-    const getDate = (record: RegistryDataRecord) => new Date(record.meta.created ?? OLD_RECORD_CREATED).getTime();
+    const getDate = (record: RegistryRecord) => new Date(record.created ?? OLD_RECORD_CREATED).getTime();
 
     // Find last service record for each registered IPFS service.
     const records = services
-      .filter(service => ipfsServiceCID.equals(service.data.extension['@type']))
-      .sort((recordA: RegistryDataRecord, recordB: RegistryDataRecord) => getDate(recordA) - getDate(recordB)).reverse()
+      .filter(service => ipfsServiceCID.equals(service.payload.extension['@type']))
+      .sort((recordA: RegistryRecord, recordB: RegistryRecord) => getDate(recordA) - getDate(recordB)).reverse()
       .filter((record, index, self) => {
-        return index === self.findIndex(r => r.data.extension.addresses[0].split('/').pop() === record.data.extension.addresses[0].split('/').pop());
+        return index === self.findIndex(r => r.payload.extension.addresses[0].split('/').pop() === record.payload.extension.addresses[0].split('/').pop());
       });
 
     const active = records.sort(() => Math.random() - 0.5); // assuming all are active?
@@ -108,7 +108,7 @@ export class SwarmConnector {
     for (const service of active) {
       servicesTried++;
 
-      const addresses = service.data.extension.addresses as string[];
+      const addresses = service.payload.extension.addresses as string[];
       // eslint-disable-next-line
       for (const address of addresses ?? []) {
         if (/ip4/.test(address) || /dns4/.test(address) || this._allowIPv6) {

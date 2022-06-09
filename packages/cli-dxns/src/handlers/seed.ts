@@ -9,7 +9,7 @@ import pb from 'protobufjs';
 
 import { print } from '@dxos/cli-core';
 import { log } from '@dxos/debug';
-import { DomainKey, DXN, IRegistryClient, TypeRecordMetadata } from '@dxos/registry-client';
+import { DomainKey, DXN, RegistryClient, TypeRecordMetadata } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { uploadToIPFS } from '../utils';
@@ -43,20 +43,20 @@ const TYPES: Record<string, TypeDescription> = {
 const IPFS_SERVICE_DXN = 'dxos:type/service/ipfs';
 const SERVICE_DXN = 'dxos:type/service';
 
-const bootstrapIPFS = async (registry: IRegistryClient) => {
-  const ipfsType = await registry.getResourceRecord(DXN.parse(IPFS_SERVICE_DXN), 'latest');
-  const serviceType = await registry.getResourceRecord(DXN.parse(SERVICE_DXN), 'latest');
+const bootstrapIPFS = async (registry: RegistryClient) => {
+  const ipfsType = await registry.getResource(DXN.parse(IPFS_SERVICE_DXN));
+  const serviceType = await registry.getResource(DXN.parse(SERVICE_DXN));
 
-  if (!serviceType) {
+  if (!serviceType?.tags.latest) {
     throw new Error('Service type not found');
   }
 
-  if (!ipfsType) {
+  if (!ipfsType?.tags.latest) {
     throw new Error('IPFS type not found');
   }
 
-  const ipfsCID = ipfsType.record.cid;
-  const serviceCID = serviceType.record.cid;
+  const ipfsCID = ipfsType.tags.latest;
+  const serviceCID = serviceType.tags.latest;
 
   const serviceData = {
     type: 'ipfs',
@@ -70,7 +70,7 @@ const bootstrapIPFS = async (registry: IRegistryClient) => {
       ]
     }
   };
-  await registry.insertDataRecord(serviceData, serviceCID);
+  await registry.registerRecord(serviceData, serviceCID);
 };
 
 export const seedRegistry = (params: Params) => async (argv: any) => {
@@ -108,25 +108,25 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     verbose && log('Claiming Domain name..');
     domainKey = await auctionsClient.claimAuction(domain, account);
   } else {
-    domainKey = await registryClient.resolveDomainName(domain);
+    domainKey = await registryClient.getDomainKey(domain);
   }
 
   // Uploading types to IPFS
   verbose && log('Uploading types to IPFS...');
-  const sourceIpfsCid = await uploadToIPFS(config, DXNS_PROTO_DIR_PATH);
+  const protobufIpfsCid = await uploadToIPFS(config, DXNS_PROTO_DIR_PATH);
   verbose && log('Uploaded types to IPFS.');
 
   // Register DXOS Schema.
   verbose && log('Registering DXOS schema types..');
   const root = await pb.load(SCHEMA_PATH as string);
-  const meta: TypeRecordMetadata = { sourceIpfsCid };
+  const meta: TypeRecordMetadata = { protobufIpfsCid };
 
   for (const [typeName, { fqn, description }] of Object.entries(TYPES)) {
     verbose && log(`Registering ${typeName}..`);
 
-    const cid = await registryClient.insertTypeRecord(root, fqn, { ...meta, description });
+    const cid = await registryClient.registerTypeRecord(fqn, root, { ...meta, description });
     const dxn = DXN.fromDomainKey(domainKey, typeName);
-    await registryClient.updateResource(dxn, account, cid);
+    await registryClient.registerResource(dxn, cid, account);
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }

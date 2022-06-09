@@ -5,19 +5,19 @@
 import assert from 'assert';
 
 import { print } from '@dxos/cli-core';
-import { CID, DXN, RegistryDataRecord } from '@dxos/registry-client';
+import { CID, DXN, RegistryRecord } from '@dxos/registry-client';
 
 import type { Params } from '../modules/app';
 
 const APP_TYPE_DXN = 'dxos:type/app';
 
-export const displayApps = (record: RegistryDataRecord) => {
+export const displayApps = (record: RegistryRecord) => {
   return ({
     cid: record.cid.toString(),
-    created: record.meta.created,
-    description: record.meta.description,
-    displayName: record.meta.displayName,
-    bundle: CID.from(Buffer.from(record.data.bundle, 'base64')).toString()
+    created: record.created,
+    description: record.description,
+    displayName: record.displayName,
+    bundle: CID.from(Buffer.from(record.payload.bundle, 'base64')).toString()
   });
 };
 
@@ -38,7 +38,7 @@ export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
     throw new Error('App type not found.');
   }
 
-  const records = await registry.getDataRecords({ type: appType.record.cid });
+  const records = await registry.getRecords({ type: appType.record.cid });
 
   apps = records.map(displayApps);
 
