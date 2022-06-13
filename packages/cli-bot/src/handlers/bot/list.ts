@@ -39,7 +39,7 @@ export const list = ({ config } : ListParameters) => async ({ json } : BotListOp
   const botFactoryClient = new BotFactoryClient(networkManager);
   try {
     await botFactoryClient.start(PublicKey.from(topic));
-    const bots = await botFactoryClient.list();
+    const bots = await botFactoryClient.getBots();
 
     print(bots.map(bot => ({
       id: bot.id,
