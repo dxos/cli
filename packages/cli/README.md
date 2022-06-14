@@ -156,17 +156,9 @@ While developing a specific cli extension as a package in the monorepo, `rushx b
 
 ### Running commands locally
 
-During local development there is a need for testing of a newly created/modified commands. 
-For that purpose, any cli command could be called from the repo root via `pnpm run dx`, e.g.:
+During local development there is a need for testing of a newly created/modified commands. There also might be a need for the command to be called from the specific path (e.g. during app deployent).
 
-> **Note:** Command arguments should be separated from the command via `--` for `pnpm` to pass it to executable.
-
-```bash
-pnpm run dx dxns resource list -- --json
-```
-
-If the command ought to be called from the specific path (e.g. during app deployent), 
-an alias for the local dx binary coud be created by adding such to the shell profile:
+For such cases, an alias for the local dx binary coud be created by adding such to the shell profile:
 
 ```bash
 `eval $(./scripts/dev.sh)`
