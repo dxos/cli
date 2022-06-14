@@ -179,7 +179,7 @@ describe('CLI', () => {
     it('get resource', async () => {
       const resource = await cmd('dxns resource get dxos:type/app --json').json();
 
-      expect(resource.dxn).toEqual('dxos:type/app');
+      expect(resource.name).toEqual('dxos:type/app');
     });
 
     it('list records', async () => {
