@@ -24,7 +24,8 @@ export const addDummyData = (params: Params) => async (argv: any) => {
   assert(botType?.tags.latest, 'Bot type not found.');
 
   const cid = await registry.registerRecord({
-    hash: createCID().value
+    hash: createCID().value,
+    localPath: './bot.js'
   }, botType.tags.latest, {
     description: 'Test bot'
   });

@@ -173,7 +173,7 @@ describe('CLI', () => {
     it('list resources', async () => {
       const resources = await cmd('dxns resource list --json').json();
 
-      expect(resources.some((r: any) => r.dxn === 'dxos:type/app')).toBe(true);
+      expect(resources.some((r: any) => r.name === 'dxos:type/app')).toBe(true);
     });
 
     it('get resource', async () => {
@@ -185,13 +185,14 @@ describe('CLI', () => {
     it('list records', async () => {
       const records = await cmd('dxns record list --json').json();
 
-      expect(records.some((r: any) => r.messageName === '.dxos.type.App')).toBe(true);
+      expect(records.some((r: any) => r.description === 'Test bot')).toBe(true);
     });
 
     it('get record', async () => {
-      const record = await cmd('dxns record get dxos:type/app --json').json();
+      const record = await cmd('dxns record get dxos:testbot --json').json();
 
-      expect(record.messageName).toBe('.dxos.type.App');
+      expect(record.description).toBe('Test bot');
+      expect(record.payload.localPath).toBe('./bot.js');
       expect(record.cid).toBeDefined();
 
       const record2 = await cmd('dxns record get ' + record.cid + ' --json').json();
