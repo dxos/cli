@@ -75,11 +75,11 @@ export class SwarmConnector {
     if (!this._registry) {
       throw new Error('Registry client is not initialized.');
     }
-    const type = await this._registry.getResourceRecord(DXN.parse(dxn), 'latest');
-    if (!type) {
+    const type = await this._registry.getResource(DXN.parse(dxn));
+    if (!type?.tags.latest) {
       throw new Error('Can\'t find ipfs service type record');
     }
-    return type.record.cid;
+    return type.tags.latest;
   }
 
   async connect () {

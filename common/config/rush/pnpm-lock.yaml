@@ -626,6 +626,7 @@ importers:
     specifiers:
       '@dxos/async': ~2.33.0
       '@dxos/cli-core': workspace:*
+      '@dxos/cli-dxns': workspace:*
       '@dxos/debug': ~2.33.0
       '@dxos/eslint-plugin': ~1.0.27
       '@dxos/registry-client': ~2.33.0
@@ -674,6 +675,7 @@ importers:
       pify: 5.0.0
       yargs: 17.5.1
     devDependencies:
+      '@dxos/cli-dxns': link:../cli-dxns
       '@dxos/eslint-plugin': 1.0.27_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.35
@@ -9164,7 +9166,7 @@ packages:
     resolution: {integrity: sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==}
 
   /nanoassert/1.1.0:
-    resolution: {integrity: sha1-TzFS4JVA/eKMdvRLGbvNHVpCR40=}
+    resolution: {integrity: sha512-C40jQ3NzfkP53NsO8kEOFd79p4b9kDXQMwgiY1z8ZwrDZgUyom0AHwGegF4Dm99L+YoYhuaB0ceerUcXmqr1rQ==}
 
   /nanoassert/2.0.0:
     resolution: {integrity: sha512-7vO7n28+aYO4J+8w96AzhmU8G+Y/xpPDJz/se19ICsqj/momRbb9mh9ZUtkoJ5X3nTnPdhEJyc0qnM6yAsHBaA==}

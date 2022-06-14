@@ -2,10 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
 import { Arguments } from 'yargs';
 
 import { print, CoreOptions } from '@dxos/cli-core';
-import { raise } from '@dxos/debug';
 import { DXN, RegistryRecord, Resource } from '@dxos/registry-client';
 
 import type { Params } from '../../modules/bot';
@@ -46,9 +46,10 @@ export const query = ({ getDXNSClient }: QueryParams) => async (argv: Arguments<
   const { json } = argv;
   const client = await getDXNSClient();
   const registry = client.registryClient;
-  const botType = await registry.getResourceRecord(DXN.parse(BOT_TYPE_DXN), 'latest') ?? raise(new Error('Bot type not found.'));
-  const records = await registry.getRecords({ type: botType.record.cid });
-  const resources = await registry.getResources({ type: botType.record.cid });
+  const botType = await registry.getResource(DXN.parse(BOT_TYPE_DXN));
+  assert(botType?.tags.latest, 'Bot type not found.');
+  const records = await registry.getRecords({ type: botType.tags.latest });
+  const resources = await registry.getResources({ type: botType.tags.latest });
 
   const bots = mergeResourceRecords(records, resources);
 

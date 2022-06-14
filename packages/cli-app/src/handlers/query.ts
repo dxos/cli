@@ -28,19 +28,14 @@ interface QueryParams {
 export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
   const { json } = argv;
 
-  let apps = [];
   assert(getDXNSClient);
   const client = await getDXNSClient();
   const registry = client.registryClient;
-  const appType = await registry.getResourceRecord(DXN.parse(APP_TYPE_DXN), 'latest');
+  const appType = await registry.getResource(DXN.parse(APP_TYPE_DXN));
+  assert(appType?.tags.latest, 'App type not found.');
 
-  if (!appType) {
-    throw new Error('App type not found.');
-  }
-
-  const records = await registry.getRecords({ type: appType.record.cid });
-
-  apps = records.map(displayApps);
+  const records = await registry.getRecords({ type: appType.tags.latest });
+  const apps = records.map(displayApps);
 
   if (apps && apps.length) {
     print(apps, { json });

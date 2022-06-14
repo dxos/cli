@@ -60,6 +60,7 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
+    "@dxos/cli-dxns": "workspace:*",
     "@dxos/eslint-plugin": "~1.0.27",
     "@types/jest": "~27.0.3",
     "@types/node": "~16.11.12",
