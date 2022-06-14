@@ -63,19 +63,20 @@ const registerServices = async (options: RegisterServiceOptions) => {
 };
 
 export const register = ({ getDXNSClient }: any) => async (argv: any) => {
-  const { domain, name, url } = argv;
+  // TODO(wittjosiah): Update options.
+  const { domain, name: path, url } = argv;
   const { registryClient, getDXNSAccount } = await getDXNSClient();
 
   const kubeType = await registryClient.getResource(DXN.parse(KUBE_DXN_NAME));
   assert(kubeType?.tags.latest);
 
-  const cid = await registryClient.insertDataRecord({ url }, kubeType.tags.latest, {});
-  const domainKey = await registryClient.resolveDomainName(domain);
-  const dxn = DXN.fromDomainKey(domainKey, name);
+  const cid = await registryClient.registerRecord({ url }, kubeType.tags.latest, {});
+  const domainKey = await registryClient.getDomainKey(domain);
+  const name = DXN.fromDomainKey(domainKey, path);
   const account = await getDXNSAccount(argv);
-  await registryClient.updateResource(dxn, account, cid);
+  await registryClient.registerResource(name, cid, account);
   await registerServices({
-    kubeName: name,
+    kubeName: path,
     registryClient,
     domainKey,
     kubeCID: cid,
