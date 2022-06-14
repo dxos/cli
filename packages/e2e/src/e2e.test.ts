@@ -192,7 +192,6 @@ describe('CLI', () => {
       const record = await cmd('dxns record get dxos:testbot --json').json();
 
       expect(record.description).toBe('Test bot');
-      expect(record.payload.localPath).toBe('./bot.js');
       expect(record.cid).toBeDefined();
 
       const record2 = await cmd('dxns record get ' + record.cid + ' --json').json();
