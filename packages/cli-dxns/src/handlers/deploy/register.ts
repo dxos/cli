@@ -24,7 +24,7 @@ export interface RegisterParams {
 }
 
 export const register = ({ getDXNSClient, module, cid, license, account }: RegisterParams) => async (argv: any) => {
-  const { verbose, version, tag, 'dry-run': noop, skipExisting, hashPath = DEFAULT_CID_PATH } = argv;
+  const { verbose, tag, 'dry-run': noop, hashPath = DEFAULT_CID_PATH } = argv;
 
   const { name, type, displayName, description, tags, record: dataRecord } = module;
 
@@ -42,18 +42,13 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   const record = {
     license,
     ...dataRecord,
-    ...clean({ version }),
     ...clean({ tag })
   };
-
-  if (record.version === 'false') {
-    record.version = null;
-  }
 
   // Inject IPFS CID.
   set(record, hashPath, CID.from(cid).value);
 
-  verbose && log(`Registering ${resource}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : '') + (record.version ? ` Version ${record.version}.` : ''));
+  verbose && log(`Registering ${resource}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : ''));
 
   if (verbose || noop) {
     log(JSON.stringify({ record }, undefined, 2));
@@ -78,21 +73,13 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   const domainKey = await client.registryClient.getDomainKey(domain);
   verbose && log(`Assigning name ${resource}...`);
   if (!noop && recordCID) {
-    try {
-      await client.registryClient.registerResource(
-        DXN.fromDomainKey(domainKey, resource),
-        recordCID,
-        account,
-        record.tag ?? 'latest'
-      );
-    } catch (err) {
-      if (skipExisting && String(err).includes('VersionAlreadyExists')) {
-        verbose && log('Skipping existing version.');
-      } else {
-        throw err;
-      }
-    }
+    await client.registryClient.registerResource(
+      DXN.fromDomainKey(domainKey, resource),
+      recordCID,
+      account,
+      record.tag ?? 'latest'
+    );
   }
 
-  verbose && log(`Registered ${resource}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : '') + (record.version ? ` Version ${record.version}.` : ''));
+  verbose && log(`Registered ${resource}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : ''));
 };
