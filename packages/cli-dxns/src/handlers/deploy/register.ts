@@ -42,7 +42,8 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   const record = {
     license,
     ...dataRecord,
-    ...clean({ tag })
+    // TODO(wittjosiah): Include version in generic way?
+    ...clean({ build: { tag } })
   };
 
   // Inject IPFS CID.
@@ -77,7 +78,7 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
       DXN.fromDomainKey(domainKey, resource),
       recordCID,
       account,
-      record.tag ?? 'latest'
+      tag ?? 'latest'
     );
   }
 

@@ -265,7 +265,7 @@ describe('CLI', () => {
     });
 
     it('Registers tagged app', async () => {
-      await cmd(`dxns --account ${account} deploy --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
+      await cmd(`dxns --account ${account} deploy --tag beta`, join(__dirname, '../mocks/app')).run();
     });
 
     it('Serves the app by tags', async () => {
