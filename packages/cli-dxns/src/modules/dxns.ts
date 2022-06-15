@@ -10,6 +10,7 @@ import { getBlocks } from '../handlers/block';
 import { deploy } from '../handlers/deploy';
 import { addDummyData } from '../handlers/dummy-data';
 import { info } from '../handlers/info';
+import { getPeer } from '../handlers/peer';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
 import { Params } from '../interfaces';
@@ -72,6 +73,15 @@ export const DXNSModule = (params: Params) => {
         describe: 'Get current DXNS block number.',
 
         handler: asyncHandler(getBlocks(params))
+      })
+
+      .command({
+        command: ['peer'],
+        describe: 'Get Peer connection string.',
+        builder: yargs => yargs
+          .option('url', { type: 'string', required: true }),
+
+        handler: asyncHandler(getPeer())
       })
 
       .command({
