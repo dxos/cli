@@ -88,6 +88,8 @@ export const DXNSModule = (params: Params) => {
         builder: (yargs: Argv) => yargs
           .strict(false)
           .version(false)
+          .option('version', { type: 'string' })
+          .option('skipExisting', { type: 'boolean' })
           .option('tag', { type: 'string' })
           .option('timeout', { type: 'string', default: '10m' })
           .option('path', { type: 'string' })

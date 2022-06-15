@@ -24,9 +24,8 @@ export const displayRecord = (record: RegistryRecord) => {
     displayName: record.displayName,
     description: record.description,
     tags: record.tags,
-    typeCid: record.payload['@type'].toString(),
     created: record.created?.toISOString(),
-    data: displayHash(record.payload)
+    payload: displayHash(record.payload)
   };
 };
 
@@ -36,8 +35,8 @@ export const displayType = (type: RegistryType) => {
     displayName: type.displayName,
     description: type.description,
     tags: type.tags,
-    messageName: type.type.messageName,
-    created: type.created?.toISOString()
+    created: type.created?.toISOString(),
+    messageName: type.type.messageName
   };
 };
 

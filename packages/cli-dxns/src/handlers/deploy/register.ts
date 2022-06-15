@@ -24,7 +24,7 @@ export interface RegisterParams {
 }
 
 export const register = ({ getDXNSClient, module, cid, license, account }: RegisterParams) => async (argv: any) => {
-  const { verbose, tag, 'dry-run': noop, hashPath = DEFAULT_CID_PATH } = argv;
+  const { verbose, version, tag, 'dry-run': noop, skipExisting, hashPath = DEFAULT_CID_PATH } = argv;
 
   const { name, type, displayName, description, tags, record: dataRecord } = module;
 
@@ -36,20 +36,28 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   assert(resource, 'Invalid resource.');
   assert(domain, 'Invalid domain.');
 
+  // TODO(wittjosiah): Remove? Validation done by DXN.
   assert(/^[a-zA-Z0-9][a-zA-Z0-9-/]{1,61}[a-zA-Z0-9-]{2,}$/.test(resource), 'Name could contain only letters, numbers, dashes or slashes.');
 
   // Compose record.
   const record = {
     license,
     ...dataRecord,
-    // TODO(wittjosiah): Include version in generic way?
-    ...clean({ build: { tag } })
+    ...clean({ build: { tag, version } })
   };
+
+  if (record.build?.version === 'false') {
+    record.build.version = null;
+  }
 
   // Inject IPFS CID.
   set(record, hashPath, CID.from(cid).value);
 
-  verbose && log(`Registering ${resource}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : ''));
+  verbose && log(
+    `Registering ${resource}.` +
+    (record.build?.tag ? ` Tagged ${record.build.tag}.` : '') +
+    (record.build?.version ? ` Version ${record.build.version}.` : '')
+  );
 
   if (verbose || noop) {
     log(JSON.stringify({ record }, undefined, 2));
@@ -72,15 +80,53 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   }
 
   const domainKey = await client.registryClient.getDomainKey(domain);
-  verbose && log(`Assigning name ${resource}...`);
-  if (!noop && recordCID) {
+  if (!noop && tag && recordCID) {
+    verbose && log(`Assigning name ${resource}@${tag}...`);
     await client.registryClient.registerResource(
       DXN.fromDomainKey(domainKey, resource),
       recordCID,
       account,
-      tag ?? 'latest'
+      tag
     );
   }
 
-  verbose && log(`Registered ${resource}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : ''));
+  if (!noop && version && recordCID) {
+    verbose && log(`Assigning name ${resource}@${version}...`);
+    await registerVersion(
+      client.registryClient,
+      DXN.fromDomainKey(domainKey, resource),
+      version,
+      recordCID,
+      account,
+      skipExisting
+    );
+  }
+
+  verbose && log(
+    `Registered ${resource}.` +
+    (record.build?.tag ? ` Tagged ${record.build.tag}.` : '') +
+    (record.build?.version ? ` Version ${record.build.version}.` : '')
+  );
+};
+
+const registerVersion = (
+  registry: RegistryClient,
+  name: DXN,
+  version: string,
+  recordCID: CID,
+  account: AccountKey,
+  skipExisting: boolean
+) => async () => {
+  const resource = await registry.getResource(name);
+
+  if (skipExisting && resource?.tags[version]) {
+    return;
+  }
+
+  await registry.registerResource(
+    name,
+    recordCID,
+    account,
+    version
+  );
 };
