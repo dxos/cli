@@ -109,14 +109,14 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   );
 };
 
-const registerVersion = (
+const registerVersion = async (
   registry: RegistryClient,
   name: DXN,
   version: string,
   recordCID: CID,
   account: AccountKey,
   skipExisting: boolean
-) => async () => {
+) => {
   const resource = await registry.getResource(name);
 
   console.log({ resource, tags: resource?.tags, tag: resource?.tags[version], name, version, recordCID, account, skipExisting });
