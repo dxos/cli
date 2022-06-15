@@ -265,12 +265,13 @@ describe('CLI', () => {
     });
 
     it('Registers tagged app', async () => {
-      await cmd(`dxns --account ${account} deploy --tag beta`, join(__dirname, '../mocks/app')).run();
+      await cmd(`dxns --account ${account} deploy --tag beta --version 2.0.1`, join(__dirname, '../mocks/app')).run();
     });
 
     it('Serves the app by tags', async () => {
       expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@latest/`)).statusCode).toBe(200);
       expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@beta/`)).statusCode).toBe(200);
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@2.0.1/`)).statusCode).toBe(200);
     });
 
     it('Serves directly by CID', async () => {
