@@ -53,7 +53,7 @@ export class BotFactoryConnector {
 
     try {
       await botFactoryClient.start(PublicKey.from(this._topic));
-      const bots = await botFactoryClient.list();
+      const bots = await botFactoryClient.getBots();
 
       console.log(`Connected to Bot Factory, ${bots.length} bots are running.`);
       await sleep(TIMEOUT);

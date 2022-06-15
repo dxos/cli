@@ -100,7 +100,7 @@ export const DXNSModule = (params: Params) => {
           .version(false)
           .option('version', { type: 'string' })
           .option('skipExisting', { type: 'boolean' })
-          .option('tag', { type: 'array' })
+          .option('tag', { type: 'string' })
           .option('timeout', { type: 'string', default: '10m' })
           .option('path', { type: 'string' })
           .option('config', { type: 'string' })

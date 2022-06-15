@@ -7,8 +7,8 @@ import clean from 'lodash-clean';
 import set from 'lodash.set';
 
 import { log } from '@dxos/debug';
-import { AccountKey, CID, DXN, RecordKind, UpdateResourceOptions } from '@dxos/registry-client';
-import type { IRegistryClient } from '@dxos/registry-client';
+import { AccountKey, CID, DXN } from '@dxos/registry-client';
+import type { RegistryClient } from '@dxos/registry-client';
 
 import { Params } from '../../interfaces';
 import { PackageModule } from '../../utils/config';
@@ -36,58 +36,97 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   assert(resource, 'Invalid resource.');
   assert(domain, 'Invalid domain.');
 
+  // TODO(wittjosiah): Remove? Validation done by DXN.
   assert(/^[a-zA-Z0-9][a-zA-Z0-9-/]{1,61}[a-zA-Z0-9-]{2,}$/.test(resource), 'Name could contain only letters, numbers, dashes or slashes.');
 
   // Compose record.
   const record = {
     license,
     ...dataRecord,
-    ...clean({ version }),
-    ...clean({ tag })
+    ...clean({ build: { tag, version } })
   };
 
-  if (record.version === 'false') {
-    record.version = null;
+  if (record.build?.version === 'false') {
+    record.build.version = null;
   }
 
   // Inject IPFS CID.
   set(record, hashPath, CID.from(cid).value);
 
-  verbose && log(`Registering ${resource}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : '') + (record.version ? ` Version ${record.version}.` : ''));
+  verbose && log(
+    `Registering ${resource}.` +
+    (record.build?.tag ? ` Tagged ${record.build.tag}.` : '') +
+    (record.build?.version ? ` Version ${record.build.version}.` : '')
+  );
 
   if (verbose || noop) {
     log(JSON.stringify({ record }, undefined, 2));
   }
 
-  const client: { registryClient: IRegistryClient } = await getDXNSClient();
+  const client: { registryClient: RegistryClient } = await getDXNSClient();
 
-  const recordType = await client.registryClient.getResourceRecord(DXN.parse(type), 'latest');
-  assert(recordType);
-  assert(recordType.record.kind === RecordKind.Type, `Can not find type "${type}" in DXNS.`);
+  const typeResource = await client.registryClient.getResource(DXN.parse(type));
+  assert(typeResource, `Can not find type "${type}".`);
+  const typeCid = typeResource.tags.latest;
+  assert(typeCid, `No latest tag registered for type "${type}".`);
 
   let recordCID;
   if (!noop) {
-    recordCID = await client.registryClient.insertDataRecord(record, recordType?.record.cid, {
+    recordCID = await client.registryClient.registerRecord(record, typeCid, {
       description,
       displayName,
       tags
     });
   }
 
-  const domainKey = await client.registryClient.resolveDomainName(domain);
-  const opts: UpdateResourceOptions = { version: record.version, tags: record.tag ?? ['latest'] };
-  verbose && log(`Assigning name ${resource}...`);
+  const domainKey = await client.registryClient.getDomainKey(domain);
   if (!noop && recordCID) {
-    try {
-      await client.registryClient.updateResource(DXN.fromDomainKey(domainKey, resource), account, recordCID, opts);
-    } catch (err) {
-      if (skipExisting && String(err).includes('VersionAlreadyExists')) {
-        verbose && log('Skipping existing version.');
-      } else {
-        throw err;
-      }
-    }
+    verbose && log(`Assigning name ${resource}@${tag}...`);
+    await client.registryClient.registerResource(
+      DXN.fromDomainKey(domainKey, resource),
+      recordCID,
+      account,
+      tag ?? 'latest'
+    );
   }
 
-  verbose && log(`Registered ${resource}.` + (record.tag ? ` Tagged ${record.tag.join(', ')}.` : '') + (record.version ? ` Version ${record.version}.` : ''));
+  if (!noop && version && recordCID) {
+    verbose && log(`Assigning name ${resource}@${version}...`);
+    await registerVersion(
+      client.registryClient,
+      DXN.fromDomainKey(domainKey, resource),
+      version,
+      recordCID,
+      account,
+      skipExisting
+    );
+  }
+
+  verbose && log(
+    `Registered ${resource}.` +
+    (record.build?.tag ? ` Tagged ${record.build.tag}.` : '') +
+    (record.build?.version ? ` Version ${record.build.version}.` : '')
+  );
+};
+
+const registerVersion = async (
+  registry: RegistryClient,
+  name: DXN,
+  version: string,
+  recordCID: CID,
+  account: AccountKey,
+  skipExisting: boolean
+) => {
+  const resource = await registry.getResource(name);
+
+  if (skipExisting && resource?.tags[version]) {
+    return;
+  }
+
+  await registry.registerResource(
+    name,
+    recordCID,
+    account,
+    version
+  );
 };

@@ -2,8 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
+
 import { print } from '@dxos/cli-core';
-import { raise } from '@dxos/debug';
 import { createCID, DXN } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
@@ -19,17 +20,18 @@ export const addDummyData = (params: Params) => async (argv: any) => {
 
   print('Adding bot record');
 
-  const botType = await registry.getResourceRecord(DXN.parse(BOT_TYPE_DXN), 'latest') ?? raise(new Error('Bot type not found.'));
+  const botType = await registry.getResource(DXN.parse(BOT_TYPE_DXN));
+  assert(botType?.tags.latest, 'Bot type not found.');
 
-  const cid = await registry.insertDataRecord({
+  const cid = await registry.registerRecord({
     hash: createCID().value
-  }, botType.record.cid, {
+  }, botType.tags.latest, {
     description: 'Test bot'
   });
 
-  const domainKey = await registry.resolveDomainName('dxos');
-  const dxn = DXN.fromDomainKey(domainKey, 'testBot');
-  await registry.updateResource(dxn, account, cid);
+  const domainKey = await registry.getDomainKey('dxos');
+  const name = DXN.fromDomainKey(domainKey, 'testBot');
+  await registry.registerResource(name, cid, account);
 
   print('Bot record added');
 };

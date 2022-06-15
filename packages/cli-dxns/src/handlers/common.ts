@@ -3,7 +3,7 @@
 //
 
 import { print as cliPrint } from '@dxos/cli-core';
-import { CID, RecordKind, RegistryRecord, Resource } from '@dxos/registry-client';
+import { CID, RegistryRecord, RegistryType, Resource } from '@dxos/registry-client';
 
 export const displayHash = (data: any) => {
   if (data.bundle) {
@@ -14,40 +14,36 @@ export const displayHash = (data: any) => {
       data.bundle = '';
     }
   }
+
   return data;
 };
 
 export const displayRecord = (record: RegistryRecord) => {
-  const common = {
-    kind: record.kind,
-    cid: record.cid.toString()
+  return {
+    cid: record.cid.toString(),
+    displayName: record.displayName,
+    description: record.description,
+    tags: record.tags,
+    created: record.created?.toISOString(),
+    payload: displayHash(record.payload)
   };
+};
 
-  switch (record.kind) {
-    case RecordKind.Type:
-      return {
-        ...common,
-        messageName: record.messageName,
-        ...record.meta,
-        created: record.meta.created?.toISOString()
-      };
-    case RecordKind.Data:
-      return {
-        ...common,
-        typeCid: record.type.toString(),
-        ...record.meta,
-        created: record.meta.created?.toISOString(),
-        size: record.dataSize,
-        data: displayHash(record.data)
-      };
-  }
+export const displayType = (type: RegistryType) => {
+  return {
+    cid: type.cid.toString(),
+    displayName: type.displayName,
+    description: type.description,
+    tags: type.tags,
+    created: type.created?.toISOString(),
+    messageName: type.type.messageName
+  };
 };
 
 export const displayResource = (resource: Resource) => {
   return ({
-    dxn: resource.id.toString(),
+    name: resource.name.toString(),
     tags: Object.keys(resource.tags),
-    versions: Object.keys(resource.versions),
     type: resource.type
   });
 };
@@ -58,6 +54,14 @@ export const printRecord = (record: RegistryRecord, argv: any): void => {
 
 export const printRecords = (records: RegistryRecord[], argv: any): void => {
   cliPrint(records.map(displayRecord), { json: argv.json });
+};
+
+export const printType = (type: RegistryType, argv: any): void => {
+  cliPrint(displayType(type), { json: argv.json });
+};
+
+export const printTypes = (types: RegistryType[], argv: any): void => {
+  cliPrint(types.map(displayType), { json: argv.json });
 };
 
 export const printResource = (resource: Resource, argv: any): void => {

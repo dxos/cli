@@ -173,25 +173,25 @@ describe('CLI', () => {
     it('list resources', async () => {
       const resources = await cmd('dxns resource list --json').json();
 
-      expect(resources.some((r: any) => r.dxn === 'dxos:type/app')).toBe(true);
+      expect(resources.some((r: any) => r.name === 'dxos:type/app')).toBe(true);
     });
 
     it('get resource', async () => {
       const resource = await cmd('dxns resource get dxos:type/app --json').json();
 
-      expect(resource.dxn).toEqual('dxos:type/app');
+      expect(resource.name).toEqual('dxos:type/app');
     });
 
     it('list records', async () => {
       const records = await cmd('dxns record list --json').json();
 
-      expect(records.some((r: any) => r.messageName === '.dxos.type.App')).toBe(true);
+      expect(records.some((r: any) => r.description === 'Test bot')).toBe(true);
     });
 
     it('get record', async () => {
-      const record = await cmd('dxns record get dxos:type/app --json').json();
+      const record = await cmd('dxns record get dxos:testbot --json').json();
 
-      expect(record.messageName).toBe('.dxos.type.App');
+      expect(record.description).toBe('Test bot');
       expect(record.cid).toBeDefined();
 
       const record2 = await cmd('dxns record get ' + record.cid + ' --json').json();
@@ -264,21 +264,14 @@ describe('CLI', () => {
       expect(response.statusCode).toBe(200);
     });
 
-    it('Registers versioned and tagged app', async () => {
-      await cmd(`dxns --account ${account} deploy --version 2.0.1 --tag latest --tag beta`, join(__dirname, '../mocks/app')).run();
-    });
-
-    it('Serves the app without any version', async () => {
-      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}/`)).statusCode).toBe(200);
-    });
-
-    it('Serves the app by a version', async () => {
-      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@2.0.1/`)).statusCode).toBe(200);
+    it('Registers tagged app', async () => {
+      await cmd(`dxns --account ${account} deploy --tag beta --version 2.0.1 --verbose`, join(__dirname, '../mocks/app')).run();
     });
 
     it('Serves the app by tags', async () => {
       expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@latest/`)).statusCode).toBe(200);
       expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@beta/`)).statusCode).toBe(200);
+      expect((await got(`http://localhost:${APP_SERVER_PORT}/app/${APP_DOMAIN}:${APP_NAME_DOTTED}@2.0.1/`)).statusCode).toBe(200);
     });
 
     it('Serves directly by CID', async () => {
@@ -306,9 +299,7 @@ describe('CLI', () => {
       await cmd(`dxns --account ${account} deploy \
         --config dx.yml \
         --path out \
-        --tag latest \
-        --version false \
-        --skipExisting`,
+        --tag latest`,
       'mocks/bot'
       ).run();
       const bots = await cmd('bot query --json').json();

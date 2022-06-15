@@ -4,8 +4,10 @@
 
 import { spawnSync } from 'child_process';
 import path from 'path';
+import { Argv } from 'yargs';
 
 import { Runnable, stopService, asyncHandler, print } from '@dxos/cli-core';
+import type { DXNSClient } from '@dxos/cli-dxns';
 
 import { publish, register, query /*, download */ } from '../handlers';
 
@@ -24,13 +26,18 @@ const IPFS_SWARM_CONNECTOR_DEFAULT_LOG_FILE = '/var/log/ipfs-swarm-connect.log';
 const ipfsRunnable = new Runnable(IPFS_EXEC);
 const swarmConnectRunable = new Runnable(IPFS_SWARM_CONNECTOR_EXEC, [IPFS_SWARM_CONNECTOR_PATH]);
 
+export interface Params {
+  config: any,
+  getDXNSClient(): Promise<DXNSClient>,
+}
+
 /**
  * IPFS CLI module.
  */
-export const IPFSModule = ({ config, getDXNSClient }) => ({
+export const IPFSModule = ({ config, getDXNSClient }: Params) => ({
   command: ['ipfs'],
   describe: 'IPFS CLI.',
-  builder: yargs => yargs
+  builder: (yargs: Argv) => yargs
 
     .command({
       command: ['start'],
@@ -48,7 +55,7 @@ export const IPFSModule = ({ config, getDXNSClient }) => ({
         .option('connect-ipv6', { type: 'boolean', default: false })
         .option('max-memory', { type: 'string' }),
 
-      handler: asyncHandler(async argv => {
+      handler: asyncHandler(async (argv: any) => {
         const { logFile, daemon, procName, forward, connectInterval, connectIpv6, dxnsBootstrap, maxMemory } = argv;
         const forwardArgs = forward ? JSON.parse(forward).args : [];
 
@@ -86,7 +93,7 @@ export const IPFSModule = ({ config, getDXNSClient }) => ({
       builder: yargs => yargs
         .option('proc-name', { type: 'string', default: IPFS_PROCESS_NAME }),
 
-      handler: asyncHandler(async argv => {
+      handler: asyncHandler(async (argv: any) => {
         const { procName } = argv;
         await stopService(procName);
         await stopService(IPFS_SWARM_CONNECTOR_PROCESS_NAME);
@@ -102,8 +109,12 @@ export const IPFSModule = ({ config, getDXNSClient }) => ({
         const data = spawnSync(IPFS_EXEC, ['version']);
         const result = String(data.stdout);
 
-        const [, version] = result.match(/ipfs version ([0-9\\.]+)/i);
+        const match = result.match(/ipfs version ([0-9\\.]+)/i);
+        if (!match) {
+          throw new Error('IPFS is not running.');
+        }
 
+        const [, version] = match;
         print({ version }, { json: true });
       })
     })
@@ -221,11 +232,9 @@ export const IPFSModule = ({ config, getDXNSClient }) => ({
         .option('quiet', { type: 'boolean', default: false, alias: 'q' })
         .option('name', { type: 'string' })
         .option('domain', { type: 'string' })
-        .option('version', { type: 'string' })
         .option('tag', { type: 'string' })
-        .option('skipExisting', { type: 'boolean' })
         .option('timeout', { type: 'string', default: '20m' }),
-      handler: asyncHandler(async argv => {
+      handler: asyncHandler(async (argv: any) => {
         const client = await getDXNSClient();
         const account = await client.getDXNSAccount(argv);
         const result = await publish(config)(argv);

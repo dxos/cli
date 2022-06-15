@@ -46,17 +46,17 @@ export const addDataRecord = (params: Params) => async (argv: any) => {
 
   const data = JSON.parse(argv.data as string);
   const resourceName = name as string | undefined;
+  // TODO(wittjosiah): Add display name and tags.
   const meta: RecordMetadata = {
-    created: new Date(),
     description
   };
   const schemaCid = CID.from(schema as string);
 
-  const cid = await client.registryClient.insertDataRecord(data, schemaCid, meta);
+  const cid = await client.registryClient.registerRecord(data, schemaCid, meta);
   if (resourceName) {
     const domainKey = DomainKey.fromHex(domain as string);
-    const dxn = DXN.fromDomainKey(domainKey, resourceName);
-    await client.registryClient.updateResource(dxn, account, cid);
+    const name = DXN.fromDomainKey(domainKey, resourceName);
+    await client.registryClient.registerResource(name, cid, account);
     return print({
       id: DXN.fromDomainKey(domainKey, resourceName).toString(),
       cid: cid.toB58String(),
