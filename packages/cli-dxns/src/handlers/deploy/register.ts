@@ -80,13 +80,13 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   }
 
   const domainKey = await client.registryClient.getDomainKey(domain);
-  if (!noop && tag && recordCID) {
+  if (!noop && recordCID) {
     verbose && log(`Assigning name ${resource}@${tag}...`);
     await client.registryClient.registerResource(
       DXN.fromDomainKey(domainKey, resource),
       recordCID,
       account,
-      tag
+      tag ?? 'latest'
     );
   }
 
