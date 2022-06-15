@@ -119,7 +119,8 @@ const registerVersion = (
 ) => async () => {
   const resource = await registry.getResource(name);
 
-  log({ resource, tags: resource?.tags, tag: resource?.tags[version], name, version, recordCID, account, skipExisting });
+  console.log({ resource, tags: resource?.tags, tag: resource?.tags[version], name, version, recordCID, account, skipExisting });
+
   if (skipExisting && resource?.tags[version]) {
     return;
   }
