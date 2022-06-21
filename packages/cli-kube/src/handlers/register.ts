@@ -22,7 +22,7 @@ interface RegisterServiceOptions {
 
 const getServiceTypeCID = async (registryClient: RegistryClient, serviceName: string) => {
   // Checking for specific type, like dxos:type/service/app-server
-  const cid = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN + '/' + serviceName)))?.tags.latest;
+  const cid = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN + '/' + serviceName)));
   if (cid) {
     const record = await registryClient.getTypeRecord(cid);
     if (record) {
@@ -41,7 +41,7 @@ const registerServices = async (options: RegisterServiceOptions) => {
     throw new Error('Kube service endpoint is not available');
   }
   for (const service of services) {
-    const generalServiceTypeCid = (await options.registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN)))!.tags!.latest!;
+    const generalServiceTypeCid = (await options.registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN)))!;
 
     const serviceTypeCid = await getServiceTypeCID(options.registryClient, service.name) || generalServiceTypeCid;
 
@@ -56,9 +56,9 @@ const registerServices = async (options: RegisterServiceOptions) => {
 
     const cid = await options.registryClient.registerRecord(serviceData, generalServiceTypeCid, {});
 
-    const name = `${options.kubeName}/service/${service.name}`;
-    const dxn = DXN.fromDomainKey(options.domainKey, name);
-    await options.registryClient.registerResource(dxn, cid, options.account);
+    const path = `${options.kubeName}/service/${service.name}`;
+    const name = DXN.fromDomainKey(options.domainKey, path, 'latest');
+    await options.registryClient.registerResource(name, cid, options.account);
   }
 };
 
@@ -68,11 +68,11 @@ export const register = ({ getDXNSClient }: any) => async (argv: any) => {
   const { registryClient, getDXNSAccount } = await getDXNSClient();
 
   const kubeType = await registryClient.getResource(DXN.parse(KUBE_DXN_NAME));
-  assert(kubeType?.tags.latest);
+  assert(kubeType);
 
-  const cid = await registryClient.registerRecord({ url }, kubeType.tags.latest, {});
+  const cid = await registryClient.registerRecord({ url }, kubeType, {});
   const domainKey = await registryClient.getDomainKey(domain);
-  const name = DXN.fromDomainKey(domainKey, path);
+  const name = DXN.fromDomainKey(domainKey, path, 'latest');
   const account = await getDXNSAccount(argv);
   await registryClient.registerResource(name, cid, account);
   await registerServices({

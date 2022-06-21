@@ -44,7 +44,7 @@ export const list = ({ config } : ListParameters) => async ({ json } : BotListOp
     print(bots.map(bot => ({
       id: bot.id,
       status: getBotStatus(bot),
-      dxn: bot.packageSpecifier?.dxn,
+      name: bot.packageSpecifier?.name,
       partyKey: bot.partyKey?.toHex()
     })), { json });
   } finally {

@@ -15,12 +15,12 @@ export const listDomains = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const domains = await client.registryClient.getDomains();
+  const authorities = await client.registryClient.listAuthorities();
 
-  print(domains.map(domain => ({
-    key: domain.key.toHex(),
-    name: domain.name,
-    owner: domain.owner
+  print(authorities.map(authority => ({
+    key: authority.key.toHex(),
+    name: authority.domainName,
+    owner: authority.owner
   })), { json });
 };
 
@@ -32,7 +32,7 @@ export const getFreeDomain = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const domain = await client.registryClient.registerDomainKey(AccountKey.fromHex(account));
+  const domain = await client.registryClient.registerAuthority(AccountKey.fromHex(account));
 
   print({ key: domain.toHex() }, { json });
 };

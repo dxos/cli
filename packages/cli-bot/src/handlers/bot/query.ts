@@ -6,7 +6,7 @@ import assert from 'assert';
 import { Arguments } from 'yargs';
 
 import { print, CoreOptions } from '@dxos/cli-core';
-import { DXN, RegistryRecord, Resource } from '@dxos/registry-client';
+import { DXN, RegistryRecord, ResourceSet } from '@dxos/registry-client';
 
 import type { Params } from '../../modules/bot';
 
@@ -23,7 +23,7 @@ interface QueryParams {
   getDXNSClient: Params['getDXNSClient']
 }
 
-export const mergeResourceRecords = (records: RegistryRecord[], resources: Resource[]) => {
+export const mergeResourceRecords = (records: RegistryRecord[], resources: ResourceSet[]) => {
   const bots: BotData[] = [];
   for (const resource of resources) {
     for (const tag of Object.keys(resource.tags)) {
@@ -47,9 +47,9 @@ export const query = ({ getDXNSClient }: QueryParams) => async (argv: Arguments<
   const client = await getDXNSClient();
   const registry = client.registryClient;
   const botType = await registry.getResource(DXN.parse(BOT_TYPE_DXN));
-  assert(botType?.tags.latest, 'Bot type not found.');
-  const records = await registry.getRecords({ type: botType.tags.latest });
-  const resources = await registry.getResources();
+  assert(botType, 'Bot type not found.');
+  const records = await registry.listRecords({ type: botType });
+  const resources = await registry.listResources();
 
   const bots = mergeResourceRecords(records, resources);
 

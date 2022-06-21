@@ -10,6 +10,7 @@ import { join } from 'path';
 
 import { sleep } from '@dxos/async';
 import type { Awaited } from '@dxos/async';
+import { CID } from '@dxos/registry-client';
 import { createTestBroker } from '@dxos/signal';
 
 import { HTTPServer } from '../mocks/http-server';
@@ -177,9 +178,9 @@ describe('CLI', () => {
     });
 
     it('get resource', async () => {
-      const resource = await cmd('dxns resource get dxos:type/app --json').json();
+      const { cid } = await cmd('dxns resource get dxos:type/app --json').json();
 
-      expect(resource.name).toEqual('dxos:type/app');
+      expect(CID.from(cid).toString()).toEqual(cid);
     });
 
     it('list records', async () => {

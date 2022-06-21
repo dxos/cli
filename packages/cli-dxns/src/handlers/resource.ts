@@ -16,16 +16,19 @@ export const listResources = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  let resources = await client.registryClient.getResources();
+  let resources = await client.registryClient.listResources();
 
   if (argv.account) {
     const account = await client.accountClient.getAccount(AccountKey.fromHex(argv.account));
     assert(account, 'DXNS Account not found.');
-    const accountDomains = (await client.registryClient.getDomains())
-      .filter(domain => AccountKey.equals(domain.owner, account.id))
-      .map(domain => domain.name);
+    const accountAuthorities = (await client.registryClient.listAuthorities())
+      .filter(authority => AccountKey.equals(authority.owner, account.id));
 
-    resources = resources.filter(resource => accountDomains.includes(resource.name.domain));
+    resources = resources.filter(resource => accountAuthorities.findIndex(authority =>
+      typeof resource.name.authority === 'string'
+        ? resource.name.authority === authority.domainName
+        : resource.name.authority.toString() === authority.key.toString()
+    ) !== -1);
   }
 
   print(resources.map(displayResource), { json });
@@ -40,7 +43,7 @@ export const getResource = (params: Params) => async (argv: any) => {
   const client = await getDXNSClient();
   const resource = await client.registryClient.getResource(parsedDxn);
 
-  print(resource ? displayResource(resource) : undefined, { json });
+  print({ cid: resource?.toString() }, { json });
 };
 
 export const deleteResource = (params: Params) => async (argv: any) => {

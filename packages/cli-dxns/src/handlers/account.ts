@@ -24,7 +24,7 @@ export const listAccount = (params: Params) => async (argv: any) => {
 export const listAllAccount = (params: Params) => async (argv: any) => {
   const { json } = argv;
   const { accountClient } = await params.getDXNSClient();
-  const allAccounts = await accountClient.getAllAccounts();
+  const allAccounts = await accountClient.listAccounts();
   const accounts = allAccounts.map(account => account.id);
 
   print(accounts, { json });
@@ -63,7 +63,7 @@ export const addDeviceToAccount = ({ getDXNSClient }: Params) => async (argv: {d
   const account = await getDXNSAccount(argv);
 
   for (const device of devices) {
-    await accountClient.addDeviceToAccount(account, device);
+    await accountClient.addDevice(account, device);
   }
 };
 
