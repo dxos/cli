@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.20.2](https://www.github.com/dxos/cli/compare/v2.20.1...v2.20.2) (2022-06-21)
+
+
+### Bug Fixes
+
+* ns command to discover bootnode addr. ([#519](https://www.github.com/dxos/cli/issues/519)) ([a7d91e2](https://www.github.com/dxos/cli/commit/a7d91e29a10548dc0bb4581abbd32f2ffd399233))
+
 ### [2.20.1](https://www.github.com/dxos/cli/compare/v2.20.0...v2.20.1) (2022-06-01)
 
 
