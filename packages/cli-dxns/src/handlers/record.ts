@@ -16,7 +16,7 @@ export const listRecords = (params: Params) => async (argv: any) => {
   const { json } = argv;
 
   const client = await getDXNSClient();
-  const output = await client.registryClient.getRecords();
+  const output = await client.registryClient.listRecords();
 
   print(output.map(displayRecord), { json });
 };

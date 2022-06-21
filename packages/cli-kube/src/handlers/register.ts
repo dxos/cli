@@ -22,7 +22,7 @@ interface RegisterServiceOptions {
 
 const getServiceTypeCID = async (registryClient: RegistryClient, serviceName: string) => {
   // Checking for specific type, like dxos:type/service/app-server
-  const cid = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN + '/' + serviceName)))?.tags.latest;
+  const cid = (await registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN + '/' + serviceName)));
   if (cid) {
     const record = await registryClient.getTypeRecord(cid);
     if (record) {
@@ -41,7 +41,7 @@ const registerServices = async (options: RegisterServiceOptions) => {
     throw new Error('Kube service endpoint is not available');
   }
   for (const service of services) {
-    const generalServiceTypeCid = (await options.registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN)))!.tags!.latest!;
+    const generalServiceTypeCid = (await options.registryClient.getResource(DXN.parse(SERVICE_TYPE_DXN)))!;
 
     const serviceTypeCid = await getServiceTypeCID(options.registryClient, service.name) || generalServiceTypeCid;
 

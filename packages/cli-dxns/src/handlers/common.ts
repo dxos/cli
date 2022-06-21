@@ -3,7 +3,7 @@
 //
 
 import { print as cliPrint } from '@dxos/cli-core';
-import { CID, RegistryRecord, RegistryType, Resource } from '@dxos/registry-client';
+import { CID, RegistryRecord, RegistryType, ResourceSet } from '@dxos/registry-client';
 
 export const displayHash = (data: any) => {
   if (data.bundle) {
@@ -40,11 +40,10 @@ export const displayType = (type: RegistryType) => {
   };
 };
 
-export const displayResource = (resource: Resource) => {
+export const displayResource = (resource: ResourceSet) => {
   return ({
     name: resource.name.toString(),
-    tags: Object.keys(resource.tags),
-    type: resource.type
+    tags: Object.keys(resource.tags)
   });
 };
 
@@ -64,10 +63,10 @@ export const printTypes = (types: RegistryType[], argv: any): void => {
   cliPrint(types.map(displayType), { json: argv.json });
 };
 
-export const printResource = (resource: Resource, argv: any): void => {
+export const printResource = (resource: ResourceSet, argv: any): void => {
   cliPrint(displayResource(resource), { json: argv.json });
 };
 
-export const printResources = (resources: Resource[], argv: any): void => {
+export const printResources = (resources: ResourceSet[], argv: any): void => {
   cliPrint(resources.map(displayResource), { json: argv.json });
 };

@@ -37,15 +37,16 @@ export const register = ({ getDXNSClient, account }: QueryParams) => async (argv
   const client = await getDXNSClient();
 
   const fileType = await client.registryClient.getResource(DXN.parse(FILE_TYPE_DXN));
-  assert(fileType?.tags.latest, 'File type not found');
+  assert(fileType, 'File type not found');
 
   const cid = await client.registryClient.registerRecord({
     hash: CID.from(fileCID).value,
     contentType,
     fileName
-  }, fileType?.tags.latest);
+  }, fileType);
 
   const domainKey = await client.registryClient.getDomainKey(domain);
   log(`Assigning name ${name}...`);
-  await client.registryClient.registerResource(DXN.fromDomainKey(domainKey, name), cid, account, tag ?? 'latest');
+  // TODO(wittjosiah): Force tag to be specified when registering?
+  await client.registryClient.registerResource(DXN.fromDomainKey(domainKey, name, tag ?? 'latest'), cid, account);
 };

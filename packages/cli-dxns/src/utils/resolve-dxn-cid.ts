@@ -9,11 +9,12 @@ import { DXNSClient } from '../interfaces';
 export const resolveDXNorCID = async (client: DXNSClient, argv: any): Promise<CID> => {
   let dxn: DXN | undefined;
   try {
+    // TODO(wittjosiah): Rename to name.
     dxn = DXN.parse(argv.dxn as string);
   } catch (e: any) {}
   let cid: CID | undefined;
   if (dxn) {
-    cid = (await client.registryClient.getResource(dxn))?.tags.latest;
+    cid = (await client.registryClient.getResource(dxn));
   } else {
     cid = CID.from(argv.cid as string);
   }

@@ -47,21 +47,18 @@ const bootstrapIPFS = async (registry: RegistryClient) => {
   const ipfsType = await registry.getResource(DXN.parse(IPFS_SERVICE_DXN));
   const serviceType = await registry.getResource(DXN.parse(SERVICE_DXN));
 
-  if (!serviceType?.tags.latest) {
+  if (!serviceType) {
     throw new Error('Service type not found');
   }
 
-  if (!ipfsType?.tags.latest) {
+  if (!ipfsType) {
     throw new Error('IPFS type not found');
   }
-
-  const ipfsCID = ipfsType.tags.latest;
-  const serviceCID = serviceType.tags.latest;
 
   const serviceData = {
     type: 'ipfs',
     extension: {
-      '@type': ipfsCID,
+      '@type': ipfsType,
       description: 'ipfs1.kube.dxos.network',
       protocol: 'ipfs/0.1.0',
       addresses: [
@@ -70,7 +67,7 @@ const bootstrapIPFS = async (registry: RegistryClient) => {
       ]
     }
   };
-  await registry.registerRecord(serviceData, serviceCID);
+  await registry.registerRecord(serviceData, serviceType);
 };
 
 export const seedRegistry = (params: Params) => async (argv: any) => {
@@ -125,8 +122,8 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     verbose && log(`Registering ${typeName}..`);
 
     const cid = await registryClient.registerTypeRecord(fqn, root, { ...meta, description });
-    const dxn = DXN.fromDomainKey(domainKey, typeName);
-    await registryClient.registerResource(dxn, cid, account);
+    const name = DXN.fromDomainKey(domainKey, typeName, 'latest');
+    await registryClient.registerResource(name, cid, account);
 
     verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
   }

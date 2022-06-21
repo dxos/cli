@@ -32,9 +32,9 @@ export const query = ({ getDXNSClient }: QueryParams) => async (argv: Arguments<
   const client = await getDXNSClient();
   const registry = client.registryClient;
   const fileType = await registry.getResource(DXN.parse(FILE_TYPE_DXN));
-  assert(fileType?.tags.latest, 'App type not found.');
+  assert(fileType, 'App type not found.');
 
-  const records = await registry.getRecords({ type: fileType.tags.latest });
+  const records = await registry.listRecords({ type: fileType });
   const files = records.map(displayApps);
 
   if (files && files.length) {

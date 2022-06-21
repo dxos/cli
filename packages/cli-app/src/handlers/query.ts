@@ -32,9 +32,9 @@ export const query = ({ getDXNSClient }: QueryParams) => async (argv: any) => {
   const client = await getDXNSClient();
   const registry = client.registryClient;
   const appType = await registry.getResource(DXN.parse(APP_TYPE_DXN));
-  assert(appType?.tags.latest, 'App type not found.');
+  assert(appType, 'App type not found.');
 
-  const records = await registry.getRecords({ type: appType.tags.latest });
+  const records = await registry.listRecords({ type: appType });
   const apps = records.map(displayApps);
 
   if (apps && apps.length) {

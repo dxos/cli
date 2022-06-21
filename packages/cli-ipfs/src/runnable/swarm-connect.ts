@@ -8,7 +8,7 @@ import { boolean } from 'boolean';
 import { spawnSync } from 'child_process';
 
 import { sleep } from '@dxos/async';
-import { DXN, RegistryClient, definitions, PolkadotRegistryClientBackend, RegistryRecord } from '@dxos/registry-client';
+import { DXN, RegistryClient, definitions, PolkadotRegistry, RegistryRecord } from '@dxos/registry-client';
 
 const OLD_RECORD_CREATED = '2001-01-01';
 
@@ -60,7 +60,7 @@ export class SwarmConnector {
     const types = Object.values(definitions).reduce((res, { types }) => ({ ...res, ...types }), {});
     const api = await ApiPromise.create({ provider, types });
 
-    this._registry = new RegistryClient(new PolkadotRegistryClientBackend(api));
+    this._registry = new RegistryClient(new PolkadotRegistry(api));
 
     await this.connect();
 
@@ -76,10 +76,10 @@ export class SwarmConnector {
       throw new Error('Registry client is not initialized.');
     }
     const type = await this._registry.getResource(DXN.parse(dxn));
-    if (!type?.tags.latest) {
+    if (!type) {
       throw new Error('Can\'t find ipfs service type record');
     }
-    return type.tags.latest;
+    return type;
   }
 
   async connect () {
@@ -88,7 +88,7 @@ export class SwarmConnector {
     }
     const ipfsServiceCID = await this.getServiceTypeCID(IPFS_SERVICE_DXN);
     const serviceCID = await this.getServiceTypeCID(SERVICE_DXN);
-    const services = await this._registry.getRecords({ type: serviceCID });
+    const services = await this._registry.listRecords({ type: serviceCID });
 
     const getDate = (record: RegistryRecord) => new Date(record.created ?? OLD_RECORD_CREATED).getTime();
 

@@ -4,7 +4,7 @@
 
 import pb from 'protobufjs';
 
-import { CID, DomainKey, DXN, RegistryType, Resource, TypeRecordMetadata } from '@dxos/registry-client';
+import { CID, DomainKey, DXN, RegistryType, ResourceSet, TypeRecordMetadata } from '@dxos/registry-client';
 
 import { Params } from '../interfaces';
 import { resolveDXNorCID, uploadToIPFS } from '../utils';
@@ -12,7 +12,7 @@ import { printResource, printType, printTypes } from './common';
 
 export const listTypes = (params: Params) => async (argv: any) => {
   const client = await params.getDXNSClient();
-  const types = await client.registryClient.getTypeRecords();
+  const types = await client.registryClient.listTypeRecords();
 
   printTypes(types, argv);
 };
@@ -67,7 +67,7 @@ export const addType = (params: Params) => async (argv: any) => {
       name: DXN.fromDomainKey(domainKey, resourceName as string)
     };
 
-    printResource(resource as Resource, argv);
+    printResource(resource as ResourceSet, argv);
   } else {
     printType(typeRecord, argv);
   }

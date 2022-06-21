@@ -31,13 +31,7 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   assert(name, 'Invalid name.');
   assert(type, 'Invalid type.');
 
-  const { resource, domain } = DXN.parse(name);
-
-  assert(resource, 'Invalid resource.');
-  assert(domain, 'Invalid domain.');
-
-  // TODO(wittjosiah): Remove? Validation done by DXN.
-  assert(/^[a-zA-Z0-9][a-zA-Z0-9-/]{1,61}[a-zA-Z0-9-]{2,}$/.test(resource), 'Name could contain only letters, numbers, dashes or slashes.');
+  const { authority, path } = DXN.parse(name);
 
   // Compose record.
   const record = {
@@ -54,7 +48,7 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   set(record, hashPath, CID.from(cid).value);
 
   verbose && log(
-    `Registering ${resource}.` +
+    `Registering ${path}.` +
     (record.build?.tag ? ` Tagged ${record.build.tag}.` : '') +
     (record.build?.version ? ` Version ${record.build.version}.` : '')
   );
@@ -67,35 +61,32 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
 
   const typeResource = await client.registryClient.getResource(DXN.parse(type));
   assert(typeResource, `Can not find type "${type}".`);
-  const typeCid = typeResource.tags.latest;
-  assert(typeCid, `No latest tag registered for type "${type}".`);
 
   let recordCID;
   if (!noop) {
-    recordCID = await client.registryClient.registerRecord(record, typeCid, {
+    recordCID = await client.registryClient.registerRecord(record, typeResource, {
       description,
       displayName,
       tags
     });
   }
 
-  const domainKey = await client.registryClient.getDomainKey(domain);
+  const domainKey = typeof authority === 'string' ? await client.registryClient.getDomainKey(authority) : authority;
   if (!noop && recordCID) {
-    verbose && log(`Assigning name ${resource}@${tag}...`);
+    verbose && log(`Assigning name ${path}@${tag}...`);
+    // TODO(wittjosiah): Force tag to be specified when registering?
     await client.registryClient.registerResource(
-      DXN.fromDomainKey(domainKey, resource),
+      DXN.fromDomainKey(domainKey, path, tag ?? 'latest'),
       recordCID,
-      account,
-      tag ?? 'latest'
+      account
     );
   }
 
   if (!noop && version && recordCID) {
-    verbose && log(`Assigning name ${resource}@${version}...`);
+    verbose && log(`Assigning name ${path}@${version}...`);
     await registerVersion(
       client.registryClient,
-      DXN.fromDomainKey(domainKey, resource),
-      version,
+      DXN.fromDomainKey(domainKey, path, version),
       recordCID,
       account,
       skipExisting
@@ -103,7 +94,7 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
   }
 
   verbose && log(
-    `Registered ${resource}.` +
+    `Registered ${path}.` +
     (record.build?.tag ? ` Tagged ${record.build.tag}.` : '') +
     (record.build?.version ? ` Version ${record.build.version}.` : '')
   );
@@ -112,21 +103,19 @@ export const register = ({ getDXNSClient, module, cid, license, account }: Regis
 const registerVersion = async (
   registry: RegistryClient,
   name: DXN,
-  version: string,
   recordCID: CID,
   account: AccountKey,
   skipExisting: boolean
 ) => {
   const resource = await registry.getResource(name);
 
-  if (skipExisting && resource?.tags[version]) {
+  if (skipExisting && resource) {
     return;
   }
 
   await registry.registerResource(
     name,
     recordCID,
-    account,
-    version
+    account
   );
 };

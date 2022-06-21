@@ -21,16 +21,16 @@ export const addDummyData = (params: Params) => async (argv: any) => {
   print('Adding bot record');
 
   const botType = await registry.getResource(DXN.parse(BOT_TYPE_DXN));
-  assert(botType?.tags.latest, 'Bot type not found.');
+  assert(botType, 'Bot type not found.');
 
   const cid = await registry.registerRecord({
     hash: createCID().value
-  }, botType.tags.latest, {
+  }, botType, {
     description: 'Test bot'
   });
 
   const domainKey = await registry.getDomainKey('dxos');
-  const name = DXN.fromDomainKey(domainKey, 'testBot');
+  const name = DXN.fromDomainKey(domainKey, 'testBot', 'latest');
   await registry.registerResource(name, cid, account);
 
   print('Bot record added');

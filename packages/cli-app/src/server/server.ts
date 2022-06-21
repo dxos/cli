@@ -65,9 +65,7 @@ class Resolver {
 
     let record: RegistryRecord | undefined;
     if (id.includes(':')) {
-      const [dxn, versionOrTag] = id.split('@', 2);
-      const resourceRecord = await this._registryClient.getResourceRecord(DXN.urldecode(dxn), versionOrTag ?? 'latest');
-      record = resourceRecord?.record;
+      record = await this._registryClient.getRecordByName(DXN.urldecode(id));
     } else {
       record = await this._registryClient.getRecord(CID.from(id));
     }
