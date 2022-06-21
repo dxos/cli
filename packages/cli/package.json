@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli",
-  "version": "2.20.1",
+  "version": "2.20.2",
   "description": "DXOS CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli#readme",
   "bugs": {
