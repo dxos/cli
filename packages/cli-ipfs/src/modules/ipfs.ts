@@ -9,7 +9,7 @@ import { Argv } from 'yargs';
 import { Runnable, stopService, asyncHandler, print } from '@dxos/cli-core';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
-import { publish, register, query /*, download */ } from '../handlers';
+import { install, publish, register, query /*, download */ } from '../handlers';
 
 const IPFS_EXEC = 'ipfs';
 const IPFS_PROCESS_NAME = 'ipfs';
@@ -249,6 +249,14 @@ export const IPFSModule = ({ config, getDXNSClient }: Params) => ({
       builder: yargs => yargs,
 
       handler: asyncHandler(query({ getDXNSClient }))
+    })
+
+    .command({
+      command: ['install'],
+      describe: 'Install IPFS.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(install())
     })
 
 });
