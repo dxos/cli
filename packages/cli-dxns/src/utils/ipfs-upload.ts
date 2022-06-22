@@ -10,10 +10,11 @@ const { globSource } = IpfsHttpClient as any;
 interface UploadOptions {
   timeout: string | number
   progress?: Function
+  pin?: boolean
 }
 
 export const uploadToIPFS = async (config: any, path: string, options?: UploadOptions): Promise<string> => {
-  const { timeout, progress } = options || {};
+  const { timeout, pin = true, progress } = options || {};
 
   const ipfsServer = config.get('runtime.services.ipfs.server');
   assert(ipfsServer, 'Invalid IPFS Server.');
@@ -28,11 +29,11 @@ export const uploadToIPFS = async (config: any, path: string, options?: UploadOp
   }
   if (fs.lstatSync(path).isDirectory()) {
     const source = globSource(path, { recursive: true });
-    const addResult = await ipfsClient.add(source, { progress });
+    const addResult = await ipfsClient.add(source, { progress, pin });
     return addResult.cid.toString();
   } else {
     const content = fs.readFileSync(path);
-    const addResult = await ipfsClient.add(content);
+    const addResult = await ipfsClient.add(content, { pin });
     return addResult.cid.toString();
   }
 };

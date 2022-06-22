@@ -103,6 +103,7 @@ export const DXNSModule = (params: Params) => {
           .option('tag', { type: 'string' })
           .option('timeout', { type: 'string', default: '10m' })
           .option('path', { type: 'string' })
+          .option('pin', { type: 'boolean', default: true })
           .option('config', { type: 'string' })
           .option('hash-path', { type: 'string' }),
 

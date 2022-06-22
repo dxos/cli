@@ -35,12 +35,13 @@ export interface PublishParams {
 
 interface PublishArgs {
   verbose?: boolean,
+  pin?: boolean,
   timeout?: ClientOptions['timeout'],
   path?: string
   config?: string
 }
 
-export const publish = ({ config, module }: PublishParams) => async ({ verbose, timeout, path }: PublishArgs): Promise<string> => {
+export const publish = ({ config, module }: PublishParams) => async ({ verbose, timeout, path, pin }: PublishArgs): Promise<string> => {
   assert(module.name, 'Module name is required to publish.');
   verbose && log(`Publishing ${module.name}...`);
 
@@ -53,6 +54,7 @@ export const publish = ({ config, module }: PublishParams) => async ({ verbose, 
 
   const cid = await uploadToIPFS(config, publishFolder, {
     timeout: timeout || '10m',
+    pin,
     progress: (bytes: any) => bar.update(bytes)
   });
 
