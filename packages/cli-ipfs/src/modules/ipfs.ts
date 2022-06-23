@@ -9,7 +9,7 @@ import { Argv } from 'yargs';
 import { Runnable, stopService, asyncHandler, print } from '@dxos/cli-core';
 import type { DXNSClient } from '@dxos/cli-dxns';
 
-import { install, publish, register, query /*, download */ } from '../handlers';
+import { init, install, publish, register, query /*, download */ } from '../handlers';
 
 const IPFS_EXEC = 'ipfs';
 const IPFS_PROCESS_NAME = 'ipfs';
@@ -53,11 +53,16 @@ export const IPFSModule = ({ config, getDXNSClient }: Params) => ({
         })
         .option('connect-interval', { type: 'number', default: 300 })
         .option('connect-ipv6', { type: 'boolean', default: false })
-        .option('max-memory', { type: 'string' }),
+        .option('max-memory', { type: 'string' })
+        .option('init', { type: 'boolean', default: false }),
 
       handler: asyncHandler(async (argv: any) => {
-        const { logFile, daemon, procName, forward, connectInterval, connectIpv6, dxnsBootstrap, maxMemory } = argv;
+        const { init: initRequired, logFile, daemon, procName, forward, connectInterval, connectIpv6, dxnsBootstrap, maxMemory } = argv;
         const forwardArgs = forward ? JSON.parse(forward).args : [];
+
+        if (initRequired) {
+          await init()();
+        }
 
         if (dxnsBootstrap && connectInterval >= 0) {
           const swarmConnectorOptions = {
@@ -257,6 +262,14 @@ export const IPFSModule = ({ config, getDXNSClient }: Params) => ({
       builder: yargs => yargs,
 
       handler: asyncHandler(install())
+    })
+
+    .command({
+      command: ['init'],
+      describe: 'Init IPFS.',
+      builder: yargs => yargs,
+
+      handler: asyncHandler(init())
     })
 
 });
