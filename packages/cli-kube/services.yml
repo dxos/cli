@@ -1,6 +1,8 @@
 - package: '@dxos/cli-signal'
   service: 'signal'
   args: '--asBootstrap'
+- package: '@dxos/cli-ipfs'
+  service: 'ipfs'
 - package: '@dxos/cli-app'
   service: 'app-server'
 - package: '@dxos/cli-dxns'
