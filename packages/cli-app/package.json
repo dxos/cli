@@ -42,9 +42,9 @@
   },
   "dependencies": {
     "@dxos/cli-core": "workspace:*",
-    "@dxos/debug": "~2.33.3",
-    "@dxos/registry-client": "~2.33.3",
-    "@dxos/util": "^2.33.3",
+    "@dxos/debug": "~2.33.4",
+    "@dxos/registry-client": "~2.33.4",
+    "@dxos/util": "^2.33.4",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@polkadot/api": "4.17.1",
     "assert": "^2.0.0",
