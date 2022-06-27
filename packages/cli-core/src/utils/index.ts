@@ -4,6 +4,7 @@
 
 export * from './async';
 export * from './certs';
+export * from './exec';
 export * from './fees';
 export * from './log';
 export * from './messages';
