@@ -1,0 +1,11 @@
+version: '3'
+services:
+  dxns:
+    image: "ghcr.io/dxos/ipfs"
+    container_name: ipfs
+    ports:
+      - 5001: '5001'
+      - 8888: '8888'
+    volumes:
+      - storage:/root/.ipfs
+    command: "dx ipfs start --connect-interval 60
