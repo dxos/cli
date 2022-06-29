@@ -81,7 +81,7 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
 
   assert(dxnsAddress, 'Create a Polkadot address using `dx dxns address`');
 
-  let domainKey: DomainKey;
+  let domainKey: DomainKey | undefined;
   if (!dataOnly) {
     const { mnemonic } = argv;
     assert(mnemonic, 'Sudo user mnemonic required');
@@ -106,7 +106,8 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
       await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
 
       verbose && log('Claiming Domain name..');
-      domainKey = await auctionsClient.claimAuction(domain, account);
+      const newDomainKey = await auctionsClient.claimAuction(domain, account);
+      domainKey = domainKey ?? newDomainKey;
     }
   } else {
     domainKey = await registryClient.getDomainKey(domains[0]);
