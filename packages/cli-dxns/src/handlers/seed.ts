@@ -15,7 +15,7 @@ import { Params } from '../interfaces';
 import { uploadToIPFS } from '../utils';
 
 const DEFAULT_BALANCE = '100000000000000000000';
-const DEFAULT_DOMAIN = 'dxos';
+const DEFAULT_DOMAINS = ['dxos', 'example'];
 const DEFAULT_BID = 10000000;
 
 interface TypeDescription {
@@ -73,7 +73,7 @@ const bootstrapIPFS = async (registry: RegistryClient) => {
 export const seedRegistry = (params: Params) => async (argv: any) => {
   const { getDXNSClient, config } = params;
 
-  const { domain = DEFAULT_DOMAIN, dataOnly = false, json, verbose } = argv;
+  const { domain: domains = DEFAULT_DOMAINS, dataOnly = false, json, verbose } = argv;
 
   const client = await getDXNSClient();
   const account = await client.getDXNSAccount(argv);
@@ -85,6 +85,8 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   if (!dataOnly) {
     const { mnemonic } = argv;
     assert(mnemonic, 'Sudo user mnemonic required');
+    assert(domains.length, 'At least one domain is required');
+
     const sudoer = keyring.addFromUri(mnemonic.join(' '));
 
     // Increase balance.
@@ -95,17 +97,19 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     verbose && log('Increasing Admin Balance..');
     await transactionHandler.sendSudoTransaction(setBalanceTx, sudoer);
 
-    // Register Domain.
-    verbose && log(`Creating auction for "${domain}" domain name..`);
-    await auctionsClient.createAuction(domain, DEFAULT_BID);
+    for (const domain of domains) {
+      // Register Domain.
+      verbose && log(`Creating auction for "${domain}" domain name..`);
+      await auctionsClient.createAuction(domain, DEFAULT_BID);
 
-    verbose && log('Force closing auction..');
-    await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
+      verbose && log('Force closing auction..');
+      await transactionHandler.sendSudoTransaction(apiRaw.tx.registry.forceCloseAuction(domain), sudoer);
 
-    verbose && log('Claiming Domain name..');
-    domainKey = await auctionsClient.claimAuction(domain, account);
+      verbose && log('Claiming Domain name..');
+      domainKey = await auctionsClient.claimAuction(domain, account);
+    }
   } else {
-    domainKey = await registryClient.getDomainKey(domain);
+    domainKey = await registryClient.getDomainKey(domains[0]);
   }
 
   // Uploading types to IPFS
@@ -122,10 +126,10 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
     verbose && log(`Registering ${typeName}..`);
 
     const cid = await registryClient.registerTypeRecord(fqn, root, { ...meta, description });
-    const name = DXN.fromDomainKey(domainKey, typeName, 'latest');
+    const name = DXN.fromDomainKey(domainKey!, typeName, 'latest');
     await registryClient.registerResource(name, cid, account);
 
-    verbose && log(`${domain}:${typeName} registered at ${cid.toB58String()}`);
+    verbose && log(`${domains[0]}:${typeName} registered at ${cid.toB58String()}`);
   }
 
   // Bootstrap IPFS
@@ -133,5 +137,5 @@ export const seedRegistry = (params: Params) => async (argv: any) => {
   await bootstrapIPFS(registryClient);
   verbose && log('IPFS record added.');
 
-  print({ account, domain }, { json });
+  print({ account, domains }, { json });
 };
