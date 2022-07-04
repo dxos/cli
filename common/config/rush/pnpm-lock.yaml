@@ -14,7 +14,7 @@ importers:
       '@dxos/crypto': ~2.33.4
       '@dxos/debug': ~2.33.4
       '@dxos/echo-db': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/random-access-multi-storage': ~2.33.4
       '@dxos/signal': ~2.33.4
       '@types/find-root': ^1.1.2
@@ -88,7 +88,7 @@ importers:
     devDependencies:
       '@dxos/async': 2.33.4
       '@dxos/crypto': 2.33.4
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@dxos/signal': 2.33.4
       '@types/find-root': 1.1.2
       '@types/fs-extra': 9.0.13
@@ -113,7 +113,7 @@ importers:
       '@dxos/cli-core': workspace:*
       '@dxos/cli-dxns': workspace:*
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/registry-client': ~2.33.4
       '@dxos/util': ^2.33.4
       '@otplib/plugin-thirty-two': ^12.0.1
@@ -188,7 +188,7 @@ importers:
       yargs: 17.5.1
     devDependencies:
       '@dxos/cli-dxns': link:../cli-dxns
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/body-parser': 1.19.2
       '@types/cli-progress': 3.11.0
       '@types/cookie-parser': 1.4.3
@@ -226,7 +226,7 @@ importers:
       '@dxos/config': ~2.33.4
       '@dxos/crypto': ~2.33.4
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/network-manager': ~2.33.4
       '@dxos/registry-client': ~2.33.4
       '@dxos/util': ^2.33.4
@@ -287,7 +287,7 @@ importers:
     devDependencies:
       '@dxos/cli-dxns': link:../cli-dxns
       '@dxos/cli-party': link:../cli-party
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/cli-progress': 3.11.0
       '@types/fs-extra': 9.0.13
       '@types/jest': 27.0.3
@@ -307,7 +307,7 @@ importers:
       '@dxos/cli-core': workspace:*
       '@dxos/crypto': ~2.33.4
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/network-manager': ~2.33.4
       '@dxos/protocol-plugin-messenger': ~2.33.0
       '@dxos/protocol-plugin-presence': ~2.33.4
@@ -332,7 +332,7 @@ importers:
       hypercore-crypto: 1.0.0
       yargs: 17.5.1
     devDependencies:
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.35
       '@types/yargs': 17.0.10
@@ -345,7 +345,7 @@ importers:
     specifiers:
       '@dxos/cli-core': workspace:*
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^17.0.10
@@ -387,7 +387,7 @@ importers:
       tar: 6.1.11
       yargs: 17.5.1
     devDependencies:
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.35
       '@types/yargs': 17.0.10
@@ -403,7 +403,7 @@ importers:
       '@dxos/config': ~2.33.4
       '@dxos/crypto': ~2.33.4
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/registry-client': ~2.33.4
       '@otplib/plugin-thirty-two': ^12.0.1
       '@types/dockerode': 3.2.3
@@ -497,7 +497,7 @@ importers:
       yargs-parser: 19.0.4
       yargs-unparser: 2.0.0
     devDependencies:
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/dockerode': 3.2.3
       '@types/download': 6.2.4
       '@types/find-remove': 2.0.1
@@ -526,7 +526,7 @@ importers:
       '@dxos/credentials': ~2.33.4
       '@dxos/crypto': ~2.33.4
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/registry-client': ~2.33.4
       '@polkadot/api': 4.17.1
       '@polkadot/keyring': 6.11.1
@@ -600,7 +600,7 @@ importers:
       yargs: 17.5.1
     devDependencies:
       '@dxos/client': 2.33.4
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@polkadot/types': 4.17.1
       '@types/bn.js': 5.1.0
       '@types/cli-progress': 3.11.0
@@ -628,7 +628,7 @@ importers:
       '@dxos/cli-core': workspace:*
       '@dxos/cli-dxns': workspace:*
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/registry-client': ~2.33.4
       '@polkadot/api': 4.17.1
       '@types/download': ^6.2.4
@@ -682,7 +682,7 @@ importers:
       yargs: 17.5.1
     devDependencies:
       '@dxos/cli-dxns': link:../cli-dxns
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/download': 6.2.4
       '@types/fs-extra': 9.0.13
       '@types/jest': 27.0.3
@@ -699,7 +699,7 @@ importers:
       '@dxos/cli-core': workspace:*
       '@dxos/crypto': ~2.33.4
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/object-model': ~2.33.4
       '@dxos/registry-client': ~2.33.4
       '@types/jest': ~27.0.3
@@ -736,7 +736,7 @@ importers:
       yamljs: 0.3.0
       yargs: 17.5.1
     devDependencies:
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/js-yaml': 3.12.7
       '@types/lodash.defaultsdeep': 4.6.7
@@ -752,7 +752,7 @@ importers:
     specifiers:
       '@dxos/cli-core': workspace:*
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^17.0.10
@@ -766,7 +766,7 @@ importers:
       '@dxos/debug': 2.33.4
       assert: 2.0.0
     devDependencies:
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.35
       '@types/yargs': 17.0.10
@@ -780,7 +780,7 @@ importers:
       '@dxos/async': ~2.33.4
       '@dxos/cli-core': workspace:*
       '@dxos/crypto': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/network-manager': ~2.33.4
       '@dxos/protocol': ~2.28.0
       '@types/jest': ~27.0.3
@@ -809,7 +809,7 @@ importers:
       performance-now: 2.1.0
       yargs: 17.5.1
     devDependencies:
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.35
       '@types/yargs': 17.0.10
@@ -828,7 +828,7 @@ importers:
       '@dxos/crypto': ~2.33.4
       '@dxos/debug': ~2.33.4
       '@dxos/echo-db': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/object-model': ~2.33.4
       '@dxos/random-access-multi-storage': ~2.33.4
       '@dxos/signal': ~2.33.4
@@ -874,7 +874,7 @@ importers:
       yargs: 17.5.1
     devDependencies:
       '@dxos/async': 2.33.4
-      '@dxos/eslint-plugin': 1.0.31_eslint@7.32.0+typescript@4.6.4
+      '@dxos/eslint-plugin': 1.0.33_eslint@7.32.0+typescript@4.6.4
       '@dxos/signal': 2.33.4
       '@swc-node/register': 1.4.2
       '@types/fs-extra': 9.0.13
@@ -893,7 +893,7 @@ importers:
     specifiers:
       '@dxos/cli-core': workspace:*
       '@dxos/debug': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@types/jest': ~27.0.3
       '@types/node': ~16.11.12
       '@types/yargs': ^17.0.10
@@ -909,7 +909,7 @@ importers:
       lodash-clean: 2.2.3
       yargs: 17.5.1
     devDependencies:
-      '@dxos/eslint-plugin': 1.0.31_3831bdd30662ed544042896786396577
+      '@dxos/eslint-plugin': 1.0.33_3831bdd30662ed544042896786396577
       '@types/jest': 27.0.3
       '@types/node': 16.11.35
       '@types/yargs': 17.0.10
@@ -924,7 +924,7 @@ importers:
       '@dxos/botkit': ~2.33.4
       '@dxos/cli-core': workspace:*
       '@dxos/crypto': ~2.33.4
-      '@dxos/eslint-plugin': ~1.0.31
+      '@dxos/eslint-plugin': ~1.0.33
       '@dxos/registry-client': ~2.33.4
       '@dxos/signal': ~2.33.4
       '@dxos/util': ^2.33.4
@@ -950,7 +950,7 @@ importers:
       '@dxos/botkit': 2.33.4
       '@dxos/cli-core': link:../cli-core
       '@dxos/crypto': 2.33.4
-      '@dxos/eslint-plugin': 1.0.31_eslint@7.32.0+typescript@4.6.4
+      '@dxos/eslint-plugin': 1.0.33_eslint@7.32.0+typescript@4.6.4
       '@dxos/registry-client': 2.33.4
       '@dxos/signal': 2.33.4
       '@dxos/util': 2.33.4
@@ -1601,12 +1601,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@dxos/eslint-plugin/1.0.31_3831bdd30662ed544042896786396577:
-    resolution: {integrity: sha512-s79gR3vQcm/Vxq/l5mIZF+/zgDayCAmGyHIbLtl6KXdqj7TLOkSWS4jiIcQ4f/J0ALrRk7xRjUMDTOYkGB0Gyw==}
+  /@dxos/eslint-plugin/1.0.33_3831bdd30662ed544042896786396577:
+    resolution: {integrity: sha512-doiSXo8QcDpEDKFZ3E3d4TOoFYLjTzytk1pMkNt344ilBPfqOhrnvVzpdx85uMxu9+/7Emw3qqHl7YA7gAqj9g==}
     peerDependencies:
       typescript: '*'
     dependencies:
       '@rushstack/eslint-patch': 1.1.3
+      '@rushstack/eslint-plugin-packlets': 0.4.1_eslint@7.32.0+typescript@4.6.4
       '@stayradiated/eslint-plugin-prefer-arrow-functions': 4.4.0_eslint@7.32.0
       '@typescript-eslint/eslint-plugin': 5.24.0_06aa5a5fbc4a1b79ee2e01d628b6f5a4
       '@typescript-eslint/parser': 5.24.0_eslint@7.32.0+typescript@4.6.4
@@ -1626,12 +1627,13 @@ packages:
       - supports-color
     dev: true
 
-  /@dxos/eslint-plugin/1.0.31_eslint@7.32.0+typescript@4.6.4:
-    resolution: {integrity: sha512-s79gR3vQcm/Vxq/l5mIZF+/zgDayCAmGyHIbLtl6KXdqj7TLOkSWS4jiIcQ4f/J0ALrRk7xRjUMDTOYkGB0Gyw==}
+  /@dxos/eslint-plugin/1.0.33_eslint@7.32.0+typescript@4.6.4:
+    resolution: {integrity: sha512-doiSXo8QcDpEDKFZ3E3d4TOoFYLjTzytk1pMkNt344ilBPfqOhrnvVzpdx85uMxu9+/7Emw3qqHl7YA7gAqj9g==}
     peerDependencies:
       typescript: '*'
     dependencies:
       '@rushstack/eslint-patch': 1.1.3
+      '@rushstack/eslint-plugin-packlets': 0.4.1_eslint@7.32.0+typescript@4.6.4
       '@stayradiated/eslint-plugin-prefer-arrow-functions': 4.4.0_eslint@7.32.0
       '@typescript-eslint/eslint-plugin': 5.24.0_06aa5a5fbc4a1b79ee2e01d628b6f5a4
       '@typescript-eslint/parser': 5.24.0_eslint@7.32.0+typescript@4.6.4
@@ -2954,6 +2956,23 @@ packages:
     resolution: {integrity: sha512-WiBSI6JBIhC6LRIsB2Kwh8DsGTlbBU+mLRxJmAe3LjHTdkDpwIbEOZgoXBbZilk/vlfjK8i6nKRAvIRn1XaIMw==}
     dev: true
 
+  /@rushstack/eslint-plugin-packlets/0.4.1_eslint@7.32.0+typescript@4.6.4:
+    resolution: {integrity: sha512-A+mb+45fAUV6SRRlRy5EXrZAHNTnvOO3ONxw0hmRDcvyPAJwoX0ClkKQriz56QQE5SL4sPxhYoqbkoKbBmsxcA==}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@rushstack/tree-pattern': 0.2.4
+      '@typescript-eslint/experimental-utils': 5.20.0_eslint@7.32.0+typescript@4.6.4
+      eslint: 7.32.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
+  /@rushstack/tree-pattern/0.2.4:
+    resolution: {integrity: sha512-H8i0OinWsdKM1TKEKPeRRTw85e+/7AIFpxm7q1blceZJhuxRBjCGAUZvQXZK4CMLx75xPqh/h1t5WHwFmElAPA==}
+    dev: true
+
   /@sammacbeth/random-access-idb-mutable-file/0.1.1:
     resolution: {integrity: sha512-jHnpuu2qtFgwCmhgrpCCk3/hU3XqXTqhidh4XmcTijkVsGwh1c2T0+r2hkHs1PRfsxeimx8qDAotphpRoYB2eg==}
     dependencies:
@@ -3604,6 +3623,19 @@ packages:
       - supports-color
     dev: true
 
+  /@typescript-eslint/experimental-utils/5.20.0_eslint@7.32.0+typescript@4.6.4:
+    resolution: {integrity: sha512-w5qtx2Wr9x13Dp/3ic9iGOGmVXK5gMwyc8rwVgZU46K9WTjPZSyPvdER9Ycy+B5lNHvoz+z2muWhUvlTpQeu+g==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@typescript-eslint/utils': 5.20.0_eslint@7.32.0+typescript@4.6.4
+      eslint: 7.32.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /@typescript-eslint/parser/5.24.0_eslint@7.32.0+typescript@4.6.4:
     resolution: {integrity: sha512-4q29C6xFYZ5B2CXqSBBdcS0lPyfM9M09DoQLtHS5kf+WbpV8pBBhHDLNhXfgyVwFnhrhYzOu7xmg02DzxeF2Uw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -3622,6 +3654,14 @@ packages:
       typescript: 4.6.4
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@typescript-eslint/scope-manager/5.20.0:
+    resolution: {integrity: sha512-h9KtuPZ4D/JuX7rpp1iKg3zOH0WNEa+ZIXwpW/KWmEFDxlA/HSfCMhiyF1HS/drTICjIbpA6OqkAhrP/zkCStg==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dependencies:
+      '@typescript-eslint/types': 5.20.0
+      '@typescript-eslint/visitor-keys': 5.20.0
     dev: true
 
   /@typescript-eslint/scope-manager/5.24.0:
@@ -3651,9 +3691,35 @@ packages:
       - supports-color
     dev: true
 
+  /@typescript-eslint/types/5.20.0:
+    resolution: {integrity: sha512-+d8wprF9GyvPwtoB4CxBAR/s0rpP25XKgnOvMf/gMXYDvlUC3rPFHupdTQ/ow9vn7UDe5rX02ovGYQbv/IUCbg==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
   /@typescript-eslint/types/5.24.0:
     resolution: {integrity: sha512-Tpg1c3shTDgTmZd3qdUyd+16r/pGmVaVEbLs+ufuWP0EruVbUiEOmpBBQxBb9a8iPRxi8Rb2oiwOxuZJzSq11A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@typescript-eslint/typescript-estree/5.20.0_typescript@4.6.4:
+    resolution: {integrity: sha512-36xLjP/+bXusLMrT9fMMYy1KJAGgHhlER2TqpUVDYUQg4w0q/NW/sg4UGAgVwAqb8V4zYg43KMUpM8vV2lve6w==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/types': 5.20.0
+      '@typescript-eslint/visitor-keys': 5.20.0
+      debug: 4.3.4
+      globby: 11.1.0
+      is-glob: 4.0.3
+      semver: 7.3.7
+      tsutils: 3.21.0_typescript@4.6.4
+      typescript: 4.6.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@typescript-eslint/typescript-estree/5.24.0_typescript@4.6.4:
@@ -3677,6 +3743,24 @@ packages:
       - supports-color
     dev: true
 
+  /@typescript-eslint/utils/5.20.0_eslint@7.32.0+typescript@4.6.4:
+    resolution: {integrity: sha512-lHONGJL1LIO12Ujyx8L8xKbwWSkoUKFSO+0wDAqGXiudWB2EO7WEUT+YZLtVbmOmSllAjLb9tpoIPwpRe5Tn6w==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@types/json-schema': 7.0.11
+      '@typescript-eslint/scope-manager': 5.20.0
+      '@typescript-eslint/types': 5.20.0
+      '@typescript-eslint/typescript-estree': 5.20.0_typescript@4.6.4
+      eslint: 7.32.0
+      eslint-scope: 5.1.1
+      eslint-utils: 3.0.0_eslint@7.32.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /@typescript-eslint/utils/5.24.0_eslint@7.32.0+typescript@4.6.4:
     resolution: {integrity: sha512-K05sbWoeCBJH8KXu6hetBJ+ukG0k2u2KlgD3bN+v+oBKm8adJqVHpSSLHNzqyuv0Lh4GVSAUgZ5lB4icmPmWLw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -3693,6 +3777,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
+    dev: true
+
+  /@typescript-eslint/visitor-keys/5.20.0:
+    resolution: {integrity: sha512-1flRpNF+0CAQkMNlTJ6L/Z5jiODG/e5+7mk6XwtPOUS3UrTz3UOiAg9jG2VtKsWI6rZQfy4C6a232QNRZTRGlg==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dependencies:
+      '@typescript-eslint/types': 5.20.0
+      eslint-visitor-keys: 3.3.0
     dev: true
 
   /@typescript-eslint/visitor-keys/5.24.0:

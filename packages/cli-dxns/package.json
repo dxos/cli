@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@dxos/client": "~2.33.4",
-    "@dxos/eslint-plugin": "~1.0.31",
+    "@dxos/eslint-plugin": "~1.0.33",
     "@polkadot/types": "4.17.1",
     "@types/bn.js": "~5.1.0",
     "@types/cli-progress": "^3.9.2",

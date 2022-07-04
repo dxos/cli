@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@dxos/async": "~2.33.4",
-    "@dxos/eslint-plugin": "~1.0.31",
+    "@dxos/eslint-plugin": "~1.0.33",
     "@dxos/signal": "~2.33.4",
     "@swc-node/register": "~1.4.2",
     "@types/fs-extra": "^9.0.13",

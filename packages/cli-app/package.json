@@ -68,7 +68,7 @@
   },
   "devDependencies": {
     "@dxos/cli-dxns": "workspace:*",
-    "@dxos/eslint-plugin": "~1.0.31",
+    "@dxos/eslint-plugin": "~1.0.33",
     "@types/body-parser": "^1.19.1",
     "@types/cli-progress": "^3.9.2",
     "@types/cookie-parser": "^1.4.2",
