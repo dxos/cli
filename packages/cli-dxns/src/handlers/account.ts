@@ -32,7 +32,7 @@ export const listAllAccount = (params: Params) => async (argv: any) => {
   await sleep(2000);
 };
 
-export const createAccount = ({ getDXNSClient }: Params) => async (argv: any) => {
+export const createAccount = ({ getDXNSClient, notVoid }: Params) => async (argv: any) => {
   const { json } = argv;
   const { accountClient, dxosClient } = await getDXNSClient();
   const account = await accountClient.createAccount();
@@ -41,6 +41,7 @@ export const createAccount = ({ getDXNSClient }: Params) => async (argv: any) =>
   print({ account: account.toHex() }, { json });
 
   await sleep(2000);
+  return notVoid ? { account: account.toHex() } : undefined;
 };
 
 export const restoreAccount = ({ getDXNSClient }: Params) => async (argv: any) => {
