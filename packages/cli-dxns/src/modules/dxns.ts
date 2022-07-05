@@ -13,6 +13,7 @@ import { info } from '../handlers/info';
 import { getPeer } from '../handlers/peer';
 import { seedRegistry } from '../handlers/seed';
 import { setKeys } from '../handlers/setup';
+import { signup } from '../handlers/signup';
 import { Params } from '../interfaces';
 import {
   accountCommand,
@@ -117,6 +118,13 @@ export const DXNSModule = (params: Params) => {
         describe: 'Print information about CLI Profile, HALO identity, DXNS Address, DXNS Account.',
         builder: yargs => yargs,
         handler: asyncHandler(info(params))
+      })
+
+      .command({
+        command: ['signup'],
+        describe: 'Create and fund DXNS address & account.',
+        builder: yargs => yargs,
+        handler: asyncHandler(signup(params))
       })
   };
 };

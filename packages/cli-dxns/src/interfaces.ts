@@ -26,5 +26,6 @@ export interface DXNSClient {
 
 export interface Params extends CoreState {
   config: Config,
-  getDXNSClient(): Promise<DXNSClient>
+  getDXNSClient(force?: boolean): Promise<DXNSClient>
+  notVoid: boolean
 }
