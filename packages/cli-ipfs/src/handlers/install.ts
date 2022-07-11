@@ -38,18 +38,18 @@ export const install = () => async () => {
   try {
     process.removeAllListeners('warning');
     await download(
-      `https://dist.ipfs.io/go-ipfs/${IPFS_VERSION}/go-ipfs_${IPFS_VERSION}_${ipfsArch}.tar.gz`,
+      `https://dxos.nyc3.digitaloceanspaces.com/kube/${IPFS_VERSION}/kube-${ipfsArch}.tar.gz`,
       tempPath,
       CONFIG
     );
 
-    await fs.copy(path.join(tempPath, 'ipfs'), '/usr/local/bin/ipfs');
+    await fs.copy(path.join(tempPath, `kube-${ipfsArch}`), '/usr/local/bin/kube');
     await fs.remove(tempPath);
   } catch (err: any) {
     if (err.statusCode === 404) {
-      throw new Error(`Unable to locate ipfs bin for ${ipfsArch} architecture.`);
+      throw new Error(`Unable to locate kube ipfs bin for ${ipfsArch} architecture.`);
     } else if (err.code === 'EACCES') {
-      log(`Permission denied while installing. Finish installation with the command: "sudo cp ${path.join(tempPath, 'ipfs')} /usr/local/bin/"`);
+      log(`Permission denied while installing. Finish installation with the command: "sudo mv ${path.join(tempPath, `kube-${ipfsArch}`)} /usr/local/bin/kube"`);
     }
   }
 };
