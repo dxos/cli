@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.20.4](https://www.github.com/dxos/cli/compare/v2.20.3...v2.20.4) (2022-07-12)
+
+
+### Bug Fixes
+
+* update ipfs start command. ([5aaa0df](https://www.github.com/dxos/cli/commit/5aaa0df78409e50202d52dd5ba76516d73c86c41))
+
 ### [2.20.3](https://www.github.com/dxos/cli/compare/v2.20.2...v2.20.3) (2022-07-11)
 
 
