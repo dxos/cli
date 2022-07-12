@@ -14,7 +14,7 @@ import { PublicKey } from '@dxos/crypto';
 import { Params } from '../interfaces';
 import { DXNS_ADDRESS_PREFERENCE } from '../utils';
 
-export const generateAddress = ({ getDXNSClient }: Params) => async (argv: any) => {
+export const generateAddress = ({ getDXNSClient, notVoid }: Params) => async (argv: any) => {
   const { json } = argv;
 
   await cryptoWaitReady();
@@ -34,6 +34,7 @@ export const generateAddress = ({ getDXNSClient }: Params) => async (argv: any) 
   await dxosClient.halo.setDevicePreference(DXNS_ADDRESS_PREFERENCE, address);
 
   print({ mnemonic, address }, { json });
+  return notVoid ? { mnemonic, address } : undefined;
 };
 
 export const listAddress = (params: Params) => async (argv: any) => {

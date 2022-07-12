@@ -28,7 +28,10 @@ const getDxosClient = async (config: Config) => {
 };
 
 let dxnsClient: DXNSClient | undefined;
-const createDxnsClientGetter = (config: Config, state: Partial<CoreState>) => async () => {
+const createDxnsClientGetter = (config: Config, state: Partial<CoreState>) => async (force: false) => {
+  if (dxnsClient && force) {
+    await destroyDXNSCliState();
+  }
   if (!dxnsClient) {
     dxnsClient = await _createDxnsClient(config, state);
   }
@@ -112,8 +115,10 @@ export const initDXNSCliState = async (state: CoreState) => {
 export const destroyDXNSCliState = async () => {
   if (dxnsClient) {
     await dxnsClient.apiRaw.disconnect();
+    dxnsClient = undefined;
   }
   if (dxosClient) {
     await dxosClient.destroy();
+    dxosClient = undefined;
   }
 };

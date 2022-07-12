@@ -3,4 +3,4 @@
 //
 
 export const FILE_TYPE_DXN = 'dxos:type/file';
-export const IPFS_VERSION = 'v0.7.0';
+export const IPFS_VERSION = 'latest';
