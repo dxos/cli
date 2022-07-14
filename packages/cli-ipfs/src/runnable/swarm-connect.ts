@@ -14,13 +14,13 @@ const OLD_RECORD_CREATED = '2001-01-01';
 
 const LIMIT = 5;
 const TIMEOUT = 10000;
-const SERVICE_EXEC = 'ipfs';
+const SERVICE_EXEC = 'kube';
 const SVC_NAME = 'ipfs-swarm-connect';
 const IPFS_SERVICE_DXN = 'dxos:type/service/ipfs';
 const SERVICE_DXN = 'dxos:type/service';
 
 const connect = (address: string) => {
-  const result = spawnSync(SERVICE_EXEC, ['swarm', 'connect', address]);
+  const result = spawnSync(SERVICE_EXEC, ['ipfs', 'swarm', 'connect', address]);
   const out = String(result.stdout).trim();
   const err = String(result.stderr).trim();
   if (out) {

@@ -1,5 +1,26 @@
 # Changelog
 
+### [2.20.4](https://www.github.com/dxos/cli/compare/v2.20.3...v2.20.4) (2022-07-12)
+
+
+### Bug Fixes
+
+* update ipfs start command. ([5aaa0df](https://www.github.com/dxos/cli/commit/5aaa0df78409e50202d52dd5ba76516d73c86c41))
+
+### [2.20.3](https://www.github.com/dxos/cli/compare/v2.20.2...v2.20.3) (2022-07-11)
+
+
+### Bug Fixes
+
+* add ipfs to services list. ([d4cdb7a](https://www.github.com/dxos/cli/commit/d4cdb7a4982f842842a8fc8f085ce84965827f01))
+* cli-ipfs to use new KUBE bin. ([#531](https://www.github.com/dxos/cli/issues/531)) ([5b06f0c](https://www.github.com/dxos/cli/commit/5b06f0c89c6a4b689e24ed0c96168ee486f75bbf))
+* dockerize ipfs. ([#527](https://www.github.com/dxos/cli/issues/527)) ([e279df8](https://www.github.com/dxos/cli/commit/e279df8623d6585a10d8da022d73c1fab14e3053))
+* ipfs init command. ([#526](https://www.github.com/dxos/cli/issues/526)) ([79b0b4a](https://www.github.com/dxos/cli/commit/79b0b4a78d82372c7d4812f2a1eb646a48b174a0))
+* ipfs install. ([#524](https://www.github.com/dxos/cli/issues/524)) ([fd21789](https://www.github.com/dxos/cli/commit/fd2178902ee6e6657a9801613656e52a451c590e))
+* ns signup command. ([#530](https://www.github.com/dxos/cli/issues/530)) ([83e0c92](https://www.github.com/dxos/cli/commit/83e0c92eeb3255752b5ceb811a6ebd0ddb2ac55c))
+* optional IPFS pin for deployment. ([#523](https://www.github.com/dxos/cli/issues/523)) ([ca8ec7b](https://www.github.com/dxos/cli/commit/ca8ec7b9398c63cca1539d24ae6a8e71bb56dcab))
+* rm ipfs from docker services. ([15c2d55](https://www.github.com/dxos/cli/commit/15c2d552c1b83e81100c3fd6675e28e06b80e4aa))
+
 ### [2.20.2](https://www.github.com/dxos/cli/compare/v2.20.1...v2.20.2) (2022-06-21)
 
 

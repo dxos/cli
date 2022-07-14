@@ -1,6 +1,6 @@
 {
   "name": "@dxos/cli-kube",
-  "version": "2.20.2",
+  "version": "2.20.4",
   "description": "DXOS KUBE CLI",
   "homepage": "https://github.com/dxos/cli/tree/master/packages/cli-kube#readme",
   "bugs": {

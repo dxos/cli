@@ -11,9 +11,9 @@ import type { DXNSClient } from '@dxos/cli-dxns';
 
 import { init, install, publish, register, query /*, download */ } from '../handlers';
 
-const IPFS_EXEC = 'ipfs';
-const IPFS_PROCESS_NAME = 'ipfs';
-const IPFS_DEFAULT_LOG_FILE = '/var/log/ipfs.log';
+const IPFS_EXEC = 'kube';
+const IPFS_PROCESS_NAME = 'kube';
+const IPFS_DEFAULT_LOG_FILE = '/var/log/kube.log';
 
 const IPFS_SWARM_CONNECTOR_EXEC = 'node';
 const IPFS_SWARM_CONNECTOR_PROCESS_NAME = 'ipfs-swarm-connect';
