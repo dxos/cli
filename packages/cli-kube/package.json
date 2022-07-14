@@ -57,7 +57,7 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.33",
+    "@dxos/eslint-plugin": "~1.0.34",
     "@types/jest": "~27.0.3",
     "@types/js-yaml": "^3.12.5",
     "@types/lodash.defaultsdeep": "^4.6.6",
