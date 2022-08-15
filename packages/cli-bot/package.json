@@ -67,7 +67,7 @@
   "devDependencies": {
     "@dxos/cli-party": "workspace:*",
     "@dxos/cli-dxns": "workspace:*",
-    "@dxos/eslint-plugin": "~1.0.34",
+    "@dxos/eslint-plugin": "~1.0.40",
     "@types/cli-progress": "^3.9.2",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "~27.0.3",

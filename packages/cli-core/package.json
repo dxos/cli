@@ -76,7 +76,7 @@
     "yargs-unparser": "^2.0.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.34",
+    "@dxos/eslint-plugin": "~1.0.40",
     "@types/dockerode": "3.2.3",
     "@types/download": "^6.2.4",
     "@types/find-remove": "^2.0.1",
