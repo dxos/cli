@@ -35,12 +35,12 @@
     "verbose": false
   },
   "dependencies": {
-    "@dxos/async": "~2.33.2",
-    "@dxos/client": "~2.33.2",
-    "@dxos/config": "~2.33.2",
-    "@dxos/crypto": "~2.33.2",
-    "@dxos/debug": "~2.33.2",
-    "@dxos/registry-client": "~2.33.2",
+    "@dxos/async": "~2.33.8",
+    "@dxos/client": "~2.33.8",
+    "@dxos/config": "~2.33.8",
+    "@dxos/crypto": "~2.33.8",
+    "@dxos/debug": "~2.33.8",
+    "@dxos/registry-client": "~2.33.8",
     "@otplib/plugin-thirty-two": "^12.0.1",
     "@types/yargs": "^17.0.10",
     "assert": "^2.0.0",
@@ -76,7 +76,7 @@
     "yargs-unparser": "^2.0.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.27",
+    "@dxos/eslint-plugin": "~1.0.40",
     "@types/dockerode": "3.2.3",
     "@types/download": "^6.2.4",
     "@types/find-remove": "^2.0.1",
